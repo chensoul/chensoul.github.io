@@ -1,0 +1,35 @@
+/* ===============================custom.css ================================== */
+
+body {
+    line-height: 1.4;
+}
+
+/* 设置title字体大小 */
+.header .logo-wrapper .logo {
+    position: relative;
+    font-size: 34px;
+    line-height: 60px;
+}
+
+/* 让阅读更多居右 */
+.read-more {
+    text-align: right;
+    padding: 0 0 20px;
+}
+
+/* 调整返回顶部icon位置和大小 */
+.back-to-top {
+    right: 40px;
+    bottom: 25px;
+    font-size: 2em;
+}
+
+/*代码自动换行*/
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+/*高亮代码不显示行号*/
+.post .post-content .highlight>.chroma .lntd:first-child {
+    display: none;
+}
