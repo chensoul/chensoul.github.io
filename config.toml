@@ -24,8 +24,8 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 date = [":filename", ":default", ":fileModTime"]
 
 [permalinks]
-#post = "/:year:month:day/:slug"
-post = ":slug"
+post = "/:year/:month/:day/:slug"
+#post = ":slug"
 
 [author]                  # essential                     # 必需
   name = "chensoul"
