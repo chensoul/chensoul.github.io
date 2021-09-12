@@ -1,10 +1,10 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>从零开始搭建个人博客 - Chensoul - 六月陈书</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="chensoul"><meta name=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。
-"><meta name=keywords content="hugo"><meta name=generator content="Hugo 0.83.1 with theme even"><link rel=canonical href=http://blog.chensoul.com/2021/09/09/build-personal-blog-hand-by-hand/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="从零开始搭建个人博客"><meta property="og:description" content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta property="og:type" content="article"><meta property="og:url" content="http://blog.chensoul.com/2021/09/09/build-personal-blog-hand-by-hand/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-09-09T18:14:34+08:00"><meta property="article:modified_time" content="2021-09-09T18:14:34+08:00"><meta itemprop=name content="从零开始搭建个人博客"><meta itemprop=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta itemprop=datePublished content="2021-09-09T18:14:34+08:00"><meta itemprop=dateModified content="2021-09-09T18:14:34+08:00"><meta itemprop=wordCount content="2164"><meta itemprop=keywords content="hugo,"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始搭建个人博客"><meta name=twitter:description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>六月陈书</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a><a href=/about/><li class=mobile-menu-item>关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>六月陈书</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li><li class=menu-item><a class=menu-item-link href=/about/>关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>从零开始搭建个人博客</h1><div class=post-meta><span class=post-time>2021-09-09</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>约 2164 字</span>
-<span class=more-meta>预计阅读 5 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#域名>域名</a></li><li><a href=#服务器>服务器</a></li><li><a href=#程序>程序</a><ul><li><a href=#安装hugo>安装Hugo</a></li><li><a href=#新建站点>新建站点</a></li><li><a href=#添加主题>添加主题</a></li><li><a href=#启动>启动</a></li><li><a href=#定制化>定制化</a></li></ul></li><li><a href=#部署>部署</a><ul><li><a href=#通过github-actions部署>通过GitHub Actions部署</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。</p><h2 id=域名>域名</h2><h2 id=服务器>服务器</h2><h2 id=程序>程序</h2><h3 id=安装hugo>安装Hugo</h3><p><img src=https://www.diguage.com/images/building-blog-with-hugo/hugo-logo.svg alt="使用 Hugo 搭建博客"></p><p>在 Mac 下安装 Hugo：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+"><meta name=keywords content="hugo"><meta name=generator content="Hugo 0.83.1 with theme even"><link rel=canonical href=http://blog.chensoul.com/2021/09/09/build-personal-blog-hand-by-hand/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="从零开始搭建个人博客"><meta property="og:description" content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta property="og:type" content="article"><meta property="og:url" content="http://blog.chensoul.com/2021/09/09/build-personal-blog-hand-by-hand/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-09-09T18:14:34+08:00"><meta property="article:modified_time" content="2021-09-09T18:14:34+08:00"><meta itemprop=name content="从零开始搭建个人博客"><meta itemprop=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta itemprop=datePublished content="2021-09-09T18:14:34+08:00"><meta itemprop=dateModified content="2021-09-09T18:14:34+08:00"><meta itemprop=wordCount content="2582"><meta itemprop=keywords content="hugo,"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始搭建个人博客"><meta name=twitter:description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>六月陈书</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a><a href=/about/><li class=mobile-menu-item>关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>六月陈书</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li><li class=menu-item><a class=menu-item-link href=/about/>关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>从零开始搭建个人博客</h1><div class=post-meta><span class=post-time>2021-09-09</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>约 2582 字</span>
+<span class=more-meta>预计阅读 6 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#域名>域名</a></li><li><a href=#服务器>服务器</a></li><li><a href=#程序>程序</a><ul><li><a href=#安装hugo>安装Hugo</a></li><li><a href=#新建站点>新建站点</a></li><li><a href=#添加主题>添加主题</a></li><li><a href=#启动>启动</a></li><li><a href=#定制化>定制化</a></li></ul></li><li><a href=#部署>部署</a><ul><li><a href=#通过github-actions部署>通过GitHub Actions部署</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。</p><h2 id=域名>域名</h2><h2 id=服务器>服务器</h2><h2 id=程序>程序</h2><h3 id=安装hugo>安装Hugo</h3><p><img src=https://www.diguage.com/images/building-blog-with-hugo/hugo-logo.svg alt="使用 Hugo 搭建博客"></p><p>在 Mac 下安装 Hugo：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>brew install hugo
 </code></pre></td></tr></table></div></div><h3 id=新建站点>新建站点</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>hugo new site blog.chensoul.com
-</code></pre></td></tr></table></div></div><p>上述命令会生成一个名为 <code>blog.chensoul.com</code> 的文件夹，下面对文件夹结构做个说明：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>hugo new site chensoul.github.io
+</code></pre></td></tr></table></div></div><p>上述命令会生成一个名为 <code>chensoul.github.io</code> 的文件夹，下面对文件夹结构做个说明：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -16,8 +16,8 @@
 </span><span class=lnt>10
 </span><span class=lnt>11
 </span><span class=lnt>12
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ tree blog.chensoul.com
-blog.chensoul.com
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ tree chensoul.github.io
+chensoul.github.io
 ├── archetypes
 │   └── default.md
 ├── config.toml
@@ -30,7 +30,7 @@ blog.chensoul.com
 <span class=m>6</span> directories, <span class=m>2</span> files
 </code></pre></td></tr></table></div></div><p>新建的站点，还没有加入 Git 版本管理，进入到这个目录下，执行一下如下命令，完成 Git Repo 的初始化：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>cd blog.chensoul.com
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>cd chensoul.github.io
 git init . 
 </code></pre></td></tr></table></div></div><p>新建站点后，我们开始添加主题。</p><h3 id=添加主题>添加主题</h3><p>在 Hugo 的官网上 <a href=https://themes.gohugo.io/>Hugo Themes</a> 有非常非常多的主题，可以根据自己的喜好选择一个主题。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>git clone https://github.com/olOwOlo/hugo-theme-even.git --depth<span class=o>=</span><span class=m>1</span> themes/even
@@ -386,7 +386,141 @@ date: 2021-09-09T21:38:52+08:00
 lastmod: 2021-09-09T21:41:52+08:00
 menu: &#34;main&#34;
 weight: 50
-</code></pre></td></tr></table></div></div><h2 id=部署>部署</h2><h3 id=通过github-actions部署>通过GitHub Actions部署</h3></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+</code></pre></td></tr></table></div></div><h2 id=部署>部署</h2><h3 id=通过github-actions部署>通过GitHub Actions部署</h3><p><strong>1、首先在github里创建一个仓库：chensoul.github.io</strong></p><p><strong>2、将本地文件提交到github</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=nb>cd</span> chensoul.github.io
+git init .
+<span class=nb>echo</span> <span class=s2>&#34;# chensoul.github.io&#34;</span> &gt;&gt; README.md
+git remote add origin git@github.com:chensoul/chensoul.github.io.git
+</code></pre></td></tr></table></div></div><p><strong>3、添加 .gitignore 和 .gitmodules</strong></p><p>.gitignore</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>_theme_packages/*
+
+Thumbs.db
+.DS_Store
+
+!.gitkeep
+
+.rbenv-version
+.rvmrc
+
+*.log
+node_modules
+
+public
+
+db.json
+
+/resources
+</code></pre></td></tr></table></div></div><p>.gitmodules</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>submodule</span> <span class=s2>&#34;themes/even&#34;</span><span class=p>]</span>
+	<span class=nx>path</span> <span class=p>=</span> <span class=nx>themes</span><span class=err>/</span><span class=nx>even</span>
+	<span class=nx>url</span> <span class=p>=</span> <span class=nx>https</span><span class=err>://</span><span class=nx>github</span><span class=p>.</span><span class=nx>com</span><span class=err>/</span><span class=nx>olOwOlo</span><span class=err>/</span><span class=nx>hugo</span><span class=err>-</span><span class=nx>theme</span><span class=err>-</span><span class=nx>even</span>
+</code></pre></td></tr></table></div></div><p><strong>4、将本地代码推送到仓库</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>git commit -m <span class=s2>&#34;first commit&#34;</span>
+git push -u origin main
+</code></pre></td></tr></table></div></div><p><strong>5、创建 GitHub Actions 的 workflow</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>mkdir -p .github/workflows
+touch .github/workflows/gh-page.yml
+</code></pre></td></tr></table></div></div><p>gh-page.yml内容如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-yaml data-lang=yaml><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>github pages</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=l>hugo</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-18.04</span><span class=w>
+</span><span class=w>    </span><span class=nt>timeout-minutes</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># Fetch Hugo themes (true OR recursive)</span><span class=w>
+</span><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>    </span><span class=c># Fetch all history for .GitInfo and .Lastmod</span><span class=w>
+</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;0.83.1&#39;</span><span class=w>
+</span><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build</span><span class=w>
+</span><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
+</span><span class=w>
+</span><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy</span><span class=w>
+</span><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
+</span><span class=w>        </span><span class=nt>if</span><span class=p>:</span><span class=w> </span><span class=l>github.ref == &#39;refs/heads/hugo&#39;</span><span class=w>
+</span><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span><span class=w>          </span><span class=nt>github_token</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span><span class=w>          </span><span class=nt>publish_branch</span><span class=p>:</span><span class=w> </span><span class=l>main</span><span class=w>
+</span><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
+</span></code></pre></td></tr></table></div></div><p>上面的工作流是在 hugo 分支上触发，当有代码提交时候，会运行hugo命令生成静态文件（public目录），并且将他们推送到main分支。</p><p>所以，我们需要基于当前分支创建一个新分支hugo，并且推送到远程仓库：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>git branch hugo
+git checkout hugo
+git push origin hugo
+</code></pre></td></tr></table></div></div><p><strong>6、修改代码，推送到仓库，触发工作流</strong></p><p>在本地修改某个文件，提交代码，然后在 github 网站 <a href=https://github.com/chensoul/chensoul.github.io/actions>https://github.com/chensoul/chensoul.github.io/actions</a> 查看工作流</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>git push origin hugo
+</code></pre></td></tr></table></div></div><p>另外，我们还可以把 hugo 分支设为默认分支。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>chensoul</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2021-09-09</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/hugo/>hugo</a></div><nav class=post-nav><a class=prev href=/2021/09/09/mac-development-environment-setup/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">Mac开发环境配置</span>
