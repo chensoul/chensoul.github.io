@@ -1,0 +1,1938 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chensoul - 六月陈书</title><link>http://blog.chensoul.com/</link><description>Recent content on Chensoul - 六月陈书</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 09 Sep 2021 18:14:34 +0800</lastBuildDate><atom:link href="http://blog.chensoul.com/index.xml" rel="self" type="application/rss+xml"/><item><title>关于</title><link>http://blog.chensoul.com/about/</link><pubDate>Thu, 09 Sep 2021 21:38:52 +0800</pubDate><guid>http://blog.chensoul.com/about/</guid><description>&lt;h2 id="我是谁">我是谁&lt;/h2>
+&lt;ul>
+&lt;li>我是六月陈书，坐标：武汉，职业：程序员。&lt;/li>
+&lt;li>工作10+年，擅长软件开发与设计，技术栈包括：Java、大数据、Kubernetes等。&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>本博客主要目的记录个人学习过程中的所得所想，不代表所在公司观点。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="与我交流">与我交流&lt;/h2>
+&lt;p>您可以通过以下途径和我联系：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>邮箱：&lt;a href="mailto:czj.june@gmail.com">czj.june@gmail.com&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://twitter.com/chensoul314">Twitter&lt;/a> / &lt;a href="https://weibo.com/chenzhijun/">微博&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>微信：cemshu&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>视频号：六月陈书&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>公众号：六月陈书&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Telegram 群组：&lt;a href="https://t.me/chensoul">https://t.me/chensoul&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="关于博客">关于博客&lt;/h2>
+&lt;p>所有文章非特别说明皆为原创，遵循的协议为「&lt;a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享&lt;/a>」，由于文章表述或者内容可能存在诸多错误，所以部分内容会作修改，为保证转载信息与源同步，转载请注明文章出处！&lt;/p>
+&lt;h2 id="站点更新日志">站点更新日志&lt;/h2>
+&lt;ul>
+&lt;li>2021-09-09，注册域名 chensoul.com，开启个人博客之旅，使用 Hugo 的 &lt;a href="https://github.com/olOwOlo/hugo-theme-even">even&lt;/a> 主题建站。&lt;/li>
+&lt;/ul></description></item><item><title>Mac开发环境配置</title><link>http://blog.chensoul.com/mac-development-environment-setup/</link><pubDate>Thu, 09 Sep 2021 18:14:34 +0800</pubDate><guid>http://blog.chensoul.com/mac-development-environment-setup/</guid><description>&lt;p>这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是Mac开发环境，所以，这篇文章主要是基于Mac操作系统，记录开发环境搭建过程。&lt;/p>
+&lt;h2 id="系统偏好设置">系统偏好设置&lt;/h2>
+&lt;h3 id="触控板">触控板&lt;/h3>
+&lt;ul>
+&lt;li>系统设置 &amp;gt; 辅助功能 &amp;gt; 指针控制 &amp;gt; 触控板选项 &amp;gt; 启用拖移 &amp;gt; 三指拖移&lt;/li>
+&lt;li>系统设置 &amp;gt; 触控板 &amp;gt; 光标与点击
+&lt;ul>
+&lt;li>✓ 轻拍来点按&lt;/li>
+&lt;li>✓ 辅助点按&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="dock">Dock&lt;/h3>
+&lt;ul>
+&lt;li>置于屏幕上的位置：右边&lt;/li>
+&lt;li>设置 Dock 图标更小（大小随个人喜好）&lt;/li>
+&lt;/ul>
+&lt;h3 id="finder">Finder&lt;/h3>
+&lt;ul>
+&lt;li>显示&lt;/li>
+&lt;li>显示标签页栏&lt;/li>
+&lt;li>显示路径栏&lt;/li>
+&lt;li>显示状态栏&lt;/li>
+&lt;li>偏好设置
+&lt;ul>
+&lt;li>通用
+&lt;ul>
+&lt;li>开启新&amp;quot;访达&amp;quot;窗口时打开：HOME目录&lt;/li>
+&lt;li>在桌面上显示这些项目，全部取消&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>边栏
+&lt;ul>
+&lt;li>添加 HOME目录 和 代码文件目录&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>高级
+&lt;ul>
+&lt;li>显示所有文件扩展名&lt;/li>
+&lt;li>将以下位置的文件夹保持在顶部：
+&lt;ul>
+&lt;li>按名称排序的窗口中&lt;/li>
+&lt;li>桌面上&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="xcode">XCode&lt;/h2>
+&lt;p>从 App store 或苹果开发者网站安装 &lt;a href="https://developer.apple.com/xcode/">Xcode&lt;/a> ，然后安装 Xcode command line tools：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">xcode-select --install
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装完成后，你将可以直接在 terminal 中使用主要的命令，比如：&lt;code>make, GCC, clang, perl, svn, git, size, strip, strings, libtool, cpp&lt;/code>等等。&lt;/p>
+&lt;p>如果你想了解 Xcode command line tools 包含多少可用的命令，可以到 &lt;code>/Library/Developer/CommandLineTools/usr/bin/&lt;/code> 查看：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">ls /Library/Developer/CommandLineTools/usr/bin/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="homebrew">Homebrew&lt;/h2>
+&lt;p>&lt;a href="http://brew.sh/">Brew&lt;/a> 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。&lt;/p>
+&lt;p>Linux也支持Homebrew了，请参考 &lt;a href="https://docs.brew.sh/Homebrew-on-Linux">https://docs.brew.sh/Homebrew-on-Linux&lt;/a>。&lt;/p>
+&lt;h3 id="安装">安装&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">/usr/bin/ruby -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>替换brew.git&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git -C &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>brew --repo&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git
+git -C &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>brew --repo homebrew/core&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git brew update
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置环境变量：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">echo&lt;/span> &lt;span class="s1">&amp;#39;PATH=&amp;#34;/usr/local/bin:$PATH&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.bash_profile
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果安装了zsh，则是：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">echo&lt;/span> &lt;span class="s1">&amp;#39;PATH=&amp;#34;/usr/local/bin:$PATH&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.zshrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="cask">Cask&lt;/h3>
+&lt;p>&lt;a href="https://github.com/phinze/homebrew-cask">Brew cask&lt;/a> 是类似 Brew 的管理工具， 直接提供 dmg 级别的二进制包，（Brew 是不带源码，只有对应项目所在的 URL）。我们可以通过 Homebrew Cask 优雅、简单、快速的安装和管理 OS X 图形界面程序，比如 Google Chrome 和 Dropbox。&lt;/p>
+&lt;p>Brew cask 安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew tap phinze/homebrew-cask
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以通过 Brew cask 安装的软件有：&lt;/p>
+&lt;ul>
+&lt;li>QQ&lt;/li>
+&lt;li>qqmusic&lt;/li>
+&lt;li>google-chrome&lt;/li>
+&lt;li>virtualbox&lt;/li>
+&lt;li>vagrant&lt;/li>
+&lt;li>iterm2&lt;/li>
+&lt;li>the-unarchiver&lt;/li>
+&lt;li>switchhosts&lt;/li>
+&lt;li>aerial&lt;/li>
+&lt;li>fliqlo&lt;/li>
+&lt;/ul>
+&lt;h2 id="iterm2">iTerm2&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install --cask iterm2
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置：&lt;/p>
+&lt;ul>
+&lt;li>Preferences &amp;ndash;&amp;gt; Profiles&amp;ndash;&amp;gt; Default &amp;ndash;&amp;gt; Terminal：设置 cursor 颜色为黄色&lt;/li>
+&lt;li>Preferences &amp;ndash;&amp;gt; Profiles &amp;ndash;&amp;gt; Window &amp;ndash;&amp;gt; Transparency：设置透明度 10%~20% 即可，太高会和桌面背景冲突。如果需要临时禁用透明度可以使用快捷键 ⌘+u。&lt;/li>
+&lt;/ul>
+&lt;h3 id="zsh">Zsh&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>安装Oh My Zsh：&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sh -c &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置zsh为默认：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sudo sh -c &lt;span class="s2">&amp;#34;echo &lt;/span>&lt;span class="k">$(&lt;/span>which zsh&lt;span class="k">)&lt;/span>&lt;span class="s2"> &amp;gt;&amp;gt; /etc/shells&amp;#34;&lt;/span>
+chsh -s &lt;span class="k">$(&lt;/span>which zsh&lt;span class="k">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>bash切换到zsh&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">chsh -s /bin/zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使设置生效：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">source&lt;/span> ~/.zshrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>安装&lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins">Oh My Zsh 插件&lt;/a>&lt;/strong>，修改 .zshrc ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nv">plugins&lt;/span>&lt;span class="o">=(&lt;/span>git mvn colorize encode64 urltools wd last-working-dir sublime vagrant Z zsh-syntax-highlighting brew osx&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装 zsh-syntax-highlighting：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git &lt;span class="si">${&lt;/span>&lt;span class="nv">ZSH_CUSTOM&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">~/.oh-my-zsh/custom&lt;/span>&lt;span class="si">}&lt;/span>/plugins/zsh-syntax-highlighting
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装 zsh-autosuggestions：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/zsh-users/zsh-autosuggestions &lt;span class="nv">$ZSH_CUSTOM&lt;/span>/plugins/zsh-autosuggestions
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装git-open&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/paulirish/git-open.git &lt;span class="nv">$ZSH_CUSTOM&lt;/span>/plugins/git-open
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改主题，更多主题参考 &lt;a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">Oh My Zsh Wiki&lt;/a>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nv">ZSH_THEME&lt;/span>&lt;span class="o">=&lt;/span>pygmalion
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="tree">tree&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install tree
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="fzf">fzf&lt;/h3>
+&lt;p>安装 fzf：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install fzf
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>fzf用法：&lt;/p>
+&lt;ul>
+&lt;li>1、切换到指定目录&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># fd - cd to selected directory&lt;/span>
+fd&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="nb">local&lt;/span> dir
+&lt;span class="nv">dir&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>find &lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="si">}&lt;/span> -path &lt;span class="s1">&amp;#39;*/\.*&amp;#39;&lt;/span> -prune &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> -o -type d -print 2&amp;gt; /dev/null &lt;span class="p">|&lt;/span> fzf +m&lt;span class="k">)&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span>
+&lt;span class="nb">cd&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$dir&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>2、查看历史命令，并且执行选中的命令&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># fh - search in your command history and execute selected command&lt;/span>
+fh&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="nb">eval&lt;/span> &lt;span class="k">$(&lt;/span> &lt;span class="o">([&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$ZSH_NAME&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">fc&lt;/span> -l &lt;span class="m">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">history&lt;/span>&lt;span class="k">)&lt;/span> &lt;span class="p">|&lt;/span> fzf +s --tac &lt;span class="p">|&lt;/span> sed &lt;span class="s1">&amp;#39;s/ *[0-9]* *//&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>3、查看Chrome历史&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>提示：查看 &lt;a href="https://junegunn.kr/2015/04/browsing-chrome-history-with-fzf/">blog post&lt;/a>。&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># ch - browse chrome history&lt;/span>
+ch&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="nb">local&lt;/span> cols sep
+&lt;span class="nv">cols&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span> COLUMNS &lt;span class="o">/&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="k">))&lt;/span>
+&lt;span class="nv">sep&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{::}&amp;#39;&lt;/span>
+cp -f ~/Library/Application&lt;span class="se">\ &lt;/span>Support/Google/Chrome/Default/History /tmp/h
+sqlite3 -separator &lt;span class="nv">$sep&lt;/span> /tmp/h &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;select substr(title, 1, &lt;/span>&lt;span class="nv">$cols&lt;/span>&lt;span class="s2">), url
+&lt;/span>&lt;span class="s2"> from urls order by last_visit_time desc&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span>
+awk -F &lt;span class="nv">$sep&lt;/span> &lt;span class="s1">&amp;#39;{printf &amp;#34;%-&amp;#39;&lt;/span>&lt;span class="nv">$cols&lt;/span>&lt;span class="s1">&amp;#39;s \x1b[36m%s\x1b[m\n&amp;#34;, $1, $2}&amp;#39;&lt;/span> &lt;span class="p">|&lt;/span>
+fzf --ansi --multi &lt;span class="p">|&lt;/span> sed &lt;span class="s1">&amp;#39;s#.*\(https*://\)#\1#&amp;#39;&lt;/span> &lt;span class="p">|&lt;/span> xargs open
+&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>注意：&lt;/p>
+&lt;ul>
+&lt;li>请确认Chrome的历史记录的地址是正确的。&lt;/li>
+&lt;li>更多说明，参考 &lt;a href="https://stackoverflow.com/a/16742333/1564365">StackOverflow&lt;/a>。&lt;/li>
+&lt;/ul>
+&lt;p>fzf更多用法，参考 &lt;strong>&lt;a href="https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh">official repo&lt;/a>&lt;/strong>。&lt;/p>
+&lt;h3 id="ack">ack&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install ack
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>搜索 js 文件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">ack --js pancakes
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>搜索不包含 brew 的文件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">ack -L brew
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>排序：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">--sort-files
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>结果高亮显示：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">--sort-files
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>自定义类型：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">--type-set&lt;span class="o">=&lt;/span>&lt;span class="nv">markdown&lt;/span>&lt;span class="o">=&lt;/span>.md,.mkd,.markdown
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看ack配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">ack --dump
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="git">Git&lt;/h2>
+&lt;h3 id="安装和配置">安装和配置&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install git
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看git命令位置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">which git
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>配置用户名和邮箱：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git config --global user.name &lt;span class="s2">&amp;#34;Your Name Here&amp;#34;&lt;/span>
+git config --global user.email &lt;span class="s2">&amp;#34;your_email@youremail.com&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>这些配置会加到 ~/.gitconfig&lt;/li>
+&lt;/ul>
+&lt;p>为了将代码推送到 GitHub 仓库，建议使用HTTPS方法。如果你不想每次都输入用户名和密码的话，可以按照此 &lt;a href="https://help.github.com/articles/set-up-git">描述&lt;/a> 说的那样，运行：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git config --global credential.helper osxkeychain
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置默认分支名称为main：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git config --global init.defaultBranch main
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>配置ssh秘钥：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">ssh-keygen -t rsa -C &lt;span class="s2">&amp;#34;your_email@example.com&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>添加 SSH 公钥到 ssh-agent ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">eval&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>ssh-agent -s&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+ssh-add -K ~/.ssh/id_rsa
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>添加SSH 公钥到 GitHub 账户：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pbcopy &amp;lt; ~/.ssh/id_rsa.pub
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>打开 &lt;a href="https://github.com/settings/ssh/new">https://github.com/settings/ssh/new&lt;/a>，然后添加。&lt;/p>
+&lt;h3 id="gitignore">.gitignore&lt;/h3>
+&lt;p>下载 .gitignore：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>也可以在 &lt;a href="https://www.gitignore.io/?templates=macos">gitignore.io&lt;/a> 生成 .gitignore。&lt;/p>
+&lt;p>配置Git仓库忽略 ~/.gitignore 中的文件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git config --global core.excludesfile ~/.gitignore
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="bash-completion">Bash Completion&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install bash-completion
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看更多 completion ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ brew search &lt;span class="nv">completion&lt;/span>
+&lt;span class="o">==&lt;/span>&amp;gt; Formulae
+apm-bash-completion docker-compose-completion maven-completion sonar-completion
+bash-completion ✔ docker-machine-completion mix-completion spring-completion
+bash-completion@2 fabric-completion open-completion stormssh-completion
+boom-completion gem-completion packer-completion t-completion
+brew-cask-completion gradle-completion pip-completion tmuxinator-completion
+bundler-completion grunt-completion rails-completion vagrant-completion
+cap-completion homesick-completion rake-completion wp-cli-completion
+django-completion kitchen-completion ruby-completion yarn-completion
+docker-completion launchctl-completion rustc-completion zsh-completions ✔
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后，安装，例如：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install docker-completion
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="vim">Vim&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install vim
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="vimrc">vimrc&lt;/h3>
+&lt;p>下载 &lt;a href="https://github.com/amix/vimrc">The Ultimate vimrc&lt;/a>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/amix/vimrc.git ~/.vim_runtime
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装 complete 版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sh ~/.vim_runtime/install_awesome_vimrc.sh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装 bash 版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sh ~/.vim_runtime/install_basic_vimrc.sh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>更新 vimrc ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">cd&lt;/span> ~/.vim_runtime &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> git pull --rebase &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">cd&lt;/span> -
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="maximum-awesome">Maximum Awesome&lt;/h3>
+&lt;p>安装&lt;a href="https://github.com/square/maximum-awesome">Maximum Awesome&lt;/a>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/square/maximum-awesome.git
+&lt;span class="nb">cd&lt;/span> maximum-awesome
+rake
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="visual-studio-code">Visual Studio Code&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install --cask visual-studio-code
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>从命令行启动vscode：&lt;/p>
+&lt;ul>
+&lt;li>启动vscode，输入 &lt;strong>Command Palette&lt;/strong> (Cmd+Shift+P)，查找 &lt;strong>Shell Command: Install &amp;lsquo;code&amp;rsquo; command in PATH&lt;/strong>&lt;/li>
+&lt;li>重启 vscode 使环境变量生效&lt;/li>
+&lt;li>在命令行输入 &lt;code>code .&lt;/code>，在当前目录启动 vscode，也可以这样打开文件 &lt;code>code myfile.txt&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>安装扩展：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>JavaScript&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">ESLint&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">Prettier&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>SQL&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=bradymholt.pgformatter">PostgreSQL formatter&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Markdown&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>GitLens&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Docker&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker">Docker&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>JSON&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype">Paste JSON as Code&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Live Server&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>VS Code Icons&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons">vscode-icons&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="jetbrains-ides">JetBrains IDEs&lt;/h2>
+&lt;p>下载地址：https://www.jetbrains.com/products.html?fromMenu#type=ide&lt;/p>
+&lt;p>破解插件：https://github.com/osvax/ide-eval-resetter&lt;/p>
+&lt;h2 id="vagrant">Vagrant&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install --cask virtualbox
+brew install --cask vagrant
+brew install --cask vagrant-manager
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">vagrant box add precise64 https://vagrantcloud.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box
+vagrant init precise64
+vagrant up
+vagrant ssh
+vagrant halt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="mysql">MySQL&lt;/h2>
+&lt;p>安装mysql：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install mysql
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果想安装mysql5.7：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install mysql@5.7
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1">#设置开机启动&lt;/span>
+brew services start mysql
+&lt;span class="c1">#启动&lt;/span>
+mysql.server start
+&lt;span class="c1">#停止&lt;/span>
+mysql.server stop
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1">#登录mysql&lt;/span>
+mysql -hlocalhost -p3306 -uroot -p123456
+&lt;span class="c1">#添加远程登录用户&lt;/span>
+CREATE USER &lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>@&lt;span class="s1">&amp;#39;%&amp;#39;&lt;/span> IDENTIFIED WITH mysql_native_password BY &lt;span class="s1">&amp;#39;123456&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+GRANT ALL PRIVILEGES ON *.* TO &lt;span class="s1">&amp;#39;test&amp;#39;&lt;/span>@&lt;span class="s1">&amp;#39;%&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="c1">#查看编码&lt;/span>
+showvariables like &lt;span class="s2">&amp;#34;%char%&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+flush privileges&lt;span class="p">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装 sequel-pro：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install --cask sequel-pro
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="postgresql">PostgreSQL&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install postgres
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">postgres -V
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1">#启动&lt;/span>
+pg_ctl -D /usr/local/var/postgres start
+&lt;span class="c1">#开启启动&lt;/span>
+brew services start postgresql
+&lt;span class="c1">#停止&lt;/span>
+pg_ctl -D /usr/local/var/postgres stop
+&lt;span class="c1">#重启&lt;/span>
+pg_ctl -D /usr/local/var/postgres restart
+brew services restart postgresql
+&lt;span class="c1">#启动 PostgreSQL console&lt;/span>
+psql
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装客户端：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install psequel
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="java">Java&lt;/h2>
+&lt;p>下载 Oracle JDK：&lt;/p>
+&lt;ul>
+&lt;li>jdk6：http://support.apple.com/downloads/DL1572/en_US/JavaForOSX2013-05.dmg&lt;/li>
+&lt;li>jdk7：http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-macosx-x64.dmg?AuthParam=1403450902_0b8ed262d4128ca82031dcbdc2627aaf&lt;/li>
+&lt;/ul>
+&lt;p>设置 java_home 为 1.8:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#39;export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &amp;#39; &amp;gt;&amp;gt; ~/.zshrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装OpenJDK：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install openjdk
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="sdkman">SDKMAN&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash"> curl -s &lt;span class="s2">&amp;#34;https://get.sdkman.io&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> bash
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装complete：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">source&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$HOME&lt;/span>&lt;span class="s2">/.sdkman/bin/sdkman-init.sh&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sdk version
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1">#安装jdk&lt;/span>
+sdk install java
+&lt;span class="c1">#安装scala&lt;/span>
+sdk install scala 2.12.1
+&lt;span class="c1">#卸载&lt;/span>
+sdk uninstall scala 2.11.6
+&lt;span class="c1">#查看&lt;/span>
+sdk list
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="maven">Maven&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install maven
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="nodejs">Node.js&lt;/h2>
+&lt;p>安装node：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install node
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装nvm：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install nvm
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">source&lt;/span> ~/.bashrc &lt;span class="c1"># source your bashrc/zshrc to add nvm to PATH&lt;/span>
+&lt;span class="nb">command&lt;/span> -v nvm &lt;span class="c1"># check the nvm use message&lt;/span>
+nvm install node &lt;span class="c1"># install most recent Node stable version&lt;/span>
+nvm ls &lt;span class="c1"># list installed Node version&lt;/span>
+nvm use node &lt;span class="c1"># use stable as current version&lt;/span>
+nvm ls-remote &lt;span class="c1"># list all the Node versions you can install&lt;/span>
+nvm &lt;span class="nb">alias&lt;/span> default node &lt;span class="c1"># set the installed stable version as the default Node&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="go">Go&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install go
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置环境变量：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;export GOPATH=/something-else&amp;#34;&lt;/span> &amp;gt;&amp;gt; ~/.zshrc
+&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;export PATH=&lt;/span>&lt;span class="nv">$PATH&lt;/span>&lt;span class="s2">:&lt;/span>&lt;span class="k">$(&lt;/span>go env GOPATH&lt;span class="k">)&lt;/span>&lt;span class="s2">/bin&amp;#34;&lt;/span> &amp;gt;&amp;gt; ~/.zshrc
+&lt;span class="nb">source&lt;/span> ~/.zshrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="python">Python&lt;/h2>
+&lt;p>安装python3：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install python
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装python2.7：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install python@2
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>升级 setuptools：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install --upgrade setuptools
+pip install --upgrade pip
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pyenv">pyenv&lt;/h3>
+&lt;p>安装&lt;a href="https://github.com/yyuu/pyenv">&lt;code>pyenv&lt;/code>&lt;/a>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install pyenv
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置环境变量：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">echo&lt;/span> &lt;span class="s1">&amp;#39;eval &amp;#34;$(pyenv init -)&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.zshrc
+&lt;span class="nb">exec&lt;/span> &lt;span class="nv">$SHELL&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看python版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pyenv install --list
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装指定版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pyenv install 2.7.12
+pyenv install 3.5.2
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>设置全局版本，例如，设置2.7.12 优先级高于3.5.2 ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pyenv global 2.7.12 3.5.2
+pyenv rehash
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看版本优先级：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pyenv versions
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="pip">pip&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">curl https://bootstrap.pypa.io/get-pip.py &amp;gt; get-pip.py
+sudo python get-pip.py
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="virtualenv">virtualenv&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install virtualenv
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">cd&lt;/span> my-project/
+virtualenv venv
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果想virtualenv继承全局安装的包，可以执行：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-BASH" data-lang="BASH">virtualenv venv --system-site-packages
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令会创建一个 venv/ 目录，激活配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nb">source&lt;/span> venv/bin/activate
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>离开虚拟环境：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">deactivate
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装Virtualenvwrapper：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install virtualenvwrapper
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="numpy-scipy">Numpy-Scipy&lt;/h3>
+&lt;p>安装&lt;a href="https://sourabhbajaj.com/mac-setup/Python/numpy.html">Numpy-Scipy&lt;/a>：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用 MacPort 安装python3.5：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">sudo port install py35-numpy py35-scipy py35-matplotlib py35-ipython +notebook py35-pandas py35-sympy py35-nose
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="ipython">IPython&lt;/h3>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">pip install ipython
+pip install &lt;span class="s1">&amp;#39;ipython[zmq,qtconsole,notebook,test]&amp;#39;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="heroku">Heroku&lt;/h2>
+&lt;p>安装：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install heroku/brew/heroku
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">heroku login
+mkdir ~/.ssh
+ssh-keygen -t rsa
+heroku keys:add
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ &lt;span class="nb">cd&lt;/span> myapp/
+&lt;span class="c1"># Create the app on Heroku&lt;/span>
+$ heroku create myapp
+&lt;span class="c1"># Deploy it&lt;/span>
+$ git push heroku master
+&lt;span class="c1"># Check its status&lt;/span>
+$ heroku ps
+&lt;span class="c1"># Check the logs&lt;/span>
+$ heroku logs -t
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="其他应用">其他应用&lt;/h2>
+&lt;h3 id="开发工具">开发工具&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://www.valentina-db.com/en/valentina-studio-overview">Valentina Studio&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://atom.io/">Atom&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>百度云网盘&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>搜狗输入法&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Typora&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>钉钉&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>飞书&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>xmind&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>PostMan&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>语雀&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>TablePlus&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Telegram&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>V2rayU&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://agilebits.com/onepassword">1Password&lt;/a>：密码&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://airmailapp.com/">Airmail&lt;/a>：轻量邮件客户端&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://www.alfredapp.com/">Alfred&lt;/a>：屏保程序&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://www.freemacsoft.net/appcleaner/">AppCleaner&lt;/a>：卸载软件&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://wakaba.c3.cx/s/apps/unarchiver.html">Unarchiver&lt;/a>：解压缩软件&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="http://timingapp.com/">Timing&lt;/a>：计时软件&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="参考文章">参考文章&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://sourabhbajaj.com/mac-setup/">https://sourabhbajaj.com/mac-setup/&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>从零开始搭建个人博客</title><link>http://blog.chensoul.com/build-personal-blog-hand-by-hand/</link><pubDate>Thu, 09 Sep 2021 18:14:34 +0800</pubDate><guid>http://blog.chensoul.com/build-personal-blog-hand-by-hand/</guid><description>&lt;p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。&lt;/p>
+&lt;h2 id="域名">域名&lt;/h2>
+&lt;h2 id="服务器">服务器&lt;/h2>
+&lt;h2 id="程序">程序&lt;/h2>
+&lt;h3 id="安装hugo">安装Hugo&lt;/h3>
+&lt;p>&lt;img src="https://www.diguage.com/images/building-blog-with-hugo/hugo-logo.svg" alt="使用 Hugo 搭建博客">&lt;/p>
+&lt;p>在 Mac 下安装 Hugo：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install hugo
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="新建站点">新建站点&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">hugo new site blog.chensoul.com
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上述命令会生成一个名为 &lt;code>blog.chensoul.com&lt;/code> 的文件夹，下面对文件夹结构做个说明：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ tree blog.chensoul.com
+blog.chensoul.com
+├── archetypes
+│   └── default.md
+├── config.toml
+├── content
+├── data
+├── layouts
+├── static
+└── themes
+&lt;span class="m">6&lt;/span> directories, &lt;span class="m">2&lt;/span> files
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>新建的站点，还没有加入 Git 版本管理，进入到这个目录下，执行一下如下命令，完成 Git Repo 的初始化：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">cd blog.chensoul.com
+git init .
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>新建站点后，我们开始添加主题。&lt;/p>
+&lt;h3 id="添加主题">添加主题&lt;/h3>
+&lt;p>在 Hugo 的官网上 &lt;a href="https://themes.gohugo.io/">Hugo Themes&lt;/a> 有非常非常多的主题，可以根据自己的喜好选择一个主题。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/olOwOlo/hugo-theme-even.git --depth&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> themes/even
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="启动">启动&lt;/h3>
+&lt;p>克隆完成后，使用如下命令完成配置：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># 将示例内容拷贝到新建站点中&lt;/span>
+cp -r themes/even/exampleSite/content ./
+&lt;span class="c1"># 将默认配置拷贝到新建站点的配置中&lt;/span>
+cp themes/even/exampleSite/config.toml ./
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后启动预览：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">hugo server
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>默认是 &lt;code>1313&lt;/code> 端口号，在浏览器中直接访问 http://localhost:1313/ 就可以访问到新建的博客了。&lt;/p>
+&lt;h3 id="定制化">定制化&lt;/h3>
+&lt;h4 id="站点信息">站点信息&lt;/h4>
+&lt;p>配置网站的基本信息（仅列出被修改的配置）：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nv">baseURL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;http://blog.chensoul.com/&amp;#34;&lt;/span>
+&lt;span class="nv">title&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Chensoul - 六月陈书&amp;#34;&lt;/span>
+&lt;span class="o">[&lt;/span>author&lt;span class="o">]&lt;/span>
+&lt;span class="nv">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;chensoul&amp;#34;&lt;/span>
+&lt;span class="o">[[&lt;/span>menu.main&lt;span class="o">]]&lt;/span>
+&lt;span class="nv">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;首页&amp;#34;&lt;/span>
+&lt;span class="nv">weight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">10&lt;/span>
+&lt;span class="nv">identifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;home&amp;#34;&lt;/span>
+&lt;span class="nv">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>
+&lt;span class="o">[[&lt;/span>menu.main&lt;span class="o">]]&lt;/span>
+&lt;span class="nv">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;归档&amp;#34;&lt;/span>
+&lt;span class="nv">weight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">20&lt;/span>
+&lt;span class="nv">identifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;archives&amp;#34;&lt;/span>
+&lt;span class="nv">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/post/&amp;#34;&lt;/span>
+&lt;span class="o">[[&lt;/span>menu.main&lt;span class="o">]]&lt;/span>
+&lt;span class="nv">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;标签&amp;#34;&lt;/span>
+&lt;span class="nv">weight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">30&lt;/span>
+&lt;span class="nv">identifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;tags&amp;#34;&lt;/span>
+&lt;span class="nv">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/tags/&amp;#34;&lt;/span>
+&lt;span class="o">[[&lt;/span>menu.main&lt;span class="o">]]&lt;/span>
+&lt;span class="nv">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;分类&amp;#34;&lt;/span>
+&lt;span class="nv">weight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">40&lt;/span>
+&lt;span class="nv">identifier&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;categories&amp;#34;&lt;/span>
+&lt;span class="nv">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/categories/&amp;#34;&lt;/span>
+&lt;span class="o">[&lt;/span>params&lt;span class="o">]&lt;/span>
+&lt;span class="nv">since&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;2021&amp;#34;&lt;/span>
+&lt;span class="nv">archivePaginate&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">50&lt;/span>
+&lt;span class="nv">showArchiveCount&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">true&lt;/span>
+&lt;span class="nv">moreMeta&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">true&lt;/span>
+&lt;span class="o">[&lt;/span>params.reward&lt;span class="o">]&lt;/span> &lt;span class="c1"># 文章打赏&lt;/span>
+&lt;span class="nb">enable&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">false&lt;/span>
+&lt;span class="nv">wechat&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/path/to/your/wechat-qr-code.png&amp;#34;&lt;/span> &lt;span class="c1"># 微信二维码&lt;/span>
+&lt;span class="nv">alipay&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/path/to/your/alipay-qr-code.png&amp;#34;&lt;/span> &lt;span class="c1"># 支付宝二维码&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="文章链接">文章链接&lt;/h4>
+&lt;p>配置文章标题使用从文件中解析得到的slug，这里不要日期：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="o">[&lt;/span>permalinks&lt;span class="o">]&lt;/span>
+&lt;span class="c1">#post = &amp;#34;/:year/:month/:day/:slug&amp;#34;&lt;/span>
+&lt;span class="nv">post&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;:slug&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;strong>注意：&lt;/strong>&lt;/p>
+&lt;p>上面的slug来自文章的md文件顶部frontmatter的定义，例如这篇文章：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">title: &lt;span class="s2">&amp;#34;从零开始搭建个人博客&amp;#34;&lt;/span>
+slug: &lt;span class="s2">&amp;#34;build-personal-blog-hand-by-hand&amp;#34;&lt;/span>
+date: 2021-09-09T18:14:34+08:00
+lastmod: 2021-09-09T18:14:34+08:00
+keywords: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
+description: &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+tags: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
+categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;p>如果不想在每个人文章里面定义slug，则可以使用文章的标题：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="nv">posts&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;:filename&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Hugo的文章都在content/post目录，为了方便查找，我们可以创建一些子目录对md文件进行分类：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">content/post
+└── tech
+├── Mac开发环境配置.md
+└── 从零开始搭建博客.md
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>请注意：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>md文件名称是不包括日期的&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>md文件名就是文章的名称&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>这样组织文件和文件夹的好处是：将来可以把所有的文章打包成zip包文件上传到其他平台，比如语雀、印象笔记。当然，这时候md文件中最上面的frontmatter部分是不需要的，我们可以使用一些脚本去除他们。也就是类似下面这部分内容。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">---
+title: &lt;span class="s2">&amp;#34;从零开始搭建个人博客&amp;#34;&lt;/span>
+slug: &lt;span class="s2">&amp;#34;build-personal-blog-hand-by-hand&amp;#34;&lt;/span>
+date: 2021-09-09T18:14:34+08:00
+lastmod: 2021-09-09T18:14:34+08:00
+keywords: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
+description: &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+tags: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
+categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
+---
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>
+&lt;p>扩展：有没有可能，在每篇文章的md文件中不定义frontmatter？例如：title 从md文件名称读取；date和lastmod从文件本身的创建时间读取；keywords通过对文件内容进行分词，找出出现频次最高的三个词；tags和categories 从md文件的目录读取，等等。&lt;/p>
+&lt;blockquote>
+&lt;p>修改 frontmatter 中 date 变量的定义，首先从文件名中解析日期，同时也会解析 slug；失败时再从 frontmatter 中解析，更多用法可参考&lt;a href="https://gohugo.io/getting-started/configuration/#configure-dates">官方文档 Configure Dates&lt;/a>。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="o">[&lt;/span>frontmatter&lt;span class="o">]&lt;/span>
+&lt;span class="nv">date&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="s2">&amp;#34;:filename&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;:default&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;:fileModTime&amp;#34;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/blockquote>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h4 id="rss全文输出">RSS全文输出&lt;/h4>
+&lt;p>默认 Hugo 生成的 RSS 链接为 &lt;code>/index.xml&lt;/code>，只会把文章的摘要输出到 RSS，如果想输出全文，可以修改 RSS &lt;a href="https://gohugo.io/templates/rss/#the-embedded-rss-xml">模板&lt;/a>。&lt;/p>
+&lt;p>在创建layouts目录创建_default目录，并在这个目录下面创建index.xml：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">mkdir -p layouts/_default
+touch layouts/_default/index.xml
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>index.xml内容如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">{{- $pctx := . -}}
+{{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
+{{- $pages := slice -}}
+{{- if or $.IsHome $.IsSection -}}
+{{- $pages = $pctx.RegularPages -}}
+{{- else -}}
+{{- $pages = $pctx.Pages -}}
+{{- end -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}
+{{- $pages = $pages | first $limit -}}
+{{- end -}}
+{{- printf &amp;#34;&lt;span class="cp">&amp;lt;?xml version=\&amp;#34;1.0\&amp;#34; encoding=\&amp;#34;utf-8\&amp;#34; standalone=\&amp;#34;yes\&amp;#34;?&amp;gt;&lt;/span>&amp;#34; | safeHTML }}
+&lt;span class="nt">&amp;lt;rss&lt;/span> &lt;span class="na">version=&lt;/span>&lt;span class="s">&amp;#34;2.0&amp;#34;&lt;/span> &lt;span class="na">xmlns:atom=&lt;/span>&lt;span class="s">&amp;#34;http://www.w3.org/2005/Atom&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;channel&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;title&amp;gt;&lt;/span>{{ if eq .Title .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}&lt;span class="nt">&amp;lt;/title&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;link&amp;gt;&lt;/span>{{ .Permalink }}&lt;span class="nt">&amp;lt;/link&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;description&amp;gt;&lt;/span>Recent content {{ if ne .Title .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}&lt;span class="nt">&amp;lt;/description&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;generator&amp;gt;&lt;/span>Hugo -- gohugo.io&lt;span class="nt">&amp;lt;/generator&amp;gt;&lt;/span>{{ with .Site.LanguageCode }}
+&lt;span class="nt">&amp;lt;language&amp;gt;&lt;/span>{{.}}&lt;span class="nt">&amp;lt;/language&amp;gt;&lt;/span>{{end}}{{ with .Site.Author.email }}
+&lt;span class="nt">&amp;lt;managingEditor&amp;gt;&lt;/span>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}&lt;span class="nt">&amp;lt;/managingEditor&amp;gt;&lt;/span>{{end}}{{ with .Site.Author.email }}
+&lt;span class="nt">&amp;lt;webMaster&amp;gt;&lt;/span>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}&lt;span class="nt">&amp;lt;/webMaster&amp;gt;&lt;/span>{{end}}{{ with .Site.Copyright }}
+&lt;span class="nt">&amp;lt;copyright&amp;gt;&lt;/span>{{.}}&lt;span class="nt">&amp;lt;/copyright&amp;gt;&lt;/span>{{end}}{{ if not .Date.IsZero }}
+&lt;span class="nt">&amp;lt;lastBuildDate&amp;gt;&lt;/span>{{ .Date.Format &amp;#34;Mon, 02 Jan 2006 15:04:05 -0700&amp;#34; | safeHTML }}&lt;span class="nt">&amp;lt;/lastBuildDate&amp;gt;&lt;/span>{{ end }}
+{{- with .OutputFormats.Get &amp;#34;RSS&amp;#34; -}}
+{{ printf &amp;#34;&lt;span class="nt">&amp;lt;atom:link&lt;/span> &lt;span class="na">href=&lt;/span>&lt;span class="s">%q&lt;/span> &lt;span class="na">rel=&lt;/span>&lt;span class="s">\&amp;#34;self\&amp;#34;&lt;/span> &lt;span class="na">type=&lt;/span>&lt;span class="s">%q&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>&amp;#34; .Permalink .MediaType | safeHTML }}
+{{- end -}}
+{{ range $pages }}
+&lt;span class="nt">&amp;lt;item&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;title&amp;gt;&lt;/span>{{ .Title }}&lt;span class="nt">&amp;lt;/title&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;link&amp;gt;&lt;/span>{{ .Permalink }}&lt;span class="nt">&amp;lt;/link&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;pubDate&amp;gt;&lt;/span>{{ .Date.Format &amp;#34;Mon, 02 Jan 2006 15:04:05 -0700&amp;#34; | safeHTML }}&lt;span class="nt">&amp;lt;/pubDate&amp;gt;&lt;/span>
+{{ with .Site.Author.email }}&lt;span class="nt">&amp;lt;author&amp;gt;&lt;/span>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}&lt;span class="nt">&amp;lt;/author&amp;gt;&lt;/span>{{end}}
+&lt;span class="nt">&amp;lt;guid&amp;gt;&lt;/span>{{ .Permalink }}&lt;span class="nt">&amp;lt;/guid&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;description&amp;gt;&lt;/span>{{ .Content | html }}&lt;span class="nt">&amp;lt;/description&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/item&amp;gt;&lt;/span>
+{{ end }}
+&lt;span class="nt">&amp;lt;/channel&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/rss&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="render-hook">Render hook&lt;/h4>
+&lt;p>markdown 中引用图片的标准做法是：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">![&lt;span class="nt">Alt text here&lt;/span>](&lt;span class="na">/images/image.jpg &amp;#34;Title here&amp;#34;&lt;/span>)
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>一般只写 alt，很少写 title，有些主题会将把图片的 alt 显式在图片下面，而 hugo 只认 title，搜索发现可以通过 hugo 提供的 &lt;a href="https://gohugo.io/getting-started/configuration-markup#markdown-render-hooks">markdown render hook&lt;/a> 来实现。方式如下：&lt;/p>
+&lt;p>1、创建 &lt;code>layouts/_default/_markup/render-image.html&lt;/code> 文件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">mkdir -p layouts/_default/_markup/
+touch layouts/_default/_markup/render-image.html
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>2、render-image.html添加内容：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">{{ if .Text }}
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">figure&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Destination | safeURL }}&amp;#34;&lt;/span> &lt;span class="na">alt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Text }}&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">figcaption&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ .Text }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">figcaption&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">figure&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+{{ else }}
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Destination | safeURL }}&amp;#34;&lt;/span> &lt;span class="na">alt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Text }}&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+{{ end }}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="自定义css">自定义CSS&lt;/h4>
+&lt;p>自定义css或者javascript只需要配置下面两个参数：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="o">[&lt;/span>params&lt;span class="o">]&lt;/span>
+&lt;span class="c1"># Link custom CSS and JS assets&lt;/span>
+&lt;span class="c1"># (relative to /static/css and /static/js respectively)&lt;/span>
+&lt;span class="nv">customCSS&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="s1">&amp;#39;custom.css&amp;#39;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;span class="nv">customJS&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">[]&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>从注释可以看到，这两个参数的值是相对于 /static/css 目录和 /static/js 目录。&lt;/p>
+&lt;p>我们在 /static/css 目录创建一个 custom.css 文件：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-css" data-lang="css">&lt;span class="c">/* ===============================custom.css ================================== */&lt;/span>
+&lt;span class="nt">body&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">line-height&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">1.3&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c">/* 设置title字体大小 */&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">header&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">logo-wrapper&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">logo&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">position&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">relative&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">font-size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">34&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">line-height&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">60&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c">/* 让阅读更多居右 */&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">read-more&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">text-align&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">right&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">padding&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="mi">20&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c">/* 调整返回顶部icon位置和大小 */&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">back-to-top&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">right&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">40&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">bottom&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">25&lt;/span>&lt;span class="kt">px&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">font-size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="kt">em&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c">/*代码自动换行*/&lt;/span>
+&lt;span class="nt">pre&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">white-space&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">pre&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="kc">wrap&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">word-wrap&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">break-word&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c">/*高亮代码不显示行号*/&lt;/span>
+&lt;span class="p">.&lt;/span>&lt;span class="nc">post&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">post-content&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">highlight&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nc">chroma&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">lntd&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="nd">first-child&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">display&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">none&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="修改主题色">修改主题色&lt;/h4>
+&lt;p>修改 themes/even/assets/sass/_variables.scss&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-css" data-lang="css">
+&lt;span class="o">//&lt;/span> &lt;span class="o">==========&lt;/span> &lt;span class="nt">Theme&lt;/span> &lt;span class="nt">Color&lt;/span> &lt;span class="o">==========&lt;/span> &lt;span class="o">//&lt;/span>
+&lt;span class="o">//&lt;/span> &lt;span class="nt">Config&lt;/span> &lt;span class="nt">here&lt;/span> &lt;span class="nt">to&lt;/span> &lt;span class="nt">change&lt;/span> &lt;span class="nt">theme&lt;/span> &lt;span class="nt">color&lt;/span>
+&lt;span class="o">//&lt;/span> &lt;span class="nt">Default&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Mint&lt;/span> &lt;span class="nt">Green&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Cobalt&lt;/span> &lt;span class="nt">Blue&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Hot&lt;/span> &lt;span class="nt">Pink&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Dark&lt;/span> &lt;span class="nt">Violet&lt;/span>
+&lt;span class="o">$&lt;/span>&lt;span class="nt">theme-color-config&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Mint Green&amp;#39;&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="aboutme">AboutMe&lt;/h4>
+&lt;h3 id="配置github-actions">配置GitHub Actions&lt;/h3></description></item></channel></rss>
