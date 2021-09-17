@@ -1487,10 +1487,10 @@ $ heroku logs -t
 &lt;h2 id="服务器">服务器&lt;/h2>
 &lt;p>注册了域名之后，需要一台服务器运行程序。服务器可以是一台物理机，比如你可以使用自己的电脑作为服务器；也可以是一台虚拟的云服务器，比如在云服务提供商购买一台独立的服务器；也可以使用第三方提供的服务器空间，比如Github上可以部署静态程序。不管哪种方式，服务器都需要有一个公网IP，这样才能在因特网上访问你服务器上部署的程序。有了服务器之后，就可以给服务器公网IP设置域名解析。&lt;/p>
 &lt;p>我的服务器是在&lt;a href="https://bandwagonhost.com/aff.php?aff=58710">搬瓦工&lt;/a>购买的，一年49.99美元。&lt;/p>
-&lt;p>&lt;img src="https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/image-20210917103538890.png" alt="image-20210917103538890">&lt;/p>
+&lt;p>&lt;img src="http://blog.chensoul.com/img/bwg-plan.png" alt="bwg-plan">&lt;/p>
 &lt;h2 id="程序">程序&lt;/h2>
 &lt;h3 id="安装hugo">安装Hugo&lt;/h3>
-&lt;p>&lt;img src="https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/hugo-logo.svg" alt="使用 Hugo 搭建博客">&lt;/p>
+&lt;p>&lt;img src="http://blog.chensoul.com/img/hugo-logo.svg" alt="使用 Hugo 搭建博客">&lt;/p>
 &lt;p>在 Mac 下安装 Hugo：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2162,7 +2162,7 @@ git push origin hugo
 &lt;/div>&lt;p>另外，我们还可以把 hugo 分支设为默认分支。&lt;/p>
 &lt;p>&lt;strong>7、设置自定义域名&lt;/strong>&lt;/p>
 &lt;p>参考&lt;a href="https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain">管理 GitHub Pages 站点的自定义域&lt;/a>，添加一个自定义域名：blog.chensoul.com：&lt;/p>
-&lt;p>&lt;img src="http://blog.chensoul.com/image/image-20210917111923554.png" alt="image-20210917111923554">&lt;/p>
+&lt;p>&lt;img src="http://blog.chensoul.com/img/github-page-settings.png" alt="github-page-settings">&lt;/p>
 &lt;p>或者，在仓库的 static 目录创建一个CNAME文件，内容为：blog.chensoul.com，然后，保存提交，Github Actions会将该文件推送到main分支。&lt;/p>
 &lt;p>然后，在亚马逊网站添加&lt;a href="https://console.aws.amazon.com/route53/v2/hostedzones#">CNAME记录&lt;/a>：&lt;/p>
-&lt;p>&lt;img src="http://blog.chensoul.com/image/image-20210917112010871.png" alt="image-20210917112010871">&lt;/p></description></item></channel></rss>
+&lt;p>&lt;img src="http://blog.chensoul.com/img/amazon-dns-settings.png" alt="amazon-dns-settings">&lt;/p></description></item></channel></rss>
