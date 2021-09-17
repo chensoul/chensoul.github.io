@@ -60,6 +60,6 @@ weight: 50
 
 # 站点更新日志
 
-- 2021-09-17 启用 [blog.chensoul.com](http://blog.chensoul.com) 域名
-- 2021-09-09 注册域名 chensoul.com，使用 Hugo 的 [even](https://github.com/olOwOlo/hugo-theme-even) 主题建站，静态文件托管到 [chensoul.github.io](https://chensoul.github.io)
+- 2021-09-17 添加CNAME，使用 [blog.chensoul.com](http://blog.chensoul.com) 域名
+- 2021-09-09 注册域名 chensoul.com，使用 Hugo 的 [even](https://github.com/olOwOlo/hugo-theme-even) 主题建站，静态文件托管到 [chensoul.github.io](https://chensoul.github.io)，通过 Github Actions 进行构建
 
