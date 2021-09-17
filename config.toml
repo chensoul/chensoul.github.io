@@ -17,7 +17,7 @@ pygmentsCodefencesGuessSyntax = true
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 10                                              # 首页每页显示的文章数
 disqusShortname = ""      # disqus_shortname
-googleAnalytics = "G-GYN4GR34SG"      # UA-XXXXXXXX-X
+googleAnalytics = ""      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
 [frontmatter]
@@ -67,7 +67,7 @@ post = "/:year/:month/:day/:slug"
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = "六月陈书"        # default: the title value    # 默认值: 上面设置的title值
-  keywords = ["Java", "theme","even"]
+  keywords = ["Java", "tech"]
   description = ""
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
@@ -151,10 +151,10 @@ post = "/:year/:month/:day/:slug"
     repo = ""               # The repo to store comments
 
   [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
+    owner = "chensoul"              # Your GitHub ID
+    repo = "chensoul.github.io"               # The repo to store comments
+    clientId = "6faade6063cabd4af0b1"           # Your client ID
+    clientSecret = "3b3c116bede4d521e1c72afb89cd24a117650292"       # Your client secret
 
   # Valine.
   # You can get your appid and appkey from https://leancloud.cn
