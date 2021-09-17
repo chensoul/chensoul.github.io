@@ -695,6 +695,8 @@ brew install maven
 brew install node
 ```
 
+### nvm
+
 安装nvm：
 
 ```bash
@@ -712,6 +714,48 @@ nvm use node            # use stable as current version
 nvm ls-remote           # list all the Node versions you can install
 nvm alias default node  # set the installed stable version as the default Node
 ```
+
+### nvs
+
+Linux / macOS 环境通过 Git Clone 对应的项目即可。
+
+```bash
+$ export NVS_HOME="$HOME/.nvs"
+$ git clone https://github.com/jasongin/nvs --depth=1 "$NVS_HOME"
+$ . "$NVS_HOME/nvs.sh" install
+```
+
+在国内由于大家都懂的原因，需要把对应的镜像地址修改下：
+
+```bash
+$ nvs remote node https://npm.taobao.org/mirrors/node/
+$ nvs remote
+```
+
+通过以下命令，即可非常简单的安装 Node.js 最新的 LTS 版本。
+
+```bash
+# 安装最新的 LTS 版本
+$ nvs add lts
+
+# 配置为默认版本
+$ nvs link lts
+```
+
+安装其他版本：
+
+```bash
+# 安装其他版本尝尝鲜
+$ nvs add 12
+
+# 查看已安装的版本
+$ nvs ls
+
+# 在当前 Shell 切换版本
+$ nvs use 12
+```
+
+更多指令参见 `nvs --help` 。
 
 ## Go
 
