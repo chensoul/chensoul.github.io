@@ -1,6 +1,6 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>从零开始搭建个人博客 - Chensoul - 六月陈书</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="chensoul"><meta name=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。
-"><meta name=keywords content="hugo"><meta name=generator content="Hugo 0.83.1 with theme even"><link rel=canonical href=http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="从零开始搭建个人博客"><meta property="og:description" content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta property="og:type" content="article"><meta property="og:url" content="http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-09-09T18:14:34+08:00"><meta property="article:modified_time" content="2021-09-09T18:14:34+08:00"><meta itemprop=name content="从零开始搭建个人博客"><meta itemprop=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta itemprop=datePublished content="2021-09-09T18:14:34+08:00"><meta itemprop=dateModified content="2021-09-09T18:14:34+08:00"><meta itemprop=wordCount content="2582"><meta itemprop=keywords content="hugo,"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始搭建个人博客"><meta name=twitter:description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>六月陈书</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a><a href=/about/><li class=mobile-menu-item>关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>六月陈书</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li><li class=menu-item><a class=menu-item-link href=/about/>关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>从零开始搭建个人博客</h1><div class=post-meta><span class=post-time>2021-09-09</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>约 2582 字</span>
-<span class=more-meta>预计阅读 6 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#域名>域名</a></li><li><a href=#服务器>服务器</a></li><li><a href=#程序>程序</a><ul><li><a href=#安装hugo>安装Hugo</a></li><li><a href=#新建站点>新建站点</a></li><li><a href=#添加主题>添加主题</a></li><li><a href=#启动>启动</a></li><li><a href=#定制化>定制化</a></li></ul></li><li><a href=#部署>部署</a><ul><li><a href=#通过github-actions部署>通过GitHub Actions部署</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。</p><h2 id=域名>域名</h2><h2 id=服务器>服务器</h2><h2 id=程序>程序</h2><h3 id=安装hugo>安装Hugo</h3><p><img src=https://www.diguage.com/images/building-blog-with-hugo/hugo-logo.svg alt="使用 Hugo 搭建博客"></p><p>在 Mac 下安装 Hugo：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+"><meta name=keywords content="hugo"><meta name=generator content="Hugo 0.83.1 with theme even"><link rel=canonical href=http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/custom.css><meta property="og:title" content="从零开始搭建个人博客"><meta property="og:description" content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta property="og:type" content="article"><meta property="og:url" content="http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-09-09T18:14:34+08:00"><meta property="article:modified_time" content="2021-09-09T18:14:34+08:00"><meta itemprop=name content="从零开始搭建个人博客"><meta itemprop=description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><meta itemprop=datePublished content="2021-09-09T18:14:34+08:00"><meta itemprop=dateModified content="2021-09-09T18:14:34+08:00"><meta itemprop=wordCount content="3496"><meta itemprop=keywords content="hugo,"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始搭建个人博客"><meta name=twitter:description content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>六月陈书</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a><a href=/about/><li class=mobile-menu-item>关于</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>六月陈书</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li><li class=menu-item><a class=menu-item-link href=/about/>关于</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>从零开始搭建个人博客</h1><div class=post-meta><span class=post-time>2021-09-09</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>约 3496 字</span>
+<span class=more-meta>预计阅读 7 分钟</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#域名>域名</a></li><li><a href=#服务器>服务器</a></li><li><a href=#程序>程序</a><ul><li><a href=#安装hugo>安装Hugo</a></li><li><a href=#新建站点>新建站点</a></li><li><a href=#添加主题>添加主题</a></li><li><a href=#启动>启动</a></li></ul></li><li><a href=#定制化>定制化</a><ul><li><a href=#站点信息>站点信息</a></li><li><a href=#文章链接>文章链接</a></li><li><a href=#rss全文输出>RSS全文输出</a></li><li><a href=#自定义css>自定义CSS</a></li><li><a href=#添加评论>添加评论</a></li><li><a href=#seo优化>SEO优化</a></li></ul></li><li><a href=#部署>部署</a><ul><li><a href=#github-actions部署>GitHub Actions部署</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。</p><h2 id=域名>域名</h2><p>搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：</p><blockquote><p><strong>域名</strong>（英语：<strong>Domain Name</strong>），又称<strong>网域</strong>，是由一串用点分隔的名字组成的<a href=https://baike.baidu.com/item/Internet>Internet</a>上某一台<a href=https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA/140338>计算机</a>或计算机组的名称，用于在数据传输时对计算机的定位标识（有时也指地理位置）。</p><p>由于<a href=https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80/150859>IP地址</a>具有不方便记忆并且不能显示地址组织的名称和性质等缺点，人们设计出了域名，并通过网域名称系统（<a href=https://baike.baidu.com/item/DNS>DNS</a>，Domain Name System）来将域名和<a href=https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80>IP地址</a>相互<a href=https://baike.baidu.com/item/%E6%98%A0%E5%B0%84/20402621>映射</a>，使人更方便地访问<a href=https://baike.baidu.com/item/%E4%BA%92%E8%81%94%E7%BD%91/199186>互联网</a>，而不用去记住能够被机器直接读取的<a href=https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80>IP地址</a>数串。</p></blockquote><p>简单来说，IP地址可以标识一台计算机，但是不容易记忆，所以，设计出了域名。而域名就是标识因特网上的一台计算机，由网域名称系统DNS来完成域名和IP之间的映射。</p><p>如何注册域名？有很多网站提供域名注册服务，比如国内的：</p><ul><li><a href=https://www.alibabacloud.com/zh/domain>阿里云</a></li><li><a href=https://cloud.tencent.com/act/domainsales>腾讯云</a></li><li><a href=https://www.huaweicloud.com/>华为云</a></li></ul><p>国外的：</p><ul><li><a href=https://sg.godaddy.com/zh/offers/domain>GoDaddy</a></li><li><a href=https://www.namecheap.com/>Namecheap</a></li><li><a href=https://console.aws.amazon.com/route53/home?#DomainRegistration:>Amazon</a></li></ul><p>注册域名的建议：</p><ul><li>1、建议在正规、出名的网站注册域名，防止网站跑路。我曾经在一个小网站注册了一个域名，使用了几年之后，续期的时候，联系不上对方，导致无法使用该域名，甚至该域名被别人抢注册了。</li><li>2、在国内网站注册域名，都需要备案。如果不想备案，请在国外网站注册域名。我的域名 chensoul.com 就是在亚马逊上注册的。一是不想备案，二是对比了上面几个网站，发现亚马逊上的com域名价格相对便宜，所以一次性购买了5年。</li><li>3、建议优先注册com域名，域名尽可能的简短并且方便记忆。</li></ul><p>我曾经注册过的域名：</p><ul><li>javachen.com、javachen.space、javachen.xyz</li><li>huaiu.com</li></ul><h2 id=服务器>服务器</h2><p>注册了域名之后，需要一台服务器运行程序。服务器可以是一台物理机，比如你可以使用自己的电脑作为服务器；也可以是一台虚拟的云服务器，比如在云服务提供商购买一台独立的服务器；也可以使用第三方提供的服务器空间，比如Github上可以部署静态程序。不管哪种方式，服务器都需要有一个公网IP，这样才能在因特网上访问你服务器上部署的程序。有了服务器之后，就可以给服务器公网IP设置域名解析。</p><p>我的服务器是在<a href="https://bandwagonhost.com/aff.php?aff=58710">搬瓦工</a>购买的，一年49.99美元。</p><p><img src=https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/image-20210917103538890.png alt=image-20210917103538890></p><h2 id=程序>程序</h2><h3 id=安装hugo>安装Hugo</h3><p><img src=https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/hugo-logo.svg alt="使用 Hugo 搭建博客"></p><p>在 Mac 下安装 Hugo：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>brew install hugo
 </code></pre></td></tr></table></div></div><h3 id=新建站点>新建站点</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>hugo new site chensoul.github.io
@@ -46,7 +46,7 @@ cp -r themes/even/exampleSite/content ./
 cp themes/even/exampleSite/config.toml ./
 </code></pre></td></tr></table></div></div><p>然后启动预览：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>hugo server
-</code></pre></td></tr></table></div></div><p>默认是 <code>1313</code> 端口号，在浏览器中直接访问 http://localhost:1313/ 就可以访问到新建的博客了。</p><h3 id=定制化>定制化</h3><h4 id=站点信息>站点信息</h4><p>配置网站的基本信息（仅列出被修改的配置）：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</code></pre></td></tr></table></div></div><p>默认是 <code>1313</code> 端口号，在浏览器中直接访问 http://localhost:1313/ 就可以访问到新建的博客了。</p><h2 id=定制化>定制化</h2><h3 id=站点信息>站点信息</h3><p>配置网站的基本信息（仅列出被修改的配置）：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -126,13 +126,13 @@ cp themes/even/exampleSite/config.toml ./
     <span class=nb>enable</span> <span class=o>=</span> <span class=nb>false</span>
     <span class=nv>wechat</span> <span class=o>=</span> <span class=s2>&#34;/path/to/your/wechat-qr-code.png&#34;</span>           <span class=c1># 微信二维码</span>
     <span class=nv>alipay</span> <span class=o>=</span> <span class=s2>&#34;/path/to/your/alipay-qr-code.png&#34;</span>           <span class=c1># 支付宝二维码</span>
-</code></pre></td></tr></table></div></div><h4 id=文章链接>文章链接</h4><p>配置文章标题使用从文件中解析得到的slug，这里不要日期：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><h3 id=文章链接>文章链接</h3><p>配置文章标题使用从文件中解析得到的slug，这里不要日期：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=o>[</span>permalinks<span class=o>]</span>
 <span class=c1>#post = &#34;/:year/:month/:day/:slug&#34;</span>
 <span class=nv>post</span> <span class=o>=</span> <span class=s2>&#34;:slug&#34;</span>
-</code></pre></td></tr></table></div></div><blockquote><p><strong>注意：</strong></p><p>上面的slug来自文章的md文件顶部frontmatter的定义，例如这篇文章：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><p><strong>注意：</strong></p><p>上面的slug来自文章的md文件顶部frontmatter的定义，例如这篇文章：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -148,7 +148,7 @@ keywords: <span class=o>[</span>mac<span class=o>]</span>
 description: <span class=s2>&#34;&#34;</span>
 tags: <span class=o>[</span>mac<span class=o>]</span>
 categories: <span class=o>[</span>技术<span class=o>]</span>
-</code></pre></td></tr></table></div></div></blockquote><p>如果不想在每个人文章里面定义slug，则可以使用文章的标题：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><p>如果不想在每个人文章里面定义slug，则可以使用文章的标题：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=nv>posts</span> <span class=o>=</span> <span class=s2>&#34;:filename&#34;</span>
 </code></pre></td></tr></table></div></div><p>Hugo的文章都在content/post目录，为了方便查找，我们可以创建一些子目录对md文件进行分类：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
@@ -158,7 +158,7 @@ categories: <span class=o>[</span>技术<span class=o>]</span>
 └── tech
     ├── Mac开发环境配置.md
     └── 从零开始搭建博客.md
-</code></pre></td></tr></table></div></div><blockquote><p>请注意：</p><ul><li><p>md文件名称是不包括日期的</p></li><li><p>md文件名就是文章的名称</p></li><li><p>这样组织文件和文件夹的好处是：将来可以把所有的文章打包成zip包文件上传到其他平台，比如语雀、印象笔记。当然，这时候md文件中最上面的frontmatter部分是不需要的，我们可以使用一些脚本去除他们。也就是类似下面这部分内容。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</code></pre></td></tr></table></div></div><p>请注意：</p><ul><li><p>md文件名称是不包括日期的</p></li><li><p>md文件名就是文章的名称</p></li><li><p>这样组织文件和文件夹的好处是：将来可以把所有的文章打包成zip包文件上传到其他平台，比如语雀、印象笔记。当然，这时候md文件中最上面的frontmatter部分是不需要的，我们可以使用一些脚本去除他们。也就是类似下面这部分内容。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -168,21 +168,21 @@ categories: <span class=o>[</span>技术<span class=o>]</span>
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>---
-title: <span class=s2>&#34;从零开始搭建个人博客&#34;</span>
-slug: <span class=s2>&#34;build-personal-blog-hand-by-hand&#34;</span>
-date: 2021-09-09T18:14:34+08:00
-lastmod: 2021-09-09T18:14:34+08:00
-keywords: <span class=o>[</span>mac<span class=o>]</span>
-description: <span class=s2>&#34;&#34;</span>
-tags: <span class=o>[</span>mac<span class=o>]</span>
-categories: <span class=o>[</span>技术<span class=o>]</span>
----
-</code></pre></td></tr></table></div></div><ul><li><p>扩展：有没有可能，在每篇文章的md文件中不定义frontmatter？例如：title 从md文件名称读取；date和lastmod从文件本身的创建时间读取；keywords通过对文件内容进行分词，找出出现频次最高的三个词；tags和categories 从md文件的目录读取，等等。</p><blockquote><p>修改 frontmatter 中 date 变量的定义，首先从文件名中解析日期，同时也会解析 slug；失败时再从 frontmatter 中解析，更多用法可参考<a href=https://gohugo.io/getting-started/configuration/#configure-dates>官方文档 Configure Dates</a>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-yaml data-lang=yaml><span class=nn>---</span><span class=w>
+</span><span class=w></span><span class=nt>title</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;从零开始搭建个人博客&#34;</span><span class=w>
+</span><span class=w></span><span class=nt>slug</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;build-personal-blog-hand-by-hand&#34;</span><span class=w>
+</span><span class=w></span><span class=nt>date</span><span class=p>:</span><span class=w> </span><span class=ld>2021-09-09T18:14:34</span><span class=m>+08</span><span class=p>:</span><span class=m>00</span><span class=w>
+</span><span class=w></span><span class=nt>lastmod</span><span class=p>:</span><span class=w> </span><span class=ld>2021-09-09T18:14:34</span><span class=m>+08</span><span class=p>:</span><span class=m>00</span><span class=w>
+</span><span class=w></span><span class=nt>keywords</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>mac]</span><span class=w>
+</span><span class=w></span><span class=nt>description</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;&#34;</span><span class=w>
+</span><span class=w></span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>mac]</span><span class=w>
+</span><span class=w></span><span class=nt>categories</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>技术]</span><span class=w>
+</span><span class=w></span><span class=nn>---</span><span class=w>
+</span></code></pre></td></tr></table></div></div><blockquote><p>扩展：</p><p>有没有可能，在每篇文章的md文件中不定义frontmatter？例如：title 从md文件名称读取；date和lastmod从文件本身的创建时间读取；keywords通过对文件内容进行分词，找出出现频次最高的三个词；tags和categories 从md文件的目录读取，等等。</p></blockquote><p>修改 frontmatter 中 date 变量的定义，首先从文件名中解析日期，同时也会解析 slug；失败时再从 frontmatter 中解析，更多用法可参考<a href=https://gohugo.io/getting-started/configuration/#configure-dates>官方文档 Configure Dates</a>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=o>[</span>frontmatter<span class=o>]</span>
 <span class=nv>date</span> <span class=o>=</span> <span class=o>[</span><span class=s2>&#34;:filename&#34;</span>, <span class=s2>&#34;:default&#34;</span>, <span class=s2>&#34;:fileModTime&#34;</span><span class=o>]</span>
-</code></pre></td></tr></table></div></div></blockquote></li></ul></li></ul></blockquote><h4 id=rss全文输出>RSS全文输出</h4><p>默认 Hugo 生成的 RSS 链接为 <code>/index.xml</code>，只会把文章的摘要输出到 RSS，如果想输出全文，可以修改 RSS <a href=https://gohugo.io/templates/rss/#the-embedded-rss-xml>模板</a>。</p><p>在创建layouts目录创建_default目录，并在这个目录下面创建index.xml：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><h3 id=rss全文输出>RSS全文输出</h3><p>默认 Hugo 生成的 RSS 链接为 <code>/index.xml</code>，只会把文章的摘要输出到 RSS，如果想输出全文，可以修改 RSS <a href=https://gohugo.io/templates/rss/#the-embedded-rss-xml>模板</a>。</p><p>在创建layouts目录创建_default目录，并在这个目录下面创建index.xml：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>mkdir -p layouts/_default
 touch layouts/_default/index.xml
@@ -264,29 +264,7 @@ touch layouts/_default/index.xml
     {{ end }}
   <span class=nt>&lt;/channel&gt;</span>
 <span class=nt>&lt;/rss&gt;</span>
-</code></pre></td></tr></table></div></div><h4 id=render-hook>Render hook</h4><p>markdown 中引用图片的标准做法是：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-markdown data-lang=markdown>![<span class=nt>Alt text here</span>](<span class=na>/images/image.jpg &#34;Title here&#34;</span>)
-</code></pre></td></tr></table></div></div><p>一般只写 alt，很少写 title，有些主题会将把图片的 alt 显式在图片下面，而 hugo 只认 title，搜索发现可以通过 hugo 提供的 <a href=https://gohugo.io/getting-started/configuration-markup#markdown-render-hooks>markdown render hook</a> 来实现。方式如下：</p><p>1、创建 <code>layouts/_default/_markup/render-image.html</code> 文件：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>mkdir -p layouts/_default/_markup/
-touch layouts/_default/_markup/render-image.html
-</code></pre></td></tr></table></div></div><p>2、render-image.html添加内容：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span><span class=lnt>8
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-html data-lang=html>{{ if .Text }}
-<span class=p>&lt;</span><span class=nt>figure</span><span class=p>&gt;</span>
-<span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;{{ .Destination | safeURL }}&#34;</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;{{ .Text }}&#34;</span><span class=p>&gt;</span>
-<span class=p>&lt;</span><span class=nt>figcaption</span><span class=p>&gt;</span>{{ .Text }}<span class=p>&lt;/</span><span class=nt>figcaption</span><span class=p>&gt;</span>
-<span class=p>&lt;/</span><span class=nt>figure</span><span class=p>&gt;</span>
-{{ else }}
-<span class=p>&lt;</span><span class=nt>img</span> <span class=na>src</span><span class=o>=</span><span class=s>&#34;{{ .Destination | safeURL }}&#34;</span> <span class=na>alt</span><span class=o>=</span><span class=s>&#34;{{ .Text }}&#34;</span><span class=p>&gt;</span>
-{{ end }}
-</code></pre></td></tr></table></div></div><h4 id=自定义css>自定义CSS</h4><p>自定义css或者javascript只需要配置下面两个参数：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><h3 id=自定义css>自定义CSS</h3><p>自定义css或者javascript只需要配置下面两个参数：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -328,14 +306,7 @@ touch layouts/_default/_markup/render-image.html
 </span><span class=lnt>30
 </span><span class=lnt>31
 </span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-css data-lang=css><span class=c>/* ===============================custom.css ================================== */</span>
-
-<span class=nt>body</span> <span class=p>{</span>
-    <span class=k>line-height</span><span class=p>:</span> <span class=mf>1.3</span><span class=p>;</span>
-<span class=p>}</span>
 
 <span class=c>/* 设置title字体大小 */</span>
 <span class=p>.</span><span class=nc>header</span> <span class=p>.</span><span class=nc>logo-wrapper</span> <span class=p>.</span><span class=nc>logo</span> <span class=p>{</span>
@@ -362,31 +333,12 @@ touch layouts/_default/_markup/render-image.html
     <span class=k>white-space</span><span class=p>:</span> <span class=kc>pre</span><span class=o>-</span><span class=kc>wrap</span><span class=p>;</span>
     <span class=k>word-wrap</span><span class=p>:</span> <span class=kc>break-word</span><span class=p>;</span>
 <span class=p>}</span>
+
 <span class=c>/*高亮代码不显示行号*/</span>
 <span class=p>.</span><span class=nc>post</span> <span class=p>.</span><span class=nc>post-content</span> <span class=p>.</span><span class=nc>highlight</span><span class=o>&gt;</span><span class=p>.</span><span class=nc>chroma</span> <span class=p>.</span><span class=nc>lntd</span><span class=p>:</span><span class=nd>first-child</span> <span class=p>{</span>
     <span class=k>display</span><span class=p>:</span> <span class=kc>none</span><span class=p>;</span>
 <span class=p>}</span>
-</code></pre></td></tr></table></div></div><h4 id=修改主题色>修改主题色</h4><p>修改 themes/even/assets/sass/_variables.scss</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-css data-lang=css>
-<span class=o>//</span> <span class=o>==========</span> <span class=nt>Theme</span> <span class=nt>Color</span> <span class=o>==========</span> <span class=o>//</span>
-<span class=o>//</span> <span class=nt>Config</span> <span class=nt>here</span> <span class=nt>to</span> <span class=nt>change</span> <span class=nt>theme</span> <span class=nt>color</span>
-<span class=o>//</span> <span class=nt>Default</span> <span class=o>|</span> <span class=nt>Mint</span> <span class=nt>Green</span> <span class=o>|</span> <span class=nt>Cobalt</span> <span class=nt>Blue</span> <span class=o>|</span> <span class=nt>Hot</span> <span class=nt>Pink</span> <span class=o>|</span> <span class=nt>Dark</span> <span class=nt>Violet</span>
-<span class=o>$</span><span class=nt>theme-color-config</span><span class=o>:</span> <span class=s1>&#39;Mint Green&#39;</span><span class=o>;</span>
-</code></pre></td></tr></table></div></div><h4 id=aboutme>AboutMe</h4><p>修改 title 为中文：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-markdown data-lang=markdown>title: &#34;关于&#34;
-date: 2021-09-09T21:38:52+08:00
-lastmod: 2021-09-09T21:41:52+08:00
-menu: &#34;main&#34;
-weight: 50
-</code></pre></td></tr></table></div></div><h2 id=部署>部署</h2><h3 id=通过github-actions部署>通过GitHub Actions部署</h3><p><strong>1、首先在github里创建一个仓库：chensoul.github.io</strong></p><p><strong>2、将本地文件提交到github</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><h3 id=添加评论>添加评论</h3><h3 id=seo优化>SEO优化</h3><h2 id=部署>部署</h2><h3 id=github-actions部署>GitHub Actions部署</h3><p><strong>1、首先在github里创建一个仓库：chensoul.github.io</strong></p><p><strong>2、将本地文件提交到github</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -520,7 +472,7 @@ git checkout hugo
 git push origin hugo
 </code></pre></td></tr></table></div></div><p><strong>6、修改代码，推送到仓库，触发工作流</strong></p><p>在本地修改某个文件，提交代码，然后在 github 网站 <a href=https://github.com/chensoul/chensoul.github.io/actions>https://github.com/chensoul/chensoul.github.io/actions</a> 查看工作流</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>git push origin hugo
-</code></pre></td></tr></table></div></div><p>另外，我们还可以把 hugo 分支设为默认分支。</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+</code></pre></td></tr></table></div></div><p>另外，我们还可以把 hugo 分支设为默认分支。</p><p><strong>7、设置自定义域名</strong></p><p>参考<a href=https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain>管理 GitHub Pages 站点的自定义域</a>，添加一个自定义域名：blog.chensoul.com：</p><p><img src=/image/image-20210917111923554.png alt=image-20210917111923554></p><p>或者，在仓库的 static 目录创建一个CNAME文件，内容为：blog.chensoul.com，然后，保存提交，Github Actions会将该文件推送到main分支。</p><p>然后，在亚马逊网站添加<a href=https://console.aws.amazon.com/route53/v2/hostedzones#>CNAME记录</a>：</p><p><img src=/image/image-20210917112010871.png alt=image-20210917112010871></p></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>chensoul</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2021-09-09</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/hugo/>hugo</a></div><nav class=post-nav><a class=prev href=/2021/09/09/mac-development-environment-setup/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">Mac开发环境配置</span>
@@ -529,4 +481,4 @@ git push origin hugo
 <span class=theme-info>主题 -
 <a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
 <span class=copyright-year>&copy;
-2021<span class=heart><i class="iconfont icon-heart"></i></span><span>chensoul</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script></body></html>
+2021<span class=heart><i class="iconfont icon-heart"></i></span><span>chensoul</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-GYN4GR34SG','auto'),ga('set','anonymizeIp',!0),ga('send','pageview'))</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>

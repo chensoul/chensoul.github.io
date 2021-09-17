@@ -1,9 +1,5 @@
 /* ===============================custom.css ================================== */
 
-body {
-    line-height: 1.4;
-}
-
 /* 设置title字体大小 */
 .header .logo-wrapper .logo {
     position: relative;
@@ -29,6 +25,7 @@ pre {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
 /*高亮代码不显示行号*/
 .post .post-content .highlight>.chroma .lntd:first-child {
     display: none;

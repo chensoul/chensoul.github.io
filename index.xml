@@ -1004,7 +1004,8 @@ sdk list
 &lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">brew install node
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>安装nvm：&lt;/p>
+&lt;/div>&lt;h3 id="nvm">nvm&lt;/h3>
+&lt;p>安装nvm：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
@@ -1034,7 +1035,70 @@ nvm ls-remote &lt;span class="c1"># list all the Node versions you can install&l
 nvm &lt;span class="nb">alias&lt;/span> default node &lt;span class="c1"># set the installed stable version as the default Node&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="go">Go&lt;/h2>
+&lt;/div>&lt;h3 id="nvs">nvs&lt;/h3>
+&lt;p>Linux / macOS 环境通过 Git Clone 对应的项目即可。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">NVS_HOME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$HOME&lt;/span>&lt;span class="s2">/.nvs&amp;#34;&lt;/span>
+$ git clone https://github.com/jasongin/nvs --depth&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$NVS_HOME&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+$ . &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$NVS_HOME&lt;/span>&lt;span class="s2">/nvs.sh&amp;#34;&lt;/span> install
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在国内由于大家都懂的原因，需要把对应的镜像地址修改下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">$ nvs remote node https://npm.taobao.org/mirrors/node/
+$ nvs remote
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>通过以下命令，即可非常简单的安装 Node.js 最新的 LTS 版本。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># 安装最新的 LTS 版本&lt;/span>
+$ nvs add lts
+&lt;span class="c1"># 配置为默认版本&lt;/span>
+$ nvs link lts
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装其他版本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># 安装其他版本尝尝鲜&lt;/span>
+$ nvs add &lt;span class="m">12&lt;/span>
+&lt;span class="c1"># 查看已安装的版本&lt;/span>
+$ nvs ls
+&lt;span class="c1"># 在当前 Shell 切换版本&lt;/span>
+$ nvs use &lt;span class="m">12&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>更多指令参见 &lt;code>nvs --help&lt;/code> 。&lt;/p>
+&lt;h2 id="go">Go&lt;/h2>
 &lt;p>安装：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1377,10 +1441,42 @@ $ heroku logs -t
 &lt;li>&lt;a href="https://sourabhbajaj.com/mac-setup/">https://sourabhbajaj.com/mac-setup/&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>从零开始搭建个人博客</title><link>http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/</link><pubDate>Thu, 09 Sep 2021 18:14:34 +0800</pubDate><guid>http://blog.chensoul.com/2021/09/09/build-personal-blog-from-zero/</guid><description>&lt;p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。&lt;/p>
 &lt;h2 id="域名">域名&lt;/h2>
+&lt;p>搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>域名&lt;/strong>（英语：&lt;strong>Domain Name&lt;/strong>），又称&lt;strong>网域&lt;/strong>，是由一串用点分隔的名字组成的&lt;a href="https://baike.baidu.com/item/Internet">Internet&lt;/a>上某一台&lt;a href="https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA/140338">计算机&lt;/a>或计算机组的名称，用于在数据传输时对计算机的定位标识（有时也指地理位置）。&lt;/p>
+&lt;p>由于&lt;a href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80/150859">IP地址&lt;/a>具有不方便记忆并且不能显示地址组织的名称和性质等缺点，人们设计出了域名，并通过网域名称系统（&lt;a href="https://baike.baidu.com/item/DNS">DNS&lt;/a>，Domain Name System）来将域名和&lt;a href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80">IP地址&lt;/a>相互&lt;a href="https://baike.baidu.com/item/%E6%98%A0%E5%B0%84/20402621">映射&lt;/a>，使人更方便地访问&lt;a href="https://baike.baidu.com/item/%E4%BA%92%E8%81%94%E7%BD%91/199186">互联网&lt;/a>，而不用去记住能够被机器直接读取的&lt;a href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80">IP地址&lt;/a>数串。&lt;/p>
+&lt;/blockquote>
+&lt;p>简单来说，IP地址可以标识一台计算机，但是不容易记忆，所以，设计出了域名。而域名就是标识因特网上的一台计算机，由网域名称系统DNS来完成域名和IP之间的映射。&lt;/p>
+&lt;p>如何注册域名？有很多网站提供域名注册服务，比如国内的：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.alibabacloud.com/zh/domain">阿里云&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://cloud.tencent.com/act/domainsales">腾讯云&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.huaweicloud.com/">华为云&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>国外的：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://sg.godaddy.com/zh/offers/domain">GoDaddy&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.namecheap.com/">Namecheap&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://console.aws.amazon.com/route53/home?#DomainRegistration:">Amazon&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>注册域名的建议：&lt;/p>
+&lt;ul>
+&lt;li>1、建议在正规、出名的网站注册域名，防止网站跑路。我曾经在一个小网站注册了一个域名，使用了几年之后，续期的时候，联系不上对方，导致无法使用该域名，甚至该域名被别人抢注册了。&lt;/li>
+&lt;li>2、在国内网站注册域名，都需要备案。如果不想备案，请在国外网站注册域名。我的域名 chensoul.com 就是在亚马逊上注册的。一是不想备案，二是对比了上面几个网站，发现亚马逊上的com域名价格相对便宜，所以一次性购买了5年。&lt;/li>
+&lt;li>3、建议优先注册com域名，域名尽可能的简短并且方便记忆。&lt;/li>
+&lt;/ul>
+&lt;p>我曾经注册过的域名：&lt;/p>
+&lt;ul>
+&lt;li>javachen.com、javachen.space、javachen.xyz&lt;/li>
+&lt;li>huaiu.com&lt;/li>
+&lt;/ul>
 &lt;h2 id="服务器">服务器&lt;/h2>
+&lt;p>注册了域名之后，需要一台服务器运行程序。服务器可以是一台物理机，比如你可以使用自己的电脑作为服务器；也可以是一台虚拟的云服务器，比如在云服务提供商购买一台独立的服务器；也可以使用第三方提供的服务器空间，比如Github上可以部署静态程序。不管哪种方式，服务器都需要有一个公网IP，这样才能在因特网上访问你服务器上部署的程序。有了服务器之后，就可以给服务器公网IP设置域名解析。&lt;/p>
+&lt;p>我的服务器是在&lt;a href="https://bandwagonhost.com/aff.php?aff=58710">搬瓦工&lt;/a>购买的，一年49.99美元。&lt;/p>
+&lt;p>&lt;img src="https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/image-20210917103538890.png" alt="image-20210917103538890">&lt;/p>
 &lt;h2 id="程序">程序&lt;/h2>
 &lt;h3 id="安装hugo">安装Hugo&lt;/h3>
-&lt;p>&lt;img src="https://www.diguage.com/images/building-blog-with-hugo/hugo-logo.svg" alt="使用 Hugo 搭建博客">&lt;/p>
+&lt;p>&lt;img src="https://june-1259392600.cos.ap-chengdu.myqcloud.com/image/hugo-logo.svg" alt="使用 Hugo 搭建博客">&lt;/p>
 &lt;p>在 Mac 下安装 Hugo：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1478,8 +1574,8 @@ cp themes/even/exampleSite/config.toml ./
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>默认是 &lt;code>1313&lt;/code> 端口号，在浏览器中直接访问 http://localhost:1313/ 就可以访问到新建的博客了。&lt;/p>
-&lt;h3 id="定制化">定制化&lt;/h3>
-&lt;h4 id="站点信息">站点信息&lt;/h4>
+&lt;h2 id="定制化">定制化&lt;/h2>
+&lt;h3 id="站点信息">站点信息&lt;/h3>
 &lt;p>配置网站的基本信息（仅列出被修改的配置）：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1560,7 +1656,7 @@ cp themes/even/exampleSite/config.toml ./
 &lt;span class="nv">alipay&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/path/to/your/alipay-qr-code.png&amp;#34;&lt;/span> &lt;span class="c1"># 支付宝二维码&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h4 id="文章链接">文章链接&lt;/h4>
+&lt;/div>&lt;h3 id="文章链接">文章链接&lt;/h3>
 &lt;p>配置文章标题使用从文件中解析得到的slug，这里不要日期：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1574,8 +1670,7 @@ cp themes/even/exampleSite/config.toml ./
 &lt;span class="nv">post&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;:slug&amp;#34;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>&lt;strong>注意：&lt;/strong>&lt;/p>
+&lt;/div>&lt;p>&lt;strong>注意：&lt;/strong>&lt;/p>
 &lt;p>上面的slug来自文章的md文件顶部frontmatter的定义，例如这篇文章：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1599,8 +1694,7 @@ tags: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
 categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;/blockquote>
-&lt;p>如果不想在每个人文章里面定义slug，则可以使用文章的标题：&lt;/p>
+&lt;/div>&lt;p>如果不想在每个人文章里面定义slug，则可以使用文章的标题：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
@@ -1624,8 +1718,7 @@ categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
 └── 从零开始搭建博客.md
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>请注意：&lt;/p>
+&lt;/div>&lt;p>请注意：&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>md文件名称是不包括日期的&lt;/p>
@@ -1635,6 +1728,8 @@ categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
 &lt;/li>
 &lt;li>
 &lt;p>这样组织文件和文件夹的好处是：将来可以把所有的文章打包成zip包文件上传到其他平台，比如语雀、印象笔记。当然，这时候md文件中最上面的frontmatter部分是不需要的，我们可以使用一些脚本去除他们。也就是类似下面这部分内容。&lt;/p>
+&lt;/li>
+&lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -1649,22 +1744,22 @@ categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
 &lt;/span>&lt;span class="lnt">10
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">---
-title: &lt;span class="s2">&amp;#34;从零开始搭建个人博客&amp;#34;&lt;/span>
-slug: &lt;span class="s2">&amp;#34;build-personal-blog-hand-by-hand&amp;#34;&lt;/span>
-date: 2021-09-09T18:14:34+08:00
-lastmod: 2021-09-09T18:14:34+08:00
-keywords: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
-description: &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
-tags: &lt;span class="o">[&lt;/span>mac&lt;span class="o">]&lt;/span>
-categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
----
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nn">---&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;从零开始搭建个人博客&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">slug&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;build-personal-blog-hand-by-hand&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">date&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="ld">2021-09-09T18:14:34&lt;/span>&lt;span class="m">+08&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">00&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">lastmod&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="ld">2021-09-09T18:14:34&lt;/span>&lt;span class="m">+08&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">00&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">keywords&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">mac]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">tags&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">mac]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">categories&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">技术]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nn">---&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;ul>
-&lt;li>
-&lt;p>扩展：有没有可能，在每篇文章的md文件中不定义frontmatter？例如：title 从md文件名称读取；date和lastmod从文件本身的创建时间读取；keywords通过对文件内容进行分词，找出出现频次最高的三个词；tags和categories 从md文件的目录读取，等等。&lt;/p>
-&lt;blockquote>
+&lt;/div>&lt;blockquote>
+&lt;p>扩展：&lt;/p>
+&lt;p>有没有可能，在每篇文章的md文件中不定义frontmatter？例如：title 从md文件名称读取；date和lastmod从文件本身的创建时间读取；keywords通过对文件内容进行分词，找出出现频次最高的三个词；tags和categories 从md文件的目录读取，等等。&lt;/p>
+&lt;/blockquote>
 &lt;p>修改 frontmatter 中 date 变量的定义，首先从文件名中解析日期，同时也会解析 slug；失败时再从 frontmatter 中解析，更多用法可参考&lt;a href="https://gohugo.io/getting-started/configuration/#configure-dates">官方文档 Configure Dates&lt;/a>。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1676,13 +1771,7 @@ categories: &lt;span class="o">[&lt;/span>技术&lt;span class="o">]&lt;/span>
 &lt;span class="nv">date&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="s2">&amp;#34;:filename&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;:default&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;:fileModTime&amp;#34;&lt;/span>&lt;span class="o">]&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;/blockquote>
-&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;/blockquote>
-&lt;h4 id="rss全文输出">RSS全文输出&lt;/h4>
+&lt;/div>&lt;h3 id="rss全文输出">RSS全文输出&lt;/h3>
 &lt;p>默认 Hugo 生成的 RSS 链接为 &lt;code>/index.xml&lt;/code>，只会把文章的摘要输出到 RSS，如果想输出全文，可以修改 RSS &lt;a href="https://gohugo.io/templates/rss/#the-embedded-rss-xml">模板&lt;/a>。&lt;/p>
 &lt;p>在创建layouts目录创建_default目录，并在这个目录下面创建index.xml：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1780,52 +1869,7 @@ touch layouts/_default/index.xml
 &lt;span class="nt">&amp;lt;/rss&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h4 id="render-hook">Render hook&lt;/h4>
-&lt;p>markdown 中引用图片的标准做法是：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">![&lt;span class="nt">Alt text here&lt;/span>](&lt;span class="na">/images/image.jpg &amp;#34;Title here&amp;#34;&lt;/span>)
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>一般只写 alt，很少写 title，有些主题会将把图片的 alt 显式在图片下面，而 hugo 只认 title，搜索发现可以通过 hugo 提供的 &lt;a href="https://gohugo.io/getting-started/configuration-markup#markdown-render-hooks">markdown render hook&lt;/a> 来实现。方式如下：&lt;/p>
-&lt;p>1、创建 &lt;code>layouts/_default/_markup/render-image.html&lt;/code> 文件：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">mkdir -p layouts/_default/_markup/
-touch layouts/_default/_markup/render-image.html
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>2、render-image.html添加内容：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">{{ if .Text }}
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">figure&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Destination | safeURL }}&amp;#34;&lt;/span> &lt;span class="na">alt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Text }}&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">figcaption&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>{{ .Text }}&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">figcaption&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">figure&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-{{ else }}
-&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">img&lt;/span> &lt;span class="na">src&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Destination | safeURL }}&amp;#34;&lt;/span> &lt;span class="na">alt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ .Text }}&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
-{{ end }}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h4 id="自定义css">自定义CSS&lt;/h4>
+&lt;/div>&lt;h3 id="自定义css">自定义CSS&lt;/h3>
 &lt;p>自定义css或者javascript只需要配置下面两个参数：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1879,15 +1923,9 @@ touch layouts/_default/_markup/render-image.html
 &lt;/span>&lt;span class="lnt">30
 &lt;/span>&lt;span class="lnt">31
 &lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre class="chroma">&lt;code class="language-css" data-lang="css">&lt;span class="c">/* ===============================custom.css ================================== */&lt;/span>
-&lt;span class="nt">body&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;span class="k">line-height&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">1.3&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;span class="p">}&lt;/span>
 &lt;span class="c">/* 设置title字体大小 */&lt;/span>
 &lt;span class="p">.&lt;/span>&lt;span class="nc">header&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">logo-wrapper&lt;/span> &lt;span class="p">.&lt;/span>&lt;span class="nc">logo&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="k">position&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="kc">relative&lt;/span>&lt;span class="p">;&lt;/span>
@@ -1916,44 +1954,10 @@ touch layouts/_default/_markup/render-image.html
 &lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h4 id="修改主题色">修改主题色&lt;/h4>
-&lt;p>修改 themes/even/assets/sass/_variables.scss&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-css" data-lang="css">
-&lt;span class="o">//&lt;/span> &lt;span class="o">==========&lt;/span> &lt;span class="nt">Theme&lt;/span> &lt;span class="nt">Color&lt;/span> &lt;span class="o">==========&lt;/span> &lt;span class="o">//&lt;/span>
-&lt;span class="o">//&lt;/span> &lt;span class="nt">Config&lt;/span> &lt;span class="nt">here&lt;/span> &lt;span class="nt">to&lt;/span> &lt;span class="nt">change&lt;/span> &lt;span class="nt">theme&lt;/span> &lt;span class="nt">color&lt;/span>
-&lt;span class="o">//&lt;/span> &lt;span class="nt">Default&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Mint&lt;/span> &lt;span class="nt">Green&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Cobalt&lt;/span> &lt;span class="nt">Blue&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Hot&lt;/span> &lt;span class="nt">Pink&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="nt">Dark&lt;/span> &lt;span class="nt">Violet&lt;/span>
-&lt;span class="o">$&lt;/span>&lt;span class="nt">theme-color-config&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;Mint Green&amp;#39;&lt;/span>&lt;span class="o">;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h4 id="aboutme">AboutMe&lt;/h4>
-&lt;p>修改 title 为中文：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre class="chroma">&lt;code class="language-markdown" data-lang="markdown">title: &amp;#34;关于&amp;#34;
-date: 2021-09-09T21:38:52+08:00
-lastmod: 2021-09-09T21:41:52+08:00
-menu: &amp;#34;main&amp;#34;
-weight: 50
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="部署">部署&lt;/h2>
-&lt;h3 id="通过github-actions部署">通过GitHub Actions部署&lt;/h3>
+&lt;/div>&lt;h3 id="添加评论">添加评论&lt;/h3>
+&lt;h3 id="seo优化">SEO优化&lt;/h3>
+&lt;h2 id="部署">部署&lt;/h2>
+&lt;h3 id="github-actions部署">GitHub Actions部署&lt;/h3>
 &lt;p>&lt;strong>1、首先在github里创建一个仓库：chensoul.github.io&lt;/strong>&lt;/p>
 &lt;p>&lt;strong>2、将本地文件提交到github&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -2141,4 +2145,10 @@ git push origin hugo
 &lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">git push origin hugo
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>另外，我们还可以把 hugo 分支设为默认分支。&lt;/p></description></item></channel></rss>
+&lt;/div>&lt;p>另外，我们还可以把 hugo 分支设为默认分支。&lt;/p>
+&lt;p>&lt;strong>7、设置自定义域名&lt;/strong>&lt;/p>
+&lt;p>参考&lt;a href="https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain">管理 GitHub Pages 站点的自定义域&lt;/a>，添加一个自定义域名：blog.chensoul.com：&lt;/p>
+&lt;p>&lt;img src="http://blog.chensoul.com/image/image-20210917111923554.png" alt="image-20210917111923554">&lt;/p>
+&lt;p>或者，在仓库的 static 目录创建一个CNAME文件，内容为：blog.chensoul.com，然后，保存提交，Github Actions会将该文件推送到main分支。&lt;/p>
+&lt;p>然后，在亚马逊网站添加&lt;a href="https://console.aws.amazon.com/route53/v2/hostedzones#">CNAME记录&lt;/a>：&lt;/p>
+&lt;p>&lt;img src="http://blog.chensoul.com/image/image-20210917112010871.png" alt="image-20210917112010871">&lt;/p></description></item></channel></rss>
