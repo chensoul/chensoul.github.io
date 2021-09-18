@@ -67,7 +67,7 @@ post = "/:year/:month/:day/:slug"
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = "六月陈书"        # default: the title value    # 默认值: 上面设置的title值
-  keywords = ["Java", "tech"]
+  keywords = ["java", "tech"]
   description = ""
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
@@ -106,8 +106,8 @@ post = "/:year/:month/:day/:slug"
 
   livereUID = ""            # LiveRe UID                  # 来必力
 
-  baiduPush = false        # baidu push                  # 百度
-  baiduAnalytics = ""      # Baidu Analytics
+  baiduPush = true        # baidu push                  # 百度
+  baiduAnalytics = "92d6e3ee9ae3e2d1dd54271ea95dca5d"      # Baidu Analytics
   baiduVerification = ""   # Baidu Verification
   googleVerification = ""  # Google Verification         # 谷歌
 
