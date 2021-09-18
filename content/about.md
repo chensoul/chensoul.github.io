@@ -50,16 +50,18 @@ weight: 50
 
 - Telegram 群组：[https://t.me/chensoul](https://t.me/chensoul)
 
-  
-
-# 关于博客
-
-所有文章非特别说明皆为原创，遵循的协议为「[署名-非商业性使用-相同方式共享](http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)」，由于文章表述或者内容可能存在诸多错误，所以部分内容会作修改，为保证转载信息与源同步，转载请注明文章出处！
 
 
 
-# 站点更新日志
+# 更新日志
+
+- 2021-09-18 启用百度推送和百度分析
 
 - 2021-09-17 设置CNAME，使用 [blog.chensoul.com](http://blog.chensoul.com) 域名，添加 Gitalk 评论
 - 2021-09-09 注册域名 chensoul.com，使用 Hugo 的 [even](https://github.com/olOwOlo/hugo-theme-even) 主题建站，静态文件托管到 [chensoul.github.io](https://chensoul.github.io)，通过 Github Actions 进行构建
 
+
+
+# 关于博客
+
+所有文章非特别说明皆为原创，遵循的协议为「[署名-非商业性使用-相同方式共享](http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)」，由于文章表述或者内容可能存在诸多错误，所以部分内容会作修改，为保证转载信息与源同步，转载请注明文章出处！
