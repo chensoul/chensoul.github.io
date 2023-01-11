@@ -17,26 +17,26 @@ jobs:
                   submodules: true
                   fetch-depth: 0
 
-            - name: Set up Python
+            - name: Setup python
               uses: actions/setup-python@v2
               with:
                   python-version: 3.8
 
-            - uses: actions/cache@v2
-              name: Configure pip caching
+            - name: Configure pip caching
+              uses: actions/cache@v2
               with:
                   path: ~/.cache/pip
                   key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
                   restore-keys: |
                       ${{ runner.os }}-pip-
 
-            - name: Install Python dependencies
+            - name: Install python dependencies
               run: |
                   python -m pip install -r requirements.txt
 
             - name: Update markdown file
               env:
-                  OPEN_TOKEN: ${{ secrets.OPEN_TOKEN }}
+                  PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
               run: |-
                   python build_file.py content/about.md
                   cat content/about.md
@@ -50,19 +50,19 @@ jobs:
                   git commit -m "ci: update about page (automatically)" || exit 0
                   git push
 
-            - name: Setup Hugo
+            - name: Setup hugo
               uses: peaceiris/actions-hugo@v2
               with:
                 hugo-version: latest
                 extended: true
             
-            - name: Build Web
+            - name: Build web
               run: hugo --minify
 
-            - name: Deploy Web
+            - name: Deploy web
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  PERSONAL_TOKEN: ${{ secrets.OPEN_TOKEN }}
+                  PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
                   PUBLISH_BRANCH: cf-pages
                   PUBLISH_DIR: ./public
                   commit_message: ${{ github.event.head_commit.message }}
