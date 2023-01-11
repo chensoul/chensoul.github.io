@@ -5,6 +5,7 @@ import json
 import pathlib
 import re
 import os
+import sys
 import datetime
 
 root = pathlib.Path(__file__).parent.resolve()
@@ -127,7 +128,8 @@ def fetch_blog_entries():
 
 
 if __name__ == "__main__":
-    readme = root / "content/about.md"
+    inputfile = sys.argv[0]
+    readme = root / inputfile
     project_releases = root / "releases.md"
     releases = fetch_releases(TOKEN)
     releases.sort(key=lambda r: r["published_at"], reverse=True)
