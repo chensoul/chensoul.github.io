@@ -10,7 +10,7 @@ import datetime
 root = pathlib.Path(__file__).parent.resolve()
 client = GraphqlClient(endpoint="https://api.github.com/graphql")
 
-TOKEN = os.environ.get("PERSONAL_TOKEN", "")
+TOKEN = os.environ.get("OPEN_TOKEN", "")
 
 def replace_chunk(content, marker, chunk, inline=False):
     r = re.compile(
@@ -93,6 +93,9 @@ def fetch_releases(oauth_token):
             "hasNextPage"
         ]
         after_cursor = data["data"]["viewer"]["repositories"]["pageInfo"]["endCursor"]
+    
+    print(releases)
+
     return releases
 
 def fetch_code_time():
@@ -124,26 +127,26 @@ def fetch_blog_entries():
 
 
 if __name__ == "__main__":
-    about_zh = root / "content/about.md"
+    readme = root / "content/about.md"
     project_releases = root / "releases.md"
     releases = fetch_releases(TOKEN)
     releases.sort(key=lambda r: r["published_at"], reverse=True)
     md = "\n".join(
         [
-            # "* <a href={url} target='_blank'>{repo} {release}</a> - {published_at}".format(**release)
-            "* <a href={url} target='_blank'>{repo} {release}</a>".format(**release)
+            "* <a href={url} target='_blank'>{repo} {release}</a> - {published_at}".format(**release)
+            # "* <a href={url} target='_blank'>{repo} {release}</a>".format(**release)
             for release in releases[:10]
         ]
     )
-    about_zh_contents = about_zh.open().read()
-    rewritten_zh = replace_chunk(about_zh_contents, "recent_releases", md)
+    readme_contents = readme.open().read()
+    rewritten = replace_chunk(readme_contents, "recent_releases", md)
 
     # Write out full project-releases.md file
     project_releases_md = "\n".join(
         [
             (
-                # "* **[{repo}]({repo_url})**: [{release}]({url})- {published_at}\n"
-                "* **[{repo}]({repo_url})**: [{release}]({url})\n"
+                "* **[{repo}]({repo_url})**: [{release}]({url})- {published_at}\n"
+                # "* **[{repo}]({repo_url})**: [{release}]({url})\n"
                 "<br>{description}"
             ).format(**release)
             for release in releases
@@ -160,7 +163,7 @@ if __name__ == "__main__":
 
     code_time_text = "\n```text\n"+fetch_code_time().text+"\n```\n"
 
-    rewritten_zh = replace_chunk(rewritten_zh, "code_time", code_time_text)
+    rewritten = replace_chunk(rewritten, "code_time", code_time_text)
 
     doubans = fetch_douban()[:5]
 
@@ -168,12 +171,12 @@ if __name__ == "__main__":
         ["* <a href='{url}' target='_blank'>{title}</a> - {published}".format(**item) for item in doubans]
     )
 
-    rewritten_zh = replace_chunk(rewritten_zh, "douban", doubans_md)
+    rewritten = replace_chunk(rewritten, "douban", doubans_md)
 
-    entries = fetch_blog_entries()[:5]
+    entries = fetch_blog_entries()[:6]
     entries_md = "\n".join(
-        # ["* <a href={url} target='_blank'>{title}</a> - {published}".format(**entry) for entry in entries]
         ["* <a href={url} target='_blank'>{title}</a>".format(**entry) for entry in entries]
     )
-    rewritten_zh = replace_chunk(rewritten_zh, "blog", entries_md)
-    about_zh.open("w").write(rewritten_zh)
+    rewritten = replace_chunk(rewritten, "blog", entries_md)
+
+    readme.open("w").write(rewritten)
