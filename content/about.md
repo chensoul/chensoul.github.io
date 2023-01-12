@@ -15,7 +15,7 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 - 🏠 Blog: https://blog.chensoul.com
 - 💼 Telegram: https://t.me/chenshu_eth
 
-![picture](https://pseudoyu.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
+![picture](/images/dino.gif)
 
 ### ⌛️ 关于网站
 
@@ -51,6 +51,6 @@ Still Gathering Statistics...
 ### 💻 最近发布项目
 
 <!-- recent_releases starts -->
-* <a href=https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1 target='_blank'>scrapy-zhihu-github</a>：Scrapy 爬取知乎和 Github 用户 - 2023-01-11
-* <a href=https://github.com/chensoul/grab/releases/tag/v0.0.1 target='_blank'>grab</a>：基于spark、mahout和spring boot构建的推荐系统 - 2023-01-11
+* <a href=https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1 target='_blank'>scrapy-zhihu-github</a>：Scrapy 爬取知乎和 Github 用户
+* <a href=https://github.com/chensoul/grab/releases/tag/v0.0.1 target='_blank'>grab</a>：基于spark、mahout和spring boot构建的推荐系统
 <!-- recent_releases ends -->
