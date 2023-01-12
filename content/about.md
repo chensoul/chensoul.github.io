@@ -10,9 +10,9 @@ rss_ignore: true
 
 I'm chenshu, a java developer. Love to learn and build things. I want to learn things and become a better person. I enjoy reading, thinking and writing in my leisure time.
 
-- 📧 Email: chenshu.eth@gmail.com
 - 😄 Wechat: chenshu_eth
-- 🏠 Home Page: https://blog.chensoul.com
+- 📧 Email: chenshu.eth@gmail.com
+- 🏠 Blog: https://blog.chensoul.com
 - 💼 Telegram: https://t.me/chenshu_eth
 
 ![picture](https://pseudoyu.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)

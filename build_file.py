@@ -136,17 +136,17 @@ if __name__ == "__main__":
     releases.sort(key=lambda r: r["published_at"], reverse=True)
     md = "\n".join(
         [
-            "* <a href={url} target='_blank'>{repo}</a>：{release} - {published_at}".format(**release)
+            "* <a href={url} target='_blank'>{repo}</a>：{release}".format(**release)
             for release in releases[:10]
         ]
     )
     readme_contents = readme.open().read()
     rewritten = replace_chunk(readme_contents, "recent_releases", md)
 
-    # Write out full project-releases.md file
+    # Write out full releases.md file
     project_releases_md = "\n".join(
         [
-            "* **[{repo}]({repo_url})**：{release} - {published_at}".format(**release)
+            "* **[{repo}]({repo_url})**：{release}".format(**release)
             for release in releases
         ]
     )
@@ -166,7 +166,7 @@ if __name__ == "__main__":
     doubans = fetch_douban()[:5]
 
     doubans_md = "\n".join(
-        ["* <a href='{url}' target='_blank'>{title}</a> - {published}".format(**item) for item in doubans]
+        ["* <a href='{url}' target='_blank'>{title}</a>".format(**item) for item in doubans]
     )
 
     rewritten = replace_chunk(rewritten, "douban", doubans_md)
