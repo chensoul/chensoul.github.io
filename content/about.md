@@ -35,7 +35,8 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 ### 🎧 最近阅读观影
 
 <!-- douban starts -->
-
+* <a href='http://movie.douban.com/subject/35891542/' target='_blank'>看过绝望主夫</a>
+* <a href='http://movie.douban.com/subject/4811774/' target='_blank'>想看阿凡达：水之道</a>
 <!-- douban ends -->
 
 ### 👨🏻‍💻 最近编程记录
