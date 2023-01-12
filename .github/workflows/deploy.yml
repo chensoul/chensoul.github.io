@@ -62,7 +62,7 @@ jobs:
             - name: Deploy web
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-                  PUBLISH_BRANCH: cf-pages
-                  PUBLISH_DIR: ./public
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_branch: main
+                  publish_dir: ./public
                   commit_message: ${{ github.event.head_commit.message }}
