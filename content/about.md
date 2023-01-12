@@ -15,10 +15,11 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 - 🏠 Home Page: https://blog.chensoul.com
 - 💼 Telegram: https://t.me/chenshu_eth
 
+![picture](https://pseudoyu.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
+
 ### ⌛️ 关于网站
 
 希望自己能多输入一些新的知识和想法，多写一些小文章。
-
 
 ### 📰 最近文章
 
