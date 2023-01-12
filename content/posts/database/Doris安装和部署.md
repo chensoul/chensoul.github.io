@@ -308,7 +308,7 @@ mysql> SHOW PROC '/frontends';
 
 也可以通过 http://192.168.1.107:8030/System?path=//frontends 查看
 
-![img](/img/doris-fe-web.jpg)
+![img](/images/doris-fe-web.jpg)
 
 在 192.168.1.108 和  192.168.1.109 节点上启动 FE ：
 
