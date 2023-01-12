@@ -23,7 +23,7 @@ Java 开发工程师。喜欢探索新技术，空闲时也折腾效率工具。
 
 我的博客信息：
 
-> - **名称：** chensoul
-> - **地址：** https://blog.chensoul.com
-> - **头像：** https://blog.chensoul.com/images/author.webp
-> - **描述：** Java 开发工程师，喜欢探索新技术
+> - **名称:** chensoul
+> - **地址:** https://blog.chensoul.com
+> - **头像:** https://blog.chensoul.com/images/author.webp
+> - **描述:** Java 开发工程师，喜欢探索新技术
