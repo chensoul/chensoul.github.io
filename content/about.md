@@ -44,11 +44,11 @@ Java 开发工程师。喜欢探索新技术，空闲时也折腾效率工具。
 <!-- code_time starts -->
 
 ```text
-Markdown   11 hrs 46 mins ██████▍░░░░░░░░░░░░░░  30.4%
-Go         11 hrs 29 mins ██████▏░░░░░░░░░░░░░░  29.7%
-Other      3 hrs 58 mins  ██▏░░░░░░░░░░░░░░░░░░  10.3%
-JavaScript 3 hrs 47 mins  ██░░░░░░░░░░░░░░░░░░░   9.8%
-Solidity   3 hrs 3 mins   █▋░░░░░░░░░░░░░░░░░░░   7.9%
+Markdown   12 hrs 52 mins ███████▋░░░░░░░░░░░░░  36.4%
+Go         9 hrs 27 mins  █████▌░░░░░░░░░░░░░░░  26.8%
+JavaScript 3 hrs 43 mins  ██▏░░░░░░░░░░░░░░░░░░  10.6%
+Other      3 hrs 10 mins  █▉░░░░░░░░░░░░░░░░░░░   9.0%
+Solidity   2 hrs 11 mins  █▎░░░░░░░░░░░░░░░░░░░   6.2%
 ```
 
 <!-- code_time ends -->
