@@ -1,40 +1,43 @@
+# ------------------------------------- #
+# ---- General Settings --------------- #
+# ------------------------------------- #
 baseURL: https://blog.chensoul.com/
 title: ChenSoul
 theme: den
-enableRobotsTXT: true
-enableEmoji: true
-hasCJKLanguage: true
-preserveTaxonomyNames: true
-rssLimit: 100
-page_view_conter: true
-enableRelated: true
+enableRobotsTXT: true       # generate robots.txt
+enableEmoji: true           # use emoji support
+hasCJKLanguage: true        # detect CJK languages for word count etc.
+preserveTaxonomyNames: true # do not make tag names lowercase
+# uglyURLs = true            # more info: https://gohugo.io/content-management/urls/#ugly-urls
+rssLimit: 100                # limit number of entries in RSS feeds
 
 # Copyright, appears in the footer
-# copyright = ""             # default: author.name
+# copyright: ""             # default: author.name
 
 # Pagination
 # number of entries per page for archives, tags and categories
 # since we don't have list view, recommend a large value
 paginate: 20
-paginatePath: "page"
+paginatePath: page
 
 # Syntax Hightlight
 PygmentsCodeFences: true
 PygmentsUseClasses: true    # required for shhighlight shortcode
 
 # service plugins
-disqusShortname: ""         # disqus_shortname
-googleAnalytics: ""         # UA-XXXXXXXX-X
+disqusShortname: ''
+googleAnalytics: ''
 
 # language support # en / zh / other... translations present in i18n/
-defaultContentLanguage: "zh"           # Default language to use
+defaultContentLanguage: zh
 defaultContentLanguageInSubdir: true
 
+# Links format
 permalinks:
-  posts: /posts/:slug/
-  categories: /categories/:slug/
-  tags: /tags/:slug/
-  pages: /:slug/
+  posts: '/posts/:year/:month/:day/:slug/'
+  categories: '/categories/:slug/'
+  tags: '/tags/:slug/'
+  pages: '/:slug/'
 
 author:
   name: chenshu
@@ -42,37 +45,40 @@ sitemap:
   changefreq: weekly
   priority: 0.5
   filename: sitemap.xml
+
+# ------------------------------------- #
+# ---- Other Params ------------------- #
+# ------------------------------------- #
 params:
-  since: "2020"
+  since: '2020'
   rssFullContent: true
+
+  # site info (optional)
   keywords:
     - devops
     - programming
-  description: Programming | Devops
+  description: Devops | Programming
   logoTitle: ChenSoul
   siteLogoImage: images/fly.png
-
-  # headerTitle = "chenshu"                   # default: title
   headerImage: images/background.webp
-  showAuthorCard: true
+  showAuthorCard: true       # Whether to show author information below the article
+
   showMenuLanguages: true
-  autoLoadComments: false
-  paginateOriginalStyle: true
+
+  autoLoadComments: false    # auto load comment when scrolling down
+
+  # paginate style, default use numbered pagination links
+  # if true, use original "Previous" and "Next" links.
+  # paginateOriginalStyle: true
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
-  dateFormatToUse: 2006-01-02
-  google_verification: "D8XBzUhT4irNUQLKut79HFni0v3Xow4FY-oxUcsUlVk"
+  dateFormatToUse: '2006-01-02'
+  google_verification: 'D8XBzUhT4irNUQLKut79HFni0v3Xow4FY-oxUcsUlVk'
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  customCSS: ["custom.css"]
-  customJS: []
-
-markup:
-  goldmark:
-    renderer:
-      unsafe: true
-
+  customCSS: ['custom.css']     # if ['custom.css'], load '/static/css/custom.css' file
+  customJS: []      # if ['custom.js'], load '/static/js/custom.js' file
 
 # ------------------------------------- #
 # ---- Related Articles --------------- #
@@ -85,8 +91,7 @@ related:
   includeNewer: true
 
   # Will lower case keywords in both queries and in the indexes.
-  toLower: true
-
+  toLower: false
   indices:
     - name: categories
       weight: 200
@@ -94,6 +99,12 @@ related:
       weight: 150
     - name: tags
       weight: 100
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 languages:
   zh:
     languageCode: zh
@@ -132,5 +143,5 @@ languages:
           url: https://uptime.chensoul.com/status/services
         - name: Analytics
           weight: 30
-          identifier: chensoul-analytics
-          url: https://data.pseudoyu.com/share/8YKX7FUa/pseudoyu-blog
+          identifier: analytics
+          url: https://data.chensoul.com/share/8YKX7FUa/pseudoyu-blog

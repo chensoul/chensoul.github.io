@@ -10,6 +10,7 @@ rss_ignore: true
 
 <div class="flink" id="article-container">
     <div class="friend-list-div" >
+    {{< friend name="Pseudoyu" url="https://www.pseudoyu.com" logo="https://www.pseudoyu.com/images/author.webp" word="区块链开发工程师" >}}
     {{< friend name="Xuanwo" url="https://xuanwo.io" logo="https://pseudoyu.oss-cn-hangzhou.aliyuncs.com/images/xuanwo_avatar.jpg" word="Xuanwo's Blog" >}}
     {{< friend name="涂俊杰" url="https://blog.tujunjie.com/" logo="https://pseudoyu.oss-cn-hangzhou.aliyuncs.com/images/tujunjie_avatar.webp" word="时间记录践行者" >}}
     </div>
