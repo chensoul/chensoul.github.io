@@ -25,12 +25,12 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 ### 📰 最近文章
 
 <!-- blog starts -->
-* <a href=https://blog.chensoul.com/posts/greenplum-cc-web-install-deploy/ target='_blank'>Greenplum CC Web安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/greenplum-install-deploy/ target='_blank'>Greenplum安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/postgresql-install-deploy/ target='_blank'>PostgreSql安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/mysql-install-deploy/ target='_blank'>MySql安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/using-images-in-blog/ target='_blank'>博客中如何使用图床服务</a>
-* <a href=https://blog.chensoul.com/posts/doris-cluster-elastic-expansion/ target='_blank'>Doris集群弹性扩缩容</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/19/greenplum-cc-web-install-deploy/ target='_blank'>Greenplum CC Web安装和部署</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/19/greenplum-install-deploy/ target='_blank'>Greenplum安装和部署</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/19/postgresql-install-deploy/ target='_blank'>PostgreSql安装和部署</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/19/mysql-install-deploy/ target='_blank'>MySql安装和部署</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/19/using-images-in-blog/ target='_blank'>博客中如何使用图床服务</a>
+* <a href=https://blog.chensoul.com/posts/2022/08/18/doris-cluster-elastic-expansion/ target='_blank'>Doris集群弹性扩缩容</a>
 <!-- blog ends -->
 
 ### 🎧 最近阅读观影
