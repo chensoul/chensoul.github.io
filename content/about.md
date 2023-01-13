@@ -13,6 +13,7 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 - 😄 Wechat: chenshu_eth
 - 📧 Email: chenshu.eth@gmail.com
 - 🏠 Blog: https://blog.chensoul.com
+- 👨🏻‍💻 Github: https://github.com/chensoul
 - 💼 Telegram: https://t.me/chenshu_eth
 
 ![picture](/images/dino.gif)
