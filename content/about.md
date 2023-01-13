@@ -6,7 +6,20 @@ weight: 100
 rss_ignore: true
 ---
 
-## ✋ 关于我
+## Hi there 👋
+
+[![Blog](https://img.shields.io/badge/Blog-chensoul-9cf?style=flat-square)](https://blog.chensoul.com)
+[![GitHub](https://img.shields.io/github/followers/chensoul?logo=github&style=flat-square)](https://github.com/chensoul)
+[![Twitter](https://img.shields.io/twitter/follow/chenshu_eth?logo=twitter&style=flat-square)](https://twitter.com/chenshu_eth)
+[![Visits Badge](https://badges.strrl.dev/visits/chensoul/chensoul?style=flat-square)](https://github.com/chensoul)
+
+
+[![Contributions Badge](https://badges.strrl.dev/contributions/all/chensoul?style=flat-square)](https://github.com/chensoul)
+[![Contributions Badge](https://badges.strrl.dev/contributions/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
+[![Commits Badge](https://badges.strrl.dev/commits/weekly/chensoul?style=flat-square)](https://github.com/pseudoyu)
+[![Issues and PRs Badge](https://badges.strrl.dev/issues-and-prs/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
+
+<br />
 
 I'm chenshu, a java developer. Love to learn and build things. I want to learn things and become a better person. I enjoy reading, thinking and writing in my leisure time.
 
@@ -16,13 +29,10 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 - 👨🏻‍💻 Github: https://github.com/chensoul
 - 💼 Telegram: https://t.me/chenshu_eth
 
-![picture](/images/dino.gif)
+![picture](https://blog.chensoul.com/images/dino.gif)
 
-### ⌛️ 关于网站
 
-希望自己能多输入一些新的知识和想法，多写一些小文章。
-
-### 📰 最近文章
+### 📰 最新文章
 
 <!-- blog starts -->
 * <a href=https://blog.chensoul.com/posts/greenplum-cc-web-install-deploy/ target='_blank'>Greenplum CC Web安装和部署</a>
@@ -33,6 +43,7 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 * <a href=https://blog.chensoul.com/posts/doris-cluster-elastic-expansion/ target='_blank'>Doris集群弹性扩缩容</a>
 <!-- blog ends -->
 
+
 ### 🎧 最近阅读观影
 
 <!-- douban starts -->
@@ -41,7 +52,8 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 * <a href='http://movie.douban.com/subject/4811774/' target='_blank'>想看阿凡达：水之道</a>
 <!-- douban ends -->
 
-### 👨🏻‍💻 最近编程记录
+
+### 👨🏻‍💻 最近编程时间统计
 
 <!-- waka-box starts -->
 
@@ -51,7 +63,8 @@ Still Gathering Statistics...
 
 <!-- waka-box ends -->
 
-### 💻 最近发布项目
+
+### 💻 最近开源项目发布
 
 <!-- recent_releases starts -->
 * <a href=https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1 target='_blank'>scrapy-zhihu-github</a>：Scrapy 爬取知乎和 Github 用户
