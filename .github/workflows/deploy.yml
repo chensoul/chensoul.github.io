@@ -1,68 +1,71 @@
 name: deploy
 
 on:
-    push:
-    workflow_dispatch:
-    schedule:
-        # Runs everyday at 8:00 AM
-        - cron: "0 0 * * *"
+  push:
+  workflow_dispatch:
+  schedule:
+    # Runs everyday at 8:00 AM
+    - cron: "0 0 * * *"
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-              with:
-                  submodules: true
-                  fetch-depth: 0
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
 
-            - name: Setup python
-              uses: actions/setup-python@v2
-              with:
-                  python-version: 3.8
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-            - name: Configure pip caching
-              uses: actions/cache@v2
-              with:
-                  path: ~/.cache/pip
-                  key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pip-
+      - name: Configure pip caching
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-            - name: Install python dependencies
-              run: |
-                  python -m pip install -r requirements.txt
+      - name: Install python dependencies
+        run: |
+          python -m pip install -r requirements.txt
 
-            - name: Update markdown file
-              env:
-                  PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-              run: |-
-                  python build_file.py content/about.md
-                  cat content/about.md
+      - name: Update markdown file
+        env:
+          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |-
+          python build_file.py content/about.md
+          cat content/about.md
 
-            - name: Commit and push if changed
-              run: |-
-                  git diff
-                  git config --global user.email "action@github.com"
-                  git config --global user.name "GitHub Action"
-                  git add -A
-                  git commit -m "ci: update about page (automatically)" || exit 0
-                  git push
+      - name: Commit and push if changed
+        run: |-
+          git diff
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add -A
+          git commit -m "ci: update about page (automatically)" || exit 0
+          git push
 
-            - name: Setup hugo
-              uses: peaceiris/actions-hugo@v2
-              with:
-                hugo-version: latest
-                extended: true
-            
-            - name: Build web
-              run: hugo --minify
+      - name: Setup hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: latest
+          extended: true
 
-            - name: Deploy web
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_branch: cf-pages
-                  publish_dir: ./public
-                  commit_message: ${{ github.event.head_commit.message }}
+      - name: Build web
+        run: hugo --gc --minify
+
+      - name: Run Pagefind
+        run: npm_config_yes=true npx pagefind --source "public"
+
+      - name: Deploy web
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: cf-pages
+          publish_dir: ./public
+          commit_message: ${{ github.event.head_commit.message }}
