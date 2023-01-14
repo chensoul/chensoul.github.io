@@ -221,14 +221,15 @@ init_hive_metastore metastore hive `ls /usr/lib/hive/scripts/metastore/upgrade/p
 version: "3"
 
 services:
-  db:
-    image: postgres:13
+  pgsql:
+    image: postgres:12-alpine
     restart: always
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=chenzj
-      - POSTGRES_PASSWORD=chenzj@vps2021
+      - POSTGRES_DB: test
+      - POSTGRES_USER: test
+      - POSTGRES_PASSWORD: test@db
     volumes:
       - /data/postgres:/var/lib/postgresql/data
 ```
@@ -239,3 +240,12 @@ services:
 docker-compose -f postgresql.yaml up -d
 ```
 
+进入容器并创建数据库：
+
+```bash
+docker exec -it pgsql_1 bash
+
+CREATE USER cusdis WITH PASSWORD 'cusdis_pg!'; 
+CREATE DATABASE cusdis owner=cusdis; 
+GRANT ALL privileges ON DATABASE cusdis TO cusdis;
+```
