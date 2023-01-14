@@ -10,13 +10,13 @@ rss_ignore: true
 
 [![Blog](https://img.shields.io/badge/Blog-chensoul-9cf?style=flat-square)](https://blog.chensoul.com)
 [![GitHub](https://img.shields.io/github/followers/chensoul?logo=github&style=flat-square)](https://github.com/chensoul)
-[![Twitter](https://img.shields.io/twitter/follow/chenshu_eth?logo=twitter&style=flat-square)](https://twitter.com/chenshu_eth)
+[![Twitter](https://img.shields.io/twitter/follow/chensoul_eth?logo=twitter&style=flat-square)](https://twitter.com/chensoul_eth)
 [![Visits Badge](https://badges.strrl.dev/visits/chensoul/chensoul?style=flat-square)](https://github.com/chensoul)
 
 
 [![Contributions Badge](https://badges.strrl.dev/contributions/all/chensoul?style=flat-square)](https://github.com/chensoul)
 [![Contributions Badge](https://badges.strrl.dev/contributions/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
-[![Commits Badge](https://badges.strrl.dev/commits/weekly/chensoul?style=flat-square)](https://github.com/pseudoyu)
+[![Commits Badge](https://badges.strrl.dev/commits/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
 [![Issues and PRs Badge](https://badges.strrl.dev/issues-and-prs/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
 
 <br />
