@@ -2,10 +2,10 @@
 title: "Doris集群弹性扩缩容"
 date: 2022-08-18T11:26:27+08:00
 slug: doris-cluster-elastic-expansion
-categories: ["database"]
+categories: ["Notes"]
 tags: ["doris"]
 authors:
-- chenshu
+- chensoul
 ---
 
 Doris 可以很方便的扩容和缩容 FE、BE、Broker 实例，本文主要是对此做一些测试，记录笔记。
@@ -21,7 +21,7 @@ Doris 可以很方便的扩容和缩容 FE、BE、Broker 实例，本文主要�
 
 在操作集群之前，有必要了解 doris 的架构：
 
-![doris架构](/images/doris-overview.png)
+![doris架构](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-overview.png)
 
 Doris 有两种进程：
 
@@ -46,7 +46,7 @@ mysql> SHOW PROC '/backends';
 
 结果如下：
 
-![doris-be-status](/images/doris-be-status.png.png)
+![doris-be-status](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-be-status.png.png)
 
 
 
@@ -58,7 +58,7 @@ mysql> SHOW PROC '/frontends';
 
 结果如下：
 
-![doris-fe-status](/images/doris-fe-status.png)
+![doris-fe-status](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-fe-status.png)
 
 从上面可以看到：
 
@@ -164,7 +164,7 @@ mysql> ALTER SYSTEM drop FOLLOWER "192.168.1.109:9010";
 
 查看 FE 状态，可以看到还有两个 FE，192.168.1.107 还是为 Master。
 
-![doris-fe-status-01](/images/doris-fe-status-01.png)
+![doris-fe-status-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-fe-status-01.png)
 
 根据上面的 **FE 缩容注意事项**，如果删除 FE 节点，需要保证最终剩余的 FE 的总数为奇数。在删除一个节点之后，FE 个数为 2，FE 状态均为正常。
 
@@ -201,7 +201,7 @@ mysql -h 192.168.1.108 -P 9030 -uroot
 
  可以看到 变成了 Master：
 
-![doris-fe-status-02](/images/doris-fe-status-02.png)
+![doris-fe-status-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-fe-status-02.png)
 
 这说明，**剩余偶数个 FE 时，还是能选举出 Master？**
 
@@ -216,7 +216,7 @@ mysql> SHOW PROC '/frontends';
 
 可以看到如下结果：
 
-![doris-fe-status-03](/images/doris-fe-status-03.png)
+![doris-fe-status-03](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-fe-status-03.png)
 
 说明：非 Master 节点宕机，不影响 Master FE 节点的运行，宕机的 FE 的 Alive 状态为 false，异常信息不为空，这里为：`socket is closed by peer.`
 

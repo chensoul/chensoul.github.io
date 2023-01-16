@@ -29,7 +29,7 @@ I'm chenshu, a java developer. Love to learn and build things. I want to learn t
 - 👨🏻‍💻 Github: https://github.com/chensoul
 - 💼 Telegram: https://t.me/chensouleth
 
-![picture](https://blog.chensoul.com/images/dino.gif)
+![picture](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
 
 
 ### 📰 最新文章

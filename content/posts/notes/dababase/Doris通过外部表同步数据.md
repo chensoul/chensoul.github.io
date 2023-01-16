@@ -2,10 +2,10 @@
 title: "Doris通过外部表同步数据"
 date: 2022-08-18T10:27:21+08:00
 slug: doris-external-table-load
-categories: ["database"]
+categories: ["Notes"]
 tags: ["doris","mysql","postgresql"]
 authors:
-- chenshu
+- chensoul
 ---
 
 Doris 可以创建通过 ODBC 协议访问的外部表。创建完成后，可以通过 SELECT 语句直接查询外部表的数据，也可以通过 `INSERT INTO SELECT` 的方式导入外部表的数据。

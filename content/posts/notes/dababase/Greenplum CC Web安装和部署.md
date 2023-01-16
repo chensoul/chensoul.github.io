@@ -2,10 +2,10 @@
 title: "Greenplum CC Web安装和部署"
 date: 2022-08-19T17:16:56+08:00
 slug: greenplum-cc-web-install-deploy
-categories: ["database"]
+categories: ["Notes"]
 tags: ["greenplum"]
 authors:
-- chenshu
+- chensoul
 ---
 
 ## 安装

@@ -20,7 +20,7 @@ rss_ignore: true
 
 Java 开发工程师，喜欢探索新技术，空闲时也折腾效率工具。
 
-交换友链可发邮件至 chenshu.eth@gmail.com，或添加我的微信：chenshu_eth。
+交换友链可发邮件至 chensoul.eth@gmail.com，或添加我的微信：chenshu_eth。
 
 我的博客信息：
 

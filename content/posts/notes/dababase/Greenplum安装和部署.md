@@ -2,10 +2,10 @@
 title: "Greenplum安装和部署"
 date: 2022-08-19T17:14:18+08:00
 slug: greenplum-install-deploy
-categories: ["database"]
+categories: ["Notes"]
 tags: ["greenplum"]
 authors:
-- chenshu
+- chensoul
 ---
 
 本文主要介绍如何快速安装部署单节点的 Greenplum过程，以及Greenplum的一些常用命令及工具。

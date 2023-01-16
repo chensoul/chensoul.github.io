@@ -2,10 +2,10 @@
 title: "Linux设置时钟同步"
 date: 2022-08-16T10:13:42+08:00
 slug: config-ntp-on-linux
-categories: ["devops"]
+categories: ["Notes"]
 tags: ["ntp","chrony"]
 authors:
-- chenshu
+- chensoul
 ---
 
 NTP 是 Network Time Protocol 的缩写，也即网络时间协议，一种在 Linux 上保持准确时间的协议，它和网络上可用的 NTP 服务器保持着时钟同步。

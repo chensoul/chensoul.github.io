@@ -2,10 +2,10 @@
 title: "Doris安装和部署"
 date: 2022-08-18T09:47:03+08:00
 slug: doris-install-deploy
-categories: [database]
+categories: [Notes]
 tags: [doris]
 authors:
-- chenshu   
+- chensoul   
 ---
 
 {{<audio src="audios/here_after_us.mp3" caption="《后来的我们 - 五月天》" >}}
@@ -308,7 +308,7 @@ mysql> SHOW PROC '/frontends';
 
 也可以通过 http://192.168.1.107:8030/System?path=//frontends 查看
 
-![img](/images/doris-fe-web.jpg)
+![img](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/doris-fe-web.jpg)
 
 在 192.168.1.108 和  192.168.1.109 节点上启动 FE ：
 

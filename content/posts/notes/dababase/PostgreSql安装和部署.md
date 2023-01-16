@@ -2,10 +2,10 @@
 title: "PostgreSql安装和部署"
 date: 2022-08-19T17:11:19+08:00
 slug: postgresql-install-deploy
-categories: ["database"]
+categories: ["Notes"]
 tags: ["postgresql","docker"]
 authors:
-  - chenshu
+  - chensoul
 ---
 
 ## yum安装
@@ -222,15 +222,17 @@ version: "3"
 
 services:
   pgsql:
-    image: postgres:12-alpine
+    image: postgres:13-alpine
+    container_name: pgsql
     restart: always
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB: test
-      - POSTGRES_USER: test
-      - POSTGRES_PASSWORD: test@db
+      #- POSTGRES_DB: postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin@pg!
     volumes:
+      #- ./sql/schema.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
       - /data/postgres:/var/lib/postgresql/data
 ```
 
@@ -240,12 +242,10 @@ services:
 docker-compose -f postgresql.yaml up -d
 ```
 
-进入容器并创建数据库：
+进入容器并创建数据库和用户，例如：
 
 ```bash
-docker exec -it pgsql_1 bash
-
-CREATE USER cusdis WITH PASSWORD 'cusdis_pg!'; 
-CREATE DATABASE cusdis owner=cusdis; 
-GRANT ALL privileges ON DATABASE cusdis TO cusdis;
+docker exec -it pgsql psql -U postgres -c "CREATE USER cusdis WITH PASSWORD '123456';"
+docker exec -it pgsql psql -U postgres -c "CREATE DATABASE cusdis owner=cusdis;"
+docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE cusdis TO cusdis;"
 ```

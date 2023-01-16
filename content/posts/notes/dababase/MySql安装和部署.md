@@ -2,10 +2,10 @@
 title: "MySql安装和部署"
 date: 2022-08-19T17:03:40+08:00
 slug: mysql-install-deploy
-categories: ["database"]
+categories: ["Notes"]
 tags: ["mysql","docker"]
 authors:
-  - chenshu
+  - chensoul
 ---
 
 ## yum安装
