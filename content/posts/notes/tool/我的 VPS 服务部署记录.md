@@ -247,3 +247,11 @@ networks:
 docker-compose -f cusdis.yaml up -d
 ```
 
+### memos
+
+docker 部署：
+
+```bash
+docker run -d --name memos -p 5230:5230 -v ~/.memos/:/var/opt/memos neosmemo/memos:latest
+```
+
