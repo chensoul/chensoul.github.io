@@ -18,7 +18,7 @@ rss_ignore: true
 
 ## ✋ 关于我
 
-Java 开发工程师，喜欢探索新技术，空闲时也折腾效率工具。
+Java 开发工程师，喜欢探索新技术，空闲时也折腾效率工具。可以在 [GitHub](https://github.com/chensoul) 了解更多关于我的信息，也欢迎加入我的 [Telegram](https://t.me/chensoulshare) 频道。
 
 交换友链可发邮件至 chensoul.eth@gmail.com，或添加我的微信：chenshu_eth。
 
