@@ -21,8 +21,7 @@ def fetch_github_readme():
      )
 
 if __name__ == "__main__":
-    inputfile = sys.argv[1]
-    file = root.joinpath(inputfile)
+    file = root.joinpath(sys.argv[1])
 
     readme = fetch_github_readme()
     readme_contents = file.open().read()
