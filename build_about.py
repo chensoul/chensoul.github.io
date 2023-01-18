@@ -22,9 +22,9 @@ def fetch_github_readme():
 
 if __name__ == "__main__":
     file = root.joinpath(sys.argv[1])
+    readme_text = "\n"+fetch_github_readme().text
 
-    readme = fetch_github_readme()
     readme_contents = file.open().read()
-    rewritten = replace_chunk(readme_contents, "readme", readme)
+    rewritten = replace_chunk(readme_contents, "readme", readme_text)
 
     file.open("w").write(rewritten)
