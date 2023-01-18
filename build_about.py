@@ -25,6 +25,6 @@ if __name__ == "__main__":
 
     readme = fetch_github_readme()
     readme_contents = file.open().read()
-    rewritten = replace_chunk(readme_contents, "readme", md)
+    rewritten = replace_chunk(readme_contents, "readme", readme)
 
     readme.open("w").write(rewritten)
