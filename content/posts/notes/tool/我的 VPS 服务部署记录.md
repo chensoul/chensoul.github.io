@@ -311,3 +311,7 @@ location / {
 ```
 
 这里面的转发配置不对的话，会导致直接访问 5678 端口正常，但是访问 nginx 的话，workflow 会一直处于执行。
+
+5、添加 workflow
+
+http://stiles.cc/archives/237/
