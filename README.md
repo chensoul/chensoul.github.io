@@ -16,7 +16,7 @@
 
 <br />
 
-I'm chensoul, a Java developer based in China Wuhan. Love to learn and build things.  Follow me on [GitHub](https://github.com/chensoul). Know me on [Telegram Channel](https://t.me/chensoulshare).
+I'm chensoul, a Java developer based in China Wuhan. Love to learn and build things.  Follow me on [GitHub](https://github.com/chensoul). Know me on [Telegram Channel](https://t.me/chensoul_share).
 
 I want to learn things and become a better person. I enjoy reading, thinking and writing in my leisure time.
 
@@ -71,12 +71,12 @@ I want to learn things and become a better person. I enjoy reading, thinking and
 
 <td valign="top" width="50%">
 
-#### 🤾‍ Recent Digests
+#### 📺‍ Recent Digests
 
 <!-- douban starts -->
-* <a href='https://book.douban.com/subject/30468597/' target='_blank'>想读重构（第2版）</a>
+* <a href='http://movie.douban.com/subject/35208467/' target='_blank'>看过想见你</a>
 * <a href='http://movie.douban.com/subject/35891542/' target='_blank'>看过绝望主夫</a>
-* <a href='http://movie.douban.com/subject/4811774/' target='_blank'>想看阿凡达：水之道</a>
+* <a href='https://book.douban.com/subject/36088824/' target='_blank'>想读我们如何思考</a>
 <!-- douban ends -->
 
 </td>
