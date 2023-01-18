@@ -25,12 +25,11 @@ enjoy reading, thinking and writing in my leisure time.
 - 👨🏻‍💻 Github: https://github.com/chensoul
 - 💼 Telegram: https://t.me/chensoulshare
 
-![picture](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
-
+### My Activities 🌟
 
 <table style="width: auto">
 <tr>
-<td style="vertical-align: top;width:50%">
+<td valign="top" width="50%">
 
 #### 👨🏻‍💻 Weekly Development Breakdown
 
@@ -38,9 +37,9 @@ enjoy reading, thinking and writing in my leisure time.
 
 </td>
 
-<td style="vertical-align: top;width:50%">
+<td valign="top" width="50%">
 
-#### 💻 <a href="https://github.com/chensoul/chensoul/blob/main/releases.md" target="_blank">Product Releases</a>
+#### 🏂 Product Releases
 
 <!-- recent_releases starts -->
 * <a href=https://github.com/chensoul/learning-hadoop/releases/tag/v0.0.1 target='_blank'>learning-hadoop</a>：学习 hadoop 示例代码
@@ -53,9 +52,9 @@ enjoy reading, thinking and writing in my leisure time.
 </tr>
 
 <tr>
-<td style="vertical-align: top;width:50%">
+<td valign="top" width="50%">
 
-#### 📰 Recent Blog
+#### 🏠 Recent Blog
 
 <!-- blog starts -->
 * <a href=https://blog.chensoul.com/posts/2023/01/15/weekly_review_2/ target='_blank'>周报 #2｜博客重构</a>
@@ -67,9 +66,9 @@ enjoy reading, thinking and writing in my leisure time.
 
 </td>
 
-<td style="vertical-align: top;width:50%">
+<td valign="top" width="50%">
 
-#### 🎧 Recent Digests
+#### 🤾‍ Recent Digests
 
 <!-- douban starts -->
 * <a href='https://book.douban.com/subject/30468597/' target='_blank'>想读重构（第2版）</a>
@@ -81,4 +80,7 @@ enjoy reading, thinking and writing in my leisure time.
 </tr>
 
 </table>
+
+![picture](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
+
 <!-- readme ends -->
