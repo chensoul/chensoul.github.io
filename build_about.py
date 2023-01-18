@@ -27,4 +27,4 @@ if __name__ == "__main__":
     readme_contents = file.open().read()
     rewritten = replace_chunk(readme_contents, "readme", readme)
 
-    readme.open("w").write(rewritten)
+    file.open("w").write(rewritten)
