@@ -15,7 +15,6 @@ rss_ignore: true
 [![Twitter](https://img.shields.io/twitter/follow/chensoul_eth?logo=twitter&style=flat-square)](https://twitter.com/chensoul_eth)
 [![Visits Badge](https://badges.strrl.dev/visits/chensoul/chensoul?style=flat-square)](https://github.com/chensoul)
 
-
 [![Contributions Badge](https://badges.strrl.dev/contributions/all/chensoul?style=flat-square)](https://github.com/chensoul)
 [![Contributions Badge](https://badges.strrl.dev/contributions/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
 [![Commits Badge](https://badges.strrl.dev/commits/weekly/chensoul?style=flat-square)](https://github.com/chensoul)
@@ -23,7 +22,8 @@ rss_ignore: true
 
 <br />
 
-I'm chensoul, a java developer. Love to learn and build things. I want to learn things and become a better person. I enjoy reading, thinking and writing in my leisure time.
+I'm chensoul, a java developer. Love to learn and build things. I want to learn things and become a better person. I
+enjoy reading, thinking and writing in my leisure time.
 
 - 😄 Wechat: chenshu_eth
 - 📧 Email: chensoul.eth@gmail.com
@@ -31,22 +31,20 @@ I'm chensoul, a java developer. Love to learn and build things. I want to learn 
 - 👨🏻‍💻 Github: https://github.com/chensoul
 - 💼 Telegram: https://t.me/chensoulshare
 
-![picture](https://blog.chensoul.com/images/dino.gif)
+![picture](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dino.gif)
 
 
-<table width="960px">
+<table style="width: auto">
 <tr>
-<td valign="top" width="50%">
+<td style="vertical-align: top;width:50%">
 
 #### 👨🏻‍💻 Weekly Development Breakdown
 
 ![light](https://raw.githubusercontent.com/chensoul/chensoul/main/images/wakatime_weekly_language_stats.svg#gh-light-mode-only)
 
-![dark](https://raw.githubusercontent.com/chensoul/chensoul/main/images/wakatime_weekly_language_stats_black.svg#gh-dark-mode-only)
-
 </td>
 
-<td valign="top" width="50%">
+<td style="vertical-align: top;width:50%">
 
 #### 💻 <a href="https://github.com/chensoul/chensoul/blob/main/releases.md" target="_blank">Product Releases</a>
 
@@ -61,7 +59,7 @@ I'm chensoul, a java developer. Love to learn and build things. I want to learn 
 </tr>
 
 <tr>
-<td valign="top" width="50%">
+<td style="vertical-align: top;width:50%">
 
 #### 📰 Recent Blog
 
@@ -75,7 +73,7 @@ I'm chensoul, a java developer. Love to learn and build things. I want to learn 
 
 </td>
 
-<td valign="top" width="50%">
+<td style="vertical-align: top;width:50%">
 
 #### 🎧 Recent Digests
 
