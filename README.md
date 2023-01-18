@@ -23,7 +23,7 @@ enjoy reading, thinking and writing in my leisure time.
 - 📧 Email: chensoul.eth@gmail.com
 - 🏠 Blog: https://blog.chensoul.com
 - 👨🏻‍💻 Github: https://github.com/chensoul
-- 💼 Telegram: https://t.me/chensoulshare
+- 💼 Telegram: https://t.me/chensoul_share
 
 ### My Activities 🌟
 

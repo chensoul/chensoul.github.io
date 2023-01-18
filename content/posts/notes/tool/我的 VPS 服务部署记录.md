@@ -90,10 +90,6 @@ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
 ```
 
-
-
-### Nginx Proxy Manager
-
 ### Postgresql
 
 1、参考 [PostgreSql安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建 postgresql.yaml：
@@ -132,7 +128,6 @@ docker-compose -f postgresql.yaml up
 ### Umami
 
 参考 [umami docker-compose.yml](https://github.com/umami-software/umami/blob/master/docker-compose.yml) ，使用 docker 镜像 umami:postgresql-latest 来安装 umami。
-
 
 
 1、在 pqsql 容器创建 umami 数据库和用户：
@@ -189,19 +184,13 @@ networks:
 docker-compose -f umami.yaml up 
 ```
 
-
-
 3、设置自定义域名
 
 umami.chensoul.com
 
-
-
 4、添加网站
 
 访问 https://umami.chensoul.com/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
-
-
 
 
 
@@ -255,3 +244,70 @@ docker 部署：
 docker run -d --name memos -p 5230:5230 -v ~/.memos/:/var/opt/memos neosmemo/memos:latest
 ```
 
+### n8n
+
+1、在 pqsql 容器创建 n8n 数据库和用户：
+
+```bash
+docker exec -it pgsql psql -U postgres -c "CREATE USER n8n WITH PASSWORD 'n8n@pg';" 
+
+docker exec -it pgsql psql -U postgres -c "CREATE DATABASE n8n owner=n8n;" 
+
+docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE n8n TO n8n;" ;
+```
+
+2、通过 docker-compose 安装，创建 n8n.yaml：
+
+```yaml
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    restart: always
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=pgsql
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=n8n@pg
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=chenzj
+      - TZ="Asia/Shanghai"
+    ports:
+      - 5678:5678
+    volumes:
+      - /data/n8n:/home/node/.n8n
+    command: /bin/sh -c "n8n start --tunnel"
+    networks:
+      - custom  
+    
+networks:
+  custom:
+    external: true 
+```
+
+3、启动
+
+```bash
+docker-compose -f n8n.yaml up -d
+```
+
+4、设置 nginx 转发
+
+```text
+location / {
+    proxy_pass http://127.0.0.1:5678/;
+    proxy_set_header Connection '';
+    proxy_http_version 1.1;
+    chunked_transfer_encoding off;
+    proxy_buffering off;
+    proxy_cache off;
+    access_log /var/log/nginx/forward.log combined buffer=128k flush=5s;
+}
+```
+
+这里面的转发配置不对的话，会导致直接访问 5678 端口正常，但是访问 nginx 的话，workflow 会一直处于执行。
