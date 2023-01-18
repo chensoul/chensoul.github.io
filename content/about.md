@@ -22,8 +22,9 @@ rss_ignore: true
 
 <br />
 
-I'm chensoul, a java developer. Love to learn and build things. I want to learn things and become a better person. I
-enjoy reading, thinking and writing in my leisure time.
+I'm chensoul, a Java developer based in China Wuhan. Love to learn and build things.  Follow me on [GitHub](https://github.com/chensoul). Know me on [Telegram Channel](https://t.me/chensoulshare).
+
+I want to learn things and become a better person. I enjoy reading, thinking and writing in my leisure time.
 
 - 😄 Wechat: chenshu_eth
 - 📧 Email: chensoul.eth@gmail.com
@@ -32,6 +33,8 @@ enjoy reading, thinking and writing in my leisure time.
 - 💼 Telegram: https://t.me/chensoul_share
 
 ### My Activities 🌟
+
+<!-- see https://github.com/tw93/tw93 -->
 
 <table style="width: auto">
 <tr>
