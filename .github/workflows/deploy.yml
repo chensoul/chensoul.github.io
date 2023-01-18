@@ -39,6 +39,7 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |-
           python build_about.py content/about.md
+          python build_about.py README.md
           cat content/about.md
 
       - name: Commit and push if changed
