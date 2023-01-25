@@ -1,10 +1,10 @@
 ---
-title: "我的 VPS 服务部署记录"
-date: 2023-01-16T10:38:34+08:00
-draft: true
-slug: "note-of-deploy-services-in-my-vps"
+title: "我的VPS服务部署记录"
+date: 2023-01-25T10:38:34+08:00
+draft: false
+slug: "notes-about-deploy-services-in-vps"
 categories: ["Notes"]
-tags: ["hugo"]
+tags: ["hugo","docker","rsshub","kuma","umami","cusdis","memos","n8n"]
 authors:
   - chensoul
 ---
@@ -76,11 +76,43 @@ networks:
 
 ### Rsshub
 
-直接通过安装运行：
+直接通过 Docker 安装运行：
 
 ```bash
 docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
+
+配置 nginx ：
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rsshub.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     rsshub.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:1200;
+    }
+}
+```
+
+
 
 ### Kuma
 
@@ -89,6 +121,45 @@ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```bash
 docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
 ```
+
+配置 nginx ：
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name uptime.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     uptime.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3001;
+	proxy_http_version 1.1;
+	proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   Host $host;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection "upgrade";
+        proxy_set_header   Host $host;
+    }
+}
+```
+
+
 
 ### Postgresql
 
@@ -122,8 +193,6 @@ networks:
 ```bash
 docker-compose -f postgresql.yaml up 
 ```
-
-
 
 ### Umami
 
@@ -188,7 +257,37 @@ docker-compose -f umami.yaml up
 
 umami.chensoul.com
 
-4、添加网站
+4、配置 nginx
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name umami.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     umami.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+    }
+}
+```
+
+5、添加网站
 
 访问 https://umami.chensoul.com/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
 
@@ -236,6 +335,47 @@ networks:
 docker-compose -f cusdis.yaml up -d
 ```
 
+4、配置 nginx 
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name cusdis.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     cusdis.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3010;
+	proxy_pass_header Authorization;
+	proxy_pass_header WWW-Authenticate;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	if ($uri = '/js/iframe.umd.js') {
+        	add_header 'Access-Control-Allow-Origin' '*';
+        	#add_header 'Access-Control-Allow-Origin' 'http://localhost:1313';
+    	}
+    }
+}
+```
+
+
+
 ### memos
 
 docker 部署：
@@ -243,6 +383,38 @@ docker 部署：
 ```bash
 docker run -d --name memos -p 5230:5230 -v ~/.memos/:/var/opt/memos neosmemo/memos:latest
 ```
+
+配置 nginx 
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name memos.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     memos.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:5230;
+    }
+}
+```
+
+
 
 ### n8n
 
@@ -298,7 +470,7 @@ docker-compose -f n8n.yaml up -d
 
 4、设置 nginx 转发
 
-```text
+```nginx
 location / {
     proxy_pass http://127.0.0.1:5678/;
     proxy_set_header Connection '';
@@ -314,4 +486,6 @@ location / {
 
 5、添加 workflow
 
-http://stiles.cc/archives/237/
+参考这篇文章 http://stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。
+
+![my-n8n-workflows](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/my-n8n-workflows.png)
