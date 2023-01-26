@@ -66,11 +66,11 @@ I want to learn things and become a better person. I enjoy reading, thinking and
 #### 🏠 Recent Blog
 
 <!-- blog starts -->
+* <a href=https://blog.chensoul.com/posts/2023/01/25/notes-about-deploy-services-in-vps/ target='_blank'>我的VPS服务部署记录</a>
+* <a href=https://blog.chensoul.com/posts/2023/01/25/weekly_review_3/ target='_blank'>周报 #3｜博客定制、VPS部署服务</a>
 * <a href=https://blog.chensoul.com/posts/2023/01/15/weekly_review_2/ target='_blank'>周报 #2｜博客重构</a>
 * <a href=https://blog.chensoul.com/posts/2023/01/08/weekly_review_1/ target='_blank'>周报 #1｜开始写周报、冥想</a>
 * <a href=https://blog.chensoul.com/posts/2022/08/19/greenplum-cc-web-install-deploy/ target='_blank'>Greenplum CC Web安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/2022/08/19/greenplum-install-deploy/ target='_blank'>Greenplum安装和部署</a>
-* <a href=https://blog.chensoul.com/posts/2022/08/19/postgresql-install-deploy/ target='_blank'>PostgreSql安装和部署</a>
 <!-- blog ends -->
 
 </td>
