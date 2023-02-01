@@ -329,6 +329,19 @@ networks:
     external: true    
 ```
 
+以下配置为 EMAIL 配置可选，下面是使用 [Gmail](https://cusdis.com/doc#/features/notification?id=gmail) 进行配置，需要首先开启两阶段验证并创建一个应用密码：
+
+```properties
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=your gmail email
+SMTP_PASSWORD=<app password>
+SMTP_SENDER=your gmail email
+```
+
+
+
 3、启动
 
 ```bash
