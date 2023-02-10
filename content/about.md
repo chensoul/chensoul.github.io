@@ -80,11 +80,11 @@ I want to learn things and become a better person. I enjoy reading, thinking and
 #### 📺‍ Recent Digests
 
 <!-- douban starts -->
-* <a href='http://movie.douban.com/subject/35513968/' target='_blank'>看过交换人生</a>
-* <a href='http://movie.douban.com/subject/35372742/' target='_blank'>看过无名</a>
-* <a href='http://movie.douban.com/subject/35766491/' target='_blank'>看过满江红</a>
-* <a href='http://movie.douban.com/subject/35208467/' target='_blank'>看过想见你</a>
-* <a href='http://movie.douban.com/subject/35891542/' target='_blank'>看过绝望主夫</a>
+* <a href='http://movie.douban.com/subject/32493124/' target='_blank'>想看悬崖之上</a>
+* <a href='http://movie.douban.com/subject/35267208/' target='_blank'>看过流浪地球2</a>
+* <a href='http://movie.douban.com/subject/36156235/' target='_blank'>想看重启人生</a>
+* <a href='http://movie.douban.com/subject/25848328/' target='_blank'>想看最后生还者 第一季</a>
+* <a href='http://movie.douban.com/subject/35590262/' target='_blank'>在看粉红理论</a>
 <!-- douban ends -->
 
 </td>
