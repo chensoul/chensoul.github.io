@@ -23,7 +23,7 @@ authors:
 
 基于 [pseudoyu](https://www.pseudoyu.com/) 的博客和主题定制博客，发现并修复了bug，还做了一些改进，并在他的 github 提交 [issue](https://github.com/pseudoyu/pseudoyu/issues/2) 和 merge request。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/github-issue-build-aboutme-py.png" alt="github-issue-build-aboutme-py" style="width: 70%"/>
+<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/github-issue-build-aboutme-py.png" alt="github-issue-build-aboutme-py" style="width: 80%"/>
 
 
 
@@ -43,7 +43,7 @@ authors:
 
 我的博客源文件托管在 [gihub](https://github.com/chensoul/chensoul.github.io)，在这个仓库可以看到我的一些个人介绍，当然，我的博客也有个人介绍（在[关于](https://blog.chensoul.com/about/)页面），如果你仔细观察，可以发现他们基本上是一样的，这个是怎么实现的呢？
 
-<img src="http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/chensoul-github-io-readme.png" alt="chensoul-github-io-readme" style="width: 70%"/>
+<img src="http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/chensoul-github-io-readme.png" alt="chensoul-github-io-readme" style="width: 80%"/>
 
 首先，github 里面可以创建一个以 github 账号为名称的仓库，然后编辑好 README.md 文件，README.md 文件内容就会渲染成 html 显示到个人 github 主页。例如，我的 github 主页是 https://github.com/chensoul，我的个人仓库地址为 https://github.com/chensoul/chensoul，这个仓库是通过 github actions 来构建 README.md，构建文件查看仓库的 workflows 文件，主要有两个文件：
 
