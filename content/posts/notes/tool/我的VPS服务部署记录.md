@@ -391,10 +391,18 @@ server {
 
 ### memos
 
-docker 部署：
+通过 docker-compose 安装，创建 memos.yaml：
 
-```bash
-docker run -d --name memos -p 5230:5230 -v ~/.memos/:/var/opt/memos neosmemo/memos:latest
+```yaml
+version: "3.0"
+services:
+  memos:
+    image: neosmemo/memos:latest
+    container_name: memos
+    volumes:
+      - ~/.memos/:/var/opt/memos
+    ports:
+      - 5230:5230
 ```
 
 配置 nginx 
