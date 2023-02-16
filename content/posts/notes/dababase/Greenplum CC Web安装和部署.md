@@ -185,7 +185,6 @@ tailf $GPCC_HOME/logs/gpccws.log
 
 11、访问浏览器 http://192.168.56.141:28080 ，用户名和密码为 gpmon
 
-![image-20191217120230168](https://tva1.sinaimg.cn/large/006tNbRwgy1g9zl5upkvbj316u0u00xe.jpg)
 
 12、查看配置参数
 
