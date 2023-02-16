@@ -4,8 +4,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    # Runs everyday at 8:00 AM
-    - cron: "0 0 * * *"
+    - cron: "6 * * * *"
 
 jobs:
   build:
@@ -40,7 +39,6 @@ jobs:
         run: |-
           python build_about.py content/about.md
           python build_about.py README.md
-          cat content/about.md
 
       - name: Commit and push if changed
         run: |-
