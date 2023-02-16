@@ -3,14 +3,14 @@
     <span class="arrow-icon"></span>
   </a>
   <script>
-    var mybutton = document.getElementById("scroll-top");
+    var topButton = document.getElementById("scroll-top");
     window.onscroll = function () {
         if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
+          topButton.style.visibility = "visible";
+          topButton.style.opacity = "1";
         } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
+          topButton.style.visibility = "hidden";
+          topButton.style.opacity = "0";
         }
     };
   </script>
