@@ -9,8 +9,6 @@ authors:
   - chensoul
 ---
 
-
-
 ## Docker 安装和配置
 
 ### Docker 安装
@@ -158,7 +156,6 @@ server {
     }
 }
 ```
-
 
 
 ### Postgresql
@@ -405,6 +402,12 @@ services:
       - 5230:5230
 ```
 
+启动
+
+```bash
+docker-compose -f memos.yaml up -d
+```
+
 配置 nginx 
 
 ```nginx
@@ -470,6 +473,7 @@ services:
       - N8N_BASIC_AUTH_USER=admin
       - N8N_BASIC_AUTH_PASSWORD=chenzj
       - TZ="Asia/Shanghai"
+      - WEBHOOK_URL=https://n8n.chensoul.com/
     ports:
       - 5678:5678
     volumes:
