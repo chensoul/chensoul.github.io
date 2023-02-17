@@ -33,13 +33,13 @@ rss_ignore: true
 ## Recent Blog Posts
 
 <!-- blog starts -->
-- <a href=https://blog.chensoul.com/posts/2023/02/13/weekly_review_6/ target='_blank'>周报 #6｜买车和选号、粉色理论</a>
-- <a href=https://blog.chensoul.com/posts/2023/02/07/weekly_review_5/ target='_blank'>周报 #5｜项目事故、牙疼、Damus</a>
-- <a href=https://blog.chensoul.com/posts/2023/01/30/weekly_review_4/ target='_blank'>周报 #4｜过年、向上管理、工作周总结</a>
+- <a href=https://blog.chensoul.com/posts/2023/02/13/weekly_review_6/ target='_blank'>周报-6｜买车和选号、粉色理论</a>
+- <a href=https://blog.chensoul.com/posts/2023/02/07/weekly_review_5/ target='_blank'>周报-5｜项目事故、牙疼、Damus</a>
+- <a href=https://blog.chensoul.com/posts/2023/01/30/weekly_review_4/ target='_blank'>周报-4｜过年、向上管理、工作周总结</a>
 - <a href=https://blog.chensoul.com/posts/2023/01/25/notes-about-deploy-services-in-vps/ target='_blank'>我的VPS服务部署记录</a>
-- <a href=https://blog.chensoul.com/posts/2023/01/25/weekly_review_3/ target='_blank'>周报 #3｜博客定制、VPS部署服务</a>
-- <a href=https://blog.chensoul.com/posts/2023/01/15/weekly_review_2/ target='_blank'>周报 #2｜博客重构</a>
-- <a href=https://blog.chensoul.com/posts/2023/01/08/weekly_review_1/ target='_blank'>周报 #1｜开始写周报、冥想</a>
+- <a href=https://blog.chensoul.com/posts/2023/01/25/weekly_review_3/ target='_blank'>周报-3｜博客定制、VPS部署服务</a>
+- <a href=https://blog.chensoul.com/posts/2023/01/15/weekly_review_2/ target='_blank'>周报-2｜博客重构</a>
+- <a href=https://blog.chensoul.com/posts/2023/01/08/weekly_review_1/ target='_blank'>周报-1｜开始写周报、冥想</a>
 - <a href=https://blog.chensoul.com/posts/2022/08/19/greenplum-cc-web-install-deploy/ target='_blank'>Greenplum CC Web安装和部署</a>
 <!-- blog ends -->
 
