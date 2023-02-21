@@ -236,3 +236,8 @@ window.localStorage.removeItem(Object.keys(window.localStorage).find(i=>i.starts
 
 强烈推荐这个网页翻译插件，和其他插件翻译整个页面相比，这个插件的优势是可以同时显示双语，中英文对照非常棒，是一个 [开源](https://github.com/immersive-translate/immersive-translate) 的项目，完全免费使用。也支持 PDF，配合任何 [epub 在线阅读网站](https://epub-reader.online/)对照翻译阅读书也非常方便。也支持了Deepl，腾讯翻译等等的翻译服务。开发者 [@OwenYoungZh](https://twitter.com/OwenYoungZh)
 
+
+#### 4、[Input Source Pro](https://inputsource.pro/zh-CN)
+
+Input Source Pro 可以根据应用或是网站自动切换输入法，并且在切换窗口的时候还会贴心的提示当前的输入法是什么，比如设置 VSCode、iTerm、Xcode 默认为英文输入法，而笔记软件和企业微信默认为中文输入法，切换软件时再也不需要按 shift 键了！（这款软件安利给同事们之后纷纷点赞，简直程序员刚需）
+
