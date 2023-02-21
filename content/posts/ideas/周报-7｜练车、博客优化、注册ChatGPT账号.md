@@ -55,6 +55,14 @@ authors:
 
 
 
+![weekly-review-07](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07.png)
+
+
+
+老婆给我买的实习期贴牌到了，后面司机看到这么可爱的牌子，估计以为是个妹子在开车吧，应该会喇叭下留情了吧😄。
+
+
+
 接下来的周末，还要继续练车，和车子培养感情，从内到外熟悉车子，熟悉上班路线和交通规则，提高行驶速度。加油💪🏻！
 
 
@@ -172,7 +180,7 @@ body {
 window.localStorage.removeItem(Object.keys(window.localStorage).find(i=>i.startsWith('@@auth0spajs')))
 ```
 
-如果还是无效，则清理浏览器 cookie 和 session，再刷新页面。
+> 如果还是无效，则清理浏览器 cookie 和 session，再刷新页面。
 
 
 
