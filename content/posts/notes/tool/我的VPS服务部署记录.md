@@ -6,7 +6,9 @@ slug: "notes-about-deploy-services-in-vps"
 categories: ["Notes"]
 tags: ["hugo","docker","rsshub","kuma","umami","cusdis","memos","n8n"]
 authors:
-  - chensoul
+
+- chensoul
+
 ---
 
 ## Docker 安装和配置
@@ -17,7 +19,8 @@ authors:
 
 ### 自定义网络
 
-参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network) ，创建一个自定义的网络：
+参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network)
+，创建一个自定义的网络：
 
 ```bash
 docker network create custom
@@ -68,8 +71,6 @@ networks:
     name: custom
 ```
 
-
-
 ## 服务部署
 
 ### Rsshub
@@ -109,8 +110,6 @@ server {
     }
 }
 ```
-
-
 
 ### Kuma
 
@@ -157,10 +156,10 @@ server {
 }
 ```
 
-
 ### Postgresql
 
-1、参考 [PostgreSql安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建 postgresql.yaml：
+1、参考 [PostgreSql安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建
+postgresql.yaml：
 
 ```yaml
 version: "3"
@@ -193,8 +192,8 @@ docker-compose -f postgresql.yaml up
 
 ### Umami
 
-参考 [umami docker-compose.yml](https://github.com/umami-software/umami/blob/master/docker-compose.yml) ，使用 docker 镜像 umami:postgresql-latest 来安装 umami。
-
+参考 [umami docker-compose.yml](https://github.com/umami-software/umami/blob/master/docker-compose.yml) ，使用 docker 镜像
+umami:postgresql-latest 来安装 umami。
 
 1、在 pqsql 容器创建 umami 数据库和用户：
 
@@ -218,8 +217,6 @@ umami=>
 ```
 
 执行 [**schema.postgresql.sql**](https://github.com/umami-software/umami/blob/master/sql/schema.postgresql.sql) 文件内容。
-
-
 
 2、通过 docker-compose 安装，创建 umami.yaml：
 
@@ -288,8 +285,6 @@ server {
 
 访问 https://umami.chensoul.com/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
 
-
-
 ### Cusdis
 
 1、在 pqsql 容器创建 cusdis 数据库和用户：
@@ -326,7 +321,8 @@ networks:
     external: true    
 ```
 
-以下配置为 EMAIL 配置可选，下面是使用 [Gmail](https://cusdis.com/doc#/features/notification?id=gmail) 进行配置，需要首先开启两阶段验证并创建一个应用密码：
+以下配置为 EMAIL 配置可选，下面是使用 [Gmail](https://cusdis.com/doc#/features/notification?id=gmail)
+进行配置，需要首先开启两阶段验证并创建一个应用密码：
 
 ```properties
 SMTP_HOST=smtp.gmail.com
@@ -337,15 +333,13 @@ SMTP_PASSWORD=<app password>
 SMTP_SENDER=your gmail email
 ```
 
-
-
 3、启动
 
 ```bash
 docker-compose -f cusdis.yaml up -d
 ```
 
-4、配置 nginx 
+4、配置 nginx
 
 ```nginx
 server {
@@ -384,7 +378,64 @@ server {
 }
 ```
 
+### Artalk
 
+通过 docker-compose 安装，创建 artalk.yaml：
+
+```yaml
+version: "3.5"
+services:
+  artalk:
+    container_name: artalk
+    image: artalk/artalk-go
+    restart: always
+    ports:
+      - 23366:23366
+    volumes:
+      - ~/.artalk:/data
+```
+
+启动
+
+```bash
+docker-compose -f artalk.yaml up -d
+```
+
+配置 nginx
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name artalk.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     artalk.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:23366;
+    }
+}
+```
+
+在SSH客户端中输入下面的命令，设置输入信息设置管理员账号
+
+```build
+docker exec -it artalk artalk admin
+```
 
 ### memos
 
@@ -408,7 +459,7 @@ services:
 docker-compose -f memos.yaml up -d
 ```
 
-配置 nginx 
+配置 nginx
 
 ```nginx
 server {
@@ -437,8 +488,6 @@ server {
     }
 }
 ```
-
-
 
 ### n8n
 

@@ -73,5 +73,5 @@ authors:
 
 通过 Docker 部署这些服务非常简单，主要是需要注意的一点是：将这些服务部署到同一个网路，这样各个服务之间可以互相通信。比如：很多服务都需要依赖数据库 postgresql，可以使用 docker-compose 来编排服务。安装部署过程参考：[我的VPS服务部署记录](/posts/2023/01/25/notes-about-deploy-services-in-vps/)
 
-
+以上。
 
