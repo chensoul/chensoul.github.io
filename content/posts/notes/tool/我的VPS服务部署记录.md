@@ -113,10 +113,26 @@ server {
 
 ### Kuma
 
-参考 [kuma](https://uptime.kuma.pet/)，使用 Docker 部署：
+参考 [kuma](https://uptime.kuma.pet/)，使用 docker compose 部署，创建 uptime.yaml：
+
+```yaml
+version: '3.3'
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ~/.uptime-kuma:/app/data
+    ports:
+      - 3001:3001  # <Host Port>:<Container Port>
+    restart: always
+```
+
+启动：
 
 ```bash
-docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
+docker-compose -f uptime.yaml up -d
 ```
 
 配置 nginx ：
@@ -145,13 +161,13 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:3001;
-	proxy_http_version 1.1;
-	proxy_set_header   X-Real-IP $remote_addr;
+	    proxy_set_header   X-Real-IP $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
+        
+        proxy_http_version 1.1;
         proxy_set_header   Upgrade $http_upgrade;
         proxy_set_header   Connection "upgrade";
-        proxy_set_header   Host $host;
     }
 }
 ```
@@ -187,7 +203,7 @@ networks:
 2、启动
 
 ```bash
-docker-compose -f postgresql.yaml up 
+docker-compose -f postgresql.yaml up -d
 ```
 
 ### Umami
@@ -244,7 +260,7 @@ networks:
 启动：
 
 ```bash
-docker-compose -f umami.yaml up 
+docker-compose -f umami.yaml up -d
 ```
 
 3、设置自定义域名
@@ -376,65 +392,6 @@ server {
     	}
     }
 }
-```
-
-### Artalk
-
-通过 docker-compose 安装，创建 artalk.yaml：
-
-```yaml
-version: "3.5"
-services:
-  artalk:
-    container_name: artalk
-    image: artalk/artalk-go
-    restart: always
-    ports:
-      - 23366:23366
-    volumes:
-      - ~/.artalk:/data
-```
-
-启动
-
-```bash
-docker-compose -f artalk.yaml up -d
-```
-
-配置 nginx
-
-```nginx
-server {
-    listen 80;
-    listen [::]:80;
-    server_name artalk.chensoul.com;
-
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen          443 ssl;
-    server_name     artalk.chensoul.com;
-
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
-
-    ssl_session_cache    shared:SSL:1m;
-    ssl_session_timeout  5m;
-
-    ssl_ciphers  HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers  on;
-
-    location / {
-        proxy_pass http://127.0.0.1:23366;
-    }
-}
-```
-
-在SSH客户端中输入下面的命令，设置输入信息设置管理员账号
-
-```build
-docker exec -it artalk artalk admin
 ```
 
 ### memos
