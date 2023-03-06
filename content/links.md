@@ -24,7 +24,7 @@ Java 开发工程师，曾在拉手网、阿里巴巴工作，现就职于多点
 
 我的博客信息：
 
-> - **名称:** ChenSoul
-> - **地址:** https://blog.chensoul.com
-> - **头像:** https://blog.chensoul.com/images/author.webp
-> - **描述:** 健康，爱情和使命，按照这个顺序，其它的都不重要
+- **名称:** ChenSoul
+- **地址:** https://blog.chensoul.com
+- **头像:** https://blog.chensoul.com/images/author.webp
+- **描述:** 健康，爱情和使命，按照这个顺序，其它的都不重要
