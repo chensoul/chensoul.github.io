@@ -22,7 +22,7 @@ authors:
 
 一天下来，总共开车有五个多小时，感觉开车好累。作为新手，开车的过程中要全神贯注，铭记开车最重要的是慢这一原则，速度不敢过快。
 
-![weekly-review-06](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-06.webp)
+![weekly-review-06](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07-06.webp)
 
 回顾这一天的练车过程，发现自己存在以下问题：
 
@@ -41,7 +41,7 @@ authors:
 
 基于以上表现，接下来一周还是坐地铁上班。目前来说还是更喜欢坐地铁上班，可以看视频听音频，可以查看 RSS   订阅文章，可以写周报，可以闭目养神。
 
-![weekly-review-07](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07.png)
+![weekly-review-07](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07-07.png)
 
 老婆给我买的实习期贴牌到了，后面司机看到这么可爱的牌子，估计以为是个妹子在开车吧，应该会喇叭下留情了吧😄。
 
@@ -90,7 +90,7 @@ body {
 
 以上优化完成之后，在 [PageSpeed Insights](https://pagespeed.web.dev/) 网站上对博客首页加载速度进行了测速。移动端测试结果为 93 分，如下图：
 
-![weekly-review-01](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-01.png)
+![weekly-review-07-01](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07-01.png)
 
 影响评分的原因在于：
 
@@ -100,16 +100,14 @@ body {
 
 桌面端测试结果评分为 99 分：
 
-![weekly-review-02](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-02.png)
+![weekly-review-07-02](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07-02.png)
 
 
 另外，试了一下使用 chatgpt 来给出网站优化建议，回答如下：
 
-![weekly-review-05](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-05.png)
+
 
 ## n8n 调整
-
-![weekly-review-03](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-03.png)
 
 新增了 3 个 workflow：
 
@@ -119,7 +117,7 @@ body {
 
 - 每天早上 7 点，发送天气预报给微信
 
-![weekly-review-04](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-04.png)
+![weekly-review-07-03](../../../../../../Pictures/weekly-review-07-03.png)
 
 
 修改了以下 workflow：
