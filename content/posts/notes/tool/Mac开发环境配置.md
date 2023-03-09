@@ -30,7 +30,7 @@ typora-root-url: ../../../../static
   - command + 空格：spotlight  
   - control + 空格：切换输入法
 
-## XCode
+## 安装XCode
 
 从 App store 或苹果开发者网站安装 [Xcode](https://developer.apple.com/xcode/) ，然后安装 Xcode command line tools：
 
@@ -46,19 +46,18 @@ xcode-select --install
 ls /Library/Developer/CommandLineTools/usr/bin/
 ```
 
-## Homebrew
+## 安装Homebrew
 
 [Brew](http://brew.sh/) 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。
 
-Linux也支持Homebrew了，请参考 https://docs.brew.sh/Homebrew-on-Linux。
-
-### 安装
+打开终端模拟器，开始安装
 
 ```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-替换brew.git
+##### 替换 brew.git 源 
+
 ```bash
 git -C "$(brew --repo)" remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git 
 git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git brew update
@@ -66,39 +65,70 @@ git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.clou
 
 设置环境变量：
 ```bash
-echo 'PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
 ```
 
 如果安装了zsh，则是：
 ```bash
-echo 'PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
 ```
 
-### Cask
+## 安装软件包
 
-[Brew cask](https://github.com/phinze/homebrew-cask) 是类似 Brew 的管理工具， 直接提供 dmg 级别的二进制包，（Brew 是不带源码，只有对应项目所在的 URL）。我们可以通过 Homebrew Cask 优雅、简单、快速的安装和管理 OS X 图形界面程序，比如 Google Chrome 和 Dropbox。
+### 基本软件包
 
-Brew cask 安装：
+这些是基本软件包，建议安装
+
 ```bash
-brew tap phinze/homebrew-cask
+brew install zsh \
+   wget \
+   curl \
+   git \
+   openssh \
+   gnupg \
+   cmake \
+   vim \
+   tree \
+   nvm \
+   aria2 \
+   ffmpeg \
+   htop \
+   neofetch \
+   go
 ```
 
-可以通过 Brew cask 安装的软件有：
+### 常用软件
 
-- QQ
-- qqmusic
-- google-chrome 
-- virtualbox 
-- vagrant 
-- iterm2 
-- the-unarchiver  
-- switchhosts 
-- aerial 
-- fliqlo
+常用软件，可以选择安装
 
-## iTerm2
+```bash
+brew install --cask clash-for-windows \
+    iterm2 \
+    telegram-desktop \
+    typora \
+    google-chrome \
+    visual-studio-code \
+    coteeditor \
+    golang \
+    mos \
+    pycharm \
+    obsidian \
+    notion \
+    lark \
+    keka \
+    shottr
+```
 
-安装：
+
+
+## 打造个性化终端
+
+### iTerm2
+
+iTerm2 是 macOS 系统终端的开源替代品，它是高度可定制化的，并且功能十分强大，应该是 macOS 最好用的终端模拟器之一。
+
+#### 安装
+
 ```bash
 brew install --cask iterm2
 ```
@@ -107,168 +137,167 @@ brew install --cask iterm2
 - Preferences --> Profiles--> Default --> Terminal：设置 cursor 颜色为黄色
 - Preferences --> Profiles --> Window --> Transparency：设置透明度 10%~20% 即可，太高会和桌面背景冲突。如果需要临时禁用透明度可以使用快捷键 ⌘+u。
 
+
+
+#### 字体
+
+在 iTerm2 中，终端的字体可以对正常字体和非 ASCII 字体进行单独的设置，[Nerd-Fonts](https://github.com/ryanoasis/nerd-fonts) 是一个使用大量字形（图标）修补开发人员目标字体的项目
+
+分别安装  [font-fantasque-sans-mono-nerd-font](https://github.com/ryanoasis/nerd-fonts) + [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)  这两种字体
+
+```
+# brew 添加字体库
+brew tap homebrew/cask-fonts
+# 搜索可用 Nerd Font 字体
+brew search nerd-font
+# 以 font-fantasque-sans-mono-nerd-font 为例（我比较喜欢这个字体🥰）
+# 安装喜欢的 nerd-font 字体
+brew install font-fantasque-sans-mono-nerd-font
+# 安装「霞鹜文楷」字体
+brew install font-lxgw-wenkai
+```
+
+重新启动 iTerm2，按 `⌘` + `,` 打开 iTerm2 的偏好设置，修改字体
+
+#### **安装主题**
+
+[Dracula](https://draculatheme.com/iterm) 主题很好看，下面给 iTerm2 装上
+
+```
+git clone https://github.com/dracula/iterm.git
+```
+
+点击 `import` 导入 `Dracula.itermcolors` 文件，然后选择 `Dracula` 主题即可
+
 ### Zsh
 
-安装：
-```bash
-brew install zsh
-```
-
-**安装Oh My Zsh：**
+macOS 现在默认 Shell 是 Zsh 了（以前是 Bash），下面我们可以一边验证一边修改
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
+# macOS 预设的 Shell
+cat /etc/shells
 
-设置zsh为默认：
+# List of acceptable shells for chpass(1).
+# Ftpd will not allow users to connect who are not using
+# one of these shells.
 
-```bash
-sudo sh -c "echo $(which zsh) >> /etc/shells"  
+/bin/bash
+/bin/csh
+/bin/dash
+/bin/ksh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+
+# 查看当前正在使用的 Shell
+echo $SHELL
+/bin/zsh
+
+# 查看 zsh 版本
+zsh --version
+zsh 5.9 (arm-apple-darwin21.3.0)
+
+# 将 brew 安装的 zsh 路径添加到 /etc/shells
+sudo sh -c "echo $(which zsh) >> /etc/shells" 
+# 更改当前使用的 Shell
 chsh -s $(which zsh)
+Changing shell for dejavu.
+Password for dejavu: # 输入密码即可
+
+# 验证当前使用的 Shell
+echo $SHELL
+/opt/homebrew/bin/zsh
 ```
 
-bash切换到zsh
+如果你的 macOS 系统语言是中文，终端里会使用系统语言作为 `locale` 设置，我想要终端里的 Shell 显示语言为英语，可以编辑 zsh 配置文件
 
 ```bash
-chsh -s /bin/zsh
+# 编辑 zsh 配置用户
+vim ~/.zshrc
+# 在开头加入以下配置
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
 ```
 
-使设置生效：
+### oh-my-zsh
 
 ```bash
+# 通过 cURL 安装
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# 或是通过 Wget 安装
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+```
+
+oh-my-zsh 的默认主题是 `robbyrussell`，修改为 "pygmalion"
+
+```bash
+# 编辑配置文件
+vim ~/.zshrc
+# 找到 ZSH_THEME 字段
+ZSH_THEME="robbyrussell"
+# 将 robbyrussell 改为 ys 即可
+ZSH_THEME="pygmalion"
+# 使配置文件生效
 source ~/.zshrc
 ```
 
-**安装[Oh My Zsh 插件](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins)**，修改 .zshrc ：
 
-```bash
-plugins=(git mvn colorize encode64 urltools wd last-working-dir sublime vagrant Z zsh-syntax-highlighting brew osx)
+
+接下来安装几个 Zshell + oh-my-zsh 的增强插件
+
+#### zsh-z
+
+[zsh-z](https://github.com/agkozak/zsh-z#known-bugs) 快速跳转到经常访问的目录，是 [rupa/z](https://github.com/rupa/z) 的原生 Zshell 端口，具有附加功能
+
+```
+# 源码安装
+git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
+# 编辑配置文件
+vim ~/.zshrc
+# 找到 plugins 字段，加入 zsh-autosuggestions
+plugins=(git zsh-z)
+# 配置文件生效
+source ~/.zshrc
 ```
 
-安装 zsh-syntax-highlighting：
-```bash
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+#### zsh-autosuggestions
+
+[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) 可以根据历史记录对输入进行提示和建议
+
+```
+# 源码安装
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# 编辑配置文件
+vim ~/.zshrc
+# 找到 plugins 字段，加入 zsh-autosuggestions
+plugins=(git zsh-z zsh-autosuggestions)
+# 配置文件生效
+source ~/.zshrc
 ```
 
-安装 zsh-autosuggestions：
-```bash
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+#### zsh-syntax-highlighting
+
+[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) 可以对 Shell 中的命令进行高亮显示
+
+```
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+
+source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ```
 
-安装git-open
-```bash
-git clone https://github.com/paulirish/git-open.git $ZSH_CUSTOM/plugins/git-open
-```
+> 可以 👉 [在这里查看](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) 可用的 Zshell 插件
 
-修改主题，更多主题参考 [Oh My Zsh Wiki](https://github.com/robbyrussell/oh-my-zsh/wiki/themes)：
 
-```bash
-ZSH_THEME=pygmalion
-```
 
-### tree
-
-安装：
-```bash
-brew install tree
-```
-
-### fzf
-
-安装 fzf：
-```bash
-brew install fzf
-```
-
-fzf用法：
-- 1、切换到指定目录
+修改 .zshrc ：
 
 ```bash
-# fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
-```
-
-- 2、查看历史命令，并且执行选中的命令
-
-```bash
-# fh - search in your command history and execute selected command
-fh() {
-  eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
-}
-```
-
-- 3、查看Chrome历史
-
-> 提示：查看 [blog post](https://junegunn.kr/2015/04/browsing-chrome-history-with-fzf/)。
-
-```bash
-# ch - browse chrome history
-ch() {
-  local cols sep
-  cols=$(( COLUMNS / 3 ))
-  sep='{::}'
-
-  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
-
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
-}
-```
-
-注意：
-- 请确认Chrome的历史记录的地址是正确的。
-- 更多说明，参考 [StackOverflow](https://stackoverflow.com/a/16742333/1564365)。
-
-fzf更多用法，参考  **[official repo](https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh)**。
-
-### ack
-
-安装：
-```bash
-brew install ack
-```
-
-搜索 js 文件：
-```bash
-ack --js pancakes
-```
-
-搜索不包含 brew 的文件：
-```bash
-ack -L brew
-```
-
-排序：
-```bash
---sort-files
-```
-
-结果高亮显示：
-```bash
---sort-files
-```
-
-自定义类型：
-```bash
---type-set=markdown=.md,.mkd,.markdown
-```
-
-查看ack配置：
-```bash
-ack --dump
+plugins=(git mvn zsh-z zsh-autosuggestions zsh-syntax-highlighting)
 ```
 
 ## Git
-
-### 安装和配置
 
 安装：
 ```bash
@@ -317,116 +346,14 @@ pbcopy < ~/.ssh/id_rsa.pub
 
 打开 https://github.com/settings/ssh/new，然后添加。
 
-## Bash Completion
 
-安装：
-```bash
-brew install bash-completion
-```
 
-查看更多 completion ：
-```bash
-$ brew search completion
-```
-
-然后，安装，例如：
-```bash
-brew install docker-completion
-```
-
-## Vim
-
-安装：
-```bash
-brew install vim
-```
-
-### vimrc
-
-下载 [The Ultimate vimrc](https://github.com/amix/vimrc)：
-```bash
-git clone https://github.com/amix/vimrc.git ~/.vim_runtime
-```
-
-安装 complete 版本：
-```bash
-sh ~/.vim_runtime/install_awesome_vimrc.sh
-```
-
-安装 bash 版本：
-```bash
-sh ~/.vim_runtime/install_basic_vimrc.sh
-```
-
-更新 vimrc ：
-```bash
-cd ~/.vim_runtime && git pull --rebase && cd -
-```
-
-### Maximum Awesome
-
-安装[Maximum Awesome](https://github.com/square/maximum-awesome)：
+macOS 的 Finder 会在目录下生成一些隐藏文件（如 `.DS_Store`），我们可以使用 GitHub 维护的 macOS `.gitignore` 模板，并让它对当前用户所有的 Git 存储库都生效
 
 ```bash
-git clone https://github.com/square/maximum-awesome.git
-
-cd maximum-awesome
-rake
-```
-
-## Visual Studio Code
-
-安装：
-```bash
-brew install --cask visual-studio-code
-```
-
-从命令行启动vscode：
-- 启动vscode，输入 **Command Palette** (Cmd+Shift+P)，查找 **Shell Command: Install 'code' command in PATH**
-- 重启 vscode 使环境变量生效
-- 在命令行输入 `code .`，在当前目录启动 vscode，也可以这样打开文件 `code myfile.txt`
-
-安装扩展：
-- JavaScript
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- SQL
-  - [PostgreSQL formatter](https://marketplace.visualstudio.com/items?itemName=bradymholt.pgformatter)
-- Markdown
-  - [Markdown Preview](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
-- GitLens
-  - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-- Docker
-  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-- JSON
-  - [Paste JSON as Code](https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype)
-- Live Server
-  - [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-- VS Code Icons
-  - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
-
-## JetBrains IDEs
-
-下载地址：https://www.jetbrains.com/products.html?fromMenu#type=ide
-
-破解插件：https://github.com/osvax/ide-eval-resetter
-
-## Vagrant
-
-安装：
-```bash
-brew install --cask virtualbox
-brew install --cask vagrant
-brew install --cask vagrant-manager
-```
-
-使用：
-```bash
-vagrant box add precise64 https://vagrantcloud.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box
-vagrant init precise64
-vagrant up
-vagrant ssh
-vagrant halt
+curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
+# 附加到全局 .gitignore 文件
+git config --global core.excludesfile ~/.gitignore
 ```
 
 ## MySQL
@@ -803,64 +730,6 @@ pip install ipython
 
 pip install 'ipython[zmq,qtconsole,notebook,test]'
 ```
-
-## Heroku
-
-安装：
-
-```bash
-brew install heroku/brew/heroku
-```
-
-配置：
-
-```bash
-heroku login
-
-mkdir ~/.ssh
-ssh-keygen -t rsa
-
-heroku keys:add
-
-```
-
-使用：
-
-```bash
-$ cd myapp/
-
-# Create the app on Heroku
-$ heroku create myapp
-
-# Deploy it
-$ git push heroku master
-
-# Check its status
-$ heroku ps
-
-# Check the logs
-$ heroku logs -t
-```
-
-## 其他应用
-
-### 开发工具
-
-- [Google Chrome](https://www.google.com/intl/en/chrome/browser/)
-- [1Password](https://agilebits.com/onepassword)：密码
-- [Unarchiver](http://wakaba.c3.cx/s/apps/unarchiver.html)：解压缩软件
-- 百度云网盘
-- 搜狗输入法
-- Typora
-- 飞书
-- xmind
-- PostMan
-- 语雀
-- TablePlus
-- V2rayU
-- Staruml
-- PicGo
-- Sublime Text
 
 ## 参考文章
 

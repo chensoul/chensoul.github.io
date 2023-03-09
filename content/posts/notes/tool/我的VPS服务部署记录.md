@@ -11,6 +11,24 @@ authors:
 
 ---
 
+## 服务器设置
+
+**[可选] 设置系统 Swap 交换分区**
+
+因为 vps 服务器的运行内存很小，所以这里先设置下 Swap
+
+```bash
+# 1GB RAM with 2GB Swap
+sudo fallocate -l 2G /swapfile && \
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=2097152 && \
+sudo chmod 600 /swapfile && \
+sudo mkswap /swapfile && \
+sudo swapon /swapfile && \
+echo "/swapfile swap swap defaults 0 0" | sudo tee -a /etc/fstab && \
+sudo swapon --show && \
+sudo free -h
+```
+
 ## Docker 安装和配置
 
 ### Docker 安装
