@@ -321,6 +321,8 @@ server {
 
 ### Cusdis
 
+> VPS IP 可能被墙，所以可以使用三方云服务部署，具体参考[轻量级开源免费博客评论系统解决方案 （Cusdis + Railway）](https://www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/)
+
 1、在 pqsql 容器创建 cusdis 数据库和用户：
 
 ```bash
