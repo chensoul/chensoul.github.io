@@ -40,14 +40,7 @@
 ## Recent Digests
 
 <!-- douban starts -->
-- <a href='http://movie.douban.com/subject/27663742/' target='_blank'>看过老师·好</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/30282387/' target='_blank'>看过银河补习班</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/26754233/' target='_blank'>看过八佰</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35422807/' target='_blank'>看过扬名立万</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35215390/' target='_blank'>看过狙击手</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35155748/' target='_blank'>看过金刚川</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/34841067/' target='_blank'>看过你好，李焕英</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35444998/' target='_blank'>看过李茂扮太子</a> - 2023-03-11
+
 <!-- douban ends -->
 
 
