@@ -29,6 +29,16 @@ sudo swapon --show && \
 sudo free -h
 ```
 
+## 安装并生成证书
+
+```bash
+curl https://get.acme.sh | sh -s email=czj.june@gmail.com
+
+.acme.sh/acme.sh --issue --server letsencrypt --dns dns_aws -d chensoul.com -d '*.chensoul.com'
+
+.acme.sh/acme.sh --installcert -d chensoul.com -d *.chensoul.com  --cert-file /usr/local/nginx/ssl/chensoul.com.cer --key-file /usr/local/nginx/ssl/chensoul.com.key --fullchain-file /usr/local/nginx/ssl/fullchain.cer --ca-file /usr/local/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
+```
+
 ## Docker 安装和配置
 
 ### Docker 安装
