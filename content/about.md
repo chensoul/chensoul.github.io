@@ -33,6 +33,7 @@ rss_ignore: true
 ## Recent Blog Posts
 
 <!-- blog starts -->
+- <a href=https://blog.chensoul.com/posts/2023/03/20/weekly_review_11/ target='_blank'>周报-11｜从语雀迁移到Obsidian</a>
 - <a href=https://blog.chensoul.com/posts/2023/03/13/weekly_review_10/ target='_blank'>周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami</a>
 - <a href=https://blog.chensoul.com/posts/2023/03/07/weekly_review_9/ target='_blank'>周报-9｜开车总结、博客该写什么、Web3批量空投</a>
 - <a href=https://blog.chensoul.com/posts/2023/02/27/weekly_review_8/ target='_blank'>周报-8｜内存泄漏、公司裁员、练车</a>
@@ -40,7 +41,6 @@ rss_ignore: true
 - <a href=https://blog.chensoul.com/posts/2023/02/13/weekly_review_6/ target='_blank'>周报-6｜买车和选号、粉色理论</a>
 - <a href=https://blog.chensoul.com/posts/2023/02/07/weekly_review_5/ target='_blank'>周报-5｜项目事故、牙疼、Damus</a>
 - <a href=https://blog.chensoul.com/posts/2023/01/30/weekly_review_4/ target='_blank'>周报-4｜过年、向上管理、工作周总结</a>
-- <a href=https://blog.chensoul.com/posts/2023/01/25/notes-about-deploy-services-in-vps/ target='_blank'>我的VPS服务部署记录</a>
 <!-- blog ends -->
 
 ## Recent Digests
