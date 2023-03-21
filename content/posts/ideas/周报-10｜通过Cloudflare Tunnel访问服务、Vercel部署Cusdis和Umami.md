@@ -1,6 +1,6 @@
 ---
 title: "周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami"
-date: 2023-03-13T11:00:00+08:00
+date: 2023-03-13 11:00:00+08:00
 draft: false
 slug: weekly_review_10
 categories: [Ideas]
@@ -193,7 +193,7 @@ async headers() {
 
 chatgpt 回答如下：
 
-<img src="http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-10-06.png" alt="weekly-review-10-06" style="zoom:67%;" />
+<img src="http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-10-06.png" alt="weekly-review-10-06" style="width:67%;" />
 
 **总结：**
 

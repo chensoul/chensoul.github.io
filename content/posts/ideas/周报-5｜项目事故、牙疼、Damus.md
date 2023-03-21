@@ -1,6 +1,6 @@
 ---
 title: "周报-5｜项目事故、牙疼、Damus"
-date: 2023-02-07T00:00:00+08:00
+date: 2023-02-07 00:00:00+08:00
 draft: false
 slug: weekly_review_5
 categories: [Ideas]
