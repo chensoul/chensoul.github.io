@@ -45,29 +45,7 @@ public class NutritionFacts {
         this.carbohydrate = builder.carbohydrate;
     }
 
-    public int getServingSize() {
-        return servingSize;
-    }
-
-    public int getServings() {
-        return servings;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public int getSodium() {
-        return sodium;
-    }
-
-    public int getCarbohydrate() {
-        return carbohydrate;
-    }
+    //省略 get set
 
     public static class Builder {
         // Required parameters
