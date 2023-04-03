@@ -16,15 +16,20 @@ rss_ignore: true
     </div>
 </div>
 
-## ✋ 关于我
 
-Java 开发工程师，曾在拉手网、阿里巴巴工作，现就职于多点，定居武汉。可以在 [GitHub](https://github.com/chensoul) 了解更多关于我的信息，也欢迎加入我的 Telegram 频道 [ChenSoul Share](https://t.me/chensoul_share)。
+如果有幸你能看到这里，那么我们交个朋友吧！
 
-交换友链可发邮件至 chensoul.eth@gmail.com，或添加我的微信：chenshu_eth。
+如果你有个人的博客网站，且有意交换友情链接，可发邮件至 chensoul.eth@gmail.com，或在博客任何一篇文章下面的评论留言。
 
-我的博客信息：
 
-- **名称:** ChenSoul
-- **地址:** https://blog.chensoul.com
-- **头像:** https://blog.chensoul.com/images/author.webp
-- **描述:** 健康，爱情和使命，按照这个顺序，其它的都不重要
+
+关于本站：
+
+> - **名称：** ChenSoul
+> - **地址：** https://blog.chensoul.com
+> - **头像：** https://blog.chensoul.com/images/author.webp
+> - **描述：** 健康，爱情和使命，按照这个顺序，其它的都不重要
+
+
+
+提供这些信息就可以了，感谢你的关注！
