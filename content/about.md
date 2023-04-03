@@ -19,11 +19,15 @@ rss_ignore: true
 
 <br />
 
-- 👋 Java 开发工程师，曾在拉手网、阿里巴巴工作，现就职于多点，定居武汉。
+- 👋 I'm chensoul, a Java developer based in China Wuhan
 
-- 🌱 我正在学习 **Go、Python**、**React**，如果你有 **Java、Hadoop** 相关的问题，可以给我留言。
+- 🌱 I’m currently learning **Go、Python**
 
-- 📫 你也可以通过微信 (chenshu_eth)、[Email](mailto:chensoul.eth@gmail.com) 、[Twitter](https://twitter.com/chensoul_eth) 或者 [Telegram Channel](https://t.me/chensoul_share) 找到我。
+- 💬 Ask me about **Java、Hadoop**
+
+- 📝 I regularly write articles on [ChenSoul](https://blog.chensoul.com)
+  
+- 📫 You can reach me via WeChat(chenshu_eth)、[Email](mailto:chensoul.eth@gmail.com) 、[Twitter](https://twitter.com/chensoul_eth) or [Telegram Channel](https://t.me/chensoul_share)
 
 
 ## Recent Blog Posts
