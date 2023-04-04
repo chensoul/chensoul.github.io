@@ -41,7 +41,7 @@ authors:
 
 ### Effective Java 3 笔记
 
-请参考 [考虑以静态工厂方法代替构造函数](https://blog.chensoul.com/posts/2023/04/03/static-factory-methods-instead-of-constructors/) 。
+请参考 [《Effective Java 3》笔记：静态工厂方法代替构造函数](/posts/2023/04/03/static-factory-methods-instead-of-constructors/) 。
 
 ### Machine-Learning-With-Go
 
