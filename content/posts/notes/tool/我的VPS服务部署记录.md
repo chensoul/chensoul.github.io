@@ -356,6 +356,7 @@ services:
       - PASSWORD=cusdis
       - JWT_SECRET=vps@2023
       - NEXTAUTH_URL=https://cusdis.chensoul.com
+      - HOST=https://cusdis.chensoul.com
       - DB_TYPE=pgsql
       - DB_URL=postgresql://cusdis:cusdis@pg@pgsql:5432/cusdis
     networks:
@@ -423,6 +424,8 @@ server {
     }
 }
 ```
+
+5、部署一个 Telegram 机器人，参考 [Official Telegram bot](https://cusdis.chensoul.com/doc#/advanced/webhook?id=official-telegram-bot)。
 
 ### memos
 
