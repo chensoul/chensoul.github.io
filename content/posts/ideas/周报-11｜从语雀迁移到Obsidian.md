@@ -15,21 +15,13 @@ authors:
 
 ​														              					图片：*涨渡湖湿地水上森林公园*
 
-
-
-本篇是对 `2023-03-13` 到 `2023-03-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/) ，你可以移步了解更多或者给我留言。
-
-
+本篇是对 `2023-03-13` 到 `2023-03-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
 
 这周的工作主要是重构、优化系统，工作节奏比之前轻缓了很多。这周也开始了开车上下班，除去周五去医院做检查，一共开了 4 天车。从汉口到光谷，一共 29 公里，如果早上 6:30 出发，就只需要 50 分钟；如果 6:45 出发，竟然需要两个小时，真是无语了。无奈之下，只能每天早点出门早点到公司，然后，打完卡之后，在公司楼下走路。
-
-
 
 这周开始心里默默定了一个 flag，就是每天走路 10000 步。看了一下微信运动，基本上达成了，除了周五晚上因为加班，而少走了 64 步。
 
 <img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-11-03.png" alt="weekly-review-11-03" style="width:67%;" />
-
-
 
 ## 从语雀迁移到Obsidian
 
@@ -51,14 +43,11 @@ authors:
 - 生活
 - 健身
 
-
-
-
 ### 导出语雀文档为 markdown
 
 参考 [yuque/yuque-exporter](https://github.com/yuque/yuque-exporter) 文档，下载 yuque-exporter  之后进行导出操作，发现以下问题：
 
-- 该项目需要使用的 nodejs 版本为 18.0.4 
+- 该项目需要使用的 nodejs 版本为 18.0.4
 - nodejs 使用正确的版本还是导出失败
 
 于是，改为使用源码编译和运行导出。
@@ -86,9 +75,7 @@ if (import.meta.url.startsWith('file:')) {
 }
 ```
 
-
 3、参考 [文档](https://www.yuque.com/yuque/developer/api#785a3731) 申请语雀 TOKEN。
-
 
 4、下载项目依赖：
 
@@ -103,8 +90,6 @@ YUQUE_TOKEN=XXXXXX npm start
 ```
 
 > 导出的文件在 storage 目录，接下来可以拷贝到 Obsidian 目录里。
-
-
 
 6、另外，可以对 yuque-exporter 源码做一些修改：
 
@@ -145,8 +130,6 @@ function replaceHTML() {
 }
 ```
 
-
-
 7、删除导出的 markdown 文件当中的锚点标签（例如：`<a name="xx"></a>`）
 
 ```bash
@@ -164,8 +147,6 @@ find . -type f -name '*.md' -exec sed -i '' 's/<a name=\"[^\"]*\"><\/a>//g' {} +
 
 8、将导出的 markdown 文件中的本地图片批量上传到图床，操作方法：使用 typora 打开 storage 目录，然后依次点击 格式、图像、上传所有本地图片
 
-
-
 ## 好物分享
 
 虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
@@ -179,7 +160,5 @@ find . -type f -name '*.md' -exec sed -i '' 's/<a name=\"[^\"]*\"><\/a>//g' {} +
 - [Doprax搭建免费V2ray节点](https://elmagnifico.tech/2023/03/16/Doprax-V2ray/)
 - [Hi，土区 iCloud](https://elizen.me/posts/2023/03/hi-icloud/)
 - [国区使用土耳其iCloud服务，手把手保姆级上车教程](https://btsogiwudc.feishu.cn/docx/CgoJdHyWKopl3UxV12GcG3psnjf)
-
-
 
 以上。

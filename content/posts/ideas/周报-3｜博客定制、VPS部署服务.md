@@ -6,18 +6,14 @@ slug: weekly_review_3
 categories: [Ideas]
 tags: [review,hugo,github,cusdis,umami,kuma,cloudflare]
 authors:
-- chensoul   
+- chensoul
 ---
 
 ## 前言
 
 本篇是对 `2023-01-16` 到 `2023-01-22` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
 
-
-
 这是过年前的最后一周，上了三天班，请了两天假回去准备年货、去亲戚家吃年饭。趁放假之前，继续对博客做了一些定制，也在我的 VPS 上通过 Docker 部署了一些服务。
-
-
 
 ## 定制博客
 
@@ -25,19 +21,13 @@ authors:
 
 <img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/github-issue-build-aboutme-py.png" alt="github-issue-build-aboutme-py" style="width: 80%"/>
 
-
-
 接着在他博客主页留言，几个来回下来，收获不少。一是解决了我提出的问题，二是给我分享了一个搬瓦工的 the plan 优惠码。这时候去看了下我原来的 vps 刚好还有一天要到期，就立即花了92 美元（原价是 99 美元）购买了一台 2G 内存托管在香港的服务器。
 
 ![vps-main-controlls](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/vps-main-controlls.png)
 
 缘分就是这么奇妙，如果我不主动和这个博主联系，就不会知道搬瓦工还有这个优惠，就不会帮助我解决了博客定制过程中遇到的疑惑。
 
-
-
 > 当你想要什的时候，先给出去，你就会收获更。有舍才有得。
-
-
 
 ## 博客个人介绍
 
@@ -47,14 +37,10 @@ authors:
 
 首先，github 里面可以创建一个以 github 账号为名称的仓库，然后编辑好 README.md 文件，README.md 文件内容就会渲染成 html 显示到个人 github 主页。例如，我的 github 主页是 https://github.com/chensoul，我的个人仓库地址为 https://github.com/chensoul/chensoul，这个仓库是通过 github actions 来构建 README.md，构建文件查看仓库的 workflows 文件，主要有两个文件：
 
-- build.yml：周期性的调用 [build_readme.py](https://github.com/chensoul/chensoul/blob/main/build_readme.py) 来生成 README.md 文件（包括：获取最近 5 篇博客文章、或者 豆瓣上最近 5 个电影书籍动态、获取 github 上发布的项目、显示 wakatime 报表） 
-- waketime.yml：生成 wakatime-charts 
-
-
+- build.yml：周期性的调用 [build_readme.py](https://github.com/chensoul/chensoul/blob/main/build_readme.py) 来生成 README.md 文件（包括：获取最近 5 篇博客文章、或者 豆瓣上最近 5 个电影书籍动态、获取 github 上发布的项目、显示 wakatime 报表）
+- waketime.yml：生成 wakatime-charts
 
 当 README.md 生成之后，只需要将该文件内容同步到博客的 about.md 文件即可。怎么实现呢？参考博客源文件里的 [build_about.py](https://github.com/chensoul/chensoul.github.io/blob/main/build_about.py)。这样就可以实现一个自我介绍同步到多个平台（除了博客，还可以通过 api 接口同步到语雀等其他平台）。
-
-
 
 ## vps 上服务部署
 

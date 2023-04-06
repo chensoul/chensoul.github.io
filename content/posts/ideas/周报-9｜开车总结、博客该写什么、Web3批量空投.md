@@ -6,7 +6,7 @@ slug: weekly_review_9
 categories: [Ideas]
 tags: [review,web3,chatgpt,nodejs]
 authors:
-- chensoul   
+- chensoul
 
 ---
 
@@ -22,15 +22,13 @@ authors:
 
 这周还是没有开车，每天坐地铁上下班，刷刷 rss 看看 b 站视频，了解一些行业最新动态，同时也看看同样在写博客的那些独立开发者每周都在做什么，也学习一些新技术或者新技能。
 
-这周接触了 web3 空投，花了几个小时使用自动加手动的方式刷了 120 多个账号。自动的方式，就是用 nodejs 代码在 bsc 网络批量创建账号并保存为 csv 文件；其次，通过 onekey web 上的批量转账功能，给每个账户转了 0.00125 bnb。手动操作的部分就是，一个个的将账号私钥导入狐狸钱包，然后，用 lifeform cartoon 连接钱包账户，mint 成功之后，分享链接，再继续连接狐狸的下一个账号，重复上面操作。
+这周接触了 web3 空投，花了几个小时使用自动加手动的方式刷了 120 多个账号。自动的方式，就是用 nodejs 代码在 bsc 网络批量创建账号并保存为 csv 文件；其次，通过 onekey web 上的批量转账功能，给每个账户转了 0.00125bnb。手动操作的部分就是，一个个的将账号私钥导入狐狸钱包，然后，用 lifeform cartoon 连接钱包账户，mint 成功之后，分享链接，再继续连接狐狸的下一个账号，重复上面操作。
 
 因为太耗时间，所以只刷了 120 个账号。趁工作不忙的时候，用 chatgpt 搜索一下如何将上面的操作全部自动化。
 
 周末两天，继续练车，从汉口到阳逻，再到新洲，最后去新洲的将军山爬山、去道观河看风景。算下来，最近这三个周末六天时间，我一共开了 800 多公里了。目前，暂时没有收到违规通知，但还是存在很多不足的地方。
 
 ![weekly-review-09-08](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-09-08.png)
-
-
 
 ## 开车总结
 
@@ -42,8 +40,6 @@ authors:
 - 4、在山路行驶，入弯和出弯都会减速。
 - 5、判断车距的经验不足。表现在行驶过程中、侧方停车、倒车入库。
 
-
-
 针对以上问题，晚上刷了一些视频，做了一些笔记，希望能够帮助自己改正上面这些问题。
 
 - 1、目光看远。入弯提前收油，脚备刹车。如果弯道过急，就带点刹车，如果车速你可以控制，直接收油过弯；出弯加油，眼睛看出弯口。身体跟随方向盘靠。这样，车速不降，可以控制车速。如果以 80 码速度过弯，且这个车还在车道内，这个车的速度你就控制住了。但凡有点越线，说明车速过快，你就要降低速度。
@@ -54,12 +50,9 @@ authors:
 
 - 4、红绿灯路口，提前减速，提醒后面车减速，不要急刹车，防止后面车追尾。特别是在绿灯闪的时候，不要没有减速，突然停车。否则后面车会以为你要加速冲过去，他也加速，这样，他就会追尾你。
 
-
-
-
 ## 博客该写什么
 
-看到一篇博客 [What to blog about](https://simonwillison.net/2022/Nov/6/what-to-blog-about/) ，里面聊到了博客该写什么。一时兴起，想翻译成中文。于是，分别使用了 chrome 沉浸式翻译插件 和 chatgpt 来翻译这篇文章，得到结果如下：
+看到一篇博客 [What to blog about](https://simonwillison.net/2022/Nov/6/what-to-blog-about/)，里面聊到了博客该写什么。一时兴起，想翻译成中文。于是，分别使用了 chrome 沉浸式翻译插件和 chatgpt 来翻译这篇文章，得到结果如下：
 
 1、**使用 [chrome 沉浸式翻译插件](https://chrome.google.com/webstore/detail/immersive-translate/bpoadfkcbjbfhfodiogcnhhhpibjhbnh) 翻译这篇文章：**
 
@@ -70,14 +63,11 @@ authors:
 - 今天学到的东西
 - 正在做的项目
 
-
 2、**使用 chatgpt 翻译这篇文章：**
 
 请 chatgpt 翻译这篇文章 https://simonwillison.net/2022/Nov/6/what-to-blog-about/ 为中文，得到的结果如下：
 
 ![weekly-review-02](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-09-02.png)
-
-
 
 标题：该写什么博客？
 
@@ -109,8 +99,6 @@ authors:
 
 总之，写博客可以是一种令人满意的表达方式，可以帮助你探索和发现新的想法和机会。关键是要保持频率和灵活性，并尝试不同的博客格式。
 
-
-
 ## Web3 批量空投
 
 最近，参与了 [Lifeform Cartoon](https://cartoon.lifeform.cc/login) 的空投，这是我第一次参与 web3。下面是记录一下操作步骤：
@@ -119,11 +107,11 @@ authors:
 - 批量创建账号
 - 批量从一个账号转币到多个账号
 - 批量导入账号到狐狸钱包
-- 访问 Lifeform Cartoon 的邀请链接地址，比如：  https://cartoon.lifeform.cc?referral=0x068b021B7d44e4795c6ec07234D66c144644dC37 ，然后，连接狐狸钱包里的账号，mint 之后，分享链接再使用新的链接重复上面动作
+- 访问 Lifeform Cartoon 的邀请链接地址，比如：https://cartoon.lifeform.cc?referral=0x068b021B7d44e4795c6ec07234D66c144644dC37，然后，连接狐狸钱包里的账号，mint 之后，分享链接再使用新的链接重复上面动作
 
 上面的步骤，如果是几百个账号手动执行，则需要花费很长时间。作为一个程序员，有没有办法让程序自动实现呢？
 
-在网上查找了一些资料，同时使用 chatgpt （备注：https://poe.com/chatgpt）找到了使用  nodejs 实现的相关代码。
+在网上查找了一些资料，同时使用 chatgpt（备注：https://poe.com/chatgpt）找到了使用  nodejs 实现的相关代码。
 
 ### 1、批量创建账号
 
@@ -133,10 +121,9 @@ authors:
 
 ### 2、批量转账
 
-在BSC网络上使用Node.js编程语言从一个账号批量转 0.0125 bnb 到前面创建的多个账号，输出完整的可以运行的代码
+在BSC网络上使用Node.js编程语言从一个账号批量转 0.0125bnb 到前面创建的多个账号，输出完整的可以运行的代码
 
 ![weekly-review-05](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-09-05.png)
-
 
 ### 3、批量导入账号到 metamask 钱包
 
@@ -213,7 +200,5 @@ lightrun.com采用了安全的云架构，并且使用了端到端加密来保�
 #### 8、[妙记多 Mojidoc ](https://mojidoc.com/)
 
 新一代生产协同工具
-
-
 
 以上。

@@ -6,7 +6,7 @@ slug: weekly_review_7
 categories: [Ideas]
 tags: [review,hugo,cloudflare,n8n,chatgpt,memos,rss,github]
 authors:
-- chensoul   
+- chensoul
 
 ---
 
@@ -47,7 +47,6 @@ authors:
 
 接下来的周末，还要继续练车，和车子培养感情，从内到外熟悉车子，熟悉上班路线和交通规则，提高行驶速度。加油💪🏻！
 
-
 ## 博客优化
 
 这周重新对博客进行了优化，主要包括以下几个方面：
@@ -78,7 +77,7 @@ body {
 }
 ```
 
-### 3、修改关于页面内容 
+### 3、修改关于页面内容
 
 参考这篇文章 [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)，对 GitHub [首页](https://github.com/chensoul/chensoul) 进行改造，并通过 GitHub Action 同步到博客的 [关于](https://blog.chensoul.com/about/) 页面。
 
@@ -94,18 +93,14 @@ body {
 
 影响评分的原因在于：
 
-- First Contentful Paint (3G) 
+- First Contentful Paint (3G)
 - 加载的 [bootstrap.min.css](https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css) 文件过大，包括了一些未使用的 CSS
-
 
 桌面端测试结果评分为 99 分：
 
 ![weekly-review-07-02](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-07-02.png)
 
-
 另外，试了一下使用 chatgpt 来给出网站优化建议，回答如下：
-
-
 
 ## n8n 调整
 
@@ -119,7 +114,6 @@ body {
 
 ![weekly-review-07-03](../../../../../../Pictures/weekly-review-07-03.png)
 
-
 修改了以下 workflow：
 
 - 将豆瓣最近动态同步到电报群组以及 [memos](https://memos.chensoul.com/)
@@ -129,13 +123,11 @@ body {
 此外，在苹果手机上添加了两个捷径：
 
 - [捷径一](https://sharecuts.cn/shortcut/12640)：调用 memos API 创建 memos
-- [捷径二](https://www.icloud.com/shortcuts/d990253f43e148469af5e85c296961cf)：对网站通过 RSSBud 获取 RSS 订阅地址并发送到电报的 flowerrss 机器人进行订阅  
-
+- [捷径二](https://www.icloud.com/shortcuts/d990253f43e148469af5e85c296961cf)：对网站通过 RSSBud 获取 RSS 订阅地址并发送到电报的 flowerrss 机器人进行订阅
 
 ## ChatGPT 注册账号
 
 参考 [注册ChatGPT详细指南](https://sms-activate.org/cn/info/ChatGPT) 注册账号，我在 sms-activate 网站是购买的巴西的手机号来接验证码。
-
 
 解决地区受限问题：在浏览器地址栏里输入 `javascript:`，然后粘贴下面代码：
 
@@ -145,7 +137,6 @@ window.localStorage.removeItem(Object.keys(window.localStorage).find(i=>i.starts
 
 > 如果还是无效，则清理浏览器 cookie 和 session，再刷新页面。
 
-
 账号创建成功之后，创建了几个 chat：
 
 - 『文案小助手』：在今后的会话里，你都将扮演我的文案纠错润色助理，并综合给出优化后的版本。
@@ -153,8 +144,7 @@ window.localStorage.removeItem(Object.keys(window.localStorage).find(i=>i.starts
 - 『专业前端开发老师』：在今后的对话里，你是一个专业的前端开发者老师，会回答我所有关于前端语言开发相关的问题，尤其是 TypeScript、React、Vuejs、CSS、Html 和 Nextjs，每次都会给出代码示例，不需要我再额外提醒。
 - 『个人搜索引擎』：在今后的会话里，请你扮演我的专业搜索引擎，为我搜索查阅相关问题的答案和信息，每个问题尽量给出链接和出处，不需要我额外再说明。
 
-点击 [链接](https://platform.openai.com/account/api-keys)，可以创建应用。给飞书用户准备的 ChatGPT 机器人，参看 [ChatGPT-Feishu](https://github.com/bestony/ChatGPT-Feishu) 。
-
+点击 [链接](https://platform.openai.com/account/api-keys)，可以创建应用。给飞书用户准备的 ChatGPT 机器人，参看 [ChatGPT-Feishu](https://github.com/bestony/ChatGPT-Feishu)。
 
 # 💻 好物分享
 
@@ -177,24 +167,20 @@ window.localStorage.removeItem(Object.keys(window.localStorage).find(i=>i.starts
 
   - [驾考指南](https://tingtalk.me/driving-test/)
 
-
 ### 一些工具
 
 #### 1、[亲戚关系计算器](https://passer-by.com/relationship/vue/#/)
 
-
-#### 2、[ImageOptim](https://imageoptim.com/mac) 
+#### 2、[ImageOptim](https://imageoptim.com/mac)
 
 开源图片压缩软件：一款 Mac 小工具，可以方便的进行图片压缩，支持多格式、批量处理。值得注意的是，它压缩之后的图片会覆盖之前的图片。使用了这个工具之后，我就把  TinyPNG4Mac 卸载了。
 
-
-#### 3、[沉浸式双语网页翻译扩展 – immersive-translate](https://immersive-translate.owenyoung.com/) 
+#### 3、[沉浸式双语网页翻译扩展 – immersive-translate](https://immersive-translate.owenyoung.com/)
 
 强烈推荐这个网页翻译插件，和其他插件翻译整个页面相比，这个插件的优势是可以同时显示双语，中英文对照非常棒，是一个 [开源](https://github.com/immersive-translate/immersive-translate) 的项目，完全免费使用。也支持 PDF，配合任何 [epub 在线阅读网站](https://epub-reader.online/)对照翻译阅读书也非常方便。也支持了Deepl，腾讯翻译等等的翻译服务。开发者 [@OwenYoungZh](https://twitter.com/OwenYoungZh)
 
 #### 4、[Input Source Pro](https://inputsource.pro/zh-CN)
 
 Input Source Pro 可以根据应用或是网站自动切换输入法，并且在切换窗口的时候还会贴心的提示当前的输入法是什么，比如设置 VSCode、iTerm、Xcode 默认为英文输入法，而笔记软件和企业微信默认为中文输入法，切换软件时再也不需要按 shift 键了！
-
 
 以上。
