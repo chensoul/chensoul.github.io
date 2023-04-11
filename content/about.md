@@ -46,14 +46,7 @@ rss_ignore: true
 ## Recent Digests
 
 <!-- douban starts -->
-- <a href='http://movie.douban.com/subject/1293400/' target='_blank'>想看怒海潜将</a> - 2023-04-08
-- <a href='http://movie.douban.com/subject/35371261/' target='_blank'>看过铃芽之旅</a> - 2023-04-02
-- <a href='http://movie.douban.com/subject/27663742/' target='_blank'>看过老师·好</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/30282387/' target='_blank'>看过银河补习班</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/26754233/' target='_blank'>看过八佰</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35422807/' target='_blank'>看过扬名立万</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35215390/' target='_blank'>看过狙击手</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35155748/' target='_blank'>看过金刚川</a> - 2023-03-11
+
 <!-- douban ends -->
 
 
