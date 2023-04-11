@@ -1,5 +1,5 @@
 ---
-title: "《Effective Java 3》笔记：使用构造器代替构造函数"
+title: "《Effective Java 3》笔记：使用构造器代替构造方法"
 date: 2023-04-03T16:00:00+08:00
 slug: builder-instead-of-constructors
 categories: ["Notes"]
