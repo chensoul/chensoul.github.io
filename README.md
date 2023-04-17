@@ -27,6 +27,7 @@
 ## Recent Blog Posts
 
 <!-- blog starts -->
+- <a href=https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/ target='_blank'>《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/ target='_blank'>周报-14｜如何学习一门编程语言</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/11/enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type/ target='_blank'>《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/04/weekly_review_13/ target='_blank'>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</a>
@@ -34,7 +35,6 @@
 - <a href=https://blog.chensoul.com/posts/2023/04/03/static-factory-methods-instead-of-constructors/ target='_blank'>《Effective Java 3》笔记：静态工厂方法代替构造函数</a>
 - <a href=https://blog.chensoul.com/posts/2023/03/28/weekly_review_12/ target='_blank'>周报-12｜车辆被堵、开车总结、Effective Java3笔记</a>
 - <a href=https://blog.chensoul.com/posts/2023/03/20/weekly_review_11/ target='_blank'>周报-11｜从语雀迁移到Obsidian</a>
-- <a href=https://blog.chensoul.com/posts/2023/03/13/weekly_review_10/ target='_blank'>周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami</a>
 <!-- blog ends -->
 
 ## Recent Digests
