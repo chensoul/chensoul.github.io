@@ -89,6 +89,7 @@ yarn build
 创建 .env 文件：
 
 ```properties
+#修改为你的数据库地址
 DATABASE_URL=postgresql://umami:xxxxx@postgres.chensoul.com:5432/umami
 ```
 
