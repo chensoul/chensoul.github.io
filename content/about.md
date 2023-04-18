@@ -34,7 +34,7 @@ rss_ignore: true
 
 <!-- blog starts -->
 - <a href=https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/ target='_blank'>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</a>
-- <a href=https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/ target='_blank'>《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例</a>
+- <a href=https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/ target='_blank'>《Effective Java 3》笔记：依赖注入优于硬编码资源</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/ target='_blank'>周报-14｜如何学习一门编程语言</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/11/enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type/ target='_blank'>《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/04/weekly_review_13/ target='_blank'>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</a>
@@ -46,14 +46,14 @@ rss_ignore: true
 ## Recent Digests
 
 <!-- douban starts -->
+- <a href='https://book.douban.com/subject/35723705/' target='_blank'>最近在读Python工匠</a> - 2023-04-18
+- <a href='https://book.douban.com/subject/35196328/' target='_blank'>最近在读Python编程</a> - 2023-04-18
+- <a href='https://book.douban.com/subject/35081743/' target='_blank'>最近在读Rust权威指南</a> - 2023-04-18
+- <a href='http://movie.douban.com/subject/35595615/' target='_blank'>看过龙马精神</a> - 2023-04-18
 - <a href='http://movie.douban.com/subject/1293400/' target='_blank'>想看怒海潜将</a> - 2023-04-08
 - <a href='http://movie.douban.com/subject/35371261/' target='_blank'>看过铃芽之旅</a> - 2023-04-02
 - <a href='http://movie.douban.com/subject/27663742/' target='_blank'>看过老师·好</a> - 2023-03-11
 - <a href='http://movie.douban.com/subject/30282387/' target='_blank'>看过银河补习班</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/26754233/' target='_blank'>看过八佰</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35422807/' target='_blank'>看过扬名立万</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35215390/' target='_blank'>看过狙击手</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/35155748/' target='_blank'>看过金刚川</a> - 2023-03-11
 <!-- douban ends -->
 
 
