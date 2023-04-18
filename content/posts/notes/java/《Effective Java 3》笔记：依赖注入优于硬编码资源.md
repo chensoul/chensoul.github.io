@@ -1,5 +1,5 @@
 ---
-title: "《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例"
+title: "《Effective Java 3》笔记：依赖注入优于硬编码资源"
 date: 2023-04-17T17:00:00+08:00
 slug: prefer-dependency-injection-to-hardwiring-resources
 categories: ["Notes"]
