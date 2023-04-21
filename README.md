@@ -40,6 +40,7 @@
 ## Recent Digests
 
 <!-- douban starts -->
+- <a href='http://movie.douban.com/subject/35315950/' target='_blank'>看过灌篮高手</a> - 2023-04-20
 - <a href='https://book.douban.com/subject/35723705/' target='_blank'>最近在读Python工匠</a> - 2023-04-18
 - <a href='https://book.douban.com/subject/35196328/' target='_blank'>最近在读Python编程</a> - 2023-04-18
 - <a href='https://book.douban.com/subject/35081743/' target='_blank'>最近在读Rust权威指南</a> - 2023-04-18
@@ -47,7 +48,6 @@
 - <a href='http://movie.douban.com/subject/1293400/' target='_blank'>想看怒海潜将</a> - 2023-04-08
 - <a href='http://movie.douban.com/subject/35371261/' target='_blank'>看过铃芽之旅</a> - 2023-04-02
 - <a href='http://movie.douban.com/subject/27663742/' target='_blank'>看过老师·好</a> - 2023-03-11
-- <a href='http://movie.douban.com/subject/30282387/' target='_blank'>看过银河补习班</a> - 2023-03-11
 <!-- douban ends -->
 
 
