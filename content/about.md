@@ -33,6 +33,7 @@ rss_ignore: true
 ## Recent Blog Posts
 
 <!-- blog starts -->
+- <a href=https://blog.chensoul.com/posts/2023/04/24/avoid-creating-unnecessary-objects/ target='_blank'>《Effective Java 3》笔记：避免创建不必要的对象</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/ target='_blank'>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/ target='_blank'>《Effective Java 3》笔记：依赖注入优于硬编码资源</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/ target='_blank'>周报-14｜如何学习一门编程语言</a>
@@ -40,20 +41,12 @@ rss_ignore: true
 - <a href=https://blog.chensoul.com/posts/2023/04/04/weekly_review_13/ target='_blank'>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/03/builder-instead-of-constructors/ target='_blank'>《Effective Java 3》笔记：使用构造器代替构造方法</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/03/static-factory-methods-instead-of-constructors/ target='_blank'>《Effective Java 3》笔记：静态工厂方法代替构造函数</a>
-- <a href=https://blog.chensoul.com/posts/2023/03/28/weekly_review_12/ target='_blank'>周报-12｜车辆被堵、开车总结、Effective Java3笔记</a>
 <!-- blog ends -->
 
 ## Recent Digests
 
 <!-- douban starts -->
-- <a href='http://movie.douban.com/subject/35315950/' target='_blank'>看过灌篮高手</a> - 2023-04-20
-- <a href='https://book.douban.com/subject/35723705/' target='_blank'>最近在读Python工匠</a> - 2023-04-18
-- <a href='https://book.douban.com/subject/35196328/' target='_blank'>最近在读Python编程</a> - 2023-04-18
-- <a href='https://book.douban.com/subject/35081743/' target='_blank'>最近在读Rust权威指南</a> - 2023-04-18
-- <a href='http://movie.douban.com/subject/35595615/' target='_blank'>看过龙马精神</a> - 2023-04-18
-- <a href='http://movie.douban.com/subject/1293400/' target='_blank'>想看怒海潜将</a> - 2023-04-08
-- <a href='http://movie.douban.com/subject/35371261/' target='_blank'>看过铃芽之旅</a> - 2023-04-02
-- <a href='http://movie.douban.com/subject/27663742/' target='_blank'>看过老师·好</a> - 2023-03-11
+
 <!-- douban ends -->
 
 
