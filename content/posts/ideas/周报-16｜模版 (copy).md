@@ -80,7 +80,7 @@ authors:
 
 ### 本周嘀咕
 
-其实，大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.com/) 中，如果有一个脚本可以读取 Telegram 或者 memos 接口获取上周的分享记录，则可以自动化生成分享内容了。于是，花了一点时间写了一个 python 脚本来读取 memos 接口。
+其实，大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.com/) 中，如果有一个脚本可以读取 Telegram 或者 memos 接口获取上周的分享记录，则可以自动化生成分享内容了。于是，花了一点时间写了一个 python 脚本 [fetch_memos.py](https://github.com/chensoul/chensoul.github.io/blob/main/fetch_memos.py) 来读取 memos 接口。
 
 
 
