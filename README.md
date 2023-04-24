@@ -40,7 +40,14 @@
 ## Recent Digests
 
 <!-- douban starts -->
-
+- <a href='http://movie.douban.com/subject/1292722/' target='_blank'>看过泰坦尼克号</a> - 2023-04-24
+- <a href='http://movie.douban.com/subject/1291583/' target='_blank'>想看天空之城</a> - 2023-04-24
+- <a href='http://movie.douban.com/subject/26631790/' target='_blank'>想看速度与激情10</a> - 2023-04-24
+- <a href='http://movie.douban.com/subject/1298591/' target='_blank'>想看王者之旅</a> - 2023-04-24
+- <a href='http://movie.douban.com/subject/35315950/' target='_blank'>看过灌篮高手</a> - 2023-04-20
+- <a href='https://book.douban.com/subject/35723705/' target='_blank'>最近在读Python工匠</a> - 2023-04-18
+- <a href='https://book.douban.com/subject/35196328/' target='_blank'>最近在读Python编程</a> - 2023-04-18
+- <a href='https://book.douban.com/subject/35081743/' target='_blank'>最近在读Rust权威指南</a> - 2023-04-18
 <!-- douban ends -->
 
 
