@@ -37,7 +37,7 @@ authors:
 
 
 
-四月累计支出我诶2025元，其中餐饮和购物占了一半。
+四月累计支出共 2025 元，其中餐饮和购物占了一半。
 
 <img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-05.jpeg" alt="weekly-review-15-05" style="width:50%;" />
 
