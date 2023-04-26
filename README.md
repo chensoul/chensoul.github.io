@@ -67,7 +67,7 @@
 
 ## 最近一年跑步
 
-![light](https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg#gh-light-mode-only)
+<a href="https://run.chensoul.com/"><img src="https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg#gh-light-mode-only"/></a>
 
 
 <!-- readme ends -->
