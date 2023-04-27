@@ -46,6 +46,7 @@ rss_ignore: true
 ## 最近活动
 
 <!-- douban starts -->
+- <a href='http://movie.douban.com/subject/35413042/' target='_blank'>想看怒呛人生</a> 2023-04-27
 - <a href='https://book.douban.com/subject/7916024/' target='_blank'>想读雨中的3分58秒</a> 2023-04-25
 - <a href='https://book.douban.com/subject/3369600/' target='_blank'>想读当我谈跑步时我谈些什么</a> 2023-04-25
 - <a href='https://book.douban.com/subject/36374893/' target='_blank'>想读Node.js后端全程实战</a> 2023-04-24
@@ -53,7 +54,6 @@ rss_ignore: true
 - <a href='http://movie.douban.com/subject/1291583/' target='_blank'>想看天空之城</a> 2023-04-24
 - <a href='http://movie.douban.com/subject/26631790/' target='_blank'>想看速度与激情10</a> 2023-04-24
 - <a href='http://movie.douban.com/subject/1298591/' target='_blank'>想看王者之旅</a> 2023-04-24
-- <a href='http://movie.douban.com/subject/35315950/' target='_blank'>看过灌篮高手</a> 2023-04-20
 <!-- douban ends -->
 
 
