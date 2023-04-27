@@ -6,7 +6,6 @@ tags: ["macos"]
 categories: ["Notes"]
 authors:
   - chensoul
-typora-root-url: ../../../../static
 ---
 
 这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是Mac开发环境，所以，这篇文章主要是基于Mac操作系统，记录开发环境搭建过程。
@@ -46,7 +45,7 @@ xcode-select --install
 ls /Library/Developer/CommandLineTools/usr/bin/
 ```
 
-## 安装Homebrew
+## Homebrew
 
 [Brew](http://brew.sh/) 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。
 
@@ -56,72 +55,29 @@ ls /Library/Developer/CommandLineTools/usr/bin/
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-##### 替换 brew.git 源 
+替换 brew.git 源 
 
 ```bash
 git -C "$(brew --repo)" remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git 
-git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git brew update
+
+git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git 
+
+brew update
 ```
 
 设置环境变量：
+
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
 ```
 
 如果安装了zsh，则是：
+
 ```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
 ```
 
-## 安装软件包
-
-### 基本软件包
-
-这些是基本软件包，建议安装
-
-```bash
-brew install zsh \
-   wget \
-   curl \
-   git \
-   openssh \
-   gnupg \
-   cmake \
-   vim \
-   tree \
-   nvm \
-   aria2 \
-   ffmpeg \
-   htop \
-   neofetch \
-   go
-```
-
-### 常用软件
-
-常用软件，可以选择安装
-
-```bash
-brew install --cask clash-for-windows \
-    iterm2 \
-    telegram-desktop \
-    typora \
-    google-chrome \
-    visual-studio-code \
-    coteeditor \
-    golang \
-    mos \
-    pycharm \
-    obsidian \
-    notion \
-    lark \
-    keka \
-    shottr
-```
-
-
-
-## 打造个性化终端
+## 终端
 
 ### iTerm2
 
@@ -145,7 +101,7 @@ brew install --cask iterm2
 
 分别安装  [font-fantasque-sans-mono-nerd-font](https://github.com/ryanoasis/nerd-fonts) + [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)  这两种字体
 
-```
+```bash
 # brew 添加字体库
 brew tap homebrew/cask-fonts
 # 搜索可用 Nerd Font 字体
@@ -163,7 +119,7 @@ brew install font-lxgw-wenkai
 
 [Dracula](https://draculatheme.com/iterm) 主题很好看，下面给 iTerm2 装上
 
-```
+```bash
 git clone https://github.com/dracula/iterm.git
 ```
 
@@ -250,7 +206,7 @@ source ~/.zshrc
 
 [zsh-z](https://github.com/agkozak/zsh-z#known-bugs) 快速跳转到经常访问的目录，是 [rupa/z](https://github.com/rupa/z) 的原生 Zshell 端口，具有附加功能
 
-```
+```bash
 # 源码安装
 git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
 # 编辑配置文件
@@ -265,7 +221,7 @@ source ~/.zshrc
 
 [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) 可以根据历史记录对输入进行提示和建议
 
-```
+```bash
 # 源码安装
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # 编辑配置文件
@@ -280,16 +236,9 @@ source ~/.zshrc
 
 [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) 可以对 Shell 中的命令进行高亮显示
 
+```bash
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-```
-
-> 可以 👉 [在这里查看](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) 可用的 Zshell 插件
-
-
 
 修改 .zshrc ：
 
@@ -356,96 +305,6 @@ curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.giti
 git config --global core.excludesfile ~/.gitignore
 ```
 
-## MySQL
-
-安装mysql：
-
-```bash
-brew install mysql
-```
-
-如果想安装mysql5.7：
-
-```bash
-brew install mysql@5.7
-```
-
-使用：
-
-```bash
-#设置开机启动
-brew services start mysql
-
-#启动
-mysql.server start
-
-#停止
-mysql.server stop
-```
-
-使用：
-
-```bash
-#登录mysql
-mysql -hlocalhost -p3306 -uroot -p123456
-
-#添加远程登录用户
-CREATE USER 'test'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
-GRANT ALL PRIVILEGES ON *.* TO 'test'@'%';
-
-#查看编码
-showvariables like "%char%";
-
-flush privileges;
-```
-
-安装 sequel-pro：
-
-```bash
-brew install --cask sequel-pro
-```
-
-## PostgreSQL
-
-安装：
-
-```bash
-brew install postgres
-```
-
-查看版本：
-
-```bash
-postgres -V
-```
-
-使用：
-
-```bash
-#启动
-pg_ctl -D /usr/local/var/postgres start
-
-#开启启动
-brew services start postgresql
-
-#停止
-pg_ctl -D /usr/local/var/postgres stop
-
-#重启
-pg_ctl -D /usr/local/var/postgres restart
-brew services restart postgresql
-
-
-#启动 PostgreSQL console
-psql
-```
-
-安装客户端：
-
-```bash
-brew install psequel
-```
-
 ## Java
 
 下载 Oracle JDK：
@@ -501,7 +360,7 @@ sdk uninstall scala 2.11.6
 sdk list
 ```
 
-## Maven
+### Maven
 
 安装：
 
@@ -515,26 +374,6 @@ brew install maven
 
 ```bash
 brew install node
-```
-
-### nvm
-
-安装nvm：
-
-```bash
-brew install nvm
-```
-
-使用：
-
-```bash
-source ~/.bashrc        # source your bashrc/zshrc to add nvm to PATH
-command -v nvm          # check the nvm use message
-nvm install node        # install most recent Node stable version
-nvm ls                  # list installed Node version
-nvm use node            # use stable as current version
-nvm ls-remote           # list all the Node versions you can install
-nvm alias default node  # set the installed stable version as the default Node
 ```
 
 ### nvs
@@ -590,146 +429,52 @@ brew install go
 设置环境变量：
 
 ```bash
-echo "export GOPATH=/something-else" >> ~/.zshrc
-
-echo "export PATH=$PATH:$(go env GOPATH)/bin" >> ~/.zshrc
-
+echo "export GOPATH=$HOME/workspace/goProjects" >> ~/.zshrc
+echo "export GOBIN=$GOPATH/bin" >> ~/.zshrc
+echo "export PATH=$GOPATH:$GOBIN:$PATH" >> ~/.zshrc
 source ~/.zshrc
 ```
 
 ## Python
 
-安装python3：
+MacOS 上通过 brew 安装
 
 ```bash
-brew install python
+brew install python3
 ```
 
-安装python2.7：
+查看 python3 安装路径：
 
 ```bash
-brew install python@2
+$ which python3
+/opt/homebrew/bin/python3
+
+$ type python3
+python3 is /opt/homebrew/bin/python3
 ```
 
-升级 setuptools：
+查看版本：
 
 ```bash
-pip install --upgrade setuptools
-pip install --upgrade pip
+python --version
 ```
 
-### pyenv
-
-安装[`pyenv`](https://github.com/yyuu/pyenv)：
+修改 ~/.zshrc，设置环境变量：
 
 ```bash
-brew install pyenv
+export PYTHON_HOME=/opt/homebrew/opt/python@3.11
+export PATH=$PYTHON_HOME/bin:$PATH
+alias python=python3
+alias pip=pip3
 ```
 
-设置环境变量：
+使配置生效：
 
 ```bash
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-exec $SHELL
+source ~/.zshrc
 ```
 
-查看python版本：
 
-```bash
-pyenv install --list
-```
-
-安装指定版本：
-
-```bash
-pyenv install 2.7.12
-pyenv install 3.5.2
-```
-
-设置全局版本，例如，设置2.7.12 优先级高于3.5.2 ：
-
-```bash
-pyenv global 2.7.12 3.5.2
-pyenv rehash
-```
-
-查看版本优先级：
-
-```bash
-pyenv versions
-```
-
-### pip
-
-安装：
-
-```bash
-curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
-sudo python get-pip.py
-```
-
-### virtualenv
-
-安装：
-
-```bash
-pip install virtualenv
-```
-
-使用：
-
-```bash
-cd my-project/
-virtualenv venv
-```
-
-如果想virtualenv继承全局安装的包，可以执行：
-
-```BASH
-virtualenv venv --system-site-packages
-```
-
-上面命令会创建一个 venv/ 目录，激活配置：
-
-```bash
-source venv/bin/activate
-```
-
-离开虚拟环境：
-
-```bash
-deactivate
-```
-
-安装Virtualenvwrapper：
-
-```bash
-pip install virtualenvwrapper
-```
-
-### Numpy-Scipy
-
-安装[Numpy-Scipy](https://sourabhbajaj.com/mac-setup/Python/numpy.html)：
-
-```bash
-python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose
-```
-
-使用 MacPort 安装python3.5：
-
-```bash
-sudo port install py35-numpy py35-scipy py35-matplotlib py35-ipython +notebook py35-pandas py35-sympy py35-nose
-```
-
-### IPython
-
-安装：
-
-```bash
-pip install ipython
-
-pip install 'ipython[zmq,qtconsole,notebook,test]'
-```
 
 ## 参考文章
 
