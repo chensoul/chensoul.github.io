@@ -33,6 +33,7 @@ rss_ignore: true
 ## 最新博客
 
 <!-- blog starts -->
+- <a href=https://blog.chensoul.com/about/ target='_blank'>关于</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/25/weekly_review_16/ target='_blank'>周报-16｜《灌篮高手》电影、《春山如笑》话剧</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/24/avoid-creating-unnecessary-objects/ target='_blank'>《Effective Java 3》笔记：避免创建不必要的对象</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/ target='_blank'>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</a>
@@ -40,7 +41,6 @@ rss_ignore: true
 - <a href=https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/ target='_blank'>周报-14｜如何学习一门编程语言</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/11/enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type/ target='_blank'>《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例</a>
 - <a href=https://blog.chensoul.com/posts/2023/04/04/weekly_review_13/ target='_blank'>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</a>
-- <a href=https://blog.chensoul.com/posts/2023/04/03/builder-instead-of-constructors/ target='_blank'>《Effective Java 3》笔记：使用构造器代替构造方法</a>
 <!-- blog ends -->
 
 ## 最近活动
@@ -73,7 +73,7 @@ rss_ignore: true
 
 ## 最近一年跑步
 
-<a href="https://run.chensoul.com/"><img src="https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg#gh-light-mode-only"/></a>
+[![light](https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg#gh-light-mode-only)](https://run.chensoul.com)
 
 
 <!-- readme ends -->
