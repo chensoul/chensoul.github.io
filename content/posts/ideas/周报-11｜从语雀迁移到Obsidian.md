@@ -5,8 +5,6 @@ draft: false
 slug: weekly_review_11
 categories: [Ideas]
 tags: [review,yuque,obsidian,nodejs]
-authors:
-- chensoul
 ---
 
 ## 前言

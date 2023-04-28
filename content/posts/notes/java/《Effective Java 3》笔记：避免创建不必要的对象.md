@@ -4,8 +4,6 @@ date: 2023-04-24T09:00:00+08:00
 slug: avoid-creating-unnecessary-objects
 categories: ["Notes"]
 tags: [java]
-authors:
-  - chensoul
 ---
 
 本文是 《Effective Java 3》第二章的学习笔记：避免创建不必要的对象。
@@ -144,7 +142,7 @@ private static long sum() {
    for (int i = 0; i < 1000000; i++) {
        sum += i;
    }
-   
+
    // 推荐的写法，使用基本类型
    int sum = 0;
    for (int i = 0; i < 1000000; i++) {
@@ -152,7 +150,7 @@ private static long sum() {
    }
    ```
 
-   
+
 
 2. 如果一个对象是不可变的，可以将其缓存起来并重复使用，而不是每次需要时都创建一个新对象。
 
@@ -254,11 +252,11 @@ private static long sum() {
    }
    ```
 
-   
+
 
 3. 避免使用装箱类型，如 Integer、Boolean 等，因为它们在自动装箱和拆箱时会创建不必要的对象。可以使用基本类型和对象包装类型之间的相互转换方法来避免这种情况。
 
-   
+
 
 4. 对于大量的短字符串，可以考虑使用字符串池或者使用 String.intern() 方法，以避免创建大量的 String 对象。
 
@@ -268,7 +266,7 @@ private static long sum() {
    for (int i = 0; i < 1000000; i++) {
        str += "a";
    }
-   
+
    // 推荐的写法，使用 StringBuilder 和字符串池
    StringBuilder sb = new StringBuilder();
    for (int i = 0; i < 1000000; i++) {
@@ -295,31 +293,31 @@ private static long sum() {
    >
    > 另外，**由于 intern() 方法是一个 native 方法，它的性能可能会比较低。在实际开发中，应该根据具体情况进行选择，避免滥用 intern() 方法**。
 
-   
+
 
 5. 尽量使用静态工厂方法而不是构造方法创建对象，因为静态工厂方法可以重复使用已经创建的对象，从而避免创建不必要的对象。
 
    ```java
    // 不推荐的写法，每次都创建一个新的对象
    Date now = new Date();
-   
+
    // 推荐的写法，使用静态工厂方法
    Date now = Date.from(Instant.now());
    ```
 
-   
+
 
 6. 避免创建不必要的数组，可以使用 List、Set、Map 等集合类型来代替数组。
 
    ```java
    // 不推荐的写法，会创建不必要的数组对象
    String[] arr = new String[]{"a", "b", "c"};
-   
+
    // 推荐的写法，使用 List
    List<String> list = Arrays.asList("a", "b", "c");
    ```
 
-   
+
 
 7. 如果必须创建不可变的数组，可以使用静态工厂方法 Arrays.asList() 来创建 List，从而避免创建额外的数组对象。
 
@@ -327,12 +325,12 @@ private static long sum() {
    // 不推荐的写法，会创建不必要的数组对象
    String[] arr = new String[]{"a", "b", "c"};
    List<String> list = new ArrayList<>(Arrays.asList(arr));
-   
+
    // 推荐的写法，使用 Arrays.asList()
    List<String> list = Arrays.asList("a", "b", "c");
    ```
 
-   
+
 
 8. 避免创建过多的临时对象，如在循环中创建的对象。可以重复使用已经创建的对象，或者使用可重用的对象池来减少对象的创建和垃圾回收。
 
@@ -342,7 +340,7 @@ private static long sum() {
    for (int i = 0; i < 10000; i++) {
        list.add(String.valueOf(i));
    }
-   
+
    // 推荐的写法，使用可重用的对象池
    List<String> list = new ArrayList<>();
    StringBuffer sb = new StringBuffer();
@@ -353,7 +351,7 @@ private static long sum() {
    }
    ```
 
-   
+
 
 9. 避免在类的构造方法中创建大量的对象。如果在构造方法中创建大量的对象，会导致内存占用过大，从而影响程序的性能。可以将对象的创建放在需要使用的方法中，或者使用懒加载的方式来延迟对象的创建。
 
@@ -361,20 +359,20 @@ private static long sum() {
    // 不推荐的写法，会在构造方法中创建大量的对象
    public class MyClass {
        private List<String> list = new ArrayList<>();
-   
+
        public MyClass() {
            for (int i = 0; i < 10000; i++) {
                list.add(String.valueOf(i));
            }
        }
    }
-   
+
    // 推荐的写法，将对象的创建放在需要使用的方法中
    public class MyClass {
        private List<String> list;
-   
+
        public MyClass() {}
-   
+
        public List<String> getList() {
            if (list == null) {
                list = new ArrayList<>();
@@ -387,7 +385,7 @@ private static long sum() {
    }
    ```
 
-   
+
 
 10. 避免在递归方法中创建不必要的对象。如果在递归方法中创建不必要的对象，会导致内存占用过大，从而导致栈溢出等问题。可以使用可重用的对象池来减少对象的创建和垃圾回收。
 
@@ -399,7 +397,7 @@ private static long sum() {
         }
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
-    
+
     // 推荐的写法，使用可重用的对象池
     public static int fibonacci(int n, Map<Integer, Integer> cache) {
         if (n <= 1) {
@@ -414,7 +412,7 @@ private static long sum() {
     }
     ```
 
-    
+
 
 ## 适配器模式
 

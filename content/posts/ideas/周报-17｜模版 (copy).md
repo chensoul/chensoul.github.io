@@ -5,8 +5,6 @@ draft: true
 slug: weekly_review_17
 categories: [Ideas]
 tags: [review]
-authors:
-- chensoul
 ---
 
 ## 前言

@@ -5,8 +5,6 @@ draft: false
 slug: weekly_review_3
 categories: [Ideas]
 tags: [review,hugo,github,cusdis,umami,kuma,cloudflare]
-authors:
-- chensoul
 ---
 
 ## 前言

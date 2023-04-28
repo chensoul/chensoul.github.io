@@ -4,8 +4,6 @@ date: 2023-04-11T08:00:00+08:00
 slug: enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type
 categories: ["Notes"]
 tags: ["java"]
-authors:
-  - chensoul
 ---
 
 本文是 《Effective Java 3》第二章的学习笔记，在整理笔记过程中，通过 chatgpt 的帮助做了一些扩展。

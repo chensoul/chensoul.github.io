@@ -5,10 +5,6 @@ draft: false
 slug: "notes-about-deploy-services-in-vps"
 categories: ["Notes"]
 tags: ["hugo","docker","rsshub","kuma","umami","cusdis","memos","n8n"]
-authors:
-
-- chensoul
-
 ---
 
 ## 服务器设置
@@ -192,7 +188,7 @@ server {
 	    proxy_set_header   X-Real-IP $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
-        
+
         proxy_http_version 1.1;
         proxy_set_header   Upgrade $http_upgrade;
         proxy_set_header   Connection "upgrade";
@@ -360,12 +356,12 @@ services:
       - DB_TYPE=pgsql
       - DB_URL=postgresql://cusdis:cusdis@pg@pgsql:5432/cusdis
     networks:
-      - custom  
+      - custom
     restart: always
-    
+
 networks:
   custom:
-    external: true    
+    external: true
 ```
 
 以下配置为 EMAIL 配置可选，下面是使用 [Gmail](https://cusdis.com/doc#/features/notification?id=gmail)
@@ -484,9 +480,9 @@ server {
 1、在 pqsql 容器创建 n8n 数据库和用户：
 
 ```bash
-docker exec -it pgsql psql -U postgres -c "CREATE USER n8n WITH PASSWORD 'n8n@pg';" 
+docker exec -it pgsql psql -U postgres -c "CREATE USER n8n WITH PASSWORD 'n8n@pg';"
 
-docker exec -it pgsql psql -U postgres -c "CREATE DATABASE n8n owner=n8n;" 
+docker exec -it pgsql psql -U postgres -c "CREATE DATABASE n8n owner=n8n;"
 
 docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE n8n TO n8n;" ;
 ```
@@ -519,11 +515,11 @@ services:
       - /data/n8n:/home/node/.n8n
     command: /bin/sh -c "n8n start --tunnel"
     networks:
-      - custom  
-    
+      - custom
+
 networks:
   custom:
-    external: true 
+    external: true
 ```
 
 3、启动

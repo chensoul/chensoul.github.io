@@ -5,9 +5,6 @@ draft: false
 slug: weekly_review_10
 categories: [Ideas]
 tags: [review,chatgpt,vps,cusdis,umami,cloudflare,vercel,railway]
-authors:
-- chensoul
-
 ---
 
 ## 前言

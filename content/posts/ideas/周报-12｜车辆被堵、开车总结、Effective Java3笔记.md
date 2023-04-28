@@ -5,8 +5,6 @@ draft: false
 slug: weekly_review_12
 categories: [Ideas]
 tags: [review,java,go]
-authors:
-- chensoul
 ---
 
 ## 前言

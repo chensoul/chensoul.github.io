@@ -5,9 +5,6 @@ draft: false
 slug: weekly_review_7
 categories: [Ideas]
 tags: [review,hugo,cloudflare,n8n,chatgpt,memos,rss,github]
-authors:
-- chensoul
-
 ---
 
 ## 前言

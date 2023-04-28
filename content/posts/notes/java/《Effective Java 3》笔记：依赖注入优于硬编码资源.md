@@ -4,8 +4,6 @@ date: 2023-04-17T17:00:00+08:00
 slug: prefer-dependency-injection-to-hardwiring-resources
 categories: ["Notes"]
 tags: [java,spring]
-authors:
-  - chensoul
 ---
 
 本文是 《Effective Java 3》第二章的学习笔记，在整理笔记过程中，通过 chatgpt 的帮助做了一些扩展。
@@ -36,7 +34,7 @@ public class SpellChecker {
 // Inappropriate use of singleton - inflexible & untestable!
 public class SpellChecker {
     public static INSTANCE = new SpellChecker(...);
-  
+
     private final Lexicon dictionary = ...;
     private SpellChecker(...) {}
     public boolean isValid(String word) { ... }
@@ -61,7 +59,7 @@ public class SpellChecker {
     public SpellChecker(Lexicon dictionary) {
         this.dictionary = Objects.requireNonNull(dictionary);
     }
-  
+
     public boolean isValid(String word) { ... }
     public List<String> suggestions(String typo) { ... }
 }
@@ -334,7 +332,7 @@ Spring支持多种依赖注入类型，包括构造函数注入、setter注入�
 
 - 构造函数注入比较繁琐，需要在每个类中添加构造函数和依赖项参数。
 
-  
+
 
 **2、setter注入**
 

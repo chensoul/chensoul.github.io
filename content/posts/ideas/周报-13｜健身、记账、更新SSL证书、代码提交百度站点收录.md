@@ -4,9 +4,7 @@ date: 2023-04-04 15:40:00+08:00
 draft: false
 slug: weekly_review_13
 categories: [Ideas]
-tags: [review、rust、java、cloudflare、go、ssl]
-authors:
-- chensoul
+tags: [review,rust,java,cloudflare,go,ssl]
 ---
 
 ## 前言

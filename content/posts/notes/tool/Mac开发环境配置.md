@@ -4,8 +4,6 @@ date: 2021-09-09T18:14:34+08:00
 slug: "mac-development-environment-setup"
 tags: ["macos"]
 categories: ["Notes"]
-authors:
-  - chensoul
 ---
 
 这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是Mac开发环境，所以，这篇文章主要是基于Mac操作系统，记录开发环境搭建过程。
@@ -55,12 +53,12 @@ ls /Library/Developer/CommandLineTools/usr/bin/
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-替换 brew.git 源 
+替换 brew.git 源
 
 ```bash
-git -C "$(brew --repo)" remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git 
+git -C "$(brew --repo)" remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git
 
-git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git 
+git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git
 
 brew update
 ```
@@ -154,7 +152,7 @@ zsh --version
 zsh 5.9 (arm-apple-darwin21.3.0)
 
 # 将 brew 安装的 zsh 路径添加到 /etc/shells
-sudo sh -c "echo $(which zsh) >> /etc/shells" 
+sudo sh -c "echo $(which zsh) >> /etc/shells"
 # 更改当前使用的 Shell
 chsh -s $(which zsh)
 Changing shell for dejavu.

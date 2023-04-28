@@ -5,9 +5,6 @@ draft: false
 slug: weekly_review_9
 categories: [Ideas]
 tags: [review,web3,chatgpt,nodejs]
-authors:
-- chensoul
-
 ---
 
 ## 前言

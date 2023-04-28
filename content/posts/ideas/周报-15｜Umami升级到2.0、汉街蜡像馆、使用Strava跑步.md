@@ -5,8 +5,6 @@ draft: false
 slug: weekly_review_15
 categories: [Ideas]
 tags: [review,java,rust,python]
-authors:
-- chensoul
 ---
 
 ## 前言

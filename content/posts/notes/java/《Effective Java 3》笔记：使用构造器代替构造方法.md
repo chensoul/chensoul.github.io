@@ -4,8 +4,6 @@ date: 2023-04-03T16:00:00+08:00
 slug: builder-instead-of-constructors
 categories: ["Notes"]
 tags: ["java"]
-authors:
-  - chensoul
 ---
 
 本文是 《Effective Java 3》第二章的学习笔记，在整理笔记过程中，通过 chatgpt 的帮助做了一些扩展。
@@ -162,7 +160,7 @@ public class NutritionFacts {
 
 4. 不适合简单对象的构建：层次构建器模式适用于构建复杂对象层次结构，但对于简单的对象构建，使用层次构建器模式可能会显得过于繁琐和不必要。
 
-   
+
 
 ### 使用
 
@@ -186,27 +184,27 @@ public interface ComputerBuilder {
 ```java
 public class DesktopBuilder implements ComputerBuilder {
     private Desktop computer = new Desktop();
-    
+
     public void buildCPU(String model) {
         computer.setCPU(new CPU(model));
     }
-    
+
     public void buildGPU(String model) {
         computer.setGPU(new GPU(model));
     }
-    
+
     public void buildMemory(int size) {
         computer.setMemory(new Memory(size));
     }
-    
+
     public void addStorage(String type, int size) {
         computer.addStorage(new Storage(type, size));
     }
-    
+
     public void addPeripheral(String type) {
         computer.addPeripheral(new Peripheral(type));
     }
-    
+
     public Computer getResult() {
         return computer;
     }
@@ -214,27 +212,27 @@ public class DesktopBuilder implements ComputerBuilder {
 
 public class LaptopBuilder implements ComputerBuilder {
     private Laptop computer = new Laptop();
-    
+
     public void buildCPU(String model) {
         computer.setCPU(new CPU(model));
     }
-    
+
     public void buildGPU(String model) {
         computer.setGPU(new GPU(model));
     }
-    
+
     public void buildMemory(int size) {
         computer.setMemory(new Memory(size));
     }
-    
+
     public void addStorage(String type, int size) {
         computer.addStorage(new Storage(type, size));
     }
-    
+
     public void addPeripheral(String type) {
         computer.addPeripheral(new Peripheral(type));
     }
-    
+
     public Computer getResult() {
         return computer;
     }
@@ -246,11 +244,11 @@ public class LaptopBuilder implements ComputerBuilder {
 ```java
 public class ComputerDirector {
     private ComputerBuilder builder;
-    
+
     public ComputerDirector(ComputerBuilder builder) {
         this.builder = builder;
     }
-    
+
     public void construct() {
         builder.buildCPU("Intel Core i7");
         builder.buildGPU("Nvidia GeForce RTX 3080");
@@ -302,31 +300,31 @@ public abstract class DepartmentImpl implements Department {
     protected String name;
     protected String manager;
     protected List<Department> subDepartments = new ArrayList<>();
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public void setManager(String manager) {
         this.manager = manager;
     }
-    
+
     public void addSubDepartment(Department subDepartment) {
         subDepartments.add(subDepartment);
     }
-    
+
     public void removeSubDepartment(Department subDepartment) {
         subDepartments.remove(subDepartment);
     }
-    
+
     public List<Department> getSubDepartments() {
         return subDepartments;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public String getManager() {
         return manager;
     }
@@ -347,19 +345,19 @@ public class SalesDepartment extends DepartmentImpl {
 ```java
 public class SalesDepartmentBuilder implements DepartmentBuilder {
     private SalesDepartment department = new SalesDepartment();
-    
+
     public void buildName(String name) {
         department.setName(name);
     }
-    
+
     public void buildManager(String manager) {
         department.setManager(manager);
     }
-    
+
     public void addSubDepartment(Department subDepartment) {
         department.addSubDepartment(subDepartment);
     }
-    
+
     public Department getResult() {
         return department;
     }
@@ -367,19 +365,19 @@ public class SalesDepartmentBuilder implements DepartmentBuilder {
 
 public class DevelopmentDepartmentBuilder implements DepartmentBuilder {
     private DevelopmentDepartment department = new DevelopmentDepartment();
-    
+
     public void buildName(String name) {
         department.setName(name);
     }
-    
+
     public void buildManager(String manager) {
         department.setManager(manager);
     }
-    
+
     public void addSubDepartment(Department subDepartment) {
         department.addSubDepartment(subDepartment);
     }
-    
+
     public Department getResult() {
         return department;
     }
@@ -391,34 +389,34 @@ public class DevelopmentDepartmentBuilder implements DepartmentBuilder {
 ```java
 public class OrganizationDirector {
     private DepartmentBuilder builder;
-    
+
     public OrganizationDirector(DepartmentBuilder builder) {
         this.builder = builder;
     }
-    
+
     public void construct() {
         builder.buildName("Organization");
         builder.buildManager("CEO");
-        
+
         Department salesDept = new SalesDepartment();
         salesDept.setName("Sales Department");
         salesDept.setManager("Sales Manager");
         builder.addSubDepartment(salesDept);
-        
+
         Department devDept = new DevelopmentDepartment();
         devDept.setName("Development Department");
         devDept.setManager("Development Manager");
-        
+
         Department frontendDevDept = new DevelopmentDepartment();
         frontendDevDept.setName("Front-end Development Department");
         frontendDevDept.setManager("Front-end Development Manager");
         devDept.addSubDepartment(frontendDevDept);
-        
+
         Department backendDevDept = new DevelopmentDepartment();
         backendDevDept.setName("Back-end Development Department");
         backendDevDept.setManager("Back-end Development Manager");
         devDept.addSubDepartment(backendDevDept);
-        
+
         builder.addSubDepartment(devDept);
     }
 }
@@ -474,19 +472,19 @@ public abstract class ComputerComponent {
         private String manufacturer;
         private String model;
         // ...
-        
+
         public T setManufacturer(String manufacturer) {
             this.manufacturer = manufacturer;
             return self();
         }
-        
+
         public T setModel(String model) {
             this.model = model;
             return self();
         }
 
         protected abstract T self();
-        
+
         public abstract ComputerComponent build();
     }
 }
@@ -508,17 +506,17 @@ public class Motherboard extends ComputerComponent {
     public static class Builder extends ComputerComponent.Builder<Builder> {
         private String socketType;
         // ...
-        
+
         public Builder setSocketType(String socketType) {
             this.socketType = socketType;
             return this;
         }
-        
+
         @Override
         protected Builder self() {
             return this;
         }
-        
+
         @Override
         public Motherboard build() {
             return new Motherboard(this);
@@ -543,17 +541,17 @@ public class CPU extends ComputerComponent {
     public static class Builder extends ComputerComponent.Builder<Builder> {
         private int coreCount;
         // ...
-        
+
         public Builder setCoreCount(int coreCount) {
             this.coreCount = coreCount;
             return this;
         }
-        
+
         @Override
         protected Builder self() {
             return this;
         }
-        
+
         @Override
         public CPU build() {
             return new CPU(this);
@@ -728,7 +726,7 @@ ImmutableList<String> list = ImmutableList.<String>builder()
     .add("bar")
     .add("baz")
     .build();
-    
+
 ImmutableMap<String, Integer> map = ImmutableMap.<String, Integer>builder()
     .put("foo", 1)
     .put("bar", 2)
@@ -813,42 +811,42 @@ public class Computer {
     private String memory;
     private String hardDisk;
     private Optional<String> graphicsCard;
-    
+
     private Computer(ComputerBuilder builder) {
         this.cpu = builder.cpu;
         this.memory = builder.memory;
         this.hardDisk = builder.hardDisk;
         this.graphicsCard = builder.graphicsCard;
     }
-    
+
     // 省略getter方法
-    
+
     public static class ComputerBuilder {
         private String cpu;
         private String memory;
         private String hardDisk;
         private Optional<String> graphicsCard = Optional.empty();
-        
+
         public ComputerBuilder setCpu(String cpu) {
             this.cpu = cpu;
             return this;
         }
-        
+
         public ComputerBuilder setMemory(String memory) {
             this.memory = memory;
             return this;
         }
-        
+
         public ComputerBuilder setHardDisk(String hardDisk) {
             this.hardDisk = hardDisk;
             return this;
         }
-        
+
         public ComputerBuilder setGraphicsCard(String graphicsCard) {
             this.graphicsCard = Optional.ofNullable(graphicsCard);
             return this;
         }
-        
+
         public Computer build() {
             return new Computer(this);
         }
@@ -877,7 +875,7 @@ public class Computer {
     private String memory;
     private String hardDisk;
     private Optional<String> graphicsCard;
-    
+
     private Computer(Consumer<ComputerBuilder> builder) {
         ComputerBuilder computerBuilder = new ComputerBuilder();
         builder.accept(computerBuilder);
@@ -886,36 +884,36 @@ public class Computer {
         this.hardDisk = computerBuilder.hardDisk;
         this.graphicsCard = computerBuilder.graphicsCard;
     }
-    
+
     // 省略getter方法
-    
+
     public static class ComputerBuilder {
         private String cpu;
         private String memory;
         private String hardDisk;
         private Optional<String> graphicsCard = Optional.empty();
-        
+
         public ComputerBuilder setCpu(String cpu) {
             this.cpu = cpu;
             return this;
         }
-        
+
         public ComputerBuilder setMemory(String memory) {
             this.memory = memory;
             return this;
         }
-        
+
         public ComputerBuilder setHardDisk(String hardDisk) {
             this.hardDisk = hardDisk;
             return this;
         }
-        
+
         public ComputerBuilder setGraphicsCard(String graphicsCard) {
             this.graphicsCard = Optional.ofNullable(graphicsCard);
             return this;
         }
     }
-    
+
     public static void main(String[] args) {
         Computer computer = new Computer(builder -> builder
                 .setCpu("Intel i7")

@@ -5,9 +5,6 @@ draft: false
 slug: weekly_review_5
 categories: [Ideas]
 tags: [review,feign,aop,damus,crossbell]
-authors:
-- chensoul
-
 ---
 
 ## 前言
