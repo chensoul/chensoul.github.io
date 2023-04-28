@@ -109,7 +109,7 @@ body {
 
 - 每天早上 7 点，发送天气预报给微信
 
-![weekly-review-07-03](../../../../../../Pictures/weekly-review-07-03.png)
+
 
 修改了以下 workflow：
 
