@@ -58,9 +58,6 @@ jobs:
       - name: Build web
         run: hugo --gc --minify
 
-      - name: Run Pagefind
-        run: npm_config_yes=true npx pagefind --source "public"
-
       - name: Deploy web
         uses: peaceiris/actions-gh-pages@v3
         with:
