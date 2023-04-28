@@ -26,7 +26,7 @@ rss_ignore: true
 - 💬 Ask me about **Java、Hadoop**
 
 - 📝 I regularly write articles on [ChenSoul](https://blog.chensoul.com)
-
+  
 - 📫 You can reach me via WeChat(chenshu_eth)、[Email](mailto:chensoul.eth@gmail.com) 、[Twitter](https://twitter.com/chensoul_eth) or [Telegram Channel](https://t.me/chensoul_share)
 
 
@@ -73,7 +73,7 @@ rss_ignore: true
 
 ## 最近一年跑步
 
-<a href="https://run.chensoul.com/"><img src="https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg"/></a>
+<a href="https://run.chensoul.com/"><img src="https://raw.githubusercontent.com/chensoul/running_page/master/assets/github_2023.svg#gh-light-mode-only"/></a>
 
 
 <!-- readme ends -->
