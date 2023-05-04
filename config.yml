@@ -26,7 +26,7 @@ params:
     description: ""
     keywords: [ java, python, go ]
     author: chensoul
-    images: [ "<link or path of image for opengraph, twitter-cards>" ]
+    images: [ ]
     DateFormat: "2006-01-02"
     defaultTheme: auto # dark, light
     disableThemeToggle: false
@@ -35,11 +35,12 @@ params:
     ShowShareButtons: false
     ShowPostNavLinks: false
     ShowBreadCrumbs: false
-    ShowCodeCopyButtons: false
+    ShowCodeCopyButtons: true
     ShowWordCount: false
     ShowRssButtonInSectionTermList: false
+    ShowFullTextinRSS: true
     UseHugoToc: false
-    disableSpecial1stPost: false
+    disableSpecial1stPost: true
     disableScrollToTop: false
     comments: false
     hidemeta: false
@@ -49,8 +50,8 @@ params:
 
     assets:
         # disableHLJS: true # to disable highlight.js
-        # disableFingerprinting: true
-        favicon: "<link / abs url>"
+        disableFingerprinting: true
+        favicon: /favicon.ico
         favicon16x16: "<link / abs url>"
         favicon32x32: "<link / abs url>"
         apple_touch_icon: "<link / abs url>"
@@ -58,7 +59,7 @@ params:
 
     label:
         text: "ChenSoul"
-        icon: /apple-touch-icon.png
+        #        icon: /apple-touch-icon.png
         iconHeight: 35
 
     # profile-mode
@@ -77,17 +78,17 @@ params:
                 url: tags
 
     # home-info mode
-    homeInfoParams:
-        Title: "Hi there \U0001F44B"
-        Content: 健康，爱情和使命，按照这个顺序，其它的都不重要
-
-    socialIcons:
-        -   name: twitter
-            url: "https://twitter.com/chensoul_eth"
-        -   name: github
-            url: "https://github.com/chensoul"
-        -   name: telegram
-            url: "https://t.me/chensoul_share"
+    #    homeInfoParams:
+    #        Title: "Hi there \U0001F44B"
+    #        Content: 健康，爱情和使命，按照这个顺序，其它的都不重要
+    #
+    #    socialIcons:
+    #        -   name: twitter
+    #            url: "https://twitter.com/chensoul_eth"
+    #        -   name: github
+    #            url: "https://github.com/chensoul"
+    #        -   name: telegram
+    #            url: "https://t.me/chensoul_share"
 
     analytics:
         google:

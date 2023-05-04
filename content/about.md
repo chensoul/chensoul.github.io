@@ -2,7 +2,7 @@
 title: "关于"
 date: 2023-01-01T08:00:00+08:00
 menu: "main"
-weight: 100
+weight: 10
 rss_ignore: true
 ---
 
@@ -26,7 +26,7 @@ rss_ignore: true
 - 💬 Ask me about **Java、Hadoop**
 
 - 📝 I regularly write articles on [ChenSoul](https://blog.chensoul.com)
-  
+
 - 📫 You can reach me via WeChat(chenshu_eth)、[Email](mailto:chensoul.eth@gmail.com) 、[Twitter](https://twitter.com/chensoul_eth) or [Telegram Channel](https://t.me/chensoul_share)
 
 
