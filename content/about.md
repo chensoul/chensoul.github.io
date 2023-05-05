@@ -15,6 +15,7 @@ date: 2023-01-01T08:00:00+08:00
 - WeChat：chenshu_eth
 - [Email](mailto:chensoul.eth@gmail.com)
 - [Github](https://github.com/chensoul)
+- [Memos](https://memos.chensoul.com)
 - [Twitter](https://twitter.com/chensoul_eth)
 - [Telegram](https://t.me/chensoul_share)
 
