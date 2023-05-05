@@ -7,8 +7,7 @@ date: 2023-01-01T08:00:00+08:00
 
 ## Hi there 👋
 
-> 健康，爱情和使命，按照这个顺序，其它的都不重要。
->               ------ 纳瓦尔
+> 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------ 纳瓦尔
 
 我是 ChenSoul，一个 Java 软件开发工程师，目前工作在武汉。
 
@@ -22,7 +21,6 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
-- [关于](https://blog.chensoul.com/about/)
 - [《Effective Java 3》笔记7：排除过时的对象引用](https://blog.chensoul.com/posts/2023/05/05/eliminate-obsolete-object-references/)
 - [《Effective Java 3》笔记4：用私有构造函数使类不可实例化](https://blog.chensoul.com/posts/2023/05/05/enforce-noninstantiability-with-a-private-constructor/)
 - [周报-16｜《灌篮高手》电影、《春山如笑》话剧](https://blog.chensoul.com/posts/2023/04/25/weekly_review_16/)
@@ -30,6 +28,7 @@ date: 2023-01-01T08:00:00+08:00
 - [周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步](https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/)
 - [《Effective Java 3》笔记5：依赖注入优于硬编码资源](https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/)
 - [周报-14｜如何学习一门编程语言](https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/)
+- [《Effective Java 3》笔记3：使用私有构造函数或枚举类型创建单例](https://blog.chensoul.com/posts/2023/04/11/enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type/)
 <!-- blog ends -->
 
 ## 最近活动
