@@ -7,12 +7,12 @@ date: 2023-01-01T08:00:00+08:00
 
 ## Hi there 👋
 
-> 健康，爱情和使命，按照这个顺序，其它的都不重要。
->               ------ 纳瓦尔
+> 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------ 纳瓦尔
 
 我是 ChenSoul，一个 Java 软件开发工程师，目前工作在武汉。
 
 如果你有任何反馈或者希望讨论某个话题，欢迎使用以下方式联系我。
+
 - WeChat：chenshu_eth
 - [Email](mailto:chensoul.eth@gmail.com)
 - [Github](https://github.com/chensoul)
