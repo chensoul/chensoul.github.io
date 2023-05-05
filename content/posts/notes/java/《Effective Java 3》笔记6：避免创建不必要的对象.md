@@ -1,5 +1,5 @@
 ---
-title: "《Effective Java 3》笔记：避免创建不必要的对象"
+title: "《Effective Java 3》笔记6：避免创建不必要的对象"
 date: 2023-04-24T09:00:00+08:00
 slug: avoid-creating-unnecessary-objects
 categories: ["Notes"]
@@ -142,7 +142,7 @@ private static long sum() {
    for (int i = 0; i < 1000000; i++) {
        sum += i;
    }
-
+   
    // 推荐的写法，使用基本类型
    int sum = 0;
    for (int i = 0; i < 1000000; i++) {
@@ -266,7 +266,7 @@ private static long sum() {
    for (int i = 0; i < 1000000; i++) {
        str += "a";
    }
-
+   
    // 推荐的写法，使用 StringBuilder 和字符串池
    StringBuilder sb = new StringBuilder();
    for (int i = 0; i < 1000000; i++) {
@@ -300,7 +300,7 @@ private static long sum() {
    ```java
    // 不推荐的写法，每次都创建一个新的对象
    Date now = new Date();
-
+   
    // 推荐的写法，使用静态工厂方法
    Date now = Date.from(Instant.now());
    ```
@@ -312,7 +312,7 @@ private static long sum() {
    ```java
    // 不推荐的写法，会创建不必要的数组对象
    String[] arr = new String[]{"a", "b", "c"};
-
+   
    // 推荐的写法，使用 List
    List<String> list = Arrays.asList("a", "b", "c");
    ```
@@ -325,7 +325,7 @@ private static long sum() {
    // 不推荐的写法，会创建不必要的数组对象
    String[] arr = new String[]{"a", "b", "c"};
    List<String> list = new ArrayList<>(Arrays.asList(arr));
-
+   
    // 推荐的写法，使用 Arrays.asList()
    List<String> list = Arrays.asList("a", "b", "c");
    ```
@@ -340,7 +340,7 @@ private static long sum() {
    for (int i = 0; i < 10000; i++) {
        list.add(String.valueOf(i));
    }
-
+   
    // 推荐的写法，使用可重用的对象池
    List<String> list = new ArrayList<>();
    StringBuffer sb = new StringBuffer();
@@ -359,20 +359,20 @@ private static long sum() {
    // 不推荐的写法，会在构造方法中创建大量的对象
    public class MyClass {
        private List<String> list = new ArrayList<>();
-
+   
        public MyClass() {
            for (int i = 0; i < 10000; i++) {
                list.add(String.valueOf(i));
            }
        }
    }
-
+   
    // 推荐的写法，将对象的创建放在需要使用的方法中
    public class MyClass {
        private List<String> list;
-
+   
        public MyClass() {}
-
+   
        public List<String> getList() {
            if (list == null) {
                list = new ArrayList<>();
@@ -397,7 +397,7 @@ private static long sum() {
         }
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
-
+    
     // 推荐的写法，使用可重用的对象池
     public static int fibonacci(int n, Map<Integer, Integer> cache) {
         if (n <= 1) {

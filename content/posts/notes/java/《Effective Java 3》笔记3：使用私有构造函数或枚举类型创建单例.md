@@ -1,5 +1,5 @@
 ---
-title: "《Effective Java 3》笔记：使用私有构造函数或枚举类型创建单例"
+title: "《Effective Java 3》笔记3：使用私有构造函数或枚举类型创建单例"
 date: 2023-04-11T08:00:00+08:00
 slug: enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type
 categories: ["Notes"]

@@ -1,5 +1,5 @@
 ---
-title: "《Effective Java 3》笔记：静态工厂方法代替构造函数"
+title: "《Effective Java 3》笔记1：静态工厂方法代替构造函数"
 date: 2023-04-03T12:00:00+08:00
 slug: static-factory-methods-instead-of-constructors
 categories: ["Notes"]
@@ -57,9 +57,9 @@ public static Boolean valueOf(boolean b) {
    ```java
    public class ThreadSafeCache {
        private static final Map<String, ThreadSafeCache> instances = new ConcurrentHashMap<>();
-
+   
        private ThreadSafeCache() {}
-
+   
        public static ThreadSafeCache getInstance(String key) {
            return instances.computeIfAbsent(key, k -> new ThreadSafeCache());
        }
@@ -101,21 +101,21 @@ public static Boolean valueOf(boolean b) {
    public interface Shape {
        void draw();
    }
-
+   
    public class Circle implements Shape {
        @Override
        public void draw() {
            System.out.println("Drawing Circle");
        }
    }
-
+   
    public class Square implements Shape {
        @Override
        public void draw() {
            System.out.println("Drawing Square");
        }
    }
-
+   
    public class ShapeFactory {
        public static Shape getShape(String shapeType) {
            if (shapeType == null) {
@@ -143,20 +143,20 @@ public static Boolean valueOf(boolean b) {
    public final class ThreadSafeImmutableClass {
        private final int id;
        private final String name;
-
+   
        private ThreadSafeImmutableClass(int id, String name) {
            this.id = id;
            this.name = name;
        }
-
+   
        public static ThreadSafeImmutableClass getInstance(int id, String name) {
            return new ThreadSafeImmutableClass(id, name);
        }
-
+   
        public int getId() {
            return id;
        }
-
+   
        public String getName() {
            return name;
        }
