@@ -4,6 +4,9 @@ This is just a placeholder blank stylesheet so as to support adding custom style
 Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-css-with-themes-assets for more info
 */
 
+body {
+	font-size: 1rem;
+}
 
 .first-entry {
 	min-height: 120px;
@@ -20,8 +23,14 @@ code {
 
 .post-single a, .post-single a:visited {
 	color: #eb2344;
-	text-decoration: none;
-	transition: .2s ease-out;
+}
+
+.post-content a, .toc a:hover {
+	 box-shadow: 0 0;
+}
+
+.post-content code {
+	font-size: .88em;
 }
 
 .post-title {
