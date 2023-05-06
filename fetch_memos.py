@@ -9,9 +9,9 @@ import os
 # 读取 .env 文件
 # OPENID=XXXXX
 load_dotenv()
-open_id = os.getenv('OPENID')
+MEMOS_TOKEN = os.getenv('MEMOS_TOKEN')
 
-url = f'https://memos.chensoul.com/api/memo?openId={open_id}'
+url = f'https://memos.chensoul.com/api/memo?openId={MEMOS_TOKEN}'
 
 # 计算上周一和上周日的日期
 today = datetime.now().date()

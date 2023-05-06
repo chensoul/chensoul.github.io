@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -34,8 +34,6 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Update markdown file
-        env:
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |-
           python build_about.py content/about.md
           python build_about.py README.md
