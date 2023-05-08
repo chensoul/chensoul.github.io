@@ -19,6 +19,8 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [《Effective Java 3》笔记9：使用 try-with-resources 优于 try-finally](https://blog.chensoul.com/posts/2023/05/08/prefer-try-with-resources-to-try-finally/)
+- [《Effective Java 3》笔记8：避免使用终结器和清除器](https://blog.chensoul.com/posts/2023/05/08/avoid-finalizers-and-cleaners/)
 - [周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池](https://blog.chensoul.com/posts/2023/05/06/weekly_review_17/)
 - [《Effective Java 3》笔记7：排除过时的对象引用](https://blog.chensoul.com/posts/2023/05/05/eliminate-obsolete-object-references/)
 - [《Effective Java 3》笔记4：用私有构造函数使类不可实例化](https://blog.chensoul.com/posts/2023/05/05/enforce-noninstantiability-with-a-private-constructor/)
@@ -27,8 +29,6 @@
 - [周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步](https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/)
 - [《Effective Java 3》笔记5：依赖注入优于硬编码资源](https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/)
 - [周报-14｜如何学习一门编程语言](https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/)
-- [《Effective Java 3》笔记3：使用私有构造函数或枚举类型创建单例](https://blog.chensoul.com/posts/2023/04/11/enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type/)
-- [周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录](https://blog.chensoul.com/posts/2023/04/04/weekly_review_13/)
 <!-- blog ends -->
 
 ## 最近活动
