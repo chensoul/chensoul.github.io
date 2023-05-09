@@ -31,6 +31,8 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [Python包和环境管理](https://blog.chensoul.com/posts/2023/05/09/python-package-and-env-management/)
+- [Python安装、构建、发布、下载和运行](https://blog.chensoul.com/posts/2023/05/09/python-install-build-publish-run/)
 - [《Effective Java 3》笔记9：使用 try-with-resources 优于 try-finally](https://blog.chensoul.com/posts/2023/05/08/prefer-try-with-resources-to-try-finally/)
 - [《Effective Java 3》笔记8：避免使用终结器和清除器](https://blog.chensoul.com/posts/2023/05/08/avoid-finalizers-and-cleaners/)
 - [周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池](https://blog.chensoul.com/posts/2023/05/06/weekly_review_17/)
@@ -39,8 +41,6 @@
 - [周报-16｜《灌篮高手》电影、《春山如笑》话剧](https://blog.chensoul.com/posts/2023/04/25/weekly_review_16/)
 - [《Effective Java 3》笔记6：避免创建不必要的对象](https://blog.chensoul.com/posts/2023/04/24/avoid-creating-unnecessary-objects/)
 - [周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步](https://blog.chensoul.com/posts/2023/04/18/weekly_review_15/)
-- [《Effective Java 3》笔记5：依赖注入优于硬编码资源](https://blog.chensoul.com/posts/2023/04/17/prefer-dependency-injection-to-hardwiring-resources/)
-- [周报-14｜如何学习一门编程语言](https://blog.chensoul.com/posts/2023/04/13/weekly_review_14/)
 <!-- blog ends -->
 
 ## 最近活动
