@@ -6,15 +6,18 @@
 
 > 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------ 纳瓦尔
 
-我是 ChenSoul，一个 Java 软件开发工程师，目前工作在武汉。
+我是 ChenSoul，一个 Java 软件开发工程师，目前工作在武汉。热爱[编程](https://blog.chensoul.com/)，喜欢[跑步](https://run.chensoul.com/)。读书、健身、定投、帮朋友、陪家人，做一个长期主义者。
 
-如果你有任何反馈或者希望讨论某个话题，欢迎使用以下方式联系我。
-- WeChat：chenshu_eth
+### 找到我
+- 微信：chenshu_eth
 - [Email](mailto:chensoul.eth@gmail.com)
 - [Github](https://github.com/chensoul)
 - [Memos](https://memos.chensoul.com)
 - [Twitter](https://twitter.com/chensoul_eth)
 - [Telegram](https://t.me/chensoul_share)
+
+### 订阅
+- https://blog.chensoul.com/index.xml
 
 ## 最新博客
 
