@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [Git Flow分支模型和使用](https://blog.chensoul.com/posts/2023/05/11/git-flow-model-and-usage/)
 - [周报-18｜导出豆瓣数据、Effective Java 3第二章总结](https://blog.chensoul.com/posts/2023/05/10/weekly_review_18/)
 - [Python包和环境管理](https://blog.chensoul.com/posts/2023/05/09/python-package-and-env-management/)
 - [Python安装、构建、发布、下载和运行](https://blog.chensoul.com/posts/2023/05/09/python-install-build-publish-run/)
@@ -40,7 +41,6 @@
 - [《Effective Java 3》笔记7：排除过时的对象引用](https://blog.chensoul.com/posts/2023/05/05/eliminate-obsolete-object-references/)
 - [《Effective Java 3》笔记4：用私有构造函数使类不可实例化](https://blog.chensoul.com/posts/2023/05/05/enforce-noninstantiability-with-a-private-constructor/)
 - [周报-16｜《灌篮高手》电影、《春山如笑》话剧](https://blog.chensoul.com/posts/2023/04/25/weekly_review_16/)
-- [《Effective Java 3》笔记6：避免创建不必要的对象](https://blog.chensoul.com/posts/2023/04/24/avoid-creating-unnecessary-objects/)
 <!-- blog ends -->
 
 ## 最近活动
