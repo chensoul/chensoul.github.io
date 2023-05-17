@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
 - [Git Flow分支模型和使用](https://blog.chensoul.com/posts/2023/05/11/git-flow-model-and-usage/)
 - [周报-18｜导出豆瓣数据、Effective Java 3第二章总结](https://blog.chensoul.com/posts/2023/05/10/weekly_review_18/)
 - [Python包和环境管理](https://blog.chensoul.com/posts/2023/05/09/python-package-and-env-management/)
@@ -40,7 +41,6 @@
 - [周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池](https://blog.chensoul.com/posts/2023/05/06/weekly_review_17/)
 - [《Effective Java 3》笔记7：排除过时的对象引用](https://blog.chensoul.com/posts/2023/05/05/eliminate-obsolete-object-references/)
 - [《Effective Java 3》笔记4：用私有构造函数使类不可实例化](https://blog.chensoul.com/posts/2023/05/05/enforce-noninstantiability-with-a-private-constructor/)
-- [周报-16｜《灌篮高手》电影、《春山如笑》话剧](https://blog.chensoul.com/posts/2023/04/25/weekly_review_16/)
 <!-- blog ends -->
 
 ## 最近活动
