@@ -46,16 +46,16 @@
 ## 最近活动
 
 <!-- douban starts -->
+- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
+- [看过速度与激情7](http://movie.douban.com/subject/23761370/) 2023-05-19
+- [看过速度与激情6](http://movie.douban.com/subject/6537500/) 2023-05-19
+- [看过速度与激情5](http://movie.douban.com/subject/4286017/) 2023-05-19
+- [看过速度与激情4](http://movie.douban.com/subject/2132930/) 2023-05-19
+- [看过速度与激情3：东京漂移](http://movie.douban.com/subject/1652618/) 2023-05-19
+- [看过速度与激情2](http://movie.douban.com/subject/1307442/) 2023-05-19
+- [看过速度与激情](http://movie.douban.com/subject/1304899/) 2023-05-19
+- [看过速度与激情10](http://movie.douban.com/subject/26631790/) 2023-05-19
 - [最近在读程序员修炼之道（第2版）](https://book.douban.com/subject/35006892/) 2023-05-16
-- [读过Python工匠](https://book.douban.com/subject/35723705/) 2023-05-10
-- [听过我是一只小小鸟](https://music.douban.com/subject/1484683/) 2023-05-06
-- [读过非暴力沟通](https://book.douban.com/subject/3533221/) 2023-05-06
-- [看过长空之王](http://movie.douban.com/subject/35209731/) 2023-04-30
-- [看过人生路不熟](http://movie.douban.com/subject/35653205/) 2023-04-28
-- [想看怒呛人生](http://movie.douban.com/subject/35413042/) 2023-04-27
-- [想读雨中的3分58秒](https://book.douban.com/subject/7916024/) 2023-04-25
-- [想读当我谈跑步时我谈些什么](https://book.douban.com/subject/3369600/) 2023-04-25
-- [想读Node.js后端全程实战](https://book.douban.com/subject/36374893/) 2023-04-24
 <!-- douban ends -->
 
 
