@@ -31,6 +31,8 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [【翻译】Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
+- [Java设计模式：Abstract Document](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
 - [周报-19｜武功山看日出、Python初学建议](https://blog.chensoul.com/posts/2023/05/18/weekly_review_19/)
 - [JSR 166规范](https://blog.chensoul.com/posts/2023/05/18/jsr-166/)
 - [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
@@ -39,8 +41,6 @@
 - [Python包和环境管理](https://blog.chensoul.com/posts/2023/05/09/python-package-and-env-management/)
 - [Python安装、构建、发布、下载和运行](https://blog.chensoul.com/posts/2023/05/09/python-install-build-publish-run/)
 - [《Effective Java 3》笔记9：使用 try-with-resources 优于 try-finally](https://blog.chensoul.com/posts/2023/05/08/prefer-try-with-resources-to-try-finally/)
-- [《Effective Java 3》笔记8：避免使用终结器和清除器](https://blog.chensoul.com/posts/2023/05/08/avoid-finalizers-and-cleaners/)
-- [周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池](https://blog.chensoul.com/posts/2023/05/06/weekly_review_17/)
 <!-- blog ends -->
 
 ## 最近活动
