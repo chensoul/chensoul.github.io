@@ -34,16 +34,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [Python学习1：注释、变量和常量](https://blog.chensoul.com/posts/2023/05/23/python-comment-and-variable/)
+- [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
 - [【翻译】Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
 - [Java设计模式：Abstract Document](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
+- [Java设计模式：Abstract Factory](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
 - [周报-19｜武功山看日出、Python初学建议](https://blog.chensoul.com/posts/2023/05/18/weekly_review_19/)
 - [JSR 166规范](https://blog.chensoul.com/posts/2023/05/18/jsr-166/)
 - [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
 - [Git Flow分支模型和使用](https://blog.chensoul.com/posts/2023/05/11/git-flow-model-and-usage/)
 - [周报-18｜导出豆瓣数据、Effective Java 3第二章总结](https://blog.chensoul.com/posts/2023/05/10/weekly_review_18/)
-- [Python包和环境管理](https://blog.chensoul.com/posts/2023/05/09/python-package-and-env-management/)
-- [Python安装、构建、发布、下载和运行](https://blog.chensoul.com/posts/2023/05/09/python-install-build-publish-run/)
-- [《Effective Java 3》笔记9：使用 try-with-resources 优于 try-finally](https://blog.chensoul.com/posts/2023/05/08/prefer-try-with-resources-to-try-finally/)
 <!-- blog ends -->
 
 ## 最近活动
