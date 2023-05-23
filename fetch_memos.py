@@ -39,7 +39,7 @@ if response.status_code == 200:
             created_time = datetime.fromtimestamp(d['createdTs']).strftime('%Y-%m-%d')
             time_str = '{}'.format(created_time)
             # 使用正则表达式匹配 URL，并将其替换为 Markdown 链接格式
-            content_with_links = re.sub(r'(https?://\S+)', r'[查看链接](\1)', content)
+            content_with_links = re.sub(r'(https?://\S+)', r'[\1](\1)', content)
             # 去掉换行符
             content_with_links = content_with_links.replace('\n', ' ')
             # 将 # 开头的字符前后添加反引号

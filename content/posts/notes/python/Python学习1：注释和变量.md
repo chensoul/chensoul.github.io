@@ -1,11 +1,13 @@
 ---
 title: "Python学习1：注释、变量和常量"
-date: 2023-05-12T09:00:00+08:00
+date: 2023-05-23T18:00:00+08:00
 slug: python-comment-and-variable
-draft: true
+draft: false
 categories: ["Notes"]
 tags: ["python"]
 ---
+
+Python 注释、变量和常量是编写 Python 代码时非常重要的概念，下面分别介绍它们的基本用法和语法。
 
 
 
@@ -70,11 +72,55 @@ chmod +x 00_helloworld.py
 
 
 
+## 编码格式
+
+Python3 默认的编码格式是UTF-8（Unicode Transformation Format - 8 bit）。这是一种通用的字符编码，支持几乎所有的字符集，包括 ASCII、Latin、中文、日文、韩文等。
+
+在 Python 3.x 中，所有的字符串都是以 Unicode 编码存储的。当你在 Python 中创建一个字符串时，你可以使用任何 Unicode 字符，而不必担心编码问题。
+
+当你打开一个文本文件时，Python 会自动尝试使用 UTF-8 编码来解析文件内容。如果文件使用其他编码格式，你需要使用相应的编码格式来打开文件，或者在读取文件内容后将其解码为 Unicode。
+
+在 Python 中，你可以使用编码声明（coding declaration）来指定文件的编码格式。编码声明是一个特殊的注释，出现在 Python 文件的第一行或第二行（如果文件的第一行是 shebang，则编码声明必须出现在第二行），格式如下：
+
+```python
+# -*- coding: encoding -*-
+
+# 或者
+
+# coding=utf-8
+```
+
+其中，`encoding` 是文件的编码格式，可以是 UTF-8、ISO-8859-1 或其他编码格式的名称。编码声明告诉 Python 解释器应该使用指定的编码格式来解析该文件中的文本内容。如果没有编码声明，Python3 默认使用 UTF-8 编码来解析文件内容。
 
 
-## 注释
 
-python2默认的编码格式是 **ASCII** 格式，python3默认的编码格式是 **utf-8** 格式。
+Python 2.x 的默认编码格式是 ASCII，这是一种 7-bit 的字符编码，只能表示最基本的 ASCII 字符集，无法支持多语言和 Unicode 字符。
+
+在 Python 2.x 中，如果你需要使用 Unicode 字符，你需要在字符串前面添加一个 `u` 字符，以表示该字符串是一个 Unicode 字符串。例如：
+
+```python
+# -*- coding: utf-8 -*-
+s = u'你好，世界！'
+print s
+```
+
+在 Python 2.x 中，如果你需要打开一个非 ASCII 编码的文本文件，你需要在打开文件时指定文件的编码格式。例如：
+
+```python
+f = open('filename.txt', 'r')
+s = f.read().decode('gbk')  # 读取并解码文件内容
+f.close()
+```
+
+在 Python 2.x 中，你可以使用编码声明来指定文件的编码格式：
+
+```python
+# -*- coding: encoding -*-
+```
+
+其中，`encoding` 是文件的编码格式，可以是 UTF-8、GBK、ISO-8859-1 或其他编码格式的名称。编码声明告诉 Python 解释器应该使用指定的编码格式来解析该文件中的文本内容。如果没有编码声明，Python 2.x 默认使用 ASCII 编码来解析文件内容。
+
+
 
 在终端输入如下命令，查看编码格式：
 
@@ -87,23 +133,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 'utf-8'
 ```
 
-在 python2 中如果需要添加中文注释，需要在 python 文件的开头添加：
-
-```PYTHON
-# -*- coding: UTF-8 -*-
-
-#或者
-
-# coding=utf-8
-```
-
-> 注意：# coding=utf-8 的 = 号两边不要空格。
-
-python3 环境中，源码文件默认使用 utf-8 编码，可以正常解析中文，不需要开头加上面的代码，但是**为了代码的可移植性，建议在编写程序的时候加上**。
-
-另外，使用编辑器编写 python 程序时，还需要设置 py 文件存储的格式为UTF-8，否则会出现乱码或者报错。
 
 
+## 注释
 
 在 Python 中，注释用于在代码中添加注释、解释或说明。注释通常用于提高代码的可读性，帮助其他人理解你的代码。
 
@@ -129,21 +161,26 @@ text = "# This is not a comment because it's inside quotes."
 Python中使用以三个单引号或者三个双引号括起来的注释被视为多行注释。多行注释通常用于注释函数、类、模块等。例如：
 
 ```python
-"""
-这是一个多行注释的示例。
-它可以跨越多行，用于注释函数、类、模块等。
-"""
+'''
+这是一个多行注释，
+它可以用于描述函数、类或模块的功能和使用方法。
+'''
+
+def add_numbers(a, b):
+    """
+    这是一个用于计算两个数字之和的函数。
+    参数：
+    a -- 第一个数字
+    b -- 第二个数字
+    返回值：
+    两个数字的和
+    """
+    return a + b
 ```
 
-或者：
-
-```python
-'''
-这也是一个多行注释的示例。
-'''
-```
-
-注意，Python的多行注释实际上是一个字符串字面值，因此如果不被赋值给任何变量，它们将不会对程序产生任何影响。
+> 注意：
+>
+> Python的多行注释实际上是一个字符串字面值，因此如果不被赋值给任何变量，它们将不会对程序产生任何影响。
 
 
 
@@ -160,19 +197,37 @@ Python 中的变量可以存储各种数据类型，包括数字、字符串、�
 - 变量名区分大小写。
 - 变量名不能与 Python 的关键字相同。
 
+>以下是 Python 3.x 版本中的所有关键字：
+>
+>```bash
+>False  class   finally is      return
+>None   continue    for     lambda  try
+>True   def     from    nonlocal    while
+>and    del     global  not     with
+>as     elif    if      or      yield
+>assert else    import  pass    
+>break  except  in      raise   
+>```
+>
+>在 Python 2.x 中，还有两个额外的关键字 `exec` 和 `print`，但它们在 Python 3.x 中已经被移除。
+>
+>如果你不确定某个标识符是否是关键字，你可以使用 Python 的 `keyword` 模块来检查：
+>
+>```python
+>import keyword
+>
+>print(keyword.kwlist)
+>```
+
 ### 变量定义和使用
 
 在 Python 中，可以使用赋值语句来创建变量。赋值语句使用等号(`=`)将变量名和要存储在变量中的值分开。
 
 Python是动态类型的语言，无须声明变量类型，直接对变量赋值即可使用。
 
-
-
 示例：
 
 ```python
-# Python是动态类型的语言，无须声明变量类型，直接对变量赋值即可使用
-
 # 创建一个整型变量 x
 x = 5
 # 创建一个字符串变量 name
@@ -229,7 +284,27 @@ print(b)  # 输出 0
 print(c)  # 输出 0
 ```
 
+### 变量的作用域
 
+在 Python 中，变量的作用域是指变量在程序中可见和可访问的范围。Python 中有四种作用域：
+
+- 局部作用域：变量在函数内部定义，只能在函数内部访问。
+- 嵌套作用域：变量在嵌套函数内部定义，可以在嵌套函数内部和外部函数内部访问。
+- 全局作用域：变量在模块内部定义，可以在模块内的任何函数或类中访问。
+- 内置作用域：变量是 Python 内置的函数和对象，可以在任何地方访问。
+
+如果在函数内部访问全局变量，你需要使用 `global` 关键字来指示变量的作用域。例如：
+
+```python
+x = 10  # 全局变量
+
+def my_func():
+    global x  # 使用 global 关键字指示变量的作用域
+    x = 20   # 将全局变量 x 的值修改为 20
+
+my_func()
+print(x)  # 输出 20
+```
 
 ### 变量解包
 
@@ -373,11 +448,27 @@ print(my_string)  # 输出 Hello, world!
 
 ## 常量
 
-在 Python 中，常量是指在程序执行过程中不能被修改的变量。Python 中没有像其他编程语言那样明确定义常量的语法结构，通常使用全大写字母来表示常量：
+在 Python 中，常量是指在程序中定义的不可变的值。常量通常用大写字母表示，以便与变量区分开来。Python 中没有内置的常量类型，但是你可以使用以下方式定义常量：
 
-```bash
-# 常量示例
-PI = 3.14159
-MAX_VALUE = 100
+1. 使用普通变量表示常量。例如：
+
+```python
+PI = 3.14159265358979323846
 ```
 
+在程序中使用 `PI` 来表示圆周率，这个值不会被修改。
+
+2) 使用枚举类（Enum）表示常量。枚举类是 Python 中的一种特殊类型，用于定义一组有限的常量。例如：
+
+```python
+from enum import Enum
+
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+```
+
+在程序中使用 `Color.RED`、`Color.GREEN` 和 `Color.BLUE` 来表示三种颜色，这些值不会被修改。
+
+常量是编写可读性好、易于理解和维护的代码的重要组成部分。在编写代码时，应该将常量定义为不可变的值，并尽可能使用常量来表示不变的数据。
