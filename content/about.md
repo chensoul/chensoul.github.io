@@ -36,9 +36,9 @@ date: 2023-01-01T08:00:00+08:00
 <!-- blog starts -->
 - [Python学习1：注释、变量和常量](https://blog.chensoul.com/posts/2023/05/23/python-comment-and-variable/)
 - [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
-- [【翻译】Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
+- [[译]Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
 - [Java设计模式：Abstract Document](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
-- [Java设计模式：Abstract Factory](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
+- [Java设计模式：Abstract Factory](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-factory/)
 - [周报-19｜武功山看日出、Python初学建议](https://blog.chensoul.com/posts/2023/05/18/weekly_review_19/)
 - [JSR 166规范](https://blog.chensoul.com/posts/2023/05/18/jsr-166/)
 - [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
