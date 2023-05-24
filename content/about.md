@@ -49,7 +49,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最近活动
 
 <!-- douban starts -->
-
+- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
+- [看过速度与激情7](http://movie.douban.com/subject/23761370/) 2023-05-19
+- [看过速度与激情6](http://movie.douban.com/subject/6537500/) 2023-05-19
+- [看过速度与激情5](http://movie.douban.com/subject/4286017/) 2023-05-19
+- [看过速度与激情4](http://movie.douban.com/subject/2132930/) 2023-05-19
+- [看过速度与激情3：东京漂移](http://movie.douban.com/subject/1652618/) 2023-05-19
+- [看过速度与激情2](http://movie.douban.com/subject/1307442/) 2023-05-19
+- [看过速度与激情](http://movie.douban.com/subject/1304899/) 2023-05-19
+- [看过速度与激情10](http://movie.douban.com/subject/26631790/) 2023-05-19
+- [最近在读程序员修炼之道（第2版）](https://book.douban.com/subject/35006892/) 2023-05-16
 <!-- douban ends -->
 
 
