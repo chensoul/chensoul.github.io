@@ -15,13 +15,37 @@ tags: [review]
 
 ## 理财
 
+这周总计支出 1784 元，明细如下：
 
+- 5月15日：12元
+- 5月16日：18元
+- 5月17日：200元
+- 5月18日：12元
+- 5月19日：445元
+- 5月20日：662元
+- 5月21日：435元
 
 ## 健身
 
+本周跑步 36 公里，最长跑步距离为 10 公里。明细数据如下：
 
+![weekly-review-20-08](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-20-08.png)
+
+我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多。2 年里我跑过 2个省份 2个城市。更多跑步数据在[跑步](https://run.chensoul.com/)主页。
 
 ## 工作
+
+### Java
+
+#### 博客
+
+本周完成两篇博客
+
+- [Java设计模式：Abstract Document](/posts/2023/05/22/java-design-patterns-abstract-document/)
+
+
+
+### Python
 
 
 

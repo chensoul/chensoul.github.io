@@ -1,7 +1,7 @@
 ---
 title: "Java设计模式：Abstract Factory"
 date: 2023-05-22T14:00:00+08:00
-slug: java-design-patterns-abstract-document
+slug: java-design-patterns-abstract-factory
 categories: ["Notes"]
 tags: [java]
 ---

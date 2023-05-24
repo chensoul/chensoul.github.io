@@ -1,5 +1,5 @@
 ---
-title: "【翻译】Build Robust Continuous Integration With Docker and Friends"
+title: "[译]Build Robust Continuous Integration With Docker and Friends"
 date: 2023-05-22T15:00:00+08:00
 slug: docker-continuous-integration
 draft: false
