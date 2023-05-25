@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-20｜自动生成每日早报、周末团建](https://blog.chensoul.com/posts/2023/05/25/weekly_review_20/)
 - [Python学习1：注释、变量和常量](https://blog.chensoul.com/posts/2023/05/23/python-comment-and-variable/)
 - [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
 - [[译]Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
@@ -43,13 +44,21 @@ date: 2023-01-01T08:00:00+08:00
 - [JSR 166规范](https://blog.chensoul.com/posts/2023/05/18/jsr-166/)
 - [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
 - [Git Flow分支模型和使用](https://blog.chensoul.com/posts/2023/05/11/git-flow-model-and-usage/)
-- [周报-18｜导出豆瓣数据、Effective Java 3第二章总结](https://blog.chensoul.com/posts/2023/05/10/weekly_review_18/)
 <!-- blog ends -->
 
 ## 最近活动
 
 <!-- douban starts -->
-
+- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
+- [看过速度与激情7](http://movie.douban.com/subject/23761370/) 2023-05-19
+- [看过速度与激情6](http://movie.douban.com/subject/6537500/) 2023-05-19
+- [看过速度与激情5](http://movie.douban.com/subject/4286017/) 2023-05-19
+- [看过速度与激情4](http://movie.douban.com/subject/2132930/) 2023-05-19
+- [看过速度与激情3：东京漂移](http://movie.douban.com/subject/1652618/) 2023-05-19
+- [看过速度与激情2](http://movie.douban.com/subject/1307442/) 2023-05-19
+- [看过速度与激情](http://movie.douban.com/subject/1304899/) 2023-05-19
+- [看过速度与激情10](http://movie.douban.com/subject/26631790/) 2023-05-19
+- [最近在读程序员修炼之道（第2版）](https://book.douban.com/subject/35006892/) 2023-05-16
 <!-- douban ends -->
 
 
