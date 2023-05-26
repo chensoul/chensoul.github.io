@@ -31,16 +31,16 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [Java设计模式：Active Object](https://blog.chensoul.com/posts/2023/05/26/java-design-patterns-active-object/)
+- [《Effective Java 3》笔记14：考虑实现 Comparable 接口](https://blog.chensoul.com/posts/2023/05/26/consider-implementing-comparable/)
+- [《Effective Java 3》笔记13：明智地覆盖 clone 方法](https://blog.chensoul.com/posts/2023/05/26/override-clone-judiciously/)
+- [《Effective Java 3》笔记12：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/26/always-override-tostring/)
 - [周报-20｜自动生成每日早报、周末团建](https://blog.chensoul.com/posts/2023/05/25/weekly_review_20/)
 - [Python学习1：注释、变量和常量](https://blog.chensoul.com/posts/2023/05/23/python-comment-and-variable/)
 - [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
 - [[译]Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
 - [Java设计模式：Abstract Document](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
 - [Java设计模式：Abstract Factory](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-factory/)
-- [周报-19｜武功山看日出、Python初学建议](https://blog.chensoul.com/posts/2023/05/18/weekly_review_19/)
-- [JSR 166规范](https://blog.chensoul.com/posts/2023/05/18/jsr-166/)
-- [《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定](https://blog.chensoul.com/posts/2023/05/17/obey-the-general-contract-when-overriding-equals/)
-- [Git Flow分支模型和使用](https://blog.chensoul.com/posts/2023/05/11/git-flow-model-and-usage/)
 <!-- blog ends -->
 
 ## 最近活动
