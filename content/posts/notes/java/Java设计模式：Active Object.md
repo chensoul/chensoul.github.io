@@ -3,7 +3,7 @@ title: "Java设计模式：Active Object"
 date: 2023-05-26T10:00:00+08:00
 slug: java-design-patterns-active-object
 categories: ["Notes"]
-tags: [java]
+tags: [java,spring]
 ---
 
 
