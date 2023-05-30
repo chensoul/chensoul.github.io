@@ -45,7 +45,7 @@ if response.status_code == 200:
             # 将 # 开头的字符前后添加反引号
             content_with_links = re.sub(r'(#\S+)', r'`\1`', content_with_links)
             # 将输出内容转换为列表项的格式
-            markdown = '- **{}** {}'.format(time_str, content_with_links)
+            markdown = '- 📌`{}` {}'.format(time_str, content_with_links)
             print(markdown)
 else:
     print('请求失败：', response.status_code)

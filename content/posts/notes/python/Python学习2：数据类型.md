@@ -19,6 +19,50 @@ Python 中的数据类型包括：
 7. 字典类型：由一组键值对组成，其中键是唯一的，用于查找和存储值。
 8. None 类型：表示空值或缺失值。
 
+
+
+## 字符串
+
+定义字符串变量：
+
+```python
+# 字符串类型
+name = "John"
+message = 'Hello, world!'
+multiline = """This is a
+multiline string"""
+```
+
+查看字符串类型：
+
+```python
+type(name) # <class 'str'>
+```
+
+字符串长度：
+
+```python
+len(name) # 4
+```
+
+字符串相加：
+
+```python
+string1 = "abra"
+string2 = "cadabra"
+magic_string = string1 + string2
+magic_string # abracadabra
+```
+
+
+
+```python
+flavor = "apple pie"
+flavor[1] # p
+```
+
+
+
 示例：
 
 ```python
@@ -27,11 +71,7 @@ x = 42
 y = 3.14
 z = 1 + 2j
 
-# 字符串类型
-name = "John"
-message = 'Hello, world!'
-multiline = """This is a
-multiline string"""
+
 
 # 布尔类型
 is_true = True
