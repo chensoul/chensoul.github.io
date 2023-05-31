@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-21｜Python之禅、产品经理被优化、端午节送节](https://blog.chensoul.com/posts/2023/05/31/weekly_review_21/)
 - [Java设计模式：Active Object](https://blog.chensoul.com/posts/2023/05/26/java-design-patterns-active-object/)
 - [《Effective Java 3》笔记14：考虑实现 Comparable 接口](https://blog.chensoul.com/posts/2023/05/26/consider-implementing-comparable/)
 - [《Effective Java 3》笔记13：明智地覆盖 clone 方法](https://blog.chensoul.com/posts/2023/05/26/override-clone-judiciously/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
 - [[译]Build Robust Continuous Integration With Docker and Friends](https://blog.chensoul.com/posts/2023/05/22/docker-continuous-integration/)
 - [Java设计模式：Abstract Document](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-document/)
-- [Java设计模式：Abstract Factory](https://blog.chensoul.com/posts/2023/05/22/java-design-patterns-abstract-factory/)
 <!-- blog ends -->
 
 ## 最近活动
