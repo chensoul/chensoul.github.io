@@ -1,7 +1,7 @@
 ---
 title: "周报-21｜Python之禅、产品经理被优化、端午节送节"
-date: 2023-05-30 09:00:00+08:00
-draft: true
+date: 2023-05-31 09:00:00+08:00
+draft: false
 slug: weekly_review_21
 categories: [Ideas]
 tags: [review,python,java]
@@ -24,6 +24,10 @@ tags: [review,python,java]
 
 
 还有3个月就要到端午节，老婆买了粽叶包粽子，我也动手包了一部分。虽然包的不好看，但心里还是很满足的。自己包的粽子送节，显然更有意义。结婚之后的第一个端午节，周末开车去给长辈送了端午节。看着长辈们的头发日渐斑白，不禁感叹岁月无情。趁着年轻的时候，要对身边的亲人好一些。不要等到来不及了才知道后悔。
+
+
+
+这周在 docker 里部署了 Plausible ，使用过程中发现 Plausible 架构过于复杂，使用了 postgres 和 clickhouse 数据库，docker-compose 启动了4个容器，所以最后还是放弃了使用 Plausible。umami 的 postgres 数据库只包括几张表，操作起来比较容易，比如：时不时地，我会把来自 localhost 的访问记录删除掉，这样统计数据更加真实准确。
 
 
 
@@ -201,6 +205,18 @@ Python之禅是一组编写Python语言程序的指导原则，由著名Python�
 - [Java设计模式：Active Object](/posts/2023/05/26/java-design-patterns-active-object/)
 
 ![weekly-review-21-07](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-21-07.png)
+
+至此，《Effective Java 3》第三章学习完了。第三章介绍了Java中对象的创建和销毁，其中第三章讲述了所有对象通用的方法，主要内容如下：
+
+1. equals方法：用于比较两个对象是否相等，需要遵循一些通用约定，包括自反性、对称性、传递性、一致性和非空性等。
+2. hashCode方法：用于返回对象的哈希码，需要与equals方法一起实现，保证相等的对象具有相等的哈希码。
+3. toString方法：用于返回对象的字符串表示形式，方便调试和日志记录等。
+4. clone方法：用于复制对象，需要实现Cloneable接口，并覆盖Object类中的clone方法。
+5. finalize方法：用于在对象被垃圾回收前执行一些清理操作，但是该方法的使用非常危险，应该尽量避免使用。
+
+本章重点介绍了所有对象通用的方法，这些方法在Java中非常重要，需要程序员掌握。equals和hashCode方法是一对重要的方法，需要同时实现，保证对象的相等和哈希码的正确性。toString方法可以方便地输出对象的信息，方便调试和日志记录等。clone方法可以用于复制对象，但需要注意实现Cloneable接口，并覆盖Object类中的clone方法。最后，finalize方法虽然可以用于对象清理，但是使用非常危险，应该尽量避免使用。
+
+
 
 ## 本周分享
 

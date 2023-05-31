@@ -4,7 +4,7 @@ date: 2023-01-25T10:38:34+08:00
 draft: false
 slug: "notes-about-deploy-services-in-vps"
 categories: ["Notes"]
-tags: ["hugo","docker","rsshub","kuma","umami","cusdis","memos","n8n"]
+tags: [hugo,docker,rsshub,kuma,umami,cusdis,memos,n8n,vps,plausible]
 ---
 
 ## 服务器设置
@@ -97,6 +97,40 @@ networks:
 
 ## 服务部署
 
+### Postgresql
+
+1、参考 [PostgreSql安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建
+postgresql.yaml：
+
+```yaml
+version: "3"
+
+services:
+  pgsql:
+    image: postgres:13-alpine
+    container_name: pgsql
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin@pg!
+    networks:
+      - custom
+    volumes:
+      - /data/postgres:/var/lib/postgresql/data
+
+networks:
+  custom:
+    external: true
+```
+
+2、启动
+
+```bash
+docker-compose -f postgresql.yaml up -d
+```
+
 ### Rsshub
 
 直接通过 Docker 安装运行：
@@ -135,7 +169,7 @@ server {
 }
 ```
 
-### Kuma
+### Uptime Kuma
 
 参考 [kuma](https://uptime.kuma.pet/)，使用 docker compose 部署，创建 uptime.yaml：
 
@@ -196,38 +230,12 @@ server {
 }
 ```
 
-### Postgresql
-
-1、参考 [PostgreSql安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建
-postgresql.yaml：
-
-```yaml
-version: "3"
-
-services:
-  pgsql:
-    image: postgres:13-alpine
-    container_name: pgsql
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin@pg!
-    networks:
-      - custom
-    volumes:
-      - /data/postgres:/var/lib/postgresql/data
-
-networks:
-  custom:
-    external: true
-```
-
-2、启动
+升级
 
 ```bash
-docker-compose -f postgresql.yaml up -d
+docker compose -f uptime.yaml down 
+docker pull louislam/uptime-kuma:1
+docker-compose -f uptime.yaml up -d
 ```
 
 ### Umami
@@ -325,6 +333,14 @@ server {
 
 访问 https://umami.chensoul.com/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
 
+6、升级
+
+```bash
+docker compose -f umami.yaml down 
+docker pull ghcr.io/umami-software/umami:postgresql-latest
+docker-compose -f umami.yaml up -d
+```
+
 ### Cusdis
 
 > VPS IP 可能被墙，所以可以使用三方云服务部署，具体参考[轻量级开源免费博客评论系统解决方案 （Cusdis + Railway）](https://www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/)
@@ -408,8 +424,8 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:3010;
-	proxy_pass_header Authorization;
-	proxy_pass_header WWW-Authenticate;
+	    proxy_pass_header Authorization;
+	    proxy_pass_header WWW-Authenticate;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -422,6 +438,15 @@ server {
 ```
 
 5、部署一个 Telegram 机器人，参考 [Official Telegram bot](https://cusdis.chensoul.com/doc#/advanced/webhook?id=official-telegram-bot)。
+
+
+6、升级
+
+```bash
+docker compose -f cusdis.yaml down 
+docker pull djyde/cusdis:latest
+docker-compose -f cusdis.yaml up -d
+```
 
 ### memos
 
@@ -473,6 +498,14 @@ server {
         proxy_pass http://127.0.0.1:5230;
     }
 }
+```
+
+升级
+
+```bash
+docker compose -f memos.yaml down 
+docker pull neosmemo/memos:latest
+docker-compose -f memos.yaml up -d
 ```
 
 ### n8n
@@ -549,3 +582,116 @@ location / {
 参考这篇文章 http://stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。
 
 ![my-n8n-workflows](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/my-n8n-workflows.png)
+
+6、升级
+
+```bash
+docker compose -f n8n.yaml down 
+docker pull n8nio/n8n
+docker-compose -f n8n.yaml up -d
+```
+
+### plausible
+
+1、下载代码
+
+```bash
+$ curl -L https://github.com/plausible/hosting/archive/master.tar.gz | tar -xz
+$ cd hosting-master
+```
+
+2、更新配置文件 plausible-conf.env
+
+生成一个随机字符串：
+
+```bash
+$ openssl rand -base64 64 | tr -d '\n' ; echo
+```
+
+修改 plausible-conf.env：
+
+```bash
+BASE_URL=https://plausible.chensoul.com
+SECRET_KEY_BASE=ywewRup6H0pT1TK+qIPwdRdOYNixC/GAr5vy2IoTvzNJygD3Z7rPgQI6v1c/tUV/SsJQYxsfZ60yrn6kMiDxAA==
+```
+
+3、设置反向代理
+
+```conf
+server {
+    listen 80;
+    listen [::]:80;
+    server_name plausible.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     plausible.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+	    proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   Host $host;
+	    proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection "upgrade";
+    }
+}
+```
+
+4、启动服务
+
+```bash
+docker compose up -d
+```
+
+5、升级
+
+Docker Compose 的更新比较简单：
+
+```bash
+docker compose down 
+docker compose pull plausible
+docker compose up -d
+```
+
+6、访问 postgres 数据库
+
+第一次登录时可能会要求验证邮箱地址，如果前面没有配置 SMTP，可以通过下面的命令认证所有当前用户：
+
+```bash
+docker compose exec plausible_db psql -U postgres -d plausible_db -c "UPDATE users SET email_verified = true;"
+```
+
+进入 plausible_db 数据库：
+
+```bash
+docker compose exec plausible_db psql -U postgres -d plausible_db
+```
+
+7、博客添加统计代码
+
+```javascript
+<script defer data-domain="blog.chensoul.com" src="https://plausible.chensoul.com/js/script.js"></script>
+```
+
+8、配置 dns 
+
+在 dns 服务商添加 A 记录 plausible，稍等一下，访问 [https://plausible.chensoul.com/](https://plausible.chensoul.com/)
+
+
+参考文章：
+
+- [使用 Plausible 自建网站流量统计分析工具](https://atpx.com/blog/docker-plausible-web-analytics/)
