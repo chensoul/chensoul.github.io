@@ -34,6 +34,8 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [Java设计模式：Visitor](https://blog.chensoul.com/posts/2023/06/02/java-design-patterns-visitor/)
+- [Java设计模式：Acyclic Visitor](https://blog.chensoul.com/posts/2023/06/01/java-design-patterns-acyclic-visitor/)
 - [[译]什么是 Python Wheels，你为什么要关心它？](https://blog.chensoul.com/posts/2023/06/01/python-wheels/)
 - [[译]使用 Python 的 pip 管理项目的依赖关系](https://blog.chensoul.com/posts/2023/06/01/what-is-pip/)
 - [周报-21｜Python之禅、产品经理被优化、端午节送节](https://blog.chensoul.com/posts/2023/05/31/weekly_review_21/)
@@ -42,8 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [《Effective Java 3》笔记13：明智地覆盖 clone 方法](https://blog.chensoul.com/posts/2023/05/26/override-clone-judiciously/)
 - [《Effective Java 3》笔记12：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/26/always-override-tostring/)
 - [周报-20｜自动生成每日早报、周末团建](https://blog.chensoul.com/posts/2023/05/25/weekly_review_20/)
-- [Python学习1：注释、变量和常量](https://blog.chensoul.com/posts/2023/05/23/python-comment-and-variable/)
-- [《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/23/always-override-hashcode-when-you-override-equals/)
 <!-- blog ends -->
 
 ## 最近活动
