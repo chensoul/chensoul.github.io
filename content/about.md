@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-22｜微信读书笔记助手](https://blog.chensoul.com/posts/2023/06/09/weekly_review_22/)
 - [Java设计模式：Visitor](https://blog.chensoul.com/posts/2023/06/02/java-design-patterns-visitor/)
 - [Java设计模式：Acyclic Visitor](https://blog.chensoul.com/posts/2023/06/01/java-design-patterns-acyclic-visitor/)
 - [[译]什么是 Python Wheels，你为什么要关心它？](https://blog.chensoul.com/posts/2023/06/01/python-wheels/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [《Effective Java 3》笔记14：考虑实现 Comparable 接口](https://blog.chensoul.com/posts/2023/05/26/consider-implementing-comparable/)
 - [《Effective Java 3》笔记13：明智地覆盖 clone 方法](https://blog.chensoul.com/posts/2023/05/26/override-clone-judiciously/)
 - [《Effective Java 3》笔记12：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/26/always-override-tostring/)
-- [周报-20｜自动生成每日早报、周末团建](https://blog.chensoul.com/posts/2023/05/25/weekly_review_20/)
 <!-- blog ends -->
 
 ## 最近活动
