@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-23｜读书、健身、定投、帮朋友、陪家人](https://blog.chensoul.com/posts/2023/06/14/weekly_review_23/)
 - [Python学习3：运算符和表达式](https://blog.chensoul.com/posts/2023/06/11/python-operator-and-expression/)
 - [Python学习2：数据类型](https://blog.chensoul.com/posts/2023/06/10/python-data-type/)
 - [Java设计模式：Adapter](https://blog.chensoul.com/posts/2023/06/10/java-design-patterns-adapter/)
@@ -40,13 +41,21 @@
 - [[译]什么是 Python Wheels，你为什么要关心它？](https://blog.chensoul.com/posts/2023/06/01/python-wheels/)
 - [[译]使用 Python 的 pip 管理项目的依赖关系](https://blog.chensoul.com/posts/2023/06/01/what-is-pip/)
 - [周报-21｜Python之禅、产品经理被优化、端午节送节](https://blog.chensoul.com/posts/2023/05/31/weekly_review_21/)
-- [Java设计模式：Active Object](https://blog.chensoul.com/posts/2023/05/26/java-design-patterns-active-object/)
 <!-- blog ends -->
 
 ## 最近活动
 
 <!-- douban starts -->
-
+- [想读Java高并发核心编程 卷1](https://book.douban.com/subject/35446284/) 2023-06-12
+- [最近在读Java高并发核心编程 卷2](https://book.douban.com/subject/35446285/) 2023-06-12
+- [最近在读财富自由之路](https://book.douban.com/subject/27094706/) 2023-06-09
+- [看过速度与激情9](http://movie.douban.com/subject/25728006/) 2023-06-09
+- [看过刀剑神域进击篇：暮色黄昏](http://movie.douban.com/subject/35652451/) 2023-06-09
+- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
+- [看过速度与激情7](http://movie.douban.com/subject/23761370/) 2023-05-19
+- [看过速度与激情6](http://movie.douban.com/subject/6537500/) 2023-05-19
+- [看过速度与激情5](http://movie.douban.com/subject/4286017/) 2023-05-19
+- [看过速度与激情4](http://movie.douban.com/subject/2132930/) 2023-05-19
 <!-- douban ends -->
 
 
