@@ -31,6 +31,9 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [Python学习3：运算符和表达式](https://blog.chensoul.com/posts/2023/06/11/python-operator-and-expression/)
+- [Python学习2：数据类型](https://blog.chensoul.com/posts/2023/06/10/python-data-type/)
+- [Java设计模式：Adapter](https://blog.chensoul.com/posts/2023/06/10/java-design-patterns-adapter/)
 - [周报-22｜微信读书笔记助手](https://blog.chensoul.com/posts/2023/06/09/weekly_review_22/)
 - [Java设计模式：Visitor](https://blog.chensoul.com/posts/2023/06/02/java-design-patterns-visitor/)
 - [Java设计模式：Acyclic Visitor](https://blog.chensoul.com/posts/2023/06/01/java-design-patterns-acyclic-visitor/)
@@ -38,9 +41,6 @@
 - [[译]使用 Python 的 pip 管理项目的依赖关系](https://blog.chensoul.com/posts/2023/06/01/what-is-pip/)
 - [周报-21｜Python之禅、产品经理被优化、端午节送节](https://blog.chensoul.com/posts/2023/05/31/weekly_review_21/)
 - [Java设计模式：Active Object](https://blog.chensoul.com/posts/2023/05/26/java-design-patterns-active-object/)
-- [《Effective Java 3》笔记14：考虑实现 Comparable 接口](https://blog.chensoul.com/posts/2023/05/26/consider-implementing-comparable/)
-- [《Effective Java 3》笔记13：明智地覆盖 clone 方法](https://blog.chensoul.com/posts/2023/05/26/override-clone-judiciously/)
-- [《Effective Java 3》笔记12：当覆盖 equals 方法时，总要覆盖 hashCode 方法](https://blog.chensoul.com/posts/2023/05/26/always-override-tostring/)
 <!-- blog ends -->
 
 ## 最近活动
