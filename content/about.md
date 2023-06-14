@@ -49,16 +49,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最近活动
 
 <!-- douban starts -->
-- [想读Java高并发核心编程 卷1](https://book.douban.com/subject/35446284/) 2023-06-12
-- [最近在读Java高并发核心编程 卷2](https://book.douban.com/subject/35446285/) 2023-06-12
-- [最近在读财富自由之路](https://book.douban.com/subject/27094706/) 2023-06-09
-- [看过速度与激情9](http://movie.douban.com/subject/25728006/) 2023-06-09
-- [看过刀剑神域进击篇：暮色黄昏](http://movie.douban.com/subject/35652451/) 2023-06-09
-- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
-- [看过速度与激情7](http://movie.douban.com/subject/23761370/) 2023-05-19
-- [看过速度与激情6](http://movie.douban.com/subject/6537500/) 2023-05-19
-- [看过速度与激情5](http://movie.douban.com/subject/4286017/) 2023-05-19
-- [看过速度与激情4](http://movie.douban.com/subject/2132930/) 2023-05-19
+
 <!-- douban ends -->
 
 
