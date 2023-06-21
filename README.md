@@ -31,16 +31,16 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]为恐龙解释现代CSS](https://blog.chensoul.com/posts/2023/06/21/modern-css-explained-for-dinosaurs/)
+- [[译]为恐龙解释现代HTML](https://blog.chensoul.com/posts/2023/06/20/modern-html-explained-for-dinosaurs/)
+- [[译]为恐龙解释现代JavaScript](https://blog.chensoul.com/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/)
+- [《Effective Java 3》笔记15：尽量减少类和成员的可访问性](https://blog.chensoul.com/posts/2023/06/15/minimize-the-accessibility-of-classes-and-members/)
 - [周报-23｜读书、健身、定投、帮朋友、陪家人](https://blog.chensoul.com/posts/2023/06/14/weekly_review_23/)
+- [Python学习4：流程控制](https://blog.chensoul.com/posts/2023/06/14/python-flow-control/)
 - [Python学习3：运算符和表达式](https://blog.chensoul.com/posts/2023/06/11/python-operator-and-expression/)
 - [Python学习2：数据类型](https://blog.chensoul.com/posts/2023/06/10/python-data-type/)
 - [Java设计模式：Adapter](https://blog.chensoul.com/posts/2023/06/10/java-design-patterns-adapter/)
 - [周报-22｜微信读书笔记助手](https://blog.chensoul.com/posts/2023/06/09/weekly_review_22/)
-- [Java设计模式：Visitor](https://blog.chensoul.com/posts/2023/06/02/java-design-patterns-visitor/)
-- [Java设计模式：Acyclic Visitor](https://blog.chensoul.com/posts/2023/06/01/java-design-patterns-acyclic-visitor/)
-- [[译]什么是 Python Wheels，你为什么要关心它？](https://blog.chensoul.com/posts/2023/06/01/python-wheels/)
-- [[译]使用 Python 的 pip 管理项目的依赖关系](https://blog.chensoul.com/posts/2023/06/01/what-is-pip/)
-- [周报-21｜Python之禅、产品经理被优化、端午节送节](https://blog.chensoul.com/posts/2023/05/31/weekly_review_21/)
 <!-- blog ends -->
 
 ## 最近活动
