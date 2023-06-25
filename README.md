@@ -31,6 +31,9 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]Python模块和包-简介](https://blog.chensoul.com/posts/2023/06/25/python-modules-packages/)
+- [Python学习5：函数](https://blog.chensoul.com/posts/2023/06/25/python-function/)
+- [[译]用 Bottle 开发](https://blog.chensoul.com/posts/2023/06/25/developing-with-bottle/)
 - [周报-24｜如果没有疼痛](https://blog.chensoul.com/posts/2023/06/21/weekly_review_24/)
 - [[译]为恐龙解释现代CSS](https://blog.chensoul.com/posts/2023/06/21/modern-css-explained-for-dinosaurs/)
 - [[译]为恐龙解释现代HTML](https://blog.chensoul.com/posts/2023/06/20/modern-html-explained-for-dinosaurs/)
@@ -38,9 +41,6 @@
 - [《Effective Java 3》笔记15：尽量减少类和成员的可访问性](https://blog.chensoul.com/posts/2023/06/15/minimize-the-accessibility-of-classes-and-members/)
 - [周报-23｜读书、健身、定投、帮朋友、陪家人](https://blog.chensoul.com/posts/2023/06/14/weekly_review_23/)
 - [Python学习4：流程控制](https://blog.chensoul.com/posts/2023/06/14/python-flow-control/)
-- [Python学习3：运算符和表达式](https://blog.chensoul.com/posts/2023/06/11/python-operator-and-expression/)
-- [Python学习2：数据类型](https://blog.chensoul.com/posts/2023/06/10/python-data-type/)
-- [Java设计模式：Adapter](https://blog.chensoul.com/posts/2023/06/10/java-design-patterns-adapter/)
 <!-- blog ends -->
 
 ## 最近活动
