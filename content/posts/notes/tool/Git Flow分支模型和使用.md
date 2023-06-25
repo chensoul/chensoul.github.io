@@ -616,6 +616,7 @@ mvn versions:commit
 
 ```bash
 mvn versions:set-property -Dproperty=revision -DnewVersion=1.0.0-SNAPSHOT
+mvn versions:commit
 ```
 
 
@@ -642,6 +643,7 @@ git flow release start 1.0.0
 
 ```bash
 mvn versions:set -DnewVersion=1.0.0
+
 mvn versions:commit
 ```
 
@@ -649,12 +651,14 @@ mvn versions:commit
 
 ```bash
 mvn versions:set-property -Dproperty=revision -DnewVersion=1.0.0
+
+mvn versions:commit
 ```
 
 另外，对于多模块项目，需要在每个模块执行下面命令将 jar 推送到 maven 中央仓库：
 
 ```bash
-mvn install -DskipTests
+mvn deploy -DskipTests
 ```
 
 
@@ -663,6 +667,18 @@ mvn install -DskipTests
 
 ```bash
 git flow release finish 1.0.0
+```
+
+
+
+6、推送主分支和开发分支
+
+```bash
+git push origin develop
+
+
+git checkout main
+git push origin main
 ```
 
 

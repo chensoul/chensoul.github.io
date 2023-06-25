@@ -1,15 +1,13 @@
 ---
-title: "Python学习5：函数和模块"
-date: 2023-06-14T09:00:00+08:00
+title: "Python学习5：函数"
+date: 2023-06-25T10:00:00+08:00
 slug: python-comment-and-variable
-draft: true
+draft: false
 categories: ["Notes"]
 tags: ["python"]
 ---
 
-## 函数
-
-### 函数的定义
+## 函数的定义
 
 在 Python 中，函数是一段可重复使用的代码块，它接受一些输入（也称为参数）并产生一些输出。函数可以通过 `def` 关键字来定义，语法如下：
 
@@ -62,9 +60,9 @@ fib(0)
 print(fib(0))
 ```
 
-### 函数参数
+## 函数参数
 
-#### 默认值参数
+### 默认值参数
 
 在 Python 中，函数参数可以具有默认值，这意味着如果在函数调用期间未提供该参数的值，则使用默认值。定义具有默认值的函数参数的语法如下：
 
@@ -110,7 +108,7 @@ print(user2)  # output: {'name': 'Bob', 'age': 20, 'gender': 'male'}
 print(user3)  # output: {'name': 'Charlie', 'age': 18, 'gender': 'female', 'email': 'charlie@example.com'}
 ````
 
-#### 关键字参数
+### 关键字参数
 
 `kwarg=value` 形式的关键字参数也可以用于调用函数。函数示例如下：
 
@@ -192,13 +190,13 @@ sketch : Cheese Shop Sketch
 
 注意，关键字参数在输出结果中的顺序与调用函数时的顺序一致。
 
-#### 特殊参数
+### 特殊参数
 
 默认情况下，参数可以按位置或显式关键字传递给 Python 函数。为了让代码易读、高效，最好限制参数的传递方式，这样，开发者只需查看函数定义，即可确定参数项是仅按位置、按位置或关键字，还是仅按关键字传递。
 
 函数定义如下：
 
-```
+```python
 def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
       -----------    ----------     ----------
         |             |                  |
@@ -286,7 +284,7 @@ foo(1, **{'name': 2}) # True
 
 换句话说，仅限位置形参的名称可以在 `**kwds` 中使用，而不产生歧义。
 
-### 任意实参列表
+## 任意实参列表
 
 调用函数时，使用任意数量的实参是最少见的选项。这些实参包含在元组中。在可变数量的实参之前，可能有若干个普通参数：
 
@@ -305,7 +303,7 @@ concat("earth", "mars", "venus")
 concat("earth", "mars", "venus", sep=".")
 ```
 
-### 解包实参列表
+## 解包实参列表
 
 函数调用要求独立的位置参数，但实参在列表或元组里时，要执行相反的操作。例如，内置的 `range()` 函数要求独立的 *start* 和 *stop* 实参。如果这些参数不是独立的，则要在调用函数时，用 `*` 操作符把实参从列表或元组解包出来：
 
@@ -328,31 +326,49 @@ d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
 parrot(**d)
 ```
 
-### Lambda 表达式
+## Lambda 函数
 
-`lambda` 关键字用于创建小巧的匿名函数。`lambda a, b: a+b` 函数返回两个参数的和。Lambda 函数可用于任何需要函数对象的地方。在语法上，匿名函数只能是单个表达式。在语义上，它只是常规函数定义的语法糖。与嵌套函数定义一样，lambda 函数可以引用包含作用域中的变量：
-
-```python
-def make_incrementor(n):
-    return lambda x: x + n
-
-f = make_incrementor(42)
-f(0)
-
-f(1)
-```
-
-上例用 lambda 表达式返回函数。还可以把匿名函数用作传递的实参：
+Python 中还有一种特殊的函数称为 lambda 函数，它是一种匿名函数，用于创建简短的函数。以下是一个 lambda 函数示例：
 
 ```python
-pairs = [(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four')]
-pairs.sort(key=lambda pair: pair[1])
-pairs
+add_numbers = lambda x, y: x + y
+result = add_numbers(2, 3)
+print(result)
 ```
 
-### 函数注解
+在上面的示例中，我们使用 `lambda` 关键字创建了一个匿名函数 `add_numbers`，它接受两个参数 `x` 和 `y`，并返回它们的和。我们可以使用 `add_numbers(2, 3)` 调用这个匿名函数，并将结果存储在变量 `result` 中。
 
-函数注解 是可选的用户自定义函数类型的元数据完整信息。
+
+
+## 函数注解
+
+Python 函数注解是一种在函数定义中添加元数据的功能。这些注解可以用于指定函数参数和返回值的类型、参数的默认值、函数的文档字符串等信息。虽然注解并不会影响 Python 函数的行为，但它们可以提供有用的信息，使代码更加清晰易读。
+
+Python 函数注解使用的语法是在函数定义的参数列表后面添加冒号和注解。以下是一个函数注解的示例：
+
+```python
+def add_numbers(x: int, y: int) -> int:
+    return x + y
+```
+
+在上面的示例中，我们使用注解指定了函数 `add_numbers()` 的两个参数 `x` 和 `y` 的类型为 `int`，并指定函数返回值的类型也为 `int`。在函数体中，我们使用加法运算符将这两个参数相加，并返回结果。
+
+函数注解还可以包含参数的默认值、参数的可变性和函数的文档字符串等信息。以下是一个包含这些信息的函数注解示例：
+
+```python
+def greet(name: str = "World", *, times: int = 1) -> str:
+    """
+    Greet a person by name and optionally repeat the greeting multiple times.
+
+    :param name: The name of the person to greet. Default is "World".
+    :param times: The number of times to repeat the greeting. Default is 1.
+    :return: A string containing the greeting message.
+    """
+    message = "Hello, " + name + "!\n" * times
+    return message
+```
+
+在上面的示例中，我们使用注解指定了函数 `greet()` 的参数 `name` 和 `times` 的类型为 `str` 和 `int`，并指定了参数 `name` 的默认值为 `"World"`，参数 `times` 的默认值为 `1`。我们还使用了函数的文档字符串来提供更详细的函数说明。
 
 [标注](https://docs.python.org/zh-cn/3/glossary.html#term-function-annotation) 以字典的形式存放在函数的 `__annotations__` 属性中，并且不会影响函数的任何其他部分。 形参标注的定义方式是在形参名后加冒号，后面跟一个表达式，该表达式会被求值为标注的值。 返回值标注的定义方式是加组合符号 `->`，后面跟一个表达式，该标注位于形参列表和表示 `def` 语句结束的冒号之间。 下面的示例有一个必须的参数，一个可选的关键字参数以及返回值都带有相应的标注:
 
