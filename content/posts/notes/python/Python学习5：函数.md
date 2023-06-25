@@ -1,7 +1,7 @@
 ---
 title: "Python学习5：函数"
 date: 2023-06-25T10:00:00+08:00
-slug: python-comment-and-variable
+slug: python-function
 draft: false
 categories: ["Notes"]
 tags: ["python"]
