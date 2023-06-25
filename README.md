@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-24｜如果没有疼痛](https://blog.chensoul.com/posts/2023/06/21/weekly_review_24/)
 - [[译]为恐龙解释现代CSS](https://blog.chensoul.com/posts/2023/06/21/modern-css-explained-for-dinosaurs/)
 - [[译]为恐龙解释现代HTML](https://blog.chensoul.com/posts/2023/06/20/modern-html-explained-for-dinosaurs/)
 - [[译]为恐龙解释现代JavaScript](https://blog.chensoul.com/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/)
@@ -40,7 +41,6 @@
 - [Python学习3：运算符和表达式](https://blog.chensoul.com/posts/2023/06/11/python-operator-and-expression/)
 - [Python学习2：数据类型](https://blog.chensoul.com/posts/2023/06/10/python-data-type/)
 - [Java设计模式：Adapter](https://blog.chensoul.com/posts/2023/06/10/java-design-patterns-adapter/)
-- [周报-22｜微信读书笔记助手](https://blog.chensoul.com/posts/2023/06/09/weekly_review_22/)
 <!-- blog ends -->
 
 ## 最近活动
