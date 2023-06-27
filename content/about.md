@@ -66,6 +66,7 @@ date: 2023-01-01T08:00:00+08:00
 
 <!-- recent_releases starts -->
 - [learning-hadoop](https://github.com/chensoul/learning-hadoop/releases/tag/v0.0.1)：学习 hadoop 示例代码
+- [learning-spark](https://github.com/chensoul/learning-spark/releases/tag/v0.0.1)：学习 spark 示例代码
 - [scrapy-zhihu-github](https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1)：Scrapy爬取知乎、Github用户
 - [grab](https://github.com/chensoul/grab/releases/tag/v0.0.1)：基于spark、spring boot构建推荐系统
 <!-- recent_releases ends -->
