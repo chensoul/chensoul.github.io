@@ -49,7 +49,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最近活动
 
 <!-- douban starts -->
-
+- [想看志愿军：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
+- [想看封神第一部](http://movie.douban.com/subject/10604086/) 2023-06-26
+- [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
+- [看过消失的她](http://movie.douban.com/subject/35660795/) 2023-06-26
+- [想读Java高并发核心编程 卷1](https://book.douban.com/subject/35446284/) 2023-06-12
+- [最近在读Java高并发核心编程 卷2](https://book.douban.com/subject/35446285/) 2023-06-12
+- [最近在读财富自由之路](https://book.douban.com/subject/27094706/) 2023-06-09
+- [看过速度与激情9](http://movie.douban.com/subject/25728006/) 2023-06-09
+- [看过刀剑神域进击篇：暮色黄昏](http://movie.douban.com/subject/35652451/) 2023-06-09
+- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
 <!-- douban ends -->
 
 
@@ -57,7 +66,6 @@ date: 2023-01-01T08:00:00+08:00
 
 <!-- recent_releases starts -->
 - [learning-hadoop](https://github.com/chensoul/learning-hadoop/releases/tag/v0.0.1)：学习 hadoop 示例代码
-- [learning-spark](https://github.com/chensoul/learning-spark/releases/tag/v0.0.1)：学习 spark 示例代码
 - [scrapy-zhihu-github](https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1)：Scrapy爬取知乎、Github用户
 - [grab](https://github.com/chensoul/grab/releases/tag/v0.0.1)：基于spark、spring boot构建推荐系统
 <!-- recent_releases ends -->
