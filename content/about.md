@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-25｜端午安康](https://blog.chensoul.com/posts/2023/06/28/weekly_review_25/)
 - [[译]微服务设计模式](https://blog.chensoul.com/posts/2023/06/26/microservice-design-patterns/)
 - [Java设计模式：Aggregator Microservices](https://blog.chensoul.com/posts/2023/06/26/java-design-patterns-aggregator-microservices/)
 - [[译]Python模块和包-简介](https://blog.chensoul.com/posts/2023/06/25/python-modules-packages/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [[译]为恐龙解释现代CSS](https://blog.chensoul.com/posts/2023/06/21/modern-css-explained-for-dinosaurs/)
 - [[译]为恐龙解释现代HTML](https://blog.chensoul.com/posts/2023/06/20/modern-html-explained-for-dinosaurs/)
 - [[译]为恐龙解释现代JavaScript](https://blog.chensoul.com/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/)
-- [《Effective Java 3》笔记15：尽量减少类和成员的可访问性](https://blog.chensoul.com/posts/2023/06/15/minimize-the-accessibility-of-classes-and-members/)
 <!-- blog ends -->
 
 ## 最近活动
