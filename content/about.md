@@ -34,16 +34,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权](https://blog.chensoul.com/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/)
+- [周报-26｜上半年的绩效总结](https://blog.chensoul.com/posts/2023/07/11/weekly_review_26/)
+- [Python学习7：输入和输出](https://blog.chensoul.com/posts/2023/07/08/python-input-and-output/)
+- [Python学习6：模块和包](https://blog.chensoul.com/posts/2023/07/06/python-module-package/)
 - [Java设计模式：Ambassador](https://blog.chensoul.com/posts/2023/07/06/java-design-patterns-ambassador/)
 - [周报-25｜端午安康](https://blog.chensoul.com/posts/2023/06/28/weekly_review_25/)
 - [[译]微服务设计模式](https://blog.chensoul.com/posts/2023/06/26/microservice-design-patterns/)
+- [[译]微服务设计模式](https://blog.chensoul.com/posts/2023/06/26/microservice-design-patterns/)
 - [Java设计模式：Aggregator Microservices](https://blog.chensoul.com/posts/2023/06/26/java-design-patterns-aggregator-microservices/)
 - [[译]Python模块和包-简介](https://blog.chensoul.com/posts/2023/06/25/python-modules-packages/)
-- [Python学习5：函数](https://blog.chensoul.com/posts/2023/06/25/python-function/)
-- [[译]用 Bottle 开发](https://blog.chensoul.com/posts/2023/06/25/developing-with-bottle/)
-- [周报-24｜如果没有疼痛](https://blog.chensoul.com/posts/2023/06/21/weekly_review_24/)
-- [[译]为恐龙解释现代CSS](https://blog.chensoul.com/posts/2023/06/21/modern-css-explained-for-dinosaurs/)
-- [[译]为恐龙解释现代HTML](https://blog.chensoul.com/posts/2023/06/20/modern-html-explained-for-dinosaurs/)
 <!-- blog ends -->
 
 ## 最近活动
