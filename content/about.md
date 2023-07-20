@@ -50,7 +50,7 @@ date: 2023-01-01T08:00:00+08:00
 
 <!-- douban starts -->
 - [想看志愿军：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
-- [想看封神第一部](http://movie.douban.com/subject/10604086/) 2023-06-26
+- [想看封神第一部：朝歌风云](http://movie.douban.com/subject/10604086/) 2023-06-26
 - [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
 - [看过消失的她](http://movie.douban.com/subject/35660795/) 2023-06-26
 - [想读Java高并发核心编程 卷1](https://book.douban.com/subject/35446284/) 2023-06-12
