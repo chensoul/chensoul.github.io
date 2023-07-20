@@ -11,7 +11,7 @@ import os
 load_dotenv()
 MEMOS_TOKEN = os.getenv('MEMOS_TOKEN')
 
-url = f'https://memos.chensoul.com/api/memo?openId={MEMOS_TOKEN}'
+url = f'https://memos.chensoul.com/api/v1/memo?openId={MEMOS_TOKEN}'
 
 keyword='#memos'
 
