@@ -27,7 +27,7 @@ end_time = int(time.mktime(last_sunday.timetuple()))
 response = requests.get(url)
 
 if response.status_code == 200:
-    data = json.loads(response.text)['data']
+    data = json.loads(response.text)
 
     # 过滤出上周的记录
     recent_data = [d for d in data if start_time <= d['createdTs'] <= end_time]
