@@ -1049,26 +1049,24 @@ Spring Cloud Gateway 源码中的实现方式，主要是基于 Reactor Netty �
 >        <groupId>org.springframework.cloud</groupId>
 >        <artifactId>spring-cloud-starter-gateway-websocket</artifactId>
 >    </dependency>
->    ```
 >    ~~~
->
-> 2. 配置 Spring Cloud Gateway，需要在 application.yml 或 application.properties 文件中添加以下配置：
->
->    ~~~yaml
+> 
+>2. 配置 Spring Cloud Gateway，需要在 application.yml 或 application.properties 文件中添加以下配置：
+> 
+>   ~~~yaml
 >    spring:
 >      cloud:
 >        gateway:
 >          websockets:
 >            enabled: true
->    ```
->    
->    这段配置代码的意思是，启用 Spring Cloud Gateway 的 WebSocket 支持。
 >    ~~~
->
+> 
+>       这段配置代码的意思是，启用 Spring Cloud Gateway 的 WebSocket 支持。
+> 
 > 3. 配置 WebSocket 路由，需要在 application.yml 或 application.properties 文件中添加以下配置：
 >
 >    ```yaml
->    spring:
+>   spring:
 >      cloud:
 >        gateway:
 >          routes:
@@ -1077,29 +1075,29 @@ Spring Cloud Gateway 源码中的实现方式，主要是基于 Reactor Netty �
 >              predicates:
 >                - Path=/ws/**
 >    ```
->
+> 
 >    这段配置代码的意思是，将 /ws/** 的请求路由到 uri 为 ws://localhost:8080 的 WebSocket 服务上。
 >
 > 4. 实现 WebSocket 处理器，需要编写一个实现 WebSocketHandler 接口的处理器，例如：
 >
 >    ```java
->    @Component
+>   @Component
 >    public class EchoWebSocketHandler implements WebSocketHandler {
 >    
 >        @Override
->        public Mono<Void> handle(WebSocketSession session) {
+>           public Mono<Void> handle(WebSocketSession session) {
 >            // 处理 WebSocketSession
 >            return session.send(session.receive().map(msg -> session.textMessage("Echo: " + msg.getPayloadAsText())));
 >        }
 >    }
 >    ```
->
+> 
 >    这段代码的意思是，实现一个处理器，用来处理 WebSocketSession。在此示例中，处理器会将接收到的消息进行回显，并返回给客户端。
 >
 > 5. 配置 WebSocket 处理器，需要在 application.yml 或 application.properties 文件中添加以下配置：
 >
 >    ```yaml
->    spring:
+>   spring:
 >      cloud:
 >        gateway:
 >          routes:
@@ -1113,7 +1111,7 @@ Spring Cloud Gateway 源码中的实现方式，主要是基于 Reactor Netty �
 >                    handler: echoWebSocketHandler
 >                    subprotocols: subprotocol1, subprotocol2
 >    ```
->
+> 
 >    这段配置代码的意思是，将 WebSocket 处理器 echoWebSocketHandler 绑定到 WebSocket 路由上，并指定了子协议 subprotocol1 和 subprotocol2。
 >
 > 这样，我们就完成了在 Spring Cloud Gateway 中支持 WebSocket 协议的配置和代码实现。通过以上的配置和代码，我们可以在 Spring Cloud Gateway 上实现 WebSocket 的功能，例如实时通信、推送和广播等。
