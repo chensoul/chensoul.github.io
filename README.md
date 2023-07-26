@@ -31,16 +31,16 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]Spring Boot异常处理完整指南](https://blog.chensoul.com/posts/2023/07/26/spring-boot-exception-handling/)
+- [[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响](https://blog.chensoul.com/posts/2023/07/26/spring-boot-null-safety-annotations/)
+- [[译]使用 Spring Boot 和 Spring Security 配置 CORS](https://blog.chensoul.com/posts/2023/07/26/spring-cors/)
+- [[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）](https://blog.chensoul.com/posts/2023/07/26/spring-boot-info-endpoint/)
+- [[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）](https://blog.chensoul.com/posts/2023/07/26/using-oauth2-in-spring-scopes/)
+- [[译]在 Spring 中实现 OAuth2：第 1 部分](https://blog.chensoul.com/posts/2023/07/26/using-oauth2-in-spring/)
 - [[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权](https://blog.chensoul.com/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/)
 - [周报-26｜上半年的绩效总结](https://blog.chensoul.com/posts/2023/07/11/weekly_review_26/)
 - [Python学习7：输入和输出](https://blog.chensoul.com/posts/2023/07/08/python-input-and-output/)
 - [Python学习6：模块和包](https://blog.chensoul.com/posts/2023/07/06/python-module-package/)
-- [Java设计模式：Ambassador](https://blog.chensoul.com/posts/2023/07/06/java-design-patterns-ambassador/)
-- [周报-25｜端午安康](https://blog.chensoul.com/posts/2023/06/28/weekly_review_25/)
-- [[译]微服务设计模式](https://blog.chensoul.com/posts/2023/06/26/microservice-design-patterns/)
-- [[译]微服务设计模式](https://blog.chensoul.com/posts/2023/06/26/microservice-design-patterns/)
-- [Java设计模式：Aggregator Microservices](https://blog.chensoul.com/posts/2023/06/26/java-design-patterns-aggregator-microservices/)
-- [[译]Python模块和包-简介](https://blog.chensoul.com/posts/2023/06/25/python-modules-packages/)
 <!-- blog ends -->
 
 ## 最近活动
