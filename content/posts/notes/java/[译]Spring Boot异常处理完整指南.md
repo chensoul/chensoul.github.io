@@ -74,10 +74,10 @@ Spring Boot 提供了一些属性，我们可以使用它们添加异常消息�
 ```yaml
 server:
   error:
-  include-message: always
-  include-binding-errors: always
-  include-stacktrace: on_trace_param
-  include-exception: false
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_trace_param
+    include-exception: false
 ```
 
 在 `application.yml` 中使用这些 [Spring Boot 服务器属性](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#server-properties)，我们可以在某种程度上改变错误响应。
