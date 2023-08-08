@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [周报-28｜技术文档范例](https://blog.chensoul.com/posts/2023/07/27/weekly_review_28/)
 - [[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例](https://blog.chensoul.com/posts/2023/07/26/spring-boot-authorization-server/)
 - [[译]Spring Boot异常处理完整指南](https://blog.chensoul.com/posts/2023/07/26/spring-boot-exception-handling/)
 - [[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响](https://blog.chensoul.com/posts/2023/07/26/spring-boot-null-safety-annotations/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [[译]在 Spring 中实现 OAuth2：第 1 部分](https://blog.chensoul.com/posts/2023/07/26/using-oauth2-in-spring/)
 - [[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权](https://blog.chensoul.com/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/)
 - [周报-26｜上半年的绩效总结](https://blog.chensoul.com/posts/2023/07/11/weekly_review_26/)
-- [Python学习7：输入和输出](https://blog.chensoul.com/posts/2023/07/08/python-input-and-output/)
 <!-- blog ends -->
 
 ## 最近活动
