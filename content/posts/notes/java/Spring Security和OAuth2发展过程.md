@@ -277,7 +277,7 @@ public TokenStore tokenStore() {
 
 4) 在AuthorizationServerConfigurerAdapter配置类中设置tokenStore。
 
-```Spring Security和OAuth2发展过程
+```java
 @Override
 public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
   endpoints.tokenStore(tokenStore());  
@@ -290,7 +290,7 @@ public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 
 7) 解析JWTpayload获取用户信息，实现鉴权决策。
 
-```Spring Security和OAuth2发展过程
+```java
 String username =  ((Jwt)authentication.getPrincipal()).getSubject();
 ```
 
