@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [数据库如何设计树形结构](https://blog.chensoul.com/posts/2023/08/15/tree-structure-in-database/)
 - [Spring Security和OAuth2发展过程](https://blog.chensoul.com/posts/2023/08/15/spring-security-oauth2-history/)
 - [《Effective Java 3》笔记17：减少可变性](https://blog.chensoul.com/posts/2023/08/14/minimize-mutability/)
 - [Java设计模式：Async Method Invocation](https://blog.chensoul.com/posts/2023/08/14/java-design-patterns-async-method-invocation/)
@@ -40,7 +41,6 @@
 - [[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例](https://blog.chensoul.com/posts/2023/07/26/spring-boot-authorization-server/)
 - [[译]Spring Boot异常处理完整指南](https://blog.chensoul.com/posts/2023/07/26/spring-boot-exception-handling/)
 - [[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响](https://blog.chensoul.com/posts/2023/07/26/spring-boot-null-safety-annotations/)
-- [[译]使用 Spring Boot 和 Spring Security 配置 CORS](https://blog.chensoul.com/posts/2023/07/26/spring-cors/)
 <!-- blog ends -->
 
 ## 最近活动
