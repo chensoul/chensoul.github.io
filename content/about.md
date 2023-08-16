@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]Spring Security 和 Spring Boot 入门](https://blog.chensoul.com/posts/2023/08/16/spring-security/)
 - [[译]为 Spring Boot 应用程序创建优化的 Docker 映像](https://blog.chensoul.com/posts/2023/08/16/spring-boot-docker/)
 - [[译]Spring Security：深入了解身份验证和授权](https://blog.chensoul.com/posts/2023/08/16/spring-security-authentication-and-authorization/)
 - [[译]深入了解Spring事务管理：@Transactional](https://blog.chensoul.com/posts/2023/08/16/spring-transaction-management-transactional-in-depth/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [[译]Spring Security - 使用数据库表单登录](https://blog.chensoul.com/posts/2023/08/16/spring-security-form-login-with-database/)
 - [数据库如何设计树形结构](https://blog.chensoul.com/posts/2023/08/15/tree-structure-in-database/)
 - [Spring Security和OAuth2发展过程](https://blog.chensoul.com/posts/2023/08/15/spring-security-oauth2-history/)
-- [《Effective Java 3》笔记17：减少可变性](https://blog.chensoul.com/posts/2023/08/14/minimize-mutability/)
 <!-- blog ends -->
 
 ## 最近活动
