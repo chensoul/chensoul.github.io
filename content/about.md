@@ -34,16 +34,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]为 Spring Boot 应用程序创建优化的 Docker 映像](https://blog.chensoul.com/posts/2023/08/16/spring-boot-docker/)
+- [[译]Spring Security：深入了解身份验证和授权](https://blog.chensoul.com/posts/2023/08/16/spring-security-authentication-and-authorization/)
+- [[译]深入了解Spring事务管理：@Transactional](https://blog.chensoul.com/posts/2023/08/16/spring-transaction-management-transactional-in-depth/)
+- [[译]Spring Security - JWT](https://blog.chensoul.com/posts/2023/08/16/spring-security-with-jwt/)
+- [[译]Spring Security - OAuth2](https://blog.chensoul.com/posts/2023/08/16/spring-security-with-oauth2/)
+- [[译]Spring Security - 表单登录、记住我和注销](https://blog.chensoul.com/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/)
+- [[译]Spring Security - 使用数据库表单登录](https://blog.chensoul.com/posts/2023/08/16/spring-security-form-login-with-database/)
 - [数据库如何设计树形结构](https://blog.chensoul.com/posts/2023/08/15/tree-structure-in-database/)
 - [Spring Security和OAuth2发展过程](https://blog.chensoul.com/posts/2023/08/15/spring-security-oauth2-history/)
 - [《Effective Java 3》笔记17：减少可变性](https://blog.chensoul.com/posts/2023/08/14/minimize-mutability/)
-- [Java设计模式：Async Method Invocation](https://blog.chensoul.com/posts/2023/08/14/java-design-patterns-async-method-invocation/)
-- [Java设计模式：API Gateway](https://blog.chensoul.com/posts/2023/08/13/java-design-patterns-api-gateway/)
-- [Java设计模式：Arrange/Act/Assert](https://blog.chensoul.com/posts/2023/08/13/java-design-patterns-arrange-act-assert/)
-- [周报-28｜技术文档范例](https://blog.chensoul.com/posts/2023/07/27/weekly_review_28/)
-- [[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例](https://blog.chensoul.com/posts/2023/07/26/spring-boot-authorization-server/)
-- [[译]Spring Boot异常处理完整指南](https://blog.chensoul.com/posts/2023/07/26/spring-boot-exception-handling/)
-- [[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响](https://blog.chensoul.com/posts/2023/07/26/spring-boot-null-safety-annotations/)
 <!-- blog ends -->
 
 ## 最近活动
