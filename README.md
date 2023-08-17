@@ -50,6 +50,9 @@
 - [想看封神第一部：朝歌风云](http://movie.douban.com/subject/10604086/) 2023-06-26
 - [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
 - [看过消失的她](http://movie.douban.com/subject/35660795/) 2023-06-26
+- [想读Java高并发核心编程 卷1](https://book.douban.com/subject/35446284/) 2023-06-12
+- [最近在读Java高并发核心编程 卷2](https://book.douban.com/subject/35446285/) 2023-06-12
+- [最近在读财富自由之路](https://book.douban.com/subject/27094706/) 2023-06-09
 - [看过速度与激情9](http://movie.douban.com/subject/25728006/) 2023-06-09
 - [看过刀剑神域进击篇：暮色黄昏](http://movie.douban.com/subject/35652451/) 2023-06-09
 - [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
