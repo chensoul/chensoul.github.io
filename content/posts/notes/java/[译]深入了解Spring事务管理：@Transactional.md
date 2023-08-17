@@ -511,7 +511,7 @@ public class InvoiceService {
 - **Required (default)**：我的方法需要一个事务，要么为我打开一个事务，要么使用现有的事务 → getConnection()。设置自动提交（假）。犯罪（）。
 - **Supports**：我并不关心事务是否打开，我可以以任何一种方式工作 → 与 JDBC 无关
 - **Mandatory**：我自己不会打开一个事务，但是如果没有人打开一个事务我会哭 → 与 JDBC 无关
-- **Require_new:*：我想要完全自己的事务 → getConnection()。设置自动提交（假）。犯罪（）。
+- **Require_new**：我想要完全自己的事务 → getConnection()。设置自动提交（假）。犯罪（）。
 - **Not_Supported**：我真的不喜欢事务，我什至会尝试挂起当前正在运行的事务 → 与 JDBC 无关
 - **Never：**如果其他人启动事务我会哭→与 JDBC 无关
 - **Nested：** 听起来很复杂，但我们只是在谈论保存点！ → 连接.setSavepoint()
