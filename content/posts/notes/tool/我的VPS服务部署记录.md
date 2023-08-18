@@ -537,16 +537,13 @@ services:
       - DB_POSTGRESDB_DATABASE=n8n
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=n8n@pg
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=chenzj
       - TZ="Asia/Shanghai"
       - WEBHOOK_URL=https://n8n.chensoul.com/
     ports:
       - 5678:5678
     volumes:
       - /data/n8n:/home/node/.n8n
-    command: /bin/sh -c "n8n start --tunnel"
+    command: n8n start --tunnel
     networks:
       - custom
 

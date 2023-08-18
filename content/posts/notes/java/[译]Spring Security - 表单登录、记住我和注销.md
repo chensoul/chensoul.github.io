@@ -3,7 +3,7 @@ title: "[译]Spring Security - 表单登录、记住我和注销"
 date: 2023-08-16T09:00:00+08:00
 slug: spring-security-form-login-remember-me-and-logout
 categories: ["Notes"]
-tags: [java,"spring boot",spring]
+tags: [java,spring,"spring boot","spring security"]
 ---
 
 ## 内容

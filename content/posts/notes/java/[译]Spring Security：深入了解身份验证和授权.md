@@ -3,7 +3,7 @@ title: "[译]Spring Security：深入了解身份验证和授权"
 date: 2023-08-16T12:00:00+08:00
 slug: spring-security-authentication-and-authorization
 categories: ["Notes"]
-tags: [java,"spring boot",spring]
+tags: [java,spring,"spring boot","spring security"]
 ---
 
 您可以使用本指南来了解 Spring Security 是什么以及其核心功能（如身份验证、授权或常见漏洞保护）如何工作。此外，还有全面的常见问题解答。

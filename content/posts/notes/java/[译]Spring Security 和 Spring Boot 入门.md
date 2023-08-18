@@ -3,7 +3,7 @@ title: "[译]Spring Security 和 Spring Boot 入门"
 date: 2023-08-16T14:40:00+08:00
 slug: spring-security
 categories: ["Notes"]
-tags: [java,"spring boot",spring]
+tags: [java,spring,"spring boot","spring security"]
 ---
 
 
@@ -71,7 +71,7 @@ spring:
 要了解默认配置的工作原理，我们首先需要了解以下内容：
 
 - **Servlet Filters 过滤器**
-- **Authentication 认证 **
+- **Authentication 认证**
 - **Authorization 授权**
 
 ### Servlet Filters
@@ -141,7 +141,7 @@ org.springframework.security.web.access.intercept.
 4. **[org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLoginPageGeneratingFilter.html)** : 在 `/login` 处生成默认登录页面 html
 5. **[org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLogoutPageGeneratingFilter.html)** : 在 `/login?logout` 处生成默认注销页面 html
 6. **[org.springframework.security.web.authentication.www.BasicAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html)** : 此过滤器负责处理任何具有授权、基本身份验证方案、Base64 编码的用户名密码的 HTTP 请求标头的请求。身份验证成功后， `Authentication` 对象将被放置在 `SecurityContextHolder` 中。
-7. **[org.springframework.security.web.authentication.AnonymousAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/AnonymousAuthenticationFilter.html)** : 如果在 `SecurityContext` 中找不到 `Authentication` 对象，它会创建一个具有主体 `anonymousUser` 和角色 < b3>。
+7. **[org.springframework.security.web.authentication.AnonymousAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/AnonymousAuthenticationFilter.html)** : 如果在 `SecurityContext` 中找不到 `Authentication` 对象，它会创建一个具有主体 `anonymousUser` 和角色。
 8. **[org.springframework.security.web.access.ExceptionTranslationFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/access/ExceptionTranslationFilter.html)** :处理过滤器链中抛出的 `AccessDeniedException` 和 `AuthenticationException` 。对于 `AuthenticationException` ，需要 `AuthenticationEntryPoint` 实例来处理响应。对于 `AccessDeniedException` ，此过滤器将委托给 `AccessDeniedHandler` ，其默认实现为 `AccessDeniedHandlerImpl` 。
 9. **[org.springframework.security.web.access.intercept.FilterSecurityInterceptor](https://docs.spring.io/spring-security/site/docs/6.0.0/api/org/springframework/security/web/access/intercept/FilterSecurityInterceptor.html)** : 此过滤器负责在请求到达控制器之前对通过过滤器链的每个请求进行授权。
 
@@ -183,7 +183,7 @@ org.springframework.security.web.access.intercept.
 2. 代表 `SecurityContext` 中当前经过身份验证的用户。 `Authentication` 的每个实例都必须包含
 
 - **`principal`** - 这是标识用户的 `UserDetails` 实例。
-- **`credentials`**
+- **`credentials`** - 凭证
 - **`authorities`** - `GrantedAuthority` `GrantedAuthority` 的实例在授权过程中发挥着重要作用。
 
 #### 关于 Spring 身份验证的附加说明
@@ -392,13 +392,10 @@ public class SecurityConfiguration {
 
 它为我们提供了以下会话属性 `sessionCreationPolicy` 值：
 
-1. 
-   SessionCreationPolicy.STATELESS - 不会创建或使用任何会话。
-2. 
-   SessionCreationPolicy.ALWAYS - 如果会话不存在，则始终会创建该会话。
-3. 
-   SessionCreationPolicy.NEVER - 永远不会创建会话。但如果会话存在，就会使用它。
-4. SessionCreationPolicy.IF_REQUIRED - 如果需要，将创建会话。 （默认配置）
+1. `SessionCreationPolicy.STATELESS` - 不会创建或使用任何会话。
+2. `SessionCreationPolicy.ALWAYS` - 如果会话不存在，则始终会创建该会话。
+3. `SessionCreationPolicy.NEVER` - 永远不会创建会话。但如果会话存在，就会使用它。
+4. `SessionCreationPolicy.IF_REQUIRED` - 如果需要，将创建会话。 （默认配置）
 
 Other options include: 其他选项包括：
 
@@ -560,7 +557,7 @@ auth:
 一旦为请求匹配器配置了 Spring Security，默认情况下添加的其他端点就会受到保护。例如，让我们向 `BookController` 类添加一个端点
 
 ```java
-@GetMapping("/library/books/all")
+		@GetMapping("/library/books/all")
     public ResponseEntity<List<BookDto>> getAllBooks() {
         return ResponseEntity.ok().body(bookService.getAllBooks());
     }
@@ -584,11 +581,12 @@ auth:
 我们可以指定需要从安全配置中排除的端点列表。为此，我们首先向 `BookController` 类添加另一个端点，并添加以下配置：
 
 ```java
-@GetMapping("/library/info")
+		@GetMapping("/library/info")
     public ResponseEntity<LibraryInfo> getInfo() {
         return ResponseEntity.ok().body(bookService.getLibraryInfo());
     }
-@Bean
+
+		@Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/library/info");
     }
@@ -709,7 +707,7 @@ Will secure Ant [pattern='/library/**'] with
 这里为所有端点 `/library/**` 调用过滤器。为了进一步限制它以满足特定的端点，我们可以将 Filter 类修改为：
 
 ```java
-@Override
+		@Override
     protected boolean shouldNotFilter(HttpServletRequest request) 
             throws ServletException {
         String path = request.getRequestURI();
@@ -873,8 +871,6 @@ public class BookController {
 ```java
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-
-
     List<Book> findByGenre(String genre);
 
     @PostAuthorize("returnObject.size() > 0")

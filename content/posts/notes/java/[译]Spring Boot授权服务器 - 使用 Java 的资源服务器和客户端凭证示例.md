@@ -3,7 +3,7 @@ title: "[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客�
 date: 2023-07-26T14:00:00+08:00
 slug: spring-boot-authorization-server
 categories: ["Notes"]
-tags: [java,"spring boot","oauth2"]
+tags: [java,spring,"spring boot","spring security"]
 ---
 
 # 概述
