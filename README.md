@@ -31,16 +31,16 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]Spring Boot项目如何实现JWT认证？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-jwt-authentication-in-spring-boot-project/)
+- [[译]没有WebSecurityConfigurerAdapter的Spring Security.md](https://blog.chensoul.com/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/)
+- [[译]如何在Spring Boot2中使用UserDetailsService实现安全性？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot2-using-userdetailsservice/)
+- [[译]如何在Spring Boot3中使用UserDetailsService实现安全性？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot3-using-userdetailsservice/)
+- [[译]Spring Boot项目如何实现Security？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot-project/)
 - [[译]Spring Security 和 Spring Boot 入门](https://blog.chensoul.com/posts/2023/08/16/spring-security/)
 - [[译]为 Spring Boot 应用程序创建优化的 Docker 映像](https://blog.chensoul.com/posts/2023/08/16/spring-boot-docker/)
 - [[译]Spring Security：深入了解身份验证和授权](https://blog.chensoul.com/posts/2023/08/16/spring-security-authentication-and-authorization/)
 - [[译]深入了解Spring事务管理：@Transactional](https://blog.chensoul.com/posts/2023/08/16/spring-transaction-management-transactional-in-depth/)
 - [[译]Spring Security - JWT](https://blog.chensoul.com/posts/2023/08/16/spring-security-with-jwt/)
-- [[译]Spring Security - OAuth2](https://blog.chensoul.com/posts/2023/08/16/spring-security-with-oauth2/)
-- [[译]Spring Security - 表单登录、记住我和注销](https://blog.chensoul.com/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/)
-- [[译]Spring Security - 使用数据库表单登录](https://blog.chensoul.com/posts/2023/08/16/spring-security-form-login-with-database/)
-- [数据库如何设计树形结构](https://blog.chensoul.com/posts/2023/08/15/tree-structure-in-database/)
-- [Spring Security和OAuth2发展过程](https://blog.chensoul.com/posts/2023/08/15/spring-security-oauth2-history/)
 <!-- blog ends -->
 
 ## 最近活动
