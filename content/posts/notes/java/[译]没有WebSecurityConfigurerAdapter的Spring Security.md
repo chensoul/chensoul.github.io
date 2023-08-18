@@ -9,7 +9,7 @@ tags: [java]
 
 
 ![Spring Security Without WebSecurityConfigurerAdapter](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2022/07/SpringSecurityWithoutWSCA-1.jpg)
-在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 [Spring 官方网站](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter) 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展配置() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。
+在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 [Spring 官方网站](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter) 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展 configure() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。
 
 
 了解这一变化很重要，因为迟早我们将使用最新版本的 Spring Security 来开发安全功能。让我们讨论“没有 WebSecurityConfigurerAdapter 的 Spring Security”主题及其相关概念。

@@ -26,26 +26,18 @@ tags: [java,spring,"spring boot","spring security"]
 读完本文后，您将能够回答：
 
 1) 什么是安全上下文中的无状态和有状态身份验证？
-
 2) 无状态认证和有状态认证有什么区别？
 
 3. 那么什么是 Token，什么是 JWT(JSON Web Token)？
-
-4) 使用JWT认证有什么好处？
-
-5) JWT内部如何运作？
-
-6) 我们在什么情况下使用JWT身份验证？
+3. 使用JWT认证有什么好处？
+3. JWT内部如何运作？
+3. 我们在什么情况下使用JWT身份验证？
 
 7. 此外，JWT 身份验证和状态身份验证之间有什么区别？
-
-8) 此外，如何生成 JWT 编码令牌以及如何将其解码回来？
-
-9) 如何在Spring Boot项目中逐步实现JWT认证？
-
-10) 在 Spring Boot 3.0 中，如何在不使用 WebSecurityConfigurerAdapter 的情况下编写安全配置类？
-
-11. 最后，如何测试启用 JWT 安全的应用程序？
+7. 此外，如何生成 JWT 编码令牌以及如何将其解码回来？
+7. 如何在Spring Boot项目中逐步实现JWT认证？
+7. 在 Spring Boot 3.0 中，如何在不使用 WebSecurityConfigurerAdapter 的情况下编写安全配置类？
+7. 最后，如何测试启用 JWT 安全的应用程序？
 
 
 
