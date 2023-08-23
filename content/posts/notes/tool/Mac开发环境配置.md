@@ -21,13 +21,13 @@ categories: ["Notes"]
 - Finder
   - 显示各种栏
   - 显示所有文件扩展名
-  - 标题栏显示完整路径：defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES;killall Finder
+  - 标题栏显示完整路径：`defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES; killall Finder`
 - 禁用大部分 iCloud 同步
 - 键盘 -> 快捷键
   - command + 空格：spotlight  
   - control + 空格：切换输入法
 
-## 安装XCode
+## 安装 XCode
 
 从 App store 或苹果开发者网站安装 [Xcode](https://developer.apple.com/xcode/) ，然后安装 Xcode command line tools：
 
@@ -43,7 +43,7 @@ xcode-select --install
 ls /Library/Developer/CommandLineTools/usr/bin/
 ```
 
-## Homebrew
+## 安装 Homebrew
 
 [Brew](http://brew.sh/) 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。
 
@@ -75,93 +75,48 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
 ```
 
-## 终端
+## 通过 brew 安装软件
 
-### iTerm2
-
-iTerm2 是 macOS 系统终端的开源替代品，它是高度可定制化的，并且功能十分强大，应该是 macOS 最好用的终端模拟器之一。
-
-#### 安装
+安装常用命令：
 
 ```bash
-brew install --cask iterm2
+# hub: a github-specific version of git
+# ripgrep: rg is faster than alternatives
+# ffmpeg: eventually I'll need this for something
+# tree: really handy for listing out directories in text
+# bat: A cat(1) clone with syntax highlighting and Git integration.
+# delta: A fantastic diff tool
+brew install git hub ripgrep ffmpeg tree tmux bat wget vim hugo maven go python3 visual-studio-code	
 ```
 
-设置：
-- Preferences --> Profiles--> Default --> Terminal：设置 cursor 颜色为黄色
-- Preferences --> Profiles --> Window --> Transparency：设置透明度 10%~20% 即可，太高会和桌面背景冲突。如果需要临时禁用透明度可以使用快捷键 ⌘+u。
+安装常用软件：
 
-
-
-#### 字体
-
-在 iTerm2 中，终端的字体可以对正常字体和非 ASCII 字体进行单独的设置，[Nerd-Fonts](https://github.com/ryanoasis/nerd-fonts) 是一个使用大量字形（图标）修补开发人员目标字体的项目
-
-分别安装  [font-fantasque-sans-mono-nerd-font](https://github.com/ryanoasis/nerd-fonts) + [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)  这两种字体
-
-```bash
-# brew 添加字体库
-brew tap homebrew/cask-fonts
-# 搜索可用 Nerd Font 字体
-brew search nerd-font
-# 以 font-fantasque-sans-mono-nerd-font 为例（我比较喜欢这个字体🥰）
-# 安装喜欢的 nerd-font 字体
-brew install font-fantasque-sans-mono-nerd-font
-# 安装「霞鹜文楷」字体
-brew install font-lxgw-wenkai
+```BASH
+brew install --cask google-chrome tableplus \
+1password telegram iterm2 typora postman switchhosts \
+tinypng4mac picgo netnewswire xmind baidunetdisk feishu wechat
 ```
 
-重新启动 iTerm2，按 `⌘` + `,` 打开 iTerm2 的偏好设置，修改字体
 
-#### **安装主题**
 
-[Dracula](https://draculatheme.com/iterm) 主题很好看，下面给 iTerm2 装上
+## 安装 oh-my-zsh
 
-```bash
-git clone https://github.com/dracula/iterm.git
-```
-
-点击 `import` 导入 `Dracula.itermcolors` 文件，然后选择 `Dracula` 主题即可
-
-### Zsh
-
-macOS 现在默认 Shell 是 Zsh 了（以前是 Bash），下面我们可以一边验证一边修改
+将 brew 安装的 zsh 路径添加到 /etc/shells
 
 ```bash
-# macOS 预设的 Shell
-cat /etc/shells
-
-# List of acceptable shells for chpass(1).
-# Ftpd will not allow users to connect who are not using
-# one of these shells.
-
-/bin/bash
-/bin/csh
-/bin/dash
-/bin/ksh
-/bin/sh
-/bin/tcsh
-/bin/zsh
-
-# 查看当前正在使用的 Shell
-echo $SHELL
-/bin/zsh
-
-# 查看 zsh 版本
-zsh --version
-zsh 5.9 (arm-apple-darwin21.3.0)
-
-# 将 brew 安装的 zsh 路径添加到 /etc/shells
 sudo sh -c "echo $(which zsh) >> /etc/shells"
-# 更改当前使用的 Shell
+```
+
+更改当前使用的 Shell
+
+```bash
 chsh -s $(which zsh)
-Changing shell for dejavu.
-Password for dejavu: # 输入密码即可
 
 # 验证当前使用的 Shell
 echo $SHELL
-/opt/homebrew/bin/zsh
 ```
+
+
 
 如果你的 macOS 系统语言是中文，终端里会使用系统语言作为 `locale` 设置，我想要终端里的 Shell 显示语言为英语，可以编辑 zsh 配置文件
 
@@ -169,11 +124,10 @@ echo $SHELL
 # 编辑 zsh 配置用户
 vim ~/.zshrc
 # 在开头加入以下配置
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 ```
 
-### oh-my-zsh
+安装oh-my-zsh：
 
 ```bash
 # 通过 cURL 安装
@@ -196,11 +150,9 @@ ZSH_THEME="pygmalion"
 source ~/.zshrc
 ```
 
-
-
 接下来安装几个 Zshell + oh-my-zsh 的增强插件
 
-#### zsh-z
+### zsh-z
 
 [zsh-z](https://github.com/agkozak/zsh-z#known-bugs) 快速跳转到经常访问的目录，是 [rupa/z](https://github.com/rupa/z) 的原生 Zshell 端口，具有附加功能
 
@@ -215,7 +167,7 @@ plugins=(git zsh-z)
 source ~/.zshrc
 ```
 
-#### zsh-autosuggestions
+### zsh-autosuggestions
 
 [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) 可以根据历史记录对输入进行提示和建议
 
@@ -230,7 +182,7 @@ plugins=(git zsh-z zsh-autosuggestions)
 source ~/.zshrc
 ```
 
-#### zsh-syntax-highlighting
+### zsh-syntax-highlighting
 
 [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) 可以对 Shell 中的命令进行高亮显示
 
@@ -244,137 +196,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 plugins=(git mvn zsh-z zsh-autosuggestions zsh-syntax-highlighting)
 ```
 
-## Git
-
-安装：
-```bash
-brew install git
-```
-
-查看git命令位置：
-```bash
-which git
-```
-
-配置用户名和邮箱：
-```bash
-git config --global user.name "Your Name Here"
-git config --global user.email "your_email@youremail.com"
-```
-
-- 这些配置会加到 ~/.gitconfig
-
-为了将代码推送到 GitHub 仓库，建议使用HTTPS方法。如果你不想每次都输入用户名和密码的话，可以按照此 [描述](https://help.github.com/articles/set-up-git) 说的那样，运行：
-
-```bash
-git config --global credential.helper osxkeychain
-```
-
-设置默认分支名称为main：
-```bash
-git config --global init.defaultBranch main
-```
-
-配置ssh秘钥：
-```bash
-ssh-keygen -t rsa -C "your_email@example.com"
-```
-
-添加 SSH 公钥到 ssh-agent ：
-```bash
-eval "$(ssh-agent -s)"
-ssh-add -K ~/.ssh/id_rsa
-```
-
-添加SSH 公钥到 GitHub 账户：
-```bash
-pbcopy < ~/.ssh/id_rsa.pub
-```
-
-打开 https://github.com/settings/ssh/new，然后添加。
 
 
-
-macOS 的 Finder 会在目录下生成一些隐藏文件（如 `.DS_Store`），我们可以使用 GitHub 维护的 macOS `.gitignore` 模板，并让它对当前用户所有的 Git 存储库都生效
-
-```bash
-curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
-# 附加到全局 .gitignore 文件
-git config --global core.excludesfile ~/.gitignore
-```
-
-## Java
-
-下载 Oracle JDK：
-
-- [jdk6](http://support.apple.com/downloads/DL1572/en_US/JavaForOSX2013-05.dmg)
-- [jdk7](http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-macosx-x64.dmg)
-
-设置 java_home 为 1.8:
-
-```bash
-echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) ' >> ~/.zshrc
-```
-
-安装OpenJDK：
-
-```bash
-brew install openjdk
-```
-
-### SDKMAN
-
-安装：
-
-```bash
- curl -s "https://get.sdkman.io" | bash
-```
-
-安装complete：
-
-```bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-```
-
-查看版本：
-
-```bash
-sdk version
-```
-
-使用：
-
-```bash
-#安装jdk
-sdk install java
-
-#安装scala
-sdk install scala 2.12.1
-
-#卸载
-sdk uninstall scala 2.11.6
-
-#查看
-sdk list
-```
-
-### Maven
-
-安装：
-
-```bash
-brew install maven
-```
-
-## Node.js
-
-安装node：
-
-```bash
-brew install node
-```
-
-### nvs
+## 安装 nvs
 
 Linux / macOS 环境通过 Git Clone 对应的项目即可。
 
@@ -416,64 +240,52 @@ $ nvs use 12
 
 更多指令参见 `nvs --help` 。
 
-## Go
+
+
+## 安装 sdkman
 
 安装：
 
 ```bash
-brew install go
+curl -s "https://get.sdkman.io" | bash
 ```
 
-设置环境变量：
+安装 java8：
+
+```BASH
+sdk install java 8.0.382-zulu
+```
+
+安装 maven：
 
 ```bash
-echo "export GOPATH=$HOME/workspace/goProjects" >> ~/.zshrc
-echo "export GOBIN=$GOPATH/bin" >> ~/.zshrc
-echo "export PATH=$GOPATH:$GOBIN:$PATH" >> ~/.zshrc
-source ~/.zshrc
+sdk install maven
 ```
 
-## Python
-
-MacOS 上通过 brew 安装
+安装 jmeter：
 
 ```bash
-brew install python3
+sdk install jmeter
 ```
 
-查看 python3 安装路径：
+安装 Spring Boot：
 
 ```bash
-$ which python3
-/opt/homebrew/bin/python3
-
-$ type python3
-python3 is /opt/homebrew/bin/python3
+sdk install springboot
 ```
 
-查看版本：
+## dotfile配置
+
+下载 dotfile 文件： 
 
 ```bash
-python --version
+git clone git@github.com:chensoul/dotfiles.git
 ```
 
-修改 ~/.zshrc，设置环境变量：
+拷贝到用户目录：
 
 ```bash
-export PYTHON_HOME=/opt/homebrew/opt/python@3.11
-export PATH=$PYTHON_HOME/bin:$PATH
-alias python=python3
-alias pip=pip3
+cd dotfiles
+sh bootstrap.sh
 ```
 
-使配置生效：
-
-```bash
-source ~/.zshrc
-```
-
-
-
-## 参考文章
-
-- https://sourabhbajaj.com/mac-setup/
