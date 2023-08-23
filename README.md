@@ -31,6 +31,9 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [用户故事如何应用到个人管理](https://blog.chensoul.com/posts/2023/08/21/user-stories-in-self-manager/)
+- [如何成为一名合格的架构师](https://blog.chensoul.com/posts/2023/08/21/architecture/)
+- [软件开发流程和常用开发方法](https://blog.chensoul.com/posts/2023/08/21/the-software-development-process/)
 - [[译]Spring Boot项目如何实现JWT认证？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-jwt-authentication-in-spring-boot-project/)
 - [[译]没有WebSecurityConfigurerAdapter的Spring Security.md](https://blog.chensoul.com/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/)
 - [[译]如何在Spring Boot2中使用UserDetailsService实现安全性？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot2-using-userdetailsservice/)
@@ -38,14 +41,12 @@
 - [[译]Spring Boot项目如何实现Security？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot-project/)
 - [[译]Spring Security 和 Spring Boot 入门](https://blog.chensoul.com/posts/2023/08/16/spring-security/)
 - [[译]为 Spring Boot 应用程序创建优化的 Docker 映像](https://blog.chensoul.com/posts/2023/08/16/spring-boot-docker/)
-- [[译]Spring Security：深入了解身份验证和授权](https://blog.chensoul.com/posts/2023/08/16/spring-security-authentication-and-authorization/)
-- [[译]深入了解Spring事务管理：@Transactional](https://blog.chensoul.com/posts/2023/08/16/spring-transaction-management-transactional-in-depth/)
-- [[译]Spring Security - JWT](https://blog.chensoul.com/posts/2023/08/16/spring-security-with-jwt/)
 <!-- blog ends -->
 
 ## 最近活动
 
 <!-- douban starts -->
+- [想看卡特教练](http://movie.douban.com/subject/1309017/) 2023-08-23
 - [想看志愿军：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
 - [想看封神第一部：朝歌风云](http://movie.douban.com/subject/10604086/) 2023-06-26
 - [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
@@ -55,7 +56,6 @@
 - [最近在读财富自由之路](https://book.douban.com/subject/27094706/) 2023-06-09
 - [看过速度与激情9](http://movie.douban.com/subject/25728006/) 2023-06-09
 - [看过刀剑神域进击篇：暮色黄昏](http://movie.douban.com/subject/35652451/) 2023-06-09
-- [看过速度与激情8](http://movie.douban.com/subject/26260853/) 2023-05-19
 <!-- douban ends -->
 
 
