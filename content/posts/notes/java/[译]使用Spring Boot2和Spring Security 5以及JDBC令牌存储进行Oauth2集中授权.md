@@ -121,7 +121,7 @@ INSERT INTO credentials_authorities VALUES (3, 2);
 
 ![img](https://miro.medium.com/v2/resize:fit:1400/1*dyyiX3P9XSdsPuYQyc4_kA.jpeg)
 
-为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注释和 WebSecurityConfigurerAdapter
+为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注解和 WebSecurityConfigurerAdapter
 
 ```java
 package com.aak.configuration;

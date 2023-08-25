@@ -140,7 +140,7 @@ public class WebSecurityConfig {
 在这里，我们需要执行以下步骤：
 
 - 步骤#1：删除@override，因为我们不会从任何类中扩展和覆盖它。
-- 步骤＃2：在此方法上应用@Bean注释
+- 步骤＃2：在此方法上应用@Bean注解
 - 步骤#3：现在将方法返回类型声明为 SecurityFilterChain，而不是 void
 - 步骤#4：根据需要更新方法名称。比如说filterChain。
 - 步骤#5：方法结束时，主体返回http.build()。这里http是HttpSecurity类型的变量。

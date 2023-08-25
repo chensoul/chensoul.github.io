@@ -520,7 +520,29 @@ docker exec -it pgsql psql -U postgres -c "CREATE DATABASE n8n owner=n8n;"
 docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE n8n TO n8n;" ;
 ```
 
-2、通过 docker-compose 安装，创建 n8n.yaml：
+2、通过 docker 安装：
+
+```dockerfile
+docker run -d  \
+ --name n8n \
+ --network=custom \
+ -p 5678:5678 \
+ -e DB_TYPE=postgresdb \
+ -e DB_POSTGRESDB_DATABASE=n8n \
+ -e DB_POSTGRESDB_HOST=pgsql \
+ -e DB_POSTGRESDB_PORT=5432 \
+ -e DB_POSTGRESDB_USER=n8n \
+ -e DB_POSTGRESDB_PASSWORD=n8n@pg \
+ -e GENERIC_TIMEZONE="Asia/Shanghai" \
+ -e WEBHOOK_URL=https://n8n.chensoul.com/ \
+ -v ~/.n8n:/home/node/.n8n \
+ docker.n8n.io/n8nio/n8n \
+ n8n start
+```
+
+
+
+通过 docker-compose 安装，创建 n8n.yaml：
 
 ```yaml
 version: '3.8'
@@ -538,12 +560,12 @@ services:
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=n8n@pg
       - TZ="Asia/Shanghai"
+      - GENERIC_TIMEZONE="Asia/Shanghai"
       - WEBHOOK_URL=https://n8n.chensoul.com/
     ports:
       - 5678:5678
     volumes:
-      - /data/n8n:/home/node/.n8n
-    command: n8n start --tunnel
+      - /data/.n8n:/home/node/.n8n
     networks:
       - custom
 
@@ -568,7 +590,7 @@ location / {
     chunked_transfer_encoding off;
     proxy_buffering off;
     proxy_cache off;
-    access_log /var/log/nginx/forward.log combined buffer=128k flush=5s;
+    access_log /var/log/nginx/n8n.log combined buffer=128k flush=5s;
 }
 ```
 
@@ -579,6 +601,13 @@ location / {
 参考这篇文章 http://stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。
 
 ![my-n8n-workflows](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/my-n8n-workflows.png)
+
+workflows 参考：
+
+- [Reorx](https://reorx.com/blog/sharing-my-footprints-automation/)
+- [Pseudoyu](https://www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/)
+- [raye](https://raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he)
+- [Zeabur](https://zeabur.com/docs/marketplace/n8n)
 
 6、升级
 
