@@ -34,16 +34,16 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [Java设计模式：Balking](https://blog.chensoul.com/posts/2023/08/25/java-design-patterns-balking/)
+- [[译]REST API 的自定义错误消息处理](https://blog.chensoul.com/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/)
+- [[译]使用Spring进行REST的错误处理](https://blog.chensoul.com/posts/2023/08/25/exception-handling-for-rest-with-spring/)
+- [[译]使用@Async进行Spring Security上下文传播](https://blog.chensoul.com/posts/2023/08/25/spring-security-async-principal-propagation/)
+- [[译]Spring Events](https://blog.chensoul.com/posts/2023/08/25/spring-events/)
+- [[译]如何在Spring中执行@Async](https://blog.chensoul.com/posts/2023/08/25/spring-async/)
 - [用户故事如何应用到个人管理](https://blog.chensoul.com/posts/2023/08/21/user-stories-in-self-manager/)
 - [如何成为一名合格的架构师](https://blog.chensoul.com/posts/2023/08/21/architecture/)
 - [软件开发流程和常用开发方法](https://blog.chensoul.com/posts/2023/08/21/the-software-development-process/)
 - [[译]Spring Boot项目如何实现JWT认证？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-jwt-authentication-in-spring-boot-project/)
-- [[译]没有WebSecurityConfigurerAdapter的Spring Security.md](https://blog.chensoul.com/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/)
-- [[译]如何在Spring Boot2中使用UserDetailsService实现安全性？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot2-using-userdetailsservice/)
-- [[译]如何在Spring Boot3中使用UserDetailsService实现安全性？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot3-using-userdetailsservice/)
-- [[译]Spring Boot项目如何实现Security？](https://blog.chensoul.com/posts/2023/08/18/how-to-implement-security-in-spring-boot-project/)
-- [[译]Spring Security 和 Spring Boot 入门](https://blog.chensoul.com/posts/2023/08/16/spring-security/)
-- [[译]为 Spring Boot 应用程序创建优化的 Docker 映像](https://blog.chensoul.com/posts/2023/08/16/spring-boot-docker/)
 <!-- blog ends -->
 
 ## 最近活动
