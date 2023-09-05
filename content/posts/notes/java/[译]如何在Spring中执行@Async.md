@@ -31,7 +31,7 @@ public class SpringAsyncConfig { ... }
 启用注解就足够了。但也有一些简单的配置选项：
 
 - **annotation** 默认情况下，`@EnableAsync` 检测 Spring 的 `@Async` 注解和 EJB 3.1 `javax.ejb.Asynchronous`。我们也可以使用此选项来检测其他用户定义的注解类型。
-- **mode ** 指示应使用的建议类型 - 基于 `JDK` 代理或 `AspectJ` 编织。
+- **mode** 指示应使用的建议类型 - 基于 `JDK` 代理或 `AspectJ` 编织。
 - ***proxyTargetClass*** 指示应使用的代理类型 — `CGLIB` 或 `JDK`。仅当模式设置为 `AdviceMode.PROXY` 时，此属性才有效。
 - ***order*** 设置应用 `AsyncAnnotationBeanPostProcessor` 的顺序。默认情况下，它最后运行，以便它可以考虑所有现有代理。
 
@@ -40,7 +40,7 @@ public class SpringAsyncConfig { ... }
 
 ```xml
 <task:executor id="myexecutor" pool-size="5"  />
-<task:annotation-driven executor="myexecutor"/>Copy
+<task:annotation-driven executor="myexecutor"/>
 ```
 
 ## 3.@Async注解
