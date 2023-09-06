@@ -565,7 +565,7 @@ services:
     ports:
       - 5678:5678
     volumes:
-      - /data/.n8n:/home/node/.n8n
+      - ~/.n8n:/home/node/.n8n
     networks:
       - custom
 
@@ -583,14 +583,38 @@ docker-compose -f n8n.yaml up -d
 4、设置 nginx 转发
 
 ```nginx
-location / {
-    proxy_pass http://127.0.0.1:5678/;
-    proxy_set_header Connection '';
-    proxy_http_version 1.1;
-    chunked_transfer_encoding off;
-    proxy_buffering off;
-    proxy_cache off;
-    access_log /var/log/nginx/n8n.log combined buffer=128k flush=5s;
+server {
+    listen 80;
+    listen [::]:80;
+    server_name n8n.chensoul.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     n8n.chensoul.com;
+
+    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:5678;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
+				access_log /var/log/nginx/n8n.log combined buffer=128k flush=5s;
+
+				proxy_http_version 1.1;
+    		proxy_set_header Upgrade $http_upgrade;
+    		proxy_set_header Connection "Upgrade";
+    }
 }
 ```
 
@@ -617,107 +641,23 @@ docker pull n8nio/n8n
 docker-compose -f n8n.yaml up -d
 ```
 
-### plausible
-
-1、下载代码
+7、备份
 
 ```bash
-$ curl -L https://github.com/plausible/hosting/archive/master.tar.gz | tar -xz
-$ cd hosting-master
+: ${EXPORT_DIR="workflow-$(date +%Y%m%d)"}
+rm -rf $EXPORT_DIR/*
+
+docker exec -u node -it n8n n8n export:workflow --backup --output=./$EXPORT_DIR/
+docker cp n8n:/home/node/$EXPORT_DIR .
+
+#docker exec -u node -it n8n n8n export:credentials --all --output=./credentials.json
+#docker cp n8n:/home/node/credentials.json .
+
+cd $EXPORT_DIR
+for file in *; do
+    filename=$(cat "$file" | jq -r '.name')  # 使用-r选项以纯文本形式输出字段值
+    echo "$filename"
+    mv "$file" "$filename".json
+done
 ```
 
-2、更新配置文件 plausible-conf.env
-
-生成一个随机字符串：
-
-```bash
-$ openssl rand -base64 64 | tr -d '\n' ; echo
-```
-
-修改 plausible-conf.env：
-
-```bash
-BASE_URL=https://plausible.chensoul.com
-SECRET_KEY_BASE=ywewRup6H0pT1TK+qIPwdRdOYNixC/GAr5vy2IoTvzNJygD3Z7rPgQI6v1c/tUV/SsJQYxsfZ60yrn6kMiDxAA==
-```
-
-3、设置反向代理
-
-```conf
-server {
-    listen 80;
-    listen [::]:80;
-    server_name plausible.chensoul.com;
-
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen          443 ssl;
-    server_name     plausible.chensoul.com;
-
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
-
-    ssl_session_cache    shared:SSL:1m;
-    ssl_session_timeout  5m;
-
-    ssl_ciphers  HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers  on;
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-	    proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   Host $host;
-	    proxy_http_version 1.1;
-        proxy_set_header   Upgrade $http_upgrade;
-        proxy_set_header   Connection "upgrade";
-    }
-}
-```
-
-4、启动服务
-
-```bash
-docker compose up -d
-```
-
-5、升级
-
-Docker Compose 的更新比较简单：
-
-```bash
-docker compose down 
-docker compose pull plausible
-docker compose up -d
-```
-
-6、访问 postgres 数据库
-
-第一次登录时可能会要求验证邮箱地址，如果前面没有配置 SMTP，可以通过下面的命令认证所有当前用户：
-
-```bash
-docker compose exec plausible_db psql -U postgres -d plausible_db -c "UPDATE users SET email_verified = true;"
-```
-
-进入 plausible_db 数据库：
-
-```bash
-docker compose exec plausible_db psql -U postgres -d plausible_db
-```
-
-7、博客添加统计代码
-
-```javascript
-<script defer data-domain="blog.chensoul.com" src="https://plausible.chensoul.com/js/script.js"></script>
-```
-
-8、配置 dns 
-
-在 dns 服务商添加 A 记录 plausible，稍等一下，访问 [https://plausible.chensoul.com/](https://plausible.chensoul.com/)
-
-
-参考文章：
-
-- [使用 Plausible 自建网站流量统计分析工具](https://atpx.com/blog/docker-plausible-web-analytics/)
