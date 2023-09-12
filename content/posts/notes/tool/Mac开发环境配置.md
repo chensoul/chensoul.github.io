@@ -8,42 +8,84 @@ categories: ["Notes"]
 
 这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是Mac开发环境，所以，这篇文章主要是基于Mac操作系统，记录开发环境搭建过程。
 
-## 偏好设置
+## 系统设置
 
-- 系统所有偏好设置
-  - 通用：关闭文稿时要求保存更改
-  - Siri：关闭
-  - 辅助功能 - 指针控制（或鼠标与触控板） - 触控板选项：启动拖移(三指拖移)
-  - 触控板 > 光标与点击，轻拍来点按，辅助点按
-  - Dock
-    - 置于屏幕上的位置：右边
-    - 设置 Dock 图标更小（大小随个人喜好）
-- Finder
-  - 显示各种栏
-  - 显示所有文件扩展名
-  - 标题栏显示完整路径：`defaults write com.apple.finder _FXShowPosixPathInTitle -bool YES; killall Finder`
-- 禁用大部分 iCloud 同步
-- 键盘 -> 快捷键
-  - command + 空格：spotlight  
-  - control + 空格：切换输入法
+### 实用命令
 
-## 安装 XCode
+1. **取消 4 位数密码限制**
 
-从 App store 或苹果开发者网站安装 [Xcode](https://developer.apple.com/xcode/) ，然后安装 Xcode command line tools：
+```bash
+sudo pwpolicy -clearaccountpolicies
+```
+
+1. **允许安装任意来源的 App**
+
+```bash
+sudo spctl --master-disable
+```
+
+1. **xcode 命令行工具**
 
 ```bash
 xcode-select --install
 ```
 
-安装完成后，你将可以直接在 terminal 中使用主要的命令，比如：`make, GCC, clang, perl, svn, git, size, strip, strings, libtool, cpp`等等。
-
-如果你想了解 Xcode command line tools 包含多少可用的命令，可以通过下面命令查看：
+1. **程序坞自动隐藏加速**
 
 ```bash
-ls /Library/Developer/CommandLineTools/usr/bin/
+# 设置启动坞动画时间设置为 0.5 秒 
+defaults write com.apple.dock autohide-time-modifier -float 0.5 && killall Dock
+
+# 设置启动坞响应时间最短
+defaults write com.apple.dock autohide-delay -int 0 && killall Dock
+
+# 恢复启动坞默认动画时间
+defaults delete com.apple.dock autohide-time-modifier && killall Dock
+
+# 恢复默认启动坞响应时间
+defaults delete com.apple.Dock autohide-delay && killall Dock
 ```
 
-## 安装 Homebrew
+1. **启动台自定义行和列**
+
+```bash
+# 设置列数
+defaults write com.apple.dock springboard-columns -int 7
+
+# 设置行数
+defaults write com.apple.dock springboard-rows -int 6
+
+# 重启 Dock 生效
+killall Dock
+
+# 恢复默认的列数和行数
+defaults write com.apple.dock springboard-rows Default
+defaults write com.apple.dock springboard-columns Default
+
+# 重启 Dock 生效
+killall Dock
+```
+
+### dotfile配置
+
+下载 dotfile 文件： 
+
+```bash
+git clone git@github.com:chensoul/snippets.git
+```
+
+拷贝到用户目录：
+
+```bash
+cd dotfiles
+sh bootstrap.sh
+```
+
+
+
+## 软件设置
+
+### 安装 Homebrew
 
 [Brew](http://brew.sh/) 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。
 
@@ -75,7 +117,7 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
 ```
 
-## 通过 brew 安装软件
+### 通过 brew 安装软件
 
 安装常用命令：
 
@@ -86,7 +128,8 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
 # tree: really handy for listing out directories in text
 # bat: A cat(1) clone with syntax highlighting and Git integration.
 # delta: A fantastic diff tool
-brew install git hub ripgrep ffmpeg tree tmux bat wget vim hugo maven go python3 visual-studio-code	
+# neofetch、fastfetch: 查看系统配置
+brew install git hub ripgrep ffmpeg tree tmux bat wget vim hugo maven go python3 visual-studio-code neofetch fastfetch	
 ```
 
 安装常用软件：
@@ -99,42 +142,13 @@ tinypng4mac picgo netnewswire xmind baidunetdisk feishu wechat
 
 
 
-## 安装 oh-my-zsh
-
-将 brew 安装的 zsh 路径添加到 /etc/shells
-
-```bash
-sudo sh -c "echo $(which zsh) >> /etc/shells"
-```
-
-更改当前使用的 Shell
-
-```bash
-chsh -s $(which zsh)
-
-# 验证当前使用的 Shell
-echo $SHELL
-```
-
-
-
-如果你的 macOS 系统语言是中文，终端里会使用系统语言作为 `locale` 设置，我想要终端里的 Shell 显示语言为英语，可以编辑 zsh 配置文件
-
-```bash
-# 编辑 zsh 配置用户
-vim ~/.zshrc
-# 在开头加入以下配置
-export LANG=en_US.UTF-8
-```
+### Oh-my-zsh
 
 安装oh-my-zsh：
 
 ```bash
 # 通过 cURL 安装
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# 或是通过 Wget 安装
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 ```
 
 oh-my-zsh 的默认主题是 `robbyrussell`，修改为 "pygmalion"
@@ -142,63 +156,119 @@ oh-my-zsh 的默认主题是 `robbyrussell`，修改为 "pygmalion"
 ```bash
 # 编辑配置文件
 vim ~/.zshrc
-# 找到 ZSH_THEME 字段
-ZSH_THEME="robbyrussell"
-# 将 robbyrussell 改为 ys 即可
 ZSH_THEME="pygmalion"
+
 # 使配置文件生效
 source ~/.zshrc
 ```
 
-接下来安装几个 Zshell + oh-my-zsh 的增强插件
-
-### zsh-z
-
-[zsh-z](https://github.com/agkozak/zsh-z#known-bugs) 快速跳转到经常访问的目录，是 [rupa/z](https://github.com/rupa/z) 的原生 Zshell 端口，具有附加功能
+接下来安装几个 插件：
 
 ```bash
-# 源码安装
+# 目录切换神器
+➜ brew install autojump
+
+# 快速跳转到经常访问的目录
 git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
-# 编辑配置文件
-vim ~/.zshrc
-# 找到 plugins 字段，加入 zsh-autosuggestions
-plugins=(git zsh-z)
-# 配置文件生效
-source ~/.zshrc
+
+# 自动建议提示接下来可能要输入的命令
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+# 命令语法检测
+git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 ```
 
-### zsh-autosuggestions
-
-[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) 可以根据历史记录对输入进行提示和建议
-
-```bash
-# 源码安装
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# 编辑配置文件
-vim ~/.zshrc
-# 找到 plugins 字段，加入 zsh-autosuggestions
-plugins=(git zsh-z zsh-autosuggestions)
-# 配置文件生效
-source ~/.zshrc
-```
-
-### zsh-syntax-highlighting
-
-[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) 可以对 Shell 中的命令进行高亮显示
-
-```bash
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-
-修改 .zshrc ：
+在 `~/.zshrc` 中配置启用这些插件：
 
 ```bash
 plugins=(git mvn zsh-z zsh-autosuggestions zsh-syntax-highlighting)
 ```
 
+其他功能配置：
 
+```bash
+# 关掉 URL 反斜杠转义
+echo "DISABLE_MAGIC_FUNCTIONS=true" >> ~/.zshrc
 
-## 安装 nvs
+# 禁用 on my zsh 自动更新
+echo " zstyle ':omz:update' mode disabled" >> ~/.zshrc
+```
+
+### MySQL
+
+安装 MySQL：
+
+```BASH
+# 搜索可以安装的版本
+➜ brew search mysql
+
+# 安装对应的版本
+➜ brew install mysql@5.7
+
+# 写入环境变量
+echo 'export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"' >> ~/.zshrc
+
+# 为了让编译器找到 mysql@5.7 还需要写入
+echo 'export LDFLAGS="-L/opt/homebrew/opt/mysql@5.7/lib"' >> ~/.zshrc
+echo 'export CPPFLAGS="-I/opt/homebrew/opt/mysql@5.7/include"' >> ~/.zshrc
+
+# 为了让 pkg-config 找到 mysql@5.7 还需要写入
+echo 'PKG_CONFIG_PATH="/opt/homebrew/opt/mysql@5.7/lib/pkgconfig"' >> ~/.zshrc
+```
+
+MySQL 服务相关：
+
+```BASH
+# 查看 MySQL 服务状态
+➜ brew services info mysql@5.7
+➜ mysql.server status
+
+# 启动 MySQL 服务
+➜ brew services start mysql@5.7
+➜ mysql.server start
+
+# 重启 MySQL 服务
+➜ brew services restart mysql@5.7
+➜ mysql.server restart
+
+# 停止 MySQL 服务
+➜ brew services stop mysql@5.7
+➜ mysql.server stop
+```
+
+接着初始化 MySQL 设置，主要配置一下 root 密码已经是否远程登录登，根据提示来操作就行了：
+
+```BASH
+mysql_secure_installation
+```
+
+数据库外连，这是个可选操作 根据自己的实际情况自行决定是否开启（有被攻击的风险）：
+
+```SQL
+mysql > grant all on *.* to root@'%' identified by '你设置的密码' with grant option;
+mysql > flush privileges;
+```
+
+### Redis
+
+```BASH
+# 安装 redis
+➜ brew install redis
+
+# 查看 redis 服务状态
+➜ brew services info redis
+
+# 启动 redis 服务端
+➜ brew services start redis
+
+# 启动 redis 客户端
+➜ redis-cli
+
+# 编辑默认配置文件
+➜ sudo vim /opt/homebrew/etc/redis.conf
+```
+
+### NVS
 
 Linux / macOS 环境通过 Git Clone 对应的项目即可。
 
@@ -240,9 +310,37 @@ $ nvs use 12
 
 更多指令参见 `nvs --help` 。
 
+### OrbStack
 
+[OrbStack](https://orbstack.dev/) 是一种在 macOS 上运行 Docker 容器和 Linux 机器的快速、轻便且简单的方法。可以将其视为强大的 WSL 和 Docker Desktop 替代方案，全部集成在一个易于使用的应用程序中。
 
-## 安装 sdkman
+```BASH
+# Homebrew Cask 安装更优雅一点
+➜ brew install orbstack
+```
+
+Docker 的一些镜像国内拉取很慢，我们可以配置一下一些国内的加速源：
+
+```json
+{
+    "ipv6": true,
+  	"registry-mirrors": [
+    	"http://hub-mirror.c.163.com",
+    	"https://registry.docker-cn.com",
+    	"https://mirror.baidubce.com",
+    	"https://kn77wnbv.mirror.aliyuncs.com",
+    	"https://y0qd3iq.mirror.aliyuncs.com",
+    	"https://6kx4zyno.mirror.aliyuncs.com",
+    	"https://0dj0t5fb.mirror.aliyuncs.com",
+    	"https://docker.nju.edu.cn",
+    	"https://kuamavit.mirror.aliyuncs.com",
+    	"https://y0qd3iq.mirror.aliyuncs.com",
+    	"https://docker.mirrors.ustc.edu.cn"
+  ]
+}
+```
+
+### sdkman
 
 安装：
 
@@ -272,20 +370,5 @@ sdk install jmeter
 
 ```bash
 sdk install springboot
-```
-
-## dotfile配置
-
-下载 dotfile 文件： 
-
-```bash
-git clone git@github.com:chensoul/dotfiles.git
-```
-
-拷贝到用户目录：
-
-```bash
-cd dotfiles
-sh bootstrap.sh
 ```
 
