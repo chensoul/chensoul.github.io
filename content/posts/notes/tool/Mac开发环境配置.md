@@ -10,62 +10,6 @@ categories: ["Notes"]
 
 ## 系统设置
 
-### 实用命令
-
-1. **取消 4 位数密码限制**
-
-```bash
-sudo pwpolicy -clearaccountpolicies
-```
-
-1. **允许安装任意来源的 App**
-
-```bash
-sudo spctl --master-disable
-```
-
-1. **xcode 命令行工具**
-
-```bash
-xcode-select --install
-```
-
-1. **程序坞自动隐藏加速**
-
-```bash
-# 设置启动坞动画时间设置为 0.5 秒 
-defaults write com.apple.dock autohide-time-modifier -float 0.5 && killall Dock
-
-# 设置启动坞响应时间最短
-defaults write com.apple.dock autohide-delay -int 0 && killall Dock
-
-# 恢复启动坞默认动画时间
-defaults delete com.apple.dock autohide-time-modifier && killall Dock
-
-# 恢复默认启动坞响应时间
-defaults delete com.apple.Dock autohide-delay && killall Dock
-```
-
-1. **启动台自定义行和列**
-
-```bash
-# 设置列数
-defaults write com.apple.dock springboard-columns -int 7
-
-# 设置行数
-defaults write com.apple.dock springboard-rows -int 6
-
-# 重启 Dock 生效
-killall Dock
-
-# 恢复默认的列数和行数
-defaults write com.apple.dock springboard-rows Default
-defaults write com.apple.dock springboard-columns Default
-
-# 重启 Dock 生效
-killall Dock
-```
-
 ### dotfile配置
 
 下载 dotfile 文件： 
@@ -81,120 +25,25 @@ cd dotfiles
 sh bootstrap.sh
 ```
 
-
-
-## 软件设置
-
-### 安装 Homebrew
-
-[Brew](http://brew.sh/) 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。
-
-打开终端模拟器，开始安装
+macos系统设置：
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+. .macos
 ```
 
-替换 brew.git 源
+
+
+## 安装软件
+
+### 安装 brew、nvs、sdkman
 
 ```bash
-git -C "$(brew --repo)" remote set-url origin https://mirrors.cloud.tencent.com/homebrew/brew.git
-
-git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.cloud.tencent.com//homebrew/homebrew-core.git
-
-brew update
-```
-
-设置环境变量：
-
-```bash
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
-```
-
-如果安装了zsh，则是：
-
-```bash
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
-```
-
-### 通过 brew 安装软件
-
-安装常用命令：
-
-```bash
-# hub: a github-specific version of git
-# ripgrep: rg is faster than alternatives
-# ffmpeg: eventually I'll need this for something
-# tree: really handy for listing out directories in text
-# bat: A cat(1) clone with syntax highlighting and Git integration.
-# delta: A fantastic diff tool
-# neofetch、fastfetch: 查看系统配置
-brew install git hub ripgrep ffmpeg tree tmux bat wget vim hugo maven go python3 visual-studio-code neofetch fastfetch	
-```
-
-安装常用软件：
-
-```BASH
-brew install --cask google-chrome tableplus \
-1password telegram iterm2 typora postman switchhosts \
-tinypng4mac picgo netnewswire xmind baidunetdisk feishu wechat
+sh install.sh
 ```
 
 
 
-### Oh-my-zsh
-
-安装oh-my-zsh：
-
-```bash
-# 通过 cURL 安装
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-oh-my-zsh 的默认主题是 `robbyrussell`，修改为 "pygmalion"
-
-```bash
-# 编辑配置文件
-vim ~/.zshrc
-ZSH_THEME="pygmalion"
-
-# 使配置文件生效
-source ~/.zshrc
-```
-
-接下来安装几个 插件：
-
-```bash
-# 目录切换神器
-➜ brew install autojump
-
-# 快速跳转到经常访问的目录
-git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
-
-# 自动建议提示接下来可能要输入的命令
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-
-# 命令语法检测
-git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-```
-
-在 `~/.zshrc` 中配置启用这些插件：
-
-```bash
-plugins=(git mvn zsh-z zsh-autosuggestions zsh-syntax-highlighting)
-```
-
-其他功能配置：
-
-```bash
-# 关掉 URL 反斜杠转义
-echo "DISABLE_MAGIC_FUNCTIONS=true" >> ~/.zshrc
-
-# 禁用 on my zsh 自动更新
-echo " zstyle ':omz:update' mode disabled" >> ~/.zshrc
-```
-
-### MySQL
+### 安装 MySQL
 
 安装 MySQL：
 
@@ -249,7 +98,7 @@ mysql > grant all on *.* to root@'%' identified by '你设置的密码' with gra
 mysql > flush privileges;
 ```
 
-### Redis
+### 安装 Redis
 
 ```BASH
 # 安装 redis
@@ -268,107 +117,21 @@ mysql > flush privileges;
 ➜ sudo vim /opt/homebrew/etc/redis.conf
 ```
 
-### NVS
+## 系统备份
 
-Linux / macOS 环境通过 Git Clone 对应的项目即可。
-
-```bash
-$ export NVS_HOME="$HOME/.nvs"
-$ git clone https://github.com/jasongin/nvs --depth=1 "$NVS_HOME"
-$ . "$NVS_HOME/nvs.sh" install
-```
-
-在国内由于大家都懂的原因，需要把对应的镜像地址修改下：
+1、备份 maven 仓库：
 
 ```bash
-$ nvs remote node https://npm.taobao.org/mirrors/node/
-$ nvs remote
+zip -r m2.zip ~/.m2
 ```
 
-通过以下命令，即可非常简单的安装 Node.js 最新的 LTS 版本。
-
-```bash
-# 安装最新的 LTS 版本
-$ nvs add lts
-
-# 配置为默认版本
-$ nvs link lts
-```
-
-安装其他版本：
-
-```bash
-# 安装其他版本尝尝鲜
-$ nvs add 12
-
-# 查看已安装的版本
-$ nvs ls
-
-# 在当前 Shell 切换版本
-$ nvs use 12
-```
-
-更多指令参见 `nvs --help` 。
-
-### OrbStack
-
-[OrbStack](https://orbstack.dev/) 是一种在 macOS 上运行 Docker 容器和 Linux 机器的快速、轻便且简单的方法。可以将其视为强大的 WSL 和 Docker Desktop 替代方案，全部集成在一个易于使用的应用程序中。
+2、备份代码空间
 
 ```BASH
-# Homebrew Cask 安装更优雅一点
-➜ brew install orbstack
+find ~/workspace -type d -name "target" -exec rm -rf {} +
+
+zip -r workspace.zip ~/workspace
 ```
 
-Docker 的一些镜像国内拉取很慢，我们可以配置一下一些国内的加速源：
 
-```json
-{
-    "ipv6": true,
-  	"registry-mirrors": [
-    	"http://hub-mirror.c.163.com",
-    	"https://registry.docker-cn.com",
-    	"https://mirror.baidubce.com",
-    	"https://kn77wnbv.mirror.aliyuncs.com",
-    	"https://y0qd3iq.mirror.aliyuncs.com",
-    	"https://6kx4zyno.mirror.aliyuncs.com",
-    	"https://0dj0t5fb.mirror.aliyuncs.com",
-    	"https://docker.nju.edu.cn",
-    	"https://kuamavit.mirror.aliyuncs.com",
-    	"https://y0qd3iq.mirror.aliyuncs.com",
-    	"https://docker.mirrors.ustc.edu.cn"
-  ]
-}
-```
-
-### sdkman
-
-安装：
-
-```bash
-curl -s "https://get.sdkman.io" | bash
-```
-
-安装 java8：
-
-```BASH
-sdk install java 8.0.382-zulu
-```
-
-安装 maven：
-
-```bash
-sdk install maven
-```
-
-安装 jmeter：
-
-```bash
-sdk install jmeter
-```
-
-安装 Spring Boot：
-
-```bash
-sdk install springboot
-```
 
