@@ -35,7 +35,7 @@ macos系统设置：
 
 ## 安装软件
 
-### 安装 brew、nvs、sdkman
+### 安装 brew、nvs
 
 ```bash
 sh install.sh

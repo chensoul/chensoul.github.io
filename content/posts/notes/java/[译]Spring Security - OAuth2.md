@@ -3,7 +3,7 @@ title: "[译]Spring Security - OAuth2"
 date: 2023-08-16T10:00:00+08:00
 slug: spring-security-with-oauth2
 categories: ["Notes"]
-tags: [java,spring,"spring boot","spring security"]
+tags: [java,spring,"spring boot","spring security",oauth2]
 ---
 
 ## OAuth 2.0 基础知识
