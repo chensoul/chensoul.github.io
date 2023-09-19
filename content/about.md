@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]Spring Security 与 JWT for REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-tutorial/)
 - [Java设计模式：Builder](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-builder/)
 - [Java设计模式：Business Delegate](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-business-delegate/)
 - [Java设计模式：Bridge](https://blog.chensoul.com/posts/2023/08/28/java-design-patterns-bridge/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [[译]使用@Async进行Spring Security上下文传播](https://blog.chensoul.com/posts/2023/08/25/spring-security-async-principal-propagation/)
 - [[译]Spring Events](https://blog.chensoul.com/posts/2023/08/25/spring-events/)
 - [[译]如何在Spring中执行@Async](https://blog.chensoul.com/posts/2023/08/25/spring-async/)
-- [用户故事如何应用到个人管理](https://blog.chensoul.com/posts/2023/08/21/user-stories-in-self-manager/)
 <!-- blog ends -->
 
 ## 最近活动
