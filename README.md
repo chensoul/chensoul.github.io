@@ -31,6 +31,7 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-jwt/)
 - [[译]Spring Security 与 JWT for REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-tutorial/)
 - [Java设计模式：Builder](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-builder/)
 - [Java设计模式：Business Delegate](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-business-delegate/)
@@ -40,7 +41,6 @@
 - [[译]使用Spring进行REST的错误处理](https://blog.chensoul.com/posts/2023/08/25/exception-handling-for-rest-with-spring/)
 - [[译]使用@Async进行Spring Security上下文传播](https://blog.chensoul.com/posts/2023/08/25/spring-security-async-principal-propagation/)
 - [[译]Spring Events](https://blog.chensoul.com/posts/2023/08/25/spring-events/)
-- [[译]如何在Spring中执行@Async](https://blog.chensoul.com/posts/2023/08/25/spring-async/)
 <!-- blog ends -->
 
 ## 最近活动
