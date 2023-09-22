@@ -1,5 +1,5 @@
 ---
-title: "Java设计模式：Bytecode
+title: "Java设计模式：Bytecode"
 date: 2023-09-22T09:00:00+08:00
 slug: java-design-patterns-bytecode
 categories: ["Notes"]
