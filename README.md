@@ -52,6 +52,7 @@
 - [想看坚如磐石](http://movie.douban.com/subject/33447633/) 2023-09-06
 - [看过芭比](http://movie.douban.com/subject/4058939/) 2023-09-06
 - [想看卡特教练](http://movie.douban.com/subject/1309017/) 2023-08-23
+- [想看志愿军第一部：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
 - [想看封神第一部：朝歌风云](http://movie.douban.com/subject/10604086/) 2023-06-26
 - [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
 - [看过消失的她](http://movie.douban.com/subject/35660795/) 2023-06-26
