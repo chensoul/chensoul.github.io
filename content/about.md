@@ -34,6 +34,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [Java设计模式：Caching](https://blog.chensoul.com/posts/2023/09/25/java-design-patterns-cahcing/)
 - [React入门：初始化应用的两种方法](https://blog.chensoul.com/posts/2023/09/22/react-create-project/)
 - [Java设计模式：Bytecode](https://blog.chensoul.com/posts/2023/09/22/java-design-patterns-bytecode/)
 - [[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-jwt/)
@@ -43,7 +44,6 @@ date: 2023-01-01T08:00:00+08:00
 - [Java设计模式：Bridge](https://blog.chensoul.com/posts/2023/08/28/java-design-patterns-bridge/)
 - [Java设计模式：Balking](https://blog.chensoul.com/posts/2023/08/25/java-design-patterns-balking/)
 - [[译]REST API 的自定义错误消息处理](https://blog.chensoul.com/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/)
-- [[译]使用Spring进行REST的错误处理](https://blog.chensoul.com/posts/2023/08/25/exception-handling-for-rest-with-spring/)
 <!-- blog ends -->
 
 ## 最近活动
