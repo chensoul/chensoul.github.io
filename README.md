@@ -11,11 +11,10 @@
 热爱编程，喜欢跑步。读书、健身、定投、帮朋友、陪家人，做一个长期主义者。
 
 ### 网站
+
 - 博客：[https://blog.chensoul.com/](https://blog.chensoul.com/)
 - 跑步：[https://run.chensoul.com/](https://run.chensoul.com/)
 - Memos：[https://memos.chensoul.com/](https://memos.chensoul.com/)
-
-
 
 ### 找到我
 
@@ -25,8 +24,6 @@
 - [Github](https://github.com/chensoul)
 - [Twitter](https://twitter.com/chensoul_eth)
 - [Telegram](https://t.me/chensoul_share)
-
-
 
 ## 最新博客
 
@@ -46,6 +43,9 @@
 ## 最近活动
 
 <!-- douban starts -->
+- [看过隐入尘烟](http://movie.douban.com/subject/35131346/) 2023-10-08
+- [看过夏洛特烦恼](http://movie.douban.com/subject/25964071/) 2023-10-08
+- [看过我不是药神](http://movie.douban.com/subject/26752088/) 2023-10-08
 - [看过巨齿鲨2：深渊](http://movie.douban.com/subject/34882958/) 2023-09-06
 - [看过八角笼中](http://movie.douban.com/subject/35765480/) 2023-09-06
 - [想看敢死队4：最终章](http://movie.douban.com/subject/25845297/) 2023-09-06
@@ -53,11 +53,7 @@
 - [看过芭比](http://movie.douban.com/subject/4058939/) 2023-09-06
 - [想看卡特教练](http://movie.douban.com/subject/1309017/) 2023-08-23
 - [想看志愿军：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
-- [想看封神第一部：朝歌风云](http://movie.douban.com/subject/10604086/) 2023-06-26
-- [想看我爱你！](http://movie.douban.com/subject/35818074/) 2023-06-26
-- [看过消失的她](http://movie.douban.com/subject/35660795/) 2023-06-26
 <!-- douban ends -->
-
 
 ## 最近发布
 
@@ -67,7 +63,6 @@
 - [scrapy-zhihu-github](https://github.com/chensoul/scrapy-zhihu-github/releases/tag/v0.0.1)：Scrapy爬取知乎、Github用户
 - [grab](https://github.com/chensoul/grab/releases/tag/v0.0.1)：基于spark、spring boot构建推荐系统
 <!-- recent_releases ends -->
-
 
 ## 最近一周编码
 
