@@ -5,6 +5,7 @@ slug: react-create-project
 categories: ["Notes"]
 tags: [react,nodejs,vite]
 draft: false
+
 ---
 
 在 React 中，您可以使用多种方法来初始化一个应用程序。以下是几种常见的方法：
