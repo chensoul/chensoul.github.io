@@ -46,16 +46,7 @@ date: 2023-01-01T08:00:00+08:00
 ## 最近活动
 
 <!-- douban starts -->
-- [看过隐入尘烟](http://movie.douban.com/subject/35131346/) 2023-10-08
-- [看过夏洛特烦恼](http://movie.douban.com/subject/25964071/) 2023-10-08
-- [看过我不是药神](http://movie.douban.com/subject/26752088/) 2023-10-08
-- [看过巨齿鲨2：深渊](http://movie.douban.com/subject/34882958/) 2023-09-06
-- [看过八角笼中](http://movie.douban.com/subject/35765480/) 2023-09-06
-- [想看敢死队4：最终章](http://movie.douban.com/subject/25845297/) 2023-09-06
-- [想看坚如磐石](http://movie.douban.com/subject/33447633/) 2023-09-06
-- [看过芭比](http://movie.douban.com/subject/4058939/) 2023-09-06
-- [想看卡特教练](http://movie.douban.com/subject/1309017/) 2023-08-23
-- [想看志愿军：雄兵出击](http://movie.douban.com/subject/35496350/) 2023-06-26
+
 <!-- douban ends -->
 
 ## 最近发布
