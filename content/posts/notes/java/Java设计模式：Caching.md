@@ -7,7 +7,7 @@ tags: [java]
 draft: false
 ---
 
-本文主要介绍 [Caching](https://java-design-patterns.com/zh/patterns/caching/) 业务委托模式，在 [Java Design Patterns](https://java-design-patterns.com/)  网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。
+本文主要介绍 [Caching](https://java-design-patterns.com/zh/patterns/caching/) 模式，在 [Java Design Patterns](https://java-design-patterns.com/)  网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。
 
 ## 介绍
 
