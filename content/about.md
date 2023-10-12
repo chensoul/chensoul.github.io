@@ -31,6 +31,8 @@ date: 2023-01-01T08:00:00+08:00
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]DevOps 和测试人员的 Git 面试问题](https://blog.chensoul.com/posts/2023/10/12/git-interview-questions/)
+- [[译]Spring Security 面试问题](https://blog.chensoul.com/posts/2023/10/12/spring-security-interview-questions/)
 - [Java设计模式：Caching](https://blog.chensoul.com/posts/2023/09/25/java-design-patterns-cahcing/)
 - [React入门：初始化应用的两种方法](https://blog.chensoul.com/posts/2023/09/22/react-create-project/)
 - [Java设计模式：Bytecode](https://blog.chensoul.com/posts/2023/09/22/java-design-patterns-bytecode/)
@@ -39,8 +41,6 @@ date: 2023-01-01T08:00:00+08:00
 - [Java设计模式：Builder](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-builder/)
 - [Java设计模式：Business Delegate](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-business-delegate/)
 - [Java设计模式：Bridge](https://blog.chensoul.com/posts/2023/08/28/java-design-patterns-bridge/)
-- [Java设计模式：Balking](https://blog.chensoul.com/posts/2023/08/25/java-design-patterns-balking/)
-- [[译]REST API 的自定义错误消息处理](https://blog.chensoul.com/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/)
 <!-- blog ends -->
 
 ## 最近活动
