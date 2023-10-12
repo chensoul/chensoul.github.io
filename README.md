@@ -28,6 +28,8 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [[译]关于 HTTP 您需要了解的一切](https://blog.chensoul.com/posts/2023/10/12/http-in-depth/)
+- [前端学习路线图](https://blog.chensoul.com/posts/2023/10/12/frontend-roadmap/)
 - [[译]DevOps 和测试人员的 Git 面试问题](https://blog.chensoul.com/posts/2023/10/12/git-interview-questions/)
 - [[译]Spring Security 面试问题](https://blog.chensoul.com/posts/2023/10/12/spring-security-interview-questions/)
 - [Java设计模式：Caching](https://blog.chensoul.com/posts/2023/09/25/java-design-patterns-cahcing/)
@@ -36,8 +38,6 @@
 - [[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-jwt/)
 - [[译]Spring Security 与 JWT for REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-tutorial/)
 - [Java设计模式：Builder](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-builder/)
-- [Java设计模式：Business Delegate](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-business-delegate/)
-- [Java设计模式：Bridge](https://blog.chensoul.com/posts/2023/08/28/java-design-patterns-bridge/)
 <!-- blog ends -->
 
 ## 最近活动
