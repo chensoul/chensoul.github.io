@@ -280,6 +280,7 @@ services:
       DATABASE_URL: postgresql://umami:umami@pg@pgsql:5432/umami
       DATABASE_TYPE: postgresql
       HASH_SALT: vps@2023
+      TRACKER_SCRIPT_NAME: random-string.js
     networks:
       - custom
     restart: always
@@ -287,6 +288,19 @@ services:
 networks:
   custom:
     external: true
+```
+
+参考 [https://eallion.com/umami/](https://eallion.com/umami/)，Umami 的默认跟踪代码是被大多数的广告插件屏蔽的，被屏蔽了你就统计不到访客信息了。如果需要反屏蔽，需要在 docker-compose.yml 文件中添加环境变量：TRACKER_SCRIPT_NAME，如：
+
+```bash
+    environment:
+      TRACKER_SCRIPT_NAME: random-string.js
+```
+
+然后获取到的跟踪代码的 src 会变成：
+
+```
+srcipt.js => random-string.js
 ```
 
 启动：
@@ -325,6 +339,15 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        add_header X-Cache $upstream_cache_status;
+        # 缓存
+        add_header Cache-Control no-cache;
+        expires 12h;
     }
 }
 ```
