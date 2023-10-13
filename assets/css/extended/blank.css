@@ -1,4 +1,6 @@
-/*
+
+
+/* 
 This is just a placeholder blank stylesheet so as to support adding custom styles budled with theme's default styles
 
 Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-css-with-themes-assets for more info
@@ -17,11 +19,7 @@ pre code {
 	word-break: break-all;
 }
 
-code {
-	color: #e83e8c;
-}
-
-.post-single a, .post-single a:visited {
+.post-single .post-header a, .post-single .post-content a, .post-single .post-footer a{
 	color: #eb2344;
 }
 
@@ -30,7 +28,7 @@ code {
 }
 
 .post-content code {
-	font-size: .95em;
+	font-size: .90em;
 }
 
 .post-title {
@@ -50,4 +48,4 @@ code {
 .post-content blockquote {
     font-size: .9em;
     border-inline-start: 3px solid var(--secondary);
-}
+} 
