@@ -28,6 +28,8 @@
 ## 最新博客
 
 <!-- blog starts -->
+- [Java设计模式：Callback](https://blog.chensoul.com/posts/2023/10/13/java-design-patterns-callback/)
+- [[译]Spring Boot3和Spring6中的新特性](https://blog.chensoul.com/posts/2023/10/13/new-features-in-spring-boot-3-and-spring-6/)
 - [[译]关于 HTTP 您需要了解的一切](https://blog.chensoul.com/posts/2023/10/12/http-in-depth/)
 - [前端学习路线图](https://blog.chensoul.com/posts/2023/10/12/frontend-roadmap/)
 - [[译]DevOps 和测试人员的 Git 面试问题](https://blog.chensoul.com/posts/2023/10/12/git-interview-questions/)
@@ -36,8 +38,6 @@
 - [React入门：初始化应用的两种方法](https://blog.chensoul.com/posts/2023/09/22/react-create-project/)
 - [Java设计模式：Bytecode](https://blog.chensoul.com/posts/2023/09/22/java-design-patterns-bytecode/)
 - [[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-jwt/)
-- [[译]Spring Security 与 JWT for REST API](https://blog.chensoul.com/posts/2023/09/19/spring-security-tutorial/)
-- [Java设计模式：Builder](https://blog.chensoul.com/posts/2023/09/05/java-design-patterns-builder/)
 <!-- blog ends -->
 
 ## 最近活动
