@@ -354,8 +354,6 @@ AbstractFactory PC Config::RAM= 2 GB, HDD=500 GB, CPU=2.4 GHz
 AbstractFactory Server Config::RAM= 16 GB, HDD=1 TB, CPU=2.9 GHz
 ```
 
-类图：![Abstract-Factory-Pattern-ComputerFactory](../../../../../../../Downloads/Abstract-Factory-Pattern-ComputerFactory.png)
-
 ## 适用性
 
 在以下情况下使用抽象工厂模式
