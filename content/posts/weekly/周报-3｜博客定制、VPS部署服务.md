@@ -29,16 +29,7 @@ tags: [review, hugo, github, cusdis, umami, kuma, cloudflare]
 
 ## 博客个人介绍
 
-我的博客源文件托管在 [gihub](https://github.com/chensoul/chensoul.github.io)，在这个仓库可以看到我的一些个人介绍，当然，我的博客也有个人介绍（在[关于](https://blog.chensoul.com/about/)页面），如果你仔细观察，可以发现他们基本上是一样的，这个是怎么实现的呢？
-
-<img src="http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/chensoul-github-io-readme.png" alt="chensoul-github-io-readme" style="width: 80%"/>
-
-首先，github 里面可以创建一个以 github 账号为名称的仓库，然后编辑好 README.md 文件，README.md 文件内容就会渲染成 html 显示到个人 github 主页。例如，我的 github 主页是 https://github.com/chensoul，我的个人仓库地址为 https://github.com/chensoul/chensoul，这个仓库是通过 github actions 来构建 README.md，构建文件查看仓库的 workflows 文件，主要有两个文件：
-
-- build.yml：周期性的调用 [build_readme.py](https://github.com/chensoul/chensoul/blob/main/build_readme.py) 来生成 README.md 文件（包括：获取最近 5 篇博客文章、或者 豆瓣上最近 5 个电影书籍动态、获取 github 上发布的项目、显示 wakatime 报表）
-- waketime.yml：生成 wakatime-charts
-
-当 README.md 生成之后，只需要将该文件内容同步到博客的 about.md 文件即可。怎么实现呢？参考博客源文件里的 [build_about.py](https://github.com/chensoul/chensoul.github.io/blob/main/build_about.py)。这样就可以实现一个自我介绍同步到多个平台（除了博客，还可以通过 api 接口同步到语雀等其他平台）。
+我的博客源文件托管在 [gihub](https://github.com/chensoul/chensoul.github.io)，在这个仓库可以看到我的一些个人介绍。
 
 ## vps 上服务部署
 

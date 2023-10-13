@@ -87,7 +87,7 @@ body {
 
 ### 3、修改关于页面内容
 
-参考这篇文章 [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)，对 GitHub [首页](https://github.com/chensoul/chensoul) 进行改造，并通过 GitHub Action 同步到博客的 [关于](https://blog.chensoul.com/about/) 页面。
+参考这篇文章 [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)，对 GitHub [首页](https://github.com/chensoul/chensoul) 进行改造。
 
 ### 4、dns 解析迁移到 cloudflare
 
