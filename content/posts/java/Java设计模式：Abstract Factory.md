@@ -371,7 +371,7 @@ AbstractFactory Server Config::RAM= 16 GB, HDD=1 TB, CPU=2.9 GHz
 
 ## 相关模式
 
-- [Factory Methodopen](https://java-design-patterns.com/patterns/factory-method/)
+- [Factory Method](https://java-design-patterns.com/patterns/factory-method/)
 - [Factory Kit](https://java-design-patterns.com/patterns/factory-kit/)
 
 ## 使用
