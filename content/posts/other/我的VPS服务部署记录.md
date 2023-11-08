@@ -67,63 +67,50 @@ ba21bef23b04   none            null      local
 
 ```yaml
 networks:
-  default:
-    external: true
-    name: custom
-```
-
-例如：
-
-```yaml
-version: "3"
-
-services:
-  pgsql:
-    image: postgres:13
-    restart: always
-    ports:
-      - 5433:5432
-    environment:
-      - POSTGRES_USER=chenzj
-      - POSTGRES_PASSWORD=chenzj@vps2021
-    volumes:
-      - /data/postgres:/var/lib/postgresql/data
-
-networks:
-  default:
-    external: true
-    name: custom
-```
-
-## 服务部署
-
-### Postgresql
-
-1、参考 [PostgreSql 安装和部署](/posts/2022/08/19/postgresql-install-deploy/) ，通过 docker-compose 安装，创建
-postgresql.yaml：
-
-```yaml
-version: "3"
-
-services:
-  pgsql:
-    image: postgres:13-alpine
-    container_name: pgsql
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=admin@pg!
-    networks:
       - custom
-    volumes:
-      - /data/postgres:/var/lib/postgresql/data
+    restart: always
 
 networks:
   custom:
     external: true
 ```
+
+## 服务部署
+
+### MySQL
+
+1、使用 docker-compose 安装
+
+mysql.yaml
+
+```yaml
+version: '3'
+services:
+  mysql:
+    image: mysql:8.1.0
+    container_name: mysql
+    volumes:
+      - /data/volumes/mysql/:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: admin@mysql!
+    ports:
+      - "3306:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: [ 'CMD', 'mysql', '-e', 'SHOW DATABASES;' ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+```
+
+>注意：[修改 Docker-MySQL 容器的 默认用户加密规则](https://www.cnblogs.com/atuotuo/p/9402132.html)
 
 2、启动
 
@@ -240,31 +227,20 @@ docker-compose -f uptime.yaml up -d
 
 ### Umami
 
-参考 [umami docker-compose.yml](https://github.com/umami-software/umami/blob/master/docker-compose.yml) ，使用 docker 镜像
-umami:postgresql-latest 来安装 umami。
-
-1、在 pqsql 容器创建 umami 数据库和用户：
+1、在 mysql 容器创建 umami 数据库和用户：
 
 ```bash
-docker exec -it pgsql psql -U postgres -c "CREATE USER umami WITH PASSWORD 'umami@pg';"
-docker exec -it pgsql psql -U postgres -c "CREATE DATABASE umami owner=umami;"
-docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE umami TO umami;"
+docker exec -it mysql bash
+mysql -uroot -p 
+
+CREATE USER 'umami'@'%' IDENTIFIED BY 'umami@mysql!';
+CREATE DATABASE umami;
+GRANT ALL ON umami.* TO 'umami'@'%';
+
+ALTER USER 'umami' IDENTIFIED WITH mysql_native_password BY 'umami@mysql!';
 ```
 
-然后，初始化数 umami 数据。先进入容器：
-
-```
-docker exec -it pgsql bash
-```
-
-进入 umami 数据库：
-
-```bash
-psql -U umami -d umami
-umami=>
-```
-
-执行 [**schema.postgresql.sql**](https://github.com/umami-software/umami/blob/master/sql/schema.postgresql.sql) 文件内容。
+> 参考：[HCL SafeLinx Server with MySQL 8.0 causes "Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection."](https://support.hcltechsw.com/csm?id=kb_article&sysparm_article=KB0102948)
 
 2、通过 docker-compose 安装，创建 umami.yaml：
 
@@ -272,13 +248,13 @@ umami=>
 version: "3"
 services:
   umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest
+    image: ghcr.io/umami-software/umami:mysql-latest
     container_name: umami
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://umami:umami@pg@pgsql:5432/umami
-      DATABASE_TYPE: postgresql
+      DATABASE_URL: mysql://umami:umami@mysql!@mysql:3306/umami
+      DATABASE_TYPE: mysql
       HASH_SALT: vps@2023
       TRACKER_SCRIPT_NAME: random-string.js
     networks:
@@ -368,12 +344,15 @@ docker-compose -f umami.yaml up -d
 
 > VPS IP 可能被墙，所以可以使用三方云服务部署，具体参考[轻量级开源免费博客评论系统解决方案 （Cusdis + Railway）](https://www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/)
 
-1、在 pqsql 容器创建 cusdis 数据库和用户：
+1、在 mysql 容器创建 cusdis 数据库和用户：
 
 ```bash
-docker exec -it pgsql psql -U postgres -c "CREATE USER cusdis WITH PASSWORD 'cusdis@pg';"
-docker exec -it pgsql psql -U postgres -c "CREATE DATABASE cusdis owner=cusdis;"
-docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE cusdis TO cusdis;"
+docker exec -it mysql bash
+mysql -uroot -p 
+
+CREATE USER 'cusdis'@'%' IDENTIFIED BY 'cusdis@mysql!';
+CREATE DATABASE cusdis;
+GRANT ALL ON cusdis.* TO 'cusdis'@'%';
 ```
 
 2、通过 docker-compose 安装，创建 cusdis.yaml：
@@ -392,8 +371,8 @@ services:
       - JWT_SECRET=vps@2023
       - NEXTAUTH_URL=https://cusdis.chensoul.com
       - HOST=https://cusdis.chensoul.com
-      - DB_TYPE=pgsql
-      - DB_URL=postgresql://cusdis:cusdis@pg@pgsql:5432/cusdis
+      - DB_TYPE=mysql
+      - DB_URL=mysql://cusdis:cusdis@mysql!@mysql:3306/cusdis
     networks:
       - custom
     restart: always
@@ -472,7 +451,18 @@ docker-compose -f cusdis.yaml up -d
 
 ### memos
 
-通过 docker-compose 安装，创建 memos.yaml：
+1、在 mysql 容器创建 n8n 数据库和用户：
+
+```bash
+docker exec -it mysql bash
+mysql -uroot -p 
+
+CREATE USER 'memos'@'%' IDENTIFIED BY 'memos@mysql!';
+CREATE DATABASE memos;
+GRANT ALL ON memos.* TO 'memos'@'%';
+```
+
+2、通过 docker-compose 安装，创建 memos.yaml：
 
 ```yaml
 version: "3.0"
@@ -480,10 +470,19 @@ services:
   memos:
     image: neosmemo/memos:latest
     container_name: memos
+    environment:
+      - MEMOS_DRIVER=mysql
+      - MEMOS_DSN=memos:memos@mysql!@tcp(mysql)/memos
     volumes:
       - ~/.memos/:/var/opt/memos
     ports:
       - 5230:5230
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
 ```
 
 启动
@@ -532,14 +531,15 @@ docker-compose -f memos.yaml up -d
 
 ### n8n
 
-1、在 pqsql 容器创建 n8n 数据库和用户：
+1、在 mysql 容器创建 n8n 数据库和用户：
 
 ```bash
-docker exec -it pgsql psql -U postgres -c "CREATE USER n8n WITH PASSWORD 'n8n@pg';"
+docker exec -it mysql bash
+mysql -uroot -p 
 
-docker exec -it pgsql psql -U postgres -c "CREATE DATABASE n8n owner=n8n;"
-
-docker exec -it pgsql psql -U postgres -c "GRANT ALL privileges ON DATABASE n8n TO n8n;" ;
+CREATE USER 'n8n'@'%' IDENTIFIED BY 'n8n@mysql!';
+CREATE DATABASE n8n;
+GRANT ALL ON n8n.* TO 'n8n'@'%';
 ```
 
 2、通过 docker 安装：
@@ -549,12 +549,12 @@ docker run -d  \
  --name n8n \
  --network=custom \
  -p 5678:5678 \
- -e DB_TYPE=postgresdb \
+ -e DB_TYPE=mysqldb \
  -e DB_POSTGRESDB_DATABASE=n8n \
- -e DB_POSTGRESDB_HOST=pgsql \
- -e DB_POSTGRESDB_PORT=5432 \
+ -e DB_POSTGRESDB_HOST=mysql \
+ -e DB_POSTGRESDB_PORT=3306 \
  -e DB_POSTGRESDB_USER=n8n \
- -e DB_POSTGRESDB_PASSWORD=n8n@pg \
+ -e DB_POSTGRESDB_PASSWORD=n8n@mysql! \
  -e GENERIC_TIMEZONE="Asia/Shanghai" \
  -e WEBHOOK_URL=https://n8n.chensoul.com/ \
  -v ~/.n8n:/home/node/.n8n \
@@ -573,12 +573,12 @@ services:
     container_name: n8n
     restart: always
     environment:
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=pgsql
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=n8n
-      - DB_POSTGRESDB_USER=n8n
-      - DB_POSTGRESDB_PASSWORD=n8n@pg
+      - DB_TYPE=mysqldb
+      - DB_MYSQLDB_HOST=mysql
+      - DB_MYSQLDB_PORT=3306
+      - DB_MYSQLDB_DATABASE=n8n
+      - DB_MYSQLDB_USER=n8n
+      - DB_MYSQLDB_PASSWORD=n8n@mysql!
       - TZ="Asia/Shanghai"
       - GENERIC_TIMEZONE="Asia/Shanghai"
       - WEBHOOK_URL=https://n8n.chensoul.com/
@@ -664,19 +664,70 @@ docker-compose -f n8n.yaml up -d
 7、备份
 
 ```bash
-: ${EXPORT_DIR="workflow-$(date +%Y%m%d)"}
-rm -rf $EXPORT_DIR/*
+#!/bin/bash
+
+DATE=$(date +%Y%m%d_%H%M%S)
+
+BACKUP_DIR="/opt/backup/n8n"
+
+EXPORT_DIR="workflow-${DATE}"
 
 docker exec -u node -it n8n n8n export:workflow --backup --output=./$EXPORT_DIR/
-docker cp n8n:/home/node/$EXPORT_DIR .
+docker cp n8n:/home/node/$EXPORT_DIR ${BACKUP_DIR}/$EXPORT_DIR
 
 #docker exec -u node -it n8n n8n export:credentials --all --output=./credentials.json
 #docker cp n8n:/home/node/credentials.json .
 
-cd $EXPORT_DIR
+cd $BACKUP_DIR/$EXPORT_DIR
 for file in *; do
     filename=$(cat "$file" | jq -r '.name')  # 使用-r选项以纯文本形式输出字段值
     echo "$filename"
     mv "$file" "$filename".json
 done
 ```
+
+## 数据库备份
+
+```bash
+#!/bin/bash
+
+# 容器名称
+CONTAINER_NAME="mysql"
+
+# 备份目录
+BACKUP_DIR="/opt/backup/mysql"
+
+# 日期时间
+DATE=$(date +%Y%m%d_%H%M%S)
+
+# 备份文件名后缀
+BACKUP_POSTFIX="backup_${DATE}"
+
+# MySQL连接参数
+DB_USER="root"
+DB_PASSWORD="admin@mysql!"
+
+# 要备份的数据库列表
+DATABASES=("memos" "n8n" "umami")
+
+# 创建备份目录
+mkdir -p $BACKUP_DIR
+
+# 遍历数据库列表进行备份
+for DB_NAME in "${DATABASES[@]}"
+do
+  # 备份文件名
+  BACKUP_FILE="${DB_NAME}_${BACKUP_POSTFIX}.sql"
+
+  # 执行备份
+  docker exec $CONTAINER_NAME mysqldump -u $DB_USER --password=$DB_PASSWORD $DB_NAME > $BACKUP_DIR/$BACKUP_FILE
+
+  # 检查备份是否成功
+  if [ $? -eq 0 ]; then
+    echo "数据库 $DB_NAME 备份成功: $BACKUP_FILE"
+  else
+    echo "数据库 $DB_NAME 备份失败"
+  fi
+done
+```
+
