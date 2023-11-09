@@ -115,7 +115,7 @@ networks:
 2、启动
 
 ```bash
-docker-compose -f postgresql.yaml up -d
+docker-compose -f mysql.yaml up -d
 ```
 
 ### Rsshub
@@ -336,7 +336,7 @@ server {
 
 ```bash
 docker compose -f umami.yaml down
-docker pull ghcr.io/umami-software/umami:postgresql-latest
+docker pull ghcr.io/umami-software/umami:mysql-latest
 docker-compose -f umami.yaml up -d
 ```
 
@@ -550,11 +550,11 @@ docker run -d  \
  --network=custom \
  -p 5678:5678 \
  -e DB_TYPE=mysqldb \
- -e DB_POSTGRESDB_DATABASE=n8n \
- -e DB_POSTGRESDB_HOST=mysql \
- -e DB_POSTGRESDB_PORT=3306 \
- -e DB_POSTGRESDB_USER=n8n \
- -e DB_POSTGRESDB_PASSWORD=n8n@mysql! \
+ -e DB_MYSQLDB_DATABASE=n8n \
+ -e DB_MYSQLDB_HOST=mysql \
+ -e DB_MYSQLDB_PORT=3306 \
+ -e DB_MYSQLDB_USER=n8n \
+ -e DB_MYSQLDB_PASSWORD=n8n@mysql! \
  -e GENERIC_TIMEZONE="Asia/Shanghai" \
  -e WEBHOOK_URL=https://n8n.chensoul.com/ \
  -v ~/.n8n:/home/node/.n8n \

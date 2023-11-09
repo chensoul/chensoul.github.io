@@ -11,6 +11,7 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 enableEmoji: true
+summaryLength: 100
 
 permalinks:
   posts: "/posts/:year/:month/:day/:slug/"
@@ -46,6 +47,7 @@ params:
   TocSide: "right"
   EnableInstantClick: true
   EnableImageZoom: true
+  RSSNoContent: true
 
   commentSystems:
     disqus:
