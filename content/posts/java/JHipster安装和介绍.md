@@ -3,44 +3,34 @@ title: "JHipster安装和介绍"
 date: 2023-11-02T14:00:00+08:00
 slug: jhipster-intro
 categories: ["Java"]
-tags: [java,jhipster]
+tags: [java, jhipster]
 ---
 
-JHipster 是一个开发平台，可以快速生成，开发和部署现代Web应用程序+微服务架构。
+JHipster 是一个开发平台，可以快速生成，开发和部署现代 Web 应用程序+微服务架构。
 
 JHipster 或者称 Java Hipster，是一个应用代码产生器，能够创建 Spring Boot/Spring Cloud + React/VueJs/AngularJS 的应用。使用 JHipster，首先你要配置好 Java 、Git 以及 Maven 或者 Gradle 的环境，然后通过 NodeJs 管理工具安装 JHipster 。
 
-
-
 ## 介绍
 
-JHipster 官网： [https://www.jhipster.tech/]( https://www.jhipster.tech/) ，截止本文发布时，最新版本为 8.0.0 。
-
-
+JHipster 官网： [https://www.jhipster.tech/](https://www.jhipster.tech/) ，截止本文发布时，最新版本为 8.0.0 。
 
 JHipster 客户端使用到的技术栈有：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/jhipster-client-side-options.png" alt="jhipster-client-side-options" style="width:80%;" />
+<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-client-side-options.png" alt="jhipster-client-side-options" style="width:80%;" />
 
 服务端使用的技术栈有：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/jhipster-server-side-options.png" alt="jhipster-server-side-options" style="width:80%;" />
+<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-server-side-options.png" alt="jhipster-server-side-options" style="width:80%;" />
 
 支持以下部署方式：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/jhipster-deploy-options.png" alt="jhipster-deploy-options" style="width:80%;" />
-
-
+<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-deploy-options.png" alt="jhipster-deploy-options" style="width:80%;" />
 
 JHipster 提供了一个 CLI 工具 [generator-jhipster](https://www.jhipster.tech/installation/) 和在线网站 [https://start.jhipster.tech/](https://start.jhipster.tech/) ，来创建应用。generator-jhipster 支持本地安装和 docker 安装两种方式。另外，还有一个轻量级的定制工具 [jhipseter-lite](https://www.jhipster.tech/jhipster-lite/) 可以更细力度的定制。
 
-
-
 [JHipster Pro](http://www.jhipster.pro/index-cn) 是一个 JHipster 国内落地方案，符合国情的代码生成器解决方案，支持 MyBatis、SMS、OSS。当前最新版本对应 JHipster 官方版本：v7.1.0，网站最近一次跟新是在 2021 年 8 月份。
 
-
-
-## 安装 generator-jhipster 
+## 安装 generator-jhipster
 
 前提条件安装 Java 和 NodeJs，然后通过 npm 或者 yarn 安装 generator-jhipster。以下是通过 npm 安装：
 
@@ -125,13 +115,9 @@ docker compose -f src/main/docker/mysql.yml up -d
 docker compose -f src/main/docker/redis.yml up -d
 ```
 
+## Maven 插件
 
-
-
-
-## Maven插件
-
-### 1、Maven离线编译方法
+### 1、Maven 离线编译方法
 
 参考文章 [ https://xdcsy.github.io/Text/Section0038.xhtml](https://xdcsy.github.io/Text/Section0038.xhtml) 。
 
@@ -139,15 +125,11 @@ docker compose -f src/main/docker/redis.yml up -d
 ./mvnw dependency:go-offline
 ```
 
-
-
 ### 2、jib-maven-plugin
 
-[jib-maven-plugin](https://github.com/GoogleContainerTools/jib)  是一个用于构建和推送 Docker 镜像的 Maven 插件。它可以简化将应用程序打包为 Docker 镜像并将其推送到容器注册表的过程。
+[jib-maven-plugin](https://github.com/GoogleContainerTools/jib) 是一个用于构建和推送 Docker 镜像的 Maven 插件。它可以简化将应用程序打包为 Docker 镜像并将其推送到容器注册表的过程。
 
 相关示例，可以参考 [https://github.com/GoogleContainerTools/jib/tree/master/examples](https://github.com/GoogleContainerTools/jib/tree/master/examples) 。
-
-
 
 ### 3、spring-boot-maven-plugin
 
@@ -179,13 +161,11 @@ docker compose -f src/main/docker/redis.yml up -d
 ./mvnw -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
 ```
 
-
-
-### 4、maven-javadoc-plugin 
+### 4、maven-javadoc-plugin
 
 `maven-javadoc-plugin` 是一个用于生成 Java 代码的 Javadoc 文档的 Maven 插件。它可以根据代码中的注释自动生成详细的 API 文档，并支持定制化配置。
 
-批处理模式下生成Java文档：
+批处理模式下生成 Java 文档：
 
 ```bash
 ./mvnw  javadoc:javadoc -B
@@ -193,14 +173,12 @@ docker compose -f src/main/docker/redis.yml up -d
 
 解释一下每个部分的含义：
 
-- `./mvnw`：这是Maven Wrapper的脚本，它允许你在没有全局Maven安装的情况下运行Maven命令。`./mvnw`是用于Unix/Linux系统的脚本，如果你在Windows系统上运行，请使用`mvnw`（无前缀的点和斜杠）。
+- `./mvnw`：这是 Maven Wrapper 的脚本，它允许你在没有全局 Maven 安装的情况下运行 Maven 命令。`./mvnw`是用于 Unix/Linux 系统的脚本，如果你在 Windows 系统上运行，请使用`mvnw`（无前缀的点和斜杠）。
 - `-ntp`：这是`--no-transfer-progress`的缩写，它禁用传输进度的显示。这样做可以减少输出，使命令执行过程更加简洁。
-- `javadoc:javadoc`：这是Maven插件的目标，用于生成Javadoc文档。通过执行此目标，Maven将处理项目源代码并生成相应的Javadoc文档。
-- `--batch-mode`：这是指定Maven在批处理模式下运行的选项。批处理模式禁用交互式模式，使得Maven命令不会要求用户输入。
+- `javadoc:javadoc`：这是 Maven 插件的目标，用于生成 Javadoc 文档。通过执行此目标，Maven 将处理项目源代码并生成相应的 Javadoc 文档。
+- `--batch-mode`：这是指定 Maven 在批处理模式下运行的选项。批处理模式禁用交互式模式，使得 Maven 命令不会要求用户输入。
 
-
-
-### 5、maven-enforcer-plugin 
+### 5、maven-enforcer-plugin
 
 `maven-enforcer-plugin` 是一个用于强制执行 Maven 构建规则的插件。它可以帮助团队确保项目的构建符合特定的要求和规范。
 
@@ -244,8 +222,6 @@ docker compose -f src/main/docker/redis.yml up -d
 </plugin>
 ```
 
-
-
 ### 6、spotless-maven-plugin
 
 `spotless-maven-plugin` 是一个用于在 Maven 构建过程中执行代码格式化的插件。它可以帮助团队保持一致的代码风格，并自动修复格式错误。
@@ -272,8 +248,6 @@ docker compose -f src/main/docker/redis.yml up -d
 </plugin>
 ```
 
-
-
 ### 7、modernizer-maven-plugin
 
 `modernizer-maven-plugin` 是一个用于在 Maven 构建过程中执行代码现代化分析的插件。它可以帮助团队识别过时的代码和使用不推荐的 API，以便进行更新和修复。
@@ -298,9 +272,7 @@ docker compose -f src/main/docker/redis.yml up -d
 </plugin>
 ```
 
-
-
-### 8、sonar-maven-plugin 
+### 8、sonar-maven-plugin
 
 `sonar-maven-plugin` 是一个用于与 SonarQube 集成的 Maven 插件。SonarQube 是一个用于静态代码分析、代码质量管理和持续集成的开源平台。`sonar-maven-plugin` 可以将 Maven 项目的代码和分析结果上传到 SonarQube 服务器，并生成详细的代码质量报告。
 
@@ -353,9 +325,7 @@ Sonar 的配置文件 sonar-project.properties 是通过 maven 插件加载的�
 </plugin>
 ```
 
-
-
-### 9、jacoco-maven-plugin 
+### 9、jacoco-maven-plugin
 
 `jacoco-maven-plugin` 是一个用于在 Maven 项目中生成代码覆盖率报告的插件。它使用 JaCoCo（Java Code Coverage）工具来分析项目的测试覆盖率，并生成详细的报告，帮助开发团队评估测试的有效性和代码质量。
 
@@ -397,9 +367,7 @@ Sonar 的配置文件 sonar-project.properties 是通过 maven 插件加载的�
   </plugin>
 ```
 
-
-
-### 10、openapi-generator-maven-plugin  
+### 10、openapi-generator-maven-plugin
 
 用于根据 OpenAPI 规范（以前称为 Swagger 规范）生成客户端代码或服务器端框架。
 
@@ -451,8 +419,6 @@ Sonar 的配置文件 sonar-project.properties 是通过 maven 插件加载的�
     </configuration>
 </plugin>
 ```
-
-
 
 ### 12、git-commit-id-maven-plugin
 
@@ -577,8 +543,6 @@ class GitInfoConfiguration {
 </plugin>
 ```
 
-
-
 ### 14、maven-surefire-plugin
 
 `maven-surefire-plugin` 是一个用于在 Maven 项目中运行单元测试的插件。它提供了执行和管理单元测试的功能，并生成测试报告。
@@ -599,14 +563,12 @@ class GitInfoConfiguration {
 </plugin>
 ```
 
-
-
 ## Docker
 
 src/main/docker 中有一些常见应用的 docker-compoe 编排文件。这些文件有以下特点：
 
 - 有的提供了健康检查
-- 容器端口只映射到 127.0.0.1 
+- 容器端口只映射到 127.0.0.1
 
 ### mysql
 
@@ -630,7 +592,7 @@ services:
       - 127.0.0.1:3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     healthcheck:
-      test: ['CMD', 'mysql', '-e', 'SHOW DATABASES;']
+      test: ["CMD", "mysql", "-e", "SHOW DATABASES;"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -651,7 +613,7 @@ services:
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST_AUTH_METHOD=trust
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}']
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -698,7 +660,6 @@ services:
     ports:
       - 127.0.0.1:9001:9000
       - 127.0.0.1:9000:9000
-
 ```
 
 ### swagger-editor
@@ -712,4 +673,3 @@ services:
     ports:
       - 127.0.0.1:7742:8080
 ```
-
