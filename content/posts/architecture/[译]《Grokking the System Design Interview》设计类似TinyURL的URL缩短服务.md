@@ -470,9 +470,13 @@ We can add a Load balancing layer at three places in our system:
 
    > 客户端和应用服务器之间
 
-2. Between Application Servers and database servers 3. Between Application Servers and Cache servers
+2. Between Application Servers and database servers 
 
-   > 应用服务器和数据库服务器之间 3. 应用服务器和缓存服务器之间
+   > 应用服务器和数据库服务器之间 
+
+3. Between Application Servers and Cache servers
+
+   > 应用服务器和缓存服务器之间
 
 Initially, we could use a simple Round Robin approach that distributes incoming requests equally among backend servers. This LB is simple to implement and does not introduce any overhead. Another benefit of this approach is that if a server is dead, LB will take it out of the rotation and will stop sending any traffic to it.
 
@@ -510,13 +514,10 @@ If we chose to actively search for expired links to remove them, it would put a 
 
   > 删除过期链接后，我们可以将密钥放回到密钥数据库中以供重复使用。
 
-- Should we remove links that haven’t been visited in some length of time, say six months? This
+- Should we remove links that haven’t been visited in some length of time, say six months? This could be tricky. Since storage is getting cheap, we can decide to keep links forever.
 
-  > 我们是否应该删除一段时间内（例如六个月）未访问过的链接？这
+  > 我们是否应该删除一段时间内（例如六个月）未访问过的链接？这可能会很棘手。由于存储变得越来越便宜，我们可以决定永远保留链接。
 
-  could be tricky. Since storage is getting cheap, we can decide to keep links forever.
-
-  > 可能会很棘手。由于存储变得越来越便宜，我们可以决定永远保留链接。
 
 ![tinyurl-5](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/tinyurl-5.webp)
 
@@ -555,3 +556,4 @@ We can store permission level (public/private) with each URL in the database. We
 参考文章
 
 - [Designing a URL Shortening service like TinyURL](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b)
+- [Design a URL Shortening Service / TinyURL](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl)
