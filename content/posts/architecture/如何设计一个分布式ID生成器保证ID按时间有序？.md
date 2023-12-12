@@ -252,3 +252,4 @@ public class DistributedIdGenerator {
 - [细聊分布式ID生成方法 - 沈剑](http://chuansong.me/n/2459549)
 - [服务化框架－分布式Unique ID的生成方法一览 - 江南白衣](http://calvin1978.blogcn.com/articles/uuid.html)
 - [生成全局唯一ID的3个思路，来自一个资深架构师的总结](http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&mid=2659598286&idx=1&sn=3172172ccea316b0ed83429ae718b54d&chksm=8be9eadcbc9e63caa10d708274b4fa34ceffa416ef4527e10e6b7a1a2d2f32cf8592d65bf728)
+- [分布式ID中的SnowFlake](https://huanxin-chen.github.io/en/page-4/)
