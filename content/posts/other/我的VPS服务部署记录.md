@@ -7,7 +7,23 @@ categories: ["Other"]
 tags: [hugo, docker, rsshub, kuma, umami, cusdis, memos, n8n, vps, plausible]
 ---
 
+我的VPS使用的是 centos 服务器，所以以下操作都是基于 centos 系统。
+
+
+
 ## 服务器设置
+
+更新 yum 源：
+
+```bash
+yum update
+```
+
+安装常用软件：
+
+```bash
+yum install wget curl git vim -y
+```
 
 **[可选] 设置系统 Swap 交换分区**
 
@@ -25,14 +41,48 @@ sudo swapon --show && \
 sudo free -h
 ```
 
-## 安装并生成证书
+## 安装 Nginx
+
+参考 [CentOS 7 下 yum 安装和配置 Nginx](https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7) ，使用 yum 安装：
 
 ```bash
-curl https://get.acme.sh | sh -s email=czj.june@gmail.com
+rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 
-.acme.sh/acme.sh --issue --server letsencrypt --dns dns_aws -d chensoul.com -d '*.chensoul.com'
+yum install nginx -y
 
-.acme.sh/acme.sh --installcert -d chensoul.com -d *.chensoul.com  --cert-file /usr/local/nginx/ssl/chensoul.com.cer --key-file /usr/local/nginx/ssl/chensoul.com.key --fullchain-file /usr/local/nginx/ssl/fullchain.cer --ca-file /usr/local/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
+systemctl enable nginx
+```
+
+打开防火墙端口
+
+```bash
+yum install firewalld -y
+
+firewall-cmd --zone=public --permanent --add-service=http
+firewall-cmd --reload
+```
+
+使用反向代理需要打开网络访问权限
+
+```bash
+setsebool -P httpd_can_network_connect on 
+```
+
+
+
+## 安装并生成证书
+
+玉米托管在 cf，参考 [文章](https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf)
+
+```bash
+curl https://get.acme.sh | sh -s email=chensoul.eth@gmail.com
+
+export CF_Key="XXXXXXXXXXXXXXXXXX"
+export CF_Email="xxxxxx@xxx.com"
+
+.acme.sh/acme.sh --issue --server letsencrypt --dns dns_cf -d chensoul.com -d '*.chensoul.com'
+
+.acme.sh/acme.sh --installcert -d chensoul.com -d *.chensoul.com  --cert-file /etc/nginx/ssl/chensoul.com.cer --key-file /etc/nginx/ssl/chensoul.com.key --fullchain-file /etc/nginx/ssl/fullchain.cer --ca-file /etc/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
 ```
 
 ## Docker 安装和配置
@@ -43,8 +93,7 @@ curl https://get.acme.sh | sh -s email=czj.june@gmail.com
 
 ### 自定义网络
 
-参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network)
-，创建一个自定义的网络：
+参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network) ，创建一个自定义的网络：
 
 ```bash
 docker network create custom
@@ -141,8 +190,8 @@ server {
     listen          443 ssl;
     server_name     rsshub.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -195,8 +244,8 @@ server {
     listen          443 ssl;
     server_name     uptime.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -304,8 +353,8 @@ server {
     listen          443 ssl;
     server_name     umami.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -415,8 +464,8 @@ server {
     listen          443 ssl;
     server_name     cusdis.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -506,8 +555,8 @@ server {
     listen          443 ssl;
     server_name     memos.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -615,8 +664,8 @@ server {
     listen          443 ssl;
     server_name     n8n.chensoul.com;
 
-    ssl_certificate      /usr/local/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /usr/local/nginx/ssl/chensoul.com.key;
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
