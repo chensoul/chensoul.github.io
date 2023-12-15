@@ -74,6 +74,24 @@ MicroProfile的发展历史可以追溯到2016年。以下是MicroProfile的关�
 10. 2020年2月 - MicroProfile 3.1发布，升级了基础规范版本，并增加了其他改进和修复。
 11. 2021年5月 - MicroProfile 4.0发布，升级了基础规范版本，并引入了重大改进和新功能，如Context Propagation、Reactive Messaging等。
 
+
+
+## MicroProfile Config
+
+MicroProfile Config是MicroProfile的一个重要特性，它提供了一种解决方案，可以将配置从微服务中外部化。这使得应用和微服务可以在多个环境中运行，无需修改或重新打包。配置数据可以动态变化，应用需要能够在不重新启动服务器的情况下访问最新的配置信息。
+
+MicroProfile Config允许从不同的位置和不同的格式获取配置数据，如系统属性、系统环境变量、.properties、.xml和数据源等，这些配置位置被称为ConfigSources。
+
+![Separating configuration from code in microservices](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/ordinalPriorities.svg)
+
+它提供了一种方式，可以从许多不同的ConfigSources聚合配置，并呈现这些配置的单一、统一的视图。MicroProfile Config提供了两种获取配置属性的方式：编程方式和通过上下文和依赖注入（CDI）。
+
+在编程方式中，你首先获取包含所有可以访问的属性的Config对象，然后通过`getValue(String propertyName, Class<?> propertyValueType)`查找单个属性。使用CDI，可以直接将配置属性值注入到应用中，无需应用代码来检索它们。
+
+此外，还可以根据MicroProfile Config的规定创建自定义的ConfigSource。通过自定义ConfigSource，可以读取额外的配置值，并将它们以定义的顺序添加到Config实例中。这允许覆盖来自其他源的值或回退到其他值。
+
+
+
 ## 参考文章
 
 - [https://microprofile.io/](https://microprofile.io/)
@@ -101,3 +119,7 @@ MicroProfile的发展历史可以追溯到2016年。以下是MicroProfile的关�
 
 - [亚信Web应用中间件（FlyingServer）通过Eclipse MicroProfile功能测评](https://www.modb.pro/db/1691325241423384576)
 - [微服务框架：如果不用 Spring Boot，还可以选择谁？](https://www.cnblogs.com/javastack/p/16851078.html)
+- [“Azure 上的 Eclipse MicroProfile”文档](https://learn.microsoft.com/zh-cn/azure/developer/java/eclipse-microprofile/)
+- [JBoss 4.2. MicroProfile 配置开发](https://access.redhat.com/documentation/zh-cn/red_hat_jboss_enterprise_application_platform/7.4/html/using_jboss_eap_xp_3.0.0/_microprofile_config_development)
+
+- [QUARKUS - MICROPROFILE 健康检查](https://quarkus.pro/guides/microprofile-health.html)
