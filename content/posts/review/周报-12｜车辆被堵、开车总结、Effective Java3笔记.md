@@ -3,7 +3,7 @@ title: "周报-12｜车辆被堵、开车总结、Effective Java3笔记"
 date: 2023-03-28 09:00:00+08:00
 draft: false
 slug: weekly_review_12
-categories: [Weekly]
+categories: [Review]
 tags: [review, java, go]
 ---
 

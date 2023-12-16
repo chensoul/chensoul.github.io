@@ -3,7 +3,7 @@ title: "周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步"
 date: 2023-04-18 17:00:00+08:00
 draft: false
 slug: weekly_review_15
-categories: [Weekly]
+categories: [Review]
 tags: [review, java, rust, python]
 ---
 
@@ -11,7 +11,7 @@ tags: [review, java, rust, python]
 
 ![weekly-review-15-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-01.png)
 
-​ _题图：楚河汉街蜡像馆_
+ _题图：楚河汉街蜡像馆_
 
 本篇是对 `2023-04-10` 到 `2023-04-16` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
 

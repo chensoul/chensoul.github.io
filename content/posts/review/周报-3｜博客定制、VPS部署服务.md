@@ -3,7 +3,7 @@ title: "周报-3｜博客定制、VPS部署服务"
 date: 2023-01-25 09:47:03+08:00
 draft: false
 slug: weekly_review_3
-categories: [Weekly]
+categories: [Review]
 tags: [review, hugo, github, cusdis, umami, kuma, cloudflare]
 ---
 

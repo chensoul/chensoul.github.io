@@ -3,7 +3,7 @@ title: "周报-29｜"
 date: 2023-07-29 09:00:00+08:00
 draft: true
 slug: weekly_review_29
-categories: [Weekly]
+categories: [Review]
 tags: [review]
 ---
 

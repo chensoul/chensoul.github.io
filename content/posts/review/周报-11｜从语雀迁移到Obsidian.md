@@ -3,7 +3,7 @@ title: "周报-11｜从语雀迁移到Obsidian"
 date: 2023-03-20 11:00:00+08:00
 draft: false
 slug: weekly_review_11
-categories: [Weekly]
+categories: [Review]
 tags: [review, yuque, obsidian, nodejs]
 ---
 
@@ -11,7 +11,7 @@ tags: [review, yuque, obsidian, nodejs]
 
 ![weekly-review-11-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-11-04.jpeg)
 
-​ 图片：_涨渡湖湿地水上森林公园_
+ 图片：_涨渡湖湿地水上森林公园_
 
 本篇是对 `2023-03-13` 到 `2023-03-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
 
