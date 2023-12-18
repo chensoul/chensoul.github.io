@@ -96,8 +96,8 @@ Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和
 
 | 授权模式                         | 请求路径         | 请求方法 | 请求头                                         | 请求参数                                                     |
 | -------------------------------- | ---------------- | -------- | ---------------------------------------------- | ------------------------------------------------------------ |
-| 用户名密码(password)             | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:password<br/>username:user<br/>password:123456<br/>scope:userinfo resource<br/>client_id:client<br/>client_secret:secret |
-| 客户端凭证(client_credentials)   | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:client_credentials<br/>scope:userinfo resource<br/>client_id:client<br/>client_secret:secret |
+| 用户名密码(password)             | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:password<br/>username:user<br/>password:123456<br/>scope:server<br/>client_id:client<br/>client_secret:secret |
+| 客户端凭证(client_credentials)   | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:client_credentials<br/>scope:server<br/>client_id:client<br/>client_secret:secret |
 | 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type=code&scope=userinfo&client_id=client&redirect_uri=https://www.taobao.com |
 | 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:authorization_code<br/>code:gE3Eka<br/>redirect_uri:https://www.jd.com<br/>scope:server |
 | 简化模式(implicit)               | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:token<br/>client_id:client<br/>redirect_uri:https://www.jd.com<br/>scope:server <br/>state:123456 |
