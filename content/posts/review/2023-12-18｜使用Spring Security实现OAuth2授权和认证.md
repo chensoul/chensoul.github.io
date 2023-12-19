@@ -38,14 +38,23 @@ Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和
 
 ## jwt key生成
 
-- 生成JKS文件
-  ``
-  keytool -genkeypair -alias mytest -keyalg RSA -keypass mypass -keystore mytest.jks -storepass mypass
-  ``
+- 生成 JKS 文件
+```bash
+keytool -genkeypair -alias myalias -storetype PKCS12 -keyalg RSA -keypass mypass -keystore mykeystore.jks -storepass mypass -validity 3650
+```
 - 导出公钥
-  ``
-  keytool -list -rfc --keystore mytest.jks | openssl x509 -inform pem -pubkey
-  ``
+```bash
+# 保存为 public.cer 文件：
+keytool -exportcert -alias myalias -storepass mypass -keystore mykeystore.jks -file public.cer
+
+# 保存为 public.key 文件
+keytool -list -rfc --keystore mykeystore.jks -storepass mypass | openssl x509 -inform pem -pubkey > public.key
+```
+- 导出私钥，将其保存为 private.key 文件：
+```bash
+keytool -importkeystore -srckeystore mykeystore.jks -srcstorepass mypass -destkeystore private.p12 -deststoretype PKCS12 -deststorepass mypass -destkeypass mypass
+openssl pkcs12 -in private.p12 -nodes -nocerts -out private.key
+```
 
 ## I18N国际化
 - 参考 **LocaleConfiguration** 类
@@ -97,8 +106,8 @@ Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和
 | 授权模式                         | 请求路径         | 请求方法 | 请求头                                         | 请求参数                                                     |
 | -------------------------------- | ---------------- | -------- | ---------------------------------------------- | ------------------------------------------------------------ |
 | 用户名密码(password)             | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:password<br/>username:user<br/>password:123456<br/>scope:server<br/>client_id:client<br/>client_secret:secret |
-| 客户端凭证(client_credentials)   | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:client_credentials<br/>scope:server<br/>client_id:client<br/>client_secret:secret |
-| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type=code&scope=userinfo&client_id=client&redirect_uri=https://www.taobao.com |
+| 客户端凭证(client_credentials)   | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:client_credentials<br/>scope:userinfo resource<br/>client_id:client<br/>client_secret:secret |
+| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type=code&scope=server&client_id=client&redirect_uri=https://www.taobao.com |
 | 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:authorization_code<br/>code:gE3Eka<br/>redirect_uri:https://www.jd.com<br/>scope:server |
 | 简化模式(implicit)               | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:token<br/>client_id:client<br/>redirect_uri:https://www.jd.com<br/>scope:server <br/>state:123456 |
 
