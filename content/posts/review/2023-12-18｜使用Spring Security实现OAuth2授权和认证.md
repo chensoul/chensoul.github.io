@@ -14,16 +14,12 @@ Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和
 
 
 
-代码仓库地址：https://github.com/chensoul/spring-oauth2-tutorial/tree/main/legacy，说明如下。
+代码仓库地址：https://github.com/chensoul/spring-security-oauth2-legacy，相关依赖的版本：
 
-
-
-
-使用的是旧的 Spring Security OAuth2 版本的 API：
-
-- org.springframework.security.oauth:spring-security-oauth2 2.5.2.RELEASE
-- org.springframework.security:spring-security-oauth2-jose 5.7.11
-- org.springframework.security:spring-security-jwt 1.0.10.RELEASE
+- spring-boot: 2.7.18
+- org.springframework.security.oauth:spring-security-oauth2-autoconfigure: 2.6.8
+- org.springframework.security.oauth:spring-security-oauth2: 2.5.2.RELEASE
+- org.springframework.security:spring-security-jwt 1.1.1.RELEASE
 
 ## 特性
 
