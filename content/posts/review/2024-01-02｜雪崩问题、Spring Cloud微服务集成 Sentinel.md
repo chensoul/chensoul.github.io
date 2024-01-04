@@ -101,16 +101,17 @@ public class SentinelFallbackBlockHandler {
 ```java
 @Slf4j
 @RequiredArgsConstructor
-public class CustomBlockExceptionHandler implements BlockExceptionHandler {
+public class JsonBlockExceptionHandler implements BlockExceptionHandler {
+
     private final ObjectMapper objectMapper;
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
         log.error("Sentinel fallback , resource is {}", e.getRule().getResource(), e);
 
-        response.setContentType(MediaType.APPLICATION_JSON.getType());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-        response.getWriter().print(objectMapper.writeValueAsString(Result.error(e.getMessage())));
+        response.getWriter().print(objectMapper.writeValueAsString(Result.error(ResultCode.TOO_MANY_REQUESTS)));
     }
 }
 ```
@@ -366,7 +367,7 @@ public class SentinelFeignConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
-        return new CustomBlockExceptionHandler(objectMapper);
+        return new JsonBlockExceptionHandler(objectMapper);
     }
 
     @Bean
