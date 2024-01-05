@@ -117,7 +117,7 @@ setup(
     name='chensoul_hello',
     version='1.0.0',
     author='chensoul',
-    author_email='chensoul@chensoul.com',
+    author_email='chensoul@chensoul.cc',
     description='A simple Python package',
     packages=find_packages(),
     install_requires=[

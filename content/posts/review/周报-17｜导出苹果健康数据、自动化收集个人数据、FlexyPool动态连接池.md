@@ -9,7 +9,7 @@ tags: [review, strava, java, memos]
 
 ## 前言
 
-本篇是对 `2023-04-24` 到 `2023-04-30` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-04-24` 到 `2023-04-30` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 本周二早上跑步右小腿抽筋，跑步暂停了两天，所以有两天走路没有到一万步。在小腿恢复之后，继续跑步，查看 strava 上的统计，这周总共跑了 27 公里，比上周 41 公里少了 14 公里。
 
@@ -253,7 +253,7 @@ order by f.day asc
 
 ## 健身
 
-四月跑步记录如下，总计跑了 16 小时、125 公里。更详细数据，可以参考我的 [跑步主页](https://run.chensoul.com/)。
+四月跑步记录如下，总计跑了 16 小时、125 公里。更详细数据，可以参考我的 [跑步主页](https://run.chensoul.cc/)。
 
 ![weekly-review-17-09](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-09.png)
 
@@ -340,7 +340,7 @@ Baeldung 网站上有一篇介绍 Spring Boot 中如何使用 FlexyPool 连接�
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.com/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
 - **2023-04-28 09:01:43** 4 个文生图 AI 工具 [查看链接](https://xugaoxiang.com/2023/04/27/4-text-to-image-ai-tools/) `#memos`
 - **2023-04-27 13:29:50** 这是 Jony Ive 的 LoveFrom 团队出品的一本关于乔布斯的书，书中几乎全部引用乔布斯自己的话，没有解读，更加「原汁原味」，同时也收录了一些珍贵的照片。 [查看链接](https://stevejobsarchive.com/book) [查看链接](https://limboy.me/books/make-something-wonderful/) `#memos`
@@ -354,7 +354,7 @@ Baeldung 网站上有一篇介绍 Spring Boot 中如何使用 FlexyPool 连接�
 - **2023-04-24 14:07:04** 使用一行代码为网站的输入框增加上 AI 能力。 [查看链接](https://www.enhanceai.dev/) `#skill`
 - **2023-04-24 14:04:23** 平常是糊里糊涂的，现在变得出人意外的小心谨慎，这正是由于报复的欲望，而这种欲望多么能够锻炼人！ —— 大仲马 `#摘录`
 - **2023-04-24 14:03:59** 使人疲乏的不是远方的深谷，而是鞋子里的一粒沙子。 —— 伏尔泰 `#摘录`
-- **2023-04-24 11:00:30** 📝 《Effective Java 3》笔记：避免创建不必要的对象 `#blog` [查看链接](https://blog.chensoul.com/posts/2023/04/24/avoid-creating-unnecessary-objects/)
+- **2023-04-24 11:00:30** 📝 《Effective Java 3》笔记：避免创建不必要的对象 `#blog` [查看链接](https://blog.chensoul.cc/posts/2023/04/24/avoid-creating-unnecessary-objects/)
 - **2023-04-24 08:20:31** 使用 Python 实现 RSS 转 Newsletter. [查看链接](https://www.skyue.com/23042217.html) `#python`
 
 以上。

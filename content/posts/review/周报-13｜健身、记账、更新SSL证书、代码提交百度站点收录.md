@@ -11,7 +11,7 @@ tags: [review, rust, java, cloudflare, go, ssl]
 
 ![weekly-review-13-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-01.jpeg)
 
-本篇是对 `2023-03-27` 到 `2023-04-02` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-27` 到 `2023-04-02` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 本周是三月的最后一周，想到这，就想对随便对三月份做个总结。总结的方面，大概包括工作、生活、学习、健身、财务、娱乐几个方面。万事开头难，不知道能者多少，但是，相信不管写多少，都是有意义的。
 
@@ -71,9 +71,9 @@ export CF_Email="chensoul.eth@gmail.com"
 生成证书，并重启 nginx：
 
 ```bash
-acme.sh --issue -d "chensoul.com" -d "*.chensoul.com" --dns dns_cf \
---cert-file      /usr/local/nginx/ssl/chensoul.com.cer  \
---key-file       /usr/local/nginx/ssl/chensoul.com.key  \
+acme.sh --issue -d "chensoul.cc" -d "*.chensoul.cc" --dns dns_cf \
+--cert-file      /usr/local/nginx/ssl/chensoul.cc.cer  \
+--key-file       /usr/local/nginx/ssl/chensoul.cc.key  \
 --fullchain-file /usr/local/nginx/ssl/fullchain.cer \
 --reloadcmd "nginx -s reload"
 ```
@@ -81,7 +81,7 @@ acme.sh --issue -d "chensoul.com" -d "*.chensoul.com" --dns dns_cf \
 移除域名证书自动更新
 
 ```bash
-acme.sh --remove -d chensoul.com -d "*.chensoul.com"
+acme.sh --remove -d chensoul.cc -d "*.chensoul.cc"
 ```
 
 ## 百度站点收录

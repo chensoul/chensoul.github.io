@@ -9,7 +9,7 @@ tags: [review, java, python]
 
 ## 前言
 
-本篇是对 `2023-05-01` 到 `2023-05-07` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-05-01` 到 `2023-05-07` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 继上周实现导出苹果接口数据之后，这周又实现了自动导出豆瓣数据。此外，还萌生了导出每天阅读的数据的想法。奈何现在阅读 app 都需要收费，只能暂且搁置这个想法。
 
@@ -65,7 +65,7 @@ tags: [review, java, python]
 
 ## 健身
 
-本周 [跑步](https://run.chensoul.com/) 记录如下，总计跑步 34.37 公里，其中周六第一次跑了 12 公里，比之前有所进步。遗憾的是，有两天没有跑步，导致连续跑步天数有中断。
+本周 [跑步](https://run.chensoul.cc/) 记录如下，总计跑步 34.37 公里，其中周六第一次跑了 12 公里，比之前有所进步。遗憾的是，有两天没有跑步，导致连续跑步天数有中断。
 
 ![weekly-review-18-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-04.png)
 
@@ -152,7 +152,7 @@ tags: [review, java, python]
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.com/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
 - **2023-05-06** git flow 模型的提出：[查看链接](https://nvie.com/posts/a-successful-git-branching-model/) gitflow-avh 是一个增强工具：[查看链接](https://github.com/petervanderdoes/gitflow-avh) `#git` `#tool` `#memos`
 - **2023-05-06** 又有哪家阅读管理网站可取代豆瓣读书 [查看链接](https://glennwoo.com/2022/07/29/about-reading-tracker-websites/) `#douban` `#memos`

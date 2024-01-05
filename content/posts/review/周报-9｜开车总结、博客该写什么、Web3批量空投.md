@@ -11,7 +11,7 @@ tags: [review, web3, chatgpt, nodejs]
 
 ![将军山](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-09-07.png)
 
-本篇是对 `2023-02-27` 到 `2023-03-05` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-02-27` 到 `2023-03-05` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这周的主要工作是版本测试和项目上线，在大家的共同努力下，最后是成功上线。
 

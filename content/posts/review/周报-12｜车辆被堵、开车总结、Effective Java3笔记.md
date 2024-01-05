@@ -11,7 +11,7 @@ tags: [review, java, go]
 
 ![weekly-review-12-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-12-01.jpeg)
 
-本篇是对 `2023-03-20` 到 `2023-03-26` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-20` 到 `2023-03-26` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 上周去同济医院检查鼾症，检查结果是轻度症状，医生建议多运动减肥。这周每天走路 1 万步的目标已达成。
 

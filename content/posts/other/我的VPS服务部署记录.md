@@ -7,9 +7,7 @@ categories: ["Other"]
 tags: [hugo, docker, rsshub, kuma, umami, cusdis, memos, n8n, vps, plausible]
 ---
 
-我的VPS使用的是 centos 服务器，所以以下操作都是基于 centos 系统。
-
-
+我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。
 
 ## 服务器设置
 
@@ -65,24 +63,24 @@ firewall-cmd --reload
 使用反向代理需要打开网络访问权限
 
 ```bash
-setsebool -P httpd_can_network_connect on 
+setsebool -P httpd_can_network_connect on
 ```
-
-
 
 ## 安装并生成证书
 
 玉米托管在 cf，参考 [文章](https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf)
 
 ```bash
-curl https://get.acme.sh | sh -s email=chensoul.eth@gmail.com
+curl https://get.acme.sh | sh -s email=ichensoul@gmail.com
 
 export CF_Key="XXXXXXXXXXXXXXXXXX"
-export CF_Email="xxxxxx@xxx.com"
+export CF_Email="ichensoul@gmail.com"
 
-.acme.sh/acme.sh --issue --server letsencrypt --dns dns_cf -d chensoul.com -d '*.chensoul.com'
+.acme.sh/acme.sh --issue --server letsencrypt --dns dns_cf -d chensoul.cc -d '*.chensoul.cc'
 
-.acme.sh/acme.sh --installcert -d chensoul.com -d *.chensoul.com  --cert-file /etc/nginx/ssl/chensoul.com.cer --key-file /etc/nginx/ssl/chensoul.com.key --fullchain-file /etc/nginx/ssl/fullchain.cer --ca-file /etc/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
+cp .acme.sh/chensoul.cc_ecc/{chensoul.cc.cer,chensoul.cc.key,fullchain.cer,ca.cer} /usr/local/nginx/ssl/
+
+.acme.sh/acme.sh --installcert -d chensoul.cc -d *.chensoul.cc  --cert-file /usr/local/nginx/ssl/chensoul.cc.cer --key-file /usr/local/nginx/ssl/chensoul.cc.key --fullchain-file /usr/local/nginx/ssl/fullchain.cer --ca-file /usr/local/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
 ```
 
 ## Docker 安装和配置
@@ -133,7 +131,7 @@ networks:
 mysql.yaml
 
 ```yaml
-version: '3'
+version: "3"
 services:
   mysql:
     image: mysql:8.1.0
@@ -147,7 +145,7 @@ services:
       - "3306:3306"
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp --default-authentication-plugin=mysql_native_password
     healthcheck:
-      test: [ 'CMD', 'mysql', '-e', 'SHOW DATABASES;' ]
+      test: ["CMD", "mysql", "-e", "SHOW DATABASES;"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -159,7 +157,7 @@ networks:
     external: true
 ```
 
->注意：[修改 Docker-MySQL 容器的 默认用户加密规则](https://www.cnblogs.com/atuotuo/p/9402132.html)
+> 注意：[修改 Docker-MySQL 容器的 默认用户加密规则](https://www.cnblogs.com/atuotuo/p/9402132.html)
 
 2、启动
 
@@ -181,17 +179,17 @@ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 server {
     listen 80;
     listen [::]:80;
-    server_name rsshub.chensoul.com;
+    server_name rsshub.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     rsshub.chensoul.com;
+    server_name     rsshub.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -235,17 +233,17 @@ docker-compose -f uptime.yaml up -d
 server {
     listen 80;
     listen [::]:80;
-    server_name uptime.chensoul.com;
+    server_name uptime.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     uptime.chensoul.com;
+    server_name     uptime.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -280,7 +278,7 @@ docker-compose -f uptime.yaml up -d
 
 ```bash
 docker exec -it mysql bash
-mysql -uroot -p 
+mysql -uroot -p
 
 CREATE USER 'umami'@'%' IDENTIFIED BY 'umami@mysql!';
 CREATE DATABASE umami;
@@ -336,7 +334,7 @@ docker-compose -f umami.yaml up -d
 
 3、设置自定义域名
 
-umami.chensoul.com
+umami.chensoul.cc
 
 4、配置 nginx
 
@@ -344,17 +342,17 @@ umami.chensoul.com
 server {
     listen 80;
     listen [::]:80;
-    server_name umami.chensoul.com;
+    server_name umami.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     umami.chensoul.com;
+    server_name     umami.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -379,7 +377,7 @@ server {
 
 5、添加网站
 
-访问 https://umami.chensoul.com/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
+访问 https://umami.chensoul.cc/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
 
 6、升级
 
@@ -397,7 +395,7 @@ docker-compose -f umami.yaml up -d
 
 ```bash
 docker exec -it mysql bash
-mysql -uroot -p 
+mysql -uroot -p
 
 CREATE USER 'cusdis'@'%' IDENTIFIED BY 'cusdis@mysql!';
 CREATE DATABASE cusdis;
@@ -418,8 +416,8 @@ services:
       - USERNAME=admin
       - PASSWORD=cusdis
       - JWT_SECRET=vps@2023
-      - NEXTAUTH_URL=https://cusdis.chensoul.com
-      - HOST=https://cusdis.chensoul.com
+      - NEXTAUTH_URL=https://cusdis.chensoul.cc
+      - HOST=https://cusdis.chensoul.cc
       - DB_TYPE=mysql
       - DB_URL=mysql://cusdis:cusdis@mysql!@mysql:3306/cusdis
     networks:
@@ -455,17 +453,17 @@ docker-compose -f cusdis.yaml up -d
 server {
     listen 80;
     listen [::]:80;
-    server_name cusdis.chensoul.com;
+    server_name cusdis.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     cusdis.chensoul.com;
+    server_name     cusdis.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -488,7 +486,7 @@ server {
 }
 ```
 
-5、部署一个 Telegram 机器人，参考 [Official Telegram bot](https://cusdis.chensoul.com/doc#/advanced/webhook?id=official-telegram-bot)。
+5、部署一个 Telegram 机器人，参考 [Official Telegram bot](https://cusdis.chensoul.cc/doc#/advanced/webhook?id=official-telegram-bot)。
 
 6、升级
 
@@ -504,7 +502,7 @@ docker-compose -f cusdis.yaml up -d
 
 ```bash
 docker exec -it mysql bash
-mysql -uroot -p 
+mysql -uroot -p
 
 CREATE USER 'memos'@'%' IDENTIFIED BY 'memos@mysql!';
 CREATE DATABASE memos;
@@ -546,17 +544,17 @@ docker-compose -f memos.yaml up -d
 server {
     listen 80;
     listen [::]:80;
-    server_name memos.chensoul.com;
+    server_name memos.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     memos.chensoul.com;
+    server_name     memos.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -584,7 +582,7 @@ docker-compose -f memos.yaml up -d
 
 ```bash
 docker exec -it mysql bash
-mysql -uroot -p 
+mysql -uroot -p
 
 CREATE USER 'n8n'@'%' IDENTIFIED BY 'n8n@mysql!';
 CREATE DATABASE n8n;
@@ -605,7 +603,7 @@ docker run -d  \
  -e DB_MYSQLDB_USER=n8n \
  -e DB_MYSQLDB_PASSWORD=n8n@mysql! \
  -e GENERIC_TIMEZONE="Asia/Shanghai" \
- -e WEBHOOK_URL=https://n8n.chensoul.com/ \
+ -e WEBHOOK_URL=https://n8n.chensoul.cc/ \
  -v ~/.n8n:/home/node/.n8n \
  docker.n8n.io/n8nio/n8n \
  n8n start
@@ -630,7 +628,7 @@ services:
       - DB_MYSQLDB_PASSWORD=n8n@mysql!
       - TZ="Asia/Shanghai"
       - GENERIC_TIMEZONE="Asia/Shanghai"
-      - WEBHOOK_URL=https://n8n.chensoul.com/
+      - WEBHOOK_URL=https://n8n.chensoul.cc/
     ports:
       - 5678:5678
     volumes:
@@ -655,17 +653,17 @@ docker-compose -f n8n.yaml up -d
 server {
     listen 80;
     listen [::]:80;
-    server_name n8n.chensoul.com;
+    server_name n8n.chensoul.cc;
 
     return 301 https://$host$request_uri;
 }
 
 server {
     listen          443 ssl;
-    server_name     n8n.chensoul.com;
+    server_name     n8n.chensoul.cc;
 
     ssl_certificate      /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key  /etc/nginx/ssl/chensoul.com.key;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
 
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
@@ -779,4 +777,3 @@ do
   fi
 done
 ```
-

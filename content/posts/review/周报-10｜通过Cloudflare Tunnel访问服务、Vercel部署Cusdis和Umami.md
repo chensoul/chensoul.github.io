@@ -11,9 +11,9 @@ tags: [review, chatgpt, vps, cusdis, umami, cloudflare, vercel, railway]
 
 ![weekly-review-10-00](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-10-00.jpeg)
 
-本篇是对 `2023-03-06` 到 `2023-03-12` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-06` 到 `2023-03-12` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
-这周发现 VPS 上 [某些使用 docker 部署的服务](https://blog.chensoul.com/posts/2023/01/25/notes-about-deploy-services-in-vps/)（cusdis、umami、uptime、n8n、rsshub、memos）国内用户无法访问了，于是就折腾了一下使用 Cloudflare Tunnel 来代理这些服务。配置成功之后，又发现本地如果开启 VPN，Cloudflare Tunnel 代理的域名还是无法访问，于是放弃了使用 Cloudflare Tunnel，改为将这些国内无法访问的服务部署到免费的 VPS 服务器上，比如：Railway、Vercel。
+这周发现 VPS 上 [某些使用 docker 部署的服务](https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/)（cusdis、umami、uptime、n8n、rsshub、memos）国内用户无法访问了，于是就折腾了一下使用 Cloudflare Tunnel 来代理这些服务。配置成功之后，又发现本地如果开启 VPN，Cloudflare Tunnel 代理的域名还是无法访问，于是放弃了使用 Cloudflare Tunnel，改为将这些国内无法访问的服务部署到免费的 VPS 服务器上，比如：Railway、Vercel。
 
 这周工作忙完之后，就开始着手通知系统的重构改造服务，想着 chatgpt 这么火，于是就试试让它来写代码。在不断地修改需求的情况下，chatgpt 写出来的代码稍加调整逐渐可以使用了。
 
@@ -71,8 +71,8 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 我的域名托管在 Cloudflare 上，所以需要将原来的域名解析记录删除，主要涉及以下两个需要被国内用户访问的域名（其余域名是我个人使用，所以只需要我开启 VPN 访问即可。）：
 
-- cusdis.chensoul.com
-- umami.chensoul.com
+- cusdis.chensoul.cc
+- umami.chensoul.cc
 
 ### 3、在 Cloudflare Tunnel 添加 hostname
 
@@ -91,14 +91,14 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 - 配置 ~/.ssh/config，添加下面配置（注意：我使用 Homebrew 安装的 cloudflared）：
 
   ```bash
-  Host ssh.chensoul.com
+  Host ssh.chensoul.cc
   ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
   ```
 
-- 通过 ssh 访问 ssh.chensoul.com：
+- 通过 ssh 访问 ssh.chensoul.cc：
 
   ```bash
-  ssh root@ssh.chensoul.com
+  ssh root@ssh.chensoul.cc
   ```
 
 ### 4、在 vps 上启用防火墙，停止 nginx 服务
@@ -113,7 +113,7 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 参考 [轻量级开源免费博客评论系统解决方案（Cusdis + Railway）](https://www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/) 在 Railway 上部署 cusdis，数据库还是可以使用 vps 上部署的 postgresql，只需要配置一个 jdbc 链接即可：
 
-- postgresql://cusdis:xxxxxx@postgres.chensoul.com:5432/cusdis
+- postgresql://cusdis:xxxxxx@postgres.chensoul.cc:5432/cusdis
 
 部署完之后，发现存在跨域问题，故全部改为使用 Vercel 来部署。
 
@@ -134,7 +134,7 @@ async headers() {
 
 参考 [Umami 官方文档](https://umami.is/docs/running-on-vercel) 来部署 Umami，umami 的 postgresql jdbc 链接还是使用 vps 上面部署的 postgresql
 
-- postgresql://umami:xxxxxxpostgres.chensoul.com:5432/umami
+- postgresql://umami:xxxxxxpostgres.chensoul.cc:5432/umami
 
 ## Chatgpt 写代码
 

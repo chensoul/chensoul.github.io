@@ -11,9 +11,9 @@ tags: [review, java, rust, python]
 
 ![weekly-review-15-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-01.png)
 
- _题图：楚河汉街蜡像馆_
+_题图：楚河汉街蜡像馆_
 
-本篇是对 `2023-04-10` 到 `2023-04-16` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-04-10` 到 `2023-04-16` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这周的工作不算忙碌，继续学习《Effective Java 3》这本书，并花了一些时间学习 Rust、Python 的基础语法。
 
@@ -35,7 +35,7 @@ tags: [review, java, rust, python]
 
 <img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-06.png" alt="weekly-review-15-06" style="width:50%;" />
 
-受 [@Conge](https://conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https://github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.com](https://run.chensoul.com/)。
+受 [@Conge](https://conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https://github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.cc](https://run.chensoul.cc/)。
 
 ![weekly-review-15-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-02.png)
 
@@ -68,7 +68,7 @@ yarn build
 
 ```properties
 #修改为你的数据库地址
-DATABASE_URL=postgresql://umami:xxxxx@postgres.chensoul.com:5432/umami
+DATABASE_URL=postgresql://umami:xxxxx@postgres.chensoul.cc:5432/umami
 ```
 
 运行：
@@ -89,7 +89,7 @@ yarn start
 
 4、修改跟踪脚本，把站点中所有追踪脚本名字`umami.js`改为`script.js`。
 
-5、最后查看实时仪表盘。我的 umami 实时 [访问地址](https://umami.chensoul.com/realtime/f110cfa0-b737-4690-a032-2b9073a57fc3)
+5、最后查看实时仪表盘。我的 umami 实时 [访问地址](https://umami.chensoul.cc/realtime/f110cfa0-b737-4690-a032-2b9073a57fc3)
 
 ## 工作
 

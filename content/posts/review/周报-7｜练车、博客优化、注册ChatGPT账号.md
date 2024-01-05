@@ -9,7 +9,7 @@ tags: [review, hugo, cloudflare, n8n, chatgpt, memos, rss, github]
 
 ## 前言
 
-本篇是对 `2023-02-13` 到 `2023-02-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-02-13` 到 `2023-02-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 ## 练车
 
@@ -122,9 +122,9 @@ body {
 
 修改了以下 workflow：
 
-- 将豆瓣最近动态同步到电报群组以及 [memos](https://memos.chensoul.com/)
-- 将 GitHub 最近动态同步到电报群组以及 [memos](https://memos.chensoul.com/)
-- 将 [博客 RSS](https://blog.chensoul.com/index.xml) 同步到电报群组以及 [memos](https://memos.chensoul.com/)
+- 将豆瓣最近动态同步到电报群组以及 [memos](https://memos.chensoul.cc/)
+- 将 GitHub 最近动态同步到电报群组以及 [memos](https://memos.chensoul.cc/)
+- 将 [博客 RSS](https://blog.chensoul.cc/index.xml) 同步到电报群组以及 [memos](https://memos.chensoul.cc/)
 
 此外，在苹果手机上添加了两个捷径：
 

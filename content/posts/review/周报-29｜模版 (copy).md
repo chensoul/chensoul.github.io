@@ -9,7 +9,7 @@ tags: [review]
 
 ## 前言
 
-本篇是对 `2023-07-17` 到 `2023-07-23` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.com/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-07-17` 到 `2023-07-23` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 > 读书、健身、投资、帮朋友、陪家人。
 
@@ -25,6 +25,6 @@ tags: [review]
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [Memos](https://memos.chensoul.com/) 中。我写了一个 Python 脚本从 Memos 读取最近一周带有 `#memos` 标签的记录，分享到这里。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [Memos](https://memos.chensoul.cc/) 中。我写了一个 Python 脚本从 Memos 读取最近一周带有 `#memos` 标签的记录，分享到这里。
 
 以上。
