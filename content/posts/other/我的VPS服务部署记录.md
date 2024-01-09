@@ -23,6 +23,8 @@ yum update
 yum install wget curl git vim -y
 ```
 
+设置时区为
+
 **[可选] 设置系统 Swap 交换分区**
 
 因为 vps 服务器的运行内存很小，所以这里先设置下 Swap
@@ -68,7 +70,7 @@ setsebool -P httpd_can_network_connect on
 
 ## 安装并生成证书
 
-玉米托管在 cf，参考 [文章](https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf)
+域名托管在 CloudFlare，可以参考 [文章](https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf)
 
 ```bash
 curl https://get.acme.sh | sh -s email=ichensoul@gmail.com
@@ -78,18 +80,48 @@ export CF_Email="ichensoul@gmail.com"
 
 .acme.sh/acme.sh --issue --server letsencrypt --dns dns_cf -d chensoul.cc -d '*.chensoul.cc'
 
-cp .acme.sh/chensoul.cc_ecc/{chensoul.cc.cer,chensoul.cc.key,fullchain.cer,ca.cer} /usr/local/nginx/ssl/
+cp .acme.sh/chensoul.cc_ecc/{chensoul.cc.cer,chensoul.cc.key,fullchain.cer,ca.cer} /etc/nginx/ssl/
 
-.acme.sh/acme.sh --installcert -d chensoul.cc -d *.chensoul.cc  --cert-file /usr/local/nginx/ssl/chensoul.cc.cer --key-file /usr/local/nginx/ssl/chensoul.cc.key --fullchain-file /usr/local/nginx/ssl/fullchain.cer --ca-file /usr/local/nginx/ssl/ca.cer   --reloadcmd "sudo nginx -s reload"
+.acme.sh/acme.sh --installcert -d chensoul.cc -d *.chensoul.cc --cert-file /etc/nginx/ssl/chensoul.cc.cer --key-file /etc/nginx/ssl/chensoul.cc.key --fullchain-file /etc/nginx/ssl/fullchain.cer --ca-file /etc/nginx/ssl/ca.cer --reloadcmd "sudo nginx -s reload"
 ```
 
 ## Docker 安装和配置
 
-### Docker 安装
+Docker 安装
 
-具体过程可以参考网上文章。
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
 
-### 自定义网络
+启动 docker：
+
+```bash
+systemctl enable docker
+systemctl start docker
+```
+
+设置 iptables 允许流量转发：
+
+```bash
+iptables -P FORWARD ACCEPT
+```
+
+
+
+安装 Compose
+
+```bash
+curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+设置执行权限：
+
+```bash
+chmod +x /usr/local/bin/docker-compose
+```
+
+
 
 参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network) ，创建一个自定义的网络：
 
@@ -100,7 +132,7 @@ docker network create custom
 查看 docker 网络：
 
 ```bash
-[root@vps ~]# docker network ls
+docker network ls
 NETWORK ID     NAME            DRIVER    SCOPE
 68f4aeaa57bd   bridge          bridge    local
 6a96b9d8617e   custom          bridge    local
@@ -114,8 +146,7 @@ ba21bef23b04   none            null      local
 
 ```yaml
 networks:
-      - custom
-    restart: always
+  - custom
 
 networks:
   custom:
@@ -134,16 +165,19 @@ mysql.yaml
 version: "3"
 services:
   mysql:
-    image: mysql:8.1.0
+    image: mysql:8.2.0
     container_name: mysql
+    platform: linux/amd64
+    restart: unless-stopped
     volumes:
       - /data/volumes/mysql/:/var/lib/mysql/
     environment:
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_ROOT_PASSWORD: admin@mysql!
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=admin@mysql!
+      - TZ=Asia/Shanghai
     ports:
       - "3306:3306"
-    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp --default-authentication-plugin=mysql_native_password
+    command: --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     healthcheck:
       test: ["CMD", "mysql", "-e", "SHOW DATABASES;"]
       interval: 5s
@@ -164,6 +198,14 @@ networks:
 ```bash
 docker-compose -f mysql.yaml up -d
 ```
+
+3、进入容器：
+
+```bahs
+docker exec -it mysql bash
+```
+
+
 
 ### Rsshub
 
@@ -227,7 +269,7 @@ services:
 docker-compose -f uptime.yaml up -d
 ```
 
-配置 nginx ：
+配置 nginx  配置文件 /etc/nginx/conf.d/uptime.conf ：
 
 ```nginx
 server {
@@ -253,7 +295,7 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:3001;
-	    proxy_set_header   X-Real-IP $remote_addr;
+	      proxy_set_header   X-Real-IP $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   Host $host;
 
@@ -284,7 +326,7 @@ CREATE USER 'umami'@'%' IDENTIFIED BY 'umami@mysql!';
 CREATE DATABASE umami;
 GRANT ALL ON umami.* TO 'umami'@'%';
 
-ALTER USER 'umami' IDENTIFIED WITH mysql_native_password BY 'umami@mysql!';
+ALTER USER 'umami' IDENTIFIED WITH caching_sha2_password BY 'umami@mysql!';
 ```
 
 > 参考：[HCL SafeLinx Server with MySQL 8.0 causes "Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection."](https://support.hcltechsw.com/csm?id=kb_article&sysparm_article=KB0102948)
@@ -336,7 +378,7 @@ docker-compose -f umami.yaml up -d
 
 umami.chensoul.cc
 
-4、配置 nginx
+4、配置 nginx 配置文件 /etc/nginx/conf.d/umami.conf
 
 ```nginx
 server {
@@ -400,6 +442,8 @@ mysql -uroot -p
 CREATE USER 'cusdis'@'%' IDENTIFIED BY 'cusdis@mysql!';
 CREATE DATABASE cusdis;
 GRANT ALL ON cusdis.* TO 'cusdis'@'%';
+
+ALTER USER 'cusdis' IDENTIFIED WITH caching_sha2_password BY 'cusdis@mysql!';
 ```
 
 2、通过 docker-compose 安装，创建 cusdis.yaml：
@@ -473,8 +517,8 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:3010;
-	    proxy_pass_header Authorization;
-	    proxy_pass_header WWW-Authenticate;
+	      proxy_pass_header Authorization;
+	      proxy_pass_header WWW-Authenticate;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -507,6 +551,8 @@ mysql -uroot -p
 CREATE USER 'memos'@'%' IDENTIFIED BY 'memos@mysql!';
 CREATE DATABASE memos;
 GRANT ALL ON memos.* TO 'memos'@'%';
+
+ALTER USER 'memos' IDENTIFIED WITH caching_sha2_password BY 'memos@mysql!';
 ```
 
 2、通过 docker-compose 安装，创建 memos.yaml：
@@ -538,7 +584,7 @@ networks:
 docker-compose -f memos.yaml up -d
 ```
 
-配置 nginx
+配置 nginx 配置文件 /etc/nginx/conf.d/memos.conf
 
 ```nginx
 server {
@@ -587,29 +633,11 @@ mysql -uroot -p
 CREATE USER 'n8n'@'%' IDENTIFIED BY 'n8n@mysql!';
 CREATE DATABASE n8n;
 GRANT ALL ON n8n.* TO 'n8n'@'%';
+
+ALTER USER 'n8n' IDENTIFIED WITH caching_sha2_password BY 'n8n@mysql!';
 ```
 
-2、通过 docker 安装：
-
-```dockerfile
-docker run -d  \
- --name n8n \
- --network=custom \
- -p 5678:5678 \
- -e DB_TYPE=mysqldb \
- -e DB_MYSQLDB_DATABASE=n8n \
- -e DB_MYSQLDB_HOST=mysql \
- -e DB_MYSQLDB_PORT=3306 \
- -e DB_MYSQLDB_USER=n8n \
- -e DB_MYSQLDB_PASSWORD=n8n@mysql! \
- -e GENERIC_TIMEZONE="Asia/Shanghai" \
- -e WEBHOOK_URL=https://n8n.chensoul.cc/ \
- -v ~/.n8n:/home/node/.n8n \
- docker.n8n.io/n8nio/n8n \
- n8n start
-```
-
-通过 docker-compose 安装，创建 n8n.yaml：
+2、通过 docker-compose 安装，创建 n8n.yaml：
 
 ```yaml
 version: "3.8"
@@ -647,7 +675,7 @@ networks:
 docker-compose -f n8n.yaml up -d
 ```
 
-4、设置 nginx 转发
+4、配置 nginx 配置文件 /etc/nginx/conf.d/n8n.conf
 
 ```nginx
 server {
@@ -710,12 +738,21 @@ docker-compose -f n8n.yaml up -d
 
 7、备份
 
+安装 jq
+```bash
+yum install epel-release -y
+yum install jq -y
+```
+
+
+
 ```bash
 #!/bin/bash
 
 DATE=$(date +%Y%m%d_%H%M%S)
 
 BACKUP_DIR="/opt/backup/n8n"
+mkdir -p $BACKUP_DIR
 
 EXPORT_DIR="workflow-${DATE}"
 
@@ -734,6 +771,8 @@ done
 ```
 
 ## 数据库备份
+
+
 
 ```bash
 #!/bin/bash
