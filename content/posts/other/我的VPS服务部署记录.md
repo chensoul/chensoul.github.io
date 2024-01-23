@@ -165,7 +165,7 @@ mysql.yaml
 version: "3"
 services:
   mysql:
-    image: mysql:8.2.0
+    image: mysql:8
     container_name: mysql
     platform: linux/amd64
     restart: unless-stopped
@@ -320,7 +320,7 @@ docker-compose -f uptime.yaml up -d
 
 ```bash
 docker exec -it mysql bash
-mysql -uroot -p
+mysql -uroot -padmin@mysql!
 
 CREATE USER 'umami'@'%' IDENTIFIED BY 'umami@mysql!';
 CREATE DATABASE umami;
