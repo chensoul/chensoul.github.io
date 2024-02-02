@@ -1,5 +1,5 @@
 ---
-title: "2024-01-26｜今天做了什么"
+title: "2024-01-26｜foodie-cloud集成Feign"
 date: 2024-01-26T07:00:00+08:00
 slug: til
 categories: ["Review"]
