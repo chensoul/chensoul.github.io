@@ -687,7 +687,7 @@ management.endpoints.web.exposure.include: "*"
 
 spring.cloud.config.server.git.uri: https://github.com/chensoul/spring-cloud-examples
 spring.cloud.config.server.git.search-paths: config-repo 
-spring.cloud.config.server.git.default-label: cloud-config # 使用 cloud-config 分支
+spring.cloud.config.server.git.default-label: config # 使用 config 分支
 ```
 
 > 说明：
@@ -770,7 +770,7 @@ test: hello world
 
 在 config-client 项目基础上，修改配置文件
 
-因为服务端配置文件是在 cloud-config 分支（`spring.cloud.config.server.git.default-label: cloud-config`），故客户端也应该设置分支 `spring.cloud.config.label: cloud-config`：
+因为服务端配置文件是在 config 分支（`spring.cloud.config.server.git.default-label: config`），故客户端也应该设置分支 `spring.cloud.config.label: config`：
 
 ```yml
 
@@ -789,7 +789,7 @@ spring:
   cloud:
     config:
     	uri: http://localhost:8888
-    	label: cloud-config
+    	label: config
       # 客户端配置快速失败
       fail-fast: true
       # 配置重试，需要引入 spring-retry
@@ -818,7 +818,7 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      label: cloud-config
+      label: config
       username: ${SPRING_SECURITY_USER_NAME:root}
       password: ${SPRING_SECURITY_USER_PASSWORD:123456}
 ```
@@ -997,7 +997,7 @@ Received remote refresh request.
 
 Fetching config from server at : http://localhost:8888
 
-Located environment: name=config-client, profiles=[default], label=cloud-config, version=cfcb38e6d396ce6b85e0aa0e8839f38538b7f221, state=null
+Located environment: name=config-client, profiles=[default], label=config, version=cfcb38e6d396ce6b85e0aa0e8839f38538b7f221, state=null
 Keys refreshed [config.client.version, test]
 ```
 
