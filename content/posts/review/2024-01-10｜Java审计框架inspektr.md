@@ -1,5 +1,5 @@
 ---
-title: "2024-01-10｜今天做了什么"
+title: "2024-01-10｜ Java审计框架inspektr"
 date: 2024-01-10T18:00:00+08:00
 slug: til
 categories: ["Review"]

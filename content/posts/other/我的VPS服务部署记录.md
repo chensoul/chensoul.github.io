@@ -177,11 +177,11 @@ services:
       - TZ=Asia/Shanghai
     ports:
       - "3306:3306"
-    command: --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    command: --default-authentication-plugin=mysql_native_password --explicit_defaults_for_timestamp=true --lower_case_table_names=1 --tls-version=''
     healthcheck:
-      test: ["CMD", "mysql", "-e", "SHOW DATABASES;"]
+      test: "/usr/bin/mysql -e 'SHOW DATABASES;'"
       interval: 5s
-      timeout: 5s
+      timeout: 2s
       retries: 10
     networks:
       - custom
