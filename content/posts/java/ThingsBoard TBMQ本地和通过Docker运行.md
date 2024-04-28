@@ -71,54 +71,91 @@ tags: [ thingsboard,java]
 
 4. 通过 docker-compose 本地安装 postgres、kafka、redis
 
-   参考 docker 目录下的文件新建一个 docker-compose-test.yml 文件：
+   参考 docker 目录下的文件新建 docker-compose.postgres.yml 文件：
 
    ```yaml
-   version: "3.0"
+   version: '3.0'
    
    services:
      postgres:
        restart: always
-       image: "postgres:15"
+       image: postgres:15
        ports:
          - "5432:5432"
        environment:
          POSTGRES_DB: thingsboard_mqtt_broker
          POSTGRES_PASSWORD: postgres
+       volumes:
+         - postgres-data:/var/lib/postgresql/data
    
-     kafka:
+   
+   volumes:
+     postgres-data:
+   ```
+
+   新建 docker-compose.redis.yml 文件：
+
+   ```yaml
+   version: '3.0'
+   
+   services:
+     # Redis standalone
+     redis:
        restart: always
-       image: "bitnami/kafka:3.7.0"
+       image: bitnami/redis:7.2
+       ports:
+         - '6379:6379'
+       volumes:
+         - redis-data:/bitnami/redis/data
+       command: redis-server --requirepass 123456
+       healthcheck:
+         test: [ "CMD", "redis-cli","-a","123456","--raw", "incr","ping" ]
+         interval: 5s
+         timeout: 2s
+         retries: 10
+   
+   volumes:
+     redis-data:
+   ```
+
+   新建 docker-compose.kafka.yml 文件：
+
+   ```yml
+   version: '3.0'
+   
+   services:
+   	kafka:
+       restart: always
+       image: bitnami/kafka:3.7.0
        ports:
          - "9092:9092"
        env_file:
          - kafka.env
-   
-     redis:
-       restart: always
-       image: bitnami/redis:7
-       environment:
-         # ALLOW_EMPTY_PASSWORD is recommended only for development.
-         ALLOW_EMPTY_PASSWORD: "yes"
-       ports:
-         - "6379:6379"
    ```
 
-   然后，修改 kafka.env 文件中 `KAFKA_CFG_ADVERTISED_LISTENERS` 的地址为 docker 宿主机 IP 地址
-   ```bash
-   KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://198.19.249.3:9092
-   ```
-
-   maco上查看docker 宿主机 IP 地址方法：
+   新建  kafka.env ：
 
    ```bash
-   $ ifconfig | grep "inet " | grep -v 127.0.0.1
-   	inet 192.168.3.230 netmask 0xfffffc00 broadcast 192.168.3.255
-   	inet 198.19.249.3 netmask 0xffffff00 broadcast 198.19.249.255
-   	inet 26.26.26.1 --> 26.26.26.53 netmask 0xfffffff8
+   KAFKA_CFG_NODE_ID=0
+   KAFKA_CFG_PROCESS_ROLES=controller,broker
+   KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+   KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+   KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+   KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+   KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+   KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+   KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+   KAFKA_CFG_LOG_RETENTION_BYTES=1073741824
+   KAFKA_CFG_LOG_SEGMENT_BYTES=268435456
+   KAFKA_CFG_LOG_RETENTION_MS=300000
+   KAFKA_CFG_LOG_CLEANUP_POLICY=delete
    ```
 
-   第一个192.168.3.230 为局域网 IP 地址，第二个即为  docker 宿主机 IP 地址
+   本地 hosts 文件添加一行：
+
+   ```bash
+   localhost kafka
+   ```
 
    
 
