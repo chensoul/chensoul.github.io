@@ -72,7 +72,9 @@ kubectl create namespace cattle-system
     --set letsEncrypt.ingress.class=nginx
   ```
 
-- 使用你自己的证书来创建 Kubernetes 密文，以供 Rancher 使用
+- 使用你自己的证书来创建 Kubernetes 密文，以供 Rancher 使用。
+
+  生成自签名证书，参考：[一键生成-ssl-自签名证书脚本](https://docs.rancher.cn/docs/rancher2.5/installation/resources/advanced/self-signed-ssl/_index/#42-%E8%84%9A%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
 3. 检查 Rancher 是否已成功运行：
 

@@ -6,6 +6,7 @@ tags: [drone,k8s]
 categories: ["k8s"]
 ---
 
+Drone by [Harness](https://harness.io/) ™ 是一个现代化的持续集成平台，使忙碌的团队能够使用强大的云原生管道引擎自动化其构建、测试和发布工作流程。
 
 ## Drone实践
 

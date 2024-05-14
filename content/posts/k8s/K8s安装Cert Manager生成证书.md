@@ -199,10 +199,6 @@ Issuers 和 ClusterIssuer 区别：
 - Issuers 是基于命名空间的
 - ClusterIssuer 是基于集群的
 
-
-
-cert-manager 支持的颁发机构
-
 #### ACME Orders 和 Challenges
 
 cert-manager 支持使用[ACME Issuer从 ACME 服务器请求证书，包括从](https://cert-manager.io/docs/configuration/acme/)[Let's Encrypt](https://letsencrypt.org/)请求证书。这些证书通常在公共 Internet 上受到大多数计算机的信任。要成功请求证书，证书管理器必须解决已完成的 ACME 挑战，以证明客户端拥有所请求的 DNS 地址。
