@@ -1,6 +1,6 @@
 ---
 title: "Redis安装和部署"
-date: 2024-05-14T11:30:00+08:00
+date: 2024-05-14T11:00:00+08:00
 slug: redis-install
 categories: ["Architecture"]
 tags: ["redis"]
@@ -8,7 +8,7 @@ tags: ["redis"]
 
 ## 单机安装
 
-### Centos7 通过 yum 安装
+### 通过 yum 安装
 
 在 CentOS 7 上通过 yum 安装 Redis，可以按照以下步骤进行操作：
 
@@ -88,7 +88,7 @@ tags: ["redis"]
    ```
 
 
-### Centos7 通过 snap 安装
+### 通过 snap 安装
 
 1. 安装 redis
 
@@ -161,7 +161,7 @@ tags: ["redis"]
 
    
 
-### MacOS 上安装
+### 在 MacOS 安装
 
 1. 安装 Redis：
 
@@ -201,7 +201,7 @@ tags: ["redis"]
 
    
 
-### 源码安装
+### 通过源码安装
 
 1. 安装编译软件
 
@@ -349,6 +349,10 @@ volumes:
 
 ## 集群模式安装
 
+### 通过 yum 安装
+
+TODO
+
 ### 通过 docker-compose 安装
 
 https://github.com/chensoul/learn-docker/blob/main/docker-compose/redis/docker-compose.redis-cluster.yml
@@ -441,6 +445,10 @@ volumes:
 
 
 ## 哨兵模式安装
+
+### 通过 yum 安装
+
+TODO
 
 ### 通过 docker-compose 安装
 
