@@ -7,6 +7,10 @@ categories: ["Java"]
 tags: [ oauth2,java]
 ---
 
+原文地址：https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5
+
+
+
 在[之前的文章](/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/)中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。
 
 ![img](https://miro.medium.com/v2/resize:fit:1400/1*cFT5m5Kcfv2siHRYeUZAtg.png)
@@ -58,7 +62,7 @@ spring:
       client:
         registration:
           google:
-            client-id: "615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com"
+            client-id: "xxxxxxxxxxxxxxx"
             client-secret: "XXXXXXXXXXXX"
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 ```
@@ -106,7 +110,7 @@ spring:
       client:
         registration:
           google:
-            client-id: "615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com"
+            client-id: "xxxxxxxxxxxxxxx"
             client-secret: "xxxxxxxxxxxxxxx"
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:

@@ -7,6 +7,10 @@ categories: ["Java"]
 tags: [ oauth2,java]
 ---
 
+原文地址：https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a
+
+
+
 在[上一篇文章](/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/)中，我们讨论了使用 client_credential 的 OAuth2 授权服务器配置。在本文中，我们将讨论使用 authorization_code 授予类型的授权服务器配置。此授权流程将有一个 OIDC 客户端，它将通过使用授权码进行请求来获取 JWT 令牌。
 
 如今，社交登录非常流行，它已由 OAuth2 和 OIDC 规范标准化。我们今天的讨论主题是设置我们的社交登录客户端 (oidc-client) 应用程序，将其注册到 Spring Boot 授权服务器，使用授权服务器登录并从 OIDC 客户端应用程序访问安全资源。

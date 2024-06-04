@@ -7,6 +7,10 @@ categories: ["Java"]
 tags: [ oauth2,java]
 ---
 
+原文地址：https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a
+
+
+
 Spring 团队最近发布了他们的授权服务器。OAuth2 一直是一个热门话题，而构建或理解授权服务器一直是一个谜。在本系列的[第 1 部分](/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/)中，我描述了几乎所有您需要了解的有关 OAuth2 的概念性内容。在本系列的这篇文章中，我将尝试演示如何构建具有**client_credential**授权类型的授权服务器。我将从使用配置属性进行自动配置开始解释它们，并通过编写 Java 代码自定义配置。让我们开始吧。
 
 # 设置授权服务器

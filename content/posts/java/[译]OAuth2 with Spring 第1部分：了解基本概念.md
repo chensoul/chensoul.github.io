@@ -7,6 +7,10 @@ categories: ["Java"]
 tags: [ oauth2,java]
 ---
 
+原文地址：https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a
+
+
+
 在本系列**关于 Spring 的 OAuth2**的文章中，我将尝试介绍和解释与 OAuth2 相关的每一个问题以及如何在 Spring 框架中实现这些问题。请记住，OAuth2 完全是一个概念性的东西，在不同的框架中，它有自己的实现。此外，许多应用程序开发人员开发自己的 OAuth2 实现，而不使用 Spring 框架提供的 OAuth2 框架支持。因此，我将就这个主题撰写一系列文章。
 
 ## 什么是 OAuth2 以及为什么？
