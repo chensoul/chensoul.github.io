@@ -59,7 +59,7 @@ spring:
         registration:
           google:
             client-id: "615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com"
-            client-secret: "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"
+            client-secret: "XXXXXXXXXXXX"
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 ```
 
@@ -107,7 +107,7 @@ spring:
         registration:
           google:
             client-id: "615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com"
-            client-secret: "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"
+            client-secret: "xxxxxxxxxxxxxxx"
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - https://www.googleapis.com/auth/userinfo.email
