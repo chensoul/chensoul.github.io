@@ -1,5 +1,5 @@
 ---
-title: "[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性"
+title: "[译][译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性"
 date: 2024-06-05T07:04:00+08:00
 slug: oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security
 draft: false
@@ -496,7 +496,7 @@ logging:
 
 ![img](https://miro.medium.com/v2/resize:fit:2000/1*sIDG4eODKLQU-ntBGcdHLw.png)
 
-完整的源代码可以在[这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到。
+完整的源代码可以在[这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到
 
 
 
