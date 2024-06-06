@@ -29,7 +29,7 @@ tags: [ spring-boot，docker]
    EXPOSE 8080
    
    # 设置容器启动时执行的命令
-   ENTRYPOINT ["java"， "-jar"， "app.jar"]
+   ENTRYPOINT ["java", "-jar", "app.jar"]
    ```
 
    这个 Dockerfile 将使用 OpenJDK 11 作为基础镜像，将编译后的 JAR 文件复制到容器中，并在容器启动时执行 `java -jar app.jar` 命令。
@@ -146,7 +146,7 @@ jib {
     }
     to {
         image = 'my-spring-boot-app'
-        tags = ['latest'， project.version]
+        tags = ['latest', project.version]
     }
     container {
         mainClass = 'com.example.MySpringBootApp'
