@@ -126,8 +126,6 @@ At a high-level, we will need a chat server that will be the central piece, orch
 
 > 在高层，我们需要一个聊天服务器作为核心部分，协调用户之间的所有通信。当一个用户想要向另一个用户发送消息时，他们会连接到聊天服务器并将消息发送到服务器；然后，服务器将该消息传递给其他用户并将其存储在数据库中。
 
-![image-20231116100826987](/Users/chensoul/Pictures/facebook-01.png)
-
 The detailed workflow would look like this:
 
 > 详细的工作流程如下所示：
@@ -343,8 +341,6 @@ broadcast each status change to all the relevant active users, it will consume a
 5. Whenever the client starts a new chat with another user, we can pull the status at that time.
 
    > 每当客户端与另一个用户开始新的聊天时，我们就可以提取当时的状态。
-
-![image-20231116100912043](/Users/chensoul/Pictures/facebook-02.png)
 
 Detailed component design for Facebook messenger
 

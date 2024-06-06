@@ -274,8 +274,6 @@ We would need two tables, one for storing information about the Pastes and the o
 
 > 我们需要两个表，一个用于存储有关粘贴的信息，另一个用于存储用户数据。
 
-![image-20231116093636253](/Users/chensoul/Pictures/pastebin-03.png)
-
 Here, ‘URlHash’ is the URL equivalent of the TinyURL and ‘ContentKey’ is the object key storing the contents of the paste.
 
 > 这里，“URlHash”是相当于 TinyURL 的 URL，“ContentKey”是存储粘贴内容的对象键。
