@@ -66,6 +66,30 @@ tags: [ spring-boot，docker]
 
    这将使用刚刚构建的 `my-spring-boot-app` 镜像启动一个容器，并将容器的 8080 端口映射到宿主机的 8080 端口。
 
+4. 其他镜像
+
+   jhipster提供的 dockerfile：
+
+   ```dockerfile
+   FROM openjdk:21-slim
+   COPY . /code/jhipster-app/
+   RUN \
+       cd /code/jhipster-app/ && \
+       rm -Rf target node_modules && \
+       chmod +x mvnw && \
+       sleep 1 && \
+       ./mvnw package -DskipTests && \
+       mv /code/jhipster-app/target/*.jar /code/ && \
+       rm -Rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/*
+   
+   ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
+       JHIPSTER_SLEEP=0 \
+       JAVA_OPTS=""
+   CMD echo "The application will start in ${JHIPSTER_SLEEP}s..." && \
+       sleep ${JHIPSTER_SLEEP} && \
+       java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /code/*.jar
+   EXPOSE 8080
+
 ## 使用 Maven 镜像从源码运行
 
 1. 在项目根目录创建一个 docker-compose.yml文件：
