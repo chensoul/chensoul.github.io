@@ -222,12 +222,12 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
   <servers>
     <server>
       <username>admin</username>
-      <password>cmVmdGtuOjAxOjE3NTA3MzUwNjA6Q05seFJleDBVZjJiSDZ6ajlwYjBSSVlvYUxK</password>
+      <password>XXXXXXXXXX</password>
       <id>central</id>
     </server>
     <server>
       <username>admin</username>
-      <password>cmVmdGtuOjAxOjE3NTA3MzUwNjA6Q05seFJleDBVZjJiSDZ6ajlwYjBSSVlvYUxK</password>
+      <password>XXXXXXXXXXX</password>
       <id>snapshots</id>
     </server>
   </servers>
@@ -318,12 +318,12 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
   <servers>
     <server>
       <username>admin</username>
-      <password>cmVmdGtuOjAxOjE3NTA3MzUwNjA6Q05seFJleDBVZjJiSDZ6ajlwYjBSSVlvYUxK</password>
+      <password>XXXXXXXXXXXXX</password>
       <id>central</id>
     </server>
     <server>
       <username>admin</username>
-      <password>cmVmdGtuOjAxOjE3NTA3MzUwNjA6Q05seFJleDBVZjJiSDZ6ajlwYjBSSVlvYUxK</password>
+      <password>XXXXXXXXXXXXXX</password>
       <id>snapshots</id>
     </server>
   </servers>
