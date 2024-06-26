@@ -4,7 +4,7 @@ date: 2023-01-25T10:38:34+08:00
 draft: false
 slug: "notes-about-deploy-services-in-vps"
 categories: ["Other"]
-tags: [hugo, docker, rsshub, kuma, umami, cusdis, memos, n8n, vps, plausible]
+tags: [hugo, docker, rsshub, memos, n8n, vps, nginx]
 ---
 
 我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。

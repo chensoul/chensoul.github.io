@@ -3,7 +3,7 @@ title: "安装k3s"
 date: 2024-05-09T10:00:00+08:00
 slug: install-k3s
 tags: [k3s]
-categories: ["k8s"]
+categories: ["devops"]
 ---
 
 K3s 是轻量级的 Kubernetes。K3s 易于安装，仅需要 Kubernetes 内存的一半，所有组件都在一个小于 100 MB 的二进制文件中。

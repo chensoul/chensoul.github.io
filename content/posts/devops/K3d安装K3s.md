@@ -3,7 +3,7 @@ title: "通过k3d安装k3s"
 date: 2024-05-09T10:00:00+08:00
 slug: install-k3s-using-k3d
 tags: ["k3s"]
-categories: ["k8s"]
+categories: ["devops"]
 ---
 
 ## k3d是什么

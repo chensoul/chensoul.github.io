@@ -3,7 +3,7 @@ title: "通过k3sup安装k3s"
 date: 2024-05-09T11:00:00+08:00
 slug: install-k3s-using-k3sup
 tags: [k3s]
-categories: ["k8s"]
+categories: ["devops"]
 ---
 
 k3sup是一个支持在PC、虚拟机、ARM设备上安装k3s的工具，官方网站：<https://k3sup.dev/>
@@ -225,5 +225,11 @@ k3sup join \
 	--server-ip $SERVER_IP \
 	--server-user $USER \
   --k3s-extra-args '--docker'
+```
+
+## 卸载
+
+```bash
+/usr/local/bin/k3s-uninstall.sh
 ```
 

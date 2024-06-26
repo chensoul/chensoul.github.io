@@ -4,7 +4,7 @@ date: 2024-06-06T12:00:00+08:00
 slug: spring-boot-docker-image
 draft: false
 categories: ["Java"]
-tags: [ spring-boot，docker]
+tags: [ spring-boot,docker]
 ---
 
 

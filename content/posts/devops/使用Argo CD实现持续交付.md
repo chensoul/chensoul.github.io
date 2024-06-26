@@ -3,7 +3,7 @@ title: "使用Argo CD实现持续交付"
 date: 2024-05-11T12:00:00+08:00
 slug: argocd
 tags: [argocd,k8s]
-categories: ["k8s"]
+categories: [devops]
 ---
 
 ## 安装 ArgoCD
