@@ -3,7 +3,7 @@ title: "搭建本地 Maven 仓库 Artifactory 开源版"
 date: 2024-06-25T08:00:00+08:00
 slug: install-artifactory-oss
 draft: false
-categories: ["Java"]
+categories: ["devops"]
 tags: [ maven,artifactory]
 ---
 
@@ -92,7 +92,7 @@ EOF
 >
 >   ```bash
 >   mkdir -p $JFROG_HOME/artifactory/var/bootstrap/artifactory/tomcat/lib
->   
+>     
 >   wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar -P $JFROG_HOME/artifactory/var/bootstrap/artifactory/tomcat/lib
 >   ```
 

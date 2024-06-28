@@ -3,7 +3,7 @@ title: "[译]关于 HTTP 您需要了解的一切"
 date: 2023-10-12T13:00:00+08:00
 slug: http-in-depth
 tags: ["http"]
-categories: ["Other"]
+categories: ["devops"]
 ---
 
 HTTP 是每个 Web 开发人员都应该了解的协议，因为它为整个 Web 提供动力。了解 HTTP 当然可以帮助您开发更好的应用程序。

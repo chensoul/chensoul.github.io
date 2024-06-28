@@ -3,7 +3,7 @@ title: "Mac开发环境配置"
 date: 2021-09-09T18:14:34+08:00
 slug: "mac-development-environment-setup"
 tags: ["macos"]
-categories: ["Other"]
+categories: ["devops"]
 ---
 
 这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是 Mac 开发环境，所以，这篇文章主要是基于 Mac 操作系统，记录开发环境搭建过程。
