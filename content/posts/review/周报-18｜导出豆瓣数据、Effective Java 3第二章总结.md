@@ -152,7 +152,7 @@ tags: [review, java, python]
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
 - **2023-05-06** git flow 模型的提出：[查看链接](https://nvie.com/posts/a-successful-git-branching-model/) gitflow-avh 是一个增强工具：[查看链接](https://github.com/petervanderdoes/gitflow-avh) `#git` `#tool` `#memos`
 - **2023-05-06** 又有哪家阅读管理网站可取代豆瓣读书 [查看链接](https://glennwoo.com/2022/07/29/about-reading-tracker-websites/) `#douban` `#memos`

@@ -152,7 +152,7 @@ find . -type f -name '*.md' -exec sed -i '' 's/<a name=\"[^\"]*\"><\/a>//g' {} +
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 

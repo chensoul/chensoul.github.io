@@ -86,7 +86,7 @@ vim /etc/docker/daemon.json
 
 {
   "registry-mirrors" : [
-    "https://docker-registry.chensoul.com"
+    "https://docker-registry.chensoul.cc"
   ]
 }
 ```
@@ -127,13 +127,13 @@ vim /etc/docker/daemon.json
    ```nginx
    server {
        listen 80;
-       server_name nexus.chensoul.com;
+       server_name nexus.chensoul.cc;
        rewrite ^ https://$http_host$request_uri? permanent;
    }
    
    server {
         listen 443 ssl;
-        server_name nexus.chensoul.com;
+        server_name nexus.chensoul.cc;
         ssl_certificate /etc/nginx/ssl/all.crt;
         ssl_certificate_key /etc/nginx/ssl/all.key;
         ssl_session_timeout 5m;
@@ -164,13 +164,13 @@ vim /etc/docker/daemon.json
    ```nginx
    server {
        listen 80;
-       server_name docker-registry.chensoul.com;
+       server_name docker-registry.chensoul.cc;
        rewrite ^ https://$http_host$request_uri? permanent;
    }
    
    server {
         listen 443 ssl;
-        server_name docker-registry.chensoul.com;
+        server_name docker-registry.chensoul.cc;
         ssl_certificate /etc/nginx/ssl/all.crt;
         ssl_certificate_key /etc/nginx/ssl/all.key;
         ssl_session_timeout 5m;
@@ -266,7 +266,7 @@ volumes:
     <mirror>  
         <id>nexus</id>  
         <name>nexus repository</name>  
-        <url>https://nexus.chensoul.com/repository/maven-public/</url>  
+        <url>https://nexus.chensoul.cc/repository/maven-public/</url>  
         <mirrorOf>central</mirrorOf>  
     </mirror>     
   </mirrors>
@@ -280,13 +280,13 @@ volumes:
           </snapshots>
           <id>central</id>
           <name>nexus-release</name>
-          <url>https://nexus.chensoul.com/repository/maven-release</url>
+          <url>https://nexus.chensoul.cc/repository/maven-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
           <name>nexus-snapshot</name>
-          <url>https://nexus.chensoul.com/repository/maven-snapshot</url>
+          <url>https://nexus.chensoul.cc/repository/maven-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -296,13 +296,13 @@ volumes:
           </snapshots>
           <id>central</id>
           <name>nexus-release</name>
-          <url>https://nexus.chensoul.com/repository/maven-release</url>
+          <url>https://nexus.chensoul.cc/repository/maven-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
           <name>nexus-snapshot</name>
-          <url>https://nexus.chensoul.com/repository/maven-snapshot</url>
+          <url>https://nexus.chensoul.cc/repository/maven-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>nexus</id>
@@ -320,7 +320,7 @@ volumes:
 登录：
 
 ```bash
-docker login docker-registry.chensoul.com
+docker login docker-registry.chensoul.cc
 ```
 
 拉取镜像：
@@ -336,25 +336,25 @@ docker.io/library/alpine:3.16
 
 从日志可以看到是从 docker.io 下载镜像。
 
-接下来，试试从 docker-registry.chensoul.com 下载镜像 
+接下来，试试从 docker-registry.chensoul.cc 下载镜像 
 
 ```bash
-$ docker pull docker-registry.chensoul.com/alpine:3.16
+$ docker pull docker-registry.chensoul.cc/alpine:3.16
 3.16: Pulling from alpine
 Digest: sha256:452e7292acee0ee16c332324d7de05fa2c99f9994ecc9f0779c602916a672ae4
-Status: Downloaded newer image for docker-registry.chensoul.com/alpine:3.16
-docker-registry.chensoul.com/alpine:3.16
+Status: Downloaded newer image for docker-registry.chensoul.cc/alpine:3.16
+docker-registry.chensoul.cc/alpine:3.16
 ```
 
-从日志可以看到是从 docker-registry.chensoul.com 下载镜像，并且在 https://nexus.chensoul.com/#browse/browse:docker 可以看到下载的镜像。
+从日志可以看到是从 docker-registry.chensoul.cc 下载镜像，并且在 https://nexus.chensoul.cc/#browse/browse:docker 可以看到下载的镜像。
 
 推送镜像：
 
 ```bash
-$ docker tag alpine:3.16 docker-registry.chensoul.com/alpine:3.16-custom
+$ docker tag alpine:3.16 docker-registry.chensoul.cc/alpine:3.16-custom
 
-$ docker push docker-registry.chensoul.com/alpine:3.16-custom
-The push refers to repository [docker-registry.chensoul.com/alpine]
+$ docker push docker-registry.chensoul.cc/alpine:3.16-custom
+The push refers to repository [docker-registry.chensoul.cc/alpine]
 edbfd2db8ef2: Pushed
 3.16-custom: digest: sha256:4bdb4ac63839546daabfe0a267a363b3effa17ce02ac5f42d222174484c5686c size: 528
 ```

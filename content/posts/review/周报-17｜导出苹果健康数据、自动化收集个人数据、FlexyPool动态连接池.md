@@ -340,7 +340,7 @@ Baeldung 网站上有一篇介绍 Spring Boot 中如何使用 FlexyPool 连接�
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensoul_share)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
 - **2023-04-28 09:01:43** 4 个文生图 AI 工具 [查看链接](https://xugaoxiang.com/2023/04/27/4-text-to-image-ai-tools/) `#memos`
 - **2023-04-27 13:29:50** 这是 Jony Ive 的 LoveFrom 团队出品的一本关于乔布斯的书，书中几乎全部引用乔布斯自己的话，没有解读，更加「原汁原味」，同时也收录了一些珍贵的照片。 [查看链接](https://stevejobsarchive.com/book) [查看链接](https://limboy.me/books/make-something-wonderful/) `#memos`

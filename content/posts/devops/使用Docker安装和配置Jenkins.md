@@ -1,5 +1,5 @@
 ---
-title: "使用Docker安装和部署Jenkins"
+title: "使用Docker安装和配置Jenkins"
 date: 2024-06-26T16:00:00+08:00
 slug: install-jenkins
 draft: false
@@ -12,7 +12,7 @@ tags: [ jenkins ]
 ```bash
 $ docker volume create --name jenkins_data
 
-$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home jenkins/jenkins:lts-jdk8
+$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home jenkins/jenkins:jdk21
 ```
 
 第一次启动 Jenkins 时，Docker 日志将包含如下消息：
@@ -33,7 +33,7 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 ```yaml
 services:
    jenkins:
-        image: jenkins/jenkins:lts-jdk8
+        image: jenkins/jenkins:jdk21
         ports:
             - "8080:8080"
             - "50000:50000"
@@ -53,7 +53,7 @@ volumes:
 定制官方 Jenkins Docker 镜像，例如，安装 curl、maven、docker-ce-cli
 
 ```dockerfile
-FROM jenkins/jenkins:2.452.2-jdk8
+FROM jenkins/jenkins:jdk21
 USER root
 RUN apt-get update && apt-get install -y curl maven lsb-release
 RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
@@ -151,7 +151,15 @@ No ECDSA host key is known for github.houston.softwaregrp.net and you have reque
 
 ### 配置反向代理
 
-参考 《[CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？](https://akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c)》，创建一个 nginx conf 文件 jenkins.conf 放到 nginx 的相应目录下。
+参考 《[CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？](https://akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c)》。
+
+
+
+1. 准备好 SSL 文件，放置 /etc/nginx/ssl 目录
+2. 安装 nginx。
+
+3. 创建一个 nginx conf 文件 jenkins.conf 放到 nginx 的相应目录下。
+
 ```nginx
 # Required for Jenkins websocket agents
 map $http_upgrade $connection_upgrade {
@@ -161,13 +169,13 @@ map $http_upgrade $connection_upgrade {
 
 server {
     listen 80;
-    server_name jenkins.wesine.com.cn;
+    server_name jenkins.chensoul.cc;
     rewrite ^ https://$http_host$request_uri? permanent;
 }
 
 server {
     listen 443 ssl;
-    server_name jenkins.wesine.com.cn;
+    server_name jenkins.chensoul.cc;
     ssl_certificate /etc/nginx/ssl/all.crt;
     ssl_certificate_key /etc/nginx/ssl/all.key;
     ssl_session_timeout 5m;
