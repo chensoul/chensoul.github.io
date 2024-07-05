@@ -75,7 +75,7 @@ exit
 
 ### 配置反向代理
 
-1. 准备好 SSL 文件，放置 /etc/nginx/ssl 目录
+1. 准备好 SSL 文件（all.crt 和 all.key），放置 /etc/nginx/ssl 目录
 2. 安装 nginx。
 
 3. 创建一个 nginx conf 文件 gitlab.conf 放到 nginx 的相应目录下。
@@ -111,7 +111,12 @@ server {
 }
 ```
 
-修改 docker-compose 文件，external_url 改为域名
+修改 docker-compose 文件：
+
+- `external_url` 使用域名
+- `gitlab_shell_ssh_port`：指定 ssh 端口号为 2222。
+- `time_zone`：指定时区
+- `listen_addr`：指定 tcp 监听IP 和端口
 
 ```bash
 services:
@@ -137,17 +142,19 @@ volumes:
     gitlab_data:
 ```
 
+因为宿主机 SSH 协议占用了 22 端口，故 Gitlab 容器暴露到宿主机的端口不能使用 22 端口。如果还是想使用 22 端口，一个解决办法是，将宿主机的 SSH 服务的 22 端口改为其他端口。
 
 
-### 测试下载项目
 
-创建一个项目 ：http://gitlab.chensoul.cc/chenzj/test.git ，让后下载项目
+### 测试
+
+创建一个项目 ：http://gitlab.chensoul.cc/chenzj/test.git ，然后下载项目
 
 ```bash
 git clone https://gitlab.chensoul.cc/chenzj/test.git
 ```
 
-在 gitlab 配置 ssh 秘钥，然后通过 ssh 下载项目。
+在 gitlab 上传本地 ssh 秘钥，然后通过 ssh 协议（指定端口为 2222）下载项目。
 
 ```bash
 git clone ssh://git@gitlab.chensoul.cc:2222/chenzj/test.git
