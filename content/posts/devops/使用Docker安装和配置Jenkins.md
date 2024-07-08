@@ -305,3 +305,5 @@ sudo journalctl -u docker-jenkins -f
 ## 参考文章
 
 - [Docker 安装 Jenkins 并实现项目自动化部署](https://cloud.tencent.com/developer/article/2347137)
+
+- [How to install Jenkins using Docker Compose?](https://www.czerniga.it/2021/11/07/how-to-install-jenkins-using-docker-compose/)
