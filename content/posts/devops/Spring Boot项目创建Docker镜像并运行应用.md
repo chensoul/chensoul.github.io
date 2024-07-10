@@ -172,7 +172,7 @@ WARNING: The following Docker files already exist in this directory:
 ? Do you want to overwrite them? Yes
 ? What application platform does your project use? Java
 ? What's the relative directory (with a leading .) for your app? ./src
-? What version of Java do you want to use? 17
+? What version of Java do you want to use? 21
 ? What port does your server listen on? 8080
 ```
 
@@ -190,7 +190,7 @@ WARNING: The following Docker files already exist in this directory:
 ################################################################################
 
 # Create a stage for resolving and downloading dependencies.
-FROM eclipse-temurin:17-jdk-jammy as deps
+FROM eclipse-temurin:21-jdk-jammy as deps
 
 WORKDIR /build
 
@@ -233,7 +233,7 @@ FROM package as extract
 
 WORKDIR /build
 
-RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
+RUN java -Djarmode=tools -jar target/app.jar extract --layers --launcher --destination target/extracted
 
 ################################################################################
 
@@ -243,11 +243,11 @@ RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/e
 # from the install stage.
 #
 # The example below uses eclipse-turmin's JRE image as the foundation for running the app.
-# By specifying the "17-jre-jammy" tag, it will also use whatever happens to be the
+# By specifying the "21-jre-jammy" tag, it will also use whatever happens to be the
 # most recent version of that tag when you build your Dockerfile.
 # If reproducability is important, consider using a specific digest SHA, like
 # eclipse-temurin@sha256:99cede493dfd88720b610eb8077c8688d3cca50003d76d1d539b0efc8cca72b4.
-FROM eclipse-temurin:17-jre-jammy AS final
+FROM eclipse-temurin:21-jre-jammy AS final
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
@@ -273,17 +273,92 @@ EXPOSE 8080
 ENTRYPOINT [ "java", "org.springframework.boot.loader.launch.JarLauncher" ]
 ```
 
+> 注意：
+>
+> JDK21 使用：
+>
+> ```bash
+> java -Djarmode=tools -jar target/app.jar extract --layers --launcher --destination target/extracted
+> ```
+
 这个Dockerfile文件是用于构建和运行Java应用程序的Docker镜像。它使用多个阶段（stages）来完成不同的任务。
 
-首先，使用`eclipse-temurin:17-jdk-jammy`作为基础镜像创建一个名为`deps`的阶段。在这个阶段，工作目录被设置为`/build`，然后复制了一个可执行的`mvnw`包装器和`.mvn/`目录。接下来，通过执行`./mvnw dependency:go-offline -DskipTests`命令下载项目的依赖项，并利用Docker的缓存机制将它们挂载到`/root/.m2`目录中。
+参考《[使用 Docker 容器化并运行 Spring Boot 应用程序](https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/)》，简化（去掉 deps 阶段，添加 test、development 阶段） Dockerfile 后的文件如下：
 
-接下来，使用`deps`阶段作为基础创建一个名为`package`的阶段。在这个阶段中，将项目的源代码（`./src`目录）复制到工作目录，并执行`./mvnw package -DskipTests`命令来构建应用程序的可执行JAR文件。最后，将构建生成的JAR文件重命名为`app.jar`并放置在`target/`目录下。
+```dockerfile
+# syntax=docker/dockerfile:1
 
-然后，使用`package`阶段作为基础创建一个名为`extract`的阶段。在这个阶段中，使用Spring Boot的层工具和Docker的缓存机制，将打包的应用程序提取到一个单独的层中。这样可以实现在最终阶段中复制这个层，并利用Docker的缓存机制避免重复构建。
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
+FROM eclipse-temurin:21-jdk-jammy AS base
+WORKDIR /build
+COPY --chmod=0755 mvnw mvnw
+COPY .mvn/ .mvn/
 
-最后，使用`eclipse-temurin:17-jre-jammy`作为基础镜像创建一个名为`final`的阶段。在这个阶段中，首先通过`adduser`命令创建一个非特权用户，用于运行应用程序。然后，可以将之前阶段中提取的应用程序层复制到最终阶段中，并设置用户和工作目录。
+FROM base AS test
+WORKDIR /build
+COPY ./src src/
+RUN --mount=type=bind,source=pom.xml,target=pom.xml \
+    --mount=type=cache,target=/root/.m2 \
+    ./mvnw --ntp test
 
-通过使用多个阶段，可以充分利用Docker的缓存机制，减少重复构建的时间，并生成一个最终的镜像，其中只包含运行应用程序所需的最小依赖项和文件。
+FROM test AS package
+WORKDIR /build
+COPY ./src src/
+RUN --mount=type=bind,source=pom.xml,target=pom.xml \
+    --mount=type=cache,target=/root/.m2 \
+    ./mvnw --ntp package -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip && \
+    mv target/*.jar app.jar
+
+# Create a stage for extracting the application into separate layers.
+# Take advantage of Spring Boot's layer tools and Docker's caching by extracting
+# the packaged application into separate layers that can be copied into the final stage.
+# See Spring's docs for reference:
+# https://docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
+FROM package AS extract
+WORKDIR /build
+RUN java -Djarmode=tools -jar app.jar extract --layers --launcher --destination extracted
+
+FROM extract AS development
+WORKDIR /build
+RUN cp -r /build/extracted/dependencies/. ./
+RUN cp -r /build/extracted/spring-boot-loader/. ./
+RUN cp -r /build/extracted/snapshot-dependencies/. ./
+RUN cp -r /build/extracted/application/. ./
+CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
+
+# Create a new stage for running the application that contains the minimal
+# runtime dependencies for the application. This often uses a different base
+# image from the install or build stage where the necessary files are copied
+# from the install stage.
+#
+# The example below uses eclipse-turmin's JRE image as the foundation for running the app.
+# By specifying the "21-jre-jammy" tag, it will also use whatever happens to be the
+# most recent version of that tag when you build your Dockerfile.
+FROM eclipse-temurin:21-jre-jammy AS final
+WORKDIR /app
+# Create a non-privileged user that the app will run under.
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
+USER appuser
+COPY --from=extract /build/extracted/dependencies/ ./
+COPY --from=extract /build/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/extracted/application/ ./
+EXPOSE 8080
+ENTRYPOINT [ "java", "org.springframework.boot.loader.launch.JarLauncher" ]
+```
+
+
 
 ## 使用 Maven 插件
 
@@ -509,14 +584,14 @@ ENTRYPOINT ["java", "-jar", "application.jar"]
 # the packaged application into separate layers that can be copied into the final stage.
 # See Spring's docs for reference:
 # https://docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
-FROM eclipse-temurin:21-jre-jammy as extract
+FROM eclipse-temurin:21-jdk-jammy AS extract
 WORKDIR /build
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
-RUN java -Djarmode=layertools -jar app.jar extract --layers --destination extracted
+RUN java -Djarmode=tools -jar app.jar extract --layers --launcher --destination extracted
 
 ################################################################################
-FROM eclipse-temurin:21-jre-jammy as final
+FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
 
 # Create a non-privileged user that the app will run under.
@@ -531,10 +606,10 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-COPY --from=extract build/extracted/dependencies/ ./
-COPY --from=extract build/extracted/spring-boot-loader/ ./
-COPY --from=extract build/extracted/snapshot-dependencies/ ./
-COPY --from=extract build/extracted/application/ ./
+COPY --from=extract /build/extracted/dependencies/ ./
+COPY --from=extract /build/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/extracted/application/ ./
 
 EXPOSE 8080
 

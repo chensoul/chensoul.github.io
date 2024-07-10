@@ -7,9 +7,7 @@ categories: ["devops"]
 tags: [ spring-boot,docker]
 ---
 
-本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/language/java/)》文章，并做了一些改动。
-
-
+> 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/language/java/)》文章，并做了一些改动。
 
 Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用程序。在本模块中，您将学习如何：
 
@@ -21,10 +19,6 @@ Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用
 
 完成 Java 入门模块后，您应该能够根据本指南中提供的示例和说明来容器化您自己的 Java 应用程序。
 
-开始容器化您的第一个 Java 应用程序。
-
-
-
 # 容器化你的应用
 
 ## 先决条件
@@ -32,10 +26,6 @@ Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用
 - 您已安装最新版本的 [Docker Desktop](https://docs.docker.com/get-docker/)，Docker 会定期添加新功能，本指南的某些部分可能仅适用于最新版本的 Docker Desktop。
 
 - 您有一个 [Git 客户端](https://git-scm.com/downloads)。本节中的示例使用基于命令行的 Git 客户端，但您可以使用任何客户端。
-
-## 概述
-
-本节引导您完成 Java 应用程序的容器化和运行。
 
 ## 获取示例应用程序
 
@@ -45,8 +35,6 @@ Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用
 $ git clone https://github.com/spring-projects/spring-petclinic.git
 $ cd spring-petclinic
 ```
-
-示例应用程序是使用 Maven 构建的 Spring Boot 应用程序。有关更多详细信息，请参阅`readme.md`存储库。
 
 ## 初始化 Docker 资产
 
@@ -69,7 +57,7 @@ WARNING: The following Docker files already exist in this directory:
 ? Do you want to overwrite them? Yes
 ? What application platform does your project use? Java
 ? What's the relative directory (with a leading .) for your app? ./src
-? What version of Java do you want to use? 17
+? What version of Java do you want to use? 21
 ? What port does your server listen on? 8080
 ```
 
@@ -92,8 +80,6 @@ $ docker compose up --build
 打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
 
 在终端中，按`ctrl`+`c`停止应用程序。
-
-### 在后台运行应用程序
 
 您可以通过添加选项来运行与终端分离的应用程序`-d` 。在`spring-petclinic`目录中，在终端中运行以下命令。
 
@@ -122,8 +108,6 @@ $ docker compose down
 
 
 # 使用容器进行 Java 开发
-
-## 概述
 
 在本部分中，您将逐步为上一节中容器化的应用程序设置本地开发环境。这包括：
 
@@ -212,26 +196,26 @@ $ docker compose up --build
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-FROM eclipse-temurin:17-jdk-jammy as deps
+FROM eclipse-temurin:21-jdk-jammy AS deps
 WORKDIR /build
 COPY --chmod=0755 mvnw mvnw
 COPY .mvn/ .mvn/
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 ./mvnw dependency:go-offline -DskipTests
 
-FROM deps as package
+FROM deps AS package
 WORKDIR /build
 COPY ./src src/
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw package -DskipTests && \
+    ./mvnw --ntp package -DskipTests && \
     mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
 
-FROM package as extract
+FROM package AS extract
 WORKDIR /build
 RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
 
-FROM extract as development
+FROM extract AS development
 WORKDIR /build
 RUN cp -r /build/target/extracted/dependencies/. ./
 RUN cp -r /build/target/extracted/spring-boot-loader/. ./
@@ -239,7 +223,8 @@ RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /build/target/extracted/application/. ./
 CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
 
-FROM eclipse-temurin:17-jre-jammy AS final
+FROM eclipse-temurin:21-jre-jammy AS final
+WORKDIR /app
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -250,10 +235,10 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 USER appuser
-COPY --from=extract build/target/extracted/dependencies/ ./
-COPY --from=extract build/target/extracted/spring-boot-loader/ ./
-COPY --from=extract build/target/extracted/snapshot-dependencies/ ./
-COPY --from=extract build/target/extracted/application/ ./
+COPY --from=extract /build/target/extracted/dependencies/ ./
+COPY --from=extract /build/target/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/target/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/target/extracted/application/ ./
 EXPOSE 8080
 ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.boot.loader.launch.JarLauncher" ]
 ```
@@ -440,44 +425,44 @@ $ docker compose watch
 
 测试是现代软件开发的重要组成部分。测试对不同的开发团队来说可能意味着很多事情。有单元测试、集成测试和端到端测试。在本指南中，您将了解如何在 Docker 中运行单元测试。
 
-### 用于测试的多阶段 Dockerfile
+## 用于测试的多阶段 Dockerfile
 
 在以下示例中，您将把测试命令拉入 Dockerfile。将 Dockerfile 的内容替换为以下内容。
 
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-FROM eclipse-temurin:17-jdk-jammy as base
+FROM eclipse-temurin:21-jdk-jammy AS base
 WORKDIR /build
 COPY --chmod=0755 mvnw mvnw
 COPY .mvn/ .mvn/
 
-FROM base as test
+FROM base AS test
 WORKDIR /build
 COPY ./src src/
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw test
+    ./mvnw --ntp test
 
-FROM base as deps
+FROM base AS deps
 WORKDIR /build
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw dependency:go-offline -DskipTests
+    ./mvnw --ntp dependency:go-offline -DskipTests
 
-FROM deps as package
+FROM deps AS package
 WORKDIR /build
 COPY ./src src/
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw package -DskipTests && \
+    ./mvnw --ntp package -DskipTests && \
     mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
 
-FROM package as extract
+FROM package AS extract
 WORKDIR /build
 RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
 
-FROM extract as development
+FROM extract AS development
 WORKDIR /build
 RUN cp -r /build/target/extracted/dependencies/. ./
 RUN cp -r /build/target/extracted/spring-boot-loader/. ./
@@ -485,7 +470,8 @@ RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /build/target/extracted/application/. ./
 CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
 
-FROM eclipse-temurin:17-jre-jammy AS final
+FROM eclipse-temurin:21-jre-jammy AS final
+WORKDIR /app
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -496,10 +482,10 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 USER appuser
-COPY --from=extract build/target/extracted/dependencies/ ./
-COPY --from=extract build/target/extracted/spring-boot-loader/ ./
-COPY --from=extract build/target/extracted/snapshot-dependencies/ ./
-COPY --from=extract build/target/extracted/application/ ./
+COPY --from=extract /build/target/extracted/dependencies/ ./
+COPY --from=extract /build/target/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/target/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/target/extracted/application/ ./
 EXPOSE 8080
 ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.boot.loader.launch.JarLauncher" ]
 ```
@@ -507,15 +493,6 @@ ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.b
 首先，你添加了一个新的基础阶段。在基础阶段中，你添加了测试阶段和 deps 阶段都需要的通用指令。
 
 接下来，您添加了一个`test`基于基础阶段标记的新测试阶段。在此阶段，您复制了必要的源文件，然后指定`RUN`运行 。您以前`./mvnw test`没有使用 ，而是使用来运行测试。原因是 指令在容器运行时运行，而 指令在构建映像时运行。使用 时，如果测试失败，构建也会失败。
-
-```dockerfile
-FROM base as test
-WORKDIR /build
-COPY ./src src/
-RUN --mount=type=bind,source=pom.xml,target=pom.xml \
-    --mount=type=cache,target=/root/.m2 \
-    ./mvnw test
-```
 
 最后，您更新了 deps 阶段以基于基础阶段，并删除了现在处于基础阶段的指令。
 
@@ -575,7 +552,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 3. 创建一个名为的新**Repository 变量**`DOCKER_USERNAME`，并以您的 Docker ID 作为值。
 
-4. 为 Docker Hub创建一个新的 [个人访问令牌 (PAT)](https://docs.docker.com/security/for-developers/access-tokens/#create-an-access-token) `docker-tutorial` 。您可以将此令牌命名为。确保访问权限包括读取和写入。
+4. 为 Docker Hub创建一个新的 [个人访问令牌 (PAT)](https://docs.docker.com/security/for-developers/access-tokens/#create-an-access-token)。您可以将此令牌命名为  `docker-tutorial` 。确保访问权限包括读取和写入。
 
 5. 将 PAT 作为**存储库机密**添加到您的 GitHub 存储库中，名称为 `DOCKERHUB_TOKEN`。
 
@@ -622,7 +599,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
          - name: Login to Docker Hub
            uses: docker/login-action@v3
            with:
-             username: ${{ vars.DOCKER_USERNAME }}
+             username: ${{ secrets.DOCKER_USERNAME }}
              password: ${{ secrets.DOCKERHUB_TOKEN }}
          - name: Set up Docker Buildx
            uses: docker/setup-buildx-action@v3
@@ -637,7 +614,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
              platforms: linux/amd64,linux/arm64
              push: true
              target: final
-             tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+             tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
    ```
    
    有关的 YAML 语法的更多信息`docker/build-push-action`，请参阅 [GitHub Action README](https://github.com/docker/build-push-action/blob/master/README.md)。
