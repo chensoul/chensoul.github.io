@@ -103,6 +103,9 @@ kubectl get po -A
 启动 dashboard
 
 ```bash
+$ minikube dashboard --url
+
+# 或者
 $ minikube dashboard
 🔌  Enabling dashboard ...
     ▪ Using image docker.io/kubernetesui/dashboard:v2.7.0
@@ -187,15 +190,15 @@ minikube delete --all
 
 ## 部署应用
 
-### 部署一个服务
+### 创建 Deployment
 
-创建一个部署：
+使用 `kubectl create` 命令创建管理 Pod 的 Deployment。该 Pod 根据提供的 Docker 镜像运行容器。
 
 ```bash
 kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.0
 ```
 
-查询部署：
+查看 Deployment：
 
 ```bash
 $ kubectl get deployment web
@@ -203,12 +206,59 @@ NAME   READY   UP-TO-DATE   AVAILABLE   AGE
 web    1/1     1            1           14s
 ```
 
-将部署公开为 NodePort，会创建一个服务 hello-minikube
+该 Pod 可能需要一些时间才能变得可用。如果你在输出结果中看到 “0/1”，请在几秒钟后重试。
+
+在 Kubernetes 内运行的 [Pod](https://kubernetes.io/docs/concepts/workloads/pods/) 运行在一个私有的、隔离的网络上。 默认这些 Pod 可以从同一 Kubernetes 集群内的其他 Pod 和服务看到，但超出这个网络后则看不到。 当我们使用 `kubectl` 时，我们通过 API 端点交互与应用进行通信。
+
+`kubectl proxy` 命令可以创建一个代理，将通信转发到集群范围的私有网络。 
+
 ```bash
-$ kubectl expose deployment web --type=NodePort --port=8080
+kubectl proxy
 ```
 
-查询服务：
+你可以看到通过代理端点托管的所有 API。 例如，我们可以使用以下 `curl` 命令直接通过 API 查询版本：
+
+```
+curl http://localhost:8001/version
+```
+
+API 服务器将基于也能通过代理访问的 Pod 名称为每个 Pod 自动创建端点。
+
+获取 Pod 名称：
+
+```bash
+kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
+```
+
+输出结果如下：
+
+```bash
+web-56bb54ff6d-stk75
+```
+
+你可以运行以下命令通过代理的 API 访问 Pod：
+
+```bash
+curl http://localhost:8001/api/v1/namespaces/default/pods/web-56bb54ff6d-stk75/
+```
+
+
+
+### 创建 Service
+
+默认情况下，Pod 只能通过 Kubernetes 集群中的内部 IP 地址访问。 为了不使用代理也能访问新的 Deployment，你必须将 Pod 通过 Kubernetes [**Service**](https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/) 公开出来。
+
+使用 `kubectl expose` 命令将 Pod 暴露给公网：
+
+```bash
+$ kubectl expose deployment web --type=LoadBalancer --port=8080
+```
+
+这里的 `--type=LoadBalancer` 参数表明你希望将你的 Service 暴露到集群外部。
+
+测试镜像中的应用程序代码仅监听 TCP 8080 端口。 如果你用 `kubectl expose` 暴露了其它的端口，客户端将不能访问其它端口。
+
+查看你创建的 Service：
 
 ```bash
 $ kubectl get service web
@@ -216,33 +266,15 @@ NAME   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 web    NodePort   10.106.178.70   <none>        8080:30954/TCP   8s
 ```
 
-如何访问该服务呢？通过 http://192.168.49.2:30954/ 是无法访问的。
+对于支持负载均衡器的云服务平台而言，平台将提供一个外部 IP 来访问该服务。 在 Minikube 上，`LoadBalancer` 使得服务可以通过命令 `minikube service` 访问。
+
+运行下面的命令：
 
 ```bash
-$ curl http://192.168.49.2:30954/
-curl: (56) Recv failure: Connection reset by peer
+minikube service hello-node
 ```
 
-可以使用 `minikube service` 对该服务启动一个代理：
-
-```bash
-$ minikube service web
-|-----------|------|-------------|---------------------------|
-| NAMESPACE | NAME | TARGET PORT |            URL            |
-|-----------|------|-------------|---------------------------|
-| default   | web  |        8080 | http://192.168.49.2:30954 |
-|-----------|------|-------------|---------------------------|
-🏃  Starting tunnel for service web.
-|-----------|------|-------------|------------------------|
-| NAMESPACE | NAME | TARGET PORT |          URL           |
-|-----------|------|-------------|------------------------|
-| default   | web  |             | http://127.0.0.1:63788 |
-|-----------|------|-------------|------------------------|
-🎉  Opening service default/web in default browser...
-❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
-```
-
-这时候通过浏览器访问 http://127.0.0.1:63788/ ，可以看到以下内容：
+这将打开一个浏览器窗口，为你的应用程序提供服务并显示应用的响应。
 
 ```bash
 Hello, world!
@@ -250,51 +282,9 @@ Version: 1.0.0
 Hostname: web-56bb54ff6d-wtcxn
 ```
 
-### 部署一个负载均衡
+### 创建 Ingress
 
-创建三个 deployment：
-
-```bash
-kubectl create deployment web-balanced  -r 3 --image=gcr.io/google-samples/hello-app:1.0
-kubectl expose deployment web-balanced --type=LoadBalancer --port=8080
-```
-
-查询 deployment：
-
-```bash
-$ kubectl get deployment web-balanced
-NAME           READY   UP-TO-DATE   AVAILABLE   AGE
-web-balanced   3/3     3            3           32s
-```
-
-查询 pods：
-
-```bash
-kubectl get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-web-56bb54ff6d-wtcxn            1/1     Running   0          8m43s
-web-balanced-7fdf78888c-8p9sf   1/1     Running   0          45s
-web-balanced-7fdf78888c-9sx8g   1/1     Running   0          45s
-web-balanced-7fdf78888c-nrbnx   1/1     Running   0          45s
-```
-
-查询该服务
-
-```shell
-$ kubectl get services web-balanced
-NAME           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-web-balanced   LoadBalancer   10.97.14.48   127.0.0.1     8080:31553/TCP   8s
-```
-
-使用 `minikube service` 对该服务启动一个代理：
-
-```bash
-minikube service web-balanced
-```
-
-
-
-### 部署一个 ingress
+Minikube 有一组内置的[插件](https://kubernetes.io/zh-cn/docs/concepts/cluster-administration/addons/)， 可以在本地 Kubernetes 环境中启用、禁用和打开。
 
 查询插件：
 
@@ -304,7 +294,7 @@ minikube addons list
 
 启用入口插件：
 
-```shell
+```bash
 minikube addons enable ingress
 ```
 
@@ -385,3 +375,18 @@ Version: 1.0.0
 Hostname: web-56bb54ff6d-stk75
 ```
 
+### 清理
+
+现在可以清理你在集群中创建的资源：
+
+```bash
+kubectl delete service web
+kubectl delete deployment web
+kubectl delete ingress example-ingress
+```
+
+停止 Minikube 集群：
+
+```shell
+minikube stop
+```

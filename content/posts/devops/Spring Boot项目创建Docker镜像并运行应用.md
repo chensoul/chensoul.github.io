@@ -120,33 +120,6 @@ tags: [ spring-boot,docker]
    CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /code/*.jar
    EXPOSE 7471
 
-## 使用 Maven 镜像从源码运行
-
-1. 在项目根目录创建一个 docker-compose.yml文件：
-
-```yml
-services:
-  app:
-    image: maven:3.9.6-eclipse-temurin-21
-    volumes:
-      - .:/usr/src/workdir
-      - ~/.m2:/root/.m2
-    working_dir: /usr/src/workdir
-    command: "mvn clean -DskipTests spring-boot:run"
-    healthcheck:
-      test: [ 'CMD-SHELL','curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1' ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-```
-
-2. 启动容器
-
-```bash
-docker-compose app -f docker-compose.yml up -d
-```
-
 ## 使用 Docker init 创建 Dockerfile
 
 参考 [Containerize a Java application](https://docs.docker.com/language/java/containerize/)，首先需要安装 docker desktop，这样才能使用 docker init 命令。
@@ -623,6 +596,81 @@ ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
 - 在项目的 `build.gradle` 文件中添加 `spring-boot-gradle-plugin` 插件配置。
 - 插件会自动生成 Dockerfile 并构建 Docker 镜像。
 - 使用 `./gradlew bootBuildImage` 命令即可构建并推送镜像。
+
+
+
+## 使用 Maven 镜像从源码运行
+
+### 使用 dockerfile
+
+参考 https://github.com/selcuksert/digilib/blob/main/backend/libapp/Dockerfile 并结合前面的分层构建镜像，最后的 dockerfile 如下：
+
+```dockerfile
+FROM maven:3-eclipse-temurin-21-alpine AS build
+WORKDIR /build
+COPY . .
+RUN mvn install -DskipTests
+
+FROM build AS extract
+WORKDIR /build
+COPY target/*.jar app.jar
+RUN java -Djarmode=tools -jar app.jar extract --layers --launcher --destination extracted
+
+FROM eclipse-temurin:21-jre-jammy AS final
+WORKDIR /app
+
+# Create a non-privileged user that the app will run under.
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
+
+COPY --from=extract /build/extracted/dependencies/ ./
+COPY --from=extract /build/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/extracted/application/ ./
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+```
+
+
+
+### 使用 docker-compose
+
+1. 在项目根目录创建一个 docker-compose.yml文件：
+
+```yml
+services:
+  app:
+    image: maven:3.9.6-eclipse-temurin-21
+    volumes:
+      - .:/usr/src/workdir
+      - ~/.m2:/root/.m2
+    working_dir: /usr/src/workdir
+    command: "mvn clean -DskipTests spring-boot:run"
+    healthcheck:
+      test: [ 'CMD-SHELL','curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1' ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+```
+
+2. 启动容器
+
+```bash
+docker-compose app -f docker-compose.yml up -d
+```
+
+
 
 ## 参考文章
 
