@@ -207,7 +207,7 @@ maven-scm-publish-plugin 插件需要以下参数，参考 https://maven.apache.
       <server>
           <id>github</id>
           <username>chensoul</username>
-          <password>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</password>
+          <password>ghp_XXXXXXXXXXXXXXXXXX</password>
       </server>
   </servers>
   ```
@@ -513,24 +513,12 @@ java.lang.NoClassDefFoundError: org/apache/maven/doxia/siterenderer/DocumentCont
 ```xml
 <plugin>
     <artifactId>maven-site-plugin</artifactId>
-    <version>3.12.1</version>
+    <version>4.0.0-M15</version>
     <configuration>
-        <locales>en,fr</locales>
+        <locales>default,en,fr</locales>
     </configuration>
 </plugin>
 ```
-
-同时需要将 maven-fluido-skin 版本改为 1.11.1
-
-```xml
-<skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-fluido-skin</artifactId>
-    <version>1.11.1</version>
-</skin>
-```
-
-
 
 再次提交代码，发现 Github action 还是运行失败，异常日志：
 
@@ -561,8 +549,24 @@ and the repository exists.
 
 - 修改 src/site/site.xml 和 src/site/site_fr.xml 文件中 maven-fluido-skin 的版本为当前最新版本：2.0.0-M9
 
+  ```xml
+  <skin>
+      <groupId>org.apache.maven.skins</groupId>
+      <artifactId>maven-fluido-skin</artifactId>
+      <version>2.0.0-M9</version>
+  </skin>
+  ```
+
 - 修改 src/site/site.xml 和 src/site/site_fr.xml 文件中 `${artifactId}` 为 `${this.artifactId}`
 
+  ```xml
+  <bannerLeft>
+      <name>${this.artifactId}</name>
+      <src>https://maven.apache.org/images/apache-maven-project.png</src>
+      <href>https://www.apache.org/</href>
+  </bannerLeft>
+  ```
+  
   
 
 再次发布并打开网站，则正常显示：
