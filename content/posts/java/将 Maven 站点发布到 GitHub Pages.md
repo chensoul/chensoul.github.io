@@ -571,4 +571,4 @@ and the repository exists.
 
 再次发布并打开网站，则正常显示：
 
-![maven-my-app-github-i18n-index-ok](/Users/chensoul/Pictures/maven-my-app-github-i18n-index-ok.png)
+![maven-my-app-github-i18n-index-ok](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/maven-my-app-github-i18n-index-ok.png)
