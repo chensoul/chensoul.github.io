@@ -410,8 +410,6 @@ $ gitlab-ctl restart
 
 用户设置 -> 网络，白名单以允许来自钩子和服务的对本地网络的请求，填入 K8S 集群 api-server 的地址。
 
-![image-20200821174547237](/Users/chensoul/Downloads/第1天-分布式版本控制系统/assets/image-20200821174547237.png)
-
 ### 2、获取k8s集群API地址
 
 ```yaml
@@ -499,4 +497,4 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InluNWZyY3V5T1BjNmFFQlpmRVBmOGFOenRmVkx1
 
 ### 6、添加k8s集群
 
-管理执行 -> Kubernetes
+管理执行 -> Kubernetes，添加k8s集群

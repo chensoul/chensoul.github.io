@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [ maven,java]
 ---
 
-本文源代码：https://github.com/chensoul/maven-site-github-example/。
+本文源代码：[https://github.com/chensoul/maven-site-github-example/](https://github.com/chensoul/maven-site-github-example/) 。
 
 ## 创建 Java Maven 项目
 
@@ -72,7 +72,7 @@ git add . && git commit -m "initial site content" && git push origin gh-pages
 
 相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：https://chensoul.github.io/maven-site-github-example：
 
-![maven-my-app-github-page-index](/Users/chensoul/Desktop/tinypng_output/maven-my-app-github-page-index.png)
+![maven-my-app-github-page-index](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/maven-my-app-github-page-index.png)
 
 现在我们可以回到 **主**分支：
 
