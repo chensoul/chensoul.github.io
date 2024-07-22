@@ -1,5 +1,5 @@
 ---
-title: "使用Docker安装和配置Jenkins"
+title: "Jenkins安装和部署-使用Docker"
 date: 2024-06-26T16:00:00+08:00
 slug: install-jenkins
 draft: false

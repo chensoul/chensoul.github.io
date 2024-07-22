@@ -1,5 +1,5 @@
 ---
-title: "使用Argo CD实现持续交付"
+title: "Argo CD安装和部署"
 date: 2024-05-11T12:00:00+08:00
 slug: argocd
 tags: [argocd,k8s]

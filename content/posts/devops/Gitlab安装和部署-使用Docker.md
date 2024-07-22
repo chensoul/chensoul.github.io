@@ -1,5 +1,5 @@
 ---
-title: "使用Docker安装和配置Gitlab"
+title: "Gitlab安装和部署-使用Docker"
 date: 2024-06-26T16:00:00+08:00
 slug: install-gitlab
 draft: false
@@ -504,11 +504,8 @@ sudo gitlab-runner register \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-privileged \
-  --docker-image docker:stable \
-  --docker-volumes "/certs/client"
+  --docker-image docker:stable 
 ```
-
-> 注意：如果使用 Docker-in-Docker 的方式，在 Docker-in-Docker 容器内是无法访问没有通过 DNS 解析的 gitlab 域名的。
 
 编辑 /srv/gitlab/gitlab-runner/config.toml ，或者进入容器：
 
@@ -519,9 +516,10 @@ docker exec -it gitlab-runner nano /etc/gitlab-runner/config.toml
 修改 gitlab url 为 IP:Port，添加 maven 缓存，docker 缓存：
 
 ```toml
-concurrent = 1
+concurrent = 10 # 并行执行作业数
 check_interval = 0
 shutdown_timeout = 0
+connection_max_age = "15m0s"
 
 [session_server]
   session_timeout = 1800
@@ -531,36 +529,18 @@ shutdown_timeout = 0
   url = "http://192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
-  [runners.custom_build_dir]
   [runners.cache]
     MaxUploadedArchiveSize = 0
-    [runners.cache.s3]
-    [runners.cache.gcs]
-    [runners.cache.azure]
   [runners.docker]
     tls_verify = false
-    image = "docker:stable"
+    image = "docker:latest" # 配置默认镜像
     privileged = true
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
     disable_cache = false
-    volumes = ["/certs/client","/root/.m2:/root/.m2"]
+    volumes = ["/root/.m2:/root/.m2"] # 配置挂载路径
     shm_size = 0
     network_mtu = 0
-```
-
-配置镜像库镜像：
-
-```bash
-[[runners]]
-  ...
-  executor = "docker"
-  [runners.docker]
-    ...
-    privileged = true
-    [[runners.docker.services]]
-      name = "docker:27.0.3-dind"
-      command = ["--registry-mirror", "https://docker.1panel.live/"]
 ```
 
 重启 gitlab-runner：
@@ -578,16 +558,17 @@ sudo gitlab-runner register \
 	--url https://gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
-  --docker-image docker:stable \
+  --docker-image docker:latest \
   --docker-volumes /var/run/docker.sock:/var/run/docker.sock
 ```
 
 修改 /srv/gitlab/gitlab-runner/config.toml ：
 
 ```toml
-concurrent = 1
+concurrent = 10 # 并行执行作业数
 check_interval = 0
 shutdown_timeout = 0
+connection_max_age = "15m0s"
 
 [session_server]
   session_timeout = 1800
@@ -597,15 +578,11 @@ shutdown_timeout = 0
   url = "http://192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
-  [runners.custom_build_dir]
   [runners.cache]
     MaxUploadedArchiveSize = 0
-    [runners.cache.s3]
-    [runners.cache.gcs]
-    [runners.cache.azure]
   [runners.docker]
     tls_verify = false
-    image = "docker:stable"
+    image = "alpine:latest" # 配置默认镜像
     privileged = false
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
@@ -614,13 +591,18 @@ shutdown_timeout = 0
     volumes = ["/etc/docker/daemon.json:ro","/var/run/docker.sock","/root/.m2:/root/.m2"]
     shm_size = 0
     network_mtu = 0
-    extra_hosts = ["https://gitlab.example.com:192.168.1.107"]
-    network_mode = "host"
 ```
 
 说明：
 
-- 将 github runner 容器中的 /etc/docker/daemon.json 挂载到 docker-in-docker 中，/etc/docker/daemon.json 内容如下：
+- 在 docker 执行器内是无法访问没有通过 DNS 解析的 gitlab 域名的。需要配置 host 文件，一种方式是挂载 /etc/hosts 文件，另一种方式是添加下面配置：
+
+  ```bash
+      extra_hosts = ["https://gitlab.example.com:192.168.1.107"]
+      network_mode = "host"
+  ```
+
+- 配置 docker 镜像加速。将 github runner 容器中的 /etc/docker/daemon.json 挂载到 docker-in-docker 中，/etc/docker/daemon.json 内容如下：
 
 ```json
 {
@@ -630,9 +612,9 @@ shutdown_timeout = 0
 }
 ```
 
-- 添加 `extra_hosts = ["gitlab.example.com:192.168.1.107"] ` 和 `network_mode = "host"`，以便在 docker-in-docker 中 可以访问 gitlab 域名。192.168.1.107 为我的宿主机的 IP 地址。
+- Maven 缓存。在 docker 容器挂载 /root/.m2目录。
 
-- 宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。
+- Maven 镜像加速。在宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。
 
   ```xml
   <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -682,7 +664,60 @@ git commit -m "Initial commit"
 git push -u origin main
 ```
 
-## 配置 Gitlab
+## 配置
+
+### 常用配置
+
+进入容器，修改配置  /etc/gitlab/gitlab.rb：
+
+```bash
+# 时区
+gitlab_rails['time_zone'] = 'Asia/Shanghai'
+# 解决头像显示异常问题
+gitlab_rails['gravatar_plain_url'] = 'http://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+gitlab_rails['gravatar_ssl_url'] = 'https://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+# 关闭 promethues和alertmanager
+prometheus['enable'] = false
+alertmanager['enable'] = false
+# 默认gitlab配置资源占用较高，可以根据情况减少资源占用
+# 关闭邮件服务
+gitlab_rails['gitlab_email_enabled'] = false
+gitlab_rails['smtp_enable'] = false
+# 减少 postgresql 数据库缓存
+postgresql['shared_buffers'] = "128MB"
+# 减少 postgresql 数据库并发数量
+postgresql['max_connections'] = 60
+```
+
+使配置生效：
+
+```bash
+root@gitlab:/# gitlab-ctl reconfigure
+gitlab Reconfigured!
+root@gitlab:/# gitlab-ctl restart
+```
+
+或者直接修改 docker-compose 文件，重启容器。
+
+### 配置邮箱
+
+参考 [SMTP settings](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/smtp.md)，在安装文件中添加相关配置：
+
+```bash
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtp.gmail.com"
+gitlab_rails['smtp_port'] = 465
+gitlab_rails['smtp_user_name'] = "yourmail@gmail.com"
+gitlab_rails['smtp_password'] = "yoursecretapppass"
+gitlab_rails['smtp_domain'] = "smtp.gmail.com"
+gitlab_rails['smtp_authentication'] = "login"
+gitlab_rails['smtp_enable_starttls_auto'] = true
+gitlab_rails['smtp_tls'] = true
+gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+gitlab_rails['gitlab_email_from'] = 'yourmail@gmail.com'
+gitlab_rails['gitlab_email_display_name'] = 'GitLab TutorLokal'
+gitlab_rails['gitlab_email_reply_to'] = 'reply@yourdomain.com'
+```
 
 ### 实例配置
 
@@ -755,6 +790,12 @@ git push -u origin main
 docker exec -it gitlab bash
 ```
 
+获取root用户密码：
+
+```bash
+cat /etc/gitlab/initial_root_password | grep Password
+```
+
 运行下面命令修改root默认密码为 `abcd1234!`：
 
 ```bash
@@ -767,27 +808,7 @@ u.save!
 exit
 ```
 
-### 配置邮箱
-
-参考 [SMTP settings](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/smtp.md)，在安装文件中添加相关配置：
-
-```bash
-gitlab_rails['smtp_enable'] = true
-gitlab_rails['smtp_address'] = "smtp.gmail.com"
-gitlab_rails['smtp_port'] = 465
-gitlab_rails['smtp_user_name'] = "yourmail@gmail.com"
-gitlab_rails['smtp_password'] = "yoursecretapppass"
-gitlab_rails['smtp_domain'] = "smtp.gmail.com"
-gitlab_rails['smtp_authentication'] = "login"
-gitlab_rails['smtp_enable_starttls_auto'] = true
-gitlab_rails['smtp_tls'] = true
-gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
-gitlab_rails['gitlab_email_from'] = 'yourmail@gmail.com'
-gitlab_rails['gitlab_email_display_name'] = 'GitLab TutorLokal'
-gitlab_rails['gitlab_email_reply_to'] = 'reply@yourdomain.com'
-```
-
-## 配置系统服务
+### 配置系统服务
 
 脚本：
 
@@ -964,7 +985,22 @@ docker exec -it $RUNNER gitlab-runner restart
 docker-compose restart
 ```
 
+## 升级
 
+1、先备份相关文件，特别是数据库
+
+2、修改 docker-compose 文件中 gitlab 版本
+
+3、执行下面命令
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+
+
+## 
 
 ## 参考文章
 

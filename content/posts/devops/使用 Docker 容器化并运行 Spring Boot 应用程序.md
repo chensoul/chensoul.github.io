@@ -196,35 +196,28 @@ $ docker compose up --build
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-FROM eclipse-temurin:21-jdk-jammy AS deps
-WORKDIR /build
-COPY --chmod=0755 mvnw mvnw
-COPY .mvn/ .mvn/
-RUN --mount=type=bind,source=pom.xml,target=pom.xml \
-    --mount=type=cache,target=/root/.m2 ./mvnw dependency:go-offline -DskipTests
+# https://docs.docker.com/reference/dockerfile/
+# https://docs.docker.com/build/guide/multi-stage/
 
-FROM deps AS package
+FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+
+FROM base AS package
+WORKDIR /build
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw --ntp package -DskipTests && \
-    mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+    mvn package -DskipTests && \
+    mv target/$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
 
 FROM package AS extract
 WORKDIR /build
 RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
 
-FROM extract AS development
-WORKDIR /build
-RUN cp -r /build/target/extracted/dependencies/. ./
-RUN cp -r /build/target/extracted/spring-boot-loader/. ./
-RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
-RUN cp -r /build/target/extracted/application/. ./
-CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
-
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -244,13 +237,6 @@ ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.b
 ```
 
 保存并关闭`Dockerfile`。
-
-该文件主要添加了调试信息：
-```dockerfile
-CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
-```
-
-
 
 ## 使用 Compose 进行本地开发
 
@@ -432,31 +418,26 @@ $ docker compose watch
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-FROM eclipse-temurin:21-jdk-jammy AS base
+# https://docs.docker.com/reference/dockerfile/
+# https://docs.docker.com/build/guide/multi-stage/
+
+FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
-COPY --chmod=0755 mvnw mvnw
-COPY .mvn/ .mvn/
+COPY ./src src/
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
 
 FROM base AS test
 WORKDIR /build
-COPY ./src src/
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw --ntp test
+    mvn test
 
-FROM base AS deps
+FROM base AS package
 WORKDIR /build
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
-    ./mvnw --ntp dependency:go-offline -DskipTests
-
-FROM deps AS package
-WORKDIR /build
-COPY ./src src/
-RUN --mount=type=bind,source=pom.xml,target=pom.xml \
-    --mount=type=cache,target=/root/.m2 \
-    ./mvnw --ntp package -DskipTests && \
-    mv target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+    mvn package -DskipTests && \
+    mv target/$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
 
 FROM package AS extract
 WORKDIR /build
@@ -468,10 +449,11 @@ RUN cp -r /build/target/extracted/dependencies/. ./
 RUN cp -r /build/target/extracted/spring-boot-loader/. ./
 RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /build/target/extracted/application/. ./
-CMD [ "java", "-Dspring.profiles.active=postgres", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
+CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -489,14 +471,6 @@ COPY --from=extract /build/target/extracted/application/ ./
 EXPOSE 8080
 ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.boot.loader.launch.JarLauncher" ]
 ```
-
-首先，你添加了一个新的基础阶段。在基础阶段中，你添加了测试阶段和 deps 阶段都需要的通用指令。
-
-接下来，您添加了一个`test`基于基础阶段标记的新测试阶段。在此阶段，您复制了必要的源文件，然后指定`RUN`运行 。您以前`./mvnw test`没有使用 ，而是使用来运行测试。原因是 指令在容器运行时运行，而 指令在构建映像时运行。使用 时，如果测试失败，构建也会失败。
-
-最后，您更新了 deps 阶段以基于基础阶段，并删除了现在处于基础阶段的指令。
-
-运行以下命令以使用测试阶段作为目标构建新映像并查看测试结果。包含`--progress=plain`以查看构建输出，`--no-cache`确保测试始终运行，并`--target-test`定位测试阶段。
 
 现在，构建您的映像并运行测试。您将运行命令`docker build`并添加`--target test`标志，以便专门运行测试构建阶段。
 
@@ -585,36 +559,59 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 4. 在编辑器窗口中，复制并粘贴以下 YAML 配置。
 
    ```yaml
-   name: ci
+   # https://github.com/docker/metadata-action
+   
+   name: Build Docker Image
    
    on:
      push:
-       branches:
-         - main
+       branches: [ "main" ]
+       tags: [ "*" ]
+     release:
+       types: [ created ]
    
    jobs:
      build:
        runs-on: ubuntu-latest
        steps:
+         - name: Docker meta
+           id: meta
+           uses: docker/metadata-action@v5
+           with:
+             images: |
+               ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
+             tags: |
+               type=ref,event=tag
+               type=semver,pattern={{version}}
+               type=semver,pattern={{major}}.{{minor}}
+               type=semver,pattern={{major}}
+               type=raw,latest
+   
+         - name: Set up Docker Buildx
+           uses: docker/setup-buildx-action@v3
+   
+         - name: Set up QEMU
+           uses: docker/setup-qemu-action@v3
+   
+         - name: Set up Docker Buildx
+           uses: docker/setup-buildx-action@v3
+   
          - name: Login to Docker Hub
+           if: github.event_name != 'pull_request'
            uses: docker/login-action@v3
            with:
              username: ${{ secrets.DOCKER_USERNAME }}
-             password: ${{ secrets.DOCKERHUB_TOKEN }}
-         - name: Set up Docker Buildx
-           uses: docker/setup-buildx-action@v3
-         - name: Build and test
-           uses: docker/build-push-action@v6
-           with:
-             target: test
-             load: true
+             password: ${{ secrets.DOCKER_TOKEN }}
+   
          - name: Build and push
            uses: docker/build-push-action@v6
            with:
+             file: Dockerfile
              platforms: linux/amd64,linux/arm64
-             push: true
              target: final
-             tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+             tags: ${{ steps.meta.outputs.tags }}
+             push: ${{ github.event_name != 'pull_request' }}
+             labels: ${{ steps.meta.outputs.labels }}
    ```
    
    有关的 YAML 语法的更多信息`docker/build-push-action`，请参阅 [GitHub Action README](https://github.com/docker/build-push-action/blob/master/README.md)。

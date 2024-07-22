@@ -1,5 +1,6 @@
 ---
-title: "在Kubernetes集群上安装Rancher"
+title: "Rancher安装和部署-使用K8s
+"
 date: 2024-05-10T14:00:00+08:00
 slug: install-rancher
 tags: [k8s,rancher]

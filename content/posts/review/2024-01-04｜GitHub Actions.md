@@ -3,7 +3,7 @@ title: "2024-01-04｜GitHub Actions"
 date: 2024-01-04T18:00:00+08:00
 slug: til
 categories: ["Review"]
-tags: ["vps"]
+tags: ["vps",maven,github]
 ---
 
 今天做了什么：
@@ -70,20 +70,16 @@ tags: ["vps"]
 1、参考 [官方文档](https://github.com/release-drafter/release-drafter?tab=readme-ov-file#usage)，在仓库里面配置一个 [GitHub Action](https://github.com/marketplace/actions/release-drafter) ，例如：.github/workflows/release-drafter.yml
 
 ```yaml
+# https://github.com/release-drafter/release-drafter
+
 name: Release Drafter
 
 on:
   push:
-    # branches to consider in the event; optional, defaults to all
     branches:
       - main
-  # pull_request event is required only for autolabeler
   pull_request:
-    # Only following types are handled by the action, but one can default to all as well
     types: [opened, reopened, synchronize]
-  # pull_request_target event is required for autolabeler to support PRs from forks
-  # pull_request_target:
-  #   types: [opened, reopened, synchronize]
 
 permissions:
   contents: read
@@ -91,24 +87,11 @@ permissions:
 jobs:
   update_release_draft:
     permissions:
-      # write permission is required to create a github release
       contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      # (Optional) GitHub Enterprise requires GHE_HOST variable set
-      #- name: Set GHE_HOST
-      #  run: |
-      #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
-
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v5
-        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-        # with:
-        #   config-name: my-config.yml
-        #   disable-autolabeler: true
+      - uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -123,47 +106,64 @@ jobs:
 2、添加 .github/release-drafter.yml 配置生成的 Release 内容
 
 ```yaml
-# Configuration for Release Drafter: https://github.com/toolmantim/release-drafter
+# https://github.com/toolmantim/release-drafter
+
+# 新项目，第一次 release 为 0.1.0, 可以在 github 上手动修改为 0.0.1
 name-template: 'v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
-version-template: $MAJOR.$MINOR.$PATCH
+
 # Emoji reference: https://gitmoji.carloscuesta.me/
 categories:
-  - title: '⭐ New Features'
+  - title: 🚀 New features
     labels:
-      - 'feature'
-      - 'enhancement'
-      - 'kind/feature'
-  - title: '🐞 Bug Fixes'
+      - enhancement
+      - feature
+  - title: 🐛 Bug fixes
     labels:
-      - 'fix'
-      - 'bugfix'
-      - 'bug'
-      - 'regression'
-      - 'kind/bug'
-  - title: '📝 Documentation'
+      - bug
+      - fix
+      - hotfix
+      - bugfix
+  - title: 📝 Documentation updates
     labels:
       - documentation
-      - 'kind/doc'
-  - title: '🧰 Dependency Upgrades'
-    labels:
-      - chore
-      - dependencies
-      - 'kind/chore'
-      - 'kind/dep'
-  - title: '🚦 Tests'
+      - localization
+  - title: 🚦Tests
     labels:
       - test
       - tests
+  - title: 🧰 Dependency updates
+    labels:
+      - dependencies
+      - dependabot
+      - DEPENDABOT
+    collapse-after: 15
+
 exclude-labels:
   - reverted
   - no-changelog
   - skip-changelog
   - invalid
-change-template: '* $TITLE (#$NUMBER) @$AUTHOR'
+
+autolabeler:
+  - label: 'documentation'
+    files:
+      - '*.md'
+    branch:
+      - '/docs{0,1}\/.+/'
+  - label: 'bug'
+    branch:
+      - '/bugfix\/.+/'
+  - label: 'enhancement'
+    branch:
+      - '/feature\/.+/'
+
 template: |
   ## What’s Changed
+
   $CHANGES
+
+  All contributors: $CONTRIBUTORS
 ```
 
 模板的含义是当提交的 PR 符合其中的 labels 时，对应提交的标题会作为当次提交的说明信息，生成在 release 的草稿中。
@@ -257,40 +257,61 @@ prefixed with #.
 参考 [利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub](https://wiki.eryajf.net/pages/5baf0a) ，给 [https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world) 添加了一个 docker action： `.github/workflows/docker-image.yml `
 
 ```yaml
-name: build_docker
+name: Build Docker Image
 
 on:
+  push:
+    branches: [ "main" ]
+    tags: [ "*" ]
   release:
-    types: [created] # 表示在创建正式的 Release 时触发
+    types: [ created ]
 
 jobs:
-  build_docker:
-    name: Build docker
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      # 利用github-slug-action暴漏Github Action上下文中的关键变量 https://wiki.eryajf.net/pages/77e2fe  
+      # 暴漏 Github Action 关键变量 https://wiki.eryajf.net/pages/77e2fe
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: rlespinasse/github-slug-action@v4.5.0
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build And Push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.GITHUB_REPOSITORY_NAME_PART }}
+          # generate Docker tags based on the following events/attributes
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.GITHUB_REPOSITORY_NAME_PART }}:${{ env.GITHUB_REF_NAME }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.GITHUB_REPOSITORY_NAME_PART }}:latest
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=raw,latest
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          push: ${{ github.event_name != 'pull_request' }}
+          labels: ${{ steps.meta.outputs.labels }}
 ```
 
 关键点：使用 rlespinasse/github-slug-action@v4  暴漏Github Action上下文中的关键变量。请参考：[利用github-slug-action暴漏Github Action上下文中的关键变量 ](https://wiki.eryajf.net/pages/77e2fe) 。

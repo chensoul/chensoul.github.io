@@ -1,5 +1,5 @@
 ---
-title: "使用Yum安装和配置Gitlab"
+title: "Gitlab安装和部署-使用yum源"
 date: 2024-07-15T08:00:00+08:00
 slug: install-gitlab-using-yum
 draft: false
@@ -20,7 +20,7 @@ $ systemctl start  postfix
 $ systemctl enable postfix
 ```
 
-### 2、部署 Gitlab 
+### 2、手动安装 
 
 #### 1、安装 gitlab 依赖包
 
@@ -250,11 +250,19 @@ irb(main):005:0>
 
 去qq邮箱web界面查看是否收到邮件。
 
-### 3、Gitlab 的使用
+### 3、一键安装
+
+```bash
+curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+```
+
+
+
+## Gitlab 的使用
 
 **在浏览器中输入 http://192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
 
-#### 1、Gitlab 命令行修改密码
+### 1、Gitlab 命令行修改密码
 
 ```shell
 $ gitlab-rails console production
@@ -264,7 +272,7 @@ irb(main):003:0>user.save!                          # 如没有问题 返回true
 exit 												# 退出
 ```
 
-#### 2、Gitlab服务管理
+### 2、Gitlab服务管理
 
 ```shell
 $ gitlab-ctl start                        # 启动所有 gitlab 组件；
@@ -276,11 +284,11 @@ $ vim /etc/gitlab/gitlab.rb               # 修改默认的配置文件；
 $ gitlab-ctl tail                         # 查看日志；
 ```
 
-#### 3、登陆 Gitlab
+### 3、登陆 Gitlab
 
 **如果需要手工修改nginx的port ，可以在gitlab.rb中设置 nginx['listen_port'] = 8000 ，然后再次 gitlab-ctl reconfigure即可**
 
-#### 4、去掉用户的自动注册功能（安全）
+### 4、去掉用户的自动注册功能（安全）
 
 admin are -> settings -> Sign-up Restrictions 去掉钩钩，然后拉到最下面保存，重新登录。
 
