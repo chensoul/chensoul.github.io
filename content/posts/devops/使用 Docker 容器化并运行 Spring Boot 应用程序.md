@@ -528,7 +528,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 4. 为 Docker Hub创建一个新的 [个人访问令牌 (PAT)](https://docs.docker.com/security/for-developers/access-tokens/#create-an-access-token)。您可以将此令牌命名为  `docker-tutorial` 。确保访问权限包括读取和写入。
 
-5. 将 PAT 作为**存储库机密**添加到您的 GitHub 存储库中，名称为 `DOCKERHUB_TOKEN`。
+5. 将 PAT 作为**存储库机密**添加到您的 GitHub 存储库中，名称为 `DOCKER_TOKEN`。
 
 6. 在您机器上的本地存储库中，运行以下命令将源更改为您刚刚创建的存储库。确保更改 `your-username`为您的 GitHub 用户名和`your-repository`您创建的存储库的名称。
 
@@ -548,13 +548,13 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 设置 GitHub Actions 工作流程以构建、测试和将映像推送到 Docker Hub。
 
-1. 转到 GitHub 上的存储库，然后选择**“操作”**选项卡。该项目已经具有`maven-build`使用 Maven 构建和测试 Java 应用程序的工作流程。如果需要，您可以选择禁用此工作流程，因为您不会在本指南中使用它。您将创建一个新的替代工作流程来构建、测试和推送您的映像。
+1. 转到 GitHub 上的存储库，然后选择“操作”选项卡。该项目已经具有`maven-build`使用 Maven 构建和测试 Java 应用程序的工作流程。如果需要，您可以选择禁用此工作流程，因为您不会在本指南中使用它。您将创建一个新的替代工作流程来构建、测试和推送您的映像。
 
 2. 选择**新工作流程**。
 
 3. 选择**自己设置工作流程**。
 
-   `.github/workflows/main.yml`默认情况下，这将带您进入一个在存储库中创建新的 GitHub 操作工作流文件的页面。
+   `.github/workflows/docker`默认情况下，这将带您进入一个在存储库中创建新的 GitHub 操作工作流文件的页面。
 
 4. 在编辑器窗口中，复制并粘贴以下 YAML 配置。
 

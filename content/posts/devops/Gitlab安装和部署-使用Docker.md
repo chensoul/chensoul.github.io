@@ -9,6 +9,8 @@ tags: [ gitlab,docker ]
 
 ## 安装 Gitlab
 
+安装 gitlab-ce  版本，当前最新版本为  17.2.0 
+
 ### 配置 external_url
 
 参考 https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
@@ -65,37 +67,6 @@ docker logs -f gitlab
 cat /srv/gitlab/config/initial_root_password
 ```
 
-### 启用 Registry
-
-启动 docker 注册中心：
-
-```yaml
-services:
-  gitlab:
-    image: gitlab/gitlab-ce
-    container_name: gitlab
-    restart: always
-    hostname: 'gitlab.example.com'
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com'
-        registry_external_url 'https://gitlab.example.com:4567'
-    ports:
-      - '80:80'
-      - '443:443'
-      - '22:22'
-      - '4567:4567'
-    volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
-    shm_size: '256m'
-```
-
-> 注意：
->
-> 建议 gitlab 不开启 docker 注册中心，而是使用其他方案，比如：Habor、Nexus 等等。
-
 ### 修改默认端口
 
 参考 https://github.com/hutchgrant/gitlab-docker-local/，
@@ -111,11 +82,9 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.example.com:3143'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
-        registry_external_url 'https://gitlab.example.com:4567'
     ports:
       - '3143:443'
       - '3122:22'
-      - '4567:4567'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
@@ -123,7 +92,115 @@ services:
     shm_size: '256m'
 ```
 
-### 使用自签名证书
+### 配置时区
+
+进入容器，修改配置  /etc/gitlab/gitlab.rb：
+
+```bash
+# 时区
+gitlab_rails['time_zone'] = 'Asia/Shanghai'
+```
+
+### 解决头像显示异常问题
+
+```toml
+# 解决头像显示异常问题
+gitlab_rails['gravatar_plain_url'] = 'http://cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
+gitlab_rails['gravatar_ssl_url'] = 'https://cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
+```
+
+### 关闭不需要的服务
+
+GitLab 默认提供了软件包仓库、容器仓库、软件依赖管理，这些可以使用 Nexus 代替
+
+```toml
+# 关闭容器仓库功能
+gitlab_rails['gitlab_default_projects_features_container_registry'] = false
+gitlab_rails['registry_enabled'] = false
+registry['enable'] = false
+registry_nginx['enable'] = false
+
+# 关闭包仓库、依赖管理
+gitlab_rails['packages_enabled'] = false
+gitlab_rails['dependency_proxy_enabled'] = false
+```
+
+关闭GitLab Pages：
+
+```toml
+# 关闭GitLab Pages
+gitlab_pages['enable'] = false
+pages_nginx['enable'] = false
+```
+
+关闭监控和性能基准相关功能：
+
+```toml
+#关闭监控和性能基准相关功能
+prometheus_monitoring['enable'] = false
+alertmanager['enable'] = false
+node_exporter['enable'] = false
+redis_exporter['enable'] = false
+postgres_exporter['enable'] = false
+pgbouncer_exporter['enable'] = false
+gitlab_exporter['enable'] = false
+sidekiq['metrics_enabled'] = false
+
+# 关闭使用统计
+gitlab_rails['usage_ping_enabled'] = false
+gitlab_rails['sentry_enabled'] = false
+```
+
+关闭 KAS、Terraform、Mattermost：
+
+```toml
+# GitLab KAS
+gitlab_kas['enable'] = false
+gitlab_rails['gitlab_kas_enabled'] = false
+
+# Terraform
+gitlab_rails['terraform_state_enabled'] = false
+        
+# Mattermost
+mattermost['enable'] = false
+mattermost_nginx['enable'] = false
+
+# Kerberos
+gitlab_rails['kerberos_enabled'] = false
+sentinel['enable'] = false
+```
+
+关闭电子邮件相关功能：
+
+```toml
+# 关闭电子邮件相关功能
+gitlab_rails['smtp_enable'] = false
+gitlab_rails['gitlab_email_enabled'] = false
+gitlab_rails['incoming_email_enabled'] = false
+```
+
+### 优化 PUMA 和  sidekiq
+
+```yaml
+# 禁用 PUMA 集群模式
+puma['worker_processes'] = 0
+puma['min_threads'] = 1
+puma['max_threads'] = 2
+
+# 降低后台守护进程并发数
+sidekiq['concurrency'] = 5
+```
+
+### 优化 postgresql 
+
+```toml
+# 减少 postgresql 数据库缓存
+postgresql['shared_buffers'] = "128MB"
+# 减少 postgresql 数据库并发数量
+postgresql['max_connections'] = 60
+```
+
+### 使用自签名证书（不建议）
 
 参考 https://github.com/danieleagle/gitlab-https-docker#generating-a-self-signed-certificate ，生成服务端 key：
 
@@ -173,14 +250,9 @@ services:
         nginx['redirect_http_to_https'] = true
         nginx['ssl_certificate'] = "/etc/ssl/certs/gitlab/server-cert.pem"
         nginx['ssl_certificate_key'] = "/etc/ssl/certs/gitlab/server-key.pem"
-        registry_external_url 'https://gitlab.example.com:4567'
-        registry_nginx['enable'] = true
-        registry_nginx['ssl_certificate'] = "/etc/ssl/certs/gitlab/server-cert.pem"
-        registry_nginx['ssl_certificate_key'] = "/etc/ssl/certs/gitlab/server-key.pem"
     ports:
       - '3143:443'
       - '3122:22'
-      - '4567:4567'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
@@ -194,7 +266,7 @@ services:
 git config --global http."https://gitlab.example.com:3143/".sslCAInfo /srv/gitlab/ssl/server-cert.pem
 ```
 
-### 使用外部 Nginx
+### 使用外部 Nginx（建议）
 
 修改配置，禁用 nginx：
 
@@ -214,14 +286,9 @@ services:
         gitlab_workhorse['listen_addr'] = "0.0.0.0:8000"
         nginx['enable'] = false
         unicorn['enable'] = false
-
-        registry_external_url 'https://gitlab-registry.example.com'
-        registry_nginx['enable'] = false
-        registry_nginx['listen_addresses'] = ['0.0.0.0:4567']
     ports:
       - '8000:8000'
       - '3122:22'
-      - '4567:4567'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
@@ -278,39 +345,6 @@ server {
 }
 ```
 
-如果开启了 Registry，则 为 gitlab-registry.example.com 域名配置反向代理：
-
-```nginx
-server {
-    listen 80;
-    server_name gitlab-registry.example.com;
-    rewrite ^ https://$http_host$request_uri? permanent;
-}
-
-server {
-     listen 443 ssl;
-     server_name gitlab-registry.example.com;
-     ssl_certificate /etc/nginx/ssl/server-cert.pem;
-     ssl_certificate_key /etc/nginx/ssl/server-key.pem;
-     ssl_session_timeout 5m;
-     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
-     ssl_prefer_server_ciphers on;
-
-     client_max_body_size 1g;
-     access_log /var/log/nginx/gitlab-registry.log;
-
-     location / {
-        proxy_pass     http://127.0.0.1:4567;
-        proxy_read_timeout  90;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-     }
-}
-```
-
 拷贝证书文件到 /etc/nginx/ssl/ 目录：
 
 ```bash
@@ -320,7 +354,7 @@ sudo cp server-*.pem /etc/nginx/ssl/
 
 
 
-### 使用外部 Redis
+### 使用外部 Redis（可选）
 
 参考 [Using a non-packaged Redis instance](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/redis.md#using-a-non-packaged-redis-instance)，进入容器，修改 /etc/gitlab/gitlab.rb
 
@@ -330,7 +364,7 @@ gitlab_rails['redis_host'] = 'x.x.x.x'
 gitlab_rails['redis_port'] = 6379
 ```
 
-### 使用外部 Postgres
+### 使用外部 Postgres（可选）
 
 参考 [Using a non-packaged PostgreSQL database management server](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/database.md#using-a-non-packaged-postgresql-database-management-server)
 
@@ -398,6 +432,135 @@ gitlab-ctl reconfigure
 # Remove 'sudo' if you are the 'git' user
 sudo gitlab-rake gitlab:setup
 ```
+
+### 完整配置
+
+修改默认端口，配置时区，关闭不需要的服务，优化数据库，使用外部 Nginx：
+
+```yaml
+services:
+  gitlab:
+    image: gitlab/gitlab-ce
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.wesine.com.cn'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.wesine.com.cn'
+        gitlab_rails['gitlab_shell_ssh_port'] = 3122
+        
+				# 使用外部 Niginx
+        gitlab_workhorse['listen_network'] = "tcp"
+        gitlab_workhorse['listen_addr'] = "0.0.0.0:8000"
+        nginx['enable'] = false
+        unicorn['enable'] = false
+       
+        # 时区
+        gitlab_rails['time_zone'] = 'Asia/Shanghai'
+        # 解决头像显示异常问题
+        gitlab_rails['gravatar_plain_url'] = 'http://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+        gitlab_rails['gravatar_ssl_url'] = 'https://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+        
+        # 关闭容器仓库功能
+        gitlab_rails['gitlab_default_projects_features_container_registry'] = false
+        gitlab_rails['registry_enabled'] = false
+        registry['enable'] = false
+        registry_nginx['enable'] = false
+
+        # 关闭包仓库、依赖管理
+        gitlab_rails['packages_enabled'] = false
+        gitlab_rails['dependency_proxy_enabled'] = false
+        
+        # 关闭GitLab Pages
+        gitlab_pages['enable'] = false
+        pages_nginx['enable'] = false
+        
+        #关闭监控和性能基准相关功能
+        prometheus_monitoring['enable'] = false
+        alertmanager['enable'] = false
+        node_exporter['enable'] = false
+        redis_exporter['enable'] = false
+        postgres_exporter['enable'] = false
+        pgbouncer_exporter['enable'] = false
+        gitlab_exporter['enable'] = false
+        sidekiq['metrics_enabled'] = false
+
+        # 关闭使用统计
+        gitlab_rails['usage_ping_enabled'] = false
+        gitlab_rails['sentry_enabled'] = false
+        
+        # 关闭电子邮件相关功能
+        gitlab_rails['smtp_enable'] = false
+        gitlab_rails['gitlab_email_enabled'] = false
+        gitlab_rails['incoming_email_enabled'] = false
+        
+        # GitLab KAS
+        gitlab_kas['enable'] = false
+        gitlab_rails['gitlab_kas_enabled'] = false
+
+        # Terraform
+        gitlab_rails['terraform_state_enabled'] = false
+
+        # Mattermost
+        mattermost['enable'] = false
+        mattermost_nginx['enable'] = false
+
+        # Kerberos
+        gitlab_rails['kerberos_enabled'] = false
+        sentinel['enable'] = false
+        
+        # 减少 postgresql 数据库缓存
+        postgresql['shared_buffers'] = "128MB"
+        # 减少 postgresql 数据库并发数量
+        postgresql['max_connections'] = 60
+        
+        # 禁用 PUMA 集群模式
+        puma['worker_processes'] = 0
+        puma['min_threads'] = 1
+        puma['max_threads'] = 2
+
+        # 降低后台守护进程并发数
+        sidekiq['concurrency'] = 5
+        
+    ports:
+      - '8000:8000'
+      - '3122:22'
+    volumes:
+      - '/srv/config:/etc/gitlab'
+      - '/srv/logs:/var/log/gitlab'
+      - '/srv/data:/var/opt/gitlab'
+    shm_size: '256m'
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - '/srv/gitlab-runner:/etc/gitlab-runner'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+```
+
+将上面文件保存为 gitlab.yaml，然后执行安装命令：
+
+```bash
+docker compose -f gitlab.yaml up -d
+```
+
+启动成功之后，查看容器资源使用情况：
+
+```bash
+docker stats
+```
+
+结果如下：
+
+```bash
+CONTAINER ID   NAME            CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O        PIDS
+f384149bfeab   gitlab          0.21%     2.028GiB / 31.26GiB   6.49%     756kB / 4.66MB   246kB / 12.2MB   123
+febd4b504da8   gitlab-runner   0.00%     21.61MiB / 31.26GiB   0.07%     54kB / 330kB     0B / 0B          10
+```
+
+
 
 ## 安装 Gitlab Runner
 
@@ -632,92 +795,7 @@ connection_max_age = "15m0s"
 
   
 
-## 测试
-
-### 访问
-
-访问 https://gitlab.example.com，修改默认密码，创建一个测试用户：test
-
-### 添加 SSH Key
-
-[Add](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) / [generate](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) a ssh key
-
-```
-tail ~/.ssh/id_rsa.pub
-```
-
-拷贝并保存到 https://gitlab.example.com/profile/keys
-
-### 创建新项目
-
-创建一个项目 example ，克隆项目：
-
-```bash
-git clone ssh://git@gitlab.example.com:3122/root/example.git
-```
-
-测试添加文件并提交：
-```bash
-cd example
-git add .
-git commit -m "Initial commit"
-git push -u origin main
-```
-
-## 配置
-
-### 常用配置
-
-进入容器，修改配置  /etc/gitlab/gitlab.rb：
-
-```bash
-# 时区
-gitlab_rails['time_zone'] = 'Asia/Shanghai'
-# 解决头像显示异常问题
-gitlab_rails['gravatar_plain_url'] = 'http://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
-gitlab_rails['gravatar_ssl_url'] = 'https://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
-# 关闭 promethues和alertmanager
-prometheus['enable'] = false
-alertmanager['enable'] = false
-# 默认gitlab配置资源占用较高，可以根据情况减少资源占用
-# 关闭邮件服务
-gitlab_rails['gitlab_email_enabled'] = false
-gitlab_rails['smtp_enable'] = false
-# 减少 postgresql 数据库缓存
-postgresql['shared_buffers'] = "128MB"
-# 减少 postgresql 数据库并发数量
-postgresql['max_connections'] = 60
-```
-
-使配置生效：
-
-```bash
-root@gitlab:/# gitlab-ctl reconfigure
-gitlab Reconfigured!
-root@gitlab:/# gitlab-ctl restart
-```
-
-或者直接修改 docker-compose 文件，重启容器。
-
-### 配置邮箱
-
-参考 [SMTP settings](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/smtp.md)，在安装文件中添加相关配置：
-
-```bash
-gitlab_rails['smtp_enable'] = true
-gitlab_rails['smtp_address'] = "smtp.gmail.com"
-gitlab_rails['smtp_port'] = 465
-gitlab_rails['smtp_user_name'] = "yourmail@gmail.com"
-gitlab_rails['smtp_password'] = "yoursecretapppass"
-gitlab_rails['smtp_domain'] = "smtp.gmail.com"
-gitlab_rails['smtp_authentication'] = "login"
-gitlab_rails['smtp_enable_starttls_auto'] = true
-gitlab_rails['smtp_tls'] = true
-gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
-gitlab_rails['gitlab_email_from'] = 'yourmail@gmail.com'
-gitlab_rails['gitlab_email_display_name'] = 'GitLab TutorLokal'
-gitlab_rails['gitlab_email_reply_to'] = 'reply@yourdomain.com'
-```
+## 配置 Gitlab
 
 ### 实例配置
 
@@ -849,6 +927,39 @@ systemctl enable gitlab
 ```bash
 # sudo sh gitlab_service.sh LINUXUSER PATH_REPO_FOLDER
 sudo sh gitlab_service.sh root /opt/docker/gitlab.yaml
+```
+
+## 测试
+
+### 访问
+
+访问 https://gitlab.example.com，修改默认密码，创建一个测试用户：test
+
+### 添加 SSH Key
+
+[Add](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) / [generate](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) a ssh key
+
+```
+tail ~/.ssh/id_rsa.pub
+```
+
+拷贝并保存到 https://gitlab.example.com/profile/keys
+
+### 创建新项目
+
+创建一个项目 example ，克隆项目：
+
+```bash
+git clone ssh://git@gitlab.example.com:3122/root/example.git
+```
+
+测试添加文件并提交：
+
+```bash
+cd example
+git add .
+git commit -m "Initial commit"
+git push -u origin main
 ```
 
 

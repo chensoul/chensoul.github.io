@@ -14,8 +14,8 @@ tags: [ spring-boot,docker]
    在您的 Spring Boot 项目根目录下创建一个名为 `Dockerfile` 的文件，并添加以下内容:
 
    ```docker
-   # 使用 OpenJDK 11 作为基础镜像
-   FROM openjdk:11
+   # 使用 OpenJDK 21 作为基础镜像
+   FROM openjdk:21
    
    # 设置工作目录
    WORKDIR /app
@@ -30,7 +30,7 @@ tags: [ spring-boot,docker]
    ENTRYPOINT ["java", "-jar", "app.jar"]
    ```
 
-   这个 Dockerfile 将使用 OpenJDK 11 作为基础镜像，将编译后的 JAR 文件复制到容器中，并在容器启动时执行 `java -jar app.jar` 命令。
+   这个 Dockerfile 将使用 OpenJDK 21 作为基础镜像，将编译后的 JAR 文件复制到容器中，并在容器启动时执行 `java -jar app.jar` 命令。
 
    >**使用 Google Distroless 基础镜像**:
    >
@@ -317,7 +317,7 @@ ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
 
 主要改动：
 
-- 1、基于 maven:3-eclipse-temurin-21-alpine 镜像构建，使用 mvn 命令，而不是项目中的 mvnw 命令
+- 1、基于 maven:3-eclipse-temurin-21-alpine 镜像构建，并使用阿里云 maven 镜像，使用 mvn 命令，而不是项目中的 mvnw 命令
 - 2、去掉 deps 阶段
 
 ## 使用 Maven 插件
@@ -533,46 +533,6 @@ COPY --from=builder /builder/extracted/application/ ./
 ENTRYPOINT ["java", "-jar", "application.jar"]
 ```
 
-参考 Docker init 创建的 Dockerfile 文件如下：
-
-```dockerfile
-# syntax=docker/dockerfile:1
-
-################################################################################
-# Create a stage for extracting the application into separate layers.
-# Take advantage of Spring Boot's layer tools and Docker's caching by extracting
-# the packaged application into separate layers that can be copied into the final stage.
-# See Spring's docs for reference:
-# https://docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
-FROM eclipse-temurin:21-jdk-jammy AS extract
-WORKDIR /build
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} target/app.jar
-RUN java -Djarmode=tools -jar target/app.jar extract --layers --launcher --destination target/extracted
-
-################################################################################
-FROM eclipse-temurin:21-jre-jammy AS final
-WORKDIR /app
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
-USER appuser
-COPY --from=extract /build/target/extracted/dependencies/ ./
-COPY --from=extract /build/target/extracted/spring-boot-loader/ ./
-COPY --from=extract /build/target/extracted/snapshot-dependencies/ ./
-COPY --from=extract /build/target/extracted/application/ ./
-EXPOSE 8080
-ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
-```
-
-
-
 ## 使用 Spring Boot Gradle 插件
 
 - 在项目的 `build.gradle` 文件中添加 `spring-boot-gradle-plugin` 插件配置。
@@ -585,7 +545,30 @@ ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
 
 ### 使用 dockerfile
 
-参考 https://github.com/selcuksert/digilib/blob/main/backend/libapp/Dockerfile 并结合前面的分层构建镜像，最后的 dockerfile 如下：
+参考 《[Build a Docker Image using Maven and Spring boot](https://medium.com/@ramanamuttana/build-a-docker-image-using-maven-and-spring-boot-418e24c00776)》不使用分层构建：
+
+```dockerfile
+# Use an official Maven image as the base image
+FROM maven:3.8.4-openjdk-11-slim AS build
+# Set the working directory in the container
+WORKDIR /app
+# Copy the pom.xml and the project files to the container
+COPY pom.xml .
+COPY src ./src
+# Build the application using Maven
+RUN mvn clean package -DskipTests
+
+# Use an official OpenJDK image as the base image
+FROM openjdk:11-jre-slim
+# Set the working directory in the container
+WORKDIR /app
+# Copy the built JAR file from the previous stage to the container
+COPY --from=build /app/target/my-application.jar .
+# Set the command to run the application
+CMD ["java", "-jar", "my-application.jar"]
+```
+
+结合前面的分层构建镜像，一个简单版本的 dockerfile 如下：
 
 ```dockerfile
 FROM maven:3-eclipse-temurin-21-alpine AS package
@@ -598,9 +581,43 @@ FROM package AS extract
 WORKDIR /build 
 RUN java -Djarmode=tools -jar app.jar target/extract --layers --launcher --destination target/extracted
 
-################################################################################
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
+COPY --from=extract /build/target/extracted/dependencies/ ./
+COPY --from=extract /build/target/extracted/spring-boot-loader/ ./
+COPY --from=extract /build/target/extracted/snapshot-dependencies/ ./
+COPY --from=extract /build/target/extracted/application/ ./
+EXPOSE 8080
+ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
+```
+
+复杂一点的 dockerfile 如下：
+
+```dockerfile
+# syntax=docker/dockerfile:1
+
+# https://docs.docker.com/reference/dockerfile/
+# https://docs.docker.com/build/guide/multi-stage/
+
+FROM maven:3-eclipse-temurin-21-alpine AS base
+WORKDIR /build
+COPY ./src src/
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+
+FROM base AS package
+WORKDIR /build
+RUN --mount=type=bind,source=pom.xml,target=pom.xml \
+    --mount=type=cache,target=/root/.m2 \
+    mvn package -DskipTests && \
+    mv target/$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout).jar target/app.jar
+
+FROM package AS extract
+WORKDIR /build
+RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/extracted
+
+FROM eclipse-temurin:21-jre-jammy AS final
+WORKDIR /app
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -653,3 +670,5 @@ docker-compose app -f docker-compose.yml up -d
 ## 参考文章
 
 - [使用Spring Boot创建docker image](https://www.cnblogs.com/flydean/p/13824496.html)
+- [https://github.com/jhipster/jhipster-lite/blob/main/Dockerfile](https://github.com/jhipster/jhipster-lite/blob/main/Dockerfile)
+- [https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html](https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html)

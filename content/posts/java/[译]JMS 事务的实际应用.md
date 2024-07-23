@@ -1,0 +1,91 @@
+---
+title: "[译]JMS 事务的实际应用"
+date: 2024-07-23T17:00:00+08:00
+slug: jms-transactions-in-action
+draft: false
+categories: ["Java"]
+tags: [ jms]
+---
+
+在本文中，您将了解如何选择性地使用 JMS 事务。在 JMS 中，您可以选择控制一个会话的原子操作。每个会话都支持一系列事务。每个事务将一组生成或使用的消息分组为一个原子工作单元。确保您已经理解了[JMS 中的消息确认](https://jstobigdata.com/jms/guaranteed-delivery-using-jms-message-acknowledgement/)。
+
+**交易提交时 –** ( `jmsContext.commit()`)
+
+- 其输入的原子单位被承认。
+- 对于消费者来说，类似地，其相关的输出也被发送（被消费者接收）。
+
+**如果事务回滚完成**– （`jmsContext.rollback()`）
+
+- 其产生的信息被销毁。
+- 其使用的消息被恢复（不会从 JMS 服务器中删除）。
+
+让我们看一下代码示例，以更好地理解其功能。链接到[**GitHub 代码库**](https://github.com/jstobigdata/jms-parent-app/blob/master/jms-glassfish5/src/main/java/lab07/transactons/example/TransactionExample.java)。
+
+```Java
+package lab07.transactons.example;
+
+import labxx.common.settings.CommonSettings;
+import javax.jms.*;
+
+public class TransactionExample {
+  public static void main(String[] args) {
+
+    ConnectionFactory connectionFactory = CommonSettings.getConnectionFactory();
+    Queue queue = CommonSettings.getDefaultQueue();
+
+    Thread messageproducer = new Thread() {
+      public void run() {
+        try (JMSContext jmsContext = connectionFactory.createContext(JMSContext.SESSION_TRANSACTED)) {
+          JMSProducer producer = jmsContext.createProducer();
+          producer.send(queue, "This is a SESSION_TRANSACTED message");
+          producer.send(queue, "Sending another message");
+          //TODO - Comment and see the result, message is not delivered until committed
+          sleep(5000);
+          jmsContext.commit(); //Important
+          //Next message is never delivered as it is rollback()
+          producer.send(queue, "This message will not be delivered");
+          jmsContext.rollback();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+  
+    Thread messageConsumer = new Thread() {
+      public void run() {
+        try (JMSContext jmsContext = connectionFactory.createContext(JMSContext.SESSION_TRANSACTED)) {
+          JMSConsumer consumer = jmsContext.createConsumer(queue);
+          consumer.setMessageListener(msg -> {
+            try {
+              System.out.println(msg.getBody(String.class));
+            } catch (JMSException e) {
+              e.printStackTrace();
+            }
+          });
+          jmsContext.commit();
+          Thread.sleep(6000);
+          consumer.close();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    };
+ 
+    messageproducer.start();
+    messageConsumer.start();
+  }
+}
+```
+
+**输出**
+
+```
+This is a SESSION_TRANSACTED message
+Sending another message
+```
+
+当您在 IDE 中运行代码时，您会注意到 5 秒后终端上只打印了 2 条消息，如上所示。在消息生产者的事务提交之前，消费者不会收到任何消息。由于事务回滚已完成，消费者永远不会收到第 3 条消息（第 24 行）。
+
+正如您所注意到的，JMS 会话是使用 进行事务处理的`JMSContext.SESSION_TRANSACTED`。
+
+当你想要控制发送的消息和传递到的消息时，可以使用 JMS 事务
