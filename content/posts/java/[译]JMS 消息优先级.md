@@ -104,3 +104,7 @@ Default Priority: 4 #### Message: Msg five
 ```
 
 这些都是 JMS 优先级消息的一部分，您已经了解了如何分配自定义优先级来控制消息传递。
+
+
+
+原文链接：[JMS Prioritize Messages](https://jstobigdata.com/jms/jms-prioritize-messages/)

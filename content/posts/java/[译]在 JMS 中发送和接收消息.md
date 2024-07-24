@@ -189,3 +189,7 @@ public class TestHelloWorld {
 | 消息消费者           | 不                            |
 
 请记住，从今以后我们将专注于 JMS 2.0 API。这都是入门教程的一部分，您在其中学习了如何在 JMS 队列中发送和接收消息。我们将在接下来的教程中探讨其他几个主题。请在下面的评论中分享您对本教程的反馈。
+
+
+
+原文链接：[Send and Receive a message in JMS](https://jstobigdata.com/jms/send-and-receive-message-in-jms/)

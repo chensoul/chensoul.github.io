@@ -130,3 +130,7 @@ java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactor
 [代码示例](https://github.com/jstobigdata/jms-parent-app)
 
 完成 Glassfish for JMS 的设置后，请继续阅读下一篇文章，了解如何[在 JMS 中发送和接收消息](https://jstobigdata.com/jms/send-and-receive-message-in-jms/)。
+
+
+
+原文链接：[Install and Setup Glassfish for JMS](https://jstobigdata.com/jms/install-and-setup-glassfish-for-jms/)

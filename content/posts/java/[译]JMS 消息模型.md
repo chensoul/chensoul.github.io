@@ -505,3 +505,7 @@ true
 ```
 
 在本教程中，我通过示例简要讨论了 JMS 消息模型。请在下面的评论中告诉我您的反馈或问题。我将在单独的文章中讨论**[消息优先级](https://jstobigdata.com/jms/jms-prioritize-messages/)**和**消息** **请求-响应**。
+
+
+
+原文链接：[JMS Message Model](https://jstobigdata.com/jms/jms-message-model/)

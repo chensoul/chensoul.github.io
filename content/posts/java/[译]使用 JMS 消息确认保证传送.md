@@ -250,3 +250,7 @@ Received message: This is an DUPS_OK_ACKNOWLEDGE message
 在上面的代码示例中，第 14 行未指定确认模式，因此消费者使用的是 **AUTO_ACKNOWLEDGE** 模式。生产者和订阅者可以使用不同的确认模式。
 
 实际上，您很可能会坚持使用 **AUTO_ACKNOWLEDGE** 模式。但是，深入了解其他模式也总是好的。这都是 JMS 消息确认的一部分，使用它来确保有保证的消息传递。
+
+
+
+原文链接：[Guaranteed Delivery using JMS Message Acknowledgement](https://jstobigdata.com/jms/guaranteed-delivery-using-jms-message-acknowledgement/)

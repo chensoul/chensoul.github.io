@@ -11,10 +11,6 @@ JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的�
 
 您可以使用 ActiveMQ 或 ActiveMQ Artemes 作为 JMS 提供程序，JMS API 保持不变，只有使用相应 JMS 提供程序的 maven 依赖项会发生变化。以下是本教程中涵盖的主题。
 
-JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。消息传递是在各种应用程序或服务之间交换业务数据的过程。这是**一个完整的 JMS 2.0 教程，** 其中包含大量代码示例。完整的代码示例可在 GitHub 上找到，请下载并运行示例。本教程使用 Glassfish 开源服务器作为 JMS 提供程序的示例。
-
-您可以使用 ActiveMQ 或 ActiveMQ Artemes 作为 JMS 提供程序，JMS API 保持不变，只有使用相应 JMS 提供程序的 maven 依赖项会发生变化。以下是本教程中涵盖的主题。
-
 [代码示例](https://github.com/jstobigdata/jms-parent-app)
 
 - [JMS 简介 – Java 消息服务](/posts/2024/07/23/jms-introduction-java-message-service/)

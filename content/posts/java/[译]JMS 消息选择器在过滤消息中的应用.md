@@ -333,3 +333,7 @@ machineId='01ce3812-1869-4d23-96d8-cfc2ea6267c2', logLevel=INFO]
   - 加减 - `+`，`-`
 
 您了解了 JMS 消息选择器及其用于过滤传递给客户端的消息的方式。它在实际应用中非常有用，特别是从性能角度来看。您的应用程序可以将大量处理负载委托给 JMS 提供程序，并确保只向其传递必要的消息。
+
+
+
+原文链接： [JMS Message Selectors in Action to Filter Messages](https://jstobigdata.com/jms/jms-message-selectors-in-action-to-filter-messages/)

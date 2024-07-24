@@ -345,3 +345,7 @@ Reply CorrelationID: ID:12-192.168.0.197(bc:c9:94:43:39:c4)-61701-1576468524639
 ```
 
 这些都是使用队列的 JMS 点对点消息传递的一部分。您还学习了如何在 JMS 中使用异步消息处理。请在下面的评论中分享您对本文的反馈。
+
+
+
+原文链接：[JMS Point-to-point messaging in Action](https://jstobigdata.com/jms/jms-point-to-point-messaging-in-action/)

@@ -68,3 +68,8 @@ JMS 支持两种主要的消息传递样式，如下所示。作为 JMS 介绍�
 JMS 不提供控制或配置消息完整性或消息隐私的功能。预计许多 JMS 提供商将提供此类功能。这将由 JMS 提供商使用特定的管理工具来处理。
 
 现在，您已经通过本 JMS 入门教程对消息传递和 JMS 有了深入的了解。接下来，我们将安装和设置 JMS 消息传递服务器。
+
+
+
+原文连接：[JMS introduction – Java Message Service](https://jstobigdata.com/jms/jms-introduction-java-message-service/)
+

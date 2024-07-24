@@ -89,3 +89,7 @@ Sending another message
 正如您所注意到的，JMS 会话是使用 进行事务处理的`JMSContext.SESSION_TRANSACTED`。
 
 当你想要控制发送的消息和传递到的消息时，可以使用 JMS 事务
+
+
+
+原文链接：[JMS Transactions in Action](https://jstobigdata.com/jms/jms-transactions-in-action/)

@@ -390,3 +390,7 @@ Message 6
 ```
 
 这些都是 JMS 发布-订阅消息模型的一部分，您已经清楚地了解了jms 发布/订阅中**主题**的使用。您了解了不同的消费者，例如 `SharedConsumer`、`SharedDurableConsumer`、`DurableConsumer`以及异步消息处理。请在下面的评论中分享您的想法。
+
+
+
+原文链接：[JMS pub-sub messaging model](https://jstobigdata.com/jms/jms-pub-sub-messaging-model/)
