@@ -494,7 +494,7 @@ Do mvn release:prepare with options  -DdevelopmentVersion=${parsedVersion.majorV
 
 从日志可以看到，qcastel/github-actions-maven-release 使用了 maven 的 maven-release-plugin 插件，会发布正式版的 jar 到 maven 中央仓库。为了 避免在开发阶段每次提交都发布一个正式版本到中央仓库，可以修改 release-branch-name 为 release 分支，即限定提交到指定分支时候，从触发 maven 发布。
 
-可以添加下面参数，跳过 release:perform ，**但是 maven-release-plugin 插件还是会修改项目的版本，并创建 tag。**
+可以添加下面参数，跳过 release:perform ，即不会发布 jar 到 maven 中央仓库，**但是 maven-release-plugin 插件还是会修改项目的版本，并创建 tag。**
 
 ```bash
 with:
@@ -503,7 +503,7 @@ with:
 
 
 
-另外，每次提交，还会创建一个 tag，tag 名称为：项目名称-版本
+创建的 tag 名称格式为：项目名称-版本
 
 ![maven-hello-world-github-tag](/Users/chensoul/Pictures/maven-hello-world-github-tag.png)
 
@@ -527,4 +527,9 @@ tag 名称格式可以在 maven-release-plugin 插件中配置：
 
 
 
-maven-release-plugin 插件会修改版本，并且创建 tag ，但是并不会创建 github release。使用 https://github.com/release-drafter/release-drafter 这个 actions 可以更加 pull request 自动创建 github releae，基于此，更倾向于使用 [actions/setup-java](https://github.com/actions/setup-java) 来发布 jar 到 Maven 仓库。
+## 总结
+
+如果使用 [qcastel/github-actions-maven-release](https://github.com/qcastel/github-actions-maven-release) ，maven-release-plugin 插件会修改版本，并且创建 tag ，但是并不会创建 github release。
+
+使用 https://github.com/release-drafter/release-drafter 这个 actions 可以更加 pull request 自动创建 github releae，基于此，更倾向于使用 [actions/setup-java](https://github.com/actions/setup-java) 来发布 jar 到 Maven 仓库。
+
