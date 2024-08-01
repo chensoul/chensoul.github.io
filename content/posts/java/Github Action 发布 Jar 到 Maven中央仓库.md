@@ -15,7 +15,7 @@ tags: [ maven,java]
 
 ## 创建 Maven 项目
 
-首先在Github上面创建项目：https://github.com/chensoul/maven-hello-world
+首先在Github上面创建项目：[https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world)
 
 增加两个 Maven 插件：
 
@@ -47,7 +47,7 @@ tags: [ maven,java]
 </plugin>
 ```
 
-可以将上面的两个插件加入到 pom.xml 的 build 节点下面，也可以配置到 profile 节点下。https://github.com/chensoul/maven-hello-world 项目中使用的是第二种方式，具体见 https://github.com/chensoul/chensoul-parent 的 pom.xml 文件。
+可以将上面的两个插件加入到 pom.xml 的 build 节点下面，也可以配置到 profile 节点下。[https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world) 项目中使用的是第二种方式，具体见 https://github.com/chensoul/chensoul-parent 的 pom.xml 文件。
 
 ```xml
 <profiles>
@@ -138,8 +138,8 @@ nexus-staging-maven-plugin 插件配置的 serverId 是 ossrh ，需要和 distr
 ```xml
 <server>
   <id>ossrh</id>
-  <username>sonatypeUser</username>
-  <password>verySecretPassword</password>
+  <username>LSJkOqOi</username>
+  <password>3oJOIO5+ah7LIcRSmDC2YDGjE9PRbgxoE2UbXjOrSzC1</password>
 </server>
 ```
 
@@ -215,7 +215,7 @@ mvn -P release clean deploy
 mvn -P release clean deploy
 ```
 
-如果当前项目的版本为快照版，则发布后的 jar 在https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/
+如果当前项目的版本为快照版，则发布后的 jar 在 [https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/)
 
 如果当前项目的版本为正式版，稍等几分钟，可以在以下仓库查看发布的 jar:
 - https://central.sonatype.com/artifact/com.chensoul/maven-hello-world
