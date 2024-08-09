@@ -7,6 +7,12 @@ categories: ["Java"]
 tags: [ maven,java]
 ---
 
+作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。
+
+在过去,发布 Jar 到 Maven 中央仓库通常需要手动完成一系列繁琐的步骤，比如：申请 JIRA 账号、创建 Sonatype JIRA Issure、上传 Jar 包、签名 Jar 包等。但是随着 Github Action 的出现，这个过程变得更加自动化和简单。
+
+下面我将以一个简单的 Maven 项目为例，介绍如何使用 Github Action 实现自动发布 Jar 到 Maven 中央仓库。
+
 ## 前提条件
 
 1. 在 Github 创建一个 Maven 项目
@@ -230,6 +236,9 @@ mvn -P release clean deploy
 
 - [qcastel/github-actions-maven-release](https://github.com/qcastel/github-actions-maven-release)
 
+- [action-maven-publish](https://github.com/marketplace/actions/action-maven-publish)
+
+
 ### actions/setup-java
 
 使用 [actions/setup-java](https://github.com/actions/setup-java) ，参考使用文档，在项目的 .github/workflows 目录下创建 maven-release.yml文件：
@@ -275,10 +284,10 @@ jobs:
 
 根据上面的 yaml 文件，需要在当前项目的 Settings-->Secrets-->Actions 创建以下 Secrets：
 
-- **OSSRH_TOKEN**
-- **OSSRH_USERNAME**
-- **MAVEN_GPG_PRIVATE_KEY**
-- **MAVEN_GPG_PASSPHRASE**
+- **OSSRH_TOKEN**：您在 Sonatype 上的密码
+- **OSSRH_USERNAME**：您在 Sonatype 上的用户名
+- **MAVEN_GPG_PRIVATE_KEY**：用于签名 Jar 包的 GPG 密钥
+- **MAVEN_GPG_PASSPHRASE**：用于签名的 GPG 密钥密码
 
 
 
@@ -523,6 +532,42 @@ tag 名称格式可以在 maven-release-plugin 插件中配置：
     <goals>deploy</goals>
   </configuration>
 </plugin>
+```
+
+### action-maven-publish
+
+```yaml
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        
+    - name: Build with Maven
+      run: mvn clean install
+        
+    - name: Publish to Maven Central
+      uses: samuelmeuli/action-maven-publish@v1
+      with:
+        gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+        gpg_passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        nexus_username: ${{ secrets.OSSRH_USERNAME }}
+        nexus_password: ${{ secrets.OSSRH_TOKEN }}
 ```
 
 

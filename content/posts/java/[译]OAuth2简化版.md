@@ -4,7 +4,7 @@ date: 2024-06-05T13:00:00+08:00
 slug: oauth-2-simplified
 draft: false
 categories: ["Java"]
-tags: [ oauth,java]
+tags: [ oauth2]
 ---
 
 

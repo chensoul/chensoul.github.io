@@ -13,16 +13,14 @@ tags: [ jms]
 
 JMS 消息由 Header、Properties 和 Body（Payload）组成。我们将在下面详细讨论它们。
 
-- **消息** **头**是有关消息的元数据。消息头有两种类型：开发人员设置的头和 JMS 提供商设置的头。
+- **消息头**是有关消息的元数据。消息头有两种类型：开发人员设置的头和 JMS 提供商设置的头。
 
-- 消息属性
-
-  是用于向消息添加可选标头字段的附加标头字段。属性字段基本上有 3 种类型。
+- 消息属性是用于向消息添加可选标头字段的附加标头字段。属性字段基本上有 3 种类型。
 
   - 应用程序特定属性 - 允许设置应用程序特定的自定义标题。
   - 标准属性 – JMS 定义的标准属性。
   - JMS-Provider 特定属性。
-
+  
 - **消息主体**是发送到目的地的有效负载。JMS 支持多种类型（格式）的有效负载。
 
 ## 1. 消息头字段
@@ -40,7 +38,7 @@ javax.jms.Message#getJMSDestination()
 
 ### **1.2. JMS交付模式**
 
-JMS 支持*PERSISTENT*和 NON_PERSISTENT 消息传输模式。此标头表示传递模式。
+JMS 支持 *PERSISTEN T*和 NON_PERSISTENT 消息传输模式。此标头表示传递模式。
 
 ```java
 javax.jms.Message#setJMSDeliveryMode（int）
@@ -119,8 +117,6 @@ public class MessageExpirationTest {
 ```
 Exception in thread "main" java.lang.NullPointerException
 ```
-
-
 
 ### **1.7. JMSPriority 标头**
 

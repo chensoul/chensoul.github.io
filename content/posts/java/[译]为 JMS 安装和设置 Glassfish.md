@@ -62,7 +62,7 @@ tags: [ jms]
 
 > 理想情况下，目标资源和 ConnectionFactory 由**服务器管理员**创建。作为开发人员，您无需在现实世界中创建它们。但出于开发或测试目的，您需要在本地计算机上创建它们。
 
-只是重申上面的引述。无论您使用哪个 JMS 提供程序，它们始终需要提供ConnectionFactory和Destination 。这意味着在我们编写 Java 代码之前，需要在 JMS 提供程序中配置它们。您将在本教程的后半部分详细了解它们。有一些例外，例如 ActiveMQ，允许在运行时创建Destination。
+无论您使用哪个 JMS 提供程序，它们始终需要提供 ConnectionFactory 和 Destination 。这意味着在我们编写 Java 代码之前，需要在 JMS 提供程序中配置它们。您将在本教程的后半部分详细了解它们。有一些例外，例如 ActiveMQ，允许在运行时创建Destination。
 
 一旦创建目标资源，JMS 目标资源将如下面的屏幕截图所示。
 
@@ -70,7 +70,7 @@ tags: [ jms]
 
 ## 配置 IDE 的步骤
 
-所有代码示例均可在 GitHub 上下载。或者，您可以按照以下步骤创建一个具有下面列出的依赖项的 Maven 项目。
+​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    所有代码示例均可在 GitHub 上下载。或者，您可以按照以下步骤创建一个具有下面列出的依赖项的 Maven 项目。
 
 ### 步骤 1，创建一个 Maven 项目
 
@@ -87,7 +87,7 @@ tags: [ jms]
 
 ### 步骤 2，在 pom.xml 中添加 JMS 依赖项
 
-- 添加与 Glassfish 服务器通信所需的依赖项。基本上，您需要添加 3 个依赖项`gf-client`，`imqjmsra`和`javax.jms-api`。还将添加`junit-jupitor-api`用于运行`@Test`代码的依赖项。
+- 添加与 Glassfish 服务器通信所需的依赖项。基本上，您需要添加 3 个依赖项`gf-client`，`imqjmsra`和`javax.jms-api`。还将添加`junit-jupitor-api`用于运行`@Test`代码的依赖项。       
 
 ```XML
 <dependencies>
@@ -117,17 +117,15 @@ tags: [ jms]
 ### 步骤 3，创建 jndi.properties 文件
 
 - 创建一个用于 JNDI 查找的文件`src\main\resources\jndi.properties`
-- 在此文件中添加JMS相关配置如下图
+- 在此文件中添加 JMS 相关配置如下图
 
-```
+```properties
 java.naming.factory.initial=com.sun.enterprise.naming.SerialInitContextFactory
 java.naming.factory.url.pkgs=com.sun.enterprise.naming
 java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl
 ```
 
-您还可以从 GitHub 存储库下载整个工作代码示例。
-
-[代码示例](https://github.com/jstobigdata/jms-parent-app)
+您还可以从 GitHub 存储库下载整个工作[代码示例](https://github.com/jstobigdata/jms-parent-app)。
 
 完成 Glassfish for JMS 的设置后，请继续阅读下一篇文章，了解如何[在 JMS 中发送和接收消息](https://jstobigdata.com/jms/send-and-receive-message-in-jms/)。
 
