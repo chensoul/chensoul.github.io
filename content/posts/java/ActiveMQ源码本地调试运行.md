@@ -73,7 +73,7 @@ try {
 }
 ```
 
-在 idea 中全局搜索 BrokerService 类，可以看到很多单元测试类都用到了 BrokerService 类。比如 BrokerServiceTest 、BrokerInterceptorsTest 、IDERunner。
+在 idea 中全局搜索 BrokerService 类，可以看到很多单元测试类都用到了 BrokerService 类。比如 activemq-broker 模块中的 BrokerServiceTest 、BrokerInterceptorsTest 、IDERunner。
 
 BrokerInterceptorsTest 类如下：
 
