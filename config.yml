@@ -12,6 +12,7 @@ buildFuture: false
 buildExpired: false
 enableEmoji: true
 pygmentsUseClasses: true
+hasCJKLanguage: true
 mainsections: ["posts", "papermod"]
 
 summaryLength: 100
@@ -126,28 +127,28 @@ markup:
   highlight:
     noClasses: false
     # anchorLineNos: true
-    # codeFences: true
-    # guessSyntax: true
-    # lineNos: true
-    # style: monokai
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: monokai
 
-# privacy:
-#   vimeo:
-#     disabled: false
-#     simple: true
+privacy:
+  vimeo:
+    disabled: false
+    simple: true
 
-#   twitter:
-#     disabled: false
-#     enableDNT: true
-#     simple: true
+  twitter:
+    disabled: false
+    enableDNT: true
+    simple: true
 
-#   instagram:
-#     disabled: false
-#     simple: true
+  instagram:
+    disabled: false
+    simple: true
 
-#   youtube:
-#     disabled: false
-#     privacyEnhanced: true
+  youtube:
+    disabled: false
+    privacyEnhanced: true
 
 services:
   instagram:
