@@ -6,7 +6,7 @@ categories: ["Java"]
 tags: [java, spring, async]
 ---
 
-## **1. 概述**
+## 1. 概述
 
 在本教程中，我们将探讨 Spring 中的异步执行支持和 `@Async` 注解。
 

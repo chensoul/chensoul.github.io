@@ -16,7 +16,7 @@ JMS 提供三种确认选项，并且恢复是手动处理的。
 2. **CLIENT_ACKNOWLEDGE** – JMS 客户端必须通过调用消息的`acknowledge()`方法来确认。
 3. **DUPS_OK_ACKNOWLEDGE** – JMS 服务器可以放心地向 JMSConsumer 发送重复消息。客户端应用程序应该能够在此模式下处理重复消息。
 
-## 1. JMS **AUTO_ACKNOWLEDGE**消息传递的实际操作
+## 1. JMS AUTO_ACKNOWLEDGE消息传递的实际操作
 
 这是创建`Session`或时设置的默认确认模式`JMSContext`。您可以手动指定`AUTO_ACKNOWLEDGE`模式，如下所示。
 
@@ -111,7 +111,7 @@ public class CommonSettings {
 Received message: This is an AUTO_ACKNOWLEDGEMENT message
 ```
 
-## 2. JMS **CLIENT_ACKNOWLEDGE**消息传递的实际操作
+## 2. JMS CLIENT_ACKNOWLEDGE消息传递的实际操作
 
 当您将会话模式设置为 时`CLIENT_ACKNOWLEDGE`，客户端会通过调用其确认方法来确认消息。确认已使用的消息会自动确认已收到其会话已传送的所有消息。
 
@@ -192,7 +192,7 @@ Exception in thread "Thread-10" java.lang.NullPointerException
 
 另一方面，`messageConsumer1`接收消息但不确认，因此不会从 JMS 服务器中删除该消息。因此，`messageConsumer3`能够接收相同的消息，但这次它确认了该消息，因此会从 JMS 服务器中删除该消息。因此，`messageConsumer2`不会收到该消息，并且会`NullPointerException`在发生超时时抛出。
 
-## 3. JMS **DUPS_OK_ACKNOWLEDGE**消息传递的实际操作
+## 3. JMS DUPS_OK_ACKNOWLEDGE消息传递的实际操作
 
 在此模式下，JMS 服务器被告知要向消费者多次传递消息。这样做的好处是，服务器无需处理重复的消息传递。客户端应用程序需要能够容忍或足够智能地处理重复的消息。
 

@@ -6,7 +6,7 @@ categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security", oauth2]
 ---
 
-![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2022/12/UserDetailsServiceSpringBoot3-1.jpg)
+![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/wp-content/uploads/2022/12/UserDetailsServiceSpringBoot3-1.jpg)
 
 作为有关 Spring Security 的系列文章的继续，在本文中我们将学习“如何在 Spring Boot 3 中使用 UserDetailsService 实现 Spring Boot 中的安全性？”。经过前面的文章，我希望我们都非常熟悉安全性的基础知识，甚至 Spring Boot 应用程序中的安全性基础知识。 Spring Boot 3 发布后，我们将在这里实现“使用 Spring Boot 3 的 Spring Security UserDetailsService”。
 
@@ -247,7 +247,7 @@ public class SecurityConfig {
 
 不用说，该组织将有一个用户注册页面，即使没有登录，所有用户也必须可以访问该页面。现在让我们创建一个标准用户注册流程，如下所示。
 
-![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2022/12/UserRegistrationFlow-1.jpg?resize=640%2C339&is-pending-load=1#038;ssl=1&ezimgfmt=rs:640x339/rscb4/ng:webp/ngcb3)
+![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/wp-content/uploads/2022/12/UserRegistrationFlow-1.jpg)
 
 ### 步骤#1：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
 

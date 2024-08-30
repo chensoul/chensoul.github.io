@@ -72,7 +72,7 @@ spring:
 
 该项目的链接可以[在这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/getting-refresh-token)找到。
 
-## **问题**
+## 问题
 
 **1. 我们在哪里找到默认令牌端点？**
 

@@ -18,7 +18,7 @@ tags: [java, spring, "spring boot", "spring security"]
 
 我们首先创建授权服务器。
 
-## **依赖项：**
+## 依赖项：
 
 让我们将以下依赖项添加到我们的项目中。
 
@@ -32,7 +32,7 @@ testImplementation 'org.springframework.security:spring-security-test'
 
 我们正在使用 spring oauth2 依赖项的最新（当时）稳定版本。
 
-## **Java 实现：**
+## Java 实现：
 
 让我们创建一个名为 AuthorizationServerConfig 的配置类，并向该类添加 @Configuration 注解。现在让我们创建以下 bean 来完成配置：
 

@@ -125,7 +125,7 @@ HTTP 流是指通过 HTTP 连接从服务器连续向客户端发送数据。它
 
 另一方面，REST（表述性状态传输）是一种用于设计网络应用程序的架构风格。它基于旨在使 Web 服务可扩展、无状态和可互操作的原则和约束。 RESTful API（应用程序编程接口）使用 HTTP 作为底层通信协议，但不涉及实时数据流。相反，REST API 遵循请求-响应模型，其中客户端向服务器发送请求，服务器以所请求资源的表示形式进行响应。
 
-## **HTTP 流与长轮询**
+## HTTP 流与长轮询
 
 [在比较实时聊天](https://www.pubnub.com/solutions/chat/)和消息传递应用程序的HTTP 流和[长轮询](https://www.pubnub.com/guides/long-polling/)时，需要考虑几个因素。这两种方法都有优点和局限性，因此了解它们的差异以做出明智的决定非常重要。
 
@@ -228,7 +228,7 @@ HTTP 流也称为基于 HTTP 的自适应流，是一种通过常规 HTTP（超�
 
 **Kotlin：** [Kotlin](https://www.pubnub.com/docs/sdks/kotlin)是由 JetBrains 开发的静态类型编程语言，并正式支持 Android 开发。它可用于 Android 平台上的 HTTP 流媒体，使用 ExoPlayer 等支持 HLS 和 MPEG-DASH 等流媒体协议的库。
 
-## **哪种 HTTP 流协议更灵活并提供互操作性？**
+## 哪种 HTTP 流协议更灵活并提供互操作性？
 
 HTTP 上的动态自适应流 (DASH) 是 HTTP 流协议，与其他协议相比，它提供了更大的灵活性和互操作性。 DASH 不依赖于特定平台或设备，因此适用于各种应用程序和设备。它支持高效编码和自适应比特率流媒体，确保在不同网络条件下提供流畅的播放体验。
 

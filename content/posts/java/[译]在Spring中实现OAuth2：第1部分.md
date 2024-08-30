@@ -8,7 +8,7 @@ tags: [java, spring, "spring boot", "spring security", oauth2]
 
 OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。
 
-## **访问令牌和刷新令牌**
+## 访问令牌和刷新令牌
 
 身份验证成功后将提供访问令牌以及刷新令牌。访问令牌有一个有限的有效期（标准为 1 小时），之后需要刷新令牌才能获取新的访问令牌和新的刷新令牌。 Referesh 令牌通常会在使用后过期。
 

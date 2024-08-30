@@ -6,7 +6,7 @@ categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]
 ---
 
-![How to implement JWT Authentication in Spring Boot Project?](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2020/12/JWT_With_SpringBoot-1.jpg?resize=550%2C382&is-pending-load=1#038;ssl=1&ezimgfmt=rs:550x382/rscb4/ngcb3/notWebP)
+![How to implement JWT Authentication in Spring Boot Project?](https://javatechonline.com/wp-content/uploads/2020/12/JWT_With_SpringBoot-1.jpg)
 
 没有人可以否认这样一个事实：安全性是生产就绪应用程序的一项重要功能。尽管我们可以[使用内存身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)、[JDBC 身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)或通过 [UserDetailsS](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)​​ervice 来保护一个 Web 应用程序的安全。但是，当一个应用程序在内部使用其他应用程序的服务时，使用 Web 服务概念实现安全性就变得很重要。在这种情况下，我们使用具有特定有效期的令牌来保护我们的应用程序。此外，我们将学习“如何在 Spring Boot 项目中实现 JWT 身份验证？”以整体了解 JWT（JSON Web Token）身份验证背后的概念。
 
@@ -1081,7 +1081,7 @@ User with id ‘1’ saved succssfully!
 
 在 Postman URL 栏中输入 URL http://localhost:8080/user/getData，选择 POST 方法，然后选择 Headers。在标题下选择密钥作为“授权”。现在将令牌粘贴为授权值，如下面的屏幕截图所示。然后单击“发送”按钮。
 
-![How To Implement JWT Authentication In Spring Boot Project?](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2020/12/JWT1-2.jpg?resize=640%2C318&is-pending-load=1#038;ssl=1&ezimgfmt=rs:640x318/rscb4/ng:webp/ngcb3)
+![How To Implement JWT Authentication In Spring Boot Project?](https://javatechonline.com/wp-content/uploads/2020/12/JWT1-2.jpg)
 
 作为成功的响应，您应该得到以下输出：
 

@@ -48,13 +48,13 @@ Socket.IO可以使用[TCP](https://www.pubnub.com/guides/tcp-ip/)和[UDP](https:
 
 UDP 比 TCP 更轻量级，因为只有后者在客户端和服务器之间建立连接，但它只能由能够抵御丢失消息的应用程序使用。
 
-## **Socket.io 与 Web Sockets**
+## Socket.io 与 Web Sockets
 
 虽然 Socket.IO 明确不是[WebSocket](https://www.pubnub.com/learn/glossary/what-is-websocket/)实现，但有一些相似之处。两者都是基于事件的，这意味着您可以“侦听”连接、断开连接或 new_message 等事件，并且都允许您发送[JSON 对象等结构化数据。](https://www.w3schools.com/js/js_json_objects.asp)
 
 您可以将 Socket.IO 视为底层传输协议之上的抽象层。除了底层通信层之外，该库还实现了其他功能，例如自动重新连接、数据包缓冲和消息确认，以及在 WebSocket 不可用时回退到 HTTP 长轮询，从而增加了鲁棒性。
 
-## **Socket.io 示例：客户端/服务器**
+## Socket.io 示例：客户端/服务器
 
 JavaScript 中 Socket.IO 的 Hello World 客户端/服务器实现将编写如下，摘自[4.x Socket.IO 文档](https://socket.io/docs/v4/)：
 
@@ -70,7 +70,7 @@ JavaScript 中 Socket.IO 的 Hello World 客户端/服务器实现将编写如�
 
 该库支持两种传输方法：HTTP 长轮询和 WebSockets。首先建立 HTTP 长轮询连接，然后在可能的情况下升级为 WebSocket 连接。 WebSocket 不能在任何地方运行，例如，它们被许多公司代理和防火墙阻止，因此首先发起 HTTP 长轮询，因为它更有可能成功。 HTTP 长轮询连接建立后，会在对最终用户完全透明的过程中“[升级”为 WebSocket 连接。](https://socket.io/docs/v4/how-it-works/#upgrade-mechanism)
 
-### **Socket.IO的架构是怎样的？**
+### Socket.IO的架构是怎样的？
 
 Socket.IO 由两个不同的层组成，分别存在于客户端和服务器上：
 

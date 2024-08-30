@@ -6,7 +6,7 @@ categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]
 ---
 
-![How to implement Security in Spring Boot Project?](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2020/11/SpringSecurityBasics-1.jpg?resize=550%2C525&is-pending-load=1#038;ssl=1&ezimgfmt=rs:550x525/rscb4/ngcb3/notWebP)
+![How to implement Security in Spring Boot Project?](https://javatechonline.com/wp-content/uploads/2020/11/SpringSecurityBasics-1.jpg)
 
 如今，几乎每个客户都要求在实时应用程序中实现强大的安全功能。安全功能对于保持机密性、完整性和可用性的需求是非常有效的。现实世界中有很多类型的安全性，但我们作为开发人员将重点关注应用程序/软件安全性。
 
@@ -108,7 +108,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 以下是步骤：
 
-![SpringSecurity2](https://javatechonline.com/ezoimgfmt/i0.wp.com/javatechonline.com/wp-content/uploads/2020/11/SpringSecurity2-1-1.jpg?resize=640%2C303&is-pending-load=1#038;ssl=1&ezimgfmt=rs:640x303/rscb4/ng:webp/ngcb3)
+![SpringSecurity2](https://javatechonline.com/wp-content/uploads/2020/11/SpringSecurity2-1-1.jpg)
 
 1. 编写一个类“SecurityConfig.java”，它扩展了预定义的抽象类 WebSecurityConfigurerAdapter.java
 2. 在“SecurityConfig.java”之上相应地应用注释@Configuration 和@EnableWebSecurity。不用说，注释@EnableWebSecurity 是为了在 Web 应用程序中启用安全功能。
