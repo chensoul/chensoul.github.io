@@ -63,10 +63,6 @@ outputs:
     - RSS
     - JSON
 
-services:
-  googleAnalytics:
-    ID: G-FCSSTV9VRG
-
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: ChenSoul
@@ -74,9 +70,13 @@ params:
   author: chensoul
   keywords: [java]
   images: []
+  DateFormat: "2006-01-02"
+
+  # Hugo 默认只把 ./content/ 目录下有最多文章的目录设为主目录
+  # 详情：https://gohugo.io/functions/where/#mainsections
+  # 归档页面默认只显示主目录内的文章，如果有多个目录的话，需要修改这个配置
   mainSections:
     - posts
-  DateFormat: "2006-01-02"
 
   defaultTheme: auto # dark, light
   # disableThemeToggle: false
