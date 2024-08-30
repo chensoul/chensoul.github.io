@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: latest
           extended: true
@@ -24,7 +24,7 @@ jobs:
         run: hugo --gc --minify
 
       - name: Deploy web
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: cf-pages
