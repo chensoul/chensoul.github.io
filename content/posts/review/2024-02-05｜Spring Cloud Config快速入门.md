@@ -13,8 +13,6 @@ tags: [spring-cloud]
 1. 创建项目 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples)，测试 *Spring Cloud* Config 使用本地文件和 git 仓库作为配置中心
    
 
-
-
 ---
 
 *Spring Cloud* Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。
@@ -344,7 +342,9 @@ test: hello world
   ```bash
   cd config-server-file/src/main/resources
   
-  keytool -genkeypair -alias mytestkey -storetype PKCS12 -keyalg RSA -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" -keypass changeme -keystore server.jks -storepass changeme
+  keytool -genkeypair -alias mytestkey -storetype PKCS12 -keyalg RSA \ 
+    -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" \
+    -keypass changeme -keystore server.jks -storepass changeme
   ```
 
   然后，在配置文件中添加：
@@ -365,7 +365,7 @@ test: hello world
 重启应用，加密 "hello world"：
 
 ```bash
-$ curl -s http://root:123456@localhost:8888/encrypt --data-urlencode "hello world"
+$ curl -s http://root:123456@localhost:8888/encrypt --data-urlencode "hello world" 
 1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e                    
 ```
 

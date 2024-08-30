@@ -31,7 +31,8 @@ tags: [spring-cloud]
    
      @Before("@annotation(getMapping)")
      public void applyRateLimit(JoinPoint joinPoint, GetMapping getMapping) {
-         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+            .getRequestAttributes()).getRequest();
          if (request != null && HttpMethod.GET.matches(request.getMethod())) {
              String username = request.getUserPrincipal().getName(); // Get the username
              if (username != null && !username.isEmpty()) {
@@ -62,7 +63,8 @@ tags: [spring-cloud]
    
          if (currentRequests > maxRequests) {
              String urlWithParams = getRequestUrlWithParams(request);
-             logger.warn("Rate limit exceeded for key: {}. Request URL with Params: {}", rateLimitKey, urlWithParams);
+             logger.warn("Rate limit exceeded for key: {}. Request URL with Params: {}", 
+                rateLimitKey, urlWithParams);
              throw new RateLimitException();
          }
      }
