@@ -1,6 +1,6 @@
 ---
 title: "2024-01-04｜GitHub Actions"
-date: 2024-01-04T18:00:00+08:00
+date: 2024-01-04
 slug: til
 categories: ["Review"]
 tags: ["vps",maven,github]

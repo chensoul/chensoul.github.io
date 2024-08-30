@@ -1,6 +1,6 @@
 ---
 title: "[译]在 Spring 中实现 OAuth2：第 1 部分"
-date: 2023-07-26T07:00:00+08:00
+date: 2023-07-26
 slug: using-oauth2-in-spring
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security", oauth2]

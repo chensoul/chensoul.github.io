@@ -1,7 +1,7 @@
 ---
 title: "Rancher安装和部署-使用K8s
 "
-date: 2024-05-10T14:00:00+08:00
+date: 2024-05-10
 slug: install-rancher
 tags: [k8s,rancher]
 categories: ["devops"]

@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Security 面试问题"
-date: 2023-10-12T09:00:00+08:00
+date: 2023-10-12
 slug: spring-security-interview-questions
 categories: ["Java"]
 tags: [java, "spring security"]

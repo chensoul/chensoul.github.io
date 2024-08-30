@@ -1,8 +1,7 @@
 ---
 title: "RFC6749 | OAuth2.0授权框架中文版"
-date: 2024-06-05T08:00:00+08:00
+date: 2024-06-05
 slug: oauth2
-draft: false
 categories: ["Java"]
 tags: [ oauth2]
 ---

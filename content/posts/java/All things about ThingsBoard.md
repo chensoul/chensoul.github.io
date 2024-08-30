@@ -1,8 +1,7 @@
 ---
 title: "All things about ThingsBoard"
-date: 2024-04-29T18:00:00+08:00
+date: 2024-04-29
 slug: all-things-about-thingsboard
-draft: false
 categories: ["Java"]
 tags: [ thingsboard,java]
 ---

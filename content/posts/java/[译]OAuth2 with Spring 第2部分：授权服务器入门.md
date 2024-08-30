@@ -1,8 +1,7 @@
 ---
 title: "[译]OAuth2 with Spring 第2部分：授权服务器入门"
-date: 2024-06-05T07:01:00+08:00
+date: 2024-06-05
 slug: oauth2-with-spring-part-2-getting-started-with-authorization-server
-draft: false
 categories: ["Java"]
 tags: [ oauth2,java]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Git Flow分支模型和使用"
-date: 2023-05-11T14:00:00+08:00
+date: 2023-05-11
 slug: "git-flow-model-and-usage"
 categories: ["devops"]
 tags: ["git"]

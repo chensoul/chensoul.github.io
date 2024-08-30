@@ -1,6 +1,6 @@
 ---
 title: "通过k3sup安装k3s"
-date: 2024-05-09T11:00:00+08:00
+date: 2024-05-09
 slug: install-k3s-using-k3sup
 tags: [k3s]
 categories: ["devops"]

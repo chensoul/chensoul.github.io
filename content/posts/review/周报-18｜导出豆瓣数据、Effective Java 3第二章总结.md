@@ -1,7 +1,6 @@
 ---
 title: "周报-18｜导出豆瓣数据、Effective Java 3第二章总结"
-date: 2023-05-10 10:00:00+08:00
-draft: false
+date: 2023-05-10
 slug: weekly_review_18
 categories: [Review]
 tags: [review, java, python]

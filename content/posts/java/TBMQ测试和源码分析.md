@@ -1,8 +1,7 @@
 ---
 title: "TBMQ测试和源码分析"
-date: 2024-04-28T08:00:00+08:00
+date: 2024-04-28
 slug: thingsboard-tbmq-test
-draft: false
 categories: ["Java"]
 tags: [ thingsboard,java]
 ---

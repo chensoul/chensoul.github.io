@@ -1,6 +1,6 @@
 ---
 title: "All things about WebSocket"
-date: 2024-05-10T16:00:00+08:00
+date: 2024-05-10
 slug: all-things-about-websocket
 categories: ["Java"]
 tags: [java,websocket]

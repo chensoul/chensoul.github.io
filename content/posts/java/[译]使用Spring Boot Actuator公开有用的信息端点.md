@@ -1,6 +1,6 @@
 ---
 title: "[译]使用Spring Boot Actuator公开有用的信息端点"
-date: 2023-07-26T07:05:00+08:00
+date: 2023-07-26
 slug: spring-boot-info-endpoint
 categories: ["Java"]
 tags: [java, spring, maven, gradle]

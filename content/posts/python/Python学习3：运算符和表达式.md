@@ -1,8 +1,7 @@
 ---
 title: "Python学习3：运算符和表达式"
-date: 2023-06-11T15:30:00+08:00
+date: 2023-06-11
 slug: python-operator-and-expression
-draft: false
 categories: ["Python"]
 tags: ["python"]
 ---

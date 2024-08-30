@@ -1,6 +1,6 @@
 ---
 title: "2024-02-01｜使用 Spring Initializr 创建项目"
-date: 2024-02-01T07:00:00+08:00
+date: 2024-02-01
 slug: til
 categories: ["Review"]
 tags: [redis]

@@ -1,15 +1,12 @@
 ---
 title: "[译]Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最好？"
-date: 2024-05-07T10:00:00+08:00
+date: 2024-05-07
 slug: /apache-kafka-vs-rabbitmq-vs-aws-sns-sqs
-draft: false
 categories: ["Java"]
 tags: [ kafka,rabbitmq,java]
 ---
 
 原文链接：[https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs](https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs)
-
-
 
 将消息从一个组件获取到另一个组件是微服务架构中最重要的部分之一。每个服务必须能够与任何其他服务异步、可靠且大规模地通信。
 
@@ -19,11 +16,7 @@ tags: [ kafka,rabbitmq,java]
 
 在本文中，您将找到有关业界最受欢迎的三个消息代理如何适用于不同用例的指南。我们将研究诸如它们的扩展方法、它们支持的消息传递模式以及它们如何处理性能和智能消息路由之间的权衡等特征。
 
-
-
 ## 比较消息代理：您应该寻找什么？
-
-
 
 ![img](https://images.ctfassets.net/ee3ypdtck0rk/5uwsPw8PHnKMaENGFsHObA/55d71744763c6dae6b622906e16c3a07/comparing-message-brokers-what-should-you-look-for.png?w=1840&h=800&q=50&fm=png)
 

@@ -1,6 +1,6 @@
 ---
 title: "2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-food测试"
-date: 2024-02-18T07:00:00+08:00
+date: 2024-02-18
 slug: til
 categories: ["Review"]
 tags: [spring-cloud]

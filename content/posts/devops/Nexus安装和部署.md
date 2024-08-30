@@ -1,8 +1,7 @@
 ---
 title: "搭建本地Maven仓库Nexus"
-date: 2024-06-25T15:00:00+08:00
+date: 2024-06-25
 slug: install-nexus
-draft: false
 categories: ["devops"]
 tags: [ maven,nexus ]
 ---

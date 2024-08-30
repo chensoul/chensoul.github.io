@@ -1,8 +1,7 @@
 ---
 title: "OAuth2和OIDC区别"
-date: 2024-06-06T07:00:00+08:00
+date: 2024-06-06
 slug: oauth2-oidc
-draft: false
 categories: ["Java"]
 tags: [ oauth2]
 ---

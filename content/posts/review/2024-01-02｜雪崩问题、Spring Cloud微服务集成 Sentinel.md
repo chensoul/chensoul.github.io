@@ -1,6 +1,6 @@
 ---
 title: "2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel"
-date: 2024-01-02T17:10:00+08:00
+date: 2024-01-02
 slug: til
 categories: ["Review"]
 tags: ["spring-cloud",sentinel]

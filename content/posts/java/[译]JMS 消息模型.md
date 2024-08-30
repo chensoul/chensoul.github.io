@@ -1,8 +1,7 @@
 ---
 title: "[译]JMS 消息模型"
-date: 2024-07-23T16:10:00+08:00
+date: 2024-07-23
 slug: jms-message-model
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

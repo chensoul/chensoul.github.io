@@ -1,8 +1,7 @@
 ---
 title: "Python学习2：数据类型"
-date: 2023-06-10T15:00:00+08:00
+date: 2023-06-10
 slug: python-data-type
-draft: false
 categories: ["Python"]
 tags: ["python"]
 ---

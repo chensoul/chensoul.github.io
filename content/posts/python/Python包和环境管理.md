@@ -1,6 +1,6 @@
 ---
 title: "Python包和环境管理"
-date: 2023-05-09T10:00:00+08:00
+date: 2023-05-09
 slug: python-package-and-env-management
 categories: ["Python"]
 tags: ["python"]

@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Security 和 Spring Boot 入门"
-date: 2023-08-16T14:40:00+08:00
+date: 2023-08-16
 slug: spring-security
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security", oauth2]

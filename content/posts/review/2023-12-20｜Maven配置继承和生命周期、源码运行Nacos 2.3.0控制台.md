@@ -1,6 +1,6 @@
 ---
 title: "2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台"
-date: 2023-12-20T19:10:00+08:00
+date: 2023-12-20
 slug: til
 categories: ["Review"]
 tags: [maven,nacos]

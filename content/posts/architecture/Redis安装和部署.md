@@ -1,6 +1,6 @@
 ---
 title: "Redis安装和部署"
-date: 2024-05-14T11:00:00+08:00
+date: 2024-05-14
 slug: redis-install
 categories: ["Architecture"]
 tags: ["redis"]

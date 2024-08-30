@@ -1,6 +1,6 @@
 ---
 title: "2023-12-15｜JNDI InitialContext源码分析、ClassLoader加载机制"
-date: 2023-12-15T13:30:00+08:00
+date: 2023-12-15
 slug: til
 categories: ["Review"]
 tags: [java,jndi,classloader]

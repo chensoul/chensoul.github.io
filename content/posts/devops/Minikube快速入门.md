@@ -1,6 +1,6 @@
 ---
 title: "Minikube快速入门"
-date: 2024-07-10T13:00:00+08:00
+date: 2024-07-10
 slug: minikube-quick-start
 tags: ["minikube"]
 categories: ["devops"]

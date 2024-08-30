@@ -1,8 +1,7 @@
 ---
 title: "[译]JMS 点对点消息传递的实际应用"
-date: 2024-07-23T16:30:00+08:00
+date: 2024-07-23
 slug: jms-point-to-point-messaging-in-action
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

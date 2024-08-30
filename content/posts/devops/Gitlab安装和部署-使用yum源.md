@@ -1,8 +1,7 @@
 ---
 title: "Gitlab安装和部署-使用yum源"
-date: 2024-07-15T08:00:00+08:00
+date: 2024-07-15
 slug: install-gitlab-using-yum
-draft: false
 categories: ["devops"]
 tags: [ gitlab ]
 ---

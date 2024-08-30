@@ -1,8 +1,7 @@
 ---
 title: "[译]JMS 2.0 中的新增功能（第一部分）- 易于使用"
-date: 2024-07-24T08:00:00+08:00
+date: 2024-07-24
 slug: jms20
-draft: false
 categories: ["Java"]
 tags: [ jms ]
 ---

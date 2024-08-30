@@ -1,6 +1,6 @@
 ---
 title: "Java设计模式：Active Object"
-date: 2023-05-26T10:00:00+08:00
+date: 2023-05-26
 slug: java-design-patterns-active-object
 categories: ["Java"]
 tags: [java, spring]

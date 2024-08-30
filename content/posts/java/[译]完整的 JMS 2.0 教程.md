@@ -1,8 +1,7 @@
 ---
 title: "[译]完整的 JMS 2.0 教程"
-date: 2024-07-23T18:00:00+08:00
+date: 2024-07-23
 slug: a-complete-jms-2-0-tutorial
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

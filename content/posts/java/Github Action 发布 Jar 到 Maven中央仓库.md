@@ -1,8 +1,7 @@
 ---
 title: "Github Action 发布 Jar 到 Maven 中央仓库"
-date: 2024-08-01T08:00:00+08:00
+date: 2024-08-01
 slug: publishing-a-jar-to-maven-repository-with-github-action
-draft: false
 categories: ["Java"]
 tags: [ maven,java]
 ---

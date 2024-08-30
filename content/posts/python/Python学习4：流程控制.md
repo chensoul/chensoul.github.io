@@ -1,8 +1,7 @@
 ---
 title: "Python学习4：流程控制"
-date: 2023-06-14T09:00:00+08:00
+date: 2023-06-14
 slug: python-flow-control
-draft: false
 categories: ["Python"]
 tags: ["python"]
 ---

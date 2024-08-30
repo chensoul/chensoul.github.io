@@ -1,6 +1,6 @@
 ---
 title: "Java网络编程"
-date: 2024-08-14T09:00:00+08:00
+date: 2024-08-14
 slug: java-network-coding
 categories: ["Java"]
 tags: [ network]

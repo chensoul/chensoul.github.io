@@ -1,6 +1,6 @@
 ---
 title: "Redis实现消息队列的几种方式"
-date: 2024-05-14T11:00:00+08:00
+date: 2024-05-14
 slug: redis-install
 draft: true
 tags: ["redis"]

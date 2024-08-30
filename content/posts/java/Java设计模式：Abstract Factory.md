@@ -1,6 +1,6 @@
 ---
 title: "Java设计模式：Abstract Factory"
-date: 2023-05-22T14:00:00+08:00
+date: 2023-05-22
 slug: java-design-patterns-abstract-factory
 categories: ["Java"]
 tags: [java, spring]

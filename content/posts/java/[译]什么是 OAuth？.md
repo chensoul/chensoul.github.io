@@ -1,8 +1,7 @@
 ---
 title: "[译]什么是 OAuth？"
-date: 2024-05-07T14:00:00+08:00
+date: 2024-05-07
 slug: oauth
-draft: false
 categories: ["Java"]
 tags: [ oauth2]
 ---

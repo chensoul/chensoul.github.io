@@ -1,6 +1,6 @@
 ---
 title: "2024-01-26｜foodie-cloud集成Feign"
-date: 2024-01-26T07:00:00+08:00
+date: 2024-01-26
 slug: til
 categories: ["Review"]
 tags: [eureka,feign]

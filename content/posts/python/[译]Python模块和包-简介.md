@@ -1,8 +1,7 @@
 ---
 title: "[译]Python模块和包-简介"
-date: 2023-06-25T14:00:00+08:00
+date: 2023-06-25
 slug: python-modules-packages
-draft: false
 categories: ["Python"]
 tags: [python]
 ---

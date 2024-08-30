@@ -1,8 +1,7 @@
 ---
 title: "[译]WebSocket与HTTP：2024年为您的项目选择哪一个"
-date: 2024-05-07T11:00:00+08:00
+date: 2024-05-07
 slug: websockets-vs-http
-draft: false
 categories: ["Java"]
 tags: [ thingsboard,java]
 ---

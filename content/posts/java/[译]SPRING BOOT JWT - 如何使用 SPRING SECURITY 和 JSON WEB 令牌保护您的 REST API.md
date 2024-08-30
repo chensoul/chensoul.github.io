@@ -1,6 +1,6 @@
 ---
 title: "[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API"
-date: 2023-09-19T14:00:00+08:00
+date: 2023-09-19
 slug: spring-security-jwt
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security", oauth2]

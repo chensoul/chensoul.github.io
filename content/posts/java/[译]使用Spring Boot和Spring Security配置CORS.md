@@ -1,6 +1,6 @@
 ---
 title: "[译]使用 Spring Boot 和 Spring Security 配置 CORS"
-date: 2023-07-26T07:20:00+08:00
+date: 2023-07-26
 slug: spring-cors
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]

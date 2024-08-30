@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Instagram"
-date: 2023-11-24T09:30:00+08:00
+date: 2023-11-24
 slug: designing-instagram
 categories: ["Architecture"]
 tags: ["architecture"]

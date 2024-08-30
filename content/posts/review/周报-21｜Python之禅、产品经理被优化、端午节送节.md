@@ -1,7 +1,6 @@
 ---
 title: "周报-21｜Python之禅、产品经理被优化、端午节送节"
-date: 2023-05-31 09:00:00+08:00
-draft: false
+date: 2023-05-31
 slug: weekly_review_21
 categories: [Review]
 tags: [review, python, java]

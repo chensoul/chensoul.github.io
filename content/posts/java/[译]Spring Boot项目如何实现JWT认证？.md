@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Boot项目如何实现JWT认证？"
-date: 2023-08-18T12:00:00+08:00
+date: 2023-08-18
 slug: how-to-implement-jwt-authentication-in-spring-boot-project
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]

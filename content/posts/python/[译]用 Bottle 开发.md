@@ -1,8 +1,7 @@
 ---
 title: "[译]用 Bottle 开发"
-date: 2023-06-25T09:00:00+08:00
+date: 2023-06-25
 slug: developing-with-bottle
-draft: false
 categories: ["Python"]
 tags: [python, bottle]
 ---

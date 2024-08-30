@@ -1,10 +1,9 @@
 ---
 title: "Java设计模式：Business Delegate"
-date: 2023-09-05T09:00:00+08:00
+date: 2023-09-05
 slug: java-design-patterns-business-delegate
 categories: ["Java"]
 tags: [java]
-draft: false
 ---
 
 本文主要介绍 [Business Delegate](https://java-design-patterns.com/zh/patterns/business-delegate/) 业务委托模式，在 [Java Design Patterns](https://java-design-patterns.com/) 网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。

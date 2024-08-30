@@ -1,10 +1,9 @@
 ---
 title: "Java设计模式：Builder"
-date: 2023-09-05T09:00:00+08:00
+date: 2023-09-05
 slug: java-design-patterns-builder
 categories: ["Java"]
 tags: [java]
-draft: false
 ---
 
 本文主要介绍 [Builder](https://java-design-patterns.com/zh/patterns/builder/) 构造器模式，在 [Java Design Patterns](https://java-design-patterns.com/) 网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。

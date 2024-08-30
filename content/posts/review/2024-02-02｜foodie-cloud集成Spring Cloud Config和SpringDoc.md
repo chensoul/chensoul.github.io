@@ -1,6 +1,6 @@
 ---
 title: "2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc"
-date: 2024-02-02T07:00:00+08:00
+date: 2024-02-02
 slug: til
 categories: ["Review"]
 tags: [spring-cloud,springdoc]

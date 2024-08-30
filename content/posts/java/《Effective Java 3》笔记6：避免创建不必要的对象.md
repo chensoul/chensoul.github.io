@@ -1,6 +1,6 @@
 ---
 title: "《Effective Java 3》笔记6：避免创建不必要的对象"
-date: 2023-04-24T09:00:00+08:00
+date: 2023-04-24
 slug: avoid-creating-unnecessary-objects
 categories: ["Java"]
 tags: [java]

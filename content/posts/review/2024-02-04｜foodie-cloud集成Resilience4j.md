@@ -1,6 +1,6 @@
 ---
 title: "2024-02-04｜foodie-cloud集成Resilience4j"
-date: 2024-02-04T07:00:00+08:00
+date: 2024-02-04
 slug: til
 categories: ["Review"]
 tags: [spring-cloud,resilience4j]

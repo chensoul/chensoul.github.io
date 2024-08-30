@@ -1,6 +1,6 @@
 ---
 title: "2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描"
-date: 2023-12-19T19:10:00+08:00
+date: 2023-12-19
 slug: til
 categories: ["Review"]
 tags: [java,github,"spring-security"]

@@ -1,6 +1,6 @@
 ---
 title: "2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离"
-date: 2024-02-19T07:00:00+08:00
+date: 2024-02-19
 slug: til
 categories: ["Review"]
 tags: [spring-cloud]

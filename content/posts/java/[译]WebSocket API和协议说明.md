@@ -1,8 +1,7 @@
 ---
 title: "[译]WebSocket API和协议说明"
-date: 2024-05-07T08:00:00+08:00
+date: 2024-05-07
 slug: the-websocket-api-and-protocol-explained
-draft: false
 categories: ["Java"]
 tags: [ websocket,java]
 ---

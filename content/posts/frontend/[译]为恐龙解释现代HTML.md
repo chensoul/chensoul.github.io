@@ -1,10 +1,9 @@
 ---
 title: "[译]为恐龙解释现代HTML"
-date: 2023-06-20T09:00:00+08:00
+date: 2023-06-20
 slug: modern-html-explained-for-dinosaurs
 categories: ["Frontend"]
 tags: [css, html, javascript]
-draft: false
 ---
 
 ![Dinosaur comic panel 1](https://peterxjang.com/img/1__EEHKg3z__FAk0ipZDFuWKcw.png)

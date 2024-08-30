@@ -1,8 +1,7 @@
 ---
 title: "[译]JMS 2.0 中的新增功能"
-date: 2024-07-24T09:20:00+08:00
+date: 2024-07-24
 slug: what-is-new-in-jms-2-0
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

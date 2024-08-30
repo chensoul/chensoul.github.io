@@ -1,8 +1,7 @@
 ---
 title: "[译]什么是 Python Wheels，你为什么要关心它？"
-date: 2023-06-01T09:00:00+08:00
+date: 2023-06-01
 slug: python-wheels
-draft: false
 categories: ["Python"]
 tags: ["python"]
 ---

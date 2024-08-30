@@ -1,8 +1,7 @@
 ---
 title: "[译]什么是Socket.IO？"
-date: 2024-05-07T14:00:00+08:00
+date: 2024-05-07
 slug: socket-io
-draft: false
 categories: ["Java"]
 tags: [ socketio]
 ---

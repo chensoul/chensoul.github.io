@@ -1,6 +1,6 @@
 ---
 title: "[译]关于 HTTP 您需要了解的一切"
-date: 2023-10-12T13:00:00+08:00
+date: 2023-10-12
 slug: http-in-depth
 tags: ["http"]
 categories: ["devops"]

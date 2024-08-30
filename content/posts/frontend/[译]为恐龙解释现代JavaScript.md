@@ -1,11 +1,10 @@
 ---
 title: "[译]为恐龙解释现代JavaScript"
-date: 2023-06-19T09:00:00+08:00
+date: 2023-06-19
 slug: modern-javascript-explained-for-dinosaurs
 categories: ["Frontend"]
 tags:
   [css, html, javascript, nodejs, npm, grunt, gulp, webpack, babel, react, vite]
-draft: false
 ---
 
 ![Images from Dinosaur Comics by Ryan North](https://peterxjang.com/img/1__H8PH__HaV43gZyBJz0mJHxA.png)

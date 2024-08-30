@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Pastebin"
-date: 2023-11-24T08:30:00+08:00
+date: 2023-11-24
 slug: designing-pastebin
 categories: ["Architecture"]
 tags: ["architecture"]

@@ -1,7 +1,6 @@
 ---
 title: "我的VPS服务部署记录"
-date: 2023-01-25T10:38:34+08:00
-draft: false
+date: 2023-01-25
 slug: "notes-about-deploy-services-in-vps"
 categories: ["devops"]
 tags: [hugo, docker, rsshub, memos, n8n, vps, nginx]

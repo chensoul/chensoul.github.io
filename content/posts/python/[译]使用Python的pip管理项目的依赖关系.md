@@ -1,8 +1,7 @@
 ---
 title: "[译]使用 Python 的 pip 管理项目的依赖关系"
-date: 2023-06-01T09:00:00+08:00
+date: 2023-06-01
 slug: what-is-pip
-draft: false
 categories: ["Python"]
 tags: ["python"]
 ---

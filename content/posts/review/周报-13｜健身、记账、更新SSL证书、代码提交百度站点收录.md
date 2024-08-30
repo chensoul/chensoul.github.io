@@ -1,7 +1,6 @@
 ---
 title: "周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录"
-date: 2023-04-04 15:40:00+08:00
-draft: false
+date: 2023-04-04
 slug: weekly_review_13
 categories: [Review]
 tags: [review, rust, java, cloudflare, go, ssl]

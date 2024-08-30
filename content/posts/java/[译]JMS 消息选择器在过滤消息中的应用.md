@@ -1,8 +1,7 @@
 ---
 title: "[译]JMS 消息选择器在过滤消息中的应用"
-date: 2024-07-23T16:45:00+08:00
+date: 2024-07-23
 slug: jms-message-selectors-in-action-to-filter-messages
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "All things about OAuth"
-date: 2024-06-06T12:00:00+08:00
+date: 2024-06-06
 slug: all-things-about-oauth
 categories: ["Java"]
 tags: [oauth2]

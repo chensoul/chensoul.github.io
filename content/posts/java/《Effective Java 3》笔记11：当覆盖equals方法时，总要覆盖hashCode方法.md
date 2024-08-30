@@ -1,6 +1,6 @@
 ---
 title: "《Effective Java 3》笔记11：当覆盖 equals 方法时，总要覆盖 hashCode 方法"
-date: 2023-05-23T10:00:00+08:00
+date: 2023-05-23
 slug: always-override-hashCode-when-you-override-equals
 categories: ["Java"]
 tags: [java]

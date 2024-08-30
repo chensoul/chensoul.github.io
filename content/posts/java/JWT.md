@@ -1,8 +1,7 @@
 ---
 title: "JWT"
-date: 2024-06-06T08:00:00+08:00
+date: 2024-06-06
 slug: jwt
-draft: false
 categories: ["Java"]
 tags: [ jwt]
 ---

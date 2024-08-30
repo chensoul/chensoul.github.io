@@ -1,6 +1,6 @@
 ---
 title: "《Effective Java 3》笔记7：排除过时的对象引用"
-date: 2023-05-05T09:00:00+08:00
+date: 2023-05-05
 slug: eliminate-obsolete-object-references
 categories: ["Java"]
 tags: [java]

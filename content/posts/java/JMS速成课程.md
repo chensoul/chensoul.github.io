@@ -1,6 +1,6 @@
 ---
 title: "JMS速成课程"
-date: 2024-08-07T14:00:00+08:00
+date: 2024-08-07
 slug: a-crash-course-on-jms
 draft: true
 categories: ["Java"]

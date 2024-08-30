@@ -1,8 +1,7 @@
 ---
 title: "Git使用"
-date: 2024-07-15T09:00:00+08:00
+date: 2024-07-15
 slug: git
-draft: false
 categories: ["devops"]
 tags: [ git]
 ---

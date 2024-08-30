@@ -1,6 +1,6 @@
 ---
 title: "2024-01-30｜Mybatis plus和Jackson配置"
-date: 2024-01-30T07:00:00+08:00
+date: 2024-01-30
 slug: til
 categories: ["Review"]
 tags: [mybatis,jackson]

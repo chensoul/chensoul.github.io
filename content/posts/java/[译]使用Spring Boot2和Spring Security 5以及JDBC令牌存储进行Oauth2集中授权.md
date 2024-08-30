@@ -1,6 +1,6 @@
 ---
 title: "[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权"
-date: 2023-07-14T09:00:00+08:00
+date: 2023-07-14
 slug: oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]

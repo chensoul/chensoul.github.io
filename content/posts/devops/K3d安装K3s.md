@@ -1,6 +1,6 @@
 ---
 title: "通过k3d安装k3s"
-date: 2024-05-09T10:00:00+08:00
+date: 2024-05-09
 slug: install-k3s-using-k3d
 tags: ["k3s"]
 categories: ["devops"]

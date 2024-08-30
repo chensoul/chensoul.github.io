@@ -1,7 +1,6 @@
 ---
 title: "周报-7｜练车、博客优化、注册ChatGPT账号"
-date: 2023-02-21 00:00:00+08:00
-draft: false
+date: 2023-02-21
 slug: weekly_review_7
 categories: [Review]
 tags: [review, hugo, cloudflare, n8n, chatgpt, memos, rss, github]

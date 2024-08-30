@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Facebook Messenger"
-date: 2023-11-24T09:40:00+08:00
+date: 2023-11-24
 slug: designing-facebook-messenger
 categories: ["Architecture"]
 tags: ["architecture"]

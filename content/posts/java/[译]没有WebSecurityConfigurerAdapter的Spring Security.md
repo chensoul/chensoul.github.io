@@ -1,6 +1,6 @@
 ---
 title: "[译]没有WebSecurityConfigurerAdapter的Spring Security.md"
-date: 2023-08-18T11:30:00+08:00
+date: 2023-08-18
 slug: spring-security-without-websecurityconfigureradapter
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security", oauth2]

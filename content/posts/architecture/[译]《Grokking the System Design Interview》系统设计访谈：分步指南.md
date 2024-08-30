@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》系统设计访谈：分步指南"
-date: 2023-11-16T06:30:00+08:00
+date: 2023-11-16
 slug: sdi-a-step-by-step-guide
 categories: ["Architecture"]
 tags: ["architecture"]

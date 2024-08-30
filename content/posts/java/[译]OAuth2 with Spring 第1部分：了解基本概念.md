@@ -1,8 +1,7 @@
 ---
 title: "[译]OAuth2 with Spring 第1部分：了解基本概念"
-date: 2024-06-05T07:00:00+08:00
+date: 2024-06-05
 slug: oauth2-with-spring-part-1-knowing-the-basic-concepts
-draft: false
 categories: ["Java"]
 tags: [ oauth2,java]
 ---

@@ -1,6 +1,6 @@
 ---
 title: "周报-29｜"
-date: 2023-07-29 09:00:00+08:00
+date: 2023-07-29
 draft: true
 slug: weekly_review_29
 categories: [Review]

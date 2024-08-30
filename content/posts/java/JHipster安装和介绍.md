@@ -1,6 +1,6 @@
 ---
 title: "JHipster安装和介绍"
-date: 2023-11-02T14:00:00+08:00
+date: 2023-11-02
 slug: jhipster-intro
 categories: ["Java"]
 tags: [java, jhipster]

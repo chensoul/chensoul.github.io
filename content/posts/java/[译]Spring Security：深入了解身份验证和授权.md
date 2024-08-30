@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Security：深入了解身份验证和授权"
-date: 2023-08-16T12:00:00+08:00
+date: 2023-08-16
 slug: spring-security-authentication-and-authorization
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]

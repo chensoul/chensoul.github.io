@@ -1,6 +1,6 @@
 ---
 title: "[译]如何在Spring中执行@Async"
-date: 2023-08-25T07:00:00+08:00
+date: 2023-08-25
 slug: spring-async
 categories: ["Java"]
 tags: [java, spring, async]

@@ -1,10 +1,9 @@
 ---
 title: "Java设计模式：Async Method Invocation"
-date: 2023-08-14T08:00:00+08:00
+date: 2023-08-14
 slug: java-design-patterns-async-method-invocation
 categories: ["Java"]
 tags: [java]
-draft: false
 ---
 
 本文主要介绍 Async Method Invocation 模式，在 [Java Design Patterns](https://java-design-patterns.com/) 网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。

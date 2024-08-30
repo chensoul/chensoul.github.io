@@ -1,6 +1,6 @@
 ---
 title: "[译]面向 Java 开发人员的 Kubernetes"
-date: 2024-07-08T08:00:00+08:00
+date: 2024-07-08
 slug: kubernetes-for-java-developers
 tags: ["kubernetes"]
 categories: ["devops"]

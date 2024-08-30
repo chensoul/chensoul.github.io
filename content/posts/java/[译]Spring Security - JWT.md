@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Security - JWT"
-date: 2023-08-16T11:00:00+08:00
+date: 2023-08-16
 slug: spring-security-with-jwt
 categories: ["Java"]
 tags: [java, spring, "spring boot", "spring security"]

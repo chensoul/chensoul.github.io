@@ -1,6 +1,6 @@
 ---
 title: "2024-01-10｜ Java审计框架inspektr"
-date: 2024-01-10T18:00:00+08:00
+date: 2024-01-10
 slug: til
 categories: ["Review"]
 tags: ["spring-security",oauth2]

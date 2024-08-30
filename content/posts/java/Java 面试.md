@@ -1,6 +1,6 @@
 ---
 title: "Java面试"
-date: 2024-05-08T08:00:00+08:00
+date: 2024-05-08
 slug: spring-modulith
 draft: true
 categories: ["Java"]

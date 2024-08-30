@@ -1,6 +1,6 @@
 ---
 title: "Python安装、构建、发布、下载和运行"
-date: 2023-05-09T09:00:00+08:00
+date: 2023-05-09
 slug: python-install-build-publish-run
 categories: ["Python"]
 tags: ["python"]

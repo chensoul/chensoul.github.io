@@ -1,8 +1,7 @@
 ---
 title: "[译]在 JMS 中发送和接收消息"
-date: 2024-07-23T16:00:00+08:00
+date: 2024-07-23
 slug: send-and-receive-message-in-jms
-draft: false
 categories: ["Java"]
 tags: [ jms]
 ---

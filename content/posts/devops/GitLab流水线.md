@@ -1,6 +1,6 @@
 ---
 title: "GitLab流水线"
-date: 2024-07-12T09:00:00+08:00
+date: 2024-07-12
 slug: gitlab-cicd-quick-start
 draft: true
 categories: ["devops"]

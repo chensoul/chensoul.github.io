@@ -1,8 +1,7 @@
 ---
 title: "[译]Build Robust Continuous Integration With Docker and Friends"
-date: 2023-05-22T15:00:00+08:00
+date: 2023-05-22
 slug: docker-continuous-integration
-draft: false
 categories: ["Python"]
 tags: [python, flask, docker, github, redis]
 ---

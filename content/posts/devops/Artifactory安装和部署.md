@@ -1,8 +1,7 @@
 ---
 title: "搭建本地 Maven 仓库 Artifactory 开源版"
-date: 2024-06-25T08:00:00+08:00
+date: 2024-06-25
 slug: install-artifactory-oss
-draft: false
 categories: ["devops"]
 tags: [ maven,artifactory]
 ---

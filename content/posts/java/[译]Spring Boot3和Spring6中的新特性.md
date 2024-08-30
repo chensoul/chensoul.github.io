@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Boot3和Spring6中的新特性"
-date: 2023-10-13T07:00:00+08:00
+date: 2023-10-13
 slug: new-features-in-spring-boot-3-and-spring-6
 categories: ["Java"]
 tags: [java, "spring boot", "spring"]
