@@ -512,11 +512,7 @@ with:
 
 
 
-创建的 tag 名称格式为：项目名称-版本
-
-![maven-hello-world-github-tag](/Users/chensoul/Pictures/maven-hello-world-github-tag.png)
-
-tag 名称格式可以在 maven-release-plugin 插件中配置：
+创建的 tag 名称格式为：项目名称-版本。tag 名称格式可以在 maven-release-plugin 插件中配置：
 
 ```xml
 <plugin>
