@@ -52,11 +52,20 @@ menu:
       params:
         external: true
 
+# 设置文章分类 https://gohugo.io/content-management/taxonomies
+taxonomies:
+    tag: tags
+    categories: categories
+
 outputs:
   home:
     - HTML
     - RSS
     - JSON
+
+services:
+  googleAnalytics:
+    ID: G-FCSSTV9VRG
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
