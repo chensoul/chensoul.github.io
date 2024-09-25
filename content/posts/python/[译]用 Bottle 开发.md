@@ -3,7 +3,7 @@ title: "[译]用 Bottle 开发"
 date: 2023-06-25
 slug: developing-with-bottle
 categories: ["Python"]
-tags: [python, bottle]
+tags: [python]
 ---
 
 ![Bottle logo](https://files.realpython.com/media/bottle-logo.4c5ab3d2ae78.png)

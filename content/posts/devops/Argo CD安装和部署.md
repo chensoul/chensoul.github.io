@@ -2,7 +2,7 @@
 title: "Argo CD安装和部署"
 date: 2024-05-11
 slug: argocd
-tags: [argocd,k8s]
+tags: [argocd]
 categories: [devops]
 ---
 

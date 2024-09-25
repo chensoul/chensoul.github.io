@@ -3,7 +3,7 @@ title: "Spring Boot集成SpringDoc生成Api文档"
 date: 2024-07-10
 slug: springdoc-with-spring-boot
 categories: ["Java"]
-tags: [ springdoc,spring-boot]
+tags: [ spring-boot]
 ---
 
 以下以 Maven 为例介绍 Spring Boot集成SpringDoc生成Api文档。

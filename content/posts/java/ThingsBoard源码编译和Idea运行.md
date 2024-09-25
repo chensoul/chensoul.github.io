@@ -3,7 +3,7 @@ title: "ThingsBoard源码编译和Idea运行"
 date: 2024-08-27
 slug: thingsboard-code-source-compile
 categories: ["Java"]
-tags: [ thingsboard,java]
+tags: [ thingsboard]
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，从 [3.7](https://github.com/thingsboard/thingsboard/releases/tag/v3.7) 版本之后，要求 JDK17。官方提供了源码编译的文档：[Building from sources](https://thingsboard.io/docs/user-guide/install/building-from-source/)

@@ -3,7 +3,7 @@ title: "React入门：初始化应用的两种方法"
 date: 2023-09-22
 slug: react-create-project
 categories: ["Frontend"]
-tags: [react, nodejs, vite]
+tags: [react]
 ---
 
 在 React 中，您可以使用多种方法来初始化一个应用程序。以下是几种常见的方法：

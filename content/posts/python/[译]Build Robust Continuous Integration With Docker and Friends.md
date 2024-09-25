@@ -3,7 +3,7 @@ title: "[译]Build Robust Continuous Integration With Docker and Friends"
 date: 2023-05-22
 slug: docker-continuous-integration
 categories: ["Python"]
-tags: [python, flask, docker, github, redis]
+tags: [docker]
 ---
 
 ![Build Robust Continuous Integration With Docker and Friends](https://files.realpython.com/media/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked.479cfb791c17.jpg)

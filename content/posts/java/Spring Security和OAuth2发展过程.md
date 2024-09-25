@@ -3,7 +3,7 @@ title: "Spring Security和OAuth2发展过程"
 date: 2023-08-15
 slug: spring-security-oauth2-history
 categories: ["Java"]
-tags: [spring-security]
+tags: [spring-security,oauth2]
 ---
 
 ## Spring Security 的发展过程

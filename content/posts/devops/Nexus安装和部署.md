@@ -3,7 +3,7 @@ title: "搭建本地Maven仓库Nexus"
 date: 2024-06-25
 slug: install-nexus
 categories: ["devops"]
-tags: [ maven,nexus ]
+tags: [ maven]
 ---
 
 ## 使用 Docker 安装

@@ -3,7 +3,7 @@ title: "2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集�
 date: 2024-01-17
 slug: til
 categories: ["Review"]
-tags: [springdoc,'spring-boot',mysql,docker]
+tags: ['spring-boot',docker]
 ---
 
 

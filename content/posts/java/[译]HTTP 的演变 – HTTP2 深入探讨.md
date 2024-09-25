@@ -3,7 +3,7 @@ title: "[译]HTTP 的演变 – HTTP2 深入探讨"
 date: 2024-05-07
 slug: http2
 categories: ["Java"]
-tags: [ http,java]
+tags: [ http]
 ---
 
 

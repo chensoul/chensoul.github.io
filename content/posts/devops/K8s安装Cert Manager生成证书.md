@@ -2,7 +2,7 @@
 title: "K8s安装Cert Manager"
 date: 2024-05-10
 slug: install-cert-manager
-tags: [helm,k8s]
+tags: [k8s]
 categories: ["devops"]
 ---
 

@@ -2,7 +2,7 @@
 title: "Tengine动态裁剪图片"
 date: 2024-06-26
 slug: install-cert-manager
-tags: [tengine,lua]
+tags: [tengine]
 categories: ["devops"]
 ---
 

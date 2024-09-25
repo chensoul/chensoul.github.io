@@ -3,7 +3,7 @@ title: "2024-01-10｜ Java审计框架inspektr"
 date: 2024-01-10
 slug: til
 categories: ["Review"]
-tags: ["spring-security",oauth2]
+tags: [review]
 ---
 
 今天做了什么：

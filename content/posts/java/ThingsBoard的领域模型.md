@@ -3,7 +3,7 @@ title: "ThingsBoard的领域模型"
 date: 2024-05-07
 slug: thingsboard-domain
 categories: ["Java"]
-tags: [ thingsboard,java]
+tags: [ thingsboard]
 ---
 
 
