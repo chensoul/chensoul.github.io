@@ -3,7 +3,7 @@ title: "周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和U
 date: 2023-03-13
 slug: weekly_review_10
 categories: [Review]
-tags: [review, chatgpt, vps, cusdis, umami, cloudflare, vercel, railway]
+tags: [review]
 ---
 
 ## 前言

@@ -3,7 +3,7 @@ title: "周报-9｜开车总结、博客该写什么、Web3批量空投"
 date: 2023-03-07
 slug: weekly_review_9
 categories: [Review]
-tags: [review, web3, chatgpt, nodejs]
+tags: [review]
 ---
 
 ## 前言

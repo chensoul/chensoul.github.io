@@ -3,7 +3,7 @@ title: "[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）"
 date: 2023-07-26
 slug: using-oauth2-in-spring-scopes
 categories: ["Java"]
-tags: [spring-security,oauh2]
+tags: [spring-security,oauth2]
 ---
 
 我们在[上一篇文章](/posts/2023/07/26/using-oauth2-in-spring/)中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。

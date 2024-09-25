@@ -3,7 +3,7 @@ title: "2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel"
 date: 2024-01-02
 slug: til
 categories: ["Review"]
-tags: ["spring-cloud",sentinel]
+tags: ["spring-cloud"]
 ---
 
 今天做了什么：

@@ -3,7 +3,7 @@ title: "[译]为恐龙解释现代CSS"
 date: 2023-06-21
 slug: modern-css-explained-for-dinosaurs
 categories: ["Frontend"]
-tags: [css, html, javascript, less, sass]
+tags: [css]
 ---
 
 ![Dinosaur comic panel 1](https://peterxjang.com/img/1__kXsiGLMHSS4jUx4W6yBOlw.png)
