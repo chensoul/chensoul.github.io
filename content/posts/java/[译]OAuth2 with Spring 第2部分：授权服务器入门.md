@@ -3,10 +3,10 @@ title: "[译]OAuth2 with Spring 第2部分：授权服务器入门"
 date: 2024-06-05
 slug: oauth2-with-spring-part-2-getting-started-with-authorization-server
 categories: ["Java"]
-tags: [ oauth2,java]
+tags: [ spring-security,oauth2]
 ---
 
-原文地址：https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a
+原文地址：[https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
 
 
 
@@ -53,8 +53,8 @@ spring:
 
 - clientId
 - client-secret
-- client-authentication-methods：本例中为基本身份验证（client_secret_basic）
-- authorization-grant-types：用于请求新令牌的授予类型。在本例中为 client_credentials。
+- client-authentication-methods：本例中为基本身份验证 client_secret_basic
+- authorization-grant-types：用于请求新令牌的授予类型。在本例中为 client_credentials
 
 现在，我们必须启动授权服务器应用程序。
 

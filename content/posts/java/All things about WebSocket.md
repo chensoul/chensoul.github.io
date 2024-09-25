@@ -3,7 +3,7 @@ title: "All things about WebSocket"
 date: 2024-05-10
 slug: all-things-about-websocket
 categories: ["Java"]
-tags: [java,websocket]
+tags: [websocket]
 ---
 
 

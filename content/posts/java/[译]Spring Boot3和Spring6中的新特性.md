@@ -3,7 +3,7 @@ title: "[译]Spring Boot3和Spring6中的新特性"
 date: 2023-10-13
 slug: new-features-in-spring-boot-3-and-spring-6
 categories: ["Java"]
-tags: [java, "spring boot", "spring"]
+tags: [spring-boot]
 ---
 
 Spring Boot 3.0 于 2022 年 11 月正式发布，包含一些新功能和改进。这是继大约 4.5 年前发布 Spring Boot 2.0 后 Spring Boot 的第一个主要版本。它也是第一个支持 Spring Framework 6.0 的 Spring Boot GA 版本。作为开发人员，我们需要了解这些更新，才能顺利使用 Spring Boot。毫无疑问，新版本中最大的转变之一是放弃了对旧版本 Java 的支持。

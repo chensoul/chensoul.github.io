@@ -3,7 +3,7 @@ title: "[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行O
 date: 2023-07-14
 slug: oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security"]
+tags: [spring-security,oauth2]
 ---
 
 在这篇文章中，我们将了解如何使用 Spring Boot 2 和 Spring Security 5 OAuth2 来实现集中授权的授权服务器以及如何通过 GUI 对其进行管理，还将提供资源服务器演示以及 github 下的整个项目。
@@ -64,12 +64,12 @@ OAuth 2 为不同的用例提供了多种“授权类型”。定义的授权类
 
 要设置 Oauth 2 客户端，我们需要创建下表 [有关更多详细信息，请参阅链接]
 
-- [OAUTH_CLIENT_DETAILS OAUTH_CLIENT_DETAILS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java)
-- [OAUTH_CLIENT_TOKEN OAUTH_CLIENT_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/JdbcClientTokenServices.java)
-- [OAUTH_ACCESS_TOKEN OAUTH_ACCESS_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
-- [OAUTH_REFRESH_TOKEN OAUTH_REFRESH_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
-- [OAUTH*CODE OAUTH*代码](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
-- [OAUTH_APPROVALS OAUTH_APPROVALS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/JdbcApprovalStore.java)
+- [OAUTH_CLIENT_DETAILS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java)
+- [OAUTH_CLIENT_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/JdbcClientTokenServices.java)
+- [OAUTH_ACCESS_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
+- [OAUTH_REFRESH_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
+- [OAUTH CODE ](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
+- [OAUTH_APPROVALS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/JdbcApprovalStore.java)
 
 我们将调用像“product_api”这样的资源服务器 对于该服务器，我们定义一个客户端，称为：
 
@@ -122,29 +122,9 @@ INSERT INTO credentials_authorities VALUES (3, 2);
 为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注解和 WebSecurityConfigurerAdapter
 
 ```java
-package com.aak.configuration;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-/**
- * Created by ahmed on 20.5.18.
- */
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -159,7 +139,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/webjars/**");
-
     }
 
     @Override
@@ -201,30 +180,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 授权服务器负责验证用户身份并提供令牌，使用@EnableAuthorizationServer 注解启用授权服务器配置
 
 ```java
-package com.aak.configuration;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-
-import javax.sql.DataSource;
-
-/**
- * Created by ahmed on 21.5.18.
- */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -288,25 +243,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 资源服务器托管受 OAuth2 令牌保护的资源（基本上是我们的产品 API）
 
 ```java
-package com.aak.configuration;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-
-import javax.sql.DataSource;
-
-/**
- * Created by ahmed on 30.5.18.
- */
 @EnableResourceServer
 @Configuration
 public class ResourcesServerConfiguration  extends ResourceServerConfigurerAdapter {
@@ -347,8 +283,8 @@ public class ResourcesServerConfiguration  extends ResourceServerConfigurerAdapt
 ```bash
 #!/bin/sh
 TOKEN=`curl -s -u curl_client:user -X POST localhost:8081/oauth/token\?grant_type=client_credentials | egrep -o ‘[a-f0–9-]{20,}’`
-echo “ tGot token for curl client as :$TOKEN”
-curl localhost:8083/product/products -H “Authorization: Bearer $TOKEN”
+echo "Got token for curl client as :$TOKEN"
+curl localhost:8083/product/products -H "Authorization: Bearer $TOKEN"
 ```
 
 运行 Curl 客户端 bash 脚本后得到响应：

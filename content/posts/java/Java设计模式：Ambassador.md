@@ -3,7 +3,7 @@ title: "Java设计模式：Ambassador"
 date: 2023-07-06
 slug: java-design-patterns-ambassador
 categories: ["Java"]
-tags: [java, spring, aop]
+tags: [java]
 ---
 
 本文主要介绍 Ambassador 模式，在 [Java Design Patterns](https://java-design-patterns.com/) 网站上有对该模式进行介绍。这里主要是做个笔记，并添加一些扩展，以加深对该设计模式的理解。

@@ -3,7 +3,7 @@ title: "[译]Spring Security 和 Spring Boot 入门"
 date: 2023-08-16
 slug: spring-security
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [spring-security]
 ---
 
 Spring Security 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。

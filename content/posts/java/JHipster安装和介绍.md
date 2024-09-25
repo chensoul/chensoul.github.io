@@ -3,7 +3,7 @@ title: "JHipster安装和介绍"
 date: 2023-11-02
 slug: jhipster-intro
 categories: ["Java"]
-tags: [java, jhipster]
+tags: [jhipster]
 ---
 
 JHipster 是一个开发平台，可以快速生成，开发和部署现代 Web 应用程序+微服务架构。

@@ -8,36 +8,15 @@ categories: ["devops"]
 
 这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是 Mac 开发环境，所以，这篇文章主要是基于 Mac 操作系统，记录开发环境搭建过程。
 
-## 系统设置
-
-### dotfile 配置
-
-下载 dotfile 文件：
+## 重装系统后设置
 
 ```bash
-git clone git@github.com:chensoul/snippets.git
+git clone https://github.com/chensoul/snippets.git
+cd snippets/mac-setup
+sh setup.sh
 ```
 
-拷贝到用户目录：
-
-```bash
-cd dotfiles
-sh bootstrap.sh
-```
-
-macos 系统设置：
-
-```bash
-. .macos
-```
-
-## 安装软件
-
-### 安装 brew、nvs
-
-```bash
-sh install.sh
-```
+## 安装其他软件
 
 ### 安装 MySQL
 
@@ -124,7 +103,7 @@ zip -r m2.zip ~/.m2
 2、备份代码空间
 
 ```BASH
-find ~/workspace -type d -name "target" -exec rm -rf {} +
+find ~/codes -type d -name "target" -exec rm -rf {} +
 
-zip -r workspace.zip ~/workspace
+zip -r codes.zip ~/codes
 ```

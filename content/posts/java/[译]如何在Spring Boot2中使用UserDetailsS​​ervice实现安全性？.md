@@ -3,7 +3,7 @@ title: "[译]如何在Spring Boot2中使用UserDetailsService实现安全性？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot2-using-userdetailsservice
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [ spring-security]
 ---
 
 ![img](https://javatechonline.com/wp-content/uploads/2024/03/Thymeleaf_SpringSecurity-1.jpg)
@@ -49,7 +49,13 @@ UserDetailsS​​ervice 是 Spring 中 org.springframework.security.core.userde
 
 2）同样重要的是，重写 UserServiceImpl 类中 UserDetailsService 接口的 loadUserByUsername(String username) 方法。
 
-3）作为实施的一部分，**(A)** 借助 UserRepository 中的用户名/电子邮件获取您的用户对象。 **(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。 **(C)** 返回 Spring 定义的 User 对象，它是 UserDetails（方法的返回类型）的实现。
+3）作为实施的一部分，
+
+**(A)** 借助 UserRepository 中的用户名/电子邮件获取您的用户对象。 
+
+**(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。 
+
+**(C)** 返回 Spring 定义的 User 对象，它是 UserDetails（方法的返回类型）的实现。
 
 下面的代码代表了 UserDetailsService 的实现。但是，您将在下面的部分中看到完整的代码。
 
@@ -98,27 +104,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		return springUser;
 	}
 
-	//Other Approach: Using Lambda & Stream API of Java 8
-//	@Override
-//	public UserDetails loadUserByUsername(String email)
-//		throws UsernameNotFoundException {
-//
-//		Optional<User> opt = userRepo.findUserByEmail(email);
-//
-//		if (opt.isEmpty())
-//			throw new UsernameNotFoundException("User with email: " + email + " not found !");
-//		else {
-//			User user = opt.get();
-//			return new org.springframework.security.core.userdetails.User(
-//				user.getEmail(),
-//				user.getPassword(),
-//				user.getRoles()
-//					.stream()
-//					.map(role -> new SimpleGrantedAuthority(role))
-//					.collect(Collectors.toSet())
-//			);
-//		}
-//	}
 }
 ```
 
@@ -451,29 +436,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService{
 
 		return springUser;
 	}
-
-	//Other Approach: Using Lambda & Stream API of Java 8
-
-	/*@Override
-	public UserDetails loadUserByUsername(String email)
-			throws UsernameNotFoundException {
-
-		Optional<User> opt = userRepo.findUserByEmail(email);
-
-		if(opt.isEmpty())
-				throw new UsernameNotFoundException("User with email: " +email +" not found !");
-		else {
-			User user = opt.get();
-			return new org.springframework.security.core.userdetails.User(
-					user.getEmail(),
-					user.getPassword(),
-					user.getRoles()
-					.stream()
-					.map(role-> new SimpleGrantedAuthority(role))
-					.collect(Collectors.toSet())
-		    );
-		}*/
-
 }
 ```
 

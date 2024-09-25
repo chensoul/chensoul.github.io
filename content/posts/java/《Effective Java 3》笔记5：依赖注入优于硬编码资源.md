@@ -3,7 +3,7 @@ title: "《Effective Java 3》笔记5：依赖注入优于硬编码资源"
 date: 2023-04-17
 slug: prefer-dependency-injection-to-hardwiring-resources
 categories: ["Java"]
-tags: [java, spring]
+tags: [java]
 ---
 
 本文是 《Effective Java 3》第二章的学习笔记，在整理笔记过程中，通过 chatgpt 的帮助做了一些扩展。

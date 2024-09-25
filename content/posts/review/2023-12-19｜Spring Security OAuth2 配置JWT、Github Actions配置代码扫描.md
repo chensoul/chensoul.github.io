@@ -3,7 +3,7 @@ title: "2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代�
 date: 2023-12-19
 slug: til
 categories: ["Review"]
-tags: [java,github,"spring-security"]
+tags: [github,"spring-security"]
 ---
 
 Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 [spring-security-oauth2-legacy](https://github.com/chensoul/spring-security-oauth2-legacy) 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。 

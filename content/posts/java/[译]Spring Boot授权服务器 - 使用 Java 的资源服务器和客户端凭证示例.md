@@ -3,7 +3,7 @@ title: "[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客�
 date: 2023-07-26
 slug: spring-boot-authorization-server
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security"]
+tags: [spring-security,oauth2]
 ---
 
 # 概述
@@ -79,7 +79,7 @@ public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
 
 我们将使用它来解码令牌以进行验证。
 
-- **JWKSource<SecurityContext>**
+- **JWKSource**
 
 ```java
 @Bean
@@ -309,14 +309,14 @@ public class ArticlesController {
 
 让我们运行所有三个服务器并向客户端服务器发出请求，它应该返回正确的响应。请注意更新所有位置的端口号。在示例中，我使用了以下端口：
 
-- 9090: auth-server 9090：认证服务器
-- 9091: resource-server 9091：资源服务器
-- 9092: client-server 9092：客户端-服务器
+- 9090: auth-server
+- 9091: resource-server
+- 9092: client-server
 
 # 结论
 
 在本文中，我们学习了如何使用 Spring Boot 创建授权服务器以及如何在资源服务器和客户端服务器中配置它。
 
-您可以在此 GitHub 存储库中找到此[示例的代码](https://github.com/kumarprabhashanand/spring-authorization-server)。
+您可以在此 GitHub 存储库中找到此 [示例的代码](https://github.com/kumarprabhashanand/spring-authorization-server)。
 
 原文链接：[https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2](https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2)

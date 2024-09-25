@@ -3,7 +3,7 @@ title: "[译]如何在Spring Boot3中使用UserDetailsService实现安全性？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot3-using-userdetailsservice
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [spring-security, oauth2]
 ---
 
 ![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/wp-content/uploads/2022/12/UserDetailsServiceSpringBoot3-1.jpg)
@@ -35,9 +35,8 @@ tags: [java, spring, "spring boot", "spring security", oauth2]
 1. [Spring Boot 3.0.0](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)
 2. JDK 17 or later
 
-3. Maven 3.8.1 3）Maven 3.8.1
-4. IDE – STS 4.7.1. RELEASE
-5. IDE – STS 4.7.1。发布
+3. Maven 3.8.1 
+4. IDE – STS 4.7.1
 
 ### Jars Used
 
@@ -73,7 +72,7 @@ UserDetailsS​​ervice 是 Spring 框架在 org.springframework.security.core.
 
 **(A)** 借助 UserRepository 中的用户名/电子邮件获取您的用户对象。
 **(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。
-**(C)** 返回 Spring 定义的 User 对象，它是 UserDetails（方法的返回类型）的实现。
+**(C)** 返回 Spring 定义的 User 对象，它是 UserDetails的实现。
 
 下面的代码代表了 UserDetailsS​​ervice 的实现。但是，您将在下面的部分中看到完整的代码。
 
@@ -119,9 +118,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService{
 
 		Optional<User> opt = userRepo.findUserByEmail(email);
 
-		if(opt.isEmpty())
-				throw new UsernameNotFoundException("User with email: " +email +" not found !");
-		else {
+		if(opt.isEmpty()){
+				throw new UsernameNotFoundException("User with email: " +
+                 email +" not found !");
+		} else {
 			User user = opt.get();
 			return new org.springframework.security.core.userdetails.User(
 					user.getEmail(),
@@ -134,32 +134,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService{
 		}
 
 	}
-
-	//Other Approach: Without Using Lambda & Stream API Of Java 8
-
-	/** @Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-		Optional<User> opt = userRepo.findUserByEmail(email);
-
-		org.springframework.security.core.userdetails.User springUser=null;
-
-		if(opt.isEmpty()) {
-			throw new UsernameNotFoundException("User with email: " +email +" not found");
-		}
-			User user =opt.get();
-			List<String> roles = user.getRoles();
-			Set<GrantedAuthority> ga = new HashSet<>();
-			for(String role:roles) {
-				ga.add(new SimpleGrantedAuthority(role));
-			}
-
-			springUser = new org.springframework.security.core.userdetails.User(
-							email,
-							user.getPassword(),
-							ga );
-		return springUser;
-	} */
 
 }
 ```
@@ -249,7 +223,7 @@ public class SecurityConfig {
 
 ![Spring Security UserDetailsService Using Spring Boot 3](https://javatechonline.com/wp-content/uploads/2022/12/UserRegistrationFlow-1.jpg)
 
-### 步骤#1：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
+### 步骤#1：在 STS中创建一个 Spring Boot Starter 项目
 
 创建入门项目时，选择“Spring Security”、“Thymeleaf”、“Spring Web”、“Spring Data JPA”、“MySQL Driver”、“Lombok”和“Spring Boot DevTools”作为入门项目依赖项。即使您不知道如何创建 Spring Boot 入门项目，也请访问“如何在 Spring boot 中创建入门项目？”的内部链接。另外，如果您想了解有关 Lombok 的更多信息，请访问 Lombok 上的内部链接。
 
@@ -447,33 +421,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService{
 		}
 
 	}
-
-	//Other Approach: Without Using Lambda & Stream API Of Java 8
-
-	/** @Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-		Optional<User> opt = userRepo.findUserByEmail(email);
-
-		org.springframework.security.core.userdetails.User springUser=null;
-
-		if(opt.isEmpty()) {
-			throw new UsernameNotFoundException("User with email: " +email +" not found");
-		}
-			User user =opt.get();
-			List<String> roles = user.getRoles();
-			Set<GrantedAuthority> ga = new HashSet<>();
-			for(String role:roles) {
-				ga.add(new SimpleGrantedAuthority(role));
-			}
-
-			springUser = new org.springframework.security.core.userdetails.User(
-							email,
-							user.getPassword(),
-							ga );
-		return springUser;
-	} */
-
 }
 ```
 

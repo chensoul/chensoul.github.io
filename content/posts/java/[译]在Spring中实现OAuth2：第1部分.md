@@ -3,7 +3,7 @@ title: "[译]在 Spring 中实现 OAuth2：第 1 部分"
 date: 2023-07-26
 slug: using-oauth2-in-spring
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [spring-security, oauth2]
 ---
 
 OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。
@@ -69,9 +69,9 @@ public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapt
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests().antMatchers("/foo", "/bar", "/hello", "/test").authenticated().
-                and().csrf().disable();
+        http.authorizeRequests()
+          .antMatchers("/foo", "/bar", "/hello", "/test").authenticated().
+          and().csrf().disable();
     }
 
     @Bean
@@ -108,8 +108,8 @@ public class AuthorizationSecurityConfig extends AuthorizationServerConfigurerAd
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory().withClient("my-trusted-client")
-                .authorizedGrantTypes("password",
-                        "refresh_token", "implicit", "client_credentials", "authorization_code")
+                .authorizedGrantTypes("password","refresh_token", 
+                  "implicit", "client_credentials", "authorization_code")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(60)
@@ -121,8 +121,7 @@ public class AuthorizationSecurityConfig extends AuthorizationServerConfigurerAd
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer)
             throws Exception {
-                 oauthServer
-                .tokenKeyAccess("permitAll()")
+          oauthServer.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("permitAll()");
     }
 }
@@ -187,12 +186,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("gwidgets").password("gwidgets").authorities("CLIENT");
+		auth.inMemoryAuthentication()
+      .withUser("gwidgets").password("gwidgets").authorities("CLIENT");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 http.authorizeRequests().anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/test.html").and().csrf().disable();
+		 http.authorizeRequests()
+       .anyRequest().authenticated()
+       .and().formLogin().defaultSuccessUrl("/test.html")
+       .and().csrf().disable();
 	}
 }
 ```
@@ -200,7 +203,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 然后我们可以使用用户凭据来获取令牌，如下所示：
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=password&username=gwidgets&password=gwidgets' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
+	-d 'grant_type=password&username=gwidgets&password=gwidgets' \
+	-H "Accept: application/json"
 ```
 
 回复：
@@ -251,7 +256,9 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'gr
 然后我们被重定向到登录，登录后，我们被重定向到 OAuth 范围批准，如上一节中的隐式流程。之后，我们被重定向到以下地址：[http://localhost:8081/test.html?code=bD0mVb](http://localhost:8081/test.html?code=bD0mVb)，这是我们应用程序的欢迎页面，但带有一个特殊的查询参数： `code` 。我们将使用 curl 来获取令牌以进行演示，但也可以使用 JavaScript 在页面中完成此操作：
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
+-d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html'\
+-H "Accept: application/json"
 ```
 
 回复：
@@ -301,6 +308,8 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'cl
 
 Spring OAuth 提供开箱即用的 OAuth 端点和流程，并且可以成为以最小的努力设置 OAuth 的绝佳解决方案。然而，对于不熟悉 Spring 的开发人员来说，这可能有点令人畏惧，因为很多事情都在幕后发生。希望这篇文章可以帮助您了解全局。在下一篇文章中，我们将讨论使用 OAuth 范围来保护端点。
 
-完整的源代码可以在这里找到：[https://github.com/zak905/oauth2-example](https://github.com/zak905/oauth2-example)
+完整的源代码可以在[这里](https://github.com/zak905/oauth2-example)找到。
+
+
 
 原文链接：[http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/](http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)

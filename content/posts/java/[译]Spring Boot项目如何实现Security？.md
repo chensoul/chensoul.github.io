@@ -3,7 +3,7 @@ title: "[译]Spring Boot项目如何实现Security？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot-project
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security"]
+tags: [spring-security]
 ---
 
 ![How to implement Security in Spring Boot Project?](https://javatechonline.com/wp-content/uploads/2020/11/SpringSecurityBasics-1.jpg)
@@ -65,13 +65,13 @@ DelegatingFilterProxy 是 Spring Security 模块提供的 org.springframework.we
 
 有四种最常用的授权实现类型。他们是 ：
 
-### 1) permitAll 允许全部
+### 1) permitAll 
 
 PermitAll 表示无需任何授权即可访问当前页面。
 
 示例 URL：/login、/home、/contactUs、/aboutUs ..等。
 
-### 2) authenticated 已认证
+### 2) authenticated
 
 它表示需要登录（用户名/密码）并且不需要授权（基于角色的访问）。
 
@@ -83,7 +83,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 示例 URL+role：/approveRequest + MANAGER、/blockUser + ADMIN、/addUser + ADMIN …等。
 
-### 4) hasAnyAuthority 有任何权限
+### 4) hasAnyAuthority
 
 它表示用户应该具有身份验证和基于多个角色的授权访问。就像经理和人力资源这两个角色都可以访问特定页面。
 示例 URLs+role: /approveRequest + (MANAGER & HR)
@@ -92,15 +92,15 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 简而言之，在 Spring Boot Web 应用程序中实现安全性有三种最常见的方法。他们是
 
-### In-Memory Security 内存安全
+### In-Memory Security
 
 在这种类型的实现中，我们将数据存储在 RAM（内存中）中，并在有请求时验证数据。我们在测试或开发环境中使用这种方法。在生产应用中不建议使用此方法。
 
-### 使用数据库(JDBC)
+### 使用数据库
 
 在这种类型的实现中，我们将数据存储在数据库中，并在请求到来时验证数据/登录。但它是基于程序员提供的 SQL 查询来工作的。
 
-### Using UserDetailsService 使用用户详细信息服务
+### 使用用户详细信息服务
 
 我们将数据存储在数据库中，并在请求到来时验证数据。但 UserDetailsS​​ervice 是基于 ORM（Spring Data JPA）工作的。简而言之，UserDetailsS​​ervice 是 Spring Security 模块提供的一个接口。在登录表单中输入用户名后，当我们单击登录按钮时，将调用该服务。随后，它根据提供的用户名找到用户。它包含一个方法 loadUserByUsername(String username) 返回 UserDetails 对象。此外，UserDetails 对象为我们提供了用户名。
 
@@ -634,7 +634,7 @@ Query#2 : Retrieve username,role using username;
 ♦ select user_name,user_role from user where user_name=?;
 ```
 
-### 步骤#2：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
+### 步骤#2：在 STS中创建一个 Spring Boot Starter 项目
 
 创建入门项目时，选择“Spring Security”、“Thymeleaf”、“Spring Web”、“JDBC API”、“MySQL Driver”和“Spring Boot DevTools”作为入门项目依赖项。
 

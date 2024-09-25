@@ -3,7 +3,7 @@ title: "[译]Spring Security - 使用数据库表单登录"
 date: 2023-08-16
 slug: spring-security-form-login-with-database
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security"]
+tags: [spring-security]
 ---
 
 ## 内容

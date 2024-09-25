@@ -3,7 +3,7 @@ title: "周报-17｜导出苹果健康数据、自动化收集个人数据、Fle
 date: 2023-05-06
 slug: weekly_review_17
 categories: [Review]
-tags: [review, strava, java, memos]
+tags: [review]
 ---
 
 ## 前言

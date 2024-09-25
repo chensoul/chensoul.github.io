@@ -3,7 +3,7 @@ title: "[译]深入了解Spring事务管理：@Transactional"
 date: 2023-08-16
 slug: spring-transaction-management-transactional-in-depth
 categories: ["Java"]
-tags: [java, "spring boot", spring]
+tags: [spring-boot]
 ---
 
 您可以使用本指南来简单实用地了解 Spring 使用 @Transactional 注释进行事务管理的工作原理。

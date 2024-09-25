@@ -1,10 +1,12 @@
 ---
-title: "[译]SPRING BOOT JWT - 如何使用 SPRING SECURITY 和 JSON WEB 令牌保护您的 REST API"
+title: "[译]如何使用Spring Security和JWT保护您的REST API"
 date: 2023-09-19
 slug: spring-security-jwt
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [spring-security]
 ---
+
+原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https://www.danvega.dev/blog/spring-security-jwt)
 
 如果您快速搜索如何使用 JSON Web Tokens 在 Spring Boot 中保护 REST API，您会发现很多相同的结果。这些结果包含一种方法，该方法涉及编写自定义过滤器链并引入第三方库来编码和解码 JWT。
 
@@ -12,7 +14,7 @@ tags: [java, spring, "spring boot", "spring security", oauth2]
 
 在本教程中，您将学习如何使用 JSON Web Tokens (JWT) 和 Spring Security 来保护您的 API。我并不是说这种方法无论如何都很容易，但对我来说，它比其他选择更有意义。
 
-[Github 存储库](https://github.com/danvega/jwt)
+[Github 仓库](https://github.com/danvega/jwt)
 
 ## 应用架构
 
@@ -22,7 +24,7 @@ tags: [java, spring, "spring boot", "spring security", oauth2]
 
 您要做的是保护所有资源，以便当客户端调用 REST API 时，客户端将收到 401（未经授权），这意味着客户端请求尚未完成，因为它缺少所请求资源的有效身份验证凭据。
 
-![Application Architecture: 401 Unauthorized](https://www.danvega.dev/assets/static/app-arch-401.f374804.0962d1509d07acba537f6129298c4fa5.png)
+![Application Architecture: 401 Unauthorized](https://www.danvega.dev/images/blog/2022/09/09/app-arch-401.png)
 
 ### JSON 网络令牌 (JWT)
 
@@ -40,11 +42,11 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 
 您将引入一个新的身份验证控制器，客户端可以使用其身份验证凭据（用户名 + 密码）向该控制器发出请求，并且当成功通过身份验证时，服务将返回 JWT。
 
-![Application Architecture: JSON Web Token (JWT)](https://www.danvega.dev/assets/static/app-arch-jwt.f374804.0d833a85e47f7d3f2d2662ffc1e13ede.png)
+![Application Architecture: JSON Web Token (JWT)](https://www.danvega.dev/images/blog/2022/09/09/app-arch-jwt.png)
 
 然后，客户端将存储 JWT，并且每个后续请求将通过 Authorization 标头传递它。当服务器应用程序收到带有 JWT 的请求时，它将验证它是否是有效令牌，如果是，则允许请求继续。
 
-![Application Architecture: Request with JSON Web Token (JWT)](https://www.danvega.dev/assets/static/app-arch-with-jwt-200.f6e5db1.507593f0d844675167707e10fc94cf72.png)
+![Application Architecture: Request with JSON Web Token (JWT)](https://www.danvega.dev/images/blog/2022/09/09/app-arch-with-jwt-200.png)
 
 ## 入门
 
@@ -54,7 +56,7 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 - oAuth2 Resource Server oAuth2
 - Spring Configuration Processor
 
-![Spring Initiliazr](https://www.danvega.dev/assets/static/start-spring-io.42db587.ed9464eb8a6d436a6fcb7502aaeaa00c.png)
+![Spring Initializer](https://www.danvega.dev/images/blog/2022/09/09/start-spring-io.png)
 
 这将在您的 `pom.xml` 中生成以下依赖项
 
@@ -94,7 +96,7 @@ public class HomeController {
 }
 ```
 
-![Spring Security Login](https://www.danvega.dev/assets/static/please-sign-in.42db587.ffed1af8b1a6885620ffbe7f761b1441.png)
+![Spring Security Login](https://www.danvega.dev/images/blog/2022/09/09/please-sign-in.png)
 
 ## SPRING 安全配置
 
@@ -145,7 +147,7 @@ public InMemoryUserDetailsManager users() {
 
 配置新用户后，您应该能够重新启动应用程序并访问 http://localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用 `dvega` + `password` 登录。
 
-![Spring Security HTTP Basic](https://www.danvega.dev/assets/static/http-basic-auth.42db587.59885479c41b23db4fa6810d75cfaa42.png)
+![Spring Security HTTP Basic](https://www.danvega.dev/images/blog/2022/09/09/http-basic-auth.png)
 
 ## OAUTH 2.0 资源服务器
 
@@ -311,7 +313,7 @@ JwtDecoder jwtDecoder() {
 
 您已准备好密钥并定义了解码器，这是一种破译 JWT 的方法。如果您还记得之前的架构图，用户将需要使用用户名和密码登录。如果他们通过身份验证，您将生成一个新的 JSON Web 令牌并将其在响应中发回。
 
-![Application Architecture: JSON Web Token (JWT)](https://www.danvega.dev/assets/static/app-arch-jwt.f374804.0d833a85e47f7d3f2d2662ffc1e13ede.png)
+![Application Architecture: JSON Web Token (JWT)](https://www.danvega.dev/images/blog/2022/09/09/app-arch-jwt.png)
 
 为此，您首先需要创建一个 `JwtEncoder` 类型的 bean，并且可以在 `SecurityConfig` 中执行此操作。编码器将用于将我们之前了解的签名编码为令牌，并使用我们的私钥对其进行签名。
 
@@ -393,11 +395,11 @@ public class AuthController {
 
 测试这一点的一个简单方法是使用 Postman 等工具。如果您向令牌端点创建新的 POST 请求，您可以从“授权”选项卡中选择“基本身份验证”并输入您的凭据。如果一切正常，您将在响应中返回生成的 JWT。
 
-![Postman Basic Auth](https://www.danvega.dev/assets/static/postman-basic-auth.42db587.e23a2ab227f6b4c42ea5a7dda30c2096.png)
+![Postman Basic Auth](https://www.danvega.dev/images/blog/2022/09/09/postman-basic-auth.png)
 
 复制 JWT 并为 http://localhost:8080 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
 
-![Postman with JWT Response](https://www.danvega.dev/assets/static/postman-with-jwt-response.42db587.b0c6661e760ad4f110496be102413c38.png)
+![Postman with JWT Response](https://www.danvega.dev/images/blog/2022/09/09/postman-with-jwt-response.png)
 
 **命令行**
 
@@ -409,7 +411,7 @@ http POST :8080/token --auth dvega:password -v
 
 `-v` 参数将打印请求和响应
 
-![Httpie with Authorization](https://www.danvega.dev/assets/static/httpie-auth.42db587.6370b61c99685b116d4b436f5339d2f3.png)
+![Httpie with Authorization](https://www.danvega.dev/images/blog/2022/09/09/httpie-auth.png)
 
 响应将包含生成的 JWT 令牌。如果您在没有授权标头或没有正确令牌的情况下向根路径发出请求，您将收到 401（拒绝）响应。但是，如果您以正确的格式包含 Authorization 标头，您将获得从 `HomeController` 中的 home 方法返回的字符串。
 
@@ -417,7 +419,7 @@ http POST :8080/token --auth dvega:password -v
 http :8080 'Authorization: Bearer JWT_TOKEN_HERE'
 ```
 
-![Httpie Response Success](https://www.danvega.dev/assets/static/httpie-success.42db587.ed172ae5e4c8e03c2cc236c582715f45.png)
+![Httpie Response Success](https://www.danvega.dev/images/blog/2022/09/09/httpie-success.png)
 
 ### 自动化测试
 

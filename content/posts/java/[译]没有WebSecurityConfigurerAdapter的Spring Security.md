@@ -3,7 +3,7 @@ title: "[译]没有WebSecurityConfigurerAdapter的Spring Security.md"
 date: 2023-08-18
 slug: spring-security-without-websecurityconfigureradapter
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security", oauth2]
+tags: [spring-security]
 ---
 
 ![WebSecurityConfigurerAdapter Deprecated](https://javatechonline.com/wp-content/uploads/2022/07/WebSecurityConfigurerAdapter-Deprecated-1.jpg)

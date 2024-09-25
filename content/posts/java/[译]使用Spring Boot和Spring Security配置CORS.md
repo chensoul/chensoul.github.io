@@ -3,7 +3,7 @@ title: "[译]使用 Spring Boot 和 Spring Security 配置 CORS"
 date: 2023-07-26
 slug: spring-cors
 categories: ["Java"]
-tags: [java, spring, "spring boot", "spring security"]
+tags: [spring-security]
 ---
 
 跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。
@@ -50,8 +50,8 @@ CORS 规范定义了服务器返回的一组响应标头，这将是后续部分
 与应用程序捆绑在一起的 Maven Wrapper 将用于启动服务。您可以查看 [Spring REST 源代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SimpleLibraryApplication)和 [Spring Reactive 源代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/LibraryWebfluxApplication)。
 
 ```bash
-    mvnw clean verify spring-boot:run (for Windows)
-   ./mvnw clean verify spring-boot:run (for Linux)
+mvnw clean verify spring-boot:run (for Windows)
+./mvnw clean verify spring-boot:run (for Linux)
 ```
 
 一旦 Spring 应用程序成功启动，客户端应用程序应该能够成功从服务器加载数据。

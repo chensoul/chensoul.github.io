@@ -3,7 +3,7 @@ title: "[译]使用@Async进行Spring Security上下文传播"
 date: 2023-08-25
 slug: spring-security-async-principal-propagation
 categories: ["Java"]
-tags: [java, spring, security, async]
+tags: [spring-security]
 ---
 
 ## 1. 简介

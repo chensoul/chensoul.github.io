@@ -3,7 +3,7 @@ title: "[译]REST API 的自定义错误消息处理"
 date: 2023-08-25
 slug: global-error-handler-in-a-spring-rest-api
 categories: ["Java"]
-tags: [java, spring,]
+tags: [spring-boot]
 ---
 
 ## 1. 概述
