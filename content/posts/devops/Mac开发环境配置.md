@@ -12,7 +12,7 @@ categories: ["devops"]
 
 ```bash
 git clone https://github.com/chensoul/snippets.git
-cd snippets/mac-setup
+cd snippets/macos-setup
 sh setup.sh
 ```
 

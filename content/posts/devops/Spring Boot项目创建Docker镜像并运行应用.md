@@ -321,9 +321,9 @@ ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
 
 ## 使用 Maven 插件
 
-### Jib
+### jib-maven-plugin
 
-Jib 是 Google 开发的一款容器镜像构建工具，可以与 Maven 或 Gradle 集成使用。
+jib-maven-plugin 是 Google 开发的一款容器镜像构建工具，可以与 Maven 或 Gradle 集成使用。
 
 1. 在项目的 `pom.xml` 文件中添加 Jib Maven 插件:
 
@@ -333,25 +333,28 @@ Jib 是 Google 开发的一款容器镜像构建工具，可以与 Maven 或 Gra
     <plugin>
       <groupId>com.google.cloud.tools</groupId>
       <artifactId>jib-maven-plugin</artifactId>
-      <version>3.2.1</version>
+			<!-- 3.4.3 error: The configured platforms don't match the Docker Engine's OS and architecture (linux/arm64) -->
+      <version>3.4.2</version>
       <configuration>
         <from>
-            <image>openjdk:11-jdk-slim</image>
+            <image>eclipse-temurin:21-jre-jammy</image>
         </from>
         <to>
-            <image>my-spring-boot-app</image>
+            <image>chensoul/${project.artifactId}</image>
             <tags>
                 <tag>latest</tag>
                 <tag>${project.version}</tag>
             </tags>
         </to>
-        <container>
-            <mainClass>com.example.MySpringBootApp</mainClass>
-            <ports>
-                <port>8080</port>
-            </ports>
-        </container>
       </configuration>
+      <executions>
+          <execution>
+              <phase>package</phase>
+              <goals>
+                  <goal>dockerBuild</goal>
+              </goals>
+          </execution>
+      </executions>
     </plugin>
   </plugins>
 </build>
@@ -361,12 +364,12 @@ Jib 是 Google 开发的一款容器镜像构建工具，可以与 Maven 或 Gra
 
 ```groovy
 plugins {
-    id 'com.google.cloud.tools.jib' version '3.2.1'
+    id 'com.google.cloud.tools.jib' version '3.4.2'
 }
 
 jib {
     from {
-        image = 'openjdk:11-jdk-slim'
+        image = 'eclipse-temurin:21-jre-jammy'
     }
     to {
         image = 'my-spring-boot-app'
@@ -455,6 +458,59 @@ jib {
 
 2. 运行 `mvn dockerfile:build` 命令构建镜像。
 
+### kubernetes-maven-plugin
+
+```bash
+<plugin>
+    <groupId>org.eclipse.jkube</groupId>
+    <artifactId>kubernetes-maven-plugin</artifactId>
+    <version>1.17.0</version>
+    <configuration>
+        <images>
+            <image>
+                <alias>${project.artifactId}</alias>
+                <name>chensoul/${project.artifactId}:latest</name>
+                <build>
+                    <from>openjdk:21</from>
+                    <assembly>
+                        <mode>dir</mode>
+                        <targetDir>/usr/home/app</targetDir>
+                        <inline>
+                            <id>copy-jar</id>
+                            <baseDirectory>/home/home/app</baseDirectory>
+                            <files>
+                                <file>
+                                    <source>target/${project.artifactId}-${project.version}.jar</source>
+                                    <outputDirectory>.</outputDirectory>
+                                </file>
+                            </files>
+                        </inline>
+                    </assembly>
+                    <workdir>/usr/home/app</workdir>
+                    <cmd>java -jar ${project.artifactId}-${project.version}.jar</cmd>
+                    <ports>
+                        <port>8080</port>
+                    </ports>
+                </build>
+            </image>
+        </images>
+    </configuration>
+    <executions>
+        <execution>
+            <id>goals</id>
+            <goals>
+                <goal>resource</goal>
+                <!--goal>helm</goal-->
+                <!--goal>build</goal-->
+                <!--goal>deploy</goal-->
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+
+
 ## 使用 Spring Boot Maven 插件
 
 ### 使用 Buildpacks
@@ -477,9 +533,19 @@ Spring Boot在2.3.0之后，引入了Cloud Native 的buildpacks，通过这个�
     <artifactId>spring-boot-maven-plugin</artifactId>
     <configuration>
         <image>
-            <name>my-spring-boot-app</name>
-            <createdDate>${maven.build.timestamp}</createdDate>
+            <name>chensoul/${project.artifactId}</name>
+
+            <env>
+                <!-- Make sure `mvn spring-boot:build-image` uses the Java version defined in this project -->
+                <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+            </env>
         </image>
+        <docker>
+            <publishRegistry>
+                <username>${docker.publishRegistry.username}</username>
+                <password>${docker.publishRegistry.password}</password>
+            </publishRegistry>
+        </docker>
     </configuration>
 </plugin>
 ```
@@ -487,7 +553,16 @@ Spring Boot在2.3.0之后，引入了Cloud Native 的buildpacks，通过这个�
 2. 构建镜像
 
 ```bash
-mvn spring-boot:build-image
+mvn spring-boot:build-image -DskipTests
+```
+
+3. 或者构建镜像并上传到 docker hub
+
+```bash
+mvn spring-boot:build-image -DskipTests \
+  -Ddocker.publishRegistry.username=user \
+  -Ddocker.publishRegistry.password=secret \
+  -Dspring-boot.build-image.publish=true
 ```
 
 
