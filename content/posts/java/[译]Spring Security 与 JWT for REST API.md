@@ -3,7 +3,7 @@ title: "[译]Spring Security 与 JWT for REST API"
 date: 2023-09-19
 slug: spring-security-tutorial
 categories: ["Java"]
-tags: [spring-security]
+tags: [spring-security,jwt]
 ---
 
 **免责声明：Spring Security 5+ 已发布 OAuth JWT 支持。建议使用最新版本的 OAuth 来支持 JWT，而不是使用自定义安全性或过滤器。**

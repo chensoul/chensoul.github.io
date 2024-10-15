@@ -6,7 +6,7 @@ categories: ["Java"]
 tags: [spring-security]
 ---
 
-Spring Security 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。
+[Spring Security](https://docs.spring.io/spring-security/reference/index.html) 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。
 
 ## 示例代码
 
@@ -1005,5 +1005,7 @@ public class BookControllerTest {
 ## 结论
 
 在本文中，我们研究了适用于 Spring Security 的基本概念。此外，我们还解释了 spring 提供的默认配置以及如何覆盖它们。此外，我们还研究了一些常见的用例，并通过单元测试对其进行了验证。正如我们所看到的，Spring 提供了很大的灵活性，允许我们为复杂的应用程序定制安全性。我们可以扩展 [GitHub](https://github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上应用程序中应用的示例配置以满足我们的需求。
+
+
 
 原文链接：[https://reflectoring.io/spring-security/](https://reflectoring.io/spring-security/)
