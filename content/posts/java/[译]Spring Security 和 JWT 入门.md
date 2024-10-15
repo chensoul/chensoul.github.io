@@ -263,7 +263,7 @@ public static Jws<Claims> parseJwt(String jwtString) {
 
 | 比较依据           | 基本身份验证                                                 | 智威汤逊                                                     |
 | ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **授权标头**       | 示例基本身份验证标头：**授权：基本 xxx**。                   | 示例 JWT 标头：**授权：Bearer xxx**。                        |
+| **授权标头**       | 示例基本身份验证标头：**Authorization：Basic xxx**。         | 示例 JWT 标头：**Authorization：Bearer xxx**。               |
 | **有效期和到期日** | 基本身份验证凭据只需配置一次，每次请求都需要传递相同的凭据。它永不过期。 | 使用 JWT 令牌，我们可以使用`exp`已注册的声明来设置有效性/到期时间，之后令牌将抛出一个`io.jsonwebtoken.ExpiredJwtException`。由于令牌有效期较短，这使得 JWT 更加安全。用户必须重新发送请求才能生成新令牌。 |
 | **数据**           | 基本身份验证仅用于处理凭证（通常是用户名-密码）。            | JWT 可以包含其他信息，例如 id、角色等。一旦签名被验证，服务器就可以信任客户端发送的数据，从而避免可能需要的任何额外查找。 |
 
@@ -312,7 +312,7 @@ mvnw clean verify spring-boot:run (for Windows)
 
 ![设置](https://reflectoring.io/images/posts/spring-security-and-jwt/Postman401_hufa447b544662314047da7769a64981af_119970_2335x0_resize_box_3.png)
 
-这是因为，我们在pom.xml中添加的依赖项会自动为所有创建的端点引入基本身份验证。`spring-boot-starter-security 由于我们没有在 Postman 中指定任何凭据，因此我们收到`UnAuthorized`错误。就本文而言，我们需要用基于 JWT 的身份验证替换基本身份验证。我们知道 Spring 通过触发处理每个请求的身份验证和授权的过滤器链来为我们的端点提供安全性。[`UsernamePasswordAuthenticationFilter`](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)负责验证每个请求的凭据。为了覆盖此过滤器，让我们创建一个`Filter`名为的新过滤器`JwtFilter`。此过滤器将扩展`OncePerRequestFilter`类，因为我们希望每个请求仅调用一次过滤器：
+这是因为，我们在pom.xml中添加的依赖项会自动为所有创建的端点引入基本身份验证。spring-boot-starter-security 由于我们没有在 Postman 中指定任何凭据，因此我们收到`UnAuthorized`错误。就本文而言，我们需要用基于 JWT 的身份验证替换基本身份验证。我们知道 Spring 通过触发处理每个请求的身份验证和授权的过滤器链来为我们的端点提供安全性。[`UsernamePasswordAuthenticationFilter`](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)负责验证每个请求的凭据。为了覆盖此过滤器，让我们创建一个`Filter`名为的新过滤器`JwtFilter`。此过滤器将扩展`OncePerRequestFilter`类，因为我们希望每个请求仅调用一次过滤器：
 
 ```java
 @Component
