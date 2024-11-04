@@ -11,10 +11,28 @@ categories: ["devops"]
 ## 重装系统后设置
 
 ```bash
-git clone https://github.com/chensoul/snippets.git
-cd snippets/macos-setup
-sh setup.sh
+$ git clone https://github.com/chensoul/dotfiles.git
+$ cd dotfiles
+$ ./install.sh
 ```
+
+## 安装插件
+
+### Idea 插件
+
+- .ignore
+- Atom Material Icons
+- InlineProblems
+- Laconic POM for Maven
+- plantar-java-format
+- Maven Helper
+- Rainbow Brackets
+
+### Chrome 插件
+
+- JsonVue
+- 1Password
+- Inoreader
 
 ## 安装其他软件
 

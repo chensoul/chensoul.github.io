@@ -8,126 +8,74 @@ tags: [ spring-boot,docker]
 
 ## 手动创建 Dockerfile
 
-1. **添加 Dockerfile**
+在您的 Spring Boot 项目根目录下创建一个名为 `Dockerfile` 的文件，并添加以下内容:
 
-   在您的 Spring Boot 项目根目录下创建一个名为 `Dockerfile` 的文件，并添加以下内容:
+```dockerfile
+FROM eclipse-temurin:21-jre-alpine
+COPY target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]
+```
 
-   ```docker
-   # 使用 OpenJDK 21 作为基础镜像
-   FROM openjdk:21
-   
-   # 设置工作目录
-   WORKDIR /app
-   
-   # 将 JAR 文件复制到容器中
-   COPY target/*.jar app.jar
-   
-   # 暴露 8080 端口
-   EXPOSE 8080
-   
-   # 设置容器启动时执行的命令
-   ENTRYPOINT ["java", "-jar", "app.jar"]
-   ```
+如果 target 目录下存在多个 jar 文件，则可以在 dockerfile 同级添加一个 .dockerignore 文件忽略掉 `*-sources.jar` ：
 
-   这个 Dockerfile 将使用 OpenJDK 21 作为基础镜像，将编译后的 JAR 文件复制到容器中，并在容器启动时执行 `java -jar app.jar` 命令。
+```bash
+# Include any files or directories that you don't want to be copied to your
+# container here (e.g., local build artifacts, temporary files, etc.).
+#
+# For more help, visit the .dockerignore file reference guide at
+# https://docs.docker.com/go/build-context-dockerignore/
 
-   >**使用 Google Distroless 基础镜像**:
-   >
-   >- Distroless 基础镜像是一种精简的 Linux 发行版,只包含应用程序运行所需的最小依赖项。
-   >- 在 `Dockerfile` 中使用 `gcr.io/distroless/java:11` 作为基础镜像可以大幅减小最终镜像的体积。
+**/.classpath
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+**/.vscode
+**/.next
+**/.cache
+**/*.*proj.user
+**/*.dbmdl
+**/*.jfm
+**/charts
+**/docker-compose*
+**/compose.y*ml
+**/target/*-sources.jar
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+**/obj
+**/secrets.dev.yaml
+**/values.dev.yaml
+**/vendor
+LICENSE
+README.md
+```
 
-   如果 target 目录下存在多个 jar 文件，则可以在 dockerfile 同级添加一个 .dockerignore 文件忽略掉 `*-sources.jar` ：
+在项目根目录下运行以下命令，构建 Docker 镜像:
 
-   ```bash
-   # Include any files or directories that you don't want to be copied to your
-   # container here (e.g., local build artifacts, temporary files, etc.).
-   #
-   # For more help, visit the .dockerignore file reference guide at
-   # https://docs.docker.com/go/build-context-dockerignore/
-   
-   **/.classpath
-   **/.dockerignore
-   **/.env
-   **/.git
-   **/.gitignore
-   **/.project
-   **/.settings
-   **/.toolstarget
-   **/.vs
-   **/.vscode
-   **/.next
-   **/.cache
-   **/*.*proj.user
-   **/*.dbmdl
-   **/*.jfm
-   **/charts
-   **/docker-compose*
-   **/compose.y*ml
-   **/target/*-sources.jar
-   **/Dockerfile*
-   **/node_modules
-   **/npm-debug.log
-   **/obj
-   **/secrets.dev.yaml
-   **/values.dev.yaml
-   **/vendor
-   LICENSE
-   README.md
-   ```
+```bash
+mvn clean package
+docker build -t my-spring-boot-app .
+```
 
+这将先使用 Maven 编译项目，然后使用 Dockerfile 构建名为 `my-spring-boot-app` 的 Docker 镜像。
 
-1. **构建 Docker 镜像**
-   在项目根目录下运行以下命令，构建 Docker 镜像:
+使用以下命令启动 Docker 容器:
 
-   ```bash
-   mvn clean package
-   docker build -t my-spring-boot-app .
-   ```
-
-   这将先使用 Maven 编译项目，然后使用 Dockerfile 构建名为 `my-spring-boot-app` 的 Docker 镜像。
-
-2. **运行 Docker 容器**
-   使用以下命令启动 Docker 容器:
-
-   ```
-   docker run -p 8080:8080 my-spring-boot-app
-   ```
-
-   这将使用刚刚构建的 `my-spring-boot-app` 镜像启动一个容器，并将容器的 8080 端口映射到宿主机的 8080 端口。
-
-3. 其他镜像
-
-   jhipster-lite 提供的 [dockerfile](https://github.com/jhipster/jhipster-lite/blob/main/Dockerfile)：
-
-   ```dockerfile
-   FROM openjdk:21-slim AS build
-   COPY . /code/jhipster-app/
-   WORKDIR /code/jhipster-app/
-   RUN chmod +x mvnw && ./mvnw package -B -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip -Ddevelocity.cache.remote.enabled=false
-   RUN mv /code/jhipster-app/target/*-exec.jar /code/
-   
-   FROM openjdk:21-slim
-   COPY --from=build /code/*.jar /code/
-   RUN \
-       # configure the "jhipster" user
-       groupadd jhipster && \
-       useradd jhipster -s /bin/bash -m -g jhipster -G sudo && \
-       echo 'jhipster:jhipster'|chpasswd
-   ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
-       JAVA_OPTS=""
-   USER jhipster
-   CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /code/*.jar
-   EXPOSE 7471
+```
+docker run -p 8080:8080 my-spring-boot-app
+```
 
 ## 使用 Docker init 创建 Dockerfile
 
 参考 [Containerize a Java application](https://docs.docker.com/language/java/containerize/)，首先需要安装 docker desktop，这样才能使用 docker init 命令。
 
 ```bash
-$ git clone https://github.com/spring-projects/spring-petclinic.git
-
-$ cd spring-petclinic
-
 $ docker init
 Welcome to the Docker Init CLI!
 
@@ -333,8 +281,7 @@ jib-maven-plugin 是 Google 开发的一款容器镜像构建工具，可以与 
     <plugin>
       <groupId>com.google.cloud.tools</groupId>
       <artifactId>jib-maven-plugin</artifactId>
-			<!-- 3.4.3 error: The configured platforms don't match the Docker Engine's OS and architecture (linux/arm64) -->
-      <version>3.4.2</version>
+      <version>3.4.4</version>
       <configuration>
         <from>
             <image>eclipse-temurin:21-jre-jammy</image>
@@ -347,14 +294,6 @@ jib-maven-plugin 是 Google 开发的一款容器镜像构建工具，可以与 
             </tags>
         </to>
       </configuration>
-      <executions>
-          <execution>
-              <phase>package</phase>
-              <goals>
-                  <goal>dockerBuild</goal>
-              </goals>
-          </execution>
-      </executions>
     </plugin>
   </plugins>
 </build>
@@ -364,7 +303,7 @@ jib-maven-plugin 是 Google 开发的一款容器镜像构建工具，可以与 
 
 ```groovy
 plugins {
-    id 'com.google.cloud.tools.jib' version '3.4.2'
+    id 'com.google.cloud.tools.jib' version '3.4.4'
 }
 
 jib {
@@ -382,15 +321,7 @@ jib {
 }
 ```
 
-3. 在上述配置中，您需要修改以下内容:
-
-- `from.image`：指定用于构建镜像的基础镜像。
-- `to.image`：指定要构建的镜像名称。
-- `to.tags`：指定要添加到镜像的标签，比如 `latest` 和项目版本号。
-- `container.mainClass`：指定应用程序的主类。
-- `container.ports`：指定容器需要暴露的端口。
-
-4. 运行构建命令:
+3. 运行构建命令:
 
 - 对于 Maven 项目：`mvn compile jib:build`
 - 对于 Gradle 项目：`./gradlew jibBuild`
@@ -400,35 +331,37 @@ jib {
 1. 在 pom.xml 中添加如下配置:
 
 ```xml
-<build>
-    <plugins>
-        <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>0.40.2</version>
-            <configuration>
-                <images>
-                    <image>
-                        <name>my-spring-boot-app</name>
-                        <build>
-                            <from>openjdk:11-jdk-slim</from>
-                            <assembly>
-                                <descriptorRef>artifact</descriptorRef>
-                            </assembly>
-                            <entryPoint>
-                                <exec>
-                                    <arg>java</arg>
-                                    <arg>-jar</arg>
-                                    <arg>/maven/${project.build.finalName}.jar</arg>
-                                </exec>
-                            </entryPoint>
-                        </build>
-                    </image>
-                </images>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
+<plugin>
+    <groupId>io.fabric8</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>0.43.4</version>
+    <configuration>
+        <verbose>true</verbose>
+        <images>
+            <image>
+                <name>spring-fabric8</name>
+                <build>
+                    <from>eclipse-temurin:21-jre-jammy</from>
+                    <assembly>
+                        <descriptorRef>artifact</descriptorRef>
+                    </assembly>
+                    <entryPoint>
+                      <exec>
+                        <arg>java</arg>
+                        <arg>-jar</arg>
+                        <arg>/maven/${project.build.finalName}.${project.packaging}</arg>
+                      </exec>
+                    </entryPoint>
+                </build>
+                <run>
+                    <ports>
+                        <port>8080:8080</port>
+                    </ports>
+                </run>
+            </image>
+        </images>
+    </configuration>
+</plugin>
 ```
 
 2. 运行 `mvn docker:build` 命令构建镜像。
@@ -504,6 +437,64 @@ jib {
                 <!--goal>build</goal-->
                 <!--goal>deploy</goal-->
             </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### exec-maven-plugin
+
+参考 [spring-petclinic-microservices](https://github.com/odedia/spring-petclinic-microservices/blob/main/pom.xml) 项目：
+
+```xml
+<properties>
+    <docker.image.prefix>springcommunity</docker.image.prefix>
+    <docker.image.exposed.port>9090</docker.image.exposed.port>
+    <docker.image.dockerfile.dir>${basedir}</docker.image.dockerfile.dir>
+    <!-- podman is also supported -->
+    <container.executable>docker</container.executable>
+    <!-- By default, the OCI image is build for the linux/amd64 platform -->
+    <!-- For Apple Silicon M2 Chip you have to change it to the linux/arm64 -->
+    <container.platform>linux/amd64</container.platform>
+    <!-- The -load option is a shortcut for or -output=type=docker -->
+    <!-- Could be changed by the -push option !-->
+    <container.build.extraarg>--load</container.build.extraarg>
+</properties>
+```
+
+
+
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.1</version>
+    <executions>
+        <execution>
+            <id>docker-build</id>
+            <phase>install</phase>
+            <goals>
+                <goal>exec</goal>
+            </goals>
+            <configuration>
+                <executable>${container.executable}</executable>
+                <workingDirectory>${docker.image.dockerfile.dir}</workingDirectory>
+                <arguments>
+                    <argument>build</argument>
+                    <argument>-f</argument>
+                    <argument>Dockerfile</argument>
+                    <argument>--build-arg</argument>
+                    <argument>ARTIFACT_NAME=${project.build.finalName}</argument>
+                    <argument>--build-arg</argument>
+                    <argument>EXPOSED_PORT=${docker.image.exposed.port}</argument>
+                    <argument>--platform</argument>
+                    <argument>${container.platform}</argument>
+                    <argument>${container.build.extraarg}</argument>
+                    <argument>-t</argument>
+                    <argument>${docker.image.prefix}/${project.artifactId}</argument>
+                    <argument>${project.build.directory}</argument>
+                </arguments>
+            </configuration>
         </execution>
     </executions>
 </plugin>
