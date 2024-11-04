@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS 发布-订阅消息模型"
 date: 2024-07-23
+type: post
 slug: jms-pub-sub-messaging-model
 categories: ["Java"]
 tags: [ jms]

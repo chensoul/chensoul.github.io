@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS 消息优先级"
 date: 2024-07-23
+type: post
 slug: jms-prioritize-messages
 categories: ["Java"]
 tags: [ jms]

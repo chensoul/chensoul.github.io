@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记1：静态工厂方法代替构造函数"
 date: 2023-04-03
+type: post
 slug: static-factory-methods-instead-of-constructors
 categories: ["Java"]
 tags: ["java"]

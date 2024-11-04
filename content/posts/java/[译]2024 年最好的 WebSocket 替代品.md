@@ -1,6 +1,7 @@
 ---
 title: "[译]2024年最好的WebSocket替代品"
 date: 2024-05-07
+type: post
 slug: websocket-alternatives
 categories: ["Java"]
 tags: [ websocket]

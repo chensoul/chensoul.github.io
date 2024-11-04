@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Abstract Document"
 date: 2023-05-22
+type: post
 slug: java-design-patterns-abstract-document
 categories: ["Java"]
 tags: [java]

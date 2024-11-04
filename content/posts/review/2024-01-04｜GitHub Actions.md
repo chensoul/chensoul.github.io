@@ -1,6 +1,7 @@
 ---
 title: "2024-01-04｜GitHub Actions"
 date: 2024-01-04
+type: post
 slug: til
 categories: ["Review"]
 tags: ["vps",maven]
@@ -250,7 +251,7 @@ prefixed with #.
 
 最后来看下生成的 release drafter：
 
-![day-review-20240104-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/day-review-20240104-02.png)
+![day-review-20240104-02](/images/day-review-20240104-02.webp)
 
 ## 利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub
 
@@ -320,7 +321,7 @@ jobs:
 
 Wakatime记录的今日编码时间统计：
 
-![day-review-20240104-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/day-review-20240104-01.png)
+![day-review-20240104-01](/images/day-review-20240104-01.webp)
 
 ## 参考文章
 

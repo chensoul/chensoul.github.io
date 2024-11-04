@@ -1,6 +1,7 @@
 ---
 title: "Python学习1：注释、变量和常量"
 date: 2023-05-23
+type: post
 slug: python-comment-and-variable
 categories: ["Python"]
 tags: ["python"]

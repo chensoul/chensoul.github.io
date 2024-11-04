@@ -1,6 +1,7 @@
 ---
 title: "2024-02-05｜Spring Cloud Config快速入门"
 date: 2024-02-05
+type: post
 slug: til
 categories: ["Review"]
 tags: [spring-cloud]

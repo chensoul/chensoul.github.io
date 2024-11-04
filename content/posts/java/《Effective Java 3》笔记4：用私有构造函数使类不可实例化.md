@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记4：用私有构造函数使类不可实例化"
 date: 2023-05-05
+type: post
 slug: enforce-noninstantiability-with-a-private-constructor
 categories: ["Java"]
 tags: [java]

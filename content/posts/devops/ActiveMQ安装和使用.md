@@ -1,6 +1,7 @@
 ---
 title: "ActiveMQ安装和使用"
 date: 2024-07-05
+type: post
 slug: install-activemq
 categories: ["devops"]
 tags: [ activemq ]

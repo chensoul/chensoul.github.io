@@ -1,6 +1,7 @@
 ---
 title: "All things about Drone"
 date: 2024-05-09
+type: post
 slug: all-things-about-drone
 tags: [drone]
 categories: ["devops"]

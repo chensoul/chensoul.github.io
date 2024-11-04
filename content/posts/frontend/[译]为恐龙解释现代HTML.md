@@ -1,6 +1,7 @@
 ---
 title: "[译]为恐龙解释现代HTML"
 date: 2023-06-20
+type: post
 slug: modern-html-explained-for-dinosaurs
 categories: ["Frontend"]
 tags: [html]

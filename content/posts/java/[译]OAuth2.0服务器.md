@@ -1,6 +1,7 @@
 ---
 title: "[译]OAuth2.0服务器"
 date: 2024-06-05
+type: post
 slug: oauth2-server
 categories: ["Java"]
 tags: [oauth2]

@@ -1,6 +1,7 @@
 ---
 title: "2024-01-03｜今天做了什么"
 date: 2024-01-03
+type: post
 slug: til
 categories: ["Review"]
 tags: ["spring-cloud"]

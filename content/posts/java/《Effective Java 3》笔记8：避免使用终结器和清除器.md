@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记8：避免使用终结器和清除器"
 date: 2023-05-08
+type: post
 slug: avoid-finalizers-and-cleaners
 categories: ["Java"]
 tags: [java]

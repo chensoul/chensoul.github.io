@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS 事务的实际应用"
 date: 2024-07-23
+type: post
 slug: jms-transactions-in-action
 categories: ["Java"]
 tags: [ jms]

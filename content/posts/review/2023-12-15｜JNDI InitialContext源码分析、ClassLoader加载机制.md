@@ -1,6 +1,7 @@
 ---
 title: "2023-12-15｜JNDI InitialContext源码分析、ClassLoader加载机制"
 date: 2023-12-15
+type: post
 slug: til
 categories: ["Review"]
 tags: [jndi]
@@ -280,13 +281,13 @@ ClassLoader 类继承结构：
 
 Java中的ClassLoader是一个层次结构，由多个ClassLoader组成。每个ClassLoader都有一个父ClassLoader，除了顶层的原生类加载器（bootstrap class loader）之外。当需要加载一个类时，ClassLoader会首先尝试委托给其父ClassLoader进行加载。只有当父ClassLoader无法加载时，ClassLoader才会尝试自己加载。
 
-![ClassLoader in Java - Javatpoint](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/classloader-in-java.png)
+![ClassLoader in Java - Javatpoint](/images/classloader-in-java.webp)
 
 ### ClassLoader 如何工作
 
 
 
-![How does Classloader work in Java? | by Deepti Swain | InterviewNoodle](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/classloader-request.png)
+![How does Classloader work in Java? | by Deepti Swain | InterviewNoodle](/images/classloader-request.webp)
 
 类加载器是 Java 运行时环境的一部分。当 JVM 请求一个类时，类加载器会尝试定位该类，并使用完全限定的类名将类定义加载到运行时中。
 

@@ -1,6 +1,7 @@
 ---
 title: "React入门：初始化应用的两种方法"
 date: 2023-09-22
+type: post
 slug: react-create-project
 categories: ["Frontend"]
 tags: [react]

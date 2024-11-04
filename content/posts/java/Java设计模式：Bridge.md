@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Bridge"
 date: 2023-08-28
+type: post
 slug: java-design-patterns-bridge
 categories: ["Java"]
 tags: [java]

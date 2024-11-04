@@ -1,6 +1,7 @@
 ---
 title: "[译]比较 Socket.IO 和 HTTP：主要区别和用例"
 date: 2024-05-08
+type: post
 slug: socketio-vs-http
 categories: ["Java"]
 tags: [ socketio]

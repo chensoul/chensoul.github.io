@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Chain"
 date: 2023-10-16
+type: post
 slug: java-design-patterns-chain
 categories: ["Java"]
 tags: [java]

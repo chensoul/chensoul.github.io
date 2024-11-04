@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS介绍 – Java消息服务"
 date: 2024-07-23
+type: post
 slug: jms-introduction-java-message-service
 categories: ["Java"]
 tags: [ jms]

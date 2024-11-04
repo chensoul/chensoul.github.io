@@ -1,6 +1,7 @@
 ---
 title: "Python学习6：模块和包"
 date: 2023-07-06
+type: post
 slug: python-module-package
 categories: ["Python"]
 tags: ["python"]

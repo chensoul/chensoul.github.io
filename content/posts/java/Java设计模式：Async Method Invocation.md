@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Async Method Invocation"
 date: 2023-08-14
+type: post
 slug: java-design-patterns-async-method-invocation
 categories: ["Java"]
 tags: [java]

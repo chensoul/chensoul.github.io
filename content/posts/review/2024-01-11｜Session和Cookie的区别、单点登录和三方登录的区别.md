@@ -1,6 +1,7 @@
 ---
 title: "2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别"
 date: 2024-01-11
+type: post
 slug: til
 categories: ["Review"]
 tags: [review]

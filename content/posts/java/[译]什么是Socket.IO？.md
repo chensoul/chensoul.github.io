@@ -1,6 +1,7 @@
 ---
 title: "[译]什么是Socket.IO？"
 date: 2024-05-07
+type: post
 slug: socket-io
 categories: ["Java"]
 tags: [ socketio]

@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Acyclic Visitor"
 date: 2023-06-01
+type: post
 slug: java-design-patterns-acyclic-visitor
 categories: ["Java"]
 tags: [java]

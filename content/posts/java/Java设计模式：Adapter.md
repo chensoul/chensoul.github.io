@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Adapter"
 date: 2023-06-10
+type: post
 slug: java-design-patterns-adapter
 categories: ["Java"]
 tags: [java]

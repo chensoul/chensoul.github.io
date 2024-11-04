@@ -1,6 +1,7 @@
 ---
 title: "Kafka 安装和快速上手"
 date: 2024-10-17
+type: post
 slug: kafka-install-and-quickstart
 tags: [kafka]
 draft: true

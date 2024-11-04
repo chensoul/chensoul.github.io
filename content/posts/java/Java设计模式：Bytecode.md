@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Bytecode"
 date: 2023-09-22
+type: post
 slug: java-design-patterns-bytecode
 categories: ["Java"]
 tags: [java]

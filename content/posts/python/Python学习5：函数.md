@@ -1,6 +1,7 @@
 ---
 title: "Python学习5：函数"
 date: 2023-06-25
+type: post
 slug: python-function
 categories: ["Python"]
 tags: ["python"]

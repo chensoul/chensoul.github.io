@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Ambassador"
 date: 2023-07-06
+type: post
 slug: java-design-patterns-ambassador
 categories: ["Java"]
 tags: [java]

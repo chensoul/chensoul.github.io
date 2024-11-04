@@ -1,6 +1,7 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Twitter"
 date: 2023-12-14
+type: post
 slug: designing-twitter
 categories: ["Architecture"]
 tags: ["architecture"]
@@ -36,23 +37,23 @@ We will be designing a simpler version of Twitter with the following requirement
 > 功能要求
 
 1. Users should be able to post new tweets.
-   
+  
    > 用户应该能够发布新的推文。
    
 2. A user should be able to follow other users.
-   
+  
    > 用户应该能够关注其他用户。
    
 3. Users should be able to mark tweets as favorites.
-   
+  
    > 用户应该能够将推文标记为收藏夹。
    
 4. The service should be able to create and display a user’s timeline consisting of top tweets from all the people the user follows.
-   
+  
    > 该服务应该能够创建并显示用户的时间线，其中包含来自以下位置的热门推文：用户关注的所有人员。
    
 5. Tweets can contain photos and videos.
-   
+  
    > 推文可以包含照片和视频。
 
 **Non-functional Requirements**
@@ -60,15 +61,15 @@ We will be designing a simpler version of Twitter with the following requirement
 > 非功能性需求
 
 1. Our service needs to be highly available.
-   
+  
    > 我们的服务需要高度可用。
    
 2. Acceptable latency of the system is 200ms for timeline generation.
-   
+  
    > 时间线生成系统可接受的延迟为 200 毫秒。
    
 3. Consistency can take a hit (in the interest of availability); if a user doesn’t see a tweet for a while, it should be fine.
-   
+  
    > 一致性可能会受到影响（为了可用性）；如果用户没有看到某条推文同时，应该没问题。
 
 **Extended Requirements**
@@ -191,7 +192,7 @@ At a high level, we need multiple application servers to serve all these request
 
 > 在较高层面上，我们需要多个应用程序服务器来服务所有这些请求，并在它们前面提供负载均衡器以进行流量分配。在后端，我们需要一个高效的数据库，能够存储所有新的推文，并且能够支持海量的读取。我们还需要一些文件存储来存储照片和视频。
 
-![image-20231116102412714](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/designing-twitter-01.png)
+![image-20231116102412714](/images/designing-twitter-01.webp)
 
 Although our expected daily write load is 100 million and read load is 28 billion tweets. This means on average our system will receive around 1160 new tweets and 325K read requests per second. This traffic will be distributed unevenly throughout the day, though, at peak time we should expect at least a few thousand write requests and around 1M read requests per second. We should keep this in mind while designing the architecture of our system.
 
@@ -222,10 +223,10 @@ Since we have a huge number of new tweets every day and our read load is extreme
 > 基于UserID的分片：我们可以尝试将一个用户的所有数据存储在一台服务器上。在存储时，我们可以将 UserID 传递给我们的哈希函数，该函数将用户映射到数据库服务器，我们将在其中存储用户的所有推文、收藏夹、关注等。在查询用户的推文/关注/收藏夹时，我们可以询问我们的哈希函数在哪里可以找到用户的数据，然后从那里读取它。这种方法有几个问题：
 
 1. What if a user becomes hot? There could be a lot of queries on the server holding the user. This high load will affect the performance of our service.
-   
+  
    > 如果用户变得热门怎么办？持有用户的服务器上可能有很多查询。这种高负载会影响我们服务的性能。
 2. Over time some users can end up storing a lot of tweets or having a lot of follows compared to others. Maintaining a uniform distribution of growing user data is quite difficult.
-   
+  
    > 随着时间的推移，与其他用户相比，一些用户最终可能会存储大量推文或拥有大量关注者。保持不断增长的用户数据的均匀分布是相当困难的。
 
 To recover from these situations either we have to repartition/redistribute our data or use consistent hashing.
@@ -237,19 +238,19 @@ To recover from these situations either we have to repartition/redistribute our 
 > 基于 TweetID 的分片：我们的哈希函数会将每个 TweetID 映射到一个随机服务器，我们将在其中存储该推文。要搜索推文，我们必须查询所有服务器，每个服务器都会返回一组推文。中央服务器将汇总这些结果并将其返回给用户。让我们看一下时间线生成示例；以下是我们的系统生成用户时间线必须执行的步骤数：
 
 1. Our application (app) server will find all the people the user follows.
-   
+  
    > 我们的应用程序（app）服务器将找到用户关注的所有人员。
    
 2. App server will send the query to all database servers to find tweets from these people.
-   
+  
    > 应用服务器会将查询发送到所有数据库服务器以查找这些人的推文。
    
 3. Each database server will find the tweets for each user, sort them by recency and return the top tweets. 
-   
+  
    > 每个数据库服务器都会找到每个用户的推文，按新近度对它们进行排序并返回顶部推文。
    
 4. App server will merge all the results and sort them again to return the top results to the user.
-   
+  
    > 应用服务器将合并所有结果并再次排序，将排名靠前的结果返回给用户。
 
 This approach solves the problem of hot users, but, in contrast to sharding by UserID, we have to query all database partitions to find tweets of a user, which can result in higher latencies.
@@ -278,7 +279,7 @@ What could be the size of our TweetID? Let’s say our epoch time starts today, 
 
 86400 sec/day * 365 (days a year) * 50 (years) => 1.6B
 
-![image-20231116102448181](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/designing-twitter-02.png)
+![image-20231116102448181](/images/designing-twitter-02.webp)
 
 We would need 31 bits to store this number. Since on average we are expecting 1150 new tweets per second, we can allocate 17 bits to store auto incremented sequence; this will make our TweetID 48 bits long. So, every second we can store (2^17 => 130K) new tweets. We can reset our auto incrementing sequence every second. For fault tolerance and better performance, we can have two database servers to generate auto-incrementing keys for us, one generating even numbered keys and the other generating odd numbered keys.
 
@@ -299,7 +300,7 @@ In the above approach, we still have to query all the servers for timeline gener
 > 在上述方法中，我们仍然需要查询所有服务器以生成时间线，但我们的读取（和写入）将会快得多。
 
 1. Since we don’t have any secondary index (on creation time) this will reduce our write latency. 2. While reading, we don’t need to filter on creation-time as our primary key has epoch time included in it. 
-   
+  
    > 由于我们没有任何二级索引（在创建时），这将减少我们的写入延迟。 2.在读取时，我们不需要过滤创建时间，因为我们的主键有纪元时间包含在其中。
 
 ## 8. Cache
@@ -326,7 +327,7 @@ Our cache would be like a hash table where ‘key’ would be ‘OwnerID’ and 
 
 > 我们的缓存就像一个哈希表，其中“key”是“OwnerID”，“value”是一个双向链表，其中包含该用户在过去三天内的所有推文。由于我们希望首先检索最新的数据，因此我们始终可以在链表的头部插入新的推文，这意味着所有较旧的推文将位于链表的尾部附近。因此，我们可以从尾部删除推文，为新的推文腾出空间。
 
-![image-20231116102511054](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/designing-twitter-03.png)
+![image-20231116102511054](/images/designing-twitter-03.webp)
 
 ## 9. Timeline Generation
 
@@ -365,10 +366,10 @@ Having the ability to monitor our systems is crucial. We should constantly colle
 > 拥有监控我们系统的能力至关重要。我们应该不断收集数据，以便立即了解我们的系统的运行情况。我们可以收集以下指标/计数器来了解我们服务的性能：
 
 1. New tweets per day/second, what is the daily peak?
-   
+  
    > 每天/每秒新推文，每日峰值是多少？
 2. Timeline delivery stats, how many tweets per day/second our service is delivering. 3. Average latency that is seen by the user to refresh timeline.
-   
+  
    > 时间轴传送统计数据，我们的服务每天/每秒传送多少条推文。 3. 用户看到的刷新时间线的平均延迟。
 
 By monitoring these counters, we will realize if we need more replication, load balancing, or caching.

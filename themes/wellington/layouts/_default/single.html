@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section id="primary" class="content-archive content-area post-content-area">
+    <main id="main" class="site-main" role="main">
+        <article class="post type-post">
+            <div class="post-inner-content">
+                {{ partial "post-meta.html" . }}
+                <!-- {{ partial "social-share.html" . }} -->
+                {{ partial "toc.html" . }}
+                <div class="entry-content">
+                    {{ .Content }}
+                </div>
+                {{ partial "social-share.html" . }}
+            </div>
+        </article>
+        {{ partial "post_nav.html" . }}
+        {{ partial "related.html" . }}
+        {{ partial "comments.html" . }}
+    </main>
+</section>
+{{ end }}

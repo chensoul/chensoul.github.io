@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Business Delegate"
 date: 2023-09-05
+type: post
 slug: java-design-patterns-business-delegate
 categories: ["Java"]
 tags: [java]

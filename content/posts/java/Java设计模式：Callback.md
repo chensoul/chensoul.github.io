@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Callback"
 date: 2023-10-13
+type: post
 slug: java-design-patterns-callback
 categories: ["Java"]
 tags: [java]

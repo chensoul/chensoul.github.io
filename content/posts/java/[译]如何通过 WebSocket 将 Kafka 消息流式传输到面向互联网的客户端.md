@@ -1,6 +1,7 @@
 ---
 title: "[译]如何通过 WebSocket 将 Kafka 消息流式传输到面向互联网的客户端"
 date: 2024-05-07
+type: post
 slug: websockets-kafka
 categories: ["Java"]
 tags: [ websocket,kafka,java]

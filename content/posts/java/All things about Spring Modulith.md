@@ -1,6 +1,7 @@
 ---
 title: "All things about Spring Modulith"
 date: 2024-05-09
+type: post
 slug: all-things-about-spring-modulith
 categories: ["Java"]
 tags: [ spring]

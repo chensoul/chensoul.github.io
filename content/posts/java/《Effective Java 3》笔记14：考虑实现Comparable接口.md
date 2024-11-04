@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记14：考虑实现 Comparable 接口"
 date: 2023-05-26
+type: post
 slug: consider-implementing-Comparable
 categories: ["Java"]
 tags: [java]

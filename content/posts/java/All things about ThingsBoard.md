@@ -1,6 +1,7 @@
 ---
 title: "All things about ThingsBoard"
 date: 2024-04-29
+type: post
 slug: all-things-about-thingsboard
 categories: ["Java"]
 tags: [ thingsboard]

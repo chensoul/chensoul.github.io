@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记13：明智地覆盖 clone 方法"
 date: 2023-05-26
+type: post
 slug: override-clone-judiciously
 categories: ["Java"]
 tags: [java]

@@ -1,6 +1,7 @@
 ---
 title: "[译]在 JMS 中发送和接收消息"
 date: 2024-07-23
+type: post
 slug: send-and-receive-message-in-jms
 categories: ["Java"]
 tags: [ jms]
@@ -102,7 +103,7 @@ public class TestHelloWorldQueue {
 
 下图以流程图的形式表示上述步骤。
 
-![JMS 1.1 流程](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/JMS-1.1-Specification-min.png)
+![JMS 1.1 流程](/images/JMS-1.1-Specification-min.webp)
 
 图片来源 – Oracle JMS 2.0 规范
 
@@ -162,7 +163,7 @@ public class TestHelloWorld {
 
 下图来自官方 JMS 2.0 规范文档。
 
-![JMS 2.0 流](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/JMS-2.0-Specification-min.png)
+![JMS 2.0 流](/images/JMS-2.0-Specification-min.webp)
 
 图片来源 – Oracle JMS2.0 规范
 

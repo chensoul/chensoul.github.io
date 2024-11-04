@@ -1,6 +1,7 @@
 ---
 title: "2023-12-21｜Spring Security对OAuth2的支持及实现方式"
 date: 2023-12-21
+type: post
 slug: til
 categories: ["Review"]
 tags: ["spring-security",oauth2]

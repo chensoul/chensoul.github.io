@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记17：减少可变性"
 date: 2023-08-14
+type: post
 slug: minimize-mutability
 categories: ["Java"]
 tags: [java]

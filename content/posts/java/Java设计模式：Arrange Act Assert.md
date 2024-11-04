@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Arrange/Act/Assert"
 date: 2023-08-13
+type: post
 slug: java-design-patterns-arrange-act-assert
 categories: ["Java"]
 tags: [java]

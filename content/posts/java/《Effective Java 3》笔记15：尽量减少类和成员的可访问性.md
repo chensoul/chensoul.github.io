@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记15：尽量减少类和成员的可访问性"
 date: 2023-06-15
+type: post
 slug: minimize-the-accessibility-of-classes-and-members
 categories: ["Java"]
 tags: [java]

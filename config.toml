@@ -1,0 +1,66 @@
+baseURL = "https://blog.chensoul.cc/"
+languageCode = "en-us"
+title = "ChenSoul"
+theme = "wellington"
+paginate = 10
+
+toc = true
+summaryLength = 5
+
+enableRobotsTXT = true
+enableEmoji = true
+pygmentsCodeFences = true
+
+[permalinks]
+  posts="/posts/:year/:month/:day/:slug/"
+  categories="/categories/:slug/"
+  tags="/tags/:slug/"
+  pages="/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[related]
+  includeNewer = true
+  threshold = 0
+  toLower = true
+
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+[params]
+  author = "chensoul"
+  subtitle = "Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials"
+  description = "Java, Spring Boot, JPA, Hibernate, SQL, REST API, Microservice, Architecture, CI/CD, Docker, Kubernetes, Cloud, and DevOps Tutorials"
+  publisher = "chensoul"
+  images = ['/raw-images/favicon.jpg']
+  mainSections = ["post"]
+  youtube = "@chensoul"
+  github = "chensoul"
+  telegram = "chensouls"
+  facebook = ""
+  twitter = ""
+  linkedin = ""
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ''
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    #noClasses = false
+    #style = 'onedark'
+
+
+
+

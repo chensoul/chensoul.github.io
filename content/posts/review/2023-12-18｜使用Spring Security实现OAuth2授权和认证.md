@@ -1,6 +1,7 @@
 ---
 title: "2023-12-18｜使用Spring Security实现OAuth2授权和认证"
 date: 2023-12-18
+type: post
 slug: til
 categories: ["Review"]
 tags: [spring-security,oauth2]

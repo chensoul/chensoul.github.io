@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS 2.0 的十个好处意味着可以减少代码编写量"
 date: 2024-07-24
+type: post
 slug: jms20-means-less-code
 categories: ["Java"]
 tags: [ jms]

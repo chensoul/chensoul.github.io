@@ -1,6 +1,7 @@
 ---
 title: "周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步"
 date: 2023-04-18
+type: post
 slug: weekly_review_15
 categories: [Review]
 tags: [review]
@@ -8,7 +9,7 @@ tags: [review]
 
 ## 前言
 
-![weekly-review-15-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-01.png)
+![weekly-review-15-01](/images/weekly-review-15-01.webp)
 
 _题图：楚河汉街蜡像馆_
 
@@ -26,29 +27,29 @@ _题图：楚河汉街蜡像馆_
 
 四月累计支出共 2025 元，其中餐饮和购物占了一半。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-05.jpeg" alt="weekly-review-15-05" style="width:50%;" />
+<img src="/image/weekly-review-15-05.webp" alt="weekly-review-15-05" style="width:50%;" />
 
 ## 健身
 
 这周每天走路步数如下，其中有一天因为加班而没有完成一万步的目标。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-06.png" alt="weekly-review-15-06" style="width:50%;" />
+<img src="/image/weekly-review-15-06.webp" alt="weekly-review-15-06" style="width:50%;" />
 
 受 [@Conge](https://conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https://github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.cc](https://run.chensoul.cc/)。
 
-![weekly-review-15-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-02.png)
+![weekly-review-15-02](/images/weekly-review-15-02.webp)
 
 因为我之前是使用悦跑圈 APP 记录跑步，所以又参考[这篇文章](https://github.com/yihong0618/running_page/blob/master/README-CN.md#joyrun%E6%82%A6%E8%B7%91%E5%9C%88)导出 gpx 数据，然后[同步](https://github.com/yihong0618/running_page/blob/master/README-CN.md#gpx_to_strava)到 Strava。最后，可以把悦跑圈 APP 卸载了。
 
-![weekly-review-15-03](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-03.png)
+![weekly-review-15-03](/images/weekly-review-15-03.webp)
 
 上周跑步数据如下，总计 28.64 公里，比上周的 19.05 公里多了 9.6 公里。
 
-![weekly-review-15-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-04.png)
+![weekly-review-15-04](/images/weekly-review-15-04.webp)
 
 上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，效果如下。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-07.png" alt="weekly-review-15-07" style="width:50%;" />
+<img src="/image/weekly-review-15-07.webp" alt="weekly-review-15-07" style="width:50%;" />
 
 ## Umami 升级到 2.0
 
@@ -80,11 +81,11 @@ yarn start
 
 日志提示报错：
 
-![weekly-review-15-16](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-16.png)
+![weekly-review-15-16](/images/weekly-review-15-16.webp)
 
 解决办法是修改 scripts/check-db.js：
 
-![weekly-review-15-17](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-17.png)
+![weekly-review-15-17](/images/weekly-review-15-17.webp)
 
 4、修改跟踪脚本，把站点中所有追踪脚本名字`umami.js`改为`script.js`。
 
@@ -100,21 +101,21 @@ yarn start
 
 周末趁武汉旅游大年卡还没过期，跑到楚河汉街蜡像馆去溜达了一圈。因为有年卡，省去了 150 元的门票。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-08.png" alt="weekly-review-15-08" style="width:67%;" />
+<img src="/image/weekly-review-15-08.webp" alt="weekly-review-15-08" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-09.png" alt="weekly-review-15-09" style="width:67%;" />
+<img src="/image/weekly-review-15-09.webp" alt="weekly-review-15-09" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-10.png" alt="weekly-review-15-10" style="width:67%;" />
+<img src="/image/weekly-review-15-10.webp" alt="weekly-review-15-10" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-11.png" alt="weekly-review-15-11" style="width:67%;" />
+<img src="/image/weekly-review-15-11.webp" alt="weekly-review-15-11" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-12.png" alt="weekly-review-15-12" style="width:67%;" />
+<img src="/image/weekly-review-15-12.webp" alt="weekly-review-15-12" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-13.png" alt="weekly-review-15-13" style="width:67%;" />
+<img src="/image/weekly-review-15-13.webp" alt="weekly-review-15-13" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-14.png" alt="weekly-review-15-14" style="width:67%;" />
+<img src="/image/weekly-review-15-14.webp" alt="weekly-review-15-14" style="width:67%;" />
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-15-15.png" alt="weekly-review-15-15" style="width:67%;" />
+<img src="/image/weekly-review-15-15.webp" alt="weekly-review-15-15" style="width:67%;" />
 
 ## 好物分享
 

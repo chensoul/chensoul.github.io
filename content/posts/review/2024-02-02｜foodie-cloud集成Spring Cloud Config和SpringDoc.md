@@ -1,6 +1,7 @@
 ---
 title: "2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc"
 date: 2024-02-02
+type: post
 slug: til
 categories: ["Review"]
 tags: [spring-cloud]

@@ -1,6 +1,7 @@
 ---
 title: "[译]什么是HTTP/3？"
 date: 2024-05-07
+type: post
 slug: http3
 categories: ["Java"]
 tags: [ http]

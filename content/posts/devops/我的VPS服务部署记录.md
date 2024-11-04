@@ -1,6 +1,7 @@
 ---
 title: "我的VPS服务部署记录"
 date: 2023-01-25
+type: post
 slug: "notes-about-deploy-services-in-vps"
 categories: ["devops"]
 tags: [vps]
@@ -718,7 +719,7 @@ server {
 
 参考这篇文章 http://stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。
 
-![my-n8n-workflows](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/my-n8n-workflows.png)
+![my-n8n-workflows](/images/my-n8n-workflows.webp)
 
 workflows 参考：
 

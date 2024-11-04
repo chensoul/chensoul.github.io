@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记2：使用构造器代替构造方法"
 date: 2023-04-03
+type: post
 slug: builder-instead-of-constructors
 categories: ["Java"]
 tags: ["java"]

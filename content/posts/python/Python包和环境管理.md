@@ -1,6 +1,7 @@
 ---
 title: "Python包和环境管理"
 date: 2023-05-09
+type: post
 slug: python-package-and-env-management
 categories: ["Python"]
 tags: ["python"]

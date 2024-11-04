@@ -1,6 +1,7 @@
 ---
 title: "Mac开发环境配置"
 date: 2021-09-09
+type: post
 slug: "mac-development-environment-setup"
 tags: ["macos"]
 categories: ["devops"]

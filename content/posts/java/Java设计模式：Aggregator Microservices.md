@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Aggregator Microservices"
 date: 2023-06-26
+type: post
 slug: java-design-patterns-aggregator-microservices
 categories: ["Java"]
 tags: [java]

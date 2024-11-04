@@ -1,6 +1,7 @@
 ---
 title: "周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池"
 date: 2023-05-06
+type: post
 slug: weekly_review_17
 categories: [Review]
 tags: [review]
@@ -16,19 +17,19 @@ tags: [review]
 
 目前是使用 strava app 记录跑步数据，通过 [running_page](https://github.com/chensoul/running_page) 可以实时收集我的每天 [跑步数据](https://github.com/chensoul/running_page/blob/master/assets/running.csv)。
 
-![weekly-review-17-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-01.png)
+![weekly-review-17-01](/images/weekly-review-17-01.webp)
 
 走路、体重数据可以从苹果健康数据获取：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-06.png" alt="weekly-review-17-06" style="width:50%;" />
+<img src="/image/weekly-review-17-06.webp" alt="weekly-review-17-06" style="width:50%;" />
 
 编码数据可以从 wakatime 获取：
 
-![weekly-review-17-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-02.png)
+![weekly-review-17-02](/images/weekly-review-17-02.webp)
 
 早起的数据，我目前是通过 ios workflow 自动化来实现的。当早起闹钟响起时，往 memos 写入一条记录。
 
-![weekly-review-17-08](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-08.png)
+![weekly-review-17-08](/images/weekly-review-17-08.webp)
 
 如果可以获取到苹果屏幕使用时间数据，则可以从苹果手机获取每日第一次拿起手机的时间作为早起时间（待研究）。
 
@@ -42,7 +43,7 @@ tags: [review]
 
 Health Export 提供了一个 [web 网站](https://www.ericwolter.com/projects/apple-health-export/) 可以解析传苹果手机导出的健康数据。
 
-![weekly-review-17-03](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-03.png)
+![weekly-review-17-03](/images/weekly-review-17-03.webp)
 
 如何从 IPhone 手机导出苹果健康数据呢？您可以通过以下步骤导出这些数据：
 
@@ -61,7 +62,7 @@ Health Export 提供了一个 [web 网站](https://www.ericwolter.com/projects/a
 
 将导出的文件 export.xml 上传到 [web 网站](https://www.ericwolter.com/projects/apple-health-export/) ，稍等片刻可以导出结果。导出的健康数据是一个指标一个 csv 文件，如果想合并数据，需要做进一步处理。
 
-![weekly-review-17-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-04.png)
+![weekly-review-17-04](/images/weekly-review-17-04.webp)
 
 另外，Health Export 也提供了 IOS APP，功能好用，支持选择指定指标数据按日期聚合导出为一个 csv，还有定时导出的功能，遗憾的是需要收费。
 
@@ -225,7 +226,7 @@ order by f.day asc
 
 最后的数据如下：
 
-![weekly-review-17-05](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-05.png)
+![weekly-review-17-05](/images/weekly-review-17-05.webp)
 
 完整的 csv 文件保存在 [health.csv](https://github.com/chensoul/chensoul/blob/main/data/health.csv) 。有些记录中体重相关的数据为空，这是因为体重相关数据是通过其他和电子秤关联的 app 写进去的。`要想每天都有体重相关的数据，则需要每天使用电子称测量体重。`
 
@@ -248,13 +249,13 @@ order by f.day asc
 - 购物：751 元
 - 娱乐：216 元，看电影
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-07.png" alt="weekly-review-17-07" style="width:50%;" />
+<img src="/image/weekly-review-17-07.webp" alt="weekly-review-17-07" style="width:50%;" />
 
 ## 健身
 
 四月跑步记录如下，总计跑了 16 小时、125 公里。更详细数据，可以参考我的 [跑步主页](https://run.chensoul.cc/)。
 
-![weekly-review-17-09](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-09.png)
+![weekly-review-17-09](/images/weekly-review-17-09.webp)
 
 ## 工作
 
@@ -262,7 +263,7 @@ order by f.day asc
 
 请参考 [《Effective Java 3》笔记 4：用私有构造函数使类不可实例化](/posts/2023/05/05/enforce-noninstantiability-with-a-private-constructor/) 和 《Effective Java 3》笔记 7：[排除过时的对象引用](/posts/2023/05/05/eliminate-obsolete-object-references/)。
 
-![weekly-review-17-10](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-17-10.png)
+![weekly-review-17-10](/images/weekly-review-17-10.webp)
 
 ### FlexyPool
 

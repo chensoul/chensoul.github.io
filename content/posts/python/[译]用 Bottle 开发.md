@@ -1,6 +1,7 @@
 ---
 title: "[译]用 Bottle 开发"
 date: 2023-06-25
+type: post
 slug: developing-with-bottle
 categories: ["Python"]
 tags: [python]

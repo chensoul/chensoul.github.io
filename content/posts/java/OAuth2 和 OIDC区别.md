@@ -1,6 +1,7 @@
 ---
 title: "OAuth2和OIDC区别"
 date: 2024-06-06
+type: post
 slug: oauth2-oidc
 categories: ["Java"]
 tags: [ oauth2]

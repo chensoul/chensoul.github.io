@@ -2,6 +2,7 @@
 title: "周报-29｜"
 date: 2023-07-29
 draft: true
+type: post
 slug: weekly_review_29
 categories: [Review]
 tags: [review]

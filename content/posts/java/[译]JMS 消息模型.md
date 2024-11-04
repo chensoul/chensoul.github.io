@@ -1,6 +1,7 @@
 ---
 title: "[译]JMS 消息模型"
 date: 2024-07-23
+type: post
 slug: jms-message-model
 categories: ["Java"]
 tags: [ jms]
@@ -8,7 +9,7 @@ tags: [ jms]
 
 消息是 JMS 的核心，无论是事件还是业务数据。消息由标头、自定义属性和正文组成。这是您将在 JMS 消息模型（JMS 消息剖析）中学习的内容。
 
-![JMS 消息模型](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/JMS-message-model-min-1024x536.png)
+![JMS 消息模型](/images/JMS-message-model-min-1024x536.webp)
 
 JMS 消息由 Header、Properties 和 Body（Payload）组成。我们将在下面详细讨论它们。
 

@@ -1,6 +1,7 @@
 ---
 title: "ActiveMQ源码本地调试运行"
 date: 2024-08-09
+type: post
 slug: debug-activemq-source-code
 categories: ["Java"]
 tags: [ activemq]

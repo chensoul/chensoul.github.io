@@ -1,6 +1,7 @@
 ---
 title: "Python学习7：输入和输出"
 date: 2023-07-08
+type: post
 slug: python-input-and-output
 categories: ["Python"]
 tags: ["python"]

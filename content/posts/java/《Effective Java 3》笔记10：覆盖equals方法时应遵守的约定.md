@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记10：覆盖equals方法时应遵守的约定"
 date: 2023-05-17
+type: post
 slug: obey-the-general-contract-when-overriding-equals
 categories: ["Java"]
 tags: [java]

@@ -1,6 +1,7 @@
 ---
 title: "2024-01-10｜ Java审计框架inspektr"
 date: 2024-01-10
+type: post
 slug: til
 categories: ["Review"]
 tags: [review]

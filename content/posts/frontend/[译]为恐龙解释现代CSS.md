@@ -1,6 +1,7 @@
 ---
 title: "[译]为恐龙解释现代CSS"
 date: 2023-06-21
+type: post
 slug: modern-css-explained-for-dinosaurs
 categories: ["Frontend"]
 tags: [css]

@@ -1,6 +1,7 @@
 ---
 title: "Docker安装和配置"
 date: 2024-07-09
+type: post
 slug: install-docker
 categories: ["devops"]
 tags: [docker]

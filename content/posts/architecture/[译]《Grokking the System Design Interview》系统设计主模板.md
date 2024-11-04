@@ -1,6 +1,7 @@
 ---
 title: "[译]《Grokking the System Design Interview》系统设计主模板"
 date: 2023-11-16
+type: post
 slug: system-design-master-template
 categories: ["Architecture"]
 tags: ["architecture"]
@@ -21,10 +22,10 @@ The two biggest challenges of answering a system design interview question are:
 > 回答系统设计面试问题的两个最大挑战是：
 
 1. To know where to start.
-   
+  
    > 知道从哪里开始。
 2. To know if you have talked about all the important parts of the system.
-   
+  
    > 了解您是否已经讨论过系统的所有重要部分。
 
 To simplify this process, the course offers a comprehensive system design template that can effectively guide you in addressing any system design interview question.
@@ -34,7 +35,7 @@ To simplify this process, the course offers a comprehensive system design templa
 Have a look at the following image to understand the major components that could be part of any system design and how these components interact with each other.
 查看下图，了解可能成为任何系统设计一部分的主要组件以及这些组件如何相互交互。
 
-![system-design-master-template-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-01.webp)
+![system-design-master-template-01](/images/system-design-master-template-01.webp)
 
 With this master template in mind, we will discuss the 18 essential system design concepts. Here is a brief description of each:
 
@@ -52,7 +53,7 @@ When you input a domain name into your web browser, the DNS is responsible for f
 
 > 当您在网络浏览器中输入域名时，DNS 负责查找关联的 IP 地址并将您的请求定向到适当的服务器。此过程首先是您的计算机向递归解析器发送查询，然后递归解析器搜索一系列 DNS 服务器，从根服务器开始，然后是顶级域 (TLD) 服务器，最后是权威名称服务器。一旦找到 IP 地址，递归解析器会将其返回到您的计算机，从而允许您的浏览器与目标服务器建立连接并访问所需的内容。
 
-![system-design-master-template-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-02.webp)
+![system-design-master-template-02](/images/system-design-master-template-02.webp)
 
 ## 2. Load Balancer 
 
@@ -76,7 +77,7 @@ Load balancers employ various algorithms to determine the distribution of incomi
   
   > IP 哈希：对客户端的 IP 地址进行哈希处理，结果值用于确定请求应定向到哪个服务器。此方法可确保特定客户端的请求一致路由到同一服务器，从而有助于维护会话持久性。
 
-![system-design-master-template-03](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-03.webp)
+![system-design-master-template-03](/images/system-design-master-template-03.webp)
 
 
 
@@ -93,22 +94,22 @@ The primary functions of an API Gateway encompass:
 > API网关的主要功能包括：
 
 1. Request Routing: The API Gateway directs incoming API requests from clients to the appropriate backend service or microservice, based on predefined rules and configurations.
-   
+  
    > 请求路由：API 网关根据预定义的规则和配置，将来自客户端的传入 API 请求定向到适当的后端服务或微服务。
 2. Authentication and Authorization: The API Gateway manages user authentication and authorization, ensuring that only authorized clients can access the services. It verifies API keys, tokens, or other credentials before routing requests to the backend services.
-   
+  
    > 身份验证和授权：API网关管理用户身份验证和授权，确保只有授权的客户端才能访问服务。它在将请求路由到后端服务之前验证 API 密钥、令牌或其他凭据。
 3. Rate Limiting and Throttling: To safeguard backend services from excessive load or abuse, the API Gateway enforces rate limits or throttles requests from clients according to predefined policies.
-   
+  
    > 速率限制和节流：为了保护后端服务免受过度负载或滥用，API 网关根据预定义的策略强制执行速率限制或节流来自客户端的请求。
 4. Caching: In order to minimize latency and backend load, the API Gateway caches frequently-used responses, serving them directly to clients without the need to query the backend services.
-   
+  
    > 缓存：为了最大程度地减少延迟和后端负载，API 网关会缓存常用的响应，将其直接提供给客户端，而无需查询后端服务。
 5. Request and Response Transformation: The API Gateway can modify requests and responses, such as converting data formats, adding or removing headers, or altering query parameters, to ensure compatibility between clients and services.
-   
+  
    > 请求和响应转换：API网关可以修改请求和响应，例如转换数据格式、添加或删除标头或更改查询参数，以确保客户端和服务之间的兼容性。
 
-![system-design-master-template-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-04.webp)
+![system-design-master-template-04](/images/system-design-master-template-04.webp)
 
 
 
@@ -121,19 +122,19 @@ A Content Delivery Network (CDN) is a distributed network of servers that store 
 > 内容交付网络 (CDN) 是一种分布式服务器网络，用于存储并向地理位置较近的用户交付内容（例如图像、视频、样式表和脚本）。 CDN 旨在增强向最终用户交付内容的性能、速度和可靠性，无论其相对于源服务器的位置如何。 CDN 的运作方式如下：
 
 1. When a user requests content from a website or application, the request is directed to the nearest CDN server, also known as an edge server.
-   
+  
    > 当用户从网站或应用程序请求内容时，请求将被定向到最近的 CDN 服务器（也称为边缘服务器）。
 2. If the edge server has the requested content cached, it directly serves the content to the user. This process reduces latency and improves the user experience, as the content travels a shorter distance.
-   
+  
    > 如果边缘服务器缓存了所请求的内容，则它直接向用户提供内容。由于内容传输的距离较短，因此此过程减少了延迟并改善了用户体验。
 3. If the content is not cached on the edge server, the CDN retrieves it from the origin server or another nearby CDN server. Once the content is fetched, it is cached on the edge server and served to the user.
-   
+  
    > 如果内容未缓存在边缘服务器上，则 CDN 会从源服务器或其他附近的 CDN 服务器检索内容。获取内容后，它会缓存在边缘服务器上并提供给用户。
 4. To ensure the content stays up-to-date, the CDN periodically checks the origin server for changes and updates its cache accordingly.
-   
+  
    > 为了确保内容保持最新，CDN 定期检查源服务器是否有更改并相应更新其缓存。
 
-![system-design-master-template-05](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-05.webp)
+![system-design-master-template-05](/images/system-design-master-template-05.webp)
 
 
 
@@ -149,7 +150,7 @@ On the other hand, a reverse proxy is a server that sits in front of one or more
 
 > 另一方面，反向代理是位于一个或多个 Web 服务器前面的服务器，充当 Web 服务器和互联网之间的中介。当客户端请求互联网上的资源时，请求首先发送到反向代理。然后，反向代理将请求转发到其中一台 Web 服务器，该服务器将响应返回给反向代理。最后，反向代理将响应返回给客户端。
 
-![system-design-master-template-06](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-06.webp)
+![system-design-master-template-06](/images/system-design-master-template-06.webp)
 
 ## 6. Caching 
 
@@ -159,7 +160,7 @@ Cache is a high-speed storage layer positioned between the application and the o
 
 > 缓存是位于应用程序和原始数据源（例如数据库、文件系统或远程 Web 服务）之间的高速存储层。当应用程序请求数据时，首先检查缓存。如果数据存在于缓存中，则将其返回给应用程序。如果在缓存中找不到数据，则会从原始来源检索该数据，将其存储在缓存中以供将来使用，然后返回给应用程序。在分布式系统中，缓存可以发生在多个位置，包括客户端、DNS、CDN、负载均衡器、API 网关、服务器、数据库等。
 
-![system-design-master-template-07](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-07.webp)
+![system-design-master-template-07](/images/system-design-master-template-07.webp)
 
 ## 7. Data Partitioning 
 
@@ -173,7 +174,7 @@ Conversely, **vertical partitioning** involves splitting the columns of a table 
 
 > 相反，垂直分区涉及将表的列拆分为单独的表。该技术旨在减少表中的列数并提高仅访问有限数量列的查询的性能。
 
-![system-design-master-template-08](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-08.webp)
+![system-design-master-template-08](/images/system-design-master-template-08.webp)
 
 ## 8. Database Replication 
 
@@ -188,16 +189,16 @@ In a replicated database configuration, one server serves as the primary (or mas
 > 在复制数据库配置中，一台服务器充当主（或主）数据库，而其他服务器充当副本（或从）数据库。此过程涉及在主数据库和副本之间同步数据，确保所有数据库都拥有相同的最新信息。数据库复制具有多种优势，包括：
 
 1. Improved Performance: By distributing read queries among multiple replicas, the load on the primary database can be reduced, leading to faster query response times.
-   
+  
    > 提高性能：通过在多个副本之间分配读取查询，可以减少主数据库上的负载，从而加快查询响应时间。
 2. High Availability: If the primary database experiences failure or downtime, replicas can continue to provide data, ensuring uninterrupted access to the application.
-   
+  
    > 高可用性：如果主数据库出现故障或停机，副本可以继续提供数据，确保对应用程序的不间断访问。
 3. Enhanced Data Protection: Maintaining multiple copies of the database across different locations helps safeguard against data loss due to hardware failures or other disasters.
-   
+  
    > 增强的数据保护：在不同位置维护数据库的多个副本有助于防止由于硬件故障或其他灾难而导致的数据丢失。
 4. Load Balancing: Replicas can handle read queries, allowing for better load distribution and reducing overall stress on the primary database.
-   
+  
    > 负载平衡：副本可以处理读取查询，从而实现更好的负载分配并减少主数据库的整体压力。
 
 ## 9. Distributed Messaging Systems 
@@ -221,19 +222,19 @@ The primary characteristics of microservices include:
 > 微服务的主要特征包括：
 
 1. Single Responsibility: Adhering to the Single Responsibility Principle, each microservice focuses on a specific function or domain, making the services more straightforward to comprehend, develop, and maintain.
-   
+  
    > 单一职责：遵循单一职责原则，每个微服务都专注于特定的功能或领域，使服务更易于理解、开发和维护。
 2. Independence: Microservices can be independently developed, deployed, and scaled, offering increased flexibility and agility in the development process. Teams can work on various services simultaneously without impacting the entire system.
-   
+  
    > 独立性：微服务可以独立开发、部署和扩展，从而提高开发过程的灵活性和敏捷性。团队可以同时处理各种服务，而不会影响整个系统。
 3. Decentralization: Typically, microservices are decentralized, with each service possessing its data and business logic. This approach fosters separation of concerns and empowers teams to make decisions and select technologies tailored to their unique requirements.
-   
+  
    > 去中心化：通常，微服务是去中心化的，每个服务都拥有自己的数据和业务逻辑。这种方法促进了关注点分离，并使团队能够做出决策并选择适合其独特需求的技术。
 4. Communication: Microservices interact with each other using lightweight protocols, such as HTTP/REST, gRPC, or message queues. This fosters interoperability and facilitates the integration of new services or the replacement of existing ones.
-   
+  
    > 通信：微服务使用轻量级协议（例如 HTTP/REST、gRPC 或消息队列）相互交互。这促进了互操作性并促进新服务的集成或现有服务的替换。
 5. Fault Tolerance: As microservices are independent, the failure of one service does not necessarily result in the collapse of the entire system, enhancing the application's overall resiliency.
-   
+  
    > 容错性：由于微服务是独立的，一个服务的故障并不一定会导致整个系统崩溃，增强了应用程序的整体弹性。
 
 ## 11. NoSQL Databases 
@@ -249,19 +250,19 @@ NoSQL databases can be categorized into four main types:
 > NoSQL 数据库可分为四种主要类型：
 
 1. Document-Based: These databases store data in document-like structures, such as JSON or BSON. Each document is self-contained and can have its own unique structure, making them suitable for handling heterogeneous data. Examples of document-based NoSQL databases include MongoDB and Couchbase.
-   
+  
    > 基于文档：这些数据库以类似文档的结构存储数据，例如 JSON 或 BSON。每个文档都是独立的，可以有自己独特的结构，使它们适合处理异构数据。基于文档的 NoSQL 数据库的示例包括 MongoDB 和 Couchbase。
 2. Key-Value: These databases store data as key-value pairs, where the key acts as a unique identifier, and the value holds the associated data. Key-value databases are highly efficient for simple read and write operations, and they can be easily partitioned and scaled horizontally. Examples of key-value NoSQL databases include Redis and Amazon DynamoDB.
-   
+  
    > 键值：这些数据库将数据存储为键值对，其中键充当唯一标识符，值保存关联的数据。键值数据库对于简单的读写操作非常高效，并且可以轻松地进行分区和水平扩展。键值 NoSQL 数据库的示例包括 Redis 和 Amazon DynamoDB。
 3. Column-Family: These databases store data in column families, which are groups of related columns. They are designed to handle write-heavy workloads and are highly efficient for querying data with a known row and column keys. Examples of column-family NoSQL databases include Apache Cassandra and HBase.
-   
+  
    > 列族：这些数据库将数据存储在列族中，列族是相关列的组。它们旨在处理写入繁重的工作负载，并且对于使用已知的行键和列键查询数据非常高效。列族 NoSQL 数据库的示例包括 Apache Cassandra 和 HBase。
 4. Graph-Based: These databases are designed for storing and querying data that has complex relationships and interconnected structures, such as social networks or recommendation systems. Graph databases use nodes, edges, and properties to represent and store data, making it easier to perform complex traversals and relationship-based queries. Examples of graph-based NoSQL databases include Neo4j and Amazon Neptune.
-   
+  
    > 基于图：这些数据库旨在存储和查询具有复杂关系和互连结构的数据，例如社交网络或推荐系统。图数据库使用节点、边和属性来表示和存储数据，从而更容易执行复杂的遍历和基于关系的查询。基于图形的 NoSQL 数据库的示例包括 Neo4j 和 Amazon Neptune。
 
-![system-design-master-template-09](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-09.webp)
+![system-design-master-template-09](/images/system-design-master-template-09.webp)
 
 ## 12. Database Index 
 
@@ -286,7 +287,7 @@ Although indexes can significantly enhance query performance, they also involve 
   
   > 写入性能：当在表中插入、更新或删除数据时，相应的索引也必须更新，这可能会减慢写入操作。
 
-![system-design-master-template-10](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/system-design-master-template-10-20231117072236167.webp)
+![system-design-master-template-10](/images/system-design-master-template-10.webp)
 
 ## 13. Distributed File Systems 
 

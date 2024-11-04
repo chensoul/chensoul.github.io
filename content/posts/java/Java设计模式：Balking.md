@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Balking"
 date: 2023-08-25
+type: post
 slug: java-design-patterns-balking
 categories: ["Java"]
 tags: [java]

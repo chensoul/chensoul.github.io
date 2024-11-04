@@ -1,0 +1,38 @@
+{{ define "main" }}
+<section id="primary" class="content-archive content-area">
+<main id="main" class="site-main" role="main">
+    <div id="post-wrapper" class="post-wrapper clearfix">
+        <div class="post-column clearfix">
+            {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" site.Params.mainSections) }}
+            {{ range $paginator.Pages }}
+            <article class="post type-post">
+                <a class="wp-post-image-link" href="{{ .Permalink }}" rel="bookmark"
+                   title="Click to view {{ .Title }} post" >
+                    {{- if isset .Params "images" }}
+                    {{- if not (eq (len .Params.images) 0) }}
+                    <img width="600" height="340"
+                         src="{{ index .Params.images 0 }}"
+                         class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                         alt="{{ .Title }}" />
+                    {{ end }}
+                    {{ end }}
+                </a>
+                {{ partial "post-meta.html" . }}
+                <div class="entry-content clearfix">
+                    <p>{{ .Summary }}</p>
+                    <a href="{{ .Permalink }}"
+                       class="more-link"
+                       title="Click to read more about {{ .Title }}" >Continue reading &raquo;</a>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+
+    </div>
+    {{ partial "pagination.html" . }}
+</main>
+</section>
+<section id="secondary" class="sidebar widget-area clearfix" role="complementary">
+    {{ partial "sidebar.html" . }}
+</section>
+{{ end }}

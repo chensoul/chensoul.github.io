@@ -1,6 +1,7 @@
 ---
 title: "Python学习2：数据类型"
 date: 2023-06-10
+type: post
 slug: python-data-type
 categories: ["Python"]
 tags: ["python"]

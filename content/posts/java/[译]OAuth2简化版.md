@@ -1,6 +1,7 @@
 ---
 title: "[译]OAuth2简化版"
 date: 2024-06-05
+type: post
 slug: oauth-2-simplified
 categories: ["Java"]
 tags: [ oauth2]

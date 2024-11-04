@@ -1,6 +1,7 @@
 ---
 title: "如何设计一个分布式ID生成器保证ID按时间有序？"
 date: 2023-12-05
+type: post
 slug: distributed-id-generator
 categories: ["Architecture"]
 tags: ["architecture","distributed"]

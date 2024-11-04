@@ -1,6 +1,7 @@
 ---
 title: "JHipster安装和介绍"
 date: 2023-11-02
+type: post
 slug: jhipster-intro
 categories: ["Java"]
 tags: [jhipster]
@@ -16,15 +17,15 @@ JHipster 官网： [https://www.jhipster.tech/](https://www.jhipster.tech/) ，�
 
 JHipster 客户端使用到的技术栈有：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-client-side-options.png" alt="jhipster-client-side-options" style="width:80%;" />
+<img src="/image/jhipster-client-side-options.webp" alt="jhipster-client-side-options" style="width:80%;" />
 
 服务端使用的技术栈有：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-server-side-options.png" alt="jhipster-server-side-options" style="width:80%;" />
+<img src="/image/jhipster-server-side-options.webp" alt="jhipster-server-side-options" style="width:80%;" />
 
 支持以下部署方式：
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/jhipster-deploy-options.png" alt="jhipster-deploy-options" style="width:80%;" />
+<img src="/image/jhipster-deploy-options.webp" alt="jhipster-deploy-options" style="width:80%;" />
 
 JHipster 提供了一个 CLI 工具 [generator-jhipster](https://www.jhipster.tech/installation/) 和在线网站 [https://start.jhipster.tech/](https://start.jhipster.tech/) ，来创建应用。generator-jhipster 支持本地安装和 docker 安装两种方式。另外，还有一个轻量级的定制工具 [jhipseter-lite](https://www.jhipster.tech/jhipster-lite/) 可以更细力度的定制。
 

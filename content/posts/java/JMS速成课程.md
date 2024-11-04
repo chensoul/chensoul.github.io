@@ -1,6 +1,7 @@
 ---
 title: "JMS速成课程"
 date: 2024-08-07
+type: post
 slug: a-crash-course-on-jms
 draft: true
 categories: ["Java"]

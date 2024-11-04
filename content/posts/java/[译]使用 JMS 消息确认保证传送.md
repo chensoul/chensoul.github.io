@@ -1,6 +1,7 @@
 ---
 title: "[译]使用 JMS 消息确认保证传送"
 date: 2024-07-23
+type: post
 slug: guaranteed-delivery-using-jms-message-acknowledgement
 categories: ["Java"]
 tags: [ jms]

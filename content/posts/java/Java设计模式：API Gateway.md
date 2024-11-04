@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：API Gateway "
 date: 2023-08-13
+type: post
 slug: java-design-patterns-api-gateway
 categories: ["Java"]
 tags: [java]

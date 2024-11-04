@@ -1,6 +1,7 @@
 ---
 title: "[译]Python模块和包-简介"
 date: 2023-06-25
+type: post
 slug: python-modules-packages
 categories: ["Python"]
 tags: [python]

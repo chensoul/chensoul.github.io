@@ -1,6 +1,7 @@
 ---
 title: "[译]什么是 HTTP？"
 date: 2024-05-07
+type: post
 slug: http
 categories: ["Java"]
 tags: [ http]

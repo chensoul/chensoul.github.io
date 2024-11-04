@@ -1,6 +1,7 @@
 ---
 title: "[译]Build Robust Continuous Integration With Docker and Friends"
 date: 2023-05-22
+type: post
 slug: docker-continuous-integration
 categories: ["Python"]
 tags: [docker]

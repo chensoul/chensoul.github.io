@@ -1,6 +1,7 @@
 ---
 title: "Tengine动态裁剪图片"
 date: 2024-06-26
+type: post
 slug: install-cert-manager
 tags: [tengine]
 categories: ["devops"]
@@ -239,7 +240,7 @@ http {
 
     192.168.56.100  img.javachen.space
 
-在 /data/image/upload 下存放一个图片 1.png，然后访问：<http://192.168.56.100/1.png> ，再访问缩放图片：<http://192.168.56.100/1.png_245x245.png>
+在 /data/image/upload 下存放一个图片 1.png，然后访问：<http://192.168.56.100/1.png> ，再访问缩放图片：<http://192.168.56.100/1.png_245x245.webp>
 
 
 查看 /data/image/upload 目录是否有生成新的文件：

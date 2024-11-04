@@ -1,6 +1,7 @@
 ---
 title: "Jenkins安装和部署-使用Docker"
 date: 2024-06-26
+type: post
 slug: install-jenkins
 categories: ["devops"]
 tags: [ jenkins ]

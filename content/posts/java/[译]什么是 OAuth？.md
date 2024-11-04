@@ -1,6 +1,7 @@
 ---
 title: "[译]什么是 OAuth？"
 date: 2024-05-07
+type: post
 slug: oauth
 categories: ["Java"]
 tags: [ oauth2]

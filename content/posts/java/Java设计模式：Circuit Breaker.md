@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Circuit Breaker"
 date: 2023-10-26
+type: post
 slug: java-design-patterns-circuit-breaker
 categories: ["Java"]
 tags: [java]

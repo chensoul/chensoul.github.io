@@ -1,6 +1,7 @@
 ---
 title: "[译]什么是HTTP流式传输？"
 date: 2024-05-07
+type: post
 slug: http-streaming
 categories: ["Java"]
 tags: [ http]

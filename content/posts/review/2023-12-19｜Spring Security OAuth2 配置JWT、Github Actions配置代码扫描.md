@@ -1,6 +1,7 @@
 ---
 title: "2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描"
 date: 2023-12-19
+type: post
 slug: til
 categories: ["Review"]
 tags: [review,"spring-security"]
@@ -73,7 +74,7 @@ public class RSAUtil {
 
 在排查错误的过程中，查看 `converter.setSigningKey() `方法，`new RsaSigner(String sshKey)` 构造方法内调用了  `RsaKeyHelper` 的 `parseKeyPair` 方法，该方法需要传入的字符串是 "-----BEGIN RSA PRIVATE KEY" 开头
 
-![daily-review-20231219-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-01.png)
+![daily-review-20231219-01](/images/daily-review-20231219-01.webp)
 
 而下面代码使用 keytool 生成 JKS 文件然后导出的私钥"-----BEGIN PRIVATE KEY" 开头。
 
@@ -112,25 +113,25 @@ public class RSAUtil {
 
 参考 [Github Actions — Scan Code](https://janelifelog.medium.com/github-actions-scan-code-41c82ec82140)，启用 Code scanning alerts ，发现有一个代码扫描警告：
 
-![daily-review-20231219-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-02.png)
+![daily-review-20231219-02](/images/daily-review-20231219-02.webp)
 
 于是，参照上面说明，修改代码，再次提交代码，该警告自动关闭。
 
 干脆把 Dependabot alerts  也启用了，并中配置页面启用相关配置：
 
-![image-20231219120104154](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-03.png)
+![image-20231219120104154](/images/daily-review-20231219-03.webp)
 
 点击  [.github/dependabot.yml](https://github.com/chensoul/RSA/edit/master/.github/dependabot.yml) ，修改 package-ecosystem 值为 maven。因为当前仓库是 maven 构建，所以这里设置为 maven。
 
-![daily-review-20231219-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-04.png)
+![daily-review-20231219-04](/images/daily-review-20231219-04.webp)
 
 保存并提交修改。机器人扫描出五个版本需要升级，并自动创建了五个 Pull Request。
 
-![image-20231219120339699](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-05.png)
+![image-20231219120339699](/images/daily-review-20231219-05.webp)
 
 在仓库的 Security 页面，点击左侧的 Code scanning
 
-![daily-review-20231219-03](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/daily-review-20231219-06.png)
+![daily-review-20231219-03](/images/daily-review-20231219-06.webp)
 
 点击 Add tool，可以添加更多代码扫描工具，总共有 70 个 扫描工具可以选择，如：Semgrep、SonarQube、pmd 等等。
 

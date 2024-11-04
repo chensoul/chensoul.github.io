@@ -1,6 +1,7 @@
 ---
 title: "JWT"
 date: 2024-06-06
+type: post
 slug: jwt
 categories: ["Java"]
 tags: [ jwt]

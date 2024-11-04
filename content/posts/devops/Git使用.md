@@ -1,6 +1,7 @@
 ---
 title: "Git使用"
 date: 2024-07-15
+type: post
 slug: git
 categories: ["devops"]
 tags: [ git]
@@ -296,7 +297,7 @@ merge = refs/heads/master
 
 #### 5、常用的git 命令 
 
-![img](http://chensoul.oss-cn-hangzhou.aliyuncs.com/images/git-command.jpg)
+![img](/images/git-command.webp)
 
 ```shell
 [root@localhost ~]# git init                      # 初始化 

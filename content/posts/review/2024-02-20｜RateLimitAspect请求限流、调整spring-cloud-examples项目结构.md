@@ -1,6 +1,7 @@
 ---
 title: "2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构"
 date: 2024-02-20
+type: post
 slug: til
 categories: ["Review"]
 tags: [spring-cloud]

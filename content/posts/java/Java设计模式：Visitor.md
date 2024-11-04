@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Visitor"
 date: 2023-06-02
+type: post
 slug: java-design-patterns-visitor
 categories: ["Java"]
 tags: [java]

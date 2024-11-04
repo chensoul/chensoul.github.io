@@ -1,6 +1,7 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Dropbox"
 date: 2023-11-24
+type: post
 slug: designing-dropbox
 categories: ["Architecture"]
 tags: ["architecture"]
@@ -155,7 +156,7 @@ As shown in the diagram below, Block servers will work with the clients to uploa
 
 > 如下图所示，块服务器将与客户端一起从云存储上传/下载文件，元数据服务器将在 SQL 或 NoSQL 数据库中更新文件的元数据。同步服务器将处理通知所有客户端有关同步的不同更改的工作流程。
 
-![image-20231116095440771](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dropbox-01.png)
+![image-20231116095440771](/images/dropbox-01.webp)
 
 High level design for Dropbox
 
@@ -233,7 +234,7 @@ IV. **Indexer** will process the events received from the Watcher and update the
 
 > 4. 索引器将处理从观察器接收到的事件，并使用有关已修改文件块的信息更新内部元数据数据库。一旦块成功提交/下载到云存储，索引器将与远程同步服务通信，以将更改广播到其他客户端并更新远程元数据数据库。
 
-![image-20231116095419475](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dropbox-02.png)
+![image-20231116095419475](/images/dropbox-02.webp)
 
 **How should clients handle slow servers?** Clients should exponentially back-off if the server is busy/not-responding. Meaning, if a server is too slow to respond, clients should delay their retries and this delay should increase exponentially.
 
@@ -307,7 +308,7 @@ The Message Queuing Service will implement two types of queues in our system. Th
 
 > 消息队列服务将在我们的系统中实现两种类型的队列。请求队列是一个全局队列，所有客户端都会共享它。客户端更新元数据数据库的请求将首先发送到请求队列，同步服务将从那里接收它来更新元数据。与各个订阅客户端相对应的响应队列负责将更新消息传递给每个客户端。由于消息一旦被客户端接收到就会从队列中删除，因此我们需要为每个订阅的客户端创建单独的响应队列以共享更新消息。
 
-![image-20231116095353863](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dropbox-03.png)
+![image-20231116095353863](/images/dropbox-03.webp)
 
 **e. Cloud/Block Storage**
 
@@ -317,7 +318,7 @@ Cloud/Block Storage stores chunks of files uploaded by the users. Clients direct
 
 > 云/块存储存储用户上传的文件块。客户端直接与存储交互以发送和接收对象。将元数据与存储分离使我们能够使用云中或内部的任何存储。
 
-![image-20231116095337924](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/dropbox-04.png)
+![image-20231116095337924](/images/dropbox-04.webp)
 
 Detailed component design for Dropbox
 

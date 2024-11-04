@@ -1,6 +1,7 @@
 ---
 title: "《Effective Java 3》笔记9：使用 try-with-resources 优于 try-finally"
 date: 2023-05-08
+type: post
 slug: prefer-try-with-resources-to-try-finally
 categories: ["Java"]
 tags: [java]

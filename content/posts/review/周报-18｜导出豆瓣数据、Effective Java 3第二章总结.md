@@ -1,6 +1,7 @@
 ---
 title: "周报-18｜导出豆瓣数据、Effective Java 3第二章总结"
 date: 2023-05-10
+type: post
 slug: weekly_review_18
 categories: [Review]
 tags: [review]
@@ -16,7 +17,7 @@ tags: [review]
 
 最近又一次更换了博客主题，主要出发点是想找一个简洁的主题，减少不必要的信息干扰，也不想花时间在修改主题上面。减少了菜单链接。
 
-![weekly-review-18-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-01.png)
+![weekly-review-18-01](/images/weekly-review-18-01.webp)
 
 ## 导出豆瓣数据
 
@@ -26,11 +27,11 @@ tags: [review]
 
 除此之外，之前还实现了通过 n8n 实时同步豆瓣数据到 memos 和 telegram：
 
-![weekly-review-18-05](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-05.png)
+![weekly-review-18-05](/images/weekly-review-18-05.webp)
 
 通过 [python 脚本 ](https://github.com/chensoul/chensoul/blob/main/build_readme.py)获取最近 10 条记录，显示到 [我的 github 主页](https://github.com/chensoul)。
 
-![weekly-review-18-06](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-06.png)
+![weekly-review-18-06](/images/weekly-review-18-06.webp)
 
 ## 理财
 
@@ -66,11 +67,11 @@ tags: [review]
 
 本周 [跑步](https://run.chensoul.cc/) 记录如下，总计跑步 34.37 公里，其中周六第一次跑了 12 公里，比之前有所进步。遗憾的是，有两天没有跑步，导致连续跑步天数有中断。
 
-![weekly-review-18-04](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-04.png)
+![weekly-review-18-04](/images/weekly-review-18-04.webp)
 
 从 3 月份开始跑步到 5 月，目前总共跑步距离达到了 230 公里。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-03.png" alt="weekly-review-18-03" style="width:50%;" />
+<img src="/image/weekly-review-18-03.webp" alt="weekly-review-18-03" style="width:50%;" />
 
 ## 工作
 
@@ -81,7 +82,7 @@ tags: [review]
 - [《Effective Java 3》笔记 8：避免使用终结器和清除器](/posts/2023/05/08/avoid-finalizers-and-cleaners/)
 - [《Effective Java 3》笔记 9：使用 try-with-resources 优于 try-finally](/posts/2023/05/08/prefer-try-with-resources-to-try-finally/)
 
-![weekly-review-18-02](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-18-02.png)
+![weekly-review-18-02](/images/weekly-review-18-02.webp)
 
 至此，《Effective Java 3》第二章学习完了，现在总结如下：
 

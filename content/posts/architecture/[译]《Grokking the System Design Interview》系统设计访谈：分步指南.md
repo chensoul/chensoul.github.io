@@ -1,6 +1,7 @@
 ---
 title: "[译]《Grokking the System Design Interview》系统设计访谈：分步指南"
 date: 2023-11-16
+type: post
 slug: sdi-a-step-by-step-guide
 categories: ["Architecture"]
 tags: ["architecture"]
@@ -142,7 +143,7 @@ For Twitter, at a high-level, we will need multiple application servers to serve
 
 
 
-![20231116_image-20231116072253280](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/20231116_image-20231116072253280.png)
+![20231116_image-20231116072253280](/images/sdi-a-step-by-step-guide-01.webp)
 
 
 

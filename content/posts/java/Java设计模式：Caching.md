@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Caching"
 date: 2023-09-25
+type: post
 slug: java-design-patterns-cahcing
 categories: ["Java"]
 tags: [java]

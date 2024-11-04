@@ -1,6 +1,7 @@
 ---
 title: "[译]WebSocket与REST"
 date: 2024-05-07
+type: post
 slug: websocket-vs-rest
 categories: ["Java"]
 tags: [ websocket]

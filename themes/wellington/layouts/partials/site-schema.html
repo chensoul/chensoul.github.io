@@ -1,0 +1,46 @@
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "TechArticle",
+                "name": "{{ .Title | safeJS }}",
+                "headline": "{{ .Title | safeJS }}",
+                "inLanguage": "en-US",
+                {{- if isset .Params "images" }}
+                {{- if not (eq (len .Params.images) 0) }}
+                "image": {{ index .Params.images 0 }}, {{ end }}{{ end }}
+                "url": {{ .Permalink }},
+                "description": {{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }},
+                "wordCount": "{{ .WordCount }}",
+                "keywords": [{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}],
+                "datePublished": {{ .PublishDate }},
+                "dateModified": {{ .Lastmod }},
+                "author": {
+                    "@type": "Person",
+                    "name": {{ .Site.Params.author }}
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": {{ .Permalink }}
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": {{ .Site.Params.publisher }},
+                    "url": {{ .Permalink }}
+                }
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": {{ .Site.Params.publisher }},
+                "url": {{ .Site.BaseURL }},
+                "sameAs": [
+                    "https://twitter.com/{{ .Site.Params.twitter }}",
+                    "https://github.com/{{ .Site.Params.github }}",
+                    "https://www.linkedin.com/in/{{ .Site.Params.linkedin }}"
+                ]
+            }
+        ]
+    }
+</script>

@@ -1,6 +1,7 @@
 ---
 title: "周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录"
 date: 2023-04-04
+type: post
 slug: weekly_review_13
 categories: [Review]
 tags: [review]
@@ -8,7 +9,7 @@ tags: [review]
 
 ## 前言
 
-![weekly-review-13-01](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-01.jpeg)
+![weekly-review-13-01](/images/weekly-review-13-01.webp)
 
 本篇是对 `2023-03-27` 到 `2023-04-02` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
@@ -22,11 +23,11 @@ tags: [review]
 
 完成了每天一万步的计划，并且共跑步 8 次，一共 26 公里，最高平均配速 7 分钟，还跳绳一次（550 下）。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-03.jpeg" alt="weekly-review-13-03" style="width:50%;" />
+<img src="/image/weekly-review-13-03.webp" alt="weekly-review-13-03" style="width:50%;" />
 
 跑步的目的不是快，而是乐此不疲。每天跑步 5 公里，每次消耗 300 卡路里的热量，大概需要 10 周才能瘦 10 斤。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-02.jpeg" alt="weekly-review-13-02" style="width:50%;" />
+<img src="/image/weekly-review-13-02.webp" alt="weekly-review-13-02" style="width:50%;" />
 
 光靠走路和跑步，想在 4 月完成瘦 10 斤的目标，应该是不可能的，打算辅助间歇性断食，看下效果。
 
@@ -42,11 +43,11 @@ tags: [review]
 
 找来找去，发现微信里没有有个『微信记账本』小程序就可以在微信里自动记账，也支持手动记账。于是，这周试了一下这个小程序，并有意的控制自己每天的输出。因为每天都有带饭，这样中饭就不用花钱了；早餐呢，是泡之前买的黑芝麻糊喝，省去了早餐费用。结果是，这周的支出只有 4.5 元。一次是早上买了一本豆浆，一次是早上跑步怕迟到就骑了一次动感单车。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-05.jpeg" alt="weekly-review-13-05" style="width:50%;" />
+<img src="/image/weekly-review-13-05.webp" alt="weekly-review-13-05" style="width:50%;" />
 
 正好三月结束了，查看了一下三月的支出报表。总的来说，三月支出的有点多，超乎了我的想象。如果每个月都是支出这么多，那以后的零花钱就不够用了。还是要勒紧裤腰带过日子啊。
 
-<img src="https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-04.jpeg" alt="weekly-review-13-04" style="width:50%;" />
+<img src="/image/weekly-review-13-04.webp" alt="weekly-review-13-04" style="width:50%;" />
 
 ## 更新 SSL 证书
 
@@ -58,7 +59,7 @@ curl https://get.acme.sh | sh -s email=chensoul.eth@gmail.com
 
 **我的域名托管在 cloudflare**，故需要获取 [cloudflare API key](https://dash.cloudflare.com/profile/api-tokens)，在 `API 令牌` 页面，点击查看 `Global API Key`。
 
-![weekly-review-13-06](https://chensoul.oss-cn-hangzhou.aliyuncs.com/images/weekly-review-13-06.png)
+![weekly-review-13-06](/images/weekly-review-13-06.webp)
 
 保存 `CF_Key` 和 `CF_Email`：
 

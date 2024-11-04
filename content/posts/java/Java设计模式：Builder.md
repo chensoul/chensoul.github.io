@@ -1,6 +1,7 @@
 ---
 title: "Java设计模式：Builder"
 date: 2023-09-05
+type: post
 slug: java-design-patterns-builder
 categories: ["Java"]
 tags: [java]
