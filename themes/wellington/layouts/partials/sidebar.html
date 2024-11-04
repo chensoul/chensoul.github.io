@@ -6,7 +6,7 @@
         <h3 class="widget-title">{{ .Params.author | default .Site.Params.author}}</h3>
     </div>
     <div>
-        <img src="/raw-images/favicon.jpg" alt="{{ .Params.author }}" height="400px" width="335px"/>
+        <img src="/images/favicon.webp" alt="{{ .Params.author }}" height="400px" width="335px"/>
     </div>
 </aside>
 
@@ -47,19 +47,6 @@
 </aside> -->
 
 
-<aside id="top-posts" class="widget clearfix">
-    <div class="widget-header"><h3 class="widget-title">Top Posts</h3></div>
-    <ul>
-        {{ range (where .Site.RegularPages "Section" "in" (.Site.Params.postSections | default (slice "posts"))) }}
-        {{- if (.Params.popular) }}
-        <li>
-            <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
-        </li>
-        {{ end }}
-        {{ end }}
-    </ul>
-</aside>
-
 <aside id="recent-posts" class="widget clearfix">
     <div class="widget-header">
         <h3 class="widget-title">Recent Posts</h3>
@@ -70,8 +57,20 @@
         <li class="widget__item"><a class="widget__link" href="{{ .RelPermalink }}">{{ .Title }}</a></li>
         {{- end }}
     </ul>
-
 </aside>
+
+<!-- <aside id="top-posts" class="widget clearfix">
+    <div class="widget-header"><h3 class="widget-title">Top Posts</h3></div>
+    <ul>
+        {{ range (where .Site.RegularPages "Section" "in" (.Site.Params.postSections | default (slice "posts"))) }}
+        {{- if (.Params.popular) }}
+        <li>
+            <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+        </li>
+        {{ end }}
+        {{ end }}
+    </ul>
+</aside> -->
 
 <aside id="tag_cloud" class="widget widget_tag_cloud clearfix">
     <div class="widget-header"><h3 class="widget-title">Tags</h3></div>
