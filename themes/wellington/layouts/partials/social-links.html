@@ -3,7 +3,7 @@
 
     {{ if (not (eq .Site.Params.github "")) }}
     <a class="social-link-item"
-       href="https://github.com/{{.Site.Params.github}}"
+       href="https://github.com/{{ .Site.Params.github }}"
        aria-label="Follow me on GitHub"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-github fa-2xl github"></i>
@@ -12,7 +12,7 @@
 
     {{ if (not (eq .Site.Params.twitter "")) }}
     <a class="social-link-item"
-       href="https://twitter.com/{{.Site.Params.twitter}}"
+       href="https://x.com/{{ .Site.Params.twitter }}"
        aria-label="Follow me on Twitter"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-square-twitter fa-2xl twitter"></i>
@@ -21,7 +21,7 @@
 
     {{ if (not (eq .Site.Params.linkedin "")) }}
     <a class="social-link-item"
-       href="https://www.linkedin.com/in/{{.Site.Params.linkedin}}"
+       href="https://www.linkedin.com/in/{{ .Site.Params.linkedin }}"
        aria-label="Follow me on LinkedIn"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-linkedin fa-2xl linkedin"></i>
@@ -30,7 +30,7 @@
 
     {{ if (not (eq .Site.Params.youtube "")) }}
     <a class="social-link-item"
-       href="https://www.youtube.com/{{.Site.Params.youtube}}"
+       href="https://www.youtube.com/{{ .Site.Params.youtube }}"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-youtube fa-2xl youtube"></i>
     </a>
@@ -38,7 +38,7 @@
 
     {{ if (not (eq .Site.Params.telegram "")) }}
     <a class="social-link-item"
-       href="https://t.me/{{.Site.Params.telegram}}"
+       href="https://t.me/{{ .Site.Params.telegram }}"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-telegram fa-2xl telegram"></i>
     </a>
