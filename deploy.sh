@@ -26,8 +26,7 @@ echo "\033[0;32mConverte jpg/jpeg/JPG/png to webp...\033[0m"
 
 npm run images:optimize
 
-echo "\033[0;32mConverte jpg/jpeg/JPG to png...\033[0m"
-
+cp static/raw-images/*.webp static/images/
 
 echo "\033[0;32mDeploying updates to GitHub...\033[0m"
 
