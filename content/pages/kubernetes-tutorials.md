@@ -8,5 +8,5 @@ categories: ["Kubernetes"]
 tags: ["Kubernetes"]
 ---
 
-### Kubernetes
+## Kubernetes
 * [Argo CD安装和部署]({{< relref "Argo CD安装和部署.md" >}})

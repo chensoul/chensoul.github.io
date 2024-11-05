@@ -7,16 +7,14 @@ categories: ["Java"]
 tags: ["Java"]
 ---
 
-### Java
+## Java
 
-### Kubernetes
+## Kubernetes
 
-### Microservices
+## Microservices
 
-### Spring Boot
+## Spring Boot
 
-### Spring Cloud
+## Spring Cloud
 
-### Spring Security OAuth 2.0
-
-### 
+## Spring Security OAuth 2.0
