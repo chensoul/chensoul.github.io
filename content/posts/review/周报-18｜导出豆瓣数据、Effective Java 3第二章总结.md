@@ -71,7 +71,7 @@ tags: [review]
 
 从 3 月份开始跑步到 5 月，目前总共跑步距离达到了 230 公里。
 
-<img src="/image/weekly-review-18-03.webp" alt="weekly-review-18-03" style="width:50%;" />
+<img src="/images/weekly-review-18-03.webp" alt="weekly-review-18-03" style="width:50%;" />
 
 ## 工作
 

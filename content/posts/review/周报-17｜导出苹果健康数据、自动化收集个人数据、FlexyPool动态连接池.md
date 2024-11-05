@@ -21,7 +21,7 @@ tags: [review]
 
 走路、体重数据可以从苹果健康数据获取：
 
-<img src="/image/weekly-review-17-06.webp" alt="weekly-review-17-06" style="width:50%;" />
+<img src="/images/weekly-review-17-06.webp" alt="weekly-review-17-06" style="width:50%;" />
 
 编码数据可以从 wakatime 获取：
 
@@ -249,7 +249,7 @@ order by f.day asc
 - 购物：751 元
 - 娱乐：216 元，看电影
 
-<img src="/image/weekly-review-17-07.webp" alt="weekly-review-17-07" style="width:50%;" />
+<img src="/images/weekly-review-17-07.webp" alt="weekly-review-17-07" style="width:50%;" />
 
 ## 健身
 

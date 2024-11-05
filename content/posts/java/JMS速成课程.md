@@ -200,9 +200,7 @@ JMS（Java Message Service）是Java平台上的一种技术规范，它定义�
 JMS 相关链接：
 
 - [Java Message Service Specification](https://javaee.github.io/jms-spec/)
-
 - [API 和规范源码仓库](https://github.com/javaee/jms-spec)
-
 - [JMS 实现 Open MQ](https://javaee.github.io/openmq/)
 - [JMS 1.1 规范下载](https://download.oracle.com/otndocs/jcp/7195-jms-1.1-fr-spec-oth-JSpec/)
 - [JMS 2.0 规范下载](https://download.oracle.com/otndocs/jcp/jms-2_0_rev_a-mrel-eval-spec/index.html)
@@ -228,7 +226,6 @@ JMS定义了一组通用的企业消息概念和设施。
 - 可移植性：主要的可移植性目标是新的、仅JMS的应用程序可以在同一个消息域内的产品之间移植。
 
 
-
 JMS不涉及以下功能：
 
 - 负载均衡/容错 - 许多产品提供支持多个合作客户端实现关键服务。JMS API没有指定这些客户端如何合作以表现为一个统一的服务。
@@ -251,7 +248,6 @@ JMS应用程序由以下部分组成：
 - **管理对象** (Administered Objects)：由管理员为客户端使用而预配置的JMS对象。
 
 
-
 2、管理
 
 管理员将管理对象放置在JNDI命名空间中。JMS客户端通常在其文档中注明它需要的JMS管理对象以及如何向其提供这些对象的JNDI名称。
@@ -260,7 +256,6 @@ JMS应用程序由以下部分组成：
 
 - **连接工厂** (ConnectionFactory)：客户端使用此对象与提供者创建连接。
 - **目的地** (Destination)：客户端使用此对象指定发送消息的目的地和接收消息的来源。
-
 
 
 3、JMS 接口
@@ -275,7 +270,6 @@ JMS应用程序由以下部分组成：
 | MessageConsumer           | QueueReceiver, QueueBrowser | TopicSubscriber                 |
 
 
-
 4、开发 JMS 应用
 
 一个典型的JMS客户端执行以下JMS设置程序：
@@ -288,11 +282,9 @@ JMS应用程序由以下部分组成：
 - 告诉连接开始传递消息。
 
 
-
 5、安全性
 
 JMS不提供控制或配置消息完整性或消息隐私的功能。预计许多JMS提供者将提供这些功能。同样预计，这些服务的配置将由提供者特定的管理工具处理。客户端将作为它们使用的管理对象的一部分获得适当的安全配置。
-
 
 
 6、多线程
@@ -322,7 +314,6 @@ JMS消息由以下部分组成：
   - 标准属性：JMS定义了一些标准属性，实际上是可选的头字段。
   - 提供者特定的属性：集成JMS客户端与JMS提供者原生客户端可能需要使用提供者特定的属性。JMS为此定义了命名约定。
 - **消息体** (Body)：JMS定义了几种消息体类型，涵盖了目前使用的大多数消息风格。
-
 
 
 2、消息头字段
@@ -362,7 +353,6 @@ JMS消息由以下部分组成：
 - **属性名称** (Property Names)：属性名称必须遵守消息选择器标识符的规则。
 - **属性值** (Property Values)：属性值可以是布尔值、字节、短整型、整型、长整型、浮点型、双精度浮点型和字符串。
 - **使用属性** (Using Properties)：属性值在发送消息之前设置。当客户端接收到消息时，其属性处于只读模式。
-
 
 
 4、消息确认
@@ -553,7 +543,6 @@ public interface XATopicConnection extends XAConnection, TopicConnection {
     @Override
     TopicSession createTopicSession(boolean transacted, int acknowledgeMode) throws JMSException;
 }
-
 ```
 
 #### Session
@@ -875,8 +864,6 @@ public interface StreamMessage extends Message {
 }
 ```
 
-
-
 #### MessageProducer
 
 ```java
@@ -946,8 +933,6 @@ public interface TopicPublisher extends MessageProducer {
 }
 ```
 
-
-
 #### MessageConsumer
 
 ```java
@@ -991,8 +976,6 @@ public interface QueueBrowser extends AutoCloseable {
 }
 
 ```
-
-
 
 #### Listener
 
@@ -1171,4 +1154,3 @@ public interface JMSConsumer extends AutoCloseable {
 
 }
 ```
-

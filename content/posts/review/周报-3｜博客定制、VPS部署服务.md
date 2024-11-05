@@ -17,7 +17,7 @@ tags: [review]
 
 基于 [pseudoyu](https://www.pseudoyu.com/) 的博客和主题定制博客，发现并修复了 bug，还做了一些改进，并在他的 github 提交 [issue](https://github.com/pseudoyu/pseudoyu/issues/2) 和 merge request。
 
-<img src="/image/github-issue-build-aboutme-py.webp" alt="github-issue-build-aboutme-py" style="width: 80%"/>
+<img src="/images/github-issue-build-aboutme-py.webp" alt="github-issue-build-aboutme-py" style="width: 80%"/>
 
 接着在他博客主页留言，几个来回下来，收获不少。一是解决了我提出的问题，二是给我分享了一个搬瓦工的 the plan 优惠码。这时候去看了下我原来的 vps 刚好还有一天要到期，就立即花了 92 美元（原价是 99 美元）购买了一台 2G 内存托管在香港的服务器。
 

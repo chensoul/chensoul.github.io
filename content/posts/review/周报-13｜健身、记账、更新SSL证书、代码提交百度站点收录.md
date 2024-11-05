@@ -23,11 +23,11 @@ tags: [review]
 
 完成了每天一万步的计划，并且共跑步 8 次，一共 26 公里，最高平均配速 7 分钟，还跳绳一次（550 下）。
 
-<img src="/image/weekly-review-13-03.webp" alt="weekly-review-13-03" style="width:50%;" />
+<img src="/images/weekly-review-13-03.webp" alt="weekly-review-13-03" style="width:50%;" />
 
 跑步的目的不是快，而是乐此不疲。每天跑步 5 公里，每次消耗 300 卡路里的热量，大概需要 10 周才能瘦 10 斤。
 
-<img src="/image/weekly-review-13-02.webp" alt="weekly-review-13-02" style="width:50%;" />
+<img src="/images/weekly-review-13-02.webp" alt="weekly-review-13-02" style="width:50%;" />
 
 光靠走路和跑步，想在 4 月完成瘦 10 斤的目标，应该是不可能的，打算辅助间歇性断食，看下效果。
 
@@ -43,11 +43,11 @@ tags: [review]
 
 找来找去，发现微信里没有有个『微信记账本』小程序就可以在微信里自动记账，也支持手动记账。于是，这周试了一下这个小程序，并有意的控制自己每天的输出。因为每天都有带饭，这样中饭就不用花钱了；早餐呢，是泡之前买的黑芝麻糊喝，省去了早餐费用。结果是，这周的支出只有 4.5 元。一次是早上买了一本豆浆，一次是早上跑步怕迟到就骑了一次动感单车。
 
-<img src="/image/weekly-review-13-05.webp" alt="weekly-review-13-05" style="width:50%;" />
+<img src="/images/weekly-review-13-05.webp" alt="weekly-review-13-05" style="width:50%;" />
 
 正好三月结束了，查看了一下三月的支出报表。总的来说，三月支出的有点多，超乎了我的想象。如果每个月都是支出这么多，那以后的零花钱就不够用了。还是要勒紧裤腰带过日子啊。
 
-<img src="/image/weekly-review-13-04.webp" alt="weekly-review-13-04" style="width:50%;" />
+<img src="/images/weekly-review-13-04.webp" alt="weekly-review-13-04" style="width:50%;" />
 
 ## 更新 SSL 证书
 

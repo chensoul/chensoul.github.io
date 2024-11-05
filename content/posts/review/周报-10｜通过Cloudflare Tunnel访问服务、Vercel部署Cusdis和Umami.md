@@ -23,7 +23,7 @@ tags: [review]
 
 周六开始使用 格志 APP 写日志，选择它来记录日志的原因是它支持批量导出 mardkown、pdf、图片等。唯一有个小遗憾的是，这个应用没有图床，导出的 markdown 文件里面图片的链接不是 http 协议。
 
-![](/image/weekly-review-10-08.webp)
+![](/images/weekly-review-10-08.webp)
 
 周日去新荣龙湖天耀天街售房部看了一下房子。107 平三室两厅两卫，单价 2 万 5 带精装修，公积金贷款 90 万，商业贷款 30 年，每个月房贷 6000。目前来说，买不起这里的房子，但是，作为一个买房目标还是可以的，加油！
 
@@ -156,7 +156,7 @@ async headers() {
 
 chatgpt 回答如下：
 
-<img src="/image/weekly-review-10-06.webp" alt="weekly-review-10-06" style="width:67%;" />
+<img src="/images/weekly-review-10-06.webp" alt="weekly-review-10-06" style="width:67%;" />
 
 **总结：**
 

@@ -27,13 +27,13 @@ _题图：楚河汉街蜡像馆_
 
 四月累计支出共 2025 元，其中餐饮和购物占了一半。
 
-<img src="/image/weekly-review-15-05.webp" alt="weekly-review-15-05" style="width:50%;" />
+<img src="/images/weekly-review-15-05.webp" alt="weekly-review-15-05" style="width:50%;" />
 
 ## 健身
 
 这周每天走路步数如下，其中有一天因为加班而没有完成一万步的目标。
 
-<img src="/image/weekly-review-15-06.webp" alt="weekly-review-15-06" style="width:50%;" />
+<img src="/images/weekly-review-15-06.webp" alt="weekly-review-15-06" style="width:50%;" />
 
 受 [@Conge](https://conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https://github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.cc](https://run.chensoul.cc/)。
 
@@ -49,7 +49,7 @@ _题图：楚河汉街蜡像馆_
 
 上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，效果如下。
 
-<img src="/image/weekly-review-15-07.webp" alt="weekly-review-15-07" style="width:50%;" />
+<img src="/images/weekly-review-15-07.webp" alt="weekly-review-15-07" style="width:50%;" />
 
 ## Umami 升级到 2.0
 
@@ -101,21 +101,21 @@ yarn start
 
 周末趁武汉旅游大年卡还没过期，跑到楚河汉街蜡像馆去溜达了一圈。因为有年卡，省去了 150 元的门票。
 
-<img src="/image/weekly-review-15-08.webp" alt="weekly-review-15-08" style="width:67%;" />
+<img src="/images/weekly-review-15-08.webp" alt="weekly-review-15-08" style="width:67%;" />
 
-<img src="/image/weekly-review-15-09.webp" alt="weekly-review-15-09" style="width:67%;" />
+<img src="/images/weekly-review-15-09.webp" alt="weekly-review-15-09" style="width:67%;" />
 
-<img src="/image/weekly-review-15-10.webp" alt="weekly-review-15-10" style="width:67%;" />
+<img src="/images/weekly-review-15-10.webp" alt="weekly-review-15-10" style="width:67%;" />
 
-<img src="/image/weekly-review-15-11.webp" alt="weekly-review-15-11" style="width:67%;" />
+<img src="/images/weekly-review-15-11.webp" alt="weekly-review-15-11" style="width:67%;" />
 
-<img src="/image/weekly-review-15-12.webp" alt="weekly-review-15-12" style="width:67%;" />
+<img src="/images/weekly-review-15-12.webp" alt="weekly-review-15-12" style="width:67%;" />
 
-<img src="/image/weekly-review-15-13.webp" alt="weekly-review-15-13" style="width:67%;" />
+<img src="/images/weekly-review-15-13.webp" alt="weekly-review-15-13" style="width:67%;" />
 
-<img src="/image/weekly-review-15-14.webp" alt="weekly-review-15-14" style="width:67%;" />
+<img src="/images/weekly-review-15-14.webp" alt="weekly-review-15-14" style="width:67%;" />
 
-<img src="/image/weekly-review-15-15.webp" alt="weekly-review-15-15" style="width:67%;" />
+<img src="/images/weekly-review-15-15.webp" alt="weekly-review-15-15" style="width:67%;" />
 
 ## 好物分享
 
