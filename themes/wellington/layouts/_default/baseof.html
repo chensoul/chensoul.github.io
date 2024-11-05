@@ -35,6 +35,7 @@
     <link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
     {{ end }}
     {{ partial "site-schema.html" . }}
+    {{ partial "head.html" . }}
 </head>
 <body class="home blog post-layout-one-column">
     <button onclick="topFunction()" id="scrollTopBtn" title="Go to top">
