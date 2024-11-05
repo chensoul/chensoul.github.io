@@ -9,4 +9,4 @@ tags: ["Kubernetes"]
 ---
 
 ## Kubernetes
-* [Argo CD安装和部署]({{< relref "Argo CD安装和部署.md" >}})
+* [Argo CD安装和部署]({{< relref "2024-05-11-Argo CD安装和部署.md" >}})
