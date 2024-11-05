@@ -37,7 +37,7 @@ hugo # if using a theme, replace by `hugo -t <yourtheme>`
 git add -A
 
 # Commit changes.
-msg="Rebuilding site `date`"
+msg="Rebuilding site `date '+%Y-%m-%d %H:%M'`"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
