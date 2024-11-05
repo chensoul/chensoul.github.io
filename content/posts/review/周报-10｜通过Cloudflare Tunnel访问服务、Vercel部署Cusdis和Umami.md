@@ -156,7 +156,7 @@ async headers() {
 
 chatgpt 回答如下：
 
-<img src="/images/weekly-review-10-06.webp" alt="weekly-review-10-06" style="width:67%;" />
+![](/images/weekly-review-10-06.webp)
 
 **总结：**
 

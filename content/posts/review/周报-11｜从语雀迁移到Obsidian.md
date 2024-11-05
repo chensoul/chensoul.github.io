@@ -19,7 +19,7 @@ tags: [review]
 
 这周开始心里默默定了一个 flag，就是每天走路 10000 步。看了一下微信运动，基本上达成了，除了周五晚上因为加班，而少走了 64 步。
 
-<img src="/images/weekly-review-11-03.webp" alt="weekly-review-11-03" style="width:67%;" />
+![](/images/weekly-review-11-03.webp)
 
 ## 从语雀迁移到 Obsidian
 
@@ -31,7 +31,7 @@ tags: [review]
 
 于是，放弃了使用格志 APP，继而在使用了一段时间 Obsidian 之后，改为使用 Obsidian 来写日志和周报。
 
-<img src="/images/weekly-review-11-02.webp" alt="weekly-review-11-02" style="width:67%;" />
+![](/images/weekly-review-11-02.webp)
 
 为了不给自己太大压力，日报每天复盘内容包括以下几方面：
 
@@ -141,7 +141,7 @@ cd storage
 find . -type f -name '*.md' -exec sed -i '' 's/<a name=\"[^\"]*\"><\/a>//g' {} +
 ```
 
-<img src="/images/weekly-review-11-01.webp" alt="weekly-review-11-01" style="width:67%;" />
+![](/images/weekly-review-11-01.webp)
 
 在上面的示例代码中，我们使用了 sed 命令来删除 Markdown 文件中所有的类似 `<a name="xx"></a>` 的锚点标签。其中：
 

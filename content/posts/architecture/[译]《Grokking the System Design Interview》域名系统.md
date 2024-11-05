@@ -29,7 +29,7 @@ Similarly, computers are uniquely identified by IP addresses—for example, `104
 
 > 同样，计算机由 IP 地址唯一标识，例如， `104.18.2.119` 是一个 IP 地址。我们使用 IP 地址来访问计算机上托管的网站。由于人类无法轻易记住 IP 地址来访问域名（例如域名 eduducative.io），因此我们需要一个类似电话簿的存储库来维护域名到 IP 地址的所有映射。在本章中，我们将了解 DNS 如何充当互联网的电话簿。
 
-<img src="/images/educative-dns-06.webp" alt="educative-dns-06" style="width:75%;" />
+![](/images/educative-dns-06.webp)
 
 ## What is DNS? 
 
