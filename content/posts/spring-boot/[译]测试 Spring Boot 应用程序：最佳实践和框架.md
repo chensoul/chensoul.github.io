@@ -363,7 +363,7 @@ public class EmployeeServiceTest {
 
 **b.使用 @ConfigurationProperties 从配置文件注入属性。**
 
-```
+```java
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -504,7 +504,7 @@ public class DynamicPropertyTest {
 - 支持向外部服务发出实际的 HTTP 请求。
 - 通常用于与正在运行的应用程序中的实际服务交互。
 
-```
+```java
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
