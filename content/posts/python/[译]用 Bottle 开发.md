@@ -7,7 +7,7 @@ categories: ["Python"]
 tags: [python]
 ---
 
-![Bottle logo](https://files.realpython.com/media/bottle-logo.4c5ab3d2ae78.png)
+![Bottle logo](/images/bottle-logo.webp)
 
 我喜欢 [bottle](http://bottlepy.org/docs/stable/)。它是一个简单、快速且功能强大的 Python 微框架，非常适合小型 Web 应用程序和快速原型设计。对于那些刚刚开始 Web 开发的人来说，它也是一个出色的学习工具。
 
@@ -209,7 +209,7 @@ $ pip install -r requirements.txt
 
 导航到 https://www.plot.ly/api，注册一个新帐户，登录，然后创建一个新的 API 密钥：
 
-![Plotly API credentials](https://files.realpython.com/media/plotly-api-credentials.03a477bfd4d1.png)
+![Plotly API credentials](/images/plotly-api-credentials.webp)
 
 复制该密钥。
 
@@ -293,7 +293,7 @@ if __name__ == '__main__':
 
 输入三个人的姓名及其各自的年龄。按“提交”，如果一切顺利，您应该会看到一条祝贺消息和一个 URL。单击 URL 查看您的图表：
 
-![Plotly ages bar plot](https://files.realpython.com/media/plotly-ages-barplot.c0b4b77d41cf.png)
+![Plotly ages bar plot](/images/plotly-ages-barplot.webp)
 
 如果您收到此消息的 500 错误 - `Aw, snap! Looks like you supplied the wrong API key. Want to try again? You can always view your key at https://plot.ly/api/key. When you display your key at https://plot.ly/api/key, make sure that you're logged in as realpython.` - 您需要更新您的 API 密钥。
 
@@ -525,7 +525,7 @@ if __name__ == '__main__':
 
 运行。将值添加到表单中。然后提交。您的图表现在应如下所示：
 
-![Plotly example final graph](https://files.realpython.com/media/plotly-final-graph.4c43b1ac0563.png)
+![Plotly example final graph](/images/plotly-final-graph.webp)
 
 ## 结论
 

@@ -72,7 +72,7 @@ tags: [spring-security]
 问题是：DispatcherServlet 中没有硬编码安全性，而且您也很可能不想在 @Controllers 中摸索原始 HTTP Basic Auth 标头。最佳情况下，身份验证和授权应该在请求到达 @Controller 之前完成。
 幸运的是，在 Java Web 世界中有一种方法可以做到这一点：您可以将过滤器放在 servlet 前面，这意味着您可以考虑编写一个 SecurityFilter 并在 Tomcat（servlet 容器/应用程序服务器）中配置它来过滤每个传入的内容 HTTP 请求在到达您的 servlet 之前。
 
-[![servletfilter 1a](https://www.marcobehler.com/images/servletfilter-1a.png)](https://www.marcobehler.com/images/servletfilter-1a.png)
+![servletfilter 1a](/images/servletfilter-1a.webp)
 
 #### 一个原生的安全过滤器
 
@@ -174,7 +174,7 @@ chain.doFilter(request, response);
 
 因此，当 HTTPRequest 传入时，它将通过所有这 15 个过滤器，然后您的请求最终到达 @RestControllers。顺序也很重要，从列表的顶部开始一直到底部。
 
-[![filterchain 1a](https://www.marcobehler.com/images/filterchain-1a.png)](https://www.marcobehler.com/images/filterchain-1a.png)
+![filterchain 1a](/images/filterchain-1a.webp)
 
 ### 分析 Spring 的 FilterChain
 

@@ -261,8 +261,6 @@ JMS应用程序由以下部分组成：
 - **连接工厂** (ConnectionFactory)：客户端使用此对象与提供者创建连接。
 - **目的地** (Destination)：客户端使用此对象指定发送消息的目的地和接收消息的来源。
 
-![image-20240807172711112](/Users/chensoul/Library/Application Support/typora-user-images/image-20240807172711112.png)
-
 
 
 3、JMS 接口
@@ -276,7 +274,7 @@ JMS应用程序由以下部分组成：
 | MessageProducer           | QueueSender                 | TopicPublisher                  |
 | MessageConsumer           | QueueReceiver, QueueBrowser | TopicSubscriber                 |
 
-![image-20240807173042758](/Users/chensoul/Library/Application Support/typora-user-images/image-20240807173042758.png)
+
 
 4、开发 JMS 应用
 

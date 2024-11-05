@@ -49,7 +49,7 @@ http2 带来的改进：
 
 这是时间线，
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*RapMIK7VmYqG_2Pt3J8ZBg.png)
+![img](/images/exploring-http2-part-1-overview-01.webp)
 
 来源：[https://www.polyglotdeveloper.com/](https://www.polyglotdeveloper.com/timeline/2016-08-22-HTTP-Protocol-timeline/)
 
@@ -61,11 +61,11 @@ http2 带来的改进：
 
 根据[Can I Use](https://caniuse.com/#search=http2)的统计，大约 83% 的在线浏览器已经支持 http2
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*-kK6svyp0c6Ur5zaHEA-KQ.png)
+![img](/images/exploring-http2-part-1-overview-02.webp)
 
 > 查看实际情况，http1.1 与 http2（网络节流：**快速 3g**）
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*0pyMS4vqX7qFHdnvW4X5dA.gif)
+![img](/images/exploring-http2-part-1-overview-03.gif)
 
 http1.1（左）与http2（右）；让我们在下一节中构建它
 

@@ -15,7 +15,9 @@ tags: [ jms]
 
 这个API被称为Java消息服务（JMS）。
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*VDRQDS9_WgyFVvvMGnWC4w.jpeg)
+![img](/images/jms2.webp)
+
+
 
 JMS 规范的最后一次更新是在 2002 年，当时推出了**JMS 1.1**。从那时起，多年来，该 API 已在全球许多软件组件中使用，证明了其对开发人员的友好性。JMS 的下一个版本（**JMS 2.0**）于 2013 年 4 月问世，距离 1.1 版已有数年之久。
 

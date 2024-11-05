@@ -355,12 +355,12 @@ mvn archetype:generate \
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
   <bannerLeft>
     <name>${artifactId}</name>
-    <src>https://maven.apache.org/images/apache-maven-project.png</src>
+    <src>https://maven.apache.org/images/apache-maven-project.webp</src>
     <href>https://www.apache.org/</href>
   </bannerLeft>
 
   <bannerRight>
-    <src>https://maven.apache.org/images/maven-logo-black-on-white.png</src>
+    <src>https://maven.apache.org/images/maven-logo-black-on-white.webp</src>
     <href>https://maven.apache.org/</href>
   </bannerRight>
 
@@ -562,7 +562,7 @@ and the repository exists.
   ```xml
   <bannerLeft>
       <name>${this.artifactId}</name>
-      <src>https://maven.apache.org/images/apache-maven-project.png</src>
+      <src>https://maven.apache.org/images/apache-maven-project.webp</src>
       <href>https://www.apache.org/</href>
   </bannerLeft>
   ```

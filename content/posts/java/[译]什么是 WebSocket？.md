@@ -70,7 +70,7 @@ HTTP 轮询是接收定期数据更新的第一个解决方案。轮询是一种
 
 [长轮询在许多环境中提供快速通信，并且被广泛使用，通常与 WebSocket 连接或服务器端事件 (SSE)](https://www.pubnub.com/guides/server-sent-events/)等真正的基于推送的方法相反。长轮询在服务器端看起来可能很密集，因为它需要连续的资源来保持连接打开，但它使用的资源比重复发送轮询请求要少得多。
 
-![img](https://www.pubnub.com/cdn/3prze68gbwl1/archivedasset-17su7vkk2ohxnb2/4d1a3e99b0ce96f3e99a66af9d4d8d6d/Long-Polling-Diagram.png?w=700&h=550&fit=pad)
+![img](/images/Long-Polling-Diagram.webp)
 
 [阅读更多内容：长轮询与 Websockets](https://www.pubnub.com/blog/long-polling-vs-websockets/)
 
@@ -109,7 +109,7 @@ Google Chrome 于 2009 年成为第一个包含 WebSocket 标准支持的浏览�
 - WebSocket 可以通过许多代理和防火墙进行流式传输。
 - 有许多开源资源和教程可用于将 WebSocket 合并到应用程序中，例如 Javascript 库 Socket.io。 
 
-![img](https://www.pubnub.com/cdn/3prze68gbwl1/4WRly9PcAe4w1Zu2tHOw22/76ba0a4ed2796981cade36655c95d58a/Websoclets_Responses_1200x630_4-5-21-01.jpg?w=700&h=550&fit=pad)
+![img](/images/Websoclets_Responses.webp)
 
 ## PubNub 对 WebSockets 与长轮询的看法
 

@@ -7,7 +7,7 @@ categories: ["Python"]
 tags: [python]
 ---
 
-![Python Modules & Packages](https://files.realpython.com/media/Python-Modules-and-Packages-An-Introduction_Watermarked.20936240a94d.jpg)
+![Python Modules & Packages](/images/Python-Modules-and-Packages-An-Introduction_Watermarked.webp)
 
 本文探讨了 Python 模块和 Python 包，这两种机制有助于模块化编程。
 
@@ -605,7 +605,9 @@ a = [100, 200, 300]
 
 创建包非常简单，因为它利用了操作系统固有的分层文件结构。考虑以下安排：
 
-![Image of a Python package](https://files.realpython.com/media/pkg1.9af1c7aea48f.png)
+![Image of a Python package](/images/pkg1.webp)
+
+
 
 这里有一个名为 `pkg` 的目录，其中包含两个模块： `mod1.py` 和 `mod2.py` 。模块的内容是：
 
@@ -727,7 +729,9 @@ A = ['quux', 'corge', 'grault']
 
 我们将此文件添加到上面示例中的 `pkg` 目录中：
 
-![Illustration of hierarchical file structure of Python packages](https://files.realpython.com/media/pkg2.dab97c2f9c58.png)
+![Illustration of hierarchical file structure of Python packages](/images/pkg2.webp)
+
+
 
 现在，当导入包时，全局列表 `A` 被初始化：
 
@@ -786,7 +790,9 @@ Invoking __init__.py for pkg
 
 为了以下讨论的目的，先前定义的包被扩展以包含一些附加模块：
 
-![Illustration of hierarchical file structure of Python packages](https://files.realpython.com/media/pkg3.d2160908ae77.png)
+![Illustration of hierarchical file structure of Python packages](/images/pkg3.webp)
+
+
 
 现在 `pkg` 目录中定义了四个模块。它们的内容如下所示：
 
@@ -925,7 +931,9 @@ NameError: name 'Foo' is not defined
 
 包可以包含任意深度的嵌套子包。例如，我们对示例包目录再做一个修改，如下：
 
-![Illustration of hierarchical file structure of Python packages](https://files.realpython.com/media/pkg4.a830d6e144bf.png)
+![Illustration of hierarchical file structure of Python packages](/images/pkg4.webp)
+
+
 
 四个模块（ `mod1.py` 、 `mod2.py` 、 `mod3.py` 和 `mod4.py` ）的定义如前。但现在，它们不再被集中到 `pkg` 目录中，而是分成两个子包目录： `sub_pkg1` 和 `sub_pkg2` 。
 

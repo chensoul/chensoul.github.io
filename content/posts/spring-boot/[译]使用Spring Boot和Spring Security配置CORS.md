@@ -40,7 +40,7 @@ CORS 规范定义了服务器返回的一组响应标头，这将是后续部分
 
 我们应该能够成功启动客户端应用程序。
 
-![settings](https://reflectoring.io/images/posts/configuring-cors-with-spring/client_hu6933403b7320f6f893a41150b2491685_84510_1441x0_resize_q90_box.JPG)
+![settings](/images/configuring-cors-with-spring-01.webp)
 
 ## 设置示例服务器应用程序
 
@@ -59,10 +59,10 @@ mvnw clean verify spring-boot:run (for Windows)
 
 调用 Spring REST 服务器：
 
-![settings](https://reflectoring.io/images/posts/configuring-cors-with-spring/app_hu6933403b7320f6f893a41150b2491685_157341_1871x0_resize_q90_box.JPG)
+![settings](/images/configuring-cors-with-spring-02.webp)
 调用 Spring Reactive 服务器：
 
-![settings](https://reflectoring.io/images/posts/configuring-cors-with-spring/app_reactive_hu6933403b7320f6f893a41150b2491685_154439_1859x0_resize_q90_box.JPG)
+![settings](/images/configuring-cors-with-spring-03.webp)
 
 ## 了解 `@CrossOrigin` 属性
 
@@ -87,7 +87,7 @@ No 'Access-Control-Allow-Origin` header is present on the requested
 resource
 ```
 
-![settings](https://reflectoring.io/images/posts/configuring-cors-with-spring/cors-error_hu6933403b7320f6f893a41150b2491685_149954_1882x0_resize_q90_box.JPG)
+![settings](/images/configuring-cors-with-spring-04.webp)
 
 这是因为，即使两个应用程序均由 `localhost` 提供服务，但[由于端口不同](https://reflectoring.io/complete-guide-to-cors/#same-origin-vs-cross-origin)，它们不会被视为同一来源。
 

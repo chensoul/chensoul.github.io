@@ -30,7 +30,7 @@ Socket.IO 需要两个库 - 一个在服务器上，一个在客户端上。 Soc
 
 下图总结了典型的 Socket.IO 设置：
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/27G4lHu2Vj0Cm0CUC2x5p7/33813bbe794d2e8913c65f5ce23290e8/websocket.io-2_2x.png?w=1841&h=699&q=50&fm=png)
+![img](/images/socketio-vs-http-01.webp)
 
 
 
@@ -77,7 +77,7 @@ HTTP 在 RESTful 架构（即 REST API）中很常见。 REST 的经典用例是
 
 **传统的 HTTP 消息流如下所示：**
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/1kp3L78PA3GizIQ9P8fPFZ/8fc93fc45005d6d0122c08f00d64873f/http-request-response-cycle.png?w=1841&h=653&q=50&fm=png)
+![img](/images/socketio-vs-http-02.webp)
 
 **HTTP 技术的出现可以实现实时应用程序：**
 

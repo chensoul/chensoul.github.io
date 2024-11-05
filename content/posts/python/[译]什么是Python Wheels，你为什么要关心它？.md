@@ -7,7 +7,7 @@ categories: ["Python"]
 tags: ["python"]
 ---
 
-![What Are Python Wheels and Why Should You Care?](https://files.realpython.com/media/What-are-Python-Wheels-and-Why-Should-You-Care_Watermarked.22246cad13be.jpg)
+![What Are Python Wheels and Why Should You Care?](/images/What-are-Python-Wheels-and-Why-Should-You-Care_Watermarked.22246cad13be.webp)
 
 Python `.whl` 文件或 [wheels](https://packaging.python.org/glossary/#term-wheel) 是 Python 中很少被讨论的部分，但它们对 [Python 包](https://realpython.com/python-modules-packages/)的安装过程大有裨益。如果您使用 [pip](https://realpython.com/what-is-pip/) 安装了 Python 包，那么 Wheels 很可能使安装更快、更高效。
 

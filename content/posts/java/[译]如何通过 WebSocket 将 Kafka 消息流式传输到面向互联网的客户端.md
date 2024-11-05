@@ -98,7 +98,7 @@ channel.subscribe(function(message) {
 
 为了解决这个问题，您需要在 Kafka 层和最终用户之间使用面向互联网的实时消息传递服务，如下所示。 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/1mSISUDbiSHU5DAcazwPO0/b24da28ea889caa7b37870c170af1589/kafka-messge-routing_2x.png?w=1840&h=1316&q=50&fm=png)
+![img](/images/kafka-messge-routing_2x.webp)
 
 使用该模型的好处：
 
@@ -263,19 +263,19 @@ Kafka 不用于最后一英里交付的主要原因之一与安全性和可用�
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/24q7YH3BGi4u9s71dPtuY6/29039abdd524d6802d23f7f3da60b5c2/kafka-architecture-1-simple-model_2x.png?w=1840&h=928&q=50&fm=png)
+![img](/images/kafka-architecture-1-simple-model_2x.webp)
 
 您可以采用的辅助模型涉及一个面向互联网的实时消息传递服务和两个 Kafka 实例（主实例和备份/后备实例）。由于消息传递服务是解耦的，因此它不知道（也不关心）两个 Kafka 实例中的哪一个正在为其提供数据。该模型是一种故障转移设计，为您的 Kafka 设置增加了一层可靠性：如果其中一个 Kafka 实例发生故障，第二个实例将取代它。 
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/3aShnXT3MZFes2tDlcCfsX/b82884534f6a383802d8aff8f486b553/kafka-architecture-2-failover-model_2x.png?w=1840&h=928&q=50&fm=png)
+![img](/images/kafka-architecture-2-failover-model_2x.webp)
 
 第三种模式非常受 Ably 客户欢迎，是主动-主动方法。它需要两个Kafka集群同时独立运行，以分担负载。两个集群均以 50% 的容量运行，并使用相同的面向 Internet 的实时消息传递服务。此模型在需要将消息流式传输到大量客户端设备的情况下特别有用。如果其中一个 Kafka 集群发生故障，另一个集群可以承担 50% 的负载，以保持系统运行。
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/54S6lyL01iReCzF2NyozVo/80f292ea092eb0d7facb013a77cf1494/kafka-architecture-3-active-model_2x.png?w=1840&h=928&q=50&fm=png)
+![img](/images/kafka-architecture-3-active-model_2x.webp)
 
 
 

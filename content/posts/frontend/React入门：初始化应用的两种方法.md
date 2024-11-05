@@ -67,9 +67,7 @@ cd my-app
 npm start
 ```
 
-先前由 create-react-app 创建的脚本会启动一个地服务 [localhost:3000](localhost:3000)，并打开你的默认浏览器来访问这个服务。成功启动浏览器的话，你的浏览器上会显示如下画面：
-
-![](https://developer.mozilla.org/zh-CN/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started/default-create-react-app.png)
+先前由 create-react-app 创建的脚本会启动一个地服务 [localhost:3000](localhost:3000)，并打开你的默认浏览器来访问这个服务。成功启动浏览器的话，你的浏览器上会显示如下画面
 
 6. 应用结构
 

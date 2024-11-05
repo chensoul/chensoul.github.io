@@ -17,7 +17,7 @@ tags: [ socketio]
 
 [Socket.IO](https://socket.io/)是一个开源的跨平台库，它提供客户端和服务器之间基于事件的[全双工双向通信](https://www.geeksforgeeks.org/transmission-modes-computer-networks/)。它基于 WebSocket 协议构建，提供附加功能，例如自动重新连接以及在无法使用 [WebSocket时回退到](https://www.pubnub.com/guides/what-are-websockets-and-when-should-you-use-them/)[HTTP 长轮询。](https://www.pubnub.com/blog/http-long-polling/)
 
-![img](https://www.pubnub.com/cdn/3prze68gbwl1/4t7rtQndLsmkIKrTmwacxr/7d22b54ec50fc5b61687ad5a207f4cd7/Client_Server.png?w=700&h=550&fit=pad)
+![img](/images/Client_Server.webp)
 
 Socket.IO 客户端由客户端和服务器端库组成。虽然最初在服务器上支持[NodeJS ，在客户端支持](https://www.pubnub.com/blog/nodejs-websocket-programming-examples/)[JavaScript](https://www.pubnub.com/guides/javascript/)，但现在它支持各种服务器和客户端技术，包括[Java](https://www.pubnub.com/docs/sdks/java)、[Python](https://www.pubnub.com/docs/sdks/python)、[Swift](https://www.pubnub.com/docs/sdks/swift)和[Kotlin](https://www.pubnub.com/docs/sdks/kotlin)，它们都是官方代码库的一部分，由活跃社区贡献。
 
@@ -61,11 +61,11 @@ JavaScript 中 Socket.IO 的 Hello World 客户端/服务器实现将编写如�
 
 **Socket.io 服务器示例：**
 
-![Socket.IO服务器代码](https://www.pubnub.com/cdn/3prze68gbwl1/40uArOVlAmoZlNuuMX9FZ7/a9f0be25c98b1f564d83de5ceb6c3d2c/socket.io.server.png?w=700&h=550&fit=pad)
+![Socket.IO服务器代码](/images/socket.io.server.webp)
 
 **Socket.io 客户端示例：**
 
-![Socket.IO客户端代码](https://www.pubnub.com/cdn/3prze68gbwl1/1G2eAMlK0hd6NQlpK7sh7d/5d90236386a536e0ddb73e5925e8f4ef/socket.io.client.png?w=700&h=550&fit=pad)
+![Socket.IO客户端代码](/images/socket.io.client.webp)
 
 ## Socket.IO 是如何工作的？
 
@@ -96,5 +96,5 @@ Socket.IO 是一个库，它不是**一个基础设施**。作为解决方案架
 
 *使用 Socket.IO 在服务器实例之间广播消息的建议架构：*
 
-![img](https://www.pubnub.com/cdn/3prze68gbwl1/3Qevza67o2ZdxHLAmJZXin/dc8feed8b638a5a9056c46aa85e48022/Client_server_datastore.png?w=700&h=550&fit=pad)
+![img](/images/Client_server_datastore.webp)
 

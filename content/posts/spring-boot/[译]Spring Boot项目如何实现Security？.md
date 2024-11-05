@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [spring-security]
 ---
 
-![How to implement Security in Spring Boot Project?](https://javatechonline.com/wp-content/uploads/2020/11/SpringSecurityBasics-1.jpg)
+![How to implement Security in Spring Boot Project?](/images/SpringSecurityBasics-2.webp)
 
 如今，几乎每个客户都要求在实时应用程序中实现强大的安全功能。安全功能对于保持机密性、完整性和可用性的需求是非常有效的。现实世界中有很多类型的安全性，但我们作为开发人员将重点关注应用程序/软件安全性。
 
@@ -60,7 +60,7 @@ DelegatingFilterProxy 是 Spring Security 模块提供的 org.springframework.we
 
 如下图所示，当用户向应用程序发送请求时，请求会先经过安全过滤器，然后再发送给 DispatcherServlet。如果用户验证此过滤器的安全性，则只有请求才会发送到 DispatcherServlet 来满足用户的目的。
 
-![img](https://i0.wp.com/javatechonline.com/wp-content/uploads/2020/11/SpringSecurity1-1-1.jpg)
+![img](/images/SpringSecurity1-1-2.webp)
 
 ## Spring Boot 应用程序使用了多少种授权类型？
 
@@ -109,7 +109,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 以下是步骤：
 
-![SpringSecurity2](https://javatechonline.com/wp-content/uploads/2020/11/SpringSecurity2-1-1.jpg)
+![SpringSecurity2](/images/SpringSecurity2-1-2.webp)
 
 1. 编写一个类“SecurityConfig.java”，它扩展了预定义的抽象类 WebSecurityConfigurerAdapter.java
 2. 在“SecurityConfig.java”之上相应地应用注释@Configuration 和@EnableWebSecurity。不用说，注释@EnableWebSecurity 是为了在 Web 应用程序中启用安全功能。
@@ -557,7 +557,7 @@ public class SecurityConfig {
 
 您的项目结构将如下图所示。
 
-![img](https://i0.wp.com/javatechonline.com/wp-content/uploads/2020/11/SpringSecurity5.jpg)
+![img](/images/SpringSecurity6.webp)
 
 ## 如何实现 JDBC 身份验证安全性示例
 

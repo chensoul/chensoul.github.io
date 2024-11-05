@@ -348,7 +348,7 @@ DDD 的基石之一是有界上下文的概念。此概念指的是领域模型�
 
 为了更好地形象化地展示六边形架构的工作原理，请考虑一个说明其主要组件排列的基本图表：
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*L8_40RsZJvYSl8sILtUcsQ.png)
+![img](/images/hexagonal-architecture.webp)
 
 在此图中：
 

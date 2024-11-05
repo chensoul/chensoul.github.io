@@ -82,7 +82,7 @@ https://authorization-server.com/auth?response_type=code&
 
 用户看到授权提示
 
-![OAuth Authorization Prompt](https://aaronparecki.com/oauth-2-simplified/oauth-authorization-prompt.png)
+![OAuth Authorization Prompt](/images/oauth-authorization-prompt.webp)
 
 如果用户单击“允许”，则该服务会使用授权代码将用户重定向回您的网站
 
@@ -165,7 +165,7 @@ https://authorization-server.com/auth?response_type=code&client_id=CLIENT_ID&red
 
 用户看到授权提示
 
-![OAuth Authorization Prompt](https://aaronparecki.com/oauth-2-simplified/oauth-authorization-prompt.png)如果用户单击“允许”，则该服务会使用身份验证代码将用户重定向回您的网站
+![OAuth Authorization Prompt](/images/oauth-authorization-prompt.webp)如果用户单击“允许”，则该服务会使用身份验证代码将用户重定向回您的网站
 
 ```bash
 https://example-app.com/cb?code=AUTH_CODE_HERE&state=1234zyx
@@ -253,7 +253,7 @@ https://facebook.com/dialog/oauth?response_type=code&client_id=CLIENT_ID
 
 用户将看到授权提示
 
-![Facebook Authorization Prompt](https://aaronparecki.com/oauth-2-simplified/everyday-city-auth.png)
+![Facebook Authorization Prompt](/images/everyday-city-auth.webp)
 
 ### 获取访问令牌
 

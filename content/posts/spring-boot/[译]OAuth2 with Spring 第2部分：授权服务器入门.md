@@ -17,7 +17,7 @@ Spring 团队最近发布了他们的授权服务器。OAuth2 一直是一个热
 
 让我们转到[Spring Initializr](https://start.spring.io/)并生成项目。
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*zgDd5LlL4FiHrLfnyt1nQg.png)
+![img](/images/oauth2-with-spring-part-2-01.webp)
 
 为了创建授权服务器，我们需要 Oauth2 授权服务器依赖。
 
@@ -59,13 +59,17 @@ spring:
 
 现在，我们必须启动授权服务器应用程序。
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*3lg54f7EHJ5f6qwT-dD69Q.png)
+
+
+![img](/images/oauth2-with-spring-part-2-02.webp)
 
 接下来，在 postman 中，我们向*/oauth2/token*端点发出 POST 请求以获取令牌。为什么是*/oauth2/token*端点？
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*5_Rx8U7Sr2ZHXKR0oXVslQ.png)
+![img](/images/oauth2-with-spring-part-2-03.webp)
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*4a-hjxq-GHx4NjUH9Dg-2g.png)
+
+
+![img](/images/oauth2-with-spring-part-2-04.webp)
 
 我们可以看到，一旦我们提交请求，我们就会收到详细的令牌信息。
 

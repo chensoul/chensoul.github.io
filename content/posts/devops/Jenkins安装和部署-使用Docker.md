@@ -143,7 +143,7 @@ No ECDSA host key is known for github.houston.softwaregrp.net and you have reque
 
 可以采用下面的方法解决：
 
-![img](https://developer.qcloudimg.com/http-save/yehe-9281266/f783d4864d48e3dfe0dbb61d7f545203.jpg)
+![img](/images/jenkins-ssh-key.webp)
 
 ### 配置SSH登录
 

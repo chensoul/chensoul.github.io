@@ -7,7 +7,7 @@ categories: ["Python"]
 tags: [docker]
 ---
 
-![Build Robust Continuous Integration With Docker and Friends](https://files.realpython.com/media/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked.479cfb791c17.jpg)
+![Build Robust Continuous Integration With Docker and Friends](/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp)
 
 持续集成 (CI) 已成为软件开发的关键，它允许团队频繁合并代码更改并及早发现错误。
 
@@ -44,7 +44,7 @@ Docker 容器通过提供一致的环境帮助促进持续集成过程，您可�
 
 它将是一个由 Docker Compose 编排的多容器应用程序，您将能够在本地和云端构建和测试，为持续集成铺平道路：
 
-![The Architecture of the Page Tracker Application](https://files.realpython.com/media/page_tracker_architecture.drawio_2.1c8cf20462ae.png)
+![The Architecture of the Page Tracker Application](/images/page_tracker_architecture-0765910.webp)
 
 该应用程序由两个 Docker 容器组成。第一个容器将在 Gunicorn 之上运行一个 Flask 应用程序，响应 HTTP 请求并更新页面浏览量。
 
@@ -105,7 +105,7 @@ Docker version 23.0.4, build f480fb1
 
 在接下来的几节中，您将使用 [Flask](https://realpython.com/tutorials/flask/) 框架实现一个基本的 Web 应用程序。您的应用程序将跟踪页面浏览总数，并在每次请求时向用户显示该数字：
 
-![A web application for tracking page views](https://files.realpython.com/media/screenshot-browser.5036973f0aae.png)
+![A web application for tracking page views](/images/screenshot-browser-0765910.webp)
 
 应用程序的当前状态将保存在 [Redis](https://redis.io/) 数据存储中，该存储通常用于缓存和其他类型的数据持久化。这样，停止您的网络服务器不会重置观看次数。您可以将 Redis 视为一种数据库。
 
@@ -1811,7 +1811,7 @@ GitHub 是您通常上传源代码的地方，而 Docker Registry 是存储构�
 
 如果还没有，请立即在 Docker Hub 上注册一个帐户。请注意，除了电子邮件地址和密码外，您还需要提供唯一的用户名，就像在 GitHub 上一样：
 
-![img](https://files.realpython.com/media/docker_hub.912fd6ac373d.png)
+![img](/images/docker_hub-0765910.webp)
 
 选择一个好记的用户名至关重要，因为它将成为您在 Docker Hub 上的独特句柄。为了避免不同用户拥有的镜像之间的名称冲突，Docker Hub 通过用户名和存储库名称的组合来识别每个存储库。
 
@@ -1819,7 +1819,7 @@ GitHub 是您通常上传源代码的地方，而 Docker Registry 是存储构�
 
 在 Web 浏览器中注册并登录到您的新 Docker Hub 帐户后，您应该做的第一件事是为您的镜像创建一个存储库。单击“创建存储库”磁贴或转到顶部导航栏中的“存储库”选项卡，然后单击“创建存储库”按钮。然后，将您的存储库命名为 `page-tracker` ，如果需要，请为其提供有意义的描述，然后选择 Private 选项以使其仅对您可见：
 
-![img](https://files.realpython.com/media/docker_hub2.359dd2359251.png)
+![img](/images/docker_hub2-0765910.webp)
 
 之后，您将看到带有终端命令的说明，这些命令将允许您将 Docker 镜像推送到您的存储库。但首先，您必须从命令行登录 Docker Hub，提供您的用户名和密码：
 
@@ -1871,7 +1871,7 @@ $ docker push realpython/page-tracker:latest
 
 当您在 Docker Hub 上刷新您的配置文件时，它应该反映您刚刚推送到存储库中的两个标签：
 
-![Tagged Docker Images on Docker Hub](https://files.realpython.com/media/docker_hub3.69a099d38e54.png)
+![Tagged Docker Images on Docker Hub](/images/docker_hub3-0765910.webp)
 
 现在，当您将协作者添加到您的私有存储库时，他们将能够推送或拉取镜像。请记住，这需要在 Docker Hub 上升级订阅计划。
 
@@ -2870,7 +2870,7 @@ jobs:
 
 通过单击顶部工具栏中带有齿轮图标的选项卡打开 GitHub 存储库的设置，找到并展开安全部分下的秘密和变量，然后单击操作。这将带您进入一个面板，您可以在该面板中为 GitHub Actions 运行器定义环境变量和加密机密。现在，指定您的 `DOCKERHUB_USERNAME` 和 `DOCKERHUB_TOKEN` 机密：
 
-![GitHub Actions Repository Secrets](https://files.realpython.com/media/secrets.b7e62f0e5830.png)
+![GitHub Actions Repository Secrets](/images/secrets.b7e62f0e5830.webp)
 
 请注意，这些秘密是加密的，GitHub 不会再次向您显示它们，因此请确保将它们保存在安全的地方。但是，如果您足够努力，那么您将能够恢复它们——例如，通过您工作流程中的 shell 命令。
 
@@ -2900,19 +2900,19 @@ $ git push
 
 再次转到存储库的设置，单击代码和自动化部分下的分支，然后单击标记为添加分支保护规则的按钮。然后，在 Branch name pattern 字段中输入您的主线名称。如果您遵循本教程中使用的命名约定，则应在输入字段中键入 `master` ：
 
-![GitHub Repository's Protected Branch](https://files.realpython.com/media/rule_master.8167b2b061aa.png)
+![GitHub Repository's Protected Branch](/images/rule_master.8167b2b061aa.webp)
 
-接下来，启用其正下方的一个选项，该选项显示 Require a pull request before merging。这将自动需要至少一位审阅者的批准。如果您在 GitHub 上没有其他帐户，您可以暂时取消选中此选项。否则，如果没有其他人批准，您将无法合并您的拉取请求：![Require a Pull Request Before Merging](https://files.realpython.com/media/rule_approvals.4cc8505f0715.png)
+接下来，启用其正下方的一个选项，该选项显示 Require a pull request before merging。这将自动需要至少一位审阅者的批准。如果您在 GitHub 上没有其他帐户，您可以暂时取消选中此选项。否则，如果没有其他人批准，您将无法合并您的拉取请求：![Require a Pull Request Before Merging](/images/rule_approvals.4cc8505f0715.webp)
 
 向下滚动一点后，您会看到一个选项，上面写着 Require status checks to pass before merging。选择它以显示更多选项。当你这样做时，检查另一个选项 Require branches to be update before merging，这将防止在你的 `master` 分支有新提交时关闭拉取请求。最后，在下面的搜索框中输入您的工作名称 `build` ：
 
-![Require Status Checks to Pass Before Merging](https://files.realpython.com/media/rule_status_check.6e4a5e464e77.png)
+![Require Status Checks to Pass Before Merging](/images/rule_status_check.6e4a5e464e77.webp)
 
 现在，每个拉取请求都需要在允许合并之前通过端到端测试。
 
 要在不允许管理员和其他具有提升权限的用户绕过这些规则的情况下强制执行这些规则，您可以在底部选择一个标记为不允许绕过上述设置的选项：
 
-![Don't Allow Bypassing the Above Settings](https://files.realpython.com/media/rule_dont_allow.3a38d146c315.png)
+![Don't Allow Bypassing the Above Settings](/images/rule_dont_allow.3a38d146c315.webp)
 
 好的。一切就绪！如何使用您的 Docker 应用程序来测试您的持续集成工作流程？
 
@@ -2963,7 +2963,7 @@ remote:      https://github.com/realpython/page-tracker/pull/new/feature...
 
 当 GitHub Actions 运行器完成其工作时，由于检查失败，您将无法合并您的分支：
 
-![GitHub Status Check Failed With a Conflict](https://files.realpython.com/media/failed_pr2.e4e611e3f3cf.png)
+![GitHub Status Check Failed With a Conflict](/images/failed_pr2.e4e611e3f3cf.webp)
 
 在这种情况下，您只有一个检查对应于工作流中的 `build` 作业，您在上一节中将其配置为分支保护规则之一。您可以单击右侧的 Details 链接来调查失败检查的日志，并且您可以选择以调试模式重新运行相应的作业以收集更多数据。
 
@@ -2975,7 +2975,7 @@ remote:      https://github.com/realpython/page-tracker/pull/new/feature...
 
 即使没有任何冲突，如果主线在您的功能分支之前有几个提交，那么无论测试结果如何，您仍然必须将 `master` 中的最新更改合并到您的分支中。这是因为您之前制定的另一个分支保护规则：
 
-![GitHub Status Check Passed With an Outdated Branch](https://files.realpython.com/media/pr_update2.f48575db3caa.png)
+![GitHub Status Check Passed With an Outdated Branch](/images/pr_update2.f48575db3caa.webp)
 
 合并拉取请求按钮将保持灰色和禁用状态，直到您采取措施解决所有这些问题。
 
@@ -3013,11 +3013,11 @@ $ git push
 
 拉取请求应该接受您的更改并开始另一个 CI 构建。一旦满足所有保护规则，您最终可以通过单击绿色按钮将您的功能分支合并到受保护的主线中：
 
-![GitHub Status Checks Passed](https://files.realpython.com/media/pr_success.0d326c26e9ad.png)
+![GitHub Status Checks Passed](/images/pr_success.0d326c26e9ad.webp)
 
 请注意，合并将触发针对 `master` 分支的另一个 CI 构建，以测试您的更改是否与代码库的其余部分很好地集成。事情总是有可能出错。另一方面，如果 CI 构建成功，则工作流将标记并将镜像推送到您的 Docker Hub 存储库：
 
-![Docker Image Tagged and Pushed By a GitHub Action](https://files.realpython.com/media/docker_hub_push.93959f48b437.png)
+![Docker Image Tagged and Pushed By a GitHub Action](/images/docker_hub_push.93959f48b437.webp)
 
 每次 CI 工作流成功时，推送的 Docker 镜像都会被标记为当前 Git 提交哈希和标签 `latest` 。
 

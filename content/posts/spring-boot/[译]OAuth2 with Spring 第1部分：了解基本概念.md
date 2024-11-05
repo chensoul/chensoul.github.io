@@ -42,7 +42,7 @@ OAuth2 有几种授权类型来请求访问令牌。授权类型的唯一目的�
 
 ## 了解接收访问令牌的工作流程
 
-![img](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*lYr5ApUKOTDzmWrB.jpeg)
+![img](/images/oauth2-with-spring-part-1-01.webp)
 
 OAuth 工作流
 

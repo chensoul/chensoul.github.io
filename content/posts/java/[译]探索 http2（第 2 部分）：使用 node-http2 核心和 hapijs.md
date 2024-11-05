@@ -13,7 +13,7 @@ tags: [ http]
 
 
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*AI-qItSMJDSBxEhk8XMyIw.png)
+![img](/images/exploring-http2-part-2-overview-01.webp)
 
 来源：[https://www.thewebmaster.com/](https://www.thewebmaster.com/hosting/2015/dec/14/what-is-http2-and-how-does-it-compare-to-http1-1/)
 
@@ -135,7 +135,7 @@ server.start(err => {
 
 瞧！
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*L9veiRtzmsz0IAEgUh6m2A.png)
+![img](/images/exploring-http2-part-2-overview-02.webp)
 
 服务器用 pong 回复
 
@@ -149,7 +149,7 @@ server.start(err => {
   `curl --http2 --cacert localhost-cert.pem https://127.0.0.1:8000/ping`
   `—-http2``—-cacert`
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*lg5aK51i7fuRLkcSQYuktA.png)
+![img](/images/exploring-http2-part-2-overview-03.webp)
 
 - `-I`我们可以通过要求curl仅返回带有（head）或带有（verbose）的响应头来验证协议`-v`。
 
@@ -170,7 +170,7 @@ const serverOptions = {
 
 现在我们开始！当客户端不支持 http2 时，回退到提供 http1.1
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*g2DqJtUEbxmRngiUqJlbiw.png)
+![img](/images/exploring-http2-part-2-overview-04.webp)
 
 同时为 http1.1 和 http2 客户端提供服务
 
@@ -178,7 +178,7 @@ const serverOptions = {
 
 仔细观察差异，
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*8AA4UMVWo1kKSiyuXRARZA.png)
+![img](/images/exploring-http2-part-2-overview-05.webp)
 
 > 通过**瀑布**部分，可以明显地掌握单个 TCP 连接使用与多个 TCP 连接使用之间的差异。
 

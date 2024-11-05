@@ -17,7 +17,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/0mExYcxsnzccWxnktAKjc/33a49e1e736a2f906216d630b84fb641/websockets.png?w=1840&h=745&q=50&fm=png)
+![img](/images/websockets.webp)
 
 了解更多：
 
@@ -52,7 +52,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/5EGr0dYKI0QvIrKJT5yurZ/69d73a97e3eaf967a4021f5b32c04dc8/server_sent_events_how_it_works.png?w=1840&h=872&q=50&fm=png)
+![img](/images/server_sent_events_how_it_works.webp)
 
 **服务器发送事件的优点**
 
@@ -78,7 +78,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/1UuClqOdPD71XXPcFC8th1/57c06019e34acea200cf90ba941a7559/http-long-polling.png?w=1841&h=742&q=50&fm=png)
+![img](/images/http-long-polling.webp)
 
 **长轮询的优点**
 
@@ -108,7 +108,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/1TOFDCbQuE2eLsiVrATR3c/c8c3aad55c1b8d9717b600327cd990a1/mqtt-overview_2x.png?w=1840&h=998&q=50&fm=png)
+![img](/images/mqtt-overview_2x.webp)
 
 **MQTT 优势**
 
@@ -126,7 +126,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/497sFZqUwJ6gV8MGZdpgQT/540c531e38a511dbab8aea16d985aee2/mqtt-over-websocket-overview.png?w=1840&h=740&q=50&fm=png)
+![img](/images/mqtt-over-websocket-overview.webp)
 
 [查看 MQTT 与 WebSocket 的比较](https://ably.com/topic/mqtt-vs-websocket)
 
@@ -138,7 +138,7 @@ tags: [ websocket]
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/Mcj9xuaipsdgSbreNRkKw/4d4b5b213e0fb1e1edfdfe1c958dd965/webrtc-logo-vert-retro-255x305.png?w=255&h=305&q=50&fm=png)
+![img](/images/webrtc-logo-vert-retro.webp)
 
 **WebRTC优势**
 
@@ -158,7 +158,7 @@ WebRTC 主要设计用于流式传输音频和视频内容（通过 UDP），在
 
 
 
-![img](https://images.ctfassets.net/ee3ypdtck0rk/9qHMoUzBFSIwLplan0yqa/e811a5fc90ce365f3aec0b49f7d53753/signaling-overview-webrtc-websockets_2x.png?w=1840&h=666&q=50&fm=png)
+![img](/images/signaling-overview-webrtc-websockets_2x.webp)
 
 [了解 WebRTC 与 WebSocket 的比较](https://ably.com/topic/webrtc-vs-websocket)
 
