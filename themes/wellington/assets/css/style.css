@@ -312,10 +312,6 @@ i {
 	font-style: italic;
 }
 
-blockquote {
-	margin: 0 1.5em;
-}
-
 address {
 	margin: 0 0 1.5em;
 }
@@ -375,13 +371,13 @@ body {
 }
 
 blockquote {
-	margin: 0 0 1.5em;
+	/* margin: 0 0 1.5em; */
 	padding-left: 1.25em;
 	border-left: 4px solid #303030;
 	color: #777;
 	font-style: italic;
 	/*font-size: 18px;*/
-	font-size: 1.125rem;
+	font-size: 1rem;
 }
 
 blockquote cite,
