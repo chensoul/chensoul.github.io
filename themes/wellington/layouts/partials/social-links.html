@@ -19,6 +19,15 @@
     </a>
     {{ end }}
 
+    {{ if (not (eq .Site.Params.telegram "")) }}
+    <a class="social-link-item"
+       href="https://t.me/{{ .Site.Params.telegram }}"
+       aria-label="Follow me on Telegram"
+       target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-telegram fa-2xl telegram"></i>
+    </a>
+    {{ end }}
+
     {{ if (not (eq .Site.Params.linkedin "")) }}
     <a class="social-link-item"
        href="https://www.linkedin.com/in/{{ .Site.Params.linkedin }}"
@@ -31,17 +40,9 @@
     {{ if (not (eq .Site.Params.youtube "")) }}
     <a class="social-link-item"
        href="https://www.youtube.com/{{ .Site.Params.youtube }}"
+       aria-label="Follow me on Youtube"
        target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-youtube fa-2xl youtube"></i>
     </a>
     {{ end }}
-
-    {{ if (not (eq .Site.Params.telegram "")) }}
-    <a class="social-link-item"
-       href="https://t.me/{{ .Site.Params.telegram }}"
-       target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-telegram fa-2xl telegram"></i>
-    </a>
-    {{ end }}
-
 </aside>
