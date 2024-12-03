@@ -29,24 +29,26 @@ cd thingsboard
 mvn clean install -Dmaven.test.skip=true
 ```
 
-如果在编译过程中提示找不到 Gradle：
-
-```
-[ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution 'https://services.gradle.org/distributions/gradle-7.3.3-bin.zip'. -> [Help 1]
-```
-
-往上查看详细异常日志：
-
-```
-* What went wrong:
-Could not compile build file '/Users/chensoul/Codes/github/thingsboard/packaging/java/build.gradle'.
-> startup failed:
-  General error during conversion: Unsupported class file major version 65
-
-  java.lang.IllegalArgumentException: Unsupported class file major version 65
-```
-
-可以看到是 JDK 版本过高的原因。需要确认 JDK 版本使用 17，不能是 21。
+> 排错：
+>
+> 1. 如果在编译过程中提示找不到 Gradle：
+>
+> ```
+> [ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution 'https://services.gradle.org/distributions/gradle-7.3.3-bin.zip'. -> [Help 1]
+> ```
+>
+> 往上查看详细异常日志：
+>
+> ```
+> * What went wrong:
+> Could not compile build file '/Users/chensoul/Codes/github/thingsboard/packaging/java/build.gradle'.
+> > startup failed:
+>   General error during conversion: Unsupported class file major version 65
+> 
+>   java.lang.IllegalArgumentException: Unsupported class file major version 65
+> ```
+>
+> 可以看到是 JDK 版本过高的原因。需要确认 JDK 版本使用 17，不能是 21。
 
 如果 maven 下载太慢，则修改 mirrors 节点如下：
 
@@ -79,18 +81,24 @@ Could not compile build file '/Users/chensoul/Codes/github/thingsboard/packaging
 
 首先 IDEA 需要安装 lombok 和 Protobuf 相关插件，有个 proto 文件生成的java代码过大(`TransportProtos`)，默认是不会解析的。需要编辑idea 的属性(Help -> Edit Custom Properties)，加入`idea.max.intellisense.filesize=3000`，将上限提高到3M。
 
-准备 postgres 数据库，使用 docker-compose 运行：
+准备 postgres 数据库，在 docker 目录下面创建 docker-compose.postgres-1.yml：
 
 ```yaml
 services:
   postgres:
     restart: always
-    image: "postgres:15"
+    image: "postgres:16"
     ports:
     - "5432:5432"
     environment:
       POSTGRES_DB: thingsboard
       POSTGRES_PASSWORD: postgres
+```
+
+使用 docker-compose 启动 postgres ：
+
+```bash
+docker compose -f docker-compose.postgres-1.yml up -d
 ```
 
 在 idea 中打开项目，然后将 dao/src/main/resources/sql 目录拷贝到 application/src/main/data 目录下。
@@ -104,3 +112,4 @@ services:
 - 系统管理员： sysadmin@thingsboard.org / sysadmin
 - 租户管理员：tenant@thingsboard.org / tenant
 - 客户用户： customer@thingsboard.org / customer
+
