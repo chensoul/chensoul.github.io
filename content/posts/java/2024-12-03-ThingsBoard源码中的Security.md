@@ -1,5 +1,5 @@
 ---
-title: "ThingsBoard源码中的Github Actions"
+title: "ThingsBoard源码中的Security"
 date: 2024-12-03
 type: post
 slug: security-in-thingsboard
@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [thingsboard,spring-security,oauth2]
 ---
 
-ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
+ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
 
 ## 设置和安全
 
@@ -24,9 +24,9 @@ ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动�
    系统内置支持以下几种客户端。
 
    - Apple:
-     - 访问令牌：https://appleid.apple.com/auth/token
-     - 授权：https://appleid.apple.com/auth/authorize?response_mode=form_post
-     - JSON Web 地址：https://appleid.apple.com/auth/keys
+     - 访问令牌：[https://appleid.apple.com/auth/token](https://appleid.apple.com/auth/token)
+     - 授权：[](https://github.com/thingsboard/thingsboard)https://appleid.apple.com/auth/authorize?response_mode=form_post
+     - JSON Web 地址：[https://appleid.apple.com/auth/keys](https://appleid.apple.com/auth/keys)
      - 用户信息：
      - 范围：openid、name、email
      - 用户名属性：email
@@ -37,10 +37,10 @@ ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动�
      - 租户名称策略：DOMAIN
 
    - [Google](https://console.cloud.google.com/):
-     - 访问令牌：https://oauth2.googleapis.com/token
-     - 授权：https://accounts.google.com/o/oauth2/v2/auth
-     - JSON Web 地址：https://www.googleapis.com/oauth2/v3/certs
-     - 用户信息：https://openidconnect.googleapis.com/v1/userinfo
+     - 访问令牌：[https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)
+     - 授权：[https://accounts.google.com/o/oauth2/v2/auth](https://accounts.google.com/o/oauth2/v2/auth)
+     - JSON Web 地址：[https://www.googleapis.com/oauth2/v3/certs](https://www.googleapis.com/oauth2/v3/certs)
+     - 用户信息：[https://openidconnect.googleapis.com/v1/userinfo](https://openidconnect.googleapis.com/v1/userinfo)
      - 范围：openid、profile、email
      - 用户名属性：email
      - 电子邮件属性：email
@@ -49,10 +49,10 @@ ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动�
      - Last Name 名称属性：family_name
      - 租户名称策略：DOMAIN
    - Facebook:
-     - 访问令牌：https://graph.facebook.com/v2.8/oauth/access_token
-     - 授权：https://www.facebook.com/v2.8/dialog/oauth
+     - 访问令牌：[https://graph.facebook.com/v2.8/oauth/access_token](https://graph.facebook.com/v2.8/oauth/access_token)
+     - 授权：[https://www.facebook.com/v2.8/dialog/oauth](https://www.facebook.com/v2.8/dialog/oauth)
      - JSON Web 地址：
-     - 用户信息：https://graph.facebook.com/me?fields=id,name,first_name,last_name,email
+     - 用户信息：[https://graph.facebook.com/me?fields=id,name,first_name,last_name,email](https://graph.facebook.com/me?fields=id,name,first_name,last_name,email)
      - 范围：public_profile、email
      - 用户名属性：email
      - 电子邮件属性：email
@@ -62,10 +62,10 @@ ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动�
      - 租户名称策略：DOMAIN
 
    - [Github](https://github.com/settings/developers):
-     - 访问令牌：https://github.com/login/oauth/access_token
-     - 授权：https://github.com/login/oauth/authorize
+     - 访问令牌：[https://github.com/login/oauth/access_token](https://github.com/login/oauth/access_token)
+     - 授权：[https://github.com/login/oauth/authorize](https://github.com/login/oauth/authorize)
      - JSON Web 地址：
-     - 用户信息：https://api.github.com/user
+     - 用户信息：[https://api.github.com/user](https://api.github.com/user)
      - 范围：read:user、user:email
      - 用户名属性：login
      - 电子邮件属性：
@@ -75,9 +75,9 @@ ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，启动�
      - 租户名称策略：DOMAIN 
 
 
-​	以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：http://localhost:8080/login/oauth2/code/。
+​	以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：[http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)。
 
-完成配置之后，配置的内存保证到数据库中，系统设置对应数据库表是 admin_settings。
+完成配置之后，配置的内存保证到数据库中，系统设置对应数据库表是 `admin_settings`。
 
 ```sql
 CREATE TABLE "public"."admin_settings" (
@@ -143,11 +143,11 @@ CREATE TABLE "public"."admin_settings" (
 
 OAuth2 相关的表为：
 
-- domain
-- domain_oauth2_client
+- `domain`
+- `domain_oauth2_client`
 
-- oauth2_client
-- oauth2_client_registration_template
+- `oauth2_client`
+- `oauth2_client_registration_template`
 
 ## 账号
 
@@ -163,12 +163,12 @@ OAuth2 相关的表为：
 
 个人账号的相关设置保存在以下两张表：
 
-- user_auth_settings
-- user_settings
+- `user_auth_settings`
+- `user_settings`
 
 ## 登陆页面
 
-开启 OAuht2 之后，注销登陆，进入登陆页面。当前登陆页面会通过 http://localhost:8080/api/noauth/oauth2Clients?platform=WEB POST 接口（对应的 Controller 类为 OAuth2Controller）查询开通的 OAuth2 客户端列表。返回内容如下：
+开启 OAuht2 之后，注销登陆，进入登陆页面。当前登陆页面会通过 [http://localhost:8080/api/noauth/oauth2Clients?platform=WEB](http://localhost:8080/api/noauth/oauth2Clients?platform=WEB) POST 接口（对应的 Controller 类为 `OAuth2Controller`）查询开通的 OAuth2 客户端列表。返回内容如下：
 
 ```json
 [
@@ -182,7 +182,7 @@ OAuth2 相关的表为：
 
 f02246b0-b121-11ef-983d-d79399efbf69 为 oauth2_client 主键。
 
-在登陆页面，点击使用 Google 登陆，后台在 OAuth2AuthorizationRequestRedirectFilter 的 doFilterInternal 方法打个断点。
+在登陆页面，点击使用 Google 登陆，后台在 `OAuth2AuthorizationRequestRedirectFilter` 的 `doFilterInternal` 方法打个断点。
 
 ```java
 	try {
@@ -212,22 +212,22 @@ public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
 }
 ```
 
-- 首先获取 registrationId，即 f02246b0-b121-11ef-983d-d79399efbf69
-- 获取 redirectUriAction，即 login
-- 获取 appPackage，为 null
-- 获取 platform，为 null
-- 获取 appToken，为 null
+- 首先获取 `registrationId`，即 f02246b0-b121-11ef-983d-d79399efbf69
+- 获取 `redirectUriAction`，即 login
+- 获取 `appPackage`，为 null
+- 获取 `platform`，为 null
+- 获取 `appToken`，为 null
 
-- 通过 this.clientRegistrationRepository 的 findByRegistrationId 方法 查询 ClientRegistration
+- 通过 this.clientRegistrationRepository 的 `findByRegistrationId` 方法 查询 ClientRegistration
 
-- 如果 ClientRegistration 的授权类型为 authorization_code
+- 如果 ClientRegistration 的授权类型为 `authorization_code`
 
-  - 如果 scope 包含 OPENID，则添加 nonce 参数
-  - 如果 clientAuthenticationMethod 为 none，则添加 pkce 参数
+  - 如果 `scope` 包含 `OPENID`，则添加 `nonce` 参数
+  - 如果 `clientAuthenticationMethod` 为 `none`，则添加 `pkce` 参数
 
-- 获取重定向地址，这里为 http://localhost:8080/login/oauth2/code/
+- 获取重定向地址，这里为 [http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)
 
-- 构建 OAuth2AuthorizationRequest 对象
+- 构建 `OAuth2AuthorizationRequest` 对象
 
   ```json
   {
@@ -257,7 +257,7 @@ public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
 
 ## OAuth2 Client 配置
 
-OAuth2 Client 相关配置在 ThingsboardSecurityConfiguration 类
+OAuth2 Client 相关配置在 `ThingsboardSecurityConfiguration` 类
 
 ```java
 @Bean
@@ -277,11 +277,11 @@ OAuth2 Client 相关配置在 ThingsboardSecurityConfiguration 类
   }
 ```
 
-oauth2Login 的 authorizationEndpoint 配置了一个 authorizationRequestRepository 和 authorizationRequestResolver。
+oauth2Login 的 authorizationEndpoint 配置了一个 `authorizationRequestRepository` 和 `authorizationRequestResolver`。
 
-authorizationRequestRepository 对应的是 HttpCookieOAuth2AuthorizationRequestRepository，保存 request 请求地址到 cookie；authorizationRequestResolver 对应的是 CustomOAuth2AuthorizationRequestResolver。
+authorizationRequestRepository 对应的是 `HttpCookieOAuth2AuthorizationRequestRepository`，保存 request 请求地址到 cookie；authorizationRequestResolver 对应的是 `CustomOAuth2AuthorizationRequestResolver`。
 
-oauth2Login 的登陆页面为 /oauth2Login，处理登陆请求的地址为 oauth2Configuration.getLoginProcessingUrl()，oauth2Configuration 的配置：
+oauth2Login 的登陆页面为 `/oauth2Login`，处理登陆请求的地址为 `oauth2Configuration.getLoginProcessingUrl()`，oauth2Configuration 的配置：
 
 ```yaml
 security:
