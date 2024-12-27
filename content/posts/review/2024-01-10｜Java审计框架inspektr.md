@@ -34,7 +34,7 @@ tags: [review]
 - 重写微服务日志记录模块
 - 写一个 Lambda 类库
 - 重构公司微服务框架
-- 继续重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud)
+- 继续重构 foodie-cloud
   - 支持单点登录
   - 支持全文检索
   - 集成 Spring Security OAuth2

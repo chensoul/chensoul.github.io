@@ -56,7 +56,7 @@ tags: [review]
 - [ ] 4、明天待办事项：
 
   - 重写微服务日志记录模块
-  - 继续重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud)
+  - 继续重构 foodie-cloud
     - 支持单点登录
     - 支持全文检索
     - 集成 Spring Security OAuth2

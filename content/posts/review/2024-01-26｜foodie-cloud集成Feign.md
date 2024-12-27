@@ -11,7 +11,7 @@ tags: [eureka,feign]
 
 今天做了什么：
 
-1. 重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目
+1. 重构 foodie-cloud 项目
    - 集成 Feign 替换 RestTemplate
    - 认证服务负责用户的维护和登录
 

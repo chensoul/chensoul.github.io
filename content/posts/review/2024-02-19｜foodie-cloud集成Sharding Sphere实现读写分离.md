@@ -9,5 +9,5 @@ tags: [spring-cloud]
 
 今天做了什么：
 
-1. 重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目
-   - 基于 docker 实现数据库配置主从复制，[集成 Sharding Sphere 实现读写分离](https://github.com/chensoul/foodie-cloud/blob/main/docs/mysql.md)
+1. 重构 foodie-cloud 项目
+   - 基于 docker 实现数据库配置主从复制，集成 Sharding Sphere 实现读写分离

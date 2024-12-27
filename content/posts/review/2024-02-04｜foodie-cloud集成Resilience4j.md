@@ -11,7 +11,7 @@ tags: [spring-cloud]
 
 今天做了什么：
 
-1. 重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目
+1. 重构 foodie-cloud 项目
    - 集成 **Resilience4j**
    - 修改 README.md 文档
 

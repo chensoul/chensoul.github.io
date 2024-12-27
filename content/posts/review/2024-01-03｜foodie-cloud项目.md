@@ -10,7 +10,7 @@ tags: ["spring-cloud"]
 今天做了什么：
 
 - [idworker-client](https://github.com/bingoohuang/idworker-client) ，一个开源的 ID 生成器，适合在单机使用
-- github 上创建了一个使用 spring cloud netflix 相关组件的微服务项目 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples)
+- github 上创建了一个使用 spring cloud netflix 相关组件的微服务项目
 - 重构了狂野架构师课程中的微服务版本的源码
 
 
@@ -21,8 +21,6 @@ tags: ["spring-cloud"]
 - 升级 Spring Boot 和 Spring Cloud 版本
 - 去掉 tk-mybatis 改为使用 mybatis-plus
 - 重构模块和部分代码
-
-重构后的源码地址：[https://github.com/chensoul/foodie-cloud](https://github.com/chensoul/foodie-cloud) 
 
 
 

@@ -11,7 +11,7 @@ tags: [mybatis]
 
 今天做了什么：
 
-1. 重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目
+1. 重构 foodie-cloud 项目
    - 参考 DDD 组织包结构
    - Mybatis plus 配置主键生成策略和数据审计功能
    -  Jackson 配置日期序列化

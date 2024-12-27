@@ -7,10 +7,10 @@ categories: ["Java"]
 tags: [thingsboard]
 ---
 
-ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，其 .github/workflows 目录下面有两个文件：
+ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：
 
-- check-configuration-files.yml：使用 python 脚本校验 yaml 文件
-- license-header-format.yml：是给文件添加 license 并提交代码到 git 仓库
+- `check-configuration-files.yml`：使用 python 脚本校验 yaml 文件
+- `license-header-format.yml`：是给文件添加 license 并提交代码到 git 仓库
 
 ## check-configuration-files.yml 
 
@@ -263,6 +263,7 @@ limitations under the License.
     </configuration>
     <executions>
         <execution>
+          	<phase>initialize</phase>
             <goals>
                 <goal>check</goal>
             </goals>

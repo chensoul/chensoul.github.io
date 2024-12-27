@@ -11,7 +11,7 @@ tags: [spring]
 
 今天做了什么：
 
-1. 重构 [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目，部署到 docker 容器
+1. 重构 foodie-cloud 项目，部署到 docker 容器
 1. 使用 Spring Initializr 创建项目
 
 

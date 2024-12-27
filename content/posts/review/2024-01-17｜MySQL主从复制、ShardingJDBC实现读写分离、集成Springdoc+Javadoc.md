@@ -12,7 +12,7 @@ tags: ['spring-boot',docker]
 今天做了什么：
 
 1. 观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。
-1.  [foodie-cloud](https://github.com/chensoul/foodie-cloud) 项目实现读写分离并集成 Springdoc
+1.  foodie-cloud 项目实现读写分离并集成 Springdoc
 
 
 

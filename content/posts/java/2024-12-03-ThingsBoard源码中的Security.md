@@ -25,7 +25,7 @@ ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://
 
    - Apple:
      - 访问令牌：[https://appleid.apple.com/auth/token](https://appleid.apple.com/auth/token)
-     - 授权：[](https://github.com/thingsboard/thingsboard)https://appleid.apple.com/auth/authorize?response_mode=form_post
+     - 授权：[https://appleid.apple.com/auth/authorize?response_mode=form_post](https://appleid.apple.com/auth/authorize?response_mode=form_post)
      - JSON Web 地址：[https://appleid.apple.com/auth/keys](https://appleid.apple.com/auth/keys)
      - 用户信息：
      - 范围：openid、name、email
@@ -92,7 +92,7 @@ CREATE TABLE "public"."admin_settings" (
 
 表中记录：
 
-```sql
+```json
 [
   {
     "id": "2fa02d60-b119-11ef-8167-dfb7a1b13a5a",
@@ -155,7 +155,7 @@ OAuth2 相关的表为：
 
 双因素认证可以使用以下身份验证：
 
-- 验证APP。使用手机上的Google Authenticator、Authy或Duo等应用程序进行身份验证，它将生成用于登录的验证码。
+- 验证 APP。使用手机上的 Google Authenticator、Authy或Duo等应用程序进行身份验证，它将生成用于登录的验证码。
 - 电子邮件。使用您电子邮件中的验证码进行身份验证。
 - 备份验证码。这些可打印的一次性密码允许您在离开手机时登录，比如正在旅行。
 
@@ -180,7 +180,7 @@ OAuth2 相关的表为：
 ]
 ```
 
-f02246b0-b121-11ef-983d-d79399efbf69 为 oauth2_client 主键。
+f02246b0-b121-11ef-983d-d79399efbf69 为 `oauth2_client` 主键。
 
 在登陆页面，点击使用 Google 登陆，后台在 `OAuth2AuthorizationRequestRedirectFilter` 的 `doFilterInternal` 方法打个断点。
 
@@ -198,7 +198,7 @@ f02246b0-b121-11ef-983d-d79399efbf69 为 oauth2_client 主键。
 		}
 ```
 
-this.authorizationRequestResolver 对于的 Bean 为 CustomOAuth2AuthorizationRequestResolver，其 resolve 方法逻辑如下：
+`this.authorizationRequestResolver` 对于的 Bean 为 `CustomOAuth2AuthorizationRequestResolver`，其 `resolve` 方法逻辑如下：
 
 ```java
 @Override
@@ -218,9 +218,9 @@ public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
 - 获取 `platform`，为 null
 - 获取 `appToken`，为 null
 
-- 通过 this.clientRegistrationRepository 的 `findByRegistrationId` 方法 查询 ClientRegistration
+- 通过 `this.clientRegistrationRepository` 的 `findByRegistrationId` 方法 查询 `ClientRegistration`
 
-- 如果 ClientRegistration 的授权类型为 `authorization_code`
+- 如果 `ClientRegistration` 的授权类型为 `authorization_code`
 
   - 如果 `scope` 包含 `OPENID`，则添加 `nonce` 参数
   - 如果 `clientAuthenticationMethod` 为 `none`，则添加 `pkce` 参数
@@ -277,9 +277,9 @@ OAuth2 Client 相关配置在 `ThingsboardSecurityConfiguration` 类
   }
 ```
 
-oauth2Login 的 authorizationEndpoint 配置了一个 `authorizationRequestRepository` 和 `authorizationRequestResolver`。
+oauth2Login 的 `authorizationEndpoint` 配置了一个 `authorizationRequestRepository` 和 `authorizationRequestResolver`。
 
-authorizationRequestRepository 对应的是 `HttpCookieOAuth2AuthorizationRequestRepository`，保存 request 请求地址到 cookie；authorizationRequestResolver 对应的是 `CustomOAuth2AuthorizationRequestResolver`。
+`authorizationRequestRepository` 对应的是 `HttpCookieOAuth2AuthorizationRequestRepository`，保存 request 请求地址到 cookie；authorizationRequestResolver 对应的是 `CustomOAuth2AuthorizationRequestResolver`。
 
 oauth2Login 的登陆页面为 `/oauth2Login`，处理登陆请求的地址为 `oauth2Configuration.getLoginProcessingUrl()`，oauth2Configuration 的配置：
 
@@ -293,42 +293,42 @@ security:
       emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}"
 ```
 
-oauth2Login 登陆成功的 handler 为 Oauth2AuthenticationSuccessHandler：
+oauth2Login 登陆成功的 handler 为 `Oauth2AuthenticationSuccessHandler`：
 
-- 通过 httpCookieOAuth2AuthorizationRequestRepository 获取 OAuth2AuthorizationRequest
-- 从 authorizationRequest 属性 获取 callback_url_scheme
-- 获取 baseUrl
-- 获取 OAuth2AuthenticationToken
-- 使用 OAuth2ClientService 通过 OAuth2AuthenticationToken 的 authorizedClientRegistrationId 获取 OAuth2Client
-- 使用 OAuth2AuthorizedClientService 通过 OAuth2AuthenticationToken 的 authorizedClientRegistrationId  和 principal name 获取 OAuth2AuthorizedClient
-- 使用 OAuth2ClientMapperProvider 获取 OAuth2ClientMapper
-- 使用 OAuth2ClientMapper 创建 SecurityUser
-- 清除 Authentication 属性
-- 创建 JwtPair
+- 通过 `httpCookieOAuth2AuthorizationRequestRepository` 获取 OAuth2AuthorizationRequest
+- 从 authorizationRequest 属性 获取 `callback_url_scheme`
+- 获取 `baseUrl`
+- 获取 `OAuth2AuthenticationToken`
+- 使用 `OAuth2ClientService` 通过 `OAuth2AuthenticationToken` 的 `authorizedClientRegistrationId` 获取 OAuth2Client
+- 使用 `OAuth2AuthorizedClientService` 通过 `OAuth2AuthenticationToken` 的 `authorizedClientRegistrationId`  和 principal name 获取 OAuth2AuthorizedClient
+- 使用 `OAuth2ClientMapperProvider` 获取 OAuth2ClientMapper
+- 使用 `OAuth2ClientMapper` 创建 SecurityUser
+- 清除 `Authentication` 属性
+- 创建 `JwtPair`
 - 重定向到地址
-- 使用 SystemSecurityService 记录登陆成功日志
+- 使用 `SystemSecurityService` 记录登陆成功日志
 
-oauth2Login 登陆失败的 handler 为 Oauth2AuthenticationFailureHandler：
+oauth2Login 登陆失败的 handler 为 `Oauth2AuthenticationFailureHandler`：
 
-- 通过 httpCookieOAuth2AuthorizationRequestRepository 获取 OAuth2AuthorizationRequest
-- 从 authorizationRequest 属性 获取 callback_url_scheme
-- 获取 baseUrl
-- httpCookieOAuth2AuthorizationRequestRepository 清除 cookie
+- 通过 `httpCookieOAuth2AuthorizationRequestRepository` 获取 `OAuth2AuthorizationRequest`
+- 从 `authorizationRequest` 属性 获取 `callback_url_scheme`
+- 获取 `baseUrl`
+- `httpCookieOAuth2AuthorizationRequestRepository` 清除 `cookie`
 - 重定向到地址
 
 所以，OAuth2 client 相关代码重点在以下类：
 
-- CustomOAuth2AuthorizationRequestResolver
+- `CustomOAuth2AuthorizationRequestResolver`
 
-- OAuth2Controller、OAuth2ConfigTemplateController
+- `OAuth2Controller`、`OAuth2ConfigTemplateController`
 
-- OAuth2ClientService、OAuth2ConfigTemplateService
+- `OAuth2ClientService`、`OAuth2ConfigTemplateService`
 
-  - OAuth2ClientDao、OAuth2ClientRegistrationTemplateDao
-    - OAuth2Client、OAuth2ClientRegistrationTemplate
+  - `OAuth2ClientDao`、`OAuth2ClientRegistrationTemplateDao`
+    - `OAuth2Client`、`OAuth2ClientRegistrationTemplate`
 
-- OAuth2AppTokenFactory
+- `OAuth2AppTokenFactory`
 
-- HybridClientRegistrationRepository
+- `HybridClientRegistrationRepository`
 
   
