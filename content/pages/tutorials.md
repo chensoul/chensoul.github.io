@@ -3,8 +3,6 @@ title: Tutorials
 author: chensoul
 date: 2024-11-04T21:00:00+08:00
 slug: /tutorials/
-categories: ["Java"]
-tags: ["Java"]
 ---
 
 ## Java
