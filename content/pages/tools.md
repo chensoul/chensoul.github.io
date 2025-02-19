@@ -69,7 +69,10 @@ IOS：
 - [LetsVPN](https://github.com/LetsgoNetwork/LetsGo_1/)
 - 1Password
 - 高德地图
-- Strava：记录跑步
+- Strava：记录跑步、散步、骑行，自动同步至苹果健康
+- 华为运动健康 + 体重秤：记录体重，自动同步至苹果健康
+- 欢太健康：记录睡眠和心率，，自动同步至苹果健康
+- Pacer（可选）：用于导出苹果健康数据为 csv 文件，包括 Weight、DailySteps、DetailedSteps、ActivitySesions
 - 币安
 - X
 - Telegram
