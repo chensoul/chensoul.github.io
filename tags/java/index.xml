@@ -1,4 +1,133 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on ChenSoul</title><link>https://blog.chensoul.cc/tags/java/</link><description>Recent content in Java on ChenSoul</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 05 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>[译]领域驱动设计速成课程</title><link>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-on-domain-driven-design/</link><pubDate>Mon, 05 Aug 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-on-domain-driven-design/</guid><description>&lt;p>原文链接：&lt;a href="https://blog.bytebytego.com/p/a-crash-course-on-domain-driven-design" target="_blank">https://blog.bytebytego.com/p/a-crash-course-on-domain-driven-design&lt;/a>&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on ChenSoul</title><link>https://blog.chensoul.cc/tags/java/</link><description>Recent content in Java on ChenSoul</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 17 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>如何实现榜单 top N 统计</title><link>https://blog.chensoul.cc/posts/2025/02/17/top-n-using-redis/</link><pubDate>Mon, 17 Feb 2025 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2025/02/17/top-n-using-redis/</guid><description>&lt;p>以下是一个基于本地缓存 + Redis ZSet + 定时任务的榜单方案，适用于高并发场景：&lt;/p>
+&lt;h2 id="方案概述">方案概述&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>本地缓存&lt;/strong> ：在应用服务器本地缓存榜单数据，减少对 Redis 的访问频率，提高读取速度。&lt;/li>
+&lt;li>&lt;strong>Redis ZSet&lt;/strong> ：使用 Redis 的有序集合存储榜单数据，利用其高效的排序和范围查询功能。&lt;/li>
+&lt;li>&lt;strong>定时任务&lt;/strong> ：定期更新本地缓存和 Redis ZSet 中的榜单数据，确保数据的实时性和准确性。&lt;/li>
+&lt;/ol>
+&lt;h2 id="数据存储架构">数据存储架构&lt;/h2>
+&lt;p>&lt;strong>全局前 1000 名榜单存储在 Redis 中&lt;/strong>&lt;/p></description></item><item><title>什么是限流</title><link>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</link><pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</guid><description>&lt;h2 id="基本概念">基本概念&lt;/h2>
+&lt;p>在互联网领域，限流是指对进入系统的请求数量或频率进行控制的一种机制，以防止系统因流量暴增而过载，从而保障系统的稳定性和可用性。&lt;/p>
+&lt;h2 id="限流目的">限流目的&lt;/h2>
+&lt;ol>
+&lt;li>防止系统过载：控制请求速率，避免突发流量导致系统崩溃。&lt;/li>
+&lt;li>资源保护：合理分配系统资源，防止某些请求占用过多资源影响其他请求。&lt;/li>
+&lt;li>防止恶意攻击：通过限制请求频率，抵御DDoS等恶意攻击。&lt;/li>
+&lt;li>保障服务质量：确保系统能为每个请求提供稳定、可靠的服务。&lt;/li>
+&lt;li>削峰填谷：在访问高峰期平滑请求曲线，将超出系统承载能力的请求延后处理或拒绝。&lt;/li>
+&lt;li>成本控制：对于按量计费的云服务，限流可以有效控制成本。&lt;/li>
+&lt;li>公平竞争：确保不同用户或应用程序之间公平地使用系统资源。&lt;/li>
+&lt;/ol>
+&lt;h2 id="应用场景">应用场景&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>保护后端服务&lt;/strong> ：在高并发环境下，后端服务可能无法承受大量请求，限流有助于防止服务崩溃。&lt;/li>
+&lt;li>&lt;strong>防止 DDoS 攻击&lt;/strong> ：DDoS 攻击通过大量伪造请求涌入系统，造成系统无法响应。限流可以有效缓解这种 DDoS 攻击。&lt;/li>
+&lt;li>&lt;strong>优化用户体验&lt;/strong> ：通过控制请求频率，避免单个用户或客户端频繁请求系统，从而提升其他用户的访问体验。&lt;/li>
+&lt;li>&lt;strong>流量控制&lt;/strong> ：在某些情况下，系统需要根据当前负载情况动态调整可接受的请求量，避免资源浪费或系统崩溃。&lt;/li>
+&lt;/ul>
+&lt;h2 id="限流算法">限流算法&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>计数器算法&lt;/strong> ：通过维护一个计数器来限制在特定时间间隔内的请求数量。该算法在固定时间窗口内对请求进行计数，当请求数超过设定阈值时，则进行限流处理。
+&lt;ul>
+&lt;li>原理：在固定时间窗口内限制请求数量。&lt;/li>
+&lt;li>优点：实现起来非常简单，逻辑也很直观，易于理解。而且性能高效，因为计数器的操作速度很快，对系统性能的影响很小，内存占用也低，只需维护一个计数器。&lt;/li>
+&lt;li>缺点：
+&lt;ul>
+&lt;li>&lt;strong>缺乏流量整形机制&lt;/strong>，不能确保请求能够连续、平滑地传递到下游服务。这是因为固定窗口计数器算法的放行速率和流量的涌入速率是相同的，所以在处理不规则或者突发流量时，它的效果就不佳。&lt;/li>
+&lt;li>&lt;strong>对突发流量的容忍性也比较差&lt;/strong>。如果设置的时间窗口是10秒，阈值是100个请求，那在前1秒内涌入100个请求后，接下来的9s不会再放行请求。即使系统可能在第5秒已经处于空闲状态，具备处理新请求的能力，也只能等到下一个限流周期才行。相比之下漏桶、令牌桶则灵活的多，更能容忍突发流量。&lt;/li>
+&lt;li>&lt;strong>窗口边界容易出现过载问题&lt;/strong>。固定窗口算法将时间划分为固定大小的窗口，这种机制在窗口边界可能引发突发请求流量，导致系统的瞬时负载超过预期。比如假设阈值是100个请求，时间窗口是2秒。在当前窗口的最后1秒可能就有100个请求，而在下一个窗口的前1秒又有100个请求。单看窗口，好像限流策略成功，但如果跨越窗口之间来看，实际上在2秒内通过的请求数量可能达到200个，而不是预期的100个。可以用滑动窗口限流算法来解决这个问题。&lt;/li>
+&lt;li>&lt;strong>设置恰当的阈值也很难&lt;/strong>。如果阈值设置得过高，系统可能会允许太多请求在短时间内通过，导致负载过重。而如果设置得过低，系统就会频繁拒绝用户请求，这不仅影响用户体验，还有可能浪费宝贵的系统资源。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>适用场景：
+&lt;ul>
+&lt;li>对请求数量要求不严格的简单限流场景。&lt;/li>
+&lt;li>适合资源受限的系统，如内存或处理能力有限的环境。&lt;/li>
+&lt;li>不适用于对突发流量敏感或需要精确控制的场景。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>滑动窗口算法&lt;/strong> ：是一种基于时间窗口的限流策略，核心思想是&lt;strong>动态跟踪最近一段时间内的请求数量&lt;/strong>，以适应不均匀的流量，从而有效避免了固定窗口算法所存在的窗口边界问题，同时保持较低的内存开销。
+&lt;ul>
+&lt;li>原理：将时间窗口细分，动态滑动，提供更平滑的限流效果。&lt;/li>
+&lt;li>优点：解决了固定窗口的窗口边界问题：滑动窗口算法通过持续监控和计算时间段内的请求，减少了由于时间窗口结束而导致的请求突然集中涌入的情况。。&lt;/li>
+&lt;li>缺点：
+&lt;ul>
+&lt;li>&lt;strong>缺乏流量整形机制，无法实现平滑限流&lt;/strong>：滑动窗口算法没有流量整形机制，无法确保请求连续、平滑地传递到下游服务。由于滑动窗口算法放行的速率与流量涌入的速率相同，它无法有效管理不规则或突发的流量。流量整形是指针对突发流量进行管理，通过预设的速率稳定地输出请求，以确保发送到后端系统的流量保持在可接受的范围内，从而避免对后端造成冲击。&lt;/li>
+&lt;li>&lt;strong>难以设置恰当的阀值&lt;/strong>：如果设置的阀值过高，系统可能会允许过多的请求在短时间内通过，从而导致负载过重。另一方面，如果阀值设置过低，系统将频繁拒绝用户请求，影响用户体验，并浪费宝贵的系统资源。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>适用场景：
+&lt;ul>
+&lt;li>对请求数量要求不严格的简单限流场景。&lt;/li>
+&lt;li>适合资源受限的系统，如内存或处理能力有限的环境。&lt;/li>
+&lt;li>不适用于对突发流量敏感或需要精确控制的场景。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>漏桶算法&lt;/strong> ：是一种经典的限流算法，它的核心思想是将请求放入一个固定容量的“桶”中，桶以固定的速率“漏水”（即处理请求）。如果桶满了，则新的请求会被拒绝或排队等待。
+&lt;ul>
+&lt;li>原理：请求先进入桶中，然后以固定速率处理，超出桶容量的请求被丢弃。&lt;/li>
+&lt;li>优点：
+&lt;ul>
+&lt;li>简单直观：基于桶的模型，算法相对简单，容易实现。&lt;/li>
+&lt;li>平滑限流：能够将突发的高峰流量平滑处理，避免对下游系统的瞬时冲击。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>缺点：
+&lt;ul>
+&lt;li>&lt;strong>延迟响应请求&lt;/strong>：在高流量情况下，请求必须排队等待，可能导致用户体验下降。&lt;/li>
+&lt;li>&lt;strong>难以设置恰当的限流阀值&lt;/strong>：如果设置的限流阀值过高，也就是桶的容量过大，那么排队的请求可能超时或者延迟响应，影响用户体验。如果桶的容量过小，那么系统将频繁拒绝用户请求，影响用户体验。&lt;/li>
+&lt;li>&lt;strong>难以设置恰当的输出速率&lt;/strong>： 如果设置的漏水速率过高，可能导致下游服务过载。如果设置的漏水速率过低，漏桶缓存请求增加，漏桶满后会频繁拒绝用户请求，影响用户体验。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>适用场景：
+&lt;ul>
+&lt;li>API限流：防止短时间内接收到过量请求，保护后端服务。&lt;/li>
+&lt;li>网络流量控制：管理带宽，确保数据传输的稳定性。&lt;/li>
+&lt;li>任务调度：确保任务在执行时保持平稳的速率。&lt;/li>
+&lt;li>高并发请求处理：如高并发的Web应用程序，漏桶算法能够平稳处理大量请求。&lt;/li>
+&lt;li>服务高可用：控制访问第三方服务的速度，防止压垮下游。控制服务自身的处理速度，方式过载。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>令牌桶算法&lt;/strong> ：一种基于固定容量桶模型的算法，特点是如果请求进入系统的速率超过令牌的生成速率，或者如果一次进入的请求数量超过桶中的令牌数，则请求被限流。它通过动态限制请求进入系统的速率来实现限流，比如，令牌的生成速率是2个/s，桶的容量是10，那么请求进入系统进入的最大速率是10个/s，平均速率2个/s。
+&lt;ul>
+&lt;li>原理：令牌桶算法的基本构思是使用一个“桶”，其中存放了“令牌”，每个令牌允许处理一个请求。系统以固定的速率向这个桶中生成令牌，直到达到最大的桶容量。如果桶已满，新生成的令牌将会被丢弃。由于令牌可以在桶中累积，这使得算法在遭遇短时间内的请求高峰时，依旧能够保持一定的处理能力。&lt;/li>
+&lt;li>优点：
+&lt;ul>
+&lt;li>&lt;strong>容忍突发流量&lt;/strong>：令牌桶算法能够在一定程度上应对突发流量，当请求量增加时,桶中的令牌会被快速消耗,但只要有新的令牌不断被添加,系统就能够持续处理请求。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>缺点：
+&lt;ul>
+&lt;li>&lt;strong>实现复杂&lt;/strong>：令牌桶算法的实现和管理需要占用一定的内存和CPU资源。&lt;/li>
+&lt;li>&lt;strong>未实现平滑限流&lt;/strong>：令牌桶算法缺少流量整形机制，如果桶容量设置的不好，高峰流量会对下游系统造成瞬时冲击。&lt;/li>
+&lt;li>&lt;strong>难以设置恰当的限流阀值&lt;/strong>：如果设置的限流阀值过高，也就是桶的容量过大，当桶满时，突发流量都被允许通过，会导致下游系统过载。如果桶的容量过小，那么系统将频繁拒绝用户请求，系统资源未被充分利用，同时也影响用户体验。&lt;/li>
+&lt;li>&lt;strong>难以设置恰当的填充速率&lt;/strong>： 如果设置的令牌生成速率过高，可能导致下游服务过载。如果设置的令牌生成速率过低，会频繁拒绝用户请求，影响用户体验。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>适用场景：
+&lt;ul>
+&lt;li>API限流：有效控制API的访问速率，防止系统过载。&lt;/li>
+&lt;li>网络流量管理：在网络设备中限制带宽使用，能够容忍网络抖动，保障公平性和服务质量。&lt;/li>
+&lt;li>服务高可用：控制访问第三方服务的速度，防止压垮下游。控制服务自身的处理速度，方式过载。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="拒绝策略">拒绝策略&lt;/h2>
+&lt;p>当请求超过限流阈值时，系统可以采取不同的拒绝策略：&lt;/p></description></item><item><title>区分偶发性超时和频繁超时的重试策略</title><link>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</link><pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</guid><description>&lt;p>在实际项目中，区分偶发性超时和频繁超时的重试策略非常重要。偶发性超时可能是由于网络抖动或临时负载过高引起的，适合立即重试；而频繁超时则可能是系统过载或下游服务不可用，此时应避免重试，以免加剧问题。&lt;/p>
+&lt;p>在实际面试的过程中，经常会遇到类似的面试题目，这时候可以这样回答：&lt;/p>
+&lt;blockquote>
+&lt;p>在处理大量请求时，我们经常会遇到超时的情况。为了合理控制重试行为，避免所谓的“重试风暴”，我设计了一个基于时间窗口的算法。在这个算法中，我们维护了一个滑动窗口，窗口内记录了每个请求的时间戳以及该请求是否超时。每当一个请求超时后，我们会统计窗口内超时的请求数量。如果超时请求的数量超过了设定的阈值，我们就认为当前系统压力较大，不适合进行重试；否则，我们认为可以安全地进行重试。&lt;/p>
+&lt;p>然而，随着并发量的增加，普通版的滑动窗口算法暴露出了一些问题。特别是在高并发场景下，窗口内需要维护的请求数量可能非常大，这不仅占用了大量内存，而且在判定是否需要重试时还需要遍历整个窗口，这大大增加了算法的时间复杂度。&lt;/p>
+&lt;p>为了解决这个问题，我们进一步设计了进阶版的算法。在这个版本中，我们引入了ring buffer 来优化滑动窗口的实现。具体来说，我们不再以时间为窗口大小，而是使用固定数量的比特位来记录请求的超时信息。每个比特位对应一个请求，用1表示超时，用0表示未超时。当所有比特位都被标记后，我们从头开始再次标记。&lt;/p>
+&lt;p>这种设计极大地降低了内存占用，因为无论并发量多高，我们只需要固定数量的比特位来记录请求的超时状态。同时，在判定是否需要重试时，我们只需要统计ring buffer中为1的比特数量，这大大简化了算法的实现并提高了效率。&lt;/p></description></item><item><title>[译]领域驱动设计速成课程</title><link>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-on-domain-driven-design/</link><pubDate>Mon, 05 Aug 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-on-domain-driven-design/</guid><description>&lt;p>原文链接：&lt;a href="https://blog.bytebytego.com/p/a-crash-course-on-domain-driven-design" target="_blank">https://blog.bytebytego.com/p/a-crash-course-on-domain-driven-design&lt;/a>&lt;/p>
 &lt;p>为复杂领域开发软件是一项具有挑战性的任务。&lt;/p>
 &lt;p>随着问题领域的复杂性不断增长，创建准确表示业务概念、规则和流程的软件变得越来越困难。设计不良的软件很快就会变成难以理解、难以维护和扩展的混乱代码。&lt;/p>
 &lt;p>领域驱动设计（DDD）为这个问题提供了解决方案。&lt;/p>
