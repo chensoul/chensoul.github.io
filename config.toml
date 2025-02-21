@@ -2,13 +2,17 @@ baseURL = "https://blog.chensoul.cc/"
 languageCode = "en-us"
 title = "ChenSoul"
 theme = "wellington"
-paginate = 10
 
 summaryLength = 8
 
 enableRobotsTXT = true
 enableEmoji = true
 pygmentsCodeFences = true
+
+ignoreLogs = ['warning-goldmark-raw-html']
+
+[pagination]
+  pagerSize = 10
 
 [permalinks]
   posts="/posts/:year/:month/:day/:slug/"
