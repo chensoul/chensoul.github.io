@@ -95,11 +95,11 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>在上面的例子中，使用 ArgumentParser 类创建解析器对象，使用 add_argument() 方法添加命令行参数，使用 parse_args() 方法解析命令行参数，并使用 argparse.Namespace 对象访问解析结果。</p><p>13、使用 pprint 模块输出对象信息</p><p>pprint 模块可以用于输出 Python 对象的信息，以便更好地查看和调试对象。可以使用 pprint 模块中的 pprint() 函数将对象输出为美化的格式。例如：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pprint
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>:
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, name, age):
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>__init__</span>(self, name, age):
 </span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>name <span style=color:#f92672>=</span> name
 </span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>age <span style=color:#f92672>=</span> age
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __repr__(self):
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>__repr__</span>(self):
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Person(name=&#39;</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>name<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;, age=</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>age<span style=color:#e6db74>}</span><span style=color:#e6db74>)&#34;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>person <span style=color:#f92672>=</span> Person(<span style=color:#e6db74>&#34;Alice&#34;</span>, <span style=color:#ae81ff>25</span>)
