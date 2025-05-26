@@ -1,0 +1,94 @@
+
+{{ partial "social-links.html" . }}
+
+<aside id="author" class="widget widget_recent_entries clearfix">
+    <div class="widget-header">
+        <h3 class="widget-title">{{ .Params.author | default .Site.Params.author}}</h3>
+    </div>
+    <div>
+        <img src="/images/favicon.webp" alt="{{ .Params.author }}" height="250px" width="250px"/>
+    </div>
+</aside>
+
+<aside id="categories" class="widget clearfix">
+    <div class="widget-header"><h3 class="widget-title">Categories</h3></div>
+    <ul>
+        {{- if isset .Site.Taxonomies "categories" }}
+        {{- if not (eq (len .Site.Taxonomies.categories) 0) }}
+        {{- range $name, $items := .Site.Taxonomies.categories }}
+        <li>
+            <a href="{{ "categories/" | relLangURL }}{{ $name | urlize | lower }}/"
+                title="{{ $name }}">
+            {{ $name }}
+            </a>
+        </li>
+        {{- end }}
+
+        {{- end }}
+        {{- end }}
+    </ul>
+</aside>
+
+<!-- <aside id="tutorials" class="widget clearfix">
+    <div class="widget-header">
+        <h3 class="widget-title">Tutorials</h3>
+    </div>
+    <ul>
+        <li class="widget__item">
+            <a class="widget__link" href="{{ "/spring-boot-tutorials" | relLangURL }}/">Spring Boot Tutorials</a>
+        </li>
+        <li class="widget__item">
+            <a class="widget__link" href="{{ "/microservice-tutorial" | relLangURL }}/">Microservice Tutorials</a>
+        </li>
+        <li class="widget__item">
+            <a class="widget__link" href="{{ "/kubernetes-tutorials" | relLangURL }}/">Kubernetes Tutorials</a>
+        </li>
+    </ul>
+</aside> -->
+
+
+<aside id="recent-posts" class="widget clearfix">
+    <div class="widget-header">
+        <h3 class="widget-title">Recent Posts</h3>
+    </div>
+    <ul>
+        {{- $recent_articles_num := (.Site.Params.widgets.recent_articles_num | default 10) }}
+        {{- range first $recent_articles_num (where .Site.RegularPages "Section" "in" (.Site.Params.postSections | default (slice "posts"))) }}
+        <li class="widget__item"><a class="widget__link" href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{- end }}
+    </ul>
+</aside>
+
+<!-- <aside id="top-posts" class="widget clearfix">
+    <div class="widget-header"><h3 class="widget-title">Top Posts</h3></div>
+    <ul>
+        {{ range (where .Site.RegularPages "Section" "in" (.Site.Params.postSections | default (slice "posts"))) }}
+        {{- if (.Params.popular) }}
+        <li>
+            <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+        </li>
+        {{ end }}
+        {{ end }}
+    </ul>
+</aside> -->
+
+<aside id="tag_cloud" class="widget widget_tag_cloud clearfix">
+    <div class="widget-header"><h3 class="widget-title">Tags</h3></div>
+    <div class="tagcloud">
+        {{- if isset .Site.Taxonomies "tags" }}
+        {{- if not (eq (len .Site.Taxonomies.tags) 0) }}
+
+        <div class="widget__content">
+            {{- range $name, $items := .Site.Taxonomies.tags }}
+            <a class="tag-cloud-link widget__link widget__link--taglist"
+               href="{{ "tags/" | relLangURL }}{{ $name | urlize | lower }}/"
+               title="{{$name}}">
+                {{ $name | lower }}{{ if $.Site.Params.widgets.tags_counter }} ({{ $items.Count }}){{ end }}
+            </a>
+            {{- end }}
+        </div>
+
+        {{- end }}
+        {{- end }}
+    </div>
+</aside>

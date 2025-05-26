@@ -1,0 +1,72 @@
+baseURL = "https://blog.chensoul.cc/"
+languageCode = "en-us"
+title = "ChenSoul"
+theme = "wellington"
+
+summaryLength = 8
+
+enableRobotsTXT = true
+enableEmoji = true
+pygmentsCodeFences = true
+
+ignoreLogs = ['warning-goldmark-raw-html']
+
+[pagination]
+  pagerSize = 10
+
+[permalinks]
+  posts="/posts/:year/:month/:day/:slug/"
+  categories="/categories/:slug/"
+  tags="/tags/:slug/"
+  pages="/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[related]
+  includeNewer = true
+  threshold = 0
+  toLower = true
+
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+[params]
+  author = "chensoul"
+  subtitle = "Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials"
+  description = "Java, Spring Boot, JPA, Hibernate, SQL, REST API, Microservice, Architecture, CI/CD, Docker, Kubernetes, Cloud, and DevOps Tutorials"
+  publisher = "chensoul"
+  images = ['/images/favicon.webp']
+  mainSections = ["post"]
+  youtube = "@chensoul"
+  github = "chensoul"
+  twitter = "ichensoul"
+  telegram = "chensouls"
+  facebook = ""
+  linkedin = ""
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'monokai' #https://xyproto.github.io/splash/docs/longer/all.html
+    tabWidth = 4
+
+
+
+

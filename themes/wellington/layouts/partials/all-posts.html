@@ -1,0 +1,30 @@
+<main id="main" class="site-main" role="main">
+    <div id="post-wrapper" class="post-wrapper clearfix">
+        <div class="post-column clearfix">
+            {{ $paginator := .Paginate (where .Pages "Type" "in" site.Params.mainSections) }}
+
+            {{ range $paginator.Pages }}
+            <article class="post type-post">
+                <a href="{{ .Permalink }}" rel="bookmark">
+                    {{- if isset .Params "images" }}
+                    {{- if not (eq (len .Params.images) 0) }}
+                    <img width="600" height="340"
+                         src="{{ index .Params.images 0 }}"
+                         class="wp-post-image"  alt="{{ .Title }}" />
+                    {{ end }}
+                    {{ end }}
+                </a>
+                {{ partial "post-meta.html" . }}
+
+                <div class="entry-content clearfix">
+                    <p>{{ .Summary  }}</p>
+                    <a href="{{ .Permalink }}" class="more-link"
+                       title="Click to read more about {{ .Title }}" >More &raquo;</a>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+
+    </div>
+    {{ partial "pagination.html" . }}
+</main>

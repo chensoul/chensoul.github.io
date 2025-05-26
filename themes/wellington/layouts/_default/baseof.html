@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+    {{ if .IsHome }}
+    <title>{{ .Site.Params.Subtitle }}</title>
+    {{ else }}
+    <title>{{ with .Params.Title }}{{ . }} | {{ end }}{{ .Site.Title }}</title>
+    {{ end }}
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="preconnect" href="https://fonts.font.im">
+    <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+
+    {{ template "_internal/twitter_cards.html" . }}
+    {{ with .Site.Params.twitter -}}<meta name="twitter:creator" content="@{{ . }}"/>
+    {{ end -}}
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="{{ .Site.Params.publisher }}" />
+    {{ template "_internal/opengraph.html" . }}
+    {{ template "_internal/schema.html" . }}
+
+    <link rel='stylesheet' href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" media='all'/>
+
+    {{ $CSS := resources.Match "css/**.css" | resources.Concat "main.css"  | resources.Minify }}
+    <link rel='stylesheet' href="{{ $CSS.RelPermalink }}" type='text/css' media='all'/>
+
+    <link rel="shortcut icon" href="{{ "favicon.ico" | relURL }}" type="image/x-icon" />
+
+    {{ with .OutputFormats.Get "RSS" }}
+    <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
+    <link href="{{ .RelPermalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
+    {{ end }}
+    {{ partial "site-schema.html" . }}
+    {{ partial "head.html" . }}
+</head>
+<body class="home blog post-layout-one-column">
+    <button onclick="topFunction()" id="scrollTopBtn" title="Go to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <div id="header-top" class="header-bar-wrap"></div>
+    <div id="page" class="site">
+        <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+        {{ partial "header.html" . }}
+        <div id="content" class="site-content container clearfix">
+            {{ block "main" . }} {{ end }}
+        </div>
+        <div id="footer" class="footer-wrap">
+            {{ partial "footer.html" . }}
+        </div>
+    </div>
+    {{- $JS := slice (resources.Get "js/jquery-1.12.4.min.js") (resources.Get "js/html5shiv.min.js") (resources.Get "js/navigation.min.js") (resources.Get "js/custom.min.js") | resources.Concat "main.js" | resources.Minify }}
+    <script type='text/javascript' src="{{ $JS.RelPermalink }}"></script>
+
+<!--    {{ if (findRE "<pre" .Content 1) }}-->
+<!--    {{ $jsCopy := resources.Get "js/copy-code-button.js" | resources.Minify }}-->
+<!--    <script src="{{ $jsCopy.RelPermalink }}"></script>-->
+<!--    {{ end }}-->
+
+</body>
+</html>
