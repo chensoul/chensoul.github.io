@@ -158,12 +158,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        / TODO configure authentication manager
+        // TODO configure authentication manager
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        / TODO configure web security
+        // TODO configure web security
     }
 
 }
@@ -205,7 +205,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ));
     }
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
 }
 ```
@@ -242,7 +242,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
 }
 ```
@@ -270,20 +270,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtTokenFilter = jwtTokenFilter;
     }
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        / Enable CORS and disable CSRF
+        // Enable CORS and disable CSRF
         http = http.cors().and().csrf().disable();
 
-        / Set session management to stateless
+        // Set session management to stateless
         http = http
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and();
 
-        / Set unauthorized requests exception handler
+        // Set unauthorized requests exception handler
         http = http
             .exceptionHandling()
             .authenticationEntryPoint(
@@ -296,7 +296,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             )
             .and();
 
-        / Set permissions on endpoints
+        // Set permissions on endpoints
         http.authorizeRequests()
             / Our public endpoints
             .antMatchers("/api/public/**").permitAll()
@@ -307,14 +307,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             / Our private endpoints
             .anyRequest().authenticated();
 
-        / Add JWT token filter
+        // Add JWT token filter
         http.addFilterBefore(
             jwtTokenFilter,
             UsernamePasswordAuthenticationFilter.class
         );
     }
 
-    / Used by Spring Security if CORS is enabled.
+    // Used by Spring Security if CORS is enabled.
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source =
@@ -351,21 +351,21 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain)
             throws ServletException, IOException {
-        / Get authorization header and validate
+        // Get authorization header and validate
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (isEmpty(header) || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }
 
-        / Get jwt token and validate
+        // Get jwt token and validate
         final String token = header.split(" ")[1].trim();
         if (!jwtTokenUtil.validate(token)) {
             chain.doFilter(request, response);
             return;
         }
 
-        / Get user identity and set it on the spring security context
+        // Get user identity and set it on the spring security context
         UserDetails userDetails = userRepo
             .findByUsername(jwtTokenUtil.getUsername(token))
             .orElse(null);
@@ -395,7 +395,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
     @Override @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -480,20 +480,20 @@ Spring Security 框架为我们提供了两种设置授权模式的选项：
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        / Enable CORS and disable CSRF
+        // Enable CORS and disable CSRF
         http = http.cors().and().csrf().disable();
 
-        / Set session management to stateless
+        // Set session management to stateless
         http = http
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and();
 
-        / Set unauthorized requests exception handler
+       // Set unauthorized requests exception handler
         http = http
             .exceptionHandling()
             .authenticationEntryPoint(
@@ -506,28 +506,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             )
             .and();
 
-        / Set permissions on endpoints
+        // Set permissions on endpoints
         http.authorizeRequests()
-            / Our public endpoints
+            // Our public endpoints
             .antMatchers("/api/public/**").permitAll()
             .antMatchers(HttpMethod.GET, "/api/author/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/author/search").permitAll()
             .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/book/search").permitAll()
-            / Our private endpoints
+            // Our private endpoints
             .antMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN)
             .antMatchers("/api/author/**").hasRole(Role.AUTHOR_ADMIN)
             .antMatchers("/api/book/**").hasRole(Role.BOOK_ADMIN)
             .anyRequest().authenticated();
 
-        / Add JWT token filter
+        // Add JWT token filter
         http.addFilterBefore(
             jwtTokenFilter,
             UsernamePasswordAuthenticationFilter.class
         );
     }
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
 }
 ```
@@ -554,7 +554,7 @@ Spring Security 框架为 Web 安全定义了以下注释：
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
 }
 ```
@@ -571,7 +571,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 @RolesAllowed(Role.USER_ADMIN)
 public class UserAdminApi {
 
-	/ Details omitted for brevity
+	// Details omitted for brevity
 
 }
 
@@ -579,7 +579,7 @@ public class UserAdminApi {
 @RestController @RequestMapping(path = "api/author")
 public class AuthorApi {
 
-	/ Details omitted for brevity
+	// Details omitted for brevity
 
 	@RolesAllowed(Role.AUTHOR_ADMIN)
 	@PostMapping
@@ -608,7 +608,7 @@ public class AuthorApi {
 @RestController @RequestMapping(path = "api/book")
 public class BookApi {
 
-	/ Details omitted for brevity
+	// Details omitted for brevity
 
 	@RolesAllowed(Role.BOOK_ADMIN)
 	@PostMapping
@@ -660,7 +660,7 @@ Spring Security 框架区分两个术语：
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    / Details omitted for brevity
+    // Details omitted for brevity
 
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
@@ -708,7 +708,7 @@ These annotations are: 这些注释是：
 ```java
 @Test @WithMockUser(username="customUsername@example.io", roles={"USER_ADMIN"})
 public void test() {
-	/ Details omitted for brevity
+	// Details omitted for brevity
 }
 ```
 
@@ -721,7 +721,7 @@ public void test() {
 ```java
 @Test @WithUserDetails("customUsername@example.io")
 public void test() {
-	/ Details omitted for brevity
+	// Details omitted for brevity
 }
 ```
 
@@ -737,17 +737,17 @@ public class WithUserClassLevelAuthenticationTests {
 
     @Test
     public void test1() {
-        / Details omitted for brevity
+        // Details omitted for brevity
     }
 
     @Test
     public void test2() {
-        / Details omitted for brevity
+        // Details omitted for brevity
     }
 
     @Test @WithAnonymousUser
     public void test3() throws Exception {
-        / Details omitted for brevity
+        // Details omitted for brevity
     }
 }
 ```

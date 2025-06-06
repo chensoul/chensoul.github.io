@@ -28,10 +28,10 @@ tags: [spring-boot]
 ```java
 public class FooController{
 
-    /...
+    //...
     @ExceptionHandler({ CustomException1.class, CustomException2.class })
     public void handleException() {
-        /
+        //
     }
 }
 ```

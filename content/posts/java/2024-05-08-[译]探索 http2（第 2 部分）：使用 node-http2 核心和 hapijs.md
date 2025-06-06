@@ -41,12 +41,12 @@ touch http1Server.js
 const Hapi = require('hapi');
 const server = new Hapi.Server();
 
-/ define server config
+// define server config
 server.connection({
   port: '8000'
 });
 
-/ define route config
+// define route config
 server.route([{
   method: 'GET',
   path: '/ping',
@@ -55,7 +55,7 @@ server.route([{
   }
 }]);
 
-/ start server
+// start server
 server.start(err => {
   if (err) console.error(err)
   console.log(`Started ${server.connections.length} connections`)
@@ -90,22 +90,22 @@ const fs = require('fs');
 const Http2 = require('http2');
 const server = new Hapi.Server();
 
-/ read certificate and private key
+// read certificate and private key
 const serverOptions = {
   key: fs.readFileSync('localhost-privkey.pem'),
   cert: fs.readFileSync('localhost-cert.pem')
 };
 
-/ create http2 secure server listener
+// create http2 secure server listener
 const listener = Http2.createSecureServer(serverOptions);
 
-/ create a connection object with listener and other options
+// create a connection object with listener and other options
 server.connection({
   listener,
   port: '8000'
 });
 
-/ define routes
+// define routes
 server.route([{
   method: 'GET',
   path: '/ping',
@@ -114,7 +114,7 @@ server.route([{
   }
 }]);
 
-/ start server
+// start server
 server.start(err => {
   if (err) console.error(err)
   console.log(`Started ${server.connections.length} connections`)
@@ -157,7 +157,7 @@ server.start(err => {
 `allowHttp1: true`
 
 ```bash
-/ read certificate and private-key
+// read certificate and private-key
 const serverOptions = {
   key: fs.readFileSync('localhost-privkey.pem'),
   cert: fs.readFileSync('localhost-cert.pem'),

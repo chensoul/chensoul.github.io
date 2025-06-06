@@ -118,12 +118,12 @@ Spring Security 中的一些重要安全过滤器包括：
 ```java
 public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		Class<? extends Authentication> toTest = authentication.getClass();
-		/ .......
+		// .......
 		for (AuthenticationProvider provider : getProviders()) {
 			if (!provider.supports(toTest)) {
 				continue;
 			}
-               / ......
+               // ......
 }
 ```
 
@@ -167,13 +167,13 @@ public PasswordEncoder passwordEncoder() {
 public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword)
-        / Implement your password encoding logic here
-        / Return the encoded password as a String
+        // Implement your password encoding logic here
+        // Return the encoded password as a String
     }
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        / Implement your password verification logic here
-        / Compare the rawPassword with the encodedPassword and return true or false
+        // Implement your password verification logic here
+        // Compare the rawPassword with the encodedPassword and return true or false
     }
 }
 ```
@@ -190,7 +190,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new CustomPasswordEncoder();
     }
-    / Other security configuration code
+    // Other security configuration code
 }
 ```
 
@@ -274,7 +274,7 @@ public class SecurityConfig {
             .formLogin().permitAll();
         return http.build();
     }
-    / Possibly more bean methods ...
+    // Possibly more bean methods ...
 }
 ```
 
@@ -294,7 +294,7 @@ public class SecurityConfig {
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    /..
+    //..
 }
 ```
 
@@ -305,7 +305,7 @@ public class SecurityConfig {
 ```java
 @PreAuthorize("hasRole('ADMIN')")
 public void deleteProduct(Long productId) {
-    / Method logic for deleting a product
+    // Method logic for deleting a product
 }
 ```
 
@@ -480,7 +480,7 @@ public class MyController {
     @GetMapping("/api/resource")
     @CrossOrigin(origins = "http://example.com", methods = {RequestMethod.GET, RequestMethod.POST})
     public String getResource() {
-        /...
+        //...
     }
 }
 ```
@@ -518,7 +518,7 @@ public class MyController {
 
 ```java
 http
-    / Other security configurations...
+    // Other security configurations...
     .logout()
         .invalidateHttpSession(true) / Invalidate the user's HttpSession
         .deleteCookies("JSESSIONID") / Remove the session cookie

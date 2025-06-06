@@ -31,7 +31,7 @@ Spring Security 附带了大量内置功能和工具，为我们提供方便。�
 ```java
 protected void configure(HttpSecurity http) throws Exception {
 http
-   / ...
+   // ...
    .formLogin(
       form -> form.loginPage("/login")
       .permitAll()

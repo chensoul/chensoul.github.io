@@ -85,7 +85,7 @@ CustomOAuth2AuthorizationRequestResolver 相对于默认实现 DefaultOAuth2Auth
 
 ```java
 		private String expandRedirectUri(HttpServletRequest request, ClientRegistration clientRegistration, String action) {
-        /.....
+        //.....
 
         String redirectUri = getRedirectUri(request);
         log.trace("Redirect URI - {}.", redirectUri);
@@ -274,7 +274,7 @@ public class HybridClientRegistrationRepository implements ClientRegistrationRep
     }
 
     private ClientRegistration toSpringClientRegistration(OAuth2Client oAuth2Client){
-    	/...
+    	//...
     }
 }
 ```

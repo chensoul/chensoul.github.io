@@ -44,14 +44,14 @@ tags: [javascript]
 第 `<script src="index.js"></script>` 行引用同一目录中名为 `index.js` 的单独 JavaScript 文件：
 
 ```js
-/ index.js
+// index.js
 console.log("Hello from JavaScript!");
 ```
 
 这就是制作网站所需的全部内容！现在，假设您想添加一个其他人编写的库，例如 moment.js（一个可以帮助以人类可读的方式格式化日期的库）。例如，您可以在 JavaScript 中使用 `moment` 函数，如下所示：
 
 ```js
-moment().startOf("day").fromNow(); / 20 hours ago
+moment().startOf("day").fromNow(); // 20 hours ago
 ```
 
 但这只是假设您在网站上包含 moment.js！在 [moment.js 主页](http://momentjs.com/) 上您会看到以下说明：
@@ -80,7 +80,7 @@ moment().startOf("day").fromNow(); / 20 hours ago
 请注意， `moment.min.js` 在 `index.js` 之前加载，这意味着您可以在 `index.js` 中使用 `moment` 函数，如下所示：
 
 ```js
-/ index.js
+// index.js
 console.log("Hello from JavaScript!");
 console.log(moment().startOf("day").fromNow());
 ```
@@ -179,7 +179,7 @@ $ npm install moment --save
 如前所述，node.js 是一个设计用于在服务器上运行的 JavaScript 运行时。下面是前面的示例使用 node.js 模块的样子。与其使用 HTML 脚本标记加载所有 `moment.min.js` ，不如直接将其加载到 JavaScript 文件中，如下所示：
 
 ```js
-/ index.js
+// index.js
 var moment = require("moment");
 console.log("Hello from JavaScript!");
 console.log(moment().startOf("day").fromNow());
@@ -252,7 +252,7 @@ $ ./node_modules/.bin/webpack index.js --mode=development
 请注意，每次更改 `index.js` 时，我们都需要运行 webpack 命令。这很乏味，当我们使用 webpack 更高级的功能（例如生成源映射以帮助从转译的代码调试原始代码）时，这将变得更加乏味。Webpack 可以从名为 `webpack.config.js` 的项目根目录中的配置文件中读取选项，在我们的例子中，它看起来像：
 
 ```js
-/ webpack.config.js
+// webpack.config.js
 module.exports = {
   mode: "development",
   entry: "./index.js",
@@ -290,7 +290,7 @@ $ npm install @babel/core @babel/preset-env babel-loader --save-dev
 请注意，我们正在安装 3 个单独的包作为开发依赖项 — `@babel/core` 是 babel 的主要部分， `@babel/preset-env` 是定义要转译的新 JavaScript 功能的预设， `babel-loader` 是使 babel 能够使用 webpack 的包。我们可以通过编辑 `webpack.config.js` 文件将 webpack 配置为使用 `babel-loader` ，如下所示：
 
 ```js
-/ webpack.config.js
+// webpack.config.js
 module.exports = {
   mode: "development",
   entry: "./index.js",
@@ -320,7 +320,7 @@ module.exports = {
 现在一切都设置好了，我们可以开始用我们的 JavaScript 编写 ES2015 功能了！下面是 `index.js` 文件中的 [ES2015 模板字符串](https://babeljs.io/learn-es2015/#ecmascript-2015-features-template-strings)示例：
 
 ```js
-/ index.js
+// index.js
 var moment = require("moment");
 console.log("Hello from JavaScript!");
 console.log(moment().startOf("day").fromNow());
@@ -332,7 +332,7 @@ console.log(`Hello ${name}, how are you ${time}?`);
 我们还可以使用 [ES2015 import 语句 ](https://babeljs.io/learn-es2015/#ecmascript-2015-features-modules)代替 `require` 来加载模块，这就是您今天在很多代码库中看到的内容：
 
 ```js
-/ index.js
+// index.js
 import moment from "moment";
 console.log("Hello from JavaScript!");
 console.log(moment().startOf("day").fromNow());
@@ -350,10 +350,10 @@ $ ./node_modules/.bin/webpack
 现在您可以在浏览器中刷新 `index.html` 。在撰写本文时，大多数现代浏览器都支持所有 ES2015 功能，因此很难判断 babel 是否完成了它的工作。您可以在 IE9 等较旧的浏览器中对其进行测试，也可以在 `main.js` 中搜索以查找转译的代码行：
 
 ```js
-/ main.js
+// main.js
 / ...
 console.log("Hello " + name + ", how are you " + time + "?");
-/ ...
+// ...
 ```
 
 在这里你可以看到 babel 将 ES2015 模板字符串转换为常规的 JavaScript 字符串连接，以保持浏览器兼容性。虽然这个特殊的例子可能不太令人兴奋，但转译代码的能力是非常强大的。JavaScript 中有一些令人兴奋的语言功能，如 [async/await](async/await)，你可以立即开始使用它们来编写更好的代码。虽然音译有时可能看起来乏味和痛苦，但它在过去几年中导致了语言的巨大改进，因为人们今天正在测试明天的功能。

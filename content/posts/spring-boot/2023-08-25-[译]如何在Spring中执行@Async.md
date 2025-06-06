@@ -75,7 +75,7 @@ public Future<String> asyncMethodWithReturnType() {
         Thread.sleep(5000);
         return new AsyncResult<String>("hello world !!!!");
     } catch (InterruptedException e) {
-        /
+        //
     }
 
     return null;

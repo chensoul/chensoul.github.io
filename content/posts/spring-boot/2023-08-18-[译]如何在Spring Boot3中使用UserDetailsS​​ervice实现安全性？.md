@@ -450,13 +450,13 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 
-	/ Go to Registration Page
+	// Go to Registration Page
 	@GetMapping("/register")
 	public String register() {
 		return "registerUser";
 	}
 
-	/ Read Form data to save into DB
+	// Read Form data to save into DB
 	@PostMapping("/saveUser")
 	public String saveUser(
 			@ModelAttribute User user,

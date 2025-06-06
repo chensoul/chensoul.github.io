@@ -140,7 +140,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTUtil {
 
-	/ code to generate Token
+	// code to generate Token
 	public static String generateToken(String subject, String secret_key) {
 
 		return Jwts.builder()
@@ -154,7 +154,7 @@ public class JWTUtil {
 				.compact();
 	}
 
-	/code to get Claims
+	//code to get Claims
 	public static Claims getClaims(String token, String secret_key) {
 
 		return Jwts.parser()
@@ -184,14 +184,14 @@ public class JWT_Test {
 
 	public static void main(String[] args) {
 
-		/ code to test generated Token
+		// code to test generated Token
 		String token= JWTUtil.generateToken("Token1", secret_key);
 		System.out.println("------------------------TOKEN----------------------------------------------------");
 		System.out.println(token);
 		System.out.println();
 		System.out.println("------------------------CLAIMS----------------------------------------------------");
 
-		/code to test parsed token : Claims
+		//code to test parsed token : Claims
 
 		Claims claims= Jwts.parser()
 				.setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
@@ -458,12 +458,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public Integer saveUser(User user) {
 
-		/Encode password before saving to DB
+		//Encode password before saving to DB
 		user.setPassword(bCryptEncoder.encode(user.getPassword()));
 		return userRepo.save(user).getId();
 	}
 
-	/find user by username
+	//find user by username
 	@Override
 	public Optional<User> findByUsername(String username) {
 		return userRepo.findByUsername(username);
@@ -522,7 +522,7 @@ public class JWTUtil {
 	@Value("${app.secret.key}")
 	private String secret_key;
 
-	/ code to generate Token
+	// code to generate Token
 	public String generateToken(String subject) {
 		String tokenId= String.valueOf(new Random().nextInt(10000));
 		return Jwts.builder()
@@ -536,7 +536,7 @@ public class JWTUtil {
 				.compact();
 	}
 
-	/ code to get Claims
+	// code to get Claims
 	public Claims getClaims(String token) {
 
 		return Jwts.parser()
@@ -545,28 +545,28 @@ public class JWTUtil {
 				.getBody();
 	}
 
-	/ code to check if token is valid
+	// code to check if token is valid
 	public boolean isValidToken(String token) {
 		return getClaims(token).getExpiration().after(new Date(System.currentTimeMillis()));
 	}
 
-	/ code to check if token is valid as per username
+	// code to check if token is valid as per username
 	public boolean isValidToken(String token,String username) {
 		String tokenUserName=getSubject(token);
 		return (username.equals(tokenUserName) && !isTokenExpired(token));
 	}
 
-	/ code to check if token is expired
+	// code to check if token is expired
 	public boolean isTokenExpired(String token) {
 		return getExpirationDate(token).before(new Date(System.currentTimeMillis()));
 	}
 
-	/code to get expiration date
+	//code to get expiration date
 	public Date getExpirationDate(String token) {
 		return getClaims(token).getExpiration();
 	}
 
-	/code to get expiration date
+	//code to get expiration date
 	public String getSubject(String token) {
 		return getClaims(token).getSubject();
 	}
@@ -649,14 +649,14 @@ public class UserRestController {
 
 		Integer id = userService.saveUser(user);
 		String message= "User with id '"+id+"' saved succssfully!";
-		/return new ResponseEntity<String>(message, HttpStatus.OK);
+		//return new ResponseEntity<String>(message, HttpStatus.OK);
 		return ResponseEntity.ok(message);
 	}
 
 	@PostMapping("/loginUser")
 	public ResponseEntity<UserResponse> login(@RequestBody UserRequest request){
 
-		/Validate username/password with DB(required in case of Stateless Authentication)
+		//Validate username/password with DB(required in case of Stateless Authentication)
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				request.getUsername(), request.getPassword()));
 		String token =util.generateToken(request.getUsername());
@@ -707,11 +707,11 @@ public class SecurityFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		/ Reading Token from Authorization Header
+		// Reading Token from Authorization Header
 		String token= request.getHeader("Authorization");
 		if(token !=null) {
 			String username= util.getSubject(token);
-			/if username is not null & Context Authentication must be null
+			//if username is not null & Context Authentication must be null
 			if(username !=null && SecurityContextHolder.getContext().getAuthentication()==null) {
 				UserDetails user= userDetailsService.loadUserByUsername(username);
 				boolean isValid=util.isValidToken(token, user.getUsername());
@@ -798,7 +798,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SecurityFilter secFilter;
 
-	/Required in case of Stateless Authentication
+	//Required in case of Stateless Authentication
 	@Override @Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
@@ -825,7 +825,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			/To Verify user from second request onwards............
+			//To Verify user from second request onwards............
 			.and()
 			.addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
 			;
@@ -876,7 +876,7 @@ public class SecurityConfig {
 	@Autowired
 	private SecurityFilter secFilter;
 
-	/Required in case of Stateless Authentication
+	//Required in case of Stateless Authentication
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -894,7 +894,7 @@ public class SecurityConfig {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http
-			/ .csrf().disable()    /Disabling CSRF as not using form based login
+			// .csrf().disable()    /Disabling CSRF as not using form based login
 			.authorizeRequests()
 			.antMatchers("/user/saveUser","/user/loginUser").permitAll()
 			.anyRequest().authenticated()
@@ -904,7 +904,7 @@ public class SecurityConfig {
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			/To Verify user from second request onwards............
+			//To Verify user from second request onwards............
 			.and()
 			.addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
 
@@ -968,7 +968,7 @@ public class SecurityConfig {
 	@Autowired
 	private SecurityFilter secFilter;
 
-	/Required in case of Stateless Authentication
+	//Required in case of Stateless Authentication
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -986,7 +986,7 @@ public class SecurityConfig {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http
-			/ .csrf().disable()    /Disabling CSRF as not using form based login
+			// .csrf().disable()    /Disabling CSRF as not using form based login
 			.authorizeHttpRequests()
 			.requestMatchers("/user/saveUser","/user/loginUser").permitAll()
 			.anyRequest().authenticated()

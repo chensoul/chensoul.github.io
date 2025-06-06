@@ -93,38 +93,38 @@ public class SecurityServletFilter extends HttpFilter {
         UsernamePasswordToken token = extractUsernameAndPasswordFrom(request);  / (1)
 
         if (notAuthenticated(token)) {  / (2)
-            / either no or wrong username/password
-            / unfortunately the HTTP status code is called "unauthorized", instead of "unauthenticated"
+            // either no or wrong username/password
+            // unfortunately the HTTP status code is called "unauthorized", instead of "unauthenticated"
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); / HTTP 401.
             return;
         }
 
         if (notAuthorized(token, request)) { / (3)
-            / you are logged in, but don't have the proper rights
+            // you are logged in, but don't have the proper rights
             response.setStatus(HttpServletResponse.SC_FORBIDDEN); / HTTP 403
             return;
         }
 
-        / allow the HttpRequest to go to Spring's DispatcherServlet
-        / and @RestControllers/@Controllers.
+        // allow the HttpRequest to go to Spring's DispatcherServlet
+        // and @RestControllers/@Controllers.
         chain.doFilter(request, response); / (4)
     }
 
     private UsernamePasswordToken extractUsernameAndPasswordFrom(HttpServletRequest request) {
-        / Either try and read in a Basic Auth HTTP Header, which comes in the form of user:password
-        / Or try and find form login request parameters or POST bodies, i.e. "username=me" & "password="myPass"
+        // Either try and read in a Basic Auth HTTP Header, which comes in the form of user:password
+        // Or try and find form login request parameters or POST bodies, i.e. "username=me" & "password="myPass"
         return checkVariousLoginOptions(request);
     }
 
 
     private boolean notAuthenticated(UsernamePasswordToken token) {
-        / compare the token with what you have in your database...or in-memory...or in LDAP...
+        // compare the token with what you have in your database...or in-memory...or in LDAP...
         return false;
     }
 
     private boolean notAuthorized(UsernamePasswordToken token, HttpServletRequest request) {
-       / check if currently authenticated user has the permission/role to access this request's /URI
-       / e.g. /admin needs a ROLE_ADMIN , /callcenter needs ROLE_CALLCENTER, etc.
+       // check if currently authenticated user has the permission/role to access this request's /URI
+       // e.g. /admin needs a ROLE_ADMIN , /callcenter needs ROLE_CALLCENTER, etc.
        return false;
     }
 }
@@ -203,24 +203,24 @@ chain.doFilter(request, response);
 
 ```java
 @Configuration
-@EnableWebSecurity / (1)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter { / (1)
+@EnableWebSecurity // (1)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // (1)
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {  / (2)
+  protected void configure(HttpSecurity http) throws Exception {  // (2)
       http
         .authorizeRequests()
-          .antMatchers("/", "/home").permitAll() / (3)
-          .anyRequest().authenticated() / (4)
+          .antMatchers("/", "/home").permitAll() // (3)
+          .anyRequest().authenticated() // (4)
           .and()
-       .formLogin() / (5)
-         .loginPage("/login") / (5)
+       .formLogin() // (5)
+         .loginPage("/login") // (5)
          .permitAll()
          .and()
-      .logout() / (6)
+      .logout() // (6)
         .permitAll()
         .and()
-      .httpBasic(); / (7)
+      .httpBasic(); // (7)
   }
 }
 ```
@@ -252,10 +252,10 @@ public abstract class WebSecurityConfigurerAdapter implements
     protected void configure(HttpSecurity http) throws Exception {
             http
                 .authorizeRequests()
-                    .anyRequest().authenticated()  / (1)
+                    .anyRequest().authenticated()  // (1)
                     .and()
-                .formLogin().and()   / (2)
-                .httpBasic();  / (3)
+                .formLogin().and()   // (2)
+                .httpBasic();  // (3)
         }
 }
 ```
@@ -304,7 +304,7 @@ create table users (id int auto_increment primary key, username varchar(255), pa
 ```java
 @Bean
 public UserDetailsService userDetailsService() {
-    return new MyDatabaseUserDetailsService(); / (1)
+    return new MyDatabaseUserDetailsService(); // (1)
 }
 ```
 
@@ -313,22 +313,22 @@ public UserDetailsService userDetailsService() {
 ```java
 public class MyDatabaseUserDetailsService implements UserDetailsService {
 
-	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { / (1)
-         / 1. Load the user from the users table by username. If not found, throw UsernameNotFoundException.
-         / 2. Convert/wrap the user to a UserDetails object and return it.
+	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // (1)
+         // 1. Load the user from the users table by username. If not found, throw UsernameNotFoundException.
+         // 2. Convert/wrap the user to a UserDetails object and return it.
         return someUserDetails;
     }
 }
 
-public interface UserDetails extends Serializable { / (2)
+public interface UserDetails extends Serializable { // (2)
 
     String getUsername();
 
     String getPassword();
 
-    / <3> more methods:
-    / isAccountNonExpired,isAccountNonLocked,
-    / isCredentialsNonExpired,isEnabled
+    // <3> more methods:
+    // isAccountNonExpired,isAccountNonLocked,
+    // isCredentialsNonExpired,isEnabled
 }
 ```
 
@@ -424,18 +424,18 @@ AuthenticationProvider 主要包含一种方法，简单的实现可能如下所
 ```java
 public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvider {
 
-        Authentication authenticate(Authentication authentication)  / (1)
+        Authentication authenticate(Authentication authentication)  // (1)
                 throws AuthenticationException {
-            String username = authentication.getPrincipal().toString(); / (1)
-            String password = authentication.getCredentials().toString(); / (1)
+            String username = authentication.getPrincipal().toString(); // (1)
+            String password = authentication.getCredentials().toString(); // (1)
 
-            User user = callAtlassianCrowdRestService(username, password); / (2)
-            if (user == null) {                                     / (3)
+            User user = callAtlassianCrowdRestService(username, password); // (2)
+            if (user == null) {                                     // (3)
                 throw new AuthenticationException("could not login");
             }
-            return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()); / (4)
+            return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()); // (4)
         }
-	    / other method ignored
+	    // other method ignored
 }
 ```
 
@@ -530,8 +530,8 @@ public class MyDatabaseUserDetailsService implements UserDetailsService {
 
   UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
      User user = userDao.findByUsername(username);
-     List<SimpleGrantedAuthority> grantedAuthorities = user.getAuthorities().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList()); / (1)
-     return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities); / (2)
+     List<SimpleGrantedAuthority> grantedAuthorities = user.getAuthorities().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList()); // (1)
+     return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities); // (2)
   }
 
 }
@@ -554,13 +554,13 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
         String username = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
 
-        atlassian.crowd.User user = callAtlassianCrowdRestService(username, password); / (1)
+        atlassian.crowd.User user = callAtlassianCrowdRestService(username, password); // (1)
         if (user == null) {
             throw new AuthenticationException("could not login");
         }
-        return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), mapToAuthorities(user.getGroups())); / (2)
+        return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), mapToAuthorities(user.getGroups())); // (2)
     }
-	    / other method ignored
+	    // other method ignored
 }
 ```
 
@@ -580,9 +580,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
         http
           .authorizeRequests()
-            .antMatchers("/admin").hasAuthority("ROLE_ADMIN") / (1)
-            .antMatchers("/callcenter").hasAnyAuthority("ROLE_ADMIN", "ROLE_CALLCENTER") / (2)
-            .anyRequest().authenticated() / (3)
+            .antMatchers("/admin").hasAuthority("ROLE_ADMIN") // (1)
+            .antMatchers("/callcenter").hasAnyAuthority("ROLE_ADMIN", "ROLE_CALLCENTER") // (2)
+            .anyRequest().authenticated() // (3)
             .and()
          .formLogin()
            .and()
@@ -600,8 +600,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
   http
     .authorizeRequests()
-      .antMatchers("/admin").hasRole("ADMIN") / (1)
-      .antMatchers("/callcenter").hasAnyRole("ADMIN", "CALLCENTER") / (2)
+      .antMatchers("/admin").hasRole("ADMIN") // (1)
+      .antMatchers("/callcenter").hasAnyRole("ADMIN", "CALLCENTER") // (2)
 ```
 
 1.  现在，您不再调用“hasAuthority”，而是调用“hasRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 的权限。
@@ -614,7 +614,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
   http
     .authorizeRequests()
-      .antMatchers("/admin").access("hasRole('admin') and hasIpAddress('192.168.1.0/24') and @myCustomBean.checkAccess(authentication,request)") / (1)
+      .antMatchers("/admin").access("hasRole('admin') and hasIpAddress('192.168.1.0/24') and @myCustomBean.checkAccess(authentication,request)") // (1)
 ```
 
 1. 您正在检查用户是否具有 ROLE_ADMIN、特定的 IP 地址以及自定义 bean 检查。
@@ -690,7 +690,7 @@ Spring Security 可以帮助您防范多种常见攻击。它从计时攻击开�
 public class MyController {
     @GetMaping("/login")
     public String login(Model model, CsrfToken token) {
-        / the token will be injected automatically
+        // the token will be injected automatically
         return "/templates/login";
     }
 }
@@ -742,9 +742,9 @@ Spring Security 的 OAuth2 集成是一个复杂的主题，另外 7,000 字就�
 ```java
 @Configuration
 @EnableGlobalMethodSecurity(
-  prePostEnabled = true, / (1)
-  securedEnabled = true, / (2)
-  jsr250Enabled = true) / (3)
+  prePostEnabled = true, // (1)
+  securedEnabled = true, // (2)
+  jsr250Enabled = true) //(3)
 public class YourSecurityConfig extends WebSecurityConfigurerAdapter{
 }
 ```
@@ -767,13 +767,13 @@ public class YourSecurityConfig extends WebSecurityConfigurerAdapter{
 @Service
 public class SomeService {
 
-    @Secured("ROLE_CALLCENTER") / (1)
+    @Secured("ROLE_CALLCENTER") // (1)
     / == @RolesAllowed("ADMIN")
     public BankAccountInfo get(...) {
 
     }
 
-    @PreAuthorize("isAnonymous()") / (2)
+    @PreAuthorize("isAnonymous()") // (2)
     / @PreAuthorize("#contact.name == principal.name")
     / @PreAuthorize("ROLE_ADMIN")
     public void trackVisit(Long id);
@@ -807,9 +807,9 @@ public class SomeService {
 public class MyController {
 
     @RequestMapping("/messages/inbox")
-    public ModelAndView findMessagesForUser(@AuthenticationPrincipal CustomUser customUser, CsrfToken token) {  / (1) (2)
+    public ModelAndView findMessagesForUser(@AuthenticationPrincipal CustomUser customUser, CsrfToken token) {  // (1) (2)
 
-    / .. find messages for this user and return them ...
+    // .. find messages for this user and return them ...
     }
 }
 ```
@@ -830,10 +830,10 @@ public class MyController {
 
          if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
              CustomUser customUser = (CustomUser) authentication.getPrincipal();
-             / .. find messages for this user and return them ...
+             // .. find messages for this user and return them ...
          }
 
-         / todo
+         // todo
     }
 }
 ```
@@ -954,7 +954,7 @@ protected void configure(HttpSecurity http) throws Exception {
           .anyRequest().authenticated()
           .and()
       .formLogin()
-          .loginPage("/login") / (1)
+          .loginPage("/login") // (1)
           .permitAll();
 }
 ```

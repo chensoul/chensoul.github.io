@@ -38,11 +38,11 @@ Spring Boot 为我们提供了处理异常的工具，而不仅仅是简单的�
 @RequestMapping("/product")
 public class ProductController {
   private final ProductService productService;
-  /constructor omitted for brevity...
+  //constructor omitted for brevity...
 
   @GetMapping("/{id}")
   public Response getProduct(@PathVariable String id){
-    / this method throws a "NoSuchElementFoundException" exception
+    // this method throws a "NoSuchElementFoundException" exception
     return productService.getProduct(id);
   }
 
@@ -153,7 +153,7 @@ public class NoSuchElementFoundException extends ResponseStatusException {
 
   @Override
   public HttpHeaders getResponseHeaders() {
-      / return response headers
+      // return response headers
   }
 }
 ```
@@ -177,7 +177,7 @@ public class ProductController {
 
   private final ProductService productService;
 
-  /constructor omitted for brevity...
+  //constructor omitted for brevity...
 
   @GetMapping("/{id}")
   public Response getProduct(@PathVariable String id) {
@@ -387,9 +387,9 @@ _需要把他们全都抓到：_
 try{
   performSomeOperation();
 } catch(OperationSpecificException ex){
-  /...
+  //...
 } catch(Exception catchAllExcetion){
-  /...
+  //...
 }
 ```
 
@@ -436,9 +436,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       HttpStatus status,
       WebRequest request
   ) {
-      /Body omitted as it's similar to the method of same name
-      / in ProductController example...
-      /.....
+      //Body omitted as it's similar to the method of same name
+      // in ProductController example...
+      //.....
   }
 
   @ExceptionHandler(ItemNotFoundException.class)
@@ -447,9 +447,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       ItemNotFoundException itemNotFoundException,
       WebRequest request
   ){
-      /Body omitted as it's similar to the method of same name
-      / in ProductController example...
-      /.....
+      //Body omitted as it's similar to the method of same name
+      // in ProductController example...
+      //.....
   }
 
   @ExceptionHandler(RuntimeException.class)
@@ -458,12 +458,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       RuntimeException exception,
       WebRequest request
   ){
-      /Body omitted as it's similar to the method of same name
-      / in ProductController example...
-      /.....
+      //Body omitted as it's similar to the method of same name
+      // in ProductController example...
+      //.....
   }
 
-  /....
+  //..
 
   @Override
   public ResponseEntity<Object> handleExceptionInternal(

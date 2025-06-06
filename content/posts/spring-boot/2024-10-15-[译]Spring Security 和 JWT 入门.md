@@ -154,7 +154,7 @@ public static String createJwt() {
         return Jwts.builder()
                 .claim("id", "abc123")
                 .claim("role", "admin")
-                /*.addClaims(Map.of("id", "abc123",
+                //*.addClaims(Map.of("id", "abc123",
                         "role", "admin"))*/
                 .setIssuer("TestApplication")
                 .setIssuedAt(java.util.Date.from(Instant.now()))
@@ -188,7 +188,7 @@ lc3RBcHBsaWNhdGlvbiIsImlhdCI6MTcxMTY2MTA1MiwiZXhwIjoxNzExNjYxNjUyfQ.
 
 ```java
 public static String createJwt() {
-        / Recommended to be stored in Secret
+        // Recommended to be stored in Secret
         String secret = "5JzoMbk6E5qIqHSuBTgeQCARtUsxAkBiHwdjXOSW8kWdXzYmP3X51C0";
         Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
                 SignatureAlgorithm.HS256.getJcaName());
@@ -221,7 +221,7 @@ pj9AvbLtwITqBYazDnaTibCLecM-cQ5RAYw2YYtkyeA
 
 ```java
 public static Jws<Claims> parseJwt(String jwtString) {
-        / Recommended to be stored in Secret
+        // Recommended to be stored in Secret
         String secret = "5JzoMbk6E5qIqHSuBTgeQCARtUsxAkBiHwdjXOSW8kWdXzYmP3X51C0";
         Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
                 SignatureAlgorithm.HS256.getJcaName());
@@ -336,7 +336,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) 
             throws ServletException, IOException {
         log.info("Inside JWT filter");
-        / Code to validate the Authorization header
+        // Code to validate the Authorization header
     }
 }
 ```
@@ -755,7 +755,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                    FilterChain filterChain) 
            throws ServletException, IOException {
       try {
-         /validate token here
+         //validate token here
       } catch (ExpiredJwtException jwtException) {
          request.setAttribute("exception", jwtException);
       } catch (BadCredentialsException | 

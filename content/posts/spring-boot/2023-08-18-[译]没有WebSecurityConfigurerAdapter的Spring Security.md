@@ -25,12 +25,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-         / configure Authentication ......
+         // configure Authentication ......
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        / configure Authorization ......
+        // configure Authorization ......
     }
 }
 ```
@@ -154,7 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-      / {noop} => No operation for password encoder (no password encoding needed)
+      // {noop} => No operation for password encoder (no password encoding needed)
       auth.inMemoryAuthentication()
           .withUser("devs")
           .password ("{noop} devs") /no password encoding needed
@@ -167,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
    protected void configure(HttpSecurity http) throws Exception {
 
-      /declares which Page(URL) will have What access type
+      //declares which Page(URL) will have What access type
       http.authorizeRequests()
           .antMatchers("/home").permitAll()
           .antMatchers("/welcome").authenticated()
@@ -176,21 +176,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .antMatchers("/mgr").hasAuthority("MANAGER")
           .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-      / Any other URLs which are not configured in above antMatchers
-      / generally declared aunthenticated() in real time
-          .anyRequest().authenticated()
+      //  .anyRequest().authenticated()
 
-      / Login Form Details
+      // Login Form Details
          .and()
          .formLogin()
          .defaultSuccessUrl("/welcome", true)
 
-      / Logout Form Details
+      // Logout Form Details
         .and()
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-      / Exception Details
+      // Exception Details
         .and()
         .exceptionHandling()
         .accessDeniedPage("/accessDenied")
@@ -247,7 +245,7 @@ public class SecurityConfigNew {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        /declares which Page(URL) will have What access type
+        //declares which Page(URL) will have What access type
         http.authorizeRequests()
             .antMatchers("/home").permitAll()
             .antMatchers("/welcome").authenticated()
@@ -256,21 +254,21 @@ public class SecurityConfigNew {
             .antMatchers("/mgr").hasAuthority("MANAGER")
             .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-        / Any other URLs which are not configured in above antMatchers
-        / generally declared aunthenticated() in real time
+        // Any other URLs which are not configured in above antMatchers
+        // generally declared aunthenticated() in real time
            .anyRequest().authenticated()
 
-        / Login Form Details
+        // Login Form Details
            .and()
            .formLogin()
            .defaultSuccessUrl("/welcome", true)
 
-        / Logout Form Details
+        // Logout Form Details
           .and()
           .logout()
          .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-        / Exception Details
+        // Exception Details
          .and()
          .exceptionHandling()
         .accessDeniedPage("/accessDenied")
