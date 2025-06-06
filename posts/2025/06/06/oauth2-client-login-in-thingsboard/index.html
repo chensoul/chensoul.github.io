@@ -10,7 +10,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span><span class="tagcloud post-tags"><i class="fa fa-tags"></i>&nbsp;
 <a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/thingsboard/ title=thingsboard>thingsboard</a>
 &nbsp;
-<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/oauth2/ title=oauth2>oauth2</a></span></div></header><div class=entry-content><h2 id=thingsboard-启用-oauth2-功能>Thingsboard 启用 OAuth2 功能</h2><p>使用 <a href=mailto:sysadmin@thingsboard.org>sysadmin@thingsboard.org</a> / sysadmin 账号登录 Thingsboard 系统之后，在安全 -> OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。</p><p><img src=/images/create-oauth2-client-in-thingsboard.webp alt=create-oauth2-client-in-thingsboard></p><p>然后，创建一个域：</p><p><img src=/images/create-domain-in-thingsboard.webp alt=create-domain-in-thingsboard></p><p>域名的名称可以是 ip 加端口，也可以是域名，如果是名称，需要做好 DNS 解析。</p><blockquote><p>注意：</p><p>这里的重定向 URL 模版是 <code>localhost:8080/login/oauth2/code/</code>，而不是 <code>localhost:8080/login/oauth2/code/{registrationId}</code>。</p></blockquote><p>注销登录之后，在登录页面可以看到 使用 Github 登录的按钮。</p><p><img src=/images/login-github-page-in-thingsboard.webp alt=login-github-page-in-thingsboard></p><h2 id=源码实现>源码实现</h2><p>Thingsboard OAuth2 的相关配置在 ThingsboardSecurityConfiguration 类的 filterChain(HttpSecurity http) 方法中。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>				<span style=color:#66d9ef>if</span> (oauth2Configuration <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
+<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/oauth2/ title=oauth2>oauth2</a></span></div></header><div class=entry-content><h2 id=thingsboard-启用-oauth2-功能>Thingsboard 启用 OAuth2 功能</h2><p>使用 <a href=mailto:sysadmin@thingsboard.org>sysadmin@thingsboard.org</a> / sysadmin 账号登录 Thingsboard 系统之后，在安全 -> OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。</p><p><img src=../../../static/images/create-oauth2-client-in-thingsboard.webp alt=create-oauth2-client-in-thingsboard></p><p>然后，创建一个域：</p><p><img src=../../../static/images/create-domain-in-thingsboard.webp alt=create-domain-in-thingsboard></p><p>域名的名称可以是 ip 加端口，也可以是域名，如果是名称，需要做好 DNS 解析。</p><blockquote><p>注意：</p><p>这里的重定向 URL 模版是 <code>localhost:8080/login/oauth2/code/</code>，而不是 <code>localhost:8080/login/oauth2/code/{registrationId}</code>。</p></blockquote><p>注销登录之后，在登录页面可以看到 使用 Github 登录的按钮。</p><p><img src=../../../static/images/login-github-page-in-thingsboard.webp alt=login-github-page-in-thingsboard></p><h2 id=源码实现>源码实现</h2><p>Thingsboard OAuth2 的相关配置在 ThingsboardSecurityConfiguration 类的 filterChain(HttpSecurity http) 方法中。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>				<span style=color:#66d9ef>if</span> (oauth2Configuration <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
 </span></span><span style=display:flex><span>            http.<span style=color:#a6e22e>oauth2Login</span>(login <span style=color:#f92672>-&gt;</span> login
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>authorizationEndpoint</span>(config <span style=color:#f92672>-&gt;</span> config
 </span></span><span style=display:flex><span>                            .<span style=color:#a6e22e>authorizationRequestRepository</span>(httpCookieOAuth2AuthorizationRequestRepository)
@@ -34,9 +34,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>loginProcessingUrl</span>: <span style=color:#e6db74>&#34;${SECURITY_OAUTH2_LOGIN_PROCESSING_URL:/login/oauth2/code/}&#34;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>githubMapper</span>:
 </span></span><span style=display:flex><span>      <span style=color:#75715e># The email addresses that will be mapped from the URL</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>emailUrl</span>: <span style=color:#e6db74>&#34;${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>emailUrl</span>: <span style=color:#e6db74>&#34;${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https:/api.github.com/user/emails}&#34;</span>
 </span></span></code></pre></div><p>CustomOAuth2AuthorizationRequestResolver 相对于默认实现 DefaultOAuth2AuthorizationRequestResolver 的主要修改之处在于代expandRedirectUri 方法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>		<span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>expandRedirectUri</span>(HttpServletRequest request, ClientRegistration clientRegistration, String action) {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>//.....</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span>.....
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        String redirectUri <span style=color:#f92672>=</span> getRedirectUri(request);
 </span></span><span style=display:flex><span>        log.<span style=color:#a6e22e>trace</span>(<span style=color:#e6db74>&#34;Redirect URI - {}.&#34;</span>, redirectUri);
@@ -93,12 +93,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>}  
-</span></span></code></pre></div><p>CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&amp;state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 <a href="https://github.com/login/oauth/authorize?response_type=code&amp;client_id=Ov23likOi21AwqpT9WUP&amp;scope=read:user%20user:email&amp;state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&amp;redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c" target=_blank>https://github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c</a> ，调用 authenticationManager 进行认证。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>	<span style=color:#75715e>// OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段</span>
+</span></span></code></pre></div><p>CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&amp;state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 https:/github.com/login/oauth/authorize?response_type=code&amp;client_id=Ov23likOi21AwqpT9WUP&amp;scope=read:user%20user:email&amp;state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&amp;redirect_uri=http:/localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c ，调用 authenticationManager 进行认证。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>	<span style=color:#f92672>/</span> OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段
 </span></span><span style=display:flex><span>	String redirectUri <span style=color:#f92672>=</span> UriComponentsBuilder.<span style=color:#a6e22e>fromHttpUrl</span>(UrlUtils.<span style=color:#a6e22e>buildFullRequestUrl</span>(request))
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>replaceQuery</span>(<span style=color:#66d9ef>null</span>)
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>build</span>()
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>toUriString</span>();
-</span></span><span style=display:flex><span>		<span style=color:#75715e>// @formatter:on</span>
+</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span> <span style=color:#a6e22e>@formatter</span>:on
 </span></span><span style=display:flex><span>		OAuth2AuthorizationResponse authorizationResponse <span style=color:#f92672>=</span> OAuth2AuthorizationResponseUtils.<span style=color:#a6e22e>convert</span>(params,
 </span></span><span style=display:flex><span>				redirectUri);
 </span></span><span style=display:flex><span>		Object authenticationDetails <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>authenticationDetailsSource</span>.<span style=color:#a6e22e>buildDetails</span>(request);
@@ -129,7 +129,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>		}
 </span></span><span style=display:flex><span>		String registrationId <span style=color:#f92672>=</span> authorizationRequest.<span style=color:#a6e22e>getAttribute</span>(OAuth2ParameterNames.<span style=color:#a6e22e>REGISTRATION_ID</span>);
 </span></span><span style=display:flex><span>		ClientRegistration clientRegistration <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>clientRegistrationRepository</span>.<span style=color:#a6e22e>findByRegistrationId</span>(registrationId);
-</span></span><span style=display:flex><span>    <span style=color:#75715e>//....</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>....
 </span></span><span style=display:flex><span>}    
 </span></span></code></pre></div><p>在 thingsboard 中 clientRegistrationRepository 的实现者是 HybridClientRegistrationRepository，当然，默认实现是 InMemoryClientRegistrationRepository。InMemoryClientRegistrationRepository 是从 spring boot 配置文件中读取，例如：下面的配置定义了三个 ClientRegistration 对象，他们的 registrationId 分别是 google、github、okta，而不是 thingsboard 中自定义的 UUID 字符串。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>spring</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>security</span>:
@@ -157,10 +157,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>          <span style=color:#f92672>github</span>:
 </span></span><span style=display:flex><span>            <span style=color:#f92672>user-name-attribute</span>: <span style=color:#ae81ff>login</span>
 </span></span><span style=display:flex><span>          <span style=color:#f92672>okta</span>:
-</span></span><span style=display:flex><span>            <span style=color:#f92672>authorization-uri</span>: <span style=color:#ae81ff>https://your-subdomain.oktapreview.com/oauth2/v1/authorize</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>token-uri</span>: <span style=color:#ae81ff>https://your-subdomain.oktapreview.com/oauth2/v1/token</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>user-info-uri</span>: <span style=color:#ae81ff>https://your-subdomain.oktapreview.com/oauth2/v1/userinfo</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>jwk-set-uri</span>: <span style=color:#ae81ff>https://your-subdomain.oktapreview.com/oauth2/v1/keys</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>authorization-uri</span>: <span style=color:#ae81ff>https:/your-subdomain.oktapreview.com/oauth2/v1/authorize</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>token-uri</span>: <span style=color:#ae81ff>https:/your-subdomain.oktapreview.com/oauth2/v1/token</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>user-info-uri</span>: <span style=color:#ae81ff>https:/your-subdomain.oktapreview.com/oauth2/v1/userinfo</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>jwk-set-uri</span>: <span style=color:#ae81ff>https:/your-subdomain.oktapreview.com/oauth2/v1/keys</span>
 </span></span></code></pre></div><p>假如修改下 thingsboard 源码，将 registrationId 改为使用认证提供商的名称（小写形式），则和配置文件中一样了。</p><p>再来看 HybridClientRegistrationRepository 的实现。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Component</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>HybridClientRegistrationRepository</span> <span style=color:#66d9ef>implements</span> ClientRegistrationRepository {
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String defaultRedirectUriTemplate <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;{baseUrl}/login/oauth2/code/{registrationId}&#34;</span>;
@@ -176,7 +176,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> ClientRegistration <span style=color:#a6e22e>toSpringClientRegistration</span>(OAuth2Client oAuth2Client){
-</span></span><span style=display:flex><span>    	<span style=color:#75715e>//...</span>
+</span></span><span style=display:flex><span>    	<span style=color:#f92672>/</span>...
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>HybridClientRegistrationRepository 内部使用 OAuth2ClientService 来获取 OAuth2Client 再转换为 ClientRegistration。因此，可以使用编程的方式来动态维护 ClientRegistration 了。</p><p>在 thingsboard 中，OAuth2Client 主要字段如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Data</span>
@@ -249,10 +249,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>另外，thingsboar 在安装部署时进行了初始化，提前创建了一些模版。模版在 application/src/main/data/json/system/ oauth2_config_templates 目录下面，主要有 apple、facebook、google、github。</p><p>apple_config.json</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;providerId&#34;</span>: <span style=color:#e6db74>&#34;Apple&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;additionalInfo&#34;</span>: <span style=color:#66d9ef>null</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https://appleid.apple.com/auth/token&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https://appleid.apple.com/auth/authorize?response_mode=form_post&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https:/appleid.apple.com/auth/token&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https:/appleid.apple.com/auth/authorize?response_mode=form_post&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;scope&#34;</span>: [<span style=color:#e6db74>&#34;email&#34;</span>,<span style=color:#e6db74>&#34;openid&#34;</span>,<span style=color:#e6db74>&#34;name&#34;</span>],
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#e6db74>&#34;https://appleid.apple.com/auth/keys&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#e6db74>&#34;https:/appleid.apple.com/auth/keys&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#66d9ef>null</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;clientAuthenticationMethod&#34;</span>: <span style=color:#e6db74>&#34;POST&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userNameAttributeName&#34;</span>: <span style=color:#e6db74>&#34;email&#34;</span>,
@@ -268,15 +268,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;comment&#34;</span>: <span style=color:#66d9ef>null</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonIcon&#34;</span>: <span style=color:#e6db74>&#34;apple-logo&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonLabel&#34;</span>: <span style=color:#e6db74>&#34;Apple&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https://developer.apple.com/sign-in-with-apple/get-started/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https:/developer.apple.com/sign-in-with-apple/get-started/&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>facebook_config.json：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;providerId&#34;</span>: <span style=color:#e6db74>&#34;Facebook&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https://graph.facebook.com/v2.8/oauth/access_token&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https://www.facebook.com/v2.8/dialog/oauth&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https:/graph.facebook.com/v2.8/oauth/access_token&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https:/www.facebook.com/v2.8/dialog/oauth&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;scope&#34;</span>: [<span style=color:#e6db74>&#34;email&#34;</span>,<span style=color:#e6db74>&#34;public_profile&#34;</span>],
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#66d9ef>null</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https://graph.facebook.com/me?fields=id,name,first_name,last_name,email&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https:/graph.facebook.com/me?fields=id,name,first_name,last_name,email&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;clientAuthenticationMethod&#34;</span>: <span style=color:#e6db74>&#34;BASIC&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userNameAttributeName&#34;</span>: <span style=color:#e6db74>&#34;email&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;mapperConfig&#34;</span>: {
@@ -291,15 +291,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;comment&#34;</span>: <span style=color:#66d9ef>null</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonIcon&#34;</span>: <span style=color:#e6db74>&#34;facebook-logo&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonLabel&#34;</span>: <span style=color:#e6db74>&#34;Facebook&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https://developers.facebook.com/docs/facebook-login/web#logindialog&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https:/developers.facebook.com/docs/facebook-login/web#logindialog&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>github_config.json：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;providerId&#34;</span>: <span style=color:#e6db74>&#34;Github&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https://github.com/login/oauth/access_token&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https://github.com/login/oauth/authorize&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https:/github.com/login/oauth/access_token&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https:/github.com/login/oauth/authorize&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;scope&#34;</span>: [<span style=color:#e6db74>&#34;read:user&#34;</span>,<span style=color:#e6db74>&#34;user:email&#34;</span>],
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#66d9ef>null</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https://api.github.com/user&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https:/api.github.com/user&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;clientAuthenticationMethod&#34;</span>: <span style=color:#e6db74>&#34;BASIC&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userNameAttributeName&#34;</span>: <span style=color:#e6db74>&#34;login&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;mapperConfig&#34;</span>: {
@@ -309,19 +309,19 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;tenantNameStrategy&#34;</span>: <span style=color:#e6db74>&#34;DOMAIN&#34;</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  },
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;comment&#34;</span>: <span style=color:#e6db74>&#34;In order to log into ThingsBoard you need to have user&#39;s email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to &lt;a href=\&#34;https://docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\&#34;&gt;Github Documentation&lt;/a&gt;&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;comment&#34;</span>: <span style=color:#e6db74>&#34;In order to log into ThingsBoard you need to have user&#39;s email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to &lt;a href=\&#34;https:/docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\&#34;&gt;Github Documentation&lt;/a&gt;&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonIcon&#34;</span>: <span style=color:#e6db74>&#34;github-logo&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonLabel&#34;</span>: <span style=color:#e6db74>&#34;Github&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https://docs.github.com/en/developers/apps/creating-an-oauth-app&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https:/docs.github.com/en/developers/apps/creating-an-oauth-app&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>google_config.json：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;providerId&#34;</span>: <span style=color:#e6db74>&#34;Google&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;additionalInfo&#34;</span>: <span style=color:#66d9ef>null</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https://oauth2.googleapis.com/token&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https://accounts.google.com/o/oauth2/v2/auth&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;accessTokenUri&#34;</span>: <span style=color:#e6db74>&#34;https:/oauth2.googleapis.com/token&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;authorizationUri&#34;</span>: <span style=color:#e6db74>&#34;https:/accounts.google.com/o/oauth2/v2/auth&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;scope&#34;</span>: [<span style=color:#e6db74>&#34;email&#34;</span>,<span style=color:#e6db74>&#34;openid&#34;</span>,<span style=color:#e6db74>&#34;profile&#34;</span>],
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#e6db74>&#34;https://www.googleapis.com/oauth2/v3/certs&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https://openidconnect.googleapis.com/v1/userinfo&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;jwkSetUri&#34;</span>: <span style=color:#e6db74>&#34;https:/www.googleapis.com/oauth2/v3/certs&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userInfoUri&#34;</span>: <span style=color:#e6db74>&#34;https:/openidconnect.googleapis.com/v1/userinfo&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;clientAuthenticationMethod&#34;</span>: <span style=color:#e6db74>&#34;BASIC&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;userNameAttributeName&#34;</span>: <span style=color:#e6db74>&#34;email&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;mapperConfig&#34;</span>: {
@@ -336,7 +336,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;comment&#34;</span>: <span style=color:#66d9ef>null</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonIcon&#34;</span>: <span style=color:#e6db74>&#34;google-logo&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;loginButtonLabel&#34;</span>: <span style=color:#e6db74>&#34;Google&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https://developers.google.com/adwords/api/docs/guides/authentication&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;helpLink&#34;</span>: <span style=color:#e6db74>&#34;https:/developers.google.com/adwords/api/docs/guides/authentication&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>登录成功之后，由 oauth2AuthenticationSuccessHandler 进行处理，对应的实现类是 Oauth2AuthenticationSuccessHandler，该类的逻辑：</p><ul><li>通过 httpCookieOAuth2AuthorizationRequestRepository 获取 OAuth2AuthorizationRequest</li><li>通过 OAuth2ClientService 获取 OAuth2Client</li><li>通过 oAuth2AuthorizedClientService 加载 OAuth2AuthorizedClient</li><li>通过 oauth2ClientMapperProvider 获取 OAuth2ClientMapper ，每个 MapperType 都有一个 OAuth2ClientMapper</li><li>通过 tokenFactory 创建 JwtPair</li><li>重定向到登录成功地址</li></ul><p>OAuth2ClientMapper 定义如下，作用是将 OAuth2 返回的用户信息转换为 SecurityUser 对象。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>OAuth2ClientMapper</span> {
 </span></span><span style=display:flex><span>    SecurityUser <span style=color:#a6e22e>getOrCreateUserByClientPrincipal</span>(HttpServletRequest request, OAuth2AuthenticationToken token, String providerAccessToken, OAuth2Client oAuth2Client);
@@ -358,7 +358,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>User 对象主要定义了 email、firstName、lastName、phone，其他用户信息在 additionalInfo 对象中：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Data</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span> {
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String email;
-</span></span><span style=display:flex><span>    <span style=color:#75715e>//    private String authority;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>    <span style=color:#66d9ef>private</span> String authority;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String firstName;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String lastName;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String phone;

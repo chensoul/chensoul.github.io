@@ -50,18 +50,18 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span> <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span> <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployeeById</span>() {
-</span></span><span style=display:flex><span>  <span style=color:#75715e>// Arrange</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Arrange
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>long</span> employeeId <span style=color:#f92672>=</span> 1L;
 </span></span><span style=display:flex><span>  Employee mockEmployee <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Employee(employeeId, <span style=color:#e6db74>&#34;John Doe&#34;</span>, <span style=color:#e6db74>&#34;john.doe@example.com&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e>// Mock the behavior of the repository to return the mock employee</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Mock the behavior of the repository to <span style=color:#66d9ef>return</span> the mock employee
 </span></span><span style=display:flex><span>  Mockito.<span style=color:#a6e22e>when</span>(employeeRepository.<span style=color:#a6e22e>findById</span>(employeeId)).<span style=color:#a6e22e>thenReturn</span>(Optional.<span style=color:#a6e22e>of</span>(mockEmployee));
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e>// Act</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Act
 </span></span><span style=display:flex><span>  Employee result <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeById</span>(employeeId);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e>// Assert</span>
-</span></span><span style=display:flex><span>  assertNotNull(result);
+</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Assert
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>assertNotNull</span>(result);
 </span></span><span style=display:flex><span>  assertEquals(employeeId, result.<span style=color:#a6e22e>getId</span>());
 </span></span><span style=display:flex><span>  assertEquals(<span style=color:#e6db74>&#34;John Doe&#34;</span>, result.<span style=color:#a6e22e>getName</span>());
 </span></span><span style=display:flex><span>  assertEquals(<span style=color:#e6db74>&#34;john.doe@example.com&#34;</span>, result.<span style=color:#a6e22e>getEmail</span>());
@@ -109,20 +109,20 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testFindUserByUsername</span>() {
-</span></span><span style=display:flex><span>   <span style=color:#75715e>// Define a sample user</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Define a sample user
 </span></span><span style=display:flex><span>   User sampleUser <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> User();
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setId</span>(1L);
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setEmail</span>(<span style=color:#e6db74>&#34;john@example.com&#34;</span>);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#75715e>// Mock the repository behavior</span>
-</span></span><span style=display:flex><span>   when(userRepository.<span style=color:#a6e22e>findByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>)).<span style=color:#a6e22e>thenReturn</span>(sampleUser);
+</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Mock the repository behavior
+</span></span><span style=display:flex><span>   <span style=color:#a6e22e>when</span>(userRepository.<span style=color:#a6e22e>findByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>)).<span style=color:#a6e22e>thenReturn</span>(sampleUser);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#75715e>// Perform the test</span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Perform the test
 </span></span><span style=display:flex><span>   User foundUser <span style=color:#f92672>=</span> userService.<span style=color:#a6e22e>findUserByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#75715e>// Assertions</span>
-</span></span><span style=display:flex><span>   assertThat(foundUser).<span style=color:#a6e22e>isNotNull</span>();
+</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Assertions
+</span></span><span style=display:flex><span>   <span style=color:#a6e22e>assertThat</span>(foundUser).<span style=color:#a6e22e>isNotNull</span>();
 </span></span><span style=display:flex><span>   assertThat(foundUser.<span style=color:#a6e22e>getUsername</span>()).<span style=color:#a6e22e>isEqualTo</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>   assertThat(foundUser.<span style=color:#a6e22e>getEmail</span>()).<span style=color:#a6e22e>isEqualTo</span>(<span style=color:#e6db74>&#34;john@example.com&#34;</span>);
 </span></span><span style=display:flex><span>  }
@@ -184,13 +184,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@BeforeEach</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setUp</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Initialize the EmployeeService or set up resources if needed</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Initialize the EmployeeService or set up resources <span style=color:#66d9ef>if</span> needed
 </span></span><span style=display:flex><span>    employeeService <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> EmployeeService();    
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@AfterEach</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>tearDown</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Clean up resources or perform other cleanup tasks</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Clean up resources or perform other cleanup tasks
 </span></span><span style=display:flex><span>    employeeService <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
@@ -273,7 +273,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> String appVersion;
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>  <span style=color:#75715e>// Getters and setters</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Getters and setters
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-properties data-lang=properties><span style=display:flex><span><span style=color:#75715e>#Add the configuration properties to your application&#39;s property file</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>app.appName</span><span style=color:#f92672>=</span><span style=color:#e6db74>Keka</span>
@@ -367,7 +367,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testExampleApi</span>() {
 </span></span><span style=display:flex><span>    RestTemplate restTemplate <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> RestTemplate();
-</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://api.example.com/data&#34;</span>;
+</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http:/api.example.com/data&#34;</span>;
 </span></span><span style=display:flex><span>    ResponseEntity<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForEntity</span>(url, String.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    assertFalse(response.<span style=color:#a6e22e>getStatusCode</span>() <span style=color:#f92672>==</span> HttpStatusCode.<span style=color:#a6e22e>valueOf</span>(404))
@@ -394,7 +394,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetBusinesses</span>(){
-</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://localhost:&#34;</span> <span style=color:#f92672>+</span> port <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;/getBusinesses&#34;</span>;
+</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http:/localhost:&#34;</span> <span style=color:#f92672>+</span> port <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;/getBusinesses&#34;</span>;
 </span></span><span style=display:flex><span>    ResponseEntity<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForEntity</span>(url, String.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    assertThat(response.<span style=color:#a6e22e>getStatusCode</span>()).<span style=color:#a6e22e>isEqualTo</span>(HttpStatus.<span style=color:#a6e22e>OK</span>);
@@ -411,13 +411,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Sql</span>(scripts <span style=color:#f92672>=</span> { <span style=color:#e6db74>&#34;/init-database.sql&#34;</span>, <span style=color:#e6db74>&#34;/populate-data.sql&#34;</span> }, executionPhase <span style=color:#f92672>=</span> Sql.<span style=color:#a6e22e>ExecutionPhase</span>.<span style=color:#a6e22e>BEFORE_TEST_METHOD</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testWithSqlScripts</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Sql scripts get executed before the execution of this block</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Sql scripts get executed before the execution of <span style=color:#66d9ef>this</span> block
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Sql</span>(scripts <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/cleanup.sql&#34;</span>, executionPhase <span style=color:#f92672>=</span> Sql.<span style=color:#a6e22e>ExecutionPhase</span>.<span style=color:#a6e22e>AFTER_TEST_METHOD</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testWithCleanupSql</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Sql scripts get executed after the execution of this block</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Sql scripts get executed after the execution of <span style=color:#66d9ef>this</span> block
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><strong>i. 使用 @Disabled 暂时禁用测试。</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>import</span> org.junit.jupiter.api.Disabled;
@@ -436,14 +436,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Disabled</span>(<span style=color:#e6db74>&#34;Temporarily disabled until bug XYZ is fixed&#34;</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployees</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test will be skipped</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test will be skipped
 </span></span><span style=display:flex><span>    Employee employee <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeByName</span>(<span style=color:#e6db74>&#34;Harry&#34;</span>);
 </span></span><span style=display:flex><span>    assertNotNull(employee);
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployeeCount</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test will be executed</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test will be executed
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> empCount <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeCount</span>();
 </span></span><span style=display:flex><span>    assertTrue(empCount<span style=color:#f92672>&gt;</span>0);
 </span></span><span style=display:flex><span>  }
@@ -462,27 +462,27 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> UserService userService;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@RepeatedTest</span>(5) <span style=color:#75715e>//This test will run 5 times</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@RepeatedTest</span>(5) <span style=color:#f92672>/</span>This test will run 5 times
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetUserCount</span>() {
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> userService.<span style=color:#a6e22e>getUserCount</span>();
 </span></span><span style=display:flex><span>    assertTrue(count<span style=color:#f92672>&gt;</span>0);
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@RepeatedTest</span>(3) <span style=color:#75715e>//This test will run 3 times</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>@RepeatedTest</span>(3) <span style=color:#f92672>/</span>This test will run 3 times
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetLoggedInUsers</span>(RepetitionInfo repetitionInfo) {
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> currentRepetition <span style=color:#f92672>=</span> repetitionInfo.<span style=color:#a6e22e>getCurrentRepetition</span>();
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> totalRepetitions <span style=color:#f92672>=</span> repetitionInfo.<span style=color:#a6e22e>getTotalRepetitions</span>();
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test logic, using currentRepetition and totalRepetitions</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test logic, using currentRepetition and totalRepetitions
 </span></span><span style=display:flex><span>    RestTemplate restTemplate <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> RestTemplate();
-</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://api.example.com/getLoggedInUsers&#34;</span>;
+</span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http:/api.example.com/getLoggedInUsers&#34;</span>;
 </span></span><span style=display:flex><span>    ResponseEntity<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForEntity</span>(url, String.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span>(response.<span style=color:#a6e22e>getBody</span>() <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {   
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;CurrentRepetition: &#34;</span> <span style=color:#f92672>+</span> currentRepetition);
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h2 id=4测试覆盖率>4.测试覆盖率</h2><p>使用 SonarQube 或 Jacoco 等代码覆盖率工具来测量测试的覆盖率。以高代码覆盖率为目标，确保大多数代码都经过测试。</p><h1 id=测试框架>测试框架</h1><p>Spring Boot 应用程序中常用有几种测试工具，包括：</p><ol><li>JUnit：一种广泛使用的 Java 测试框架。</li><li>Mockito：用于在测试中创建模拟对象的模拟框架。</li><li>Testcontainers：提供用于测试的轻量级、一次性的常用数据库或服务实例。</li><li>Spring Boot 测试：提供用于测试 Spring Boot 应用程序的注释和实用程序。</li><li>RestAssured：一种用于简化 REST 服务测试的 Java DSL。</li><li>Selenium：用于Web应用程序测试，尤其是端到端测试。</li><li>Jacoco：一种代码覆盖率分析工具，可帮助您识别代码库中需要更多测试的区域。</li><li>WireMock：一种模拟 HTTP 服务的工具，可用于测试外部服务交互。</li></ol><h1 id=结论>结论</h1><p>通过遵循最佳实践并利用正确的测试工具，您可以确保测试可靠、可维护且能够有效地发现应用程序中的错误。持续的测试将提高代码质量、减少错误并提高用户满意度。</p><p><em>快乐学习！</em></p><blockquote><p><strong>请继续关注</strong><a href=https://medium.com/simform-engineering target=_blank><strong>Simform Engineering</strong></a><strong>博客，了解有关最新工具和技术的更多更新。</strong></p><p><strong>关注我们：</strong><a href=https://twitter.com/simform target=_blank><strong>Twitter</strong></a> <strong>|</strong> <a href=https://www.linkedin.com/company/simform/ target=_blank><strong>LinkedIn</strong></a></p></blockquote><p>原文链接：<a href=https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516 target=_blank>https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516</a></p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%5b%e8%af%91%5d%e6%b5%8b%e8%af%95%20Spring%20Boot%20%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%ef%bc%9a%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5%e5%92%8c%e6%a1%86%e6%9e%b6 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f10%2f14%2ftesting-spring-boot-applications-best-practices-and-frameworks%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
+</span></span></code></pre></div><h2 id=4测试覆盖率>4.测试覆盖率</h2><p>使用 SonarQube 或 Jacoco 等代码覆盖率工具来测量测试的覆盖率。以高代码覆盖率为目标，确保大多数代码都经过测试。</p><h1 id=测试框架>测试框架</h1><p>Spring Boot 应用程序中常用有几种测试工具，包括：</p><ol><li>JUnit：一种广泛使用的 Java 测试框架。</li><li>Mockito：用于在测试中创建模拟对象的模拟框架。</li><li>Testcontainers：提供用于测试的轻量级、一次性的常用数据库或服务实例。</li><li>Spring Boot 测试：提供用于测试 Spring Boot 应用程序的注释和实用程序。</li><li>RestAssured：一种用于简化 REST 服务测试的 Java DSL。</li><li>Selenium：用于Web应用程序测试，尤其是端到端测试。</li><li>Jacoco：一种代码覆盖率分析工具，可帮助您识别代码库中需要更多测试的区域。</li><li>WireMock：一种模拟 HTTP 服务的工具，可用于测试外部服务交互。</li></ol><h1 id=结论>结论</h1><p>通过遵循最佳实践并利用正确的测试工具，您可以确保测试可靠、可维护且能够有效地发现应用程序中的错误。持续的测试将提高代码质量、减少错误并提高用户满意度。</p><p><em>快乐学习！</em></p><blockquote><p><strong>请继续关注</strong><a href=https:/medium.com/simform-engineering target=_blank><strong>Simform Engineering</strong></a><strong>博客，了解有关最新工具和技术的更多更新。</strong></p><p><strong>关注我们：</strong><a href=https:/twitter.com/simform target=_blank><strong>Twitter</strong></a> <strong>|</strong> <a href=https:/www.linkedin.com/company/simform/ target=_blank><strong>LinkedIn</strong></a></p></blockquote><p>原文链接：<a href=https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516 target=_blank>https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516</a></p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%5b%e8%af%91%5d%e6%b5%8b%e8%af%95%20Spring%20Boot%20%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%ef%bc%9a%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5%e5%92%8c%e6%a1%86%e6%9e%b6 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f10%2f14%2ftesting-spring-boot-applications-best-practices-and-frameworks%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
 </a><a class=social-link-item href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f10%2f14%2ftesting-spring-boot-applications-best-practices-and-frameworks%2f&title=%5b%e8%af%91%5d%e6%b5%8b%e8%af%95%20Spring%20Boot%20%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%ef%bc%9a%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5%e5%92%8c%e6%a1%86%e6%9e%b6" target=_blank rel="noopener noreferrer" title="Click to share on LinkedIn"><i class="fa-brands fa-linkedin fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://telegram.me/share/url?text=%5b%e8%af%91%5d%e6%b5%8b%e8%af%95%20Spring%20Boot%20%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%ef%bc%9a%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5%e5%92%8c%e6%a1%86%e6%9e%b6&amp;url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f10%2f14%2ftesting-spring-boot-applications-best-practices-and-frameworks%2f" target=_blank rel="noopener noreferrer" title="Click to share on telegram"><i class="fa-brands fa-telegram fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://reddit.com/submit?url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f10%2f14%2ftesting-spring-boot-applications-best-practices-and-frameworks%2f&title=%5b%e8%af%91%5d%e6%b5%8b%e8%af%95%20Spring%20Boot%20%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%ef%bc%9a%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5%e5%92%8c%e6%a1%86%e6%9e%b6" target=_blank rel="noopener noreferrer" title="Click to share on reddit"><i class="fa-brands fa-reddit fa-2xl" style=color:#007bb5></i>

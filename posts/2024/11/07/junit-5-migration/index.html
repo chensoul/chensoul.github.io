@@ -151,7 +151,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>但是，如果我们使用的是 Spring 4，它不会与<code>SpringExtension</code>捆绑在一起。我们仍然可以使用它，但它需要来自 JitPack 存储库的额外依赖项。</p><p>要与 Spring 4 一起使用<code>SpringExtension</code>，我们必须在 Maven 中添加依赖项<code>pom.xml</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;repositories&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;repository&gt;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;id&gt;</span>jitpack.io<span style=color:#f92672>&lt;/id&gt;</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;url&gt;</span>https://jitpack.io<span style=color:#f92672>&lt;/url&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;url&gt;</span>https:/jitpack.io<span style=color:#f92672>&lt;/url&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;/repository&gt;</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>&lt;/repositories&gt;</span>
 </span></span><span style=display:flex><span>
@@ -165,7 +165,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#f92672>&lt;/dependencies&gt;</span>
 </span></span></code></pre></div><p><code>build.gradle</code>同样的方法，我们在使用Gradle时也要添加依赖：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gradle data-lang=gradle><span style=display:flex><span>repositories <span style=color:#f92672>{</span>
 </span></span><span style=display:flex><span>    mavenCentral<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>    maven <span style=color:#f92672>{</span> url <span style=color:#e6db74>&#39;https://jitpack.io&#39;</span> <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    maven <span style=color:#f92672>{</span> url <span style=color:#e6db74>&#39;https:/jitpack.io&#39;</span> <span style=color:#f92672>}</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>}</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>dependencies <span style=color:#f92672>{</span>
@@ -284,9 +284,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Statement() {
 </span></span><span style=display:flex><span>            <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>evaluate</span>() <span style=color:#66d9ef>throws</span> Throwable {
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// Store launch time</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> Store launch time
 </span></span><span style=display:flex><span>                base.<span style=color:#a6e22e>evaluate</span>();
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// Store elapsed time</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> Store elapsed time
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>        };
 </span></span><span style=display:flex><span>    }
@@ -300,12 +300,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>beforeEach</span>(ExtensionContext context) <span style=color:#66d9ef>throws</span> Exception {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// Store launch time</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Store launch time
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>afterEach</span>(ExtensionContext context) <span style=color:#66d9ef>throws</span> Exception {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// Store elapsed time</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Store elapsed time
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h3 id=自定义类规则>自定义类规则</h3><p>分别地，我们可以通过<code>@ClassRule</code>实现<code>BeforeAllCallback</code>和<code>AfterAllCallback</code>接口来重现应用的规则逻辑。</p><p>在某些情况下，我们可能在 JUnit 4 中将类规则编写为内部匿名类。在以下示例中，我们有一个服务器资源，希望能够轻松设置以用于不同的测试：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JUnit4ServerBaseTest</span> {
@@ -380,7 +380,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        assertEquals(expected, Fibonacci.<span style=color:#a6e22e>compute</span>(input));
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>编写 JUnit 4 参数化测试有很多缺点，并且有像<a href=https://github.com/Pragmatists/JUnitParams target=_blank>JUnitParams</a>这样的社区运行者将自己描述为<em>不错的参数化测试</em>。</p><p>不幸的是，JUnit 4 参数化运行器没有直接的替代品。相反，在 JUnit 5 中有一个<code>@ParameterizedTest</code>注解。可以使用各种数据源注解来提供数据。其中最接近 JUnit 4 的是<code>@MethodSource</code>注解：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JUnit5ParameterizedTest</span> {
+</span></span></code></pre></div><p>编写 JUnit 4 参数化测试有很多缺点，并且有像<a href=https:/github.com/Pragmatists/JUnitParams target=_blank>JUnitParams</a>这样的社区运行者将自己描述为<em>不错的参数化测试</em>。</p><p>不幸的是，JUnit 4 参数化运行器没有直接的替代品。相反，在 JUnit 5 中有一个<code>@ParameterizedTest</code>注解。可以使用各种数据源注解来提供数据。其中最接近 JUnit 4 的是<code>@MethodSource</code>注解：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JUnit5ParameterizedTest</span> {
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> Stream<span style=color:#f92672>&lt;</span>Arguments<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>data</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Stream.<span style=color:#a6e22e>of</span>(
 </span></span><span style=display:flex><span>                Arguments.<span style=color:#a6e22e>of</span>(1, 1),
@@ -398,7 +398,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        assertEquals(expected, Fibonacci.<span style=color:#a6e22e>compute</span>(input));
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>在 JUnit 5 中，最接近 JUnit 4 参数化测试的是使用数据<code>@ParameterizedTest</code>源<code>@MethodSource</code>。</p><p>但是，JUnit 5 中的参数化测试有一些改进。您可以在我的<a href=https://www.arhohuttunen.com/junit-5-parameterized-tests target=_blank>JUnit 5 参数化测试</a>教程中阅读有关改进的更多信息。</p><h2 id=概括>概括</h2><p>从 JUnit 4 迁移到 JUnit 5 需要做一些工作，具体取决于现有测试的编写方式。</p><ul><li>我们可以运行 JUnit 4 测试和 JUnit 5 测试，以实现逐步迁移。</li><li>在很多情况下，我们只需要查找和替换包名和类名。</li><li>我们可能必须将自定义运行器和规则转换为扩展。</li><li>为了转换参数化测试，我们可能需要做一些返工。</li></ul><p>本指南的示例代码可以在<a href=https://github.com/arhohuttunen/junit5-examples/tree/main/junit5-migration target=_blank>GitHub</a>上找到。</p><p>原文链接：<a href=https://www.arhohuttunen.com/junit-5-migration/ target=_blank>https://www.arhohuttunen.com/junit-5-migration/</a></p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%5b%e8%af%91%5d%e4%bb%8eJUnit4%e8%bf%81%e7%a7%bb%e5%88%b0JUnit5%ef%bc%9a%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f11%2f07%2fjunit-5-migration%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
+</span></span></code></pre></div><p>在 JUnit 5 中，最接近 JUnit 4 参数化测试的是使用数据<code>@ParameterizedTest</code>源<code>@MethodSource</code>。</p><p>但是，JUnit 5 中的参数化测试有一些改进。您可以在我的<a href=https:/www.arhohuttunen.com/junit-5-parameterized-tests target=_blank>JUnit 5 参数化测试</a>教程中阅读有关改进的更多信息。</p><h2 id=概括>概括</h2><p>从 JUnit 4 迁移到 JUnit 5 需要做一些工作，具体取决于现有测试的编写方式。</p><ul><li>我们可以运行 JUnit 4 测试和 JUnit 5 测试，以实现逐步迁移。</li><li>在很多情况下，我们只需要查找和替换包名和类名。</li><li>我们可能必须将自定义运行器和规则转换为扩展。</li><li>为了转换参数化测试，我们可能需要做一些返工。</li></ul><p>本指南的示例代码可以在<a href=https:/github.com/arhohuttunen/junit5-examples/tree/main/junit5-migration target=_blank>GitHub</a>上找到。</p><p>原文链接：<a href=https:/www.arhohuttunen.com/junit-5-migration/ target=_blank>https:/www.arhohuttunen.com/junit-5-migration/</a></p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%5b%e8%af%91%5d%e4%bb%8eJUnit4%e8%bf%81%e7%a7%bb%e5%88%b0JUnit5%ef%bc%9a%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f11%2f07%2fjunit-5-migration%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
 </a><a class=social-link-item href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f11%2f07%2fjunit-5-migration%2f&title=%5b%e8%af%91%5d%e4%bb%8eJUnit4%e8%bf%81%e7%a7%bb%e5%88%b0JUnit5%ef%bc%9a%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97" target=_blank rel="noopener noreferrer" title="Click to share on LinkedIn"><i class="fa-brands fa-linkedin fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://telegram.me/share/url?text=%5b%e8%af%91%5d%e4%bb%8eJUnit4%e8%bf%81%e7%a7%bb%e5%88%b0JUnit5%ef%bc%9a%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97&amp;url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f11%2f07%2fjunit-5-migration%2f" target=_blank rel="noopener noreferrer" title="Click to share on telegram"><i class="fa-brands fa-telegram fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://reddit.com/submit?url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f11%2f07%2fjunit-5-migration%2f&title=%5b%e8%af%91%5d%e4%bb%8eJUnit4%e8%bf%81%e7%a7%bb%e5%88%b0JUnit5%ef%bc%9a%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97" target=_blank rel="noopener noreferrer" title="Click to share on reddit"><i class="fa-brands fa-reddit fa-2xl" style=color:#007bb5></i>

@@ -31,7 +31,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> IllegalArgumentException(<span style=color:#e6db74>&#34;Only Time-Based UUID (Version 1) is supported!&#34;</span>);
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>        String str <span style=color:#f92672>=</span> src.<span style=color:#a6e22e>toString</span>();
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 58e0a7d7-eebc-11d8-9669-0800200c9a66 =&gt; 1d8eebc58e0a7d796690800200c9a66. Note that [11d8] -&gt; [1d8]</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> 58e0a7d7<span style=color:#f92672>-</span>eebc<span style=color:#f92672>-</span>11d8<span style=color:#f92672>-</span>9669<span style=color:#f92672>-</span>0800200c9a66 <span style=color:#f92672>=&gt;</span> 1d8eebc58e0a7d796690800200c9a66. Note that <span style=color:#f92672>[</span>11d8<span style=color:#f92672>]</span> <span style=color:#f92672>-&gt;</span> <span style=color:#f92672>[</span>1d8<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> str.<span style=color:#a6e22e>substring</span>(15, 18) <span style=color:#f92672>+</span> str.<span style=color:#a6e22e>substring</span>(9, 13) <span style=color:#f92672>+</span> str.<span style=color:#a6e22e>substring</span>(0, 8) <span style=color:#f92672>+</span> str.<span style=color:#a6e22e>substring</span>(19, 23) <span style=color:#f92672>+</span> str.<span style=color:#a6e22e>substring</span>(24);
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
@@ -145,7 +145,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> Charset UTF8 <span style=color:#f92672>=</span> Charset.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;UTF-8&#34;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>constructBaseUrl</span>(HttpServletRequest request) {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;%s://%s:%d&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;%s:/%s:%d&#34;</span>,
 </span></span><span style=display:flex><span>                getScheme(request),
 </span></span><span style=display:flex><span>                getDomainName(request),
 </span></span><span style=display:flex><span>                getPort(request));

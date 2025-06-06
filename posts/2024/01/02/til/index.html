@@ -99,13 +99,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        Object result;
 </span></span><span style=display:flex><span>        InvocationHandlerFactory.<span style=color:#a6e22e>MethodHandler</span> methodHandler <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>dispatch</span>.<span style=color:#a6e22e>get</span>(method);
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// only handle by HardCodedTarget</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (target <span style=color:#66d9ef>instanceof</span> Target.<span style=color:#a6e22e>HardCodedTarget</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> only handle by HardCodedTarget
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>if</span> (target <span style=color:#66d9ef>instanceof</span> Target.<span style=color:#a6e22e>HardCodedTarget</span>) {
 </span></span><span style=display:flex><span>            Target.<span style=color:#a6e22e>HardCodedTarget</span><span style=color:#f92672>&lt;?&gt;</span> hardCodedTarget <span style=color:#f92672>=</span> (Target.<span style=color:#a6e22e>HardCodedTarget</span>) target;
 </span></span><span style=display:flex><span>            MethodMetadata methodMetadata <span style=color:#f92672>=</span> SentinelContractHolder.<span style=color:#a6e22e>METADATA_MAP</span>
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>get</span>(hardCodedTarget.<span style=color:#a6e22e>type</span>().<span style=color:#a6e22e>getName</span>() <span style=color:#f92672>+</span> Feign.<span style=color:#a6e22e>configKey</span>(hardCodedTarget.<span style=color:#a6e22e>type</span>(), method));
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// resource default is HttpMethod:protocol://url</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (methodMetadata <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> resource <span style=color:#66d9ef>default</span> is HttpMethod:protocol:<span style=color:#f92672>/</span>url
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>if</span> (methodMetadata <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) {
 </span></span><span style=display:flex><span>                result <span style=color:#f92672>=</span> methodHandler.<span style=color:#a6e22e>invoke</span>(args);
 </span></span><span style=display:flex><span>            } <span style=color:#66d9ef>else</span> {
 </span></span><span style=display:flex><span>                String resourceName <span style=color:#f92672>=</span> methodMetadata.<span style=color:#a6e22e>template</span>().<span style=color:#a6e22e>method</span>().<span style=color:#a6e22e>toUpperCase</span>() <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;:&#39;</span> <span style=color:#f92672>+</span> hardCodedTarget.<span style=color:#a6e22e>url</span>()
@@ -116,22 +116,22 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                    entry <span style=color:#f92672>=</span> SphU.<span style=color:#a6e22e>entry</span>(resourceName, EntryType.<span style=color:#a6e22e>OUT</span>, 1, args);
 </span></span><span style=display:flex><span>                    result <span style=color:#f92672>=</span> methodHandler.<span style=color:#a6e22e>invoke</span>(args);
 </span></span><span style=display:flex><span>                } <span style=color:#66d9ef>catch</span> (Throwable ex) {
-</span></span><span style=display:flex><span>                    <span style=color:#75715e>// fallback handle</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>BlockException.<span style=color:#a6e22e>isBlockException</span>(ex)) {
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>/</span> fallback handle
+</span></span><span style=display:flex><span>                    <span style=color:#a6e22e>if</span> (<span style=color:#f92672>!</span>BlockException.<span style=color:#a6e22e>isBlockException</span>(ex)) {
 </span></span><span style=display:flex><span>                        Tracer.<span style=color:#a6e22e>trace</span>(ex);
 </span></span><span style=display:flex><span>                    }
 </span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> (fallbackFactory <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
 </span></span><span style=display:flex><span>                        <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>                            <span style=color:#66d9ef>return</span> fallbackMethodMap.<span style=color:#a6e22e>get</span>(method).<span style=color:#a6e22e>invoke</span>(fallbackFactory.<span style=color:#a6e22e>create</span>(ex), args);
 </span></span><span style=display:flex><span>                        } <span style=color:#66d9ef>catch</span> (IllegalAccessException e) {
-</span></span><span style=display:flex><span>                            <span style=color:#75715e>// shouldn&#39;t happen as method is public due to being an</span>
-</span></span><span style=display:flex><span>                            <span style=color:#75715e>// interface</span>
-</span></span><span style=display:flex><span>                            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> AssertionError(e);
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>/</span> shouldn<span style=color:#960050;background-color:#1e0010>&#39;</span>t happen as method is <span style=color:#66d9ef>public</span> due to being an
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>/</span> <span style=color:#66d9ef>interface</span>
+</span></span><span style=display:flex><span>                            <span style=color:#a6e22e>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AssertionError</span>(e);
 </span></span><span style=display:flex><span>                        } <span style=color:#66d9ef>catch</span> (InvocationTargetException e) {
 </span></span><span style=display:flex><span>                            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> AssertionError(e.<span style=color:#a6e22e>getCause</span>());
 </span></span><span style=display:flex><span>                        }
 </span></span><span style=display:flex><span>                    } <span style=color:#66d9ef>else</span> {
-</span></span><span style=display:flex><span>                        <span style=color:#75715e>// 若是Result类型 并且不包含@FeignRetry 执行自动降级返回</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>/</span> 若是Result类型 并且不包含<span style=color:#a6e22e>@FeignRetry</span> 执行自动降级返回
 </span></span><span style=display:flex><span>                        FeignRetry feignRetry <span style=color:#f92672>=</span> AnnotationUtils.<span style=color:#a6e22e>findAnnotation</span>(method, FeignRetry.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>                        <span style=color:#66d9ef>if</span> (Result.<span style=color:#a6e22e>class</span> <span style=color:#f92672>==</span> method.<span style=color:#a6e22e>getReturnType</span>() <span style=color:#f92672>&amp;&amp;</span> Objects.<span style=color:#a6e22e>isNull</span>(feignRetry)) {
 </span></span><span style=display:flex><span>                            log.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;服务调用异常&#34;</span>, ex);
@@ -148,7 +148,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                }
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// other target type using default strategy</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> other target type using <span style=color:#66d9ef>default</span> strategy
 </span></span><span style=display:flex><span>            result <span style=color:#f92672>=</span> methodHandler.<span style=color:#a6e22e>invoke</span>(args);
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>
@@ -212,7 +212,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>super</span>.<span style=color:#a6e22e>invocationHandlerFactory</span>(<span style=color:#66d9ef>new</span> InvocationHandlerFactory() {
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>public</span> InvocationHandler <span style=color:#a6e22e>create</span>(Target target, Map<span style=color:#f92672>&lt;</span>Method, MethodHandler<span style=color:#f92672>&gt;</span> dispatch) {
-</span></span><span style=display:flex><span>                    <span style=color:#75715e>// 查找 FeignClient 上的 降级策略</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>/</span> 查找 FeignClient 上的 降级策略
 </span></span><span style=display:flex><span>                    FeignClient feignClient <span style=color:#f92672>=</span> AnnotationUtils.<span style=color:#a6e22e>findAnnotation</span>(target.<span style=color:#a6e22e>type</span>(), FeignClient.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>                    Class<span style=color:#f92672>&lt;?&gt;</span> fallback <span style=color:#f92672>=</span> feignClient.<span style=color:#a6e22e>fallback</span>();
 </span></span><span style=display:flex><span>                    Class<span style=color:#f92672>&lt;?&gt;</span> fallbackFactory <span style=color:#f92672>=</span> feignClient.<span style=color:#a6e22e>fallbackFactory</span>();
@@ -231,7 +231,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> (<span style=color:#66d9ef>void</span>.<span style=color:#a6e22e>class</span> <span style=color:#f92672>!=</span> fallbackFactory) {
-</span></span><span style=display:flex><span>                        <span style=color:#75715e>//针对 hystrix fallbackFactory 特殊处理</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>/</span>针对 hystrix fallbackFactory 特殊处理
 </span></span><span style=display:flex><span>                        <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>                            fallbackFactoryInstance <span style=color:#f92672>=</span> (FallbackFactory<span style=color:#f92672>&lt;?&gt;</span>) getFromContext(beanName, <span style=color:#e6db74>&#34;fallbackFactory&#34;</span>,
 </span></span><span style=display:flex><span>                                fallbackFactory, FallbackFactory.<span style=color:#a6e22e>class</span>);
@@ -269,7 +269,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> field.<span style=color:#a6e22e>get</span>(instance);
 </span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (IllegalAccessException e) {
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// ignore</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> ignore
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>null</span>;
 </span></span><span style=display:flex><span>        }

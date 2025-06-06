@@ -24,23 +24,23 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 &nbsp;
 <a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/mysql/ title=mysql>mysql</a></span></div></header><div class=entry-content><p>我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。</p><h2 id=服务器设置>服务器设置</h2><p>设置 yum 源：</p><p>/etc/yum.repos.d/centos.repo</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>[base]
 </span></span><span style=display:flex><span>name=CentOS-$releasever - Base
-</span></span><span style=display:flex><span>baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
+</span></span><span style=display:flex><span>baseurl=https:/vault.centos.org/7.9.2009/os/$basearch/
 </span></span><span style=display:flex><span>gpgcheck=1
-</span></span><span style=display:flex><span>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+</span></span><span style=display:flex><span>gpgkey=file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 </span></span><span style=display:flex><span>enabled=1
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>[updates]
 </span></span><span style=display:flex><span>name=CentOS-$releasever - Updates
-</span></span><span style=display:flex><span>baseurl=https://vault.centos.org/7.9.2009/updates/$basearch/
+</span></span><span style=display:flex><span>baseurl=https:/vault.centos.org/7.9.2009/updates/$basearch/
 </span></span><span style=display:flex><span>gpgcheck=1
-</span></span><span style=display:flex><span>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+</span></span><span style=display:flex><span>gpgkey=file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 </span></span><span style=display:flex><span>enabled=1
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>[extras]
 </span></span><span style=display:flex><span>name=CentOS-$releasever - Extras
-</span></span><span style=display:flex><span>baseurl=https://vault.centos.org/7.9.2009/extras/$basearch/
+</span></span><span style=display:flex><span>baseurl=https:/vault.centos.org/7.9.2009/extras/$basearch/
 </span></span><span style=display:flex><span>gpgcheck=1
-</span></span><span style=display:flex><span>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+</span></span><span style=display:flex><span>gpgkey=file://etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 </span></span><span style=display:flex><span>enabled=1
 </span></span></code></pre></div><p>更新 yum 源：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>yum update
 </span></span></code></pre></div><p>安装常用软件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>yum install wget curl git vim jq ntp -y
@@ -56,7 +56,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>echo <span style=color:#e6db74>&#34;/swapfile swap swap defaults 0 0&#34;</span> | sudo tee -a /etc/fstab <span style=color:#f92672>&amp;&amp;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>sudo swapon --show <span style=color:#f92672>&amp;&amp;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>sudo free -h
-</span></span></code></pre></div><h2 id=安装-nginx>安装 Nginx</h2><p>参考 <a href=https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7 target=_blank>CentOS 7 下 yum 安装和配置 Nginx</a> ，使用 yum 安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+</span></span></code></pre></div><h2 id=安装-nginx>安装 Nginx</h2><p>参考 <a href=https:/qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7 target=_blank>CentOS 7 下 yum 安装和配置 Nginx</a> ，使用 yum 安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rpm -ivh http:/nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>yum install nginx -y
 </span></span><span style=display:flex><span>
@@ -66,7 +66,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>firewall-cmd --zone<span style=color:#f92672>=</span>public --permanent --add-service<span style=color:#f92672>=</span>http
 </span></span><span style=display:flex><span>firewall-cmd --reload
 </span></span></code></pre></div><p>使用反向代理需要打开网络访问权限</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>setsebool -P httpd_can_network_connect on
-</span></span></code></pre></div><h2 id=安装并生成证书>安装并生成证书</h2><p>域名托管在 CloudFlare，可以参考 <a href=https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf target=_blank>文章</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl https://get.acme.sh | sh -s email<span style=color:#f92672>=</span>ichensoul@gmail.com
+</span></span></code></pre></div><h2 id=安装并生成证书>安装并生成证书</h2><p>域名托管在 CloudFlare，可以参考 <a href=https:/github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf target=_blank>文章</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl https:/get.acme.sh | sh -s email<span style=color:#f92672>=</span>ichensoul@gmail.com
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>export CF_Key<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;XXXXXXXXXXXXXXXXXX&#34;</span>
 </span></span><span style=display:flex><span>export CF_Email<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ichensoul@gmail.com&#34;</span>
@@ -76,14 +76,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>cp .acme.sh/chensoul.cc_ecc/<span style=color:#f92672>{</span>chensoul.cc.cer,chensoul.cc.key,fullchain.cer,ca.cer<span style=color:#f92672>}</span> /etc/nginx/ssl/
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>.acme.sh/acme.sh --installcert -d chensoul.cc -d *.chensoul.cc --cert-file /etc/nginx/ssl/chensoul.cc.cer --key-file /etc/nginx/ssl/chensoul.cc.key --fullchain-file /etc/nginx/ssl/fullchain.cer --ca-file /etc/nginx/ssl/ca.cer --reloadcmd <span style=color:#e6db74>&#34;sudo nginx -s reload&#34;</span>
-</span></span></code></pre></div><h2 id=docker-安装和配置>Docker 安装和配置</h2><p>Docker 安装</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -fsSL https://get.docker.com -o get-docker.sh
+</span></span></code></pre></div><h2 id=docker-安装和配置>Docker 安装和配置</h2><p>Docker 安装</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -fsSL https:/get.docker.com -o get-docker.sh
 </span></span><span style=display:flex><span>sh get-docker.sh
 </span></span></code></pre></div><p>启动 docker：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>systemctl enable docker
 </span></span><span style=display:flex><span>systemctl start docker
 </span></span></code></pre></div><p>设置 iptables 允许流量转发：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>iptables -P FORWARD ACCEPT
-</span></span></code></pre></div><p>安装 Compose</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -L <span style=color:#e6db74>&#34;https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-</span><span style=color:#66d9ef>$(</span>uname -s<span style=color:#66d9ef>)</span><span style=color:#e6db74>-</span><span style=color:#66d9ef>$(</span>uname -m<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> -o /usr/local/bin/docker-compose
+</span></span></code></pre></div><p>安装 Compose</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -L <span style=color:#e6db74>&#34;https:/github.com/docker/compose/releases/download/v2.23.3/docker-compose-</span><span style=color:#66d9ef>$(</span>uname -s<span style=color:#66d9ef>)</span><span style=color:#e6db74>-</span><span style=color:#66d9ef>$(</span>uname -m<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> -o /usr/local/bin/docker-compose
 </span></span></code></pre></div><p>设置执行权限：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>chmod +x /usr/local/bin/docker-compose
-</span></span></code></pre></div><p>参考 <a href=https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network target=_blank>Best Practice: Use a Docker network </a>，创建一个自定义的网络：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker network create custom
+</span></span></code></pre></div><p>参考 <a href=https:/nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network target=_blank>Best Practice: Use a Docker network </a>，创建一个自定义的网络：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker network create custom
 </span></span></code></pre></div><p>查看 docker 网络：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker network ls
 </span></span><span style=display:flex><span>NETWORK ID     NAME            DRIVER    SCOPE
 </span></span><span style=display:flex><span>68f4aeaa57bd   bridge          bridge    local
@@ -139,7 +139,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#34;3003:3000&#34;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>mysql://umami:umami@vps!@mysql:3306/umami</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>mysql:/umami:umami@vps!@mysql:3306/umami</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_TYPE</span>: <span style=color:#ae81ff>mysql</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>HASH_SALT</span>: <span style=color:#ae81ff>vps@2025</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>TRACKER_SCRIPT_NAME</span>: <span style=color:#ae81ff>random-string.js</span>
@@ -152,7 +152,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#f92672>networks</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>custom</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>external</span>: <span style=color:#66d9ef>true</span>
-</span></span></code></pre></div><p>参考 <a href=https://eallion.com/umami/ target=_blank>https://eallion.com/umami/</a>，Umami 的默认跟踪代码是被大多数的广告插件屏蔽的，被屏蔽了你就统计不到访客信息了。如果需要反屏蔽，需要在 docker-compose.yml 文件中添加环境变量：TRACKER_SCRIPT_NAME，如：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>    environment:
+</span></span></code></pre></div><p>参考 <a href=https:/eallion.com/umami/ target=_blank>https:/eallion.com/umami/</a>，Umami 的默认跟踪代码是被大多数的广告插件屏蔽的，被屏蔽了你就统计不到访客信息了。如果需要反屏蔽，需要在 docker-compose.yml 文件中添加环境变量：TRACKER_SCRIPT_NAME，如：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>    environment:
 </span></span><span style=display:flex><span>      TRACKER_SCRIPT_NAME: random-string.js
 </span></span></code></pre></div><p>然后获取到的跟踪代码的 src 会变成：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>srcipt.js =&gt; random-string.js
 </span></span></code></pre></div><p>启动：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f umami.yaml up -d
@@ -162,7 +162,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>umami.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -179,7 +179,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:3000</span>;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:3000</span>;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Host</span> $host;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Real-IP</span> $remote_addr;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Forwarded-For</span> $proxy_add_x_forwarded_for;
@@ -191,7 +191,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#f92672>expires</span> <span style=color:#e6db74>12h</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>5、添加网站</p><p>访问 <a href=https://umami.chensoul.cc/ target=_blank>https://umami.chensoul.cc/</a>，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。</p><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f umami.yaml down
+</span></span></code></pre></div><p>5、添加网站</p><p>访问 https:/umami.chensoul.cc/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。</p><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f umami.yaml down
 </span></span><span style=display:flex><span>docker pull ghcr.io/umami-software/umami:mysql-latest
 </span></span><span style=display:flex><span>docker-compose -f umami.yaml up -d
 </span></span></code></pre></div><h3 id=memos>Memos</h3><p>1、在 mysql 容器创建 memos 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -p
@@ -225,7 +225,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>memos.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -242,7 +242,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:5230</span>;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:5230</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><ol start=5><li>美化标签</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span><span style=color:#75715e>/* 设置 Memos 标签样式 */</span>
@@ -294,7 +294,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DB_MYSQLDB_PASSWORD=n8n@vps!</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>TZ=&#34;Asia/Shanghai&#34;</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>GENERIC_TIMEZONE=&#34;Asia/Shanghai&#34;</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>WEBHOOK_URL=https://n8n.chensoul.cc/</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>WEBHOOK_URL=https:/n8n.chensoul.cc/</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;5678:5678&#39;</span>
@@ -312,7 +312,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>n8n.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -329,7 +329,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:5678</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:5678</span>;
 </span></span><span style=display:flex><span>      <span style=color:#f92672>chunked_transfer_encoding</span> <span style=color:#66d9ef>off</span>;
 </span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_buffering</span> <span style=color:#66d9ef>off</span>;
 </span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_cache</span> <span style=color:#66d9ef>off</span>;
@@ -340,7 +340,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Connection</span> <span style=color:#e6db74>&#34;Upgrade&#34;</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>这里面的转发配置不对的话，会导致直接访问 5678 端口正常，但是访问 nginx 的话，workflow 会一直处于执行。</p><p>5、添加 workflow</p><p>参考这篇文章 <a href=http://stiles.cc/archives/237/ target=_blank>http://stiles.cc/archives/237/</a> ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。</p><p>workflows 参考：</p><ul><li><a href=https://reorx.com/blog/sharing-my-footprints-automation/ target=_blank>Reorx</a></li><li><a href=https://www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/ target=_blank>Pseudoyu</a></li><li><a href=https://raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he target=_blank>raye</a></li><li><a href=https://zeabur.com/docs/marketplace/n8n target=_blank>Zeabur</a></li></ul><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f n8n.yaml down
+</span></span></code></pre></div><p>这里面的转发配置不对的话，会导致直接访问 5678 端口正常，但是访问 nginx 的话，workflow 会一直处于执行。</p><p>5、添加 workflow</p><p>参考这篇文章 http:/stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。</p><p>workflows 参考：</p><ul><li><a href=https:/reorx.com/blog/sharing-my-footprints-automation/ target=_blank>Reorx</a></li><li><a href=https:/www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/ target=_blank>Pseudoyu</a></li><li><a href=https:/raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he target=_blank>raye</a></li><li><a href=https:/zeabur.com/docs/marketplace/n8n target=_blank>Zeabur</a></li></ul><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f n8n.yaml down
 </span></span><span style=display:flex><span>docker pull n8nio/n8n
 </span></span><span style=display:flex><span>docker-compose -f n8n.yaml up -d
 </span></span></code></pre></div><p>7、备份</p><p>安装 jq</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>yum install epel-release -y
@@ -364,23 +364,23 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>docker exec -u node -it n8n n8n export:credentials --all --output<span style=color:#f92672>=</span>./credentials.json
 </span></span><span style=display:flex><span>docker cp n8n:/home/node/credentials.json <span style=color:#e6db74>${</span>BACKUP_DIR<span style=color:#e6db74>}</span>
-</span></span></code></pre></div><h3 id=bark>Bark</h3><p>Bark is an iOS App which allows you to push custom notifications to your iPhone.</p><p><a href=https://github.com/Finb/Bark target=_blank>https://github.com/Finb/Bark</a></p><p>需要的时候就可以调用 bark api 给 iPhone 推送消息。</p><ol><li><p>在ios 上安装 bark</p></li><li><p>服务端使用 docker 安装</p></li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker run -dt --name bark -p 8090:8080 -v /data/bark:/data finab/bark-server
-</span></span></code></pre></div><ol start=3><li>在 ios bark app上添加私有服务器 <a href=http://x.x.x.x:8090 target=_blank>http://x.x.x.x:8090</a></li><li>测试</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -X <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;http://x.x.x.x:8090/erWZgGQoV9CqGGwHD8AkBT&#34;</span> <span style=color:#ae81ff>\
+</span></span></code></pre></div><h3 id=bark>Bark</h3><p>Bark is an iOS App which allows you to push custom notifications to your iPhone.</p><p>https:/github.com/Finb/Bark</p><p>需要的时候就可以调用 bark api 给 iPhone 推送消息。</p><ol><li><p>在ios 上安装 bark</p></li><li><p>服务端使用 docker 安装</p></li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker run -dt --name bark -p 8090:8080 -v /data/bark:/data finab/bark-server
+</span></span></code></pre></div><ol start=3><li>在 ios bark app上添加私有服务器 http:/x.x.x.x:8090</li><li>测试</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -X <span style=color:#e6db74>&#34;POST&#34;</span> <span style=color:#e6db74>&#34;http:/x.x.x.x:8090/erWZgGQoV9CqGGwHD8AkBT&#34;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>     -H <span style=color:#e6db74>&#39;Content-Type: application/json; charset=utf-8&#39;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>     -d <span style=color:#e6db74>$&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;body&#34;: &#34;这是一个测试&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;title&#34;: &#34;Test Title&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;badge&#34;: 1,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;category&#34;: &#34;myNotificationCategory&#34;,
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;icon&#34;: &#34;https://www.usememos.com/logo-rounded.png&#34;,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;icon&#34;: &#34;https:/www.usememos.com/logo-rounded.png&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  &#34;group&#34;: &#34;test&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>}&#39;</span>
-</span></span></code></pre></div><ol start=3><li><p>在 ios bark app 上添加私有服务器：http://x.x.x.x:8090</p></li><li><p>配置 nginx 配置文件 /etc/nginx/conf.d/bark.conf</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=display:flex><span><span style=color:#66d9ef>server</span> {
+</span></span></code></pre></div><ol start=3><li><p>在 ios bark app 上添加私有服务器：http:/x.x.x.x:8090</p></li><li><p>配置 nginx 配置文件 /etc/nginx/conf.d/bark.conf</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=display:flex><span><span style=color:#66d9ef>server</span> {
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#ae81ff>80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>bark.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -397,10 +397,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:8090</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:8090</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div></li></ol><h3 id=planka>Planka</h3><p>The realtime kanban board for workgroups built with React and Redux.</p><p><a href=https://github.com/plankanban/planka target=_blank>https://github.com/plankanban/planka</a></p><p>替换 Trello 的看板工具。</p><p>安装步骤，参考 <a href=https://docs.planka.cloud/docs/installation/docker/production_version target=_blank>官方文档</a>。</p><ol><li>为了使用提前安装好的 mysql 数据库，修改 docker-compose 文件：<ul><li>修改端口为 1337</li><li>修改 DATABASE_URL</li><li>修改 volumes</li><li>设置默认登录用户</li></ul></li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
+</span></span></code></pre></div></li></ol><h3 id=planka>Planka</h3><p>The realtime kanban board for workgroups built with React and Redux.</p><p>https:/github.com/plankanban/planka</p><p>替换 Trello 的看板工具。</p><p>安装步骤，参考 <a href=https:/docs.planka.cloud/docs/installation/docker/production_version target=_blank>官方文档</a>。</p><ol><li>为了使用提前安装好的 mysql 数据库，修改 docker-compose 文件：<ul><li>修改端口为 1337</li><li>修改 DATABASE_URL</li><li>修改 volumes</li><li>设置默认登录用户</li></ul></li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>planka</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>ghcr.io/plankanban/planka:latest</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>planka</span>
@@ -412,14 +412,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>1337</span>:<span style=color:#ae81ff>1337</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>BASE_URL=http://localhost:1337/</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DATABASE_URL=mysqlql://planka:planka@vps!@mysql/planka</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>BASE_URL=http:/localhost:1337/</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DATABASE_URL=mysqlql:/planka:planka@vps!@mysql/planka</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>SECRET_KEY=notsecretkey</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - TRUST_PROXY=0</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - TOKEN_EXPIRES_IN=365 # In days</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#75715e># related: https://github.com/knex/knex/issues/2354</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># related: https:/github.com/knex/knex/issues/2354</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># As knex does not pass query parameters from the connection string we</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># have to use environment variables in order to pass the desired values, e.g.</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - PGSSLMODE=&lt;value&gt;</span>
@@ -460,7 +460,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - OIDC_IGNORE_ROLES=true</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - OIDC_ENFORCED=true</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#75715e># Email Notifications (https://nodemailer.com/smtp/)</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># Email Notifications (https:/nodemailer.com/smtp/)</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - SMTP_HOST=</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - SMTP_PORT=587</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - SMTP_NAME=</span>
@@ -473,7 +473,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#75715e># Optional fields: accessToken, events, excludedEvents</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - |</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e>#   WEBHOOKS=[{</span>
-</span></span><span style=display:flex><span>      <span style=color:#75715e>#     &#34;url&#34;: &#34;http://localhost:3001&#34;,</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>#     &#34;url&#34;: &#34;http:/localhost:3001&#34;,</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e>#     &#34;accessToken&#34;: &#34;notaccesstoken&#34;,</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e>#     &#34;events&#34;: [&#34;cardCreate&#34;, &#34;cardUpdate&#34;, &#34;cardDelete&#34;],</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e>#     &#34;excludedEvents&#34;: [&#34;notificationCreate&#34;, &#34;notificationUpdate&#34;]</span>
@@ -505,7 +505,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>planka.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -522,7 +522,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:1337</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:1337</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h3 id=rsshub>Rsshub</h3><p>直接通过 Docker 安装运行：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker run -d --name rsshub -p 1200:1200 diygod/rsshub
@@ -531,7 +531,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>rsshub.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -548,10 +548,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:1200</span>;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:1200</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h3 id=kuma>Kuma</h3><p>参考 <a href=https://uptime.kuma.pet/ target=_blank>kuma</a>，使用 docker compose 部署，创建 uptime.yaml：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
+</span></span></code></pre></div><h3 id=kuma>Kuma</h3><p>参考 <a href=https:/uptime.kuma.pet/ target=_blank>kuma</a>，使用 docker compose 部署，创建 uptime.yaml：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>uptime-kuma</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>louislam/uptime-kuma:1</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>uptime-kuma</span>
@@ -572,7 +572,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>uptime.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -589,7 +589,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:3001</span>;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:3001</span>;
 </span></span><span style=display:flex><span>	      <span style=color:#f92672>proxy_set_header</span>   <span style=color:#e6db74>X-Real-IP</span> $remote_addr;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span>   <span style=color:#e6db74>X-Forwarded-For</span> $proxy_add_x_forwarded_for;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span>   <span style=color:#e6db74>Host</span> $host;
@@ -602,7 +602,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker compose -f uptime.yaml down
 </span></span><span style=display:flex><span>docker pull louislam/uptime-kuma:1
 </span></span><span style=display:flex><span>docker-compose -f uptime.yaml up -d
-</span></span></code></pre></div><h3 id=hoarder>Hoarder</h3><p>A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.</p><p>一款可自托管的书签应用程序，带有 AI智能功能。</p><p><a href=https://github.com/hoarder-app/hoarder target=_blank>https://github.com/hoarder-app/hoarder</a></p><ol><li>通过 docker-compose 安装，创建 hoarder.yaml：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#34;3.8&#34;</span>
+</span></span></code></pre></div><h3 id=hoarder>Hoarder</h3><p>A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.</p><p>一款可自托管的书签应用程序，带有 AI智能功能。</p><p>https:/github.com/hoarder-app/hoarder</p><ol><li>通过 docker-compose 安装，创建 hoarder.yaml：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#34;3.8&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>services</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>web</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}</span>
@@ -615,9 +615,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
 </span></span><span style=display:flex><span>      <span style=color:#f92672>NEXTAUTH_SECRET</span>: <span style=color:#ae81ff>super_random_string</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>MEILI_MASTER_KEY</span>: <span style=color:#ae81ff>another_random_string</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>NEXTAUTH_URL</span>: <span style=color:#ae81ff>https://hoarder.chensoul.cc</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>MEILI_ADDR</span>: <span style=color:#ae81ff>http://meilisearch:7700</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>BROWSER_WEB_URL</span>: <span style=color:#ae81ff>http://chrome:9222</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>NEXTAUTH_URL</span>: <span style=color:#ae81ff>https:/hoarder.chensoul.cc</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>MEILI_ADDR</span>: <span style=color:#ae81ff>http:/meilisearch:7700</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>BROWSER_WEB_URL</span>: <span style=color:#ae81ff>http:/chrome:9222</span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># OPENAI_API_KEY: ...</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>DATA_DIR</span>: <span style=color:#ae81ff>/data</span>
 </span></span><span style=display:flex><span>  <span style=color:#f92672>chrome</span>:
@@ -652,7 +652,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>hoarder.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https:/</span>$host$request_uri;
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
@@ -669,12 +669,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:3002</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http:/127.0.0.1:3002</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><ol start=4><li>使用 api 接口导入 url</li></ol><p>先创建 api-key。</p><p>查询 memos 数据库（我使用的是 mysql ）中包含 url 链接的记录：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> (regexp_matches(content, <span style=color:#e6db74>&#39;https?://\S+&#39;</span>, <span style=color:#e6db74>&#39;g&#39;</span>))[<span style=color:#ae81ff>1</span>] <span style=color:#66d9ef>AS</span> url <span style=color:#66d9ef>FROM</span> memo <span style=color:#66d9ef>where</span> content <span style=color:#66d9ef>like</span> <span style=color:#e6db74>&#39;%https:%&#39;</span>
+</span></span></code></pre></div><ol start=4><li>使用 api 接口导入 url</li></ol><p>先创建 api-key。</p><p>查询 memos 数据库（我使用的是 mysql ）中包含 url 链接的记录：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> (regexp_matches(content, <span style=color:#e6db74>&#39;https?:/\S+&#39;</span>, <span style=color:#e6db74>&#39;g&#39;</span>))[<span style=color:#ae81ff>1</span>] <span style=color:#66d9ef>AS</span> url <span style=color:#66d9ef>FROM</span> memo <span style=color:#66d9ef>where</span> content <span style=color:#66d9ef>like</span> <span style=color:#e6db74>&#39;%https:%&#39;</span>
 </span></span></code></pre></div><p>将查询结果保存为 all_links.txt</p><p>然后运行导入命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#66d9ef>while</span> IFS<span style=color:#f92672>=</span> read -r url; <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    docker run --rm ghcr.io/hoarder-app/hoarder-cli:release --api-key <span style=color:#e6db74>&#34;ak1_066c79d8a9d634d4b826_d99f3a2732cab381f7c9&#34;</span> --server-addr <span style=color:#e6db74>&#34;https://hoarder.chensoul.cc/&#34;</span> bookmarks add --link <span style=color:#e6db74>&#34;</span>$url<span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>    docker run --rm ghcr.io/hoarder-app/hoarder-cli:release --api-key <span style=color:#e6db74>&#34;ak1_066c79d8a9d634d4b826_d99f3a2732cab381f7c9&#34;</span> --server-addr <span style=color:#e6db74>&#34;https:/hoarder.chensoul.cc/&#34;</span> bookmarks add --link <span style=color:#e6db74>&#34;</span>$url<span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>done</span> &lt; all_links.txt
 </span></span></code></pre></div><h2 id=服务升级>服务升级</h2><p>/opt/scripts/upgrade.sh</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>docker pull mysql:8
@@ -749,7 +749,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>*/20 * * * * /usr/sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;<span style=color:#ae81ff>1</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span> * * * sh /opt/scripts/backup_mysql.sh
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span> * * * sh /opt/scripts/backup_n8n.sh
-</span></span></code></pre></div><h2 id=参考文章>参考文章</h2><ul><li><a href=https://www.jinhuaiyao.com/posts/what-is-running-on-my-vps/ target=_blank>我的 VPS 上运行了什么</a></li></ul></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%e6%88%91%e7%9a%84VPS%e6%9c%8d%e5%8a%a1%e9%83%a8%e7%bd%b2%e8%ae%b0%e5%bd%95 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2023%2f01%2f25%2fnotes-about-deploy-services-in-vps%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
+</span></span></code></pre></div><h2 id=参考文章>参考文章</h2><ul><li><a href=https:/www.jinhuaiyao.com/posts/what-is-running-on-my-vps/ target=_blank>我的 VPS 上运行了什么</a></li></ul></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=%e6%88%91%e7%9a%84VPS%e6%9c%8d%e5%8a%a1%e9%83%a8%e7%bd%b2%e8%ae%b0%e5%bd%95 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2023%2f01%2f25%2fnotes-about-deploy-services-in-vps%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
 </a><a class=social-link-item href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2023%2f01%2f25%2fnotes-about-deploy-services-in-vps%2f&title=%e6%88%91%e7%9a%84VPS%e6%9c%8d%e5%8a%a1%e9%83%a8%e7%bd%b2%e8%ae%b0%e5%bd%95" target=_blank rel="noopener noreferrer" title="Click to share on LinkedIn"><i class="fa-brands fa-linkedin fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://telegram.me/share/url?text=%e6%88%91%e7%9a%84VPS%e6%9c%8d%e5%8a%a1%e9%83%a8%e7%bd%b2%e8%ae%b0%e5%bd%95&amp;url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2023%2f01%2f25%2fnotes-about-deploy-services-in-vps%2f" target=_blank rel="noopener noreferrer" title="Click to share on telegram"><i class="fa-brands fa-telegram fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://reddit.com/submit?url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2023%2f01%2f25%2fnotes-about-deploy-services-in-vps%2f&title=%e6%88%91%e7%9a%84VPS%e6%9c%8d%e5%8a%a1%e9%83%a8%e7%bd%b2%e8%ae%b0%e5%bd%95" target=_blank rel="noopener noreferrer" title="Click to share on reddit"><i class="fa-brands fa-reddit fa-2xl" style=color:#007bb5></i>

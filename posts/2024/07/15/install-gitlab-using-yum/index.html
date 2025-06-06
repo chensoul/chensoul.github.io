@@ -25,11 +25,11 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>$ systemctl enable postfix
 </span></span></code></pre></div><h3 id=2手动安装>2、手动安装</h3><h4 id=1安装-gitlab-依赖包>1、安装 gitlab 依赖包</h4><p>centos7:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ yum install -y curl openssh-server openssh-clients postfix cronie policycoreutils-python
 </span></span></code></pre></div><blockquote><p>gitlab-ce 10.x.x以后的版本需要依赖policycoreutils-python</p></blockquote><p>centos8:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ yum install -y curl openssh-server openssh-clients postfix cronie  policycoreutils-python-utils
-</span></span></code></pre></div><h4 id=2添加官方源>2、添加官方源</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+</span></span></code></pre></div><h4 id=2添加官方源>2、添加官方源</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ curl https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 </span></span></code></pre></div><p>因为官方源太慢，可以使用国内清华yum源，配置如下</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ vim /etc/yum.repos.d/gitlab-ce.repo
 </span></span><span style=display:flex><span><span style=color:#f92672>[</span>gitlab-ce<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>name<span style=color:#f92672>=</span>Gitlab CE Repository
-</span></span><span style=display:flex><span>baseurl<span style=color:#f92672>=</span>https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
+</span></span><span style=display:flex><span>baseurl<span style=color:#f92672>=</span>https:/mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
 </span></span><span style=display:flex><span>gpgcheck<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
 </span></span><span style=display:flex><span>enabled<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
 </span></span></code></pre></div><h4 id=3安装-gitlab>3、安装 Gitlab</h4><p>自动安装最新版</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ yum -y install gitlab-ce                    
@@ -41,12 +41,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#75715e>## GitLab URL</span>
 </span></span><span style=display:flex><span><span style=color:#75715e>##! URL on which GitLab will be reachable.</span>
 </span></span><span style=display:flex><span><span style=color:#75715e>##! For more details on configuring external_url see:</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>##! https:/docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab</span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 没有域名，可以设置为本机IP地址</span>
-</span></span><span style=display:flex><span>external_url <span style=color:#e6db74>&#39;http://172.17.0.61&#39;</span>
+</span></span><span style=display:flex><span>external_url <span style=color:#e6db74>&#39;http:/172.17.0.61&#39;</span>
 </span></span><span style=display:flex><span>***
 </span></span><span style=display:flex><span>$ grep <span style=color:#e6db74>&#34;^external_url&#34;</span> /etc/gitlab/gitlab.rb
-</span></span><span style=display:flex><span>external_url <span style=color:#e6db74>&#39;http://172.17.0.61&#39;</span>     <span style=color:#75715e>#绑定监听的域名或IP</span>
+</span></span><span style=display:flex><span>external_url <span style=color:#e6db74>&#39;http:/172.17.0.61&#39;</span>     <span style=color:#75715e>#绑定监听的域名或IP</span>
 </span></span></code></pre></div><h5 id=3初始化-gitlab>3、初始化 Gitlab</h5><p><strong>配置语言环境</strong></p><p>gitlab要求语言环境为英文环境，必须切换，切换方法如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ echo <span style=color:#e6db74>&#34;export LC_ALL=en_US.UTF-8&#34;</span>  &gt;&gt;  /etc/profile 
 </span></span></code></pre></div><p>退出终端重新登陆。</p><p>如果上面的方案不可以，再使用下面的方案：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ yum install langpacks-zh_CN langpacks-en langpacks-en_GB -y
 </span></span><span style=display:flex><span>
@@ -80,7 +80,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>nginx   <span style=color:#ae81ff>22500</span>       root    7u  IPv4  <span style=color:#ae81ff>50923</span>      0t0  TCP *:http <span style=color:#f92672>(</span>LISTEN<span style=color:#f92672>)</span>
 </span></span><span style=display:flex><span>nginx   <span style=color:#ae81ff>22501</span> gitlab-www    7u  IPv4  <span style=color:#ae81ff>50923</span>      0t0  TCP *:http <span style=color:#f92672>(</span>LISTEN<span style=color:#f92672>)</span>
 </span></span></code></pre></div><h5 id=5gitlab-设置-https-方式-缺少配置>5、Gitlab 设置 HTTPS 方式 （缺少配置）</h5><p>如果想要以上的 https 方式正常生效使用，则需要把 letsencrypt 自动生成证书的配置打开，这样在执行重新让配置生效命令 (gitlab-ctl reconfigure) 的时候会自动给域名生成免费的证书并自动在 gitlab 自带的 nginx 中加上相关的跳转配置，都是全自动的，非常方便。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ vim /etc/gitlab/gitlab.rb
-</span></span><span style=display:flex><span>letsencrypt<span style=color:#f92672>[</span><span style=color:#e6db74>&#39;enable&#39;</span><span style=color:#f92672>]</span> <span style=color:#f92672>=</span> true //如果因为这行报错，改成false即可
+</span></span><span style=display:flex><span>letsencrypt<span style=color:#f92672>[</span><span style=color:#e6db74>&#39;enable&#39;</span><span style=color:#f92672>]</span> <span style=color:#f92672>=</span> true /如果因为这行报错，改成false即可
 </span></span><span style=display:flex><span>letsencrypt<span style=color:#f92672>[</span><span style=color:#e6db74>&#39;contact_emails&#39;</span><span style=color:#f92672>]</span> <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#e6db74>&#39;testqq@qq.com&#39;</span><span style=color:#f92672>]</span>     <span style=color:#75715e># 添加联系人的电子邮件地址</span>
 </span></span></code></pre></div><h5 id=6gitlab-添加smtp邮件功能>6、Gitlab 添加smtp邮件功能</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ vim /etc/gitlab/gitlab.rb
 </span></span><span style=display:flex><span>postfix 并非必须的；根据具体情况配置，以 SMTP 的为例配置邮件服务器来实现通知；参考配置如下： 
@@ -142,7 +142,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>---------------------------------------------------------------------
 </span></span><span style=display:flex><span>Loading production environment <span style=color:#f92672>(</span>Rails 6.0.2<span style=color:#f92672>)</span>
 </span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:003:0&gt; 
-</span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:004:0&gt; Notify.test_email<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;testqq@qq.com&#39;</span>, <span style=color:#e6db74>&#39;Message Subject&#39;</span>, <span style=color:#e6db74>&#39;Message Body&#39;</span><span style=color:#f92672>)</span>.deliver_now  //输入测试命令，回车
+</span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:004:0&gt; Notify.test_email<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;testqq@qq.com&#39;</span>, <span style=color:#e6db74>&#39;Message Subject&#39;</span>, <span style=color:#e6db74>&#39;Message Body&#39;</span><span style=color:#f92672>)</span>.deliver_now  /输入测试命令，回车
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Notify#test_email: processed outbound mail in 5.2ms
 </span></span><span style=display:flex><span>Delivered mail 5eafceaa250a_1d063fb777add9a08601a@wing.mail <span style=color:#f92672>(</span>1430.1ms<span style=color:#f92672>)</span>
@@ -159,13 +159,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>Auto-Submitted: auto-generated
 </span></span><span style=display:flex><span>X-Auto-Response-Suppress: All
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>&lt;!DOCTYPE html PUBLIC <span style=color:#e6db74>&#34;-//W3C//DTD HTML 4.0 Transitional//EN&#34;</span> <span style=color:#e6db74>&#34;http://www.w3.org/TR/REC-html40/loose.dtd&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;!DOCTYPE html PUBLIC <span style=color:#e6db74>&#34;-/W3C/DTD HTML 4.0 Transitional/EN&#34;</span> <span style=color:#e6db74>&#34;http:/www.w3.org/TR/REC-html40/loose.dtd&#34;</span>&gt;
 </span></span><span style=display:flex><span>&lt;html&gt;&lt;body&gt;&lt;p&gt;Message Body&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#f92672>=</span>&gt; <span style=color:#75715e>#&lt;Mail::Message:70056859616080, Multipart: false, Headers: &lt;Date: Mon, 04 May 2020 16:13:30 +0800&gt;, &lt;From: gitlab &lt;testqq@qq.com&gt;&gt;, &lt;Reply-To: gitlab &lt;testqq@qq.com&gt;&gt;, &lt;To: testqq@qq.com&gt;, &lt;Message-ID: &lt;5eafceaa250a_1d063fb777add9a08601a@wing.mail&gt;&gt;, &lt;Subject: Message Subject&gt;, &lt;Mime-Version: 1.0&gt;, &lt;Content-Type: text/html; charset=UTF-8&gt;, &lt;Content-Transfer-Encoding: 7bit&gt;, &lt;Auto-Submitted: auto-generated&gt;, &lt;X-Auto-Response-Suppress: All&gt;&gt;</span>
 </span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:005:0&gt; 
-</span></span></code></pre></div><p>去qq邮箱web界面查看是否收到邮件。</p><h3 id=3一键安装>3、一键安装</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
-</span></span></code></pre></div><h2 id=gitlab-的使用>Gitlab 的使用</h2><p><strong>在浏览器中输入 http://192.168.1.178/ ，然后 change password: ，并使用root用户登录 即可 (后续动作根据提示操作)</strong></p><h3 id=1gitlab-命令行修改密码>1、Gitlab 命令行修改密码</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ gitlab-rails console production
+</span></span></code></pre></div><p>去qq邮箱web界面查看是否收到邮件。</p><h3 id=3一键安装>3、一键安装</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -s https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+</span></span></code></pre></div><h2 id=gitlab-的使用>Gitlab 的使用</h2><p><strong>在浏览器中输入 http:/192.168.1.178/ ，然后 change password: ，并使用root用户登录 即可 (后续动作根据提示操作)</strong></p><h3 id=1gitlab-命令行修改密码>1、Gitlab 命令行修改密码</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ gitlab-rails console production
 </span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:001:0&gt;user <span style=color:#f92672>=</span> User.where<span style=color:#f92672>(</span>id: 1<span style=color:#f92672>)</span>.first      <span style=color:#75715e># id为1的是超级管理员</span>
 </span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:002:0&gt;user.password <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;yourpassword&#39;</span>      <span style=color:#75715e># 密码必须至少8个字符</span>
 </span></span><span style=display:flex><span>irb<span style=color:#f92672>(</span>main<span style=color:#f92672>)</span>:003:0&gt;user.save!                          <span style=color:#75715e># 如没有问题 返回true</span>
@@ -208,7 +208,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>或
 </span></span><span style=display:flex><span>$ gitlab-ctl restart
 </span></span></code></pre></div><p><strong>注意：通过备份文件恢复gitlab必须保证两台主机的gitlab版本一致，否则会提示版本不匹配</strong></p><h2 id=利用gitlab管理k8s集群>利用Gitlab管理k8s集群</h2><h3 id=1权限设置>1、权限设置</h3><p>用户设置 -> 网络，白名单以允许来自钩子和服务的对本地网络的请求，填入 K8S 集群 api-server 的地址。</p><h3 id=2获取k8s集群api地址>2、获取k8s集群API地址</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#ae81ff>$ kubectl cluster-info | grep &#39;Kubernetes master&#39; | awk &#39;/http/ {print $NF}&#39;</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>https://192.168.19.200:6443</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>https:/192.168.19.200:6443</span>
 </span></span></code></pre></div><h3 id=3获取k8s集群默认ca证书>3、获取k8s集群默认CA证书</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ kubectl get secrets
 </span></span><span style=display:flex><span>NAME                  TYPE                                  DATA   AGE
 </span></span><span style=display:flex><span>default-token-cvfqx   kubernetes.io/service-account-token   <span style=color:#ae81ff>3</span>      3d21h
@@ -217,9 +217,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>MIICyDCCAbCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
 </span></span><span style=display:flex><span>cm5ldGVzMB4XDTIwMDgxNzA5MjAwMFoXDTMwMDgxNTA5MjAwMFowFTETMBEGA1UE
 </span></span><span style=display:flex><span>AxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANIM
-</span></span><span style=display:flex><span>iOGHeolaxkE+kqZtc8kDbGFhwqGxNxg4orbIjrz//Z6vrgqo2COn2NjKrVM11bmz
+</span></span><span style=display:flex><span>iOGHeolaxkE+kqZtc8kDbGFhwqGxNxg4orbIjrz/Z6vrgqo2COn2NjKrVM11bmz
 </span></span><span style=display:flex><span>VhHPCruc3snfTLIS+/Z6gZqgpw5ruX8OjfH4nhr9npKxdBon3soa10EovPwMz1KW
-</span></span><span style=display:flex><span>laqbuLKTbtTm+oCtAKYXUlzqrFGR//GW2D3bjl1QGOPbAR0pggdxSpPo6oUgtEQJ
+</span></span><span style=display:flex><span>laqbuLKTbtTm+oCtAKYXUlzqrFGR/GW2D3bjl1QGOPbAR0pggdxSpPo6oUgtEQJ
 </span></span><span style=display:flex><span>QAsNOJ40qMjevi3fnrNDrMqmcNKlSlkw8+Gf4TqM1EfAERRHiEcb/W3hOGWV0gdm
 </span></span><span style=display:flex><span>vaq7CE/ENeD1O11NE76BMmk5WO0u6ot4OmP35TTlx8K0N/WPyq76RlH7somiIb8S
 </span></span><span style=display:flex><span>1NpAzg+9K0vv1QmILScCAwEAAaMjMCEwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB

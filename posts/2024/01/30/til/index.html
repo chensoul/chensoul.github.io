@@ -39,15 +39,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>fillValIfNullByName</span>(
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>final</span> String fieldName,<span style=color:#66d9ef>final</span> Object fieldVal,
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>final</span> MetaObject metaObject,<span style=color:#66d9ef>final</span> <span style=color:#66d9ef>boolean</span> isCover) {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 1. 没有 set 方法</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>metaObject.<span style=color:#a6e22e>hasSetter</span>(fieldName)) {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 1. 没有 set 方法
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>if</span> (<span style=color:#f92672>!</span>metaObject.<span style=color:#a6e22e>hasSetter</span>(fieldName)) {
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>return</span>;
 </span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 2. 如果用户有手动设置的值</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (metaObject.<span style=color:#a6e22e>getValue</span>(fieldName) <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>isCover) {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 2. 如果用户有手动设置的值
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>if</span> (metaObject.<span style=color:#a6e22e>getValue</span>(fieldName) <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>isCover) {
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>return</span>;
 </span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 3. field 类型相同时设置</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 3. field 类型相同时设置
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>final</span> Class<span style=color:#f92672>&lt;?&gt;</span> getterType <span style=color:#f92672>=</span> metaObject.<span style=color:#a6e22e>getGetterType</span>(fieldName);
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (ClassUtils.<span style=color:#a6e22e>isAssignableValue</span>(getterType, fieldVal)) {
 </span></span><span style=display:flex><span>      metaObject.<span style=color:#a6e22e>setValue</span>(fieldName, fieldVal);
@@ -95,10 +95,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String DEFAULT_TIME_FORMAT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;HH:mm:ss&#34;</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>CustomObjectMapper</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>//收到未知属性时不报异常</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>收到未知属性时不报异常
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>configure</span>(FAIL_ON_UNKNOWN_PROPERTIES, <span style=color:#66d9ef>false</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>//反序列化时，属性不存在的兼容处理</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>反序列化时<span style=color:#960050;background-color:#1e0010>，</span>属性不存在的兼容处理
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>getDeserializationConfig</span>().<span style=color:#a6e22e>withoutFeatures</span>(DeserializationFeature.<span style=color:#a6e22e>FAIL_ON_UNKNOWN_PROPERTIES</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>final</span> SimpleModule simpleModule <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> SimpleModule()
@@ -111,7 +111,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    .<span style=color:#a6e22e>addSerializer</span>(LocalDate.<span style=color:#a6e22e>class</span>, <span style=color:#66d9ef>new</span> LocalDateSerializer(DateTimeFormatter.<span style=color:#a6e22e>ofPattern</span>(DEFAULT_DATE_FORMAT)))
 </span></span><span style=display:flex><span>    .<span style=color:#a6e22e>addSerializer</span>(LocalTime.<span style=color:#a6e22e>class</span>, <span style=color:#66d9ef>new</span> LocalTimeSerializer(DateTimeFormatter.<span style=color:#a6e22e>ofPattern</span>(DEFAULT_TIME_FORMAT)));
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>//注册功能模块 例如，可以添加自定义序列化器和反序列化器</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>注册功能模块 例如<span style=color:#960050;background-color:#1e0010>，</span>可以添加自定义序列化器和反序列化器
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>registerModule</span>(simpleModule);
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}

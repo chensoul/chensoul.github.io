@@ -29,19 +29,19 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </time></span><span class=meta-author><span class="author vcard">chensoul</span>
 </span><span class="tagcloud post-tags"><i class="fa fa-tags"></i>&nbsp;
 <a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/java/ title=java>java</a></span></div></header><div class=entry-content><p>在实际项目中，区分偶发性超时和频繁超时的重试策略非常重要。偶发性超时可能是由于网络抖动或临时负载过高引起的，适合立即重试；而频繁超时则可能是系统过载或下游服务不可用，此时应避免重试，以免加剧问题。</p><p>在实际面试的过程中，经常会遇到类似的面试题目，这时候可以这样回答：</p><blockquote><p>在处理大量请求时，我们经常会遇到超时的情况。为了合理控制重试行为，避免所谓的“重试风暴”，我设计了一个基于时间窗口的算法。在这个算法中，我们维护了一个滑动窗口，窗口内记录了每个请求的时间戳以及该请求是否超时。每当一个请求超时后，我们会统计窗口内超时的请求数量。如果超时请求的数量超过了设定的阈值，我们就认为当前系统压力较大，不适合进行重试；否则，我们认为可以安全地进行重试。</p><p>然而，随着并发量的增加，普通版的滑动窗口算法暴露出了一些问题。特别是在高并发场景下，窗口内需要维护的请求数量可能非常大，这不仅占用了大量内存，而且在判定是否需要重试时还需要遍历整个窗口，这大大增加了算法的时间复杂度。</p><p>为了解决这个问题，我们进一步设计了进阶版的算法。在这个版本中，我们引入了ring buffer 来优化滑动窗口的实现。具体来说，我们不再以时间为窗口大小，而是使用固定数量的比特位来记录请求的超时信息。每个比特位对应一个请求，用1表示超时，用0表示未超时。当所有比特位都被标记后，我们从头开始再次标记。</p><p>这种设计极大地降低了内存占用，因为无论并发量多高，我们只需要固定数量的比特位来记录请求的超时状态。同时，在判定是否需要重试时，我们只需要统计ring buffer中为1的比特数量，这大大简化了算法的实现并提高了效率。</p></blockquote><p>这里涉及到以下知识点：</p><ul><li>滑动窗口</li><li>Ring Buffer</li></ul><p>以下是针对偶发性超时和频繁超时的重试策略设计，以及如何在 Java 项目中实现。</p><h2 id=1-重试策略设计>1. <strong>重试策略设计</strong></h2><p>偶发性超时</p><ul><li><strong>特点</strong>：短时间内少量超时，可能是临时性问题。</li><li><strong>策略</strong>：<ul><li>立即重试。</li><li>重试次数较少（如 1-2 次）。</li><li>重试间隔较短（如 100ms）。</li></ul></li></ul><p><strong>频繁超时</strong></p><ul><li><strong>特点</strong>：短时间内大量超时，可能是系统过载或下游服务不可用。</li><li><strong>策略</strong>：<ul><li>避免重试，直接返回错误。</li><li>触发熔断机制，暂时停止对下游服务的调用。</li><li>记录日志并告警，通知运维人员处理。</li></ul></li></ul><hr><h2 id=2-实现方案>2. <strong>实现方案</strong></h2><p><strong>核心思路</strong></p><ul><li>使用滑动窗口（如 <code>ring buffer</code>）记录超时请求的比例。</li><li>根据超时比例动态调整重试策略：<ul><li>如果超时比例较低（如 &lt; 20%），认为是偶发性超时，允许重试。</li><li>如果超时比例较高（如 >= 20%），认为是频繁超时，禁止重试并触发熔断。</li></ul></li></ul><hr><h2 id=3-java-实现>3. <strong>Java 实现</strong></h2><p>以下是完整的 Java 实现代码，包括重试策略和熔断机制。</p><p><strong>1、创建滑动窗口统计器</strong></p><p>使用 <code>ring buffer</code> 和 <code>AtomicInteger</code> 实现线程安全的滑动窗口。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>RequestStatusTracker</span> {
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span> windowSize; <span style=color:#75715e>// 滑动窗口大小</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>double</span> failureRateThreshold; <span style=color:#75715e>// 失败率阈值（触发熔断）</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>long</span> circuitBreakerOpenTime; <span style=color:#75715e>// 熔断器打开时间（毫秒）</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span> halfOpenRequests; <span style=color:#75715e>// 半开状态下允许的请求数</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>[]</span> ringBuffer; <span style=color:#75715e>// 环形缓冲区</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger currentIndex <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#75715e>// 当前写入位置</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger successCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#75715e>// 成功请求计数</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger failureCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#75715e>// 失败请求计数</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicLong circuitBreakerOpenedTime <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicLong(0); <span style=color:#75715e>// 熔断器打开时间</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger halfOpenSuccessCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#75715e>// 半开状态下的成功请求计数</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>volatile</span> CircuitBreakerState circuitBreakerState <span style=color:#f92672>=</span> CircuitBreakerState.<span style=color:#a6e22e>CLOSED</span>; <span style=color:#75715e>// 熔断器状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span> windowSize; <span style=color:#f92672>/</span> 滑动窗口大小
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>double</span> failureRateThreshold; <span style=color:#f92672>/</span> 失败率阈值<span style=color:#960050;background-color:#1e0010>（</span>触发熔断<span style=color:#960050;background-color:#1e0010>）</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>long</span> circuitBreakerOpenTime; <span style=color:#f92672>/</span> 熔断器打开时间<span style=color:#960050;background-color:#1e0010>（</span>毫秒<span style=color:#960050;background-color:#1e0010>）</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span> halfOpenRequests; <span style=color:#f92672>/</span> 半开状态下允许的请求数
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>[]</span> ringBuffer; <span style=color:#f92672>/</span> 环形缓冲区
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger currentIndex <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#f92672>/</span> 当前写入位置
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger successCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#f92672>/</span> 成功请求计数
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger failureCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#f92672>/</span> 失败请求计数
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicLong circuitBreakerOpenedTime <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicLong(0); <span style=color:#f92672>/</span> 熔断器打开时间
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> AtomicInteger halfOpenSuccessCount <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> AtomicInteger(0); <span style=color:#f92672>/</span> 半开状态下的成功请求计数
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>volatile</span> CircuitBreakerState circuitBreakerState <span style=color:#f92672>=</span> CircuitBreakerState.<span style=color:#a6e22e>CLOSED</span>; <span style=color:#f92672>/</span> 熔断器状态
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 熔断器状态枚举</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 熔断器状态枚举
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>enum</span> CircuitBreakerState {
 </span></span><span style=display:flex><span>        CLOSED, OPEN, HALF_OPEN
 </span></span><span style=display:flex><span>    }
@@ -54,10 +54,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>failureRateThreshold</span> <span style=color:#f92672>=</span> failureRateThreshold;
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>circuitBreakerOpenTime</span> <span style=color:#f92672>=</span> circuitBreakerOpenTime;
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>halfOpenRequests</span> <span style=color:#f92672>=</span> halfOpenRequests;
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ringBuffer</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>[</span>windowSize<span style=color:#f92672>]</span>; <span style=color:#75715e>// 0: 成功, 1: 失败</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ringBuffer</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>int</span><span style=color:#f92672>[</span>windowSize<span style=color:#f92672>]</span>; <span style=color:#f92672>/</span> 0: 成功, 1: 失败
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 记录请求状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 记录请求状态
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>boolean</span> isSuccess) {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>synchronized</span> (<span style=color:#66d9ef>this</span>) {
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>int</span> index <span style=color:#f92672>=</span> currentIndex.<span style=color:#a6e22e>getAndUpdate</span>(i <span style=color:#f92672>-&gt;</span> (i <span style=color:#f92672>+</span> 1) <span style=color:#f92672>%</span> windowSize);
@@ -75,12 +75,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                failureCount.<span style=color:#a6e22e>incrementAndGet</span>();
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 更新熔断器状态</span>
-</span></span><span style=display:flex><span>            updateCircuitBreakerState();
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 更新熔断器状态
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>updateCircuitBreakerState</span>();
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 更新熔断器状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 更新熔断器状态
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateCircuitBreakerState</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>double</span> failureRate <span style=color:#f92672>=</span> (<span style=color:#66d9ef>double</span>) failureCount.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>/</span> windowSize;
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>long</span> now <span style=color:#f92672>=</span> System.<span style=color:#a6e22e>currentTimeMillis</span>();
@@ -88,49 +88,49 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>switch</span> (circuitBreakerState) {
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>case</span> CLOSED:
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> (failureRate <span style=color:#f92672>&gt;=</span> failureRateThreshold) {
-</span></span><span style=display:flex><span>                    <span style=color:#75715e>// 触发熔断</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>/</span> 触发熔断
 </span></span><span style=display:flex><span>                    circuitBreakerState <span style=color:#f92672>=</span> CircuitBreakerState.<span style=color:#a6e22e>OPEN</span>;
 </span></span><span style=display:flex><span>                    circuitBreakerOpenedTime.<span style=color:#a6e22e>set</span>(now);
 </span></span><span style=display:flex><span>                }
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>case</span> OPEN:
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> (now <span style=color:#f92672>-</span> circuitBreakerOpenedTime.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>&gt;=</span> circuitBreakerOpenTime) {
-</span></span><span style=display:flex><span>                    <span style=color:#75715e>// 进入半开状态</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>/</span> 进入半开状态
 </span></span><span style=display:flex><span>                    circuitBreakerState <span style=color:#f92672>=</span> CircuitBreakerState.<span style=color:#a6e22e>HALF_OPEN</span>;
 </span></span><span style=display:flex><span>                    halfOpenSuccessCount.<span style=color:#a6e22e>set</span>(0);
 </span></span><span style=display:flex><span>                }
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>case</span> HALF_OPEN:
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 半开状态下，成功请求数达到阈值后关闭熔断器</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> (halfOpenSuccessCount.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>&gt;=</span> halfOpenRequests) {
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> 半开状态下<span style=color:#960050;background-color:#1e0010>，</span>成功请求数达到阈值后关闭熔断器
+</span></span><span style=display:flex><span>                <span style=color:#a6e22e>if</span> (halfOpenSuccessCount.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>&gt;=</span> halfOpenRequests) {
 </span></span><span style=display:flex><span>                    circuitBreakerState <span style=color:#f92672>=</span> CircuitBreakerState.<span style=color:#a6e22e>CLOSED</span>;
 </span></span><span style=display:flex><span>                }
 </span></span><span style=display:flex><span>                <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 判断是否允许请求</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 判断是否允许请求
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>allowRequest</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (circuitBreakerState <span style=color:#f92672>==</span> CircuitBreakerState.<span style=color:#a6e22e>OPEN</span>) {
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>; <span style=color:#75715e>// 熔断器打开，禁止请求</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>; <span style=color:#f92672>/</span> 熔断器打开<span style=color:#960050;background-color:#1e0010>，</span>禁止请求
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (circuitBreakerState <span style=color:#f92672>==</span> CircuitBreakerState.<span style=color:#a6e22e>HALF_OPEN</span>) {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 半开状态下，允许部分请求</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 半开状态下<span style=color:#960050;background-color:#1e0010>，</span>允许部分请求
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> halfOpenSuccessCount.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>&lt;</span> halfOpenRequests;
 </span></span><span style=display:flex><span>        }
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>; <span style=color:#75715e>// 熔断器关闭，允许请求</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>; <span style=color:#f92672>/</span> 熔断器关闭<span style=color:#960050;background-color:#1e0010>，</span>允许请求
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 获取当前熔断器状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 获取当前熔断器状态
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getCircuitBreakerState</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> circuitBreakerState.<span style=color:#a6e22e>name</span>();
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>  	<span style=color:#75715e>// 判断熔断器是否打开</span>
+</span></span><span style=display:flex><span>  	<span style=color:#f92672>/</span> 判断熔断器是否打开
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>isCircuitBreakerOpen</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#f92672>!</span>CircuitBreakerState.<span style=color:#a6e22e>CLOSED</span>.<span style=color:#a6e22e>equals</span>(circuitBreakerState);
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 获取当前窗口内的失败率</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 获取当前窗口内的失败率
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>double</span> <span style=color:#a6e22e>getFailureRate</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> (<span style=color:#66d9ef>double</span>) failureCount.<span style=color:#a6e22e>get</span>() <span style=color:#f92672>/</span> windowSize;
 </span></span><span style=display:flex><span>    }
@@ -144,27 +144,27 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> RequestStatusTracker requestStatusTracker;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 调用外部 API 获取用户信息</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 调用外部 API 获取用户信息
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getUserInfo</span>(String userId) {
-</span></span><span style=display:flex><span>        String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.example.com/users/&#34;</span> <span style=color:#f92672>+</span> userId;
+</span></span><span style=display:flex><span>        String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https:/api.example.com/users/&#34;</span> <span style=color:#f92672>+</span> userId;
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 发送请求</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 发送请求
 </span></span><span style=display:flex><span>            String response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForObject</span>(url, String.<span style=color:#a6e22e>class</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 记录请求成功（未超时）</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 记录请求成功<span style=color:#960050;background-color:#1e0010>（</span>未超时<span style=color:#960050;background-color:#1e0010>）</span>
 </span></span><span style=display:flex><span>            requestStatusTracker.<span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>false</span>);
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> response;
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 记录请求失败（超时）</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 记录请求失败<span style=color:#960050;background-color:#1e0010>（</span>超时<span style=color:#960050;background-color:#1e0010>）</span>
 </span></span><span style=display:flex><span>            requestStatusTracker.<span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>true</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 判断是否允许重试</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (requestStatusTracker.<span style=color:#a6e22e>allowRequest</span>()) {
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 偶发性超时，立即重试</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> getUserInfo(userId);
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 判断是否允许重试
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>if</span> (requestStatusTracker.<span style=color:#a6e22e>allowRequest</span>()) {
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> 偶发性超时<span style=color:#960050;background-color:#1e0010>，</span>立即重试
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>getUserInfo</span>(userId);
 </span></span><span style=display:flex><span>            } <span style=color:#66d9ef>else</span> {
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 频繁超时，禁止重试</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Request failed and retry is not allowed due to high timeout rate&#34;</span>);
+</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> 频繁超时<span style=color:#960050;background-color:#1e0010>，</span>禁止重试
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>RuntimeException</span>(<span style=color:#e6db74>&#34;Request failed and retry is not allowed due to high timeout rate&#34;</span>);
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
@@ -174,7 +174,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ErrorDecoder <span style=color:#a6e22e>errorDecoder</span>(RequestStatusTracker tracker) {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> (methodKey, response) <span style=color:#f92672>-&gt;</span> {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 记录请求失败</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 记录请求失败
 </span></span><span style=display:flex><span>            tracker.<span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>false</span>);
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Feign request failed with status: &#34;</span> <span style=color:#f92672>+</span> response.<span style=color:#a6e22e>status</span>());
 </span></span><span style=display:flex><span>        };
@@ -182,10 +182,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> feign.<span style=color:#a6e22e>Logger</span>.<span style=color:#a6e22e>Level</span> <span style=color:#a6e22e>feignLoggerLevel</span>() {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> feign.<span style=color:#a6e22e>Logger</span>.<span style=color:#a6e22e>Level</span>.<span style=color:#a6e22e>FULL</span>; <span style=color:#75715e>// 启用详细日志</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> feign.<span style=color:#a6e22e>Logger</span>.<span style=color:#a6e22e>Level</span>.<span style=color:#a6e22e>FULL</span>; <span style=color:#f92672>/</span> 启用详细日志
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>在 Feign 客户端中，通过 <code>@FeignClient</code> 注解配置拦截器。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@FeignClient</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;userService&#34;</span>, url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.example.com&#34;</span>, configuration <span style=color:#f92672>=</span> FeignConfig.<span style=color:#a6e22e>class</span>)
+</span></span></code></pre></div><p>在 Feign 客户端中，通过 <code>@FeignClient</code> 注解配置拦截器。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@FeignClient</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;userService&#34;</span>, url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https:/api.example.com&#34;</span>, configuration <span style=color:#f92672>=</span> FeignConfig.<span style=color:#a6e22e>class</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>UserServiceClient</span> {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/users/{userId}&#34;</span>)
@@ -201,18 +201,18 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> RequestStatusTracker tracker;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getUserInfo</span>(String userId) {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 检查是否允许请求</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>tracker.<span style=color:#a6e22e>allowRequest</span>()) {
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> 检查是否允许请求
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>if</span> (<span style=color:#f92672>!</span>tracker.<span style=color:#a6e22e>allowRequest</span>()) {
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Circuit breaker is open. Request is not allowed.&#34;</span>);
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>            String response <span style=color:#f92672>=</span> userServiceClient.<span style=color:#a6e22e>getUserInfo</span>(userId);
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 记录请求成功</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 记录请求成功
 </span></span><span style=display:flex><span>            tracker.<span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>true</span>);
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> response;
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 记录请求失败</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 记录请求失败
 </span></span><span style=display:flex><span>            tracker.<span style=color:#a6e22e>recordRequest</span>(<span style=color:#66d9ef>false</span>);
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Request failed: &#34;</span> <span style=color:#f92672>+</span> e.<span style=color:#a6e22e>getMessage</span>());
 </span></span><span style=display:flex><span>        }
@@ -250,11 +250,11 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> RequestStatusTracker requestStatusTracker;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Scheduled</span>(fixedRate <span style=color:#f92672>=</span> 5000) <span style=color:#75715e>// 每 5 秒检查一次</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Scheduled</span>(fixedRate <span style=color:#f92672>=</span> 5000) <span style=color:#f92672>/</span> 每 5 秒检查一次
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>monitor</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (requestStatusTracker.<span style=color:#a6e22e>isCircuitBreakerOpen</span>()) {
 </span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Circuit breaker is open! Please check the downstream service.&#34;</span>);
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 触发告警逻辑</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 触发告警逻辑
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}

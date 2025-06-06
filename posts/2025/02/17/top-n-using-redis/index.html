@@ -20,48 +20,48 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span><span class="tagcloud post-tags"><i class="fa fa-tags"></i>&nbsp;
 <a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/java/ title=java>java</a>
 &nbsp;
-<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/redis/ title=redis>redis</a></span></div></header><div class=entry-content><p>以下是一个基于本地缓存 + Redis ZSet + 定时任务的榜单方案，适用于高并发场景：</p><h2 id=方案概述>方案概述</h2><ol><li><strong>本地缓存</strong> ：在应用服务器本地缓存榜单数据，减少对 Redis 的访问频率，提高读取速度。</li><li><strong>Redis ZSet</strong> ：使用 Redis 的有序集合存储榜单数据，利用其高效的排序和范围查询功能。</li><li><strong>定时任务</strong> ：定期更新本地缓存和 Redis ZSet 中的榜单数据，确保数据的实时性和准确性。</li></ol><h2 id=数据存储架构>数据存储架构</h2><p><strong>全局前 1000 名榜单存储在 Redis 中</strong></p><ul><li><strong>Redis ZSet</strong>：<ul><li>键名：<code>global_ranking_top_1000</code></li><li>ZSet 中的成员是用户 ID，分数是排名依据（如积分、销售额等）。</li><li>定时任务每小时更新一次，覆盖之前的 ZSet 数据。</li></ul></li></ul><p><strong>前 100 名榜单同步到本地缓存</strong></p><ul><li><strong>本地缓存</strong>：<ul><li>每个应用服务器使用内存数据结构（如 <code>ConcurrentHashMap</code>）存储前 100 名榜单。</li><li>键名：<code>local_ranking_top_100</code></li><li>数据来源于 Redis 的 <code>global_ranking_top_1000</code>，每分钟同步一次。</li></ul></li></ul><h2 id=实现步骤>实现步骤</h2><ol><li>定时任务计算全局前 1000 名</li></ol><p><strong>任务频率</strong>：每小时执行一次</p><p><strong>任务逻辑</strong>：</p><ol><li>检索数据库中所有用户的实时数据（如积分、销售额）。</li><li>排序并选出前 1000 名用户。</li><li>将前 1000 名用户写入 Redis 的 <code>global_ranking_top_1000</code> ZSet，覆盖原有数据。</li></ol><p><strong>代码示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 使用 Spring 定时任务</span>
+<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/redis/ title=redis>redis</a></span></div></header><div class=entry-content><p>以下是一个基于本地缓存 + Redis ZSet + 定时任务的榜单方案，适用于高并发场景：</p><h2 id=方案概述>方案概述</h2><ol><li><strong>本地缓存</strong> ：在应用服务器本地缓存榜单数据，减少对 Redis 的访问频率，提高读取速度。</li><li><strong>Redis ZSet</strong> ：使用 Redis 的有序集合存储榜单数据，利用其高效的排序和范围查询功能。</li><li><strong>定时任务</strong> ：定期更新本地缓存和 Redis ZSet 中的榜单数据，确保数据的实时性和准确性。</li></ol><h2 id=数据存储架构>数据存储架构</h2><p><strong>全局前 1000 名榜单存储在 Redis 中</strong></p><ul><li><strong>Redis ZSet</strong>：<ul><li>键名：<code>global_ranking_top_1000</code></li><li>ZSet 中的成员是用户 ID，分数是排名依据（如积分、销售额等）。</li><li>定时任务每小时更新一次，覆盖之前的 ZSet 数据。</li></ul></li></ul><p><strong>前 100 名榜单同步到本地缓存</strong></p><ul><li><strong>本地缓存</strong>：<ul><li>每个应用服务器使用内存数据结构（如 <code>ConcurrentHashMap</code>）存储前 100 名榜单。</li><li>键名：<code>local_ranking_top_100</code></li><li>数据来源于 Redis 的 <code>global_ranking_top_1000</code>，每分钟同步一次。</li></ul></li></ul><h2 id=实现步骤>实现步骤</h2><ol><li>定时任务计算全局前 1000 名</li></ol><p><strong>任务频率</strong>：每小时执行一次</p><p><strong>任务逻辑</strong>：</p><ol><li>检索数据库中所有用户的实时数据（如积分、销售额）。</li><li>排序并选出前 1000 名用户。</li><li>将前 1000 名用户写入 Redis 的 <code>global_ranking_top_1000</code> ZSet，覆盖原有数据。</li></ol><p><strong>代码示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span> 使用 Spring 定时任务
 </span></span><span style=display:flex><span><span style=color:#a6e22e>@Scheduled</span>(cron <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;0 0 * * * ?&#34;</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateGlobalRanking</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 1. 从数据库获取所有用户数据</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 1. 从数据库获取所有用户数据
 </span></span><span style=display:flex><span>    List<span style=color:#f92672>&lt;</span>User<span style=color:#f92672>&gt;</span> users <span style=color:#f92672>=</span> userRepository.<span style=color:#a6e22e>findAll</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 2. 排序并选出前 1000 名</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 2. 排序并选出前 1000 名
 </span></span><span style=display:flex><span>    List<span style=color:#f92672>&lt;</span>User<span style=color:#f92672>&gt;</span> top1000 <span style=color:#f92672>=</span> users.<span style=color:#a6e22e>stream</span>()
 </span></span><span style=display:flex><span>        .<span style=color:#a6e22e>sorted</span>((u1, u2) <span style=color:#f92672>-&gt;</span> Double.<span style=color:#a6e22e>compare</span>(u2.<span style=color:#a6e22e>getScore</span>(), u1.<span style=color:#a6e22e>getScore</span>()))
 </span></span><span style=display:flex><span>        .<span style=color:#a6e22e>limit</span>(1000)
 </span></span><span style=display:flex><span>        .<span style=color:#a6e22e>collect</span>(Collectors.<span style=color:#a6e22e>toList</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 3. 写入 Redis ZSet，覆盖原有数据</span>
-</span></span><span style=display:flex><span>    redisTemplate.<span style=color:#a6e22e>delete</span>(<span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>); <span style=color:#75715e>// 清空旧数据</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (User user : top1000) {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 3. 写入 Redis ZSet<span style=color:#960050;background-color:#1e0010>，</span>覆盖原有数据
+</span></span><span style=display:flex><span>    redisTemplate.<span style=color:#a6e22e>delete</span>(<span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>); <span style=color:#f92672>/</span> 清空旧数据
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>for</span> (User user : top1000) {
 </span></span><span style=display:flex><span>        redisTemplate.<span style=color:#a6e22e>opsForZSet</span>().<span style=color:#a6e22e>add</span>(<span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>, user.<span style=color:#a6e22e>getId</span>(), user.<span style=color:#a6e22e>getScore</span>());
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><ol start=2><li>定时同步前 100 名到本地缓存</li></ol><p><strong>任务频率</strong>：每分钟执行一次</p><p><strong>任务逻辑</strong>：</p><ol><li>从 Redis 的 <code>global_ranking_top_1000</code> ZSet 中获取前 100 名用户。</li><li>将前 100 名用户数据写入本地缓存。</li></ol><p><strong>代码示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 使用 Spring 定时任务</span>
+</span></span></code></pre></div><ol start=2><li>定时同步前 100 名到本地缓存</li></ol><p><strong>任务频率</strong>：每分钟执行一次</p><p><strong>任务逻辑</strong>：</p><ol><li>从 Redis 的 <code>global_ranking_top_1000</code> ZSet 中获取前 100 名用户。</li><li>将前 100 名用户数据写入本地缓存。</li></ol><p><strong>代码示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span> 使用 Spring 定时任务
 </span></span><span style=display:flex><span><span style=color:#a6e22e>@Scheduled</span>(cron <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;0 * * * * ?&#34;</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateLocalRankingCache</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 1. 从 Redis 获取前 100 名</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 1. 从 Redis 获取前 100 名
 </span></span><span style=display:flex><span>    Set<span style=color:#f92672>&lt;</span>ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;&gt;</span> top100 <span style=color:#f92672>=</span> redisTemplate.<span style=color:#a6e22e>opsForZSet</span>()
 </span></span><span style=display:flex><span>        .<span style=color:#a6e22e>reverseRangeWithScores</span>(<span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>, 0, 99);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 2. 将数据写入本地缓存</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 2. 将数据写入本地缓存
 </span></span><span style=display:flex><span>    Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;</span> localCache <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> ConcurrentHashMap<span style=color:#f92672>&lt;&gt;</span>();
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> tuple : top100) {
 </span></span><span style=display:flex><span>        String userId <span style=color:#f92672>=</span> tuple.<span style=color:#a6e22e>getValue</span>();
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>double</span> score <span style=color:#f92672>=</span> tuple.<span style=color:#a6e22e>getScore</span>();
 </span></span><span style=display:flex><span>        localCache.<span style=color:#a6e22e>put</span>(userId, score);
 </span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 更新本地缓存</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 更新本地缓存
 </span></span><span style=display:flex><span>    localRankingCache <span style=color:#f92672>=</span> localCache;
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><ol start=3><li>读取榜单数据</li></ol><p><strong>访问逻辑</strong>：</p><ol><li>优先从本地缓存读取前 100 名榜单。</li><li>如果本地缓存中没有数据（如缓存过期或未初始化），则从 Redis 的 <code>global_ranking_top_1000</code> ZSet 中读取前 100 名。</li></ol><p><strong>代码示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>getTop100Ranking</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 1. 优先从本地缓存读取</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (localRankingCache <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>localRankingCache.<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 1. 优先从本地缓存读取
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>if</span> (localRankingCache <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>localRankingCache.<span style=color:#a6e22e>isEmpty</span>()) {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> localRankingCache;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 2. 从 Redis 读取</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 2. 从 Redis 读取
 </span></span><span style=display:flex><span>    Set<span style=color:#f92672>&lt;</span>ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;&gt;</span> top100 <span style=color:#f92672>=</span> redisTemplate.<span style=color:#a6e22e>opsForZSet</span>()
 </span></span><span style=display:flex><span>        .<span style=color:#a6e22e>reverseRangeWithScores</span>(<span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>, 0, 99);
 </span></span><span style=display:flex><span>
@@ -80,37 +80,37 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> UserService userService;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 本地缓存</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 本地缓存
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> Map<span style=color:#f92672>&lt;</span>String, Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;&gt;</span> localCache <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> ConcurrentHashMap<span style=color:#f92672>&lt;&gt;</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// Redis ZSet 键名</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Redis ZSet 键名
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String GLOBAL_RANKING_KEY <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;global_ranking_top_1000&#34;</span>;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String TEMP_GLOBAL_RANKING_KEY <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temp_global_ranking_top_1000&#34;</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 定时任务：每小时计算全局前1000名</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 定时任务<span style=color:#960050;background-color:#1e0010>：</span>每小时计算全局前1000名
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Scheduled</span>(cron <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;0 0 * * * ?&#34;</span>)
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateGlobalRanking</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 1. 从数据库获取所有用户数据</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 1. 从数据库获取所有用户数据
 </span></span><span style=display:flex><span>            List<span style=color:#f92672>&lt;</span>User<span style=color:#f92672>&gt;</span> users <span style=color:#f92672>=</span> userService.<span style=color:#a6e22e>findAll</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 2. 排序并选出前1000名</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 2. 排序并选出前1000名
 </span></span><span style=display:flex><span>            List<span style=color:#f92672>&lt;</span>User<span style=color:#f92672>&gt;</span> top1000 <span style=color:#f92672>=</span> users.<span style=color:#a6e22e>stream</span>()
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>sorted</span>((u1, u2) <span style=color:#f92672>-&gt;</span> Double.<span style=color:#a6e22e>compare</span>(u2.<span style=color:#a6e22e>getScore</span>(), u1.<span style=color:#a6e22e>getScore</span>()))
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>limit</span>(1000)
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>collect</span>(Collectors.<span style=color:#a6e22e>toList</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 3. 使用临时键存储数据</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 3. 使用临时键存储数据
 </span></span><span style=display:flex><span>            redisTemplate.<span style=color:#a6e22e>delete</span>(TEMP_GLOBAL_RANKING_KEY);
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> (User user : top1000) {
 </span></span><span style=display:flex><span>                redisTemplate.<span style=color:#a6e22e>opsForZSet</span>().<span style=color:#a6e22e>add</span>(TEMP_GLOBAL_RANKING_KEY, user.<span style=color:#a6e22e>getId</span>(), user.<span style=color:#a6e22e>getScore</span>());
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 4. 原子性地将临时键重命名为目标键</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 4. 原子性地将临时键重命名为目标键
 </span></span><span style=display:flex><span>            redisTemplate.<span style=color:#a6e22e>rename</span>(TEMP_GLOBAL_RANKING_KEY, GLOBAL_RANKING_KEY);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 5. 更新本地缓存</span>
-</span></span><span style=display:flex><span>            updateLocalCache(top1000);
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 5. 更新本地缓存
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>updateLocalCache</span>(top1000);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Global ranking updated successfully.&#34;</span>);
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
@@ -126,15 +126,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        localCache.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;global_top_1000&#34;</span>, cache);
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 定时任务：每分钟同步前100名到本地缓存</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 定时任务<span style=color:#960050;background-color:#1e0010>：</span>每分钟同步前100名到本地缓存
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Scheduled</span>(cron <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;0 * * * * ?&#34;</span>)
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>updateLocalCacheFromRedis</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 1. 从Redis获取前100名</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 1. 从Redis获取前100名
 </span></span><span style=display:flex><span>            Set<span style=color:#f92672>&lt;</span>ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;&gt;</span> top100 <span style=color:#f92672>=</span> redisTemplate.<span style=color:#a6e22e>opsForZSet</span>()
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>reverseRangeWithScores</span>(GLOBAL_RANKING_KEY, 0, 99);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 2. 更新本地缓存</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 2. 更新本地缓存
 </span></span><span style=display:flex><span>            Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;</span> localTop100 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> LinkedHashMap<span style=color:#f92672>&lt;&gt;</span>();
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> (ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> tuple : top100) {
 </span></span><span style=display:flex><span>                localTop100.<span style=color:#a6e22e>put</span>(tuple.<span style=color:#a6e22e>getValue</span>(), tuple.<span style=color:#a6e22e>getScore</span>());
@@ -147,15 +147,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// 获取榜单数据</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 获取榜单数据
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>getTop100Ranking</span>() {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 优先从本地缓存读取</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> 优先从本地缓存读取
 </span></span><span style=display:flex><span>        Map<span style=color:#f92672>&lt;</span>String, Double<span style=color:#f92672>&gt;</span> localTop100 <span style=color:#f92672>=</span> localCache.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;local_top_100&#34;</span>);
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (localTop100 <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>localTop100.<span style=color:#a6e22e>isEmpty</span>()) {
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> LinkedHashMap<span style=color:#f92672>&lt;&gt;</span>(localTop100);
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 从Redis读取</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> 从Redis读取
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>            Set<span style=color:#f92672>&lt;</span>ZSetOperations.<span style=color:#a6e22e>TypedTuple</span><span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;&gt;</span> top100 <span style=color:#f92672>=</span> redisTemplate.<span style=color:#a6e22e>opsForZSet</span>()
 </span></span><span style=display:flex><span>                    .<span style=color:#a6e22e>reverseRangeWithScores</span>(GLOBAL_RANKING_KEY, 0, 99);
