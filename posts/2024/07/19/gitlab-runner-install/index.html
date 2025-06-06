@@ -8,7 +8,7 @@ current-menu-item current_page_item menu-item-home"><a href=/>Home</a></li><li c
 menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/spring-boot-tutorials/>Spring Boot Tutorials</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/microservice-tutorials/>Microservice Tutorials</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/kubernetes-tutorials/>Kubernetes Tutorials</a></li></ul></li><li class="menu-item menu-item-type-post_type menu-item-object-page"><a href=https://github.com/chensoul target=_blank>About Me</a></li></ul></nav></div></header><div id=content class="site-content container clearfix"><section id=primary class="content-archive content-area post-content-area"><main id=main class=site-main role=main><article class="post type-post"><div class=post-inner-content><header class=entry-header><h2 class=entry-title><a href=https://blog.chensoul.cc/posts/2024/07/19/gitlab-runner-install/ rel=bookmark title="GitLab Runner安装和部署">GitLab Runner安装和部署</a></h2><div class=entry-meta><span class=meta-date><time class="entry-date published" datetime=2024-07-19T00:00:00>2024-07-19
 </time></span><span class=meta-author><span class="author vcard">chensoul</span>
 </span><span class="tagcloud post-tags"><i class="fa fa-tags"></i>&nbsp;
-<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/gitlab/ title=gitlab>gitlab</a></span></div></header><div class=entry-content><h2 id=介绍>介绍</h2><p>GitLab Runner 是一个用于在 GitLab CI/CD（持续集成/持续交付）流水线中运行作业（Jobs）的开源工具。它充当了 GitLab CI/CD 系统中的代理，负责接收作业请求、执行作业脚本并报告结果。</p><p>下面是 GitLab Runner 的一些关键特点和功能：</p><ol><li>多平台支持：GitLab Runner 可在多种操作系统上运行，包括 Linux、macOS 和 Windows，使其适用于各种开发环境和需求。</li><li>作业执行器：Runner 接收来自 GitLab CI/CD 的作业请求，并在指定的环境中执行作业。它可以运行各种类型的作业，如构建、测试、部署等。</li><li>并发执行：GitLab Runner 可以同时运行多个作业，以提高整体流水线的处理能力和效率。</li><li>弹性扩展：你可以配置多个 GitLab Runner 实例，以满足不同项目和流水线的需求。每个 Runner 实例都可以在不同的环境中运行，比如在不同的物理或虚拟机器上，或者在云服务提供商的容器中。</li><li>配置灵活性：Runner 的配置相对灵活，你可以根据项目、分支或标签等条件来指定不同的执行规则。这使得你可以针对不同的场景和需求进行定制化配置。</li><li>日志和报告：Runner 会生成详细的日志和报告，用于记录作业的执行过程和结果。这些信息对于故障排除、问题追踪和流水线性能分析非常有帮助。</li><li>安全和身份验证：GitLab Runner 可与 GitLab CI/CD 系统集成，并通过访问令牌或其他身份验证机制来确保安全的通信和访问权限控制。</li></ol><h2 id=安装>安装</h2><p>GitLab Runner 的版本需要和 GitLab 保持一致。</p><p>查看当前 Gitlab 版本：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root@gitlab:/# gitlab-rake gitlab:env:info
+<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/gitlab/ title=gitlab>gitlab</a></span></div></header><div class=entry-content><h2 id=介绍>介绍</h2><p>GitLab Runner 是一个用于在 GitLab CI/CD（持续集成/持续交付）流水线中运行作业（Jobs）的开源工具。它充当了 GitLab CI/CD 系统中的代理，负责接收作业请求、执行作业脚本并报告结果。</p><p>下面是 GitLab Runner 的一些关键特点和功能：</p><ol><li>多平台支持：GitLab Runner 可在多种操作系统上运行，包括 Linux、macOS 和 Windows，使其适用于各种开发环境和需求。</li><li>作业执行器：Runner 接收来自 GitLab CI/CD 的作业请求，并在指定的环境中执行作业。它可以运行各种类型的作业，如构建、测试、部署等。</li><li>并发执行：GitLab Runner 可以同时运行多个作业，以提高整体流水线的处理能力和效率。</li><li>弹性扩展：你可以配置多个 GitLab Runner 实例，以满足不同项目和流水线的需求。每个 Runner 实例都可以在不同的环境中运行，比如在不同的物理或虚拟机器上，或者在云服务提供商的容器中。</li><li>配置灵活性：Runner 的配置相对灵活，你可以根据项目、分支或标签等条件来指定不同的执行规则。这使得你可以针对不同的场景和需求进行定制化配置。</li><li>日志和报告：Runner 会生成详细的日志和报告，用于记录作业的执行过程和结果。这些信息对于故障排除、问题追踪和流水线性能分析非常有帮助。</li><li>安全和身份验证：GitLab Runner 可与 GitLab CI/CD 系统集成，并通过访问令牌或其他身份验证机制来确保安全的通信和访问权限控制。</li></ol><h2 id=安装>安装</h2><p>GitLab Runner 的版本需要和 GitLab 保持一致。</p><p>查看当前 Gitlab 版本：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root@gitlab://# gitlab-rake gitlab:env:info
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>System information
 </span></span><span style=display:flex><span>System:		
@@ -28,9 +28,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>Directory:	/opt/gitlab/embedded/service/gitlab-rails
 </span></span><span style=display:flex><span>DB Adapter:	PostgreSQL
 </span></span><span style=display:flex><span>DB Version:	14.11
-</span></span><span style=display:flex><span>URL:		https:/gitlab.wesine.com.cn
-</span></span><span style=display:flex><span>HTTP Clone URL:	https:/gitlab.wesine.com.cn/some-group/some-project.git
-</span></span><span style=display:flex><span>SSH Clone URL:	ssh:/git@gitlab.wesine.com.cn:3122/some-group/some-project.git
+</span></span><span style=display:flex><span>URL:		https://gitlab.wesine.com.cn
+</span></span><span style=display:flex><span>HTTP Clone URL:	https://gitlab.wesine.com.cn/some-group/some-project.git
+</span></span><span style=display:flex><span>SSH Clone URL:	ssh://git@gitlab.wesine.com.cn:3122/some-group/some-project.git
 </span></span><span style=display:flex><span>Using LDAP:	no
 </span></span><span style=display:flex><span>Using Omniauth:	yes
 </span></span><span style=display:flex><span>Omniauth Providers:
@@ -38,39 +38,39 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>GitLab Shell
 </span></span><span style=display:flex><span>Version:	14.36.0
 </span></span><span style=display:flex><span>Repository storages:
-</span></span><span style=display:flex><span>- default: 	unix:/var/opt/gitlab/gitaly/gitaly.socket
+</span></span><span style=display:flex><span>- default: 	unix://var/opt/gitlab/gitaly/gitaly.socket
 </span></span><span style=display:flex><span>GitLab Shell path:		/opt/gitlab/embedded/service/gitlab-shell
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Gitaly
-</span></span><span style=display:flex><span>- default Address: 	unix:/var/opt/gitlab/gitaly/gitaly.socket
+</span></span><span style=display:flex><span>- default Address: 	unix://var/opt/gitlab/gitaly/gitaly.socket
 </span></span><span style=display:flex><span>- default Version: 	17.1.1
 </span></span><span style=display:flex><span>- default Git Version: 	2.45.1
-</span></span></code></pre></div><p>当前 Gitlab 安装的版本为 17.1.1，所以 Gitlab Runner 也需要安装 17.1.1 版本。</p><h3 id=yum安装>yum安装</h3><p>参考 https:/docs.gitlab.com/runner/install/linux-repository.html ，CentOS 上安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -L <span style=color:#e6db74>&#34;https:/packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh&#34;</span> | sudo bash
+</span></span></code></pre></div><p>当前 Gitlab 安装的版本为 17.1.1，所以 Gitlab Runner 也需要安装 17.1.1 版本。</p><h3 id=yum安装>yum安装</h3><p>参考 <a href=https://docs.gitlab.com/runner/install/linux-repository.html target=_blank>https://docs.gitlab.com/runner/install/linux-repository.html</a> ，CentOS 上安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -L <span style=color:#e6db74>&#34;https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh&#34;</span> | sudo bash
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>yum list gitlab-runner --showduplicates | sort -r
 </span></span><span style=display:flex><span>sudo yum install gitlab-runner-17.1.1
-</span></span></code></pre></div><h3 id=rpm包安装>rpm包安装</h3><p>在 https:/mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/ 查找合适版本的软件包并下载</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>wget https:/mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/gitlab-runner-17.1.0-1.x86_64.rpm
+</span></span></code></pre></div><h3 id=rpm包安装>rpm包安装</h3><p>在 <a href=https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/ target=_blank>https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/</a> 查找合适版本的软件包并下载</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/gitlab-runner-17.1.0-1.x86_64.rpm
 </span></span><span style=display:flex><span>rpm -ivh gitlab-runner-17.1.0-1.x86_64.rpm
 </span></span></code></pre></div><h3 id=docker安装>docker安装</h3><p>使用 docker 安装</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir /srv/gitlab-runner
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>docker run --name gitlab-runner -itd -v /srv/gitlab-runner:/etc/gitlab-runner --restart always gitlab/gitlab-runner:v17.1.0
+</span></span><span style=display:flex><span>docker run --name gitlab-runner -itd -v /srv/gitlab-runner://etc/gitlab-runner --restart always gitlab/gitlab-runner:v17.1.0
 </span></span></code></pre></div><p>或者使用 docker-compse 安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span> <span style=color:#f92672>services</span>: 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>gitlab-runner</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>gitlab/gitlab-runner</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>gitlab-runner</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>volumes</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;/srv/gitlab-runner:/etc/gitlab-runner&#39;</span>
-</span></span></code></pre></div><h2 id=注册>注册</h2><p>Gitlab Runner类型有三种，注册方法如下：</p><ul><li>shared：运行整个平台项目的作业（gitlab）。依次点击主页——>管理中心——>CI/CD——>Runner——>新建实例runner</li><li>group：运行特定group下的所有项目的作业（group）。依次点击主页——>群组——>指定组——>设置——>构建——>runner——>新建群组runner</li><li>specific：运行指定的项目作业（project）。依次点击主页——>项目——>指定项目——>设置——>CI/CD——>Runner——>新建项目runner</li></ul><p>生成注册命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
+</span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;/srv/gitlab-runner://etc/gitlab-runner&#39;</span>
+</span></span></code></pre></div><h2 id=注册>注册</h2><p>Gitlab Runner类型有三种，注册方法如下：</p><ul><li>shared：运行整个平台项目的作业（gitlab）。依次点击主页——>管理中心——>CI/CD——>Runner——>新建实例runner</li><li>group：运行特定group下的所有项目的作业（group）。依次点击主页——>群组——>指定组——>设置——>构建——>runner——>新建群组runner</li><li>specific：运行指定的项目作业（project）。依次点击主页——>项目——>指定项目——>设置——>CI/CD——>Runner——>新建项目runner</li></ul><p>生成注册命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span></code></pre></div><p>Runner 执行器的类型有：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker, docker-windows, instance, virtualbox, docker+machine, kubernetes, docker-autoscaler, custom, shell, ssh, parallels
 </span></span></code></pre></div><p>注册一个 shell 类型的执行器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https:/gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--executor <span style=color:#e6db74>&#34;shell&#34;</span> 
 </span></span></code></pre></div><p>注册一个 docker 类型的执行器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --non-interactive <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https:/gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-privileged
 </span></span></code></pre></div><p>docker 类型的执行器的有两种：</p><p>1、使用 sock，需要挂载 /var/run/docker.sock</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span> <span style=color:#f92672>services</span>: 
@@ -79,16 +79,16 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>gitlab-runner</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>volumes</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;/srv/gitlab-runner:/etc/gitlab-runner&#39;</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/var/run/docker.sock:/var/run/docker.sock</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/hosts:/etc/hosts </span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/docker/daemon.json:/etc/docker/daemon.json</span>
+</span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;/srv/gitlab-runner://etc/gitlab-runner&#39;</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/var/run/docker.sock://var/run/docker.sock</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/hosts://etc/hosts </span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/docker/daemon.json://etc/docker/daemon.json</span>
 </span></span></code></pre></div><p>注册执行器命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https:/gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span><span style=display:flex><span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-image docker:latest <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-volumes /var/run/docker.sock:/var/run/docker.sock
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-volumes /var/run/docker.sock://var/run/docker.sock
 </span></span></code></pre></div><p>/srv/gitlab/gitlab-runner/config.toml 文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#ae81ff>concurrent = 10</span> <span style=color:#75715e># 并行执行作业数</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>check_interval = 0</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>shutdown_timeout = 0</span>
@@ -99,7 +99,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>[[<span style=color:#ae81ff>runners]]</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>name = &#34;runner&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#ae81ff>url = &#34;http:/192.168.1.107:8000/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#ae81ff>url = &#34;http://192.168.1.107:8000/&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>token = &#34;glrt-bEe2isyLds2kaxxS74hP&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>executor = &#34;docker&#34;</span>
 </span></span><span style=display:flex><span>  [<span style=color:#ae81ff>runners.cache]</span>
@@ -116,7 +116,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>shm_size = 0</span>
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>network_mtu = 0</span>
 </span></span></code></pre></div><p>2、使用 docker in docker</p><p>注册执行器命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https:/gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span><span style=display:flex><span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
 </span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-image docker:latest 
@@ -130,7 +130,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>[[<span style=color:#ae81ff>runners]]</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>name = &#34;runner&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#ae81ff>url = &#34;http:/192.168.1.107:8000/&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#ae81ff>url = &#34;http://192.168.1.107:8000/&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>token = &#34;glrt-bEe2isyLds2kaxxS74hP&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#ae81ff>executor = &#34;docker&#34;</span>
 </span></span><span style=display:flex><span>  [<span style=color:#ae81ff>runners.cache]</span>
@@ -146,22 +146,22 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>volumes = [&#34;/etc/docker/daemon.json &#34;,&#34;/root/.m2&#34;,&#34;/cache&#34;]</span> <span style=color:#75715e># 配置挂载路径</span>
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>shm_size = 0</span>
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>network_mtu = 0</span>
-</span></span><span style=display:flex><span>    <span style=color:#ae81ff>extra_hosts = [&#34;https:/gitlab.example.com:192.168.1.107&#34;]</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>extra_hosts = [&#34;https://gitlab.example.com:192.168.1.107&#34;]</span>
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>network_mode = &#34;host&#34;</span>
-</span></span></code></pre></div><p>说明：</p><ul><li><p>在 docker 执行器内是无法访问没有通过 DNS 解析的 gitlab 域名的。需要配置 host 文件，一种方式是挂载 /etc/hosts 文件，另一种方式是添加下面配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>    extra_hosts <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#e6db74>&#34;https:/gitlab.example.com:192.168.1.107&#34;</span><span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>说明：</p><ul><li><p>在 docker 执行器内是无法访问没有通过 DNS 解析的 gitlab 域名的。需要配置 host 文件，一种方式是挂载 /etc/hosts 文件，另一种方式是添加下面配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>    extra_hosts <span style=color:#f92672>=</span> <span style=color:#f92672>[</span><span style=color:#e6db74>&#34;https://gitlab.example.com:192.168.1.107&#34;</span><span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>    network_mode <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;host&#34;</span>
 </span></span></code></pre></div></li><li><p>配置 docker 镜像加速。将 github runner 容器中的 /etc/docker/daemon.json 挂载到 docker-in-docker 中，/etc/docker/daemon.json 内容如下：</p></li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>   <span style=color:#f92672>&#34;registry-mirrors&#34;</span> : [
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https:/docker.1panel.live&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;https://docker.1panel.live&#34;</span>
 </span></span><span style=display:flex><span>   ]
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><ul><li><p>Maven 缓存。在 docker 容器挂载 /root/.m2目录。</p></li><li><p>Maven 镜像加速。在宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;settings</span> <span style=color:#a6e22e>xmlns=</span><span style=color:#e6db74>&#34;http:/maven.apache.org/SETTINGS/1.0.0&#34;</span> <span style=color:#a6e22e>xmlns:xsi=</span><span style=color:#e6db74>&#34;http:/www.w3.org/2001/XMLSchema-instance&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>xsi:schemaLocation=</span><span style=color:#e6db74>&#34;http:/maven.apache.org/SETTINGS/1.0.0 https:/maven.apache.org/xsd/settings-1.0.0.xsd&#34;</span><span style=color:#f92672>&gt;</span>
+</span></span></code></pre></div><ul><li><p>Maven 缓存。在 docker 容器挂载 /root/.m2目录。</p></li><li><p>Maven 镜像加速。在宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;settings</span> <span style=color:#a6e22e>xmlns=</span><span style=color:#e6db74>&#34;http://maven.apache.org/SETTINGS/1.0.0&#34;</span> <span style=color:#a6e22e>xmlns:xsi=</span><span style=color:#e6db74>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>xsi:schemaLocation=</span><span style=color:#e6db74>&#34;http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd&#34;</span><span style=color:#f92672>&gt;</span>
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&lt;mirrors&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;mirror&gt;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;id&gt;</span>alimaven<span style=color:#f92672>&lt;/id&gt;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;name&gt;</span>aliyun maven<span style=color:#f92672>&lt;/name&gt;</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;url&gt;</span>http:/maven.aliyun.com/nexus/content/groups/public/<span style=color:#f92672>&lt;/url&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span style=color:#f92672>&lt;/url&gt;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;mirrorOf&gt;</span>central<span style=color:#f92672>&lt;/mirrorOf&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;/mirror&gt;</span>
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&lt;/mirrors&gt;</span>
@@ -176,7 +176,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>[[<span style=color:#a6e22e>runners</span>]]
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;runner&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;https:/gitlab.example.com&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;https://gitlab.example.com&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>id</span> = <span style=color:#ae81ff>1</span> 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>token</span> = <span style=color:#e6db74>&#34;glrt-JhEv5bxs4ezxY53uyYiz&#34;</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>executor</span> = <span style=color:#e6db74>&#34;docker&#34;</span>
@@ -187,7 +187,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>tls_verify</span> = <span style=color:#66d9ef>false</span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>image</span> = <span style=color:#e6db74>&#34;alpine:latest&#34;</span> <span style=color:#75715e># 配置默认镜像</span>
 </span></span><span style=display:flex><span>   
-</span></span></code></pre></div><h3 id=修改runner为特权用户>修改runner为特权用户</h3><p>参考文档：https:/docs.gitlab.com/runner/commands/index.html#gitlab-runner-run ，以rpm方式安装的runner为例。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ vim /etc/systemd/system/gitlab-runner.service
+</span></span></code></pre></div><h3 id=修改runner为特权用户>修改runner为特权用户</h3><p>参考文档：https://docs.gitlab.com/runner/commands/index.html#gitlab-runner-run ，以rpm方式安装的runner为例。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ vim /etc/systemd/system/gitlab-runner.service
 </span></span><span style=display:flex><span>ExecStart<span style=color:#f92672>=</span>/usr/bin/gitlab-runner <span style=color:#e6db74>&#34;run&#34;</span> <span style=color:#e6db74>&#34;--working-directory&#34;</span> <span style=color:#e6db74>&#34;/home/gitlab-runner&#34;</span> <span style=color:#e6db74>&#34;--config&#34;</span> <span style=color:#e6db74>&#34;/etc/gitlab-runner/config.toml&#34;</span> <span style=color:#e6db74>&#34;--service&#34;</span> <span style=color:#e6db74>&#34;gitlab-runner&#34;</span> <span style=color:#e6db74>&#34;--user&#34;</span> <span style=color:#e6db74>&#34;root&#34;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>$ systemctl daemon-reload 
@@ -202,7 +202,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>gitlab-runner unregister   <span style=color:#75715e>#该命令使用GitLab取消已注册的runner。</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#使用令牌注销</span>
-</span></span><span style=display:flex><span>gitlab-runner unregister --url http:/gitlab.example.com/ --token t0k3n
+</span></span><span style=display:flex><span>gitlab-runner unregister --url http://gitlab.example.com/ --token t0k3n
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#使用名称注销（同名删除第一个）</span>
 </span></span><span style=display:flex><span>gitlab-runner unregister --name test-runner
@@ -223,7 +223,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>gitlab-runner restart   <span style=color:#75715e>#该命令将停止，然后启动GitLab Runner服务。</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>gitlab-runner status <span style=color:#75715e>#此命令显示GitLab Runner服务的状态。当服务正在运行时，退出代码为零；而当服务未运行时，退出代码为非零。</span>
-</span></span></code></pre></div><h2 id=执行器>执行器</h2><p>CI/CD的流水线真正的执行环境是GitLab Runner提供的执行器，为了满足各种各样的需求，GitLab CI/CD支持的执行器有很多种，最常用的是Docker， shell，Kubernets三种。</p><p>GitLab Runner支持的执行器有以下几种：</p><ul><li>SSH</li><li>Shell</li><li>Parallels</li><li>VirtualBox</li><li>Docker</li><li>Docker Machine (auto-scaling)</li><li>Kubernetes</li><li>Custom</li></ul><p>GitLab Runner 支持的执行器有GitLab Runner的安装方式有关也和宿主机环境有关。</p><p>执行器功能对比，可参考文档：https:/docs.gitlab.com/runner/executors/#selecting-the-executor 。</p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=GitLab%20Runner%e5%ae%89%e8%a3%85%e5%92%8c%e9%83%a8%e7%bd%b2 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f07%2f19%2fgitlab-runner-install%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
+</span></span></code></pre></div><h2 id=执行器>执行器</h2><p>CI/CD的流水线真正的执行环境是GitLab Runner提供的执行器，为了满足各种各样的需求，GitLab CI/CD支持的执行器有很多种，最常用的是Docker， shell，Kubernets三种。</p><p>GitLab Runner支持的执行器有以下几种：</p><ul><li>SSH</li><li>Shell</li><li>Parallels</li><li>VirtualBox</li><li>Docker</li><li>Docker Machine (auto-scaling)</li><li>Kubernetes</li><li>Custom</li></ul><p>GitLab Runner 支持的执行器有GitLab Runner的安装方式有关也和宿主机环境有关。</p><p>执行器功能对比，可参考文档：https://docs.gitlab.com/runner/executors/#selecting-the-executor 。</p></div><div><div style=font-weight:700>Share this post:</div><a class=social-link-item href="https://twitter.com/intent/tweet?text=GitLab%20Runner%e5%ae%89%e8%a3%85%e5%92%8c%e9%83%a8%e7%bd%b2 https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f07%2f19%2fgitlab-runner-install%2f" target=_blank rel="noopener noreferrer" title="Click to share on Twitter"><i class="fa-brands fa-square-twitter fa-2xl" style=color:#55acee></i>
 </a><a class=social-link-item href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f07%2f19%2fgitlab-runner-install%2f&title=GitLab%20Runner%e5%ae%89%e8%a3%85%e5%92%8c%e9%83%a8%e7%bd%b2" target=_blank rel="noopener noreferrer" title="Click to share on LinkedIn"><i class="fa-brands fa-linkedin fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://telegram.me/share/url?text=GitLab%20Runner%e5%ae%89%e8%a3%85%e5%92%8c%e9%83%a8%e7%bd%b2&amp;url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f07%2f19%2fgitlab-runner-install%2f" target=_blank rel="noopener noreferrer" title="Click to share on telegram"><i class="fa-brands fa-telegram fa-2xl" style=color:#007bb5></i>
 </a><a class=social-link-item href="https://reddit.com/submit?url=https%3a%2f%2fblog.chensoul.cc%2fposts%2f2024%2f07%2f19%2fgitlab-runner-install%2f&title=GitLab%20Runner%e5%ae%89%e8%a3%85%e5%92%8c%e9%83%a8%e7%bd%b2" target=_blank rel="noopener noreferrer" title="Click to share on reddit"><i class="fa-brands fa-reddit fa-2xl" style=color:#007bb5></i>

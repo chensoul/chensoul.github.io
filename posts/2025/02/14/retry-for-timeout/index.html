@@ -146,7 +146,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> 调用外部 API 获取用户信息
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getUserInfo</span>(String userId) {
-</span></span><span style=display:flex><span>        String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https:/api.example.com/users/&#34;</span> <span style=color:#f92672>+</span> userId;
+</span></span><span style=display:flex><span>        String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.example.com/users/&#34;</span> <span style=color:#f92672>+</span> userId;
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> 发送请求
 </span></span><span style=display:flex><span>            String response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForObject</span>(url, String.<span style=color:#a6e22e>class</span>);
@@ -185,7 +185,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> feign.<span style=color:#a6e22e>Logger</span>.<span style=color:#a6e22e>Level</span>.<span style=color:#a6e22e>FULL</span>; <span style=color:#f92672>/</span> 启用详细日志
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>在 Feign 客户端中，通过 <code>@FeignClient</code> 注解配置拦截器。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@FeignClient</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;userService&#34;</span>, url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https:/api.example.com&#34;</span>, configuration <span style=color:#f92672>=</span> FeignConfig.<span style=color:#a6e22e>class</span>)
+</span></span></code></pre></div><p>在 Feign 客户端中，通过 <code>@FeignClient</code> 注解配置拦截器。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@FeignClient</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;userService&#34;</span>, url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://api.example.com&#34;</span>, configuration <span style=color:#f92672>=</span> FeignConfig.<span style=color:#a6e22e>class</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>UserServiceClient</span> {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/users/{userId}&#34;</span>)

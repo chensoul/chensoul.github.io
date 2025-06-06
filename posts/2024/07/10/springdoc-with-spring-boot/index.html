@@ -37,7 +37,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&lt;version&gt;</span>${maven-compiler-plugin.version}<span style=color:#f92672>&lt;/version&gt;</span>
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&lt;configuration&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;annotationProcessorPaths&gt;</span>
-</span></span><span style=display:flex><span>      <span style=color:#75715e>&lt;!-- https:/springdoc.org/#javadoc-support --&gt;</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>&lt;!-- https://springdoc.org/#javadoc-support --&gt;</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&lt;path&gt;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;groupId&gt;</span>com.github.therapi<span style=color:#f92672>&lt;/groupId&gt;</span>
 </span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;artifactId&gt;</span>therapi-runtime-javadoc-scribe<span style=color:#f92672>&lt;/artifactId&gt;</span>
@@ -66,13 +66,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Value</span>(<span style=color:#e6db74>&#34;${server.port}&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> String port;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Value</span>(<span style=color:#e6db74>&#34;${openapi.prod-url:https:/localhost}&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Value</span>(<span style=color:#e6db74>&#34;${openapi.prod-url:https://localhost}&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> String prodUrl;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> OpenAPI <span style=color:#a6e22e>openAPI</span>() {
 </span></span><span style=display:flex><span>		Server devServer <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Server();
-</span></span><span style=display:flex><span>		devServer.<span style=color:#a6e22e>setUrl</span>(<span style=color:#e6db74>&#34;http:/localhost:&#34;</span> <span style=color:#f92672>+</span> port);
+</span></span><span style=display:flex><span>		devServer.<span style=color:#a6e22e>setUrl</span>(<span style=color:#e6db74>&#34;http://localhost:&#34;</span> <span style=color:#f92672>+</span> port);
 </span></span><span style=display:flex><span>		devServer.<span style=color:#a6e22e>setDescription</span>(<span style=color:#e6db74>&#34;Server URL in Development environment&#34;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		Server prodServer <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Server();
@@ -82,15 +82,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>		Contact contact <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Contact();
 </span></span><span style=display:flex><span>		contact.<span style=color:#a6e22e>setEmail</span>(<span style=color:#e6db74>&#34;ichensoul@gmail.com&#34;</span>);
 </span></span><span style=display:flex><span>		contact.<span style=color:#a6e22e>setName</span>(<span style=color:#e6db74>&#34;ChenSoul&#34;</span>);
-</span></span><span style=display:flex><span>		contact.<span style=color:#a6e22e>setUrl</span>(<span style=color:#e6db74>&#34;https:/blog.chensoul.cc&#34;</span>);
+</span></span><span style=display:flex><span>		contact.<span style=color:#a6e22e>setUrl</span>(<span style=color:#e6db74>&#34;https://blog.chensoul.cc&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		License mitLicense <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> License().<span style=color:#a6e22e>name</span>(<span style=color:#e6db74>&#34;Apache License&#34;</span>).<span style=color:#a6e22e>url</span>(<span style=color:#e6db74>&#34;https:/www.apache.org/licenses/LICENSE-2.0.txt&#34;</span>);
+</span></span><span style=display:flex><span>		License mitLicense <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> License().<span style=color:#a6e22e>name</span>(<span style=color:#e6db74>&#34;Apache License&#34;</span>).<span style=color:#a6e22e>url</span>(<span style=color:#e6db74>&#34;https://www.apache.org/licenses/LICENSE-2.0.txt&#34;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		Info info <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Info()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>title</span>(<span style=color:#e6db74>&#34;Spring Boot3 Monolith API&#34;</span>)
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>version</span>(<span style=color:#e6db74>&#34;1.0&#34;</span>)
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>contact</span>(contact)
-</span></span><span style=display:flex><span>			.<span style=color:#a6e22e>description</span>(<span style=color:#e6db74>&#34;This API exposes endpoints to manage charging sessions.&#34;</span>).<span style=color:#a6e22e>termsOfService</span>(<span style=color:#e6db74>&#34;https:/blog.chensoul.cc/terms&#34;</span>)
+</span></span><span style=display:flex><span>			.<span style=color:#a6e22e>description</span>(<span style=color:#e6db74>&#34;This API exposes endpoints to manage charging sessions.&#34;</span>).<span style=color:#a6e22e>termsOfService</span>(<span style=color:#e6db74>&#34;https://blog.chensoul.cc/terms&#34;</span>)
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>license</span>(mitLicense);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> OpenAPI().<span style=color:#a6e22e>info</span>(info).<span style=color:#a6e22e>servers</span>(List.<span style=color:#a6e22e>of</span>(devServer, prodServer));

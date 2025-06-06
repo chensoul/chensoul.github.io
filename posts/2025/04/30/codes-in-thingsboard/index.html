@@ -78,7 +78,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@RequestMapping</span>(value <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;/assets&#34;</span>, <span style=color:#e6db74>&#34;/assets/&#34;</span>, <span style=color:#e6db74>&#34;/{path:^(?!api$)(?!assets$)(?!static$)(?!webjars$)(?!swagger-ui$)[^\\.]*}/**&#34;</span>})
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>redirect</span>() {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;forward:/index.html&#34;</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;forward://index.html&#34;</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@RequestMapping</span>(<span style=color:#e6db74>&#34;/swagger-ui.html&#34;</span>)
@@ -89,7 +89,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@RequestMapping</span>(<span style=color:#e6db74>&#34;/swagger-ui/&#34;</span>)
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>redirectSwaggerIndex</span>() <span style=color:#66d9ef>throws</span> IOException {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;forward:/swagger-ui/index.html&#34;</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;forward://swagger-ui/index.html&#34;</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>WebSocketConfiguration</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Configuration</span>
@@ -145,7 +145,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> Charset UTF8 <span style=color:#f92672>=</span> Charset.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;UTF-8&#34;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>constructBaseUrl</span>(HttpServletRequest request) {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;%s:/%s:%d&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;%s://%s:%d&#34;</span>,
 </span></span><span style=display:flex><span>                getScheme(request),
 </span></span><span style=display:flex><span>                getDomainName(request),
 </span></span><span style=display:flex><span>                getPort(request));
