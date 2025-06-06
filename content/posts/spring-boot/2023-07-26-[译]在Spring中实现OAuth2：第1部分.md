@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [spring-security, oauth2]
 ---
 
-OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。
+OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https:/tools.ietf.org/html/rfc6749) 或[维基百科](https:/en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。
 
 ## 访问令牌和刷新令牌
 
@@ -19,7 +19,7 @@ OAuth 引入了授权服务器的概念，授权服务器是发出访问和刷�
 
 ## 授权类型
 
-OAuth 中最常用的授权有：客户端凭据、密码、授权码和隐式授权。每项资助都有特定的流程和用例，但由于本文的重点不是理论，因此我们将重点关注其实施。有关授权及其用途的更多详细信息，请参阅 [OAuth RFC](https://tools.ietf.org/html/rfc6749#page-8)。
+OAuth 中最常用的授权有：客户端凭据、密码、授权码和隐式授权。每项资助都有特定的流程和用例，但由于本文的重点不是理论，因此我们将重点关注其实施。有关授权及其用途的更多详细信息，请参阅 [OAuth RFC](https:/tools.ietf.org/html/rfc6749#page-8)。
 
 ## 实现
 
@@ -78,7 +78,7 @@ public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapt
     @Bean
     public RemoteTokenServices LocalTokenService() {
         final RemoteTokenServices tokenService = new RemoteTokenServices();
-        tokenService.setCheckTokenEndpointUrl("http://localhost:8081/oauth/check_token");
+        tokenService.setCheckTokenEndpointUrl("http:/localhost:8081/oauth/check_token");
         tokenService.setClientId("my-client");
         tokenService.setClientSecret("mysecret");
         return tokenService;
@@ -114,7 +114,7 @@ public class AuthorizationSecurityConfig extends AuthorizationServerConfigurerAd
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(60)
-                .redirectUris("http://localhost:8081/test.html")
+                .redirectUris("http:/localhost:8081/test.html")
                 .resourceIds("resource")
                 .secret("mysecret");
     }
@@ -239,26 +239,26 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 </html>
 ```
 
-要执行隐式授予，我们需要在浏览器中导航到以下地址：http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html
+要执行隐式授予，我们需要在浏览器中导航到以下地址：http:/localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http:/localhost:8081/test.html
 
-![Login redirect](/images/login-spring.webp)
+![Login redirect](../../../static/images/login-spring.webp)
 
 登录后，我们得到一个 OAuth 审批页面（spring 默认提供，但可以自定义）：
 
-![OAuth approval](/images/oauth-approval.webp)
+![OAuth approval](../../../static/images/oauth-approval.webp)
 批准令牌的范围后，我们最终会重定向到我们的页面，在该页面中我们在 url 的哈希中找到令牌：
 
-![Implicit grant](/images/implicit_grant.webp)
+![Implicit grant](../../../static/images/implicit_grant.webp)
 
 - 授权码授予：
 
-对于授权码授予，我们需要首先以与隐式流程相同的方式进行授权，只不过 `response_type` 现在是 `code` 。为此，我们需要导航到：[http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html](http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html)
+对于授权码授予，我们需要首先以与隐式流程相同的方式进行授权，只不过 `response_type` 现在是 `code` 。为此，我们需要导航到：[http:/localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http:/localhost:8081/test.html](http:/localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http:/localhost:8081/test.html)
 
-然后我们被重定向到登录，登录后，我们被重定向到 OAuth 范围批准，如上一节中的隐式流程。之后，我们被重定向到以下地址：[http://localhost:8081/test.html?code=bD0mVb](http://localhost:8081/test.html?code=bD0mVb)，这是我们应用程序的欢迎页面，但带有一个特殊的查询参数： `code` 。我们将使用 curl 来获取令牌以进行演示，但也可以使用 JavaScript 在页面中完成此操作：
+然后我们被重定向到登录，登录后，我们被重定向到 OAuth 范围批准，如上一节中的隐式流程。之后，我们被重定向到以下地址：[http:/localhost:8081/test.html?code=bD0mVb](http:/localhost:8081/test.html?code=bD0mVb)，这是我们应用程序的欢迎页面，但带有一个特殊的查询参数： `code` 。我们将使用 curl 来获取令牌以进行演示，但也可以使用 JavaScript 在页面中完成此操作：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
--d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html'\
+-d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http:/localhost:8081/test.html'\
 -H "Accept: application/json"
 ```
 
@@ -309,8 +309,8 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'cl
 
 Spring OAuth 提供开箱即用的 OAuth 端点和流程，并且可以成为以最小的努力设置 OAuth 的绝佳解决方案。然而，对于不熟悉 Spring 的开发人员来说，这可能有点令人畏惧，因为很多事情都在幕后发生。希望这篇文章可以帮助您了解全局。在下一篇文章中，我们将讨论使用 OAuth 范围来保护端点。
 
-完整的源代码可以在[这里](https://github.com/zak905/oauth2-example)找到。
+完整的源代码可以在[这里](https:/github.com/zak905/oauth2-example)找到。
 
 
 
-原文链接：[http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/](http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)
+原文链接：[http:/www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/](http:/www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)

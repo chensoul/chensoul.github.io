@@ -7,13 +7,13 @@ categories: ["spring-boot"]
 tags: [ spring-security]
 ---
 
-![img](/images/Thymeleaf_SpringSecurity-1.webp)
+![img](../../../static/images/Thymeleaf_SpringSecurity-1.webp)
 
-继续上一篇[关于实现 Spring Security 的两种不同方法](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。
+继续上一篇[关于实现 Spring Security 的两种不同方法](https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/)的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。
 
 然后，根据用户角色，我们将借助预定义的 UserDetailsS​​ervice 检查身份验证和授权功能。
 
-如果您正在寻找“如何在 Spring Boot 3 及以上版本中使用 UserDetailsS​​ervice 在 Spring Boot 中实现安全性？”，请访问有关[使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的单独文章。
+如果您正在寻找“如何在 Spring Boot 3 及以上版本中使用 UserDetailsS​​ervice 在 Spring Boot 中实现安全性？”，请访问有关[使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice](https:/javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的单独文章。
 
 为了说明这一点，我们将把一些角色发挥作用，并在整个过程中围绕它们进行发挥，以使其变得清晰。此外，我们将有一些页面并限制它们仅可由某些特定角色访问。同样重要的是，我们必须创建一个小型 MVC Web 应用程序，以使注册过程向用户开放。用户在注册时将输入自己的角色。然后我们可以在其之上实现安全功能。
 
@@ -110,7 +110,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 ## UserDetailsService 在 Spring Security 应用程序内部如何工作？
 
-![How to implement UserDetailsService](/images/SpringSecurity_UserDetailsService_2-1-1.webp)
+![How to implement UserDetailsService](../../../static/images/SpringSecurity_UserDetailsService_2-1-1.webp)
 
 一旦用户输入用户名和密码并单击“登录”按钮，就会调用 WebSecurityConfigurerAdapter，该适配器在内部调用 UserServiceImpl.java（实现类，由程序员提供）。此外，UserServiceImpl.java 中实现的 loadUserByUserName()方法将我们的 User 对象转换为 Spring 提供的 User 对象。此外，我们的 SecurityConfig.java 扩展了 WebSecurityConfigurerAdapter 并通过两种方法提供了身份验证和授权逻辑的实现；分别配置（AuthenticationManagerBuilder）和配置（HttpSecurity），如下面的代码所示。
 
@@ -231,7 +231,7 @@ public class SecurityConfig {
 
 同样重要的是，公司将有一个用户注册页面，即使没有登录，所有用户也必须可以访问该页面。现在让我们创建一个标准用户注册流程，如下所示。
 
-![User Registration MVC Flow Design](/images/UserRegistrationFlow-1.webp)
+![User Registration MVC Flow Design](../../../static/images/UserRegistrationFlow-1.webp)
 
 ### 步骤#1：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
 
@@ -250,7 +250,7 @@ server.port=8080
 #--------------------- DB Connection ------------------
 #AutoLoading of driver class since JDBC 4
 #spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/testBootSecurity
+spring.datasource.url=jdbc:mysql:/localhost:3306/testBootSecurity
 spring.datasource.username=root
 spring.datasource.password=devs
 
@@ -465,13 +465,13 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 
-	// Go to Registration Page
+	/ Go to Registration Page
 	@GetMapping("/register")
 	public String register() {
 		return "registerUser";
 	}
 
-	// Read Form data to save into DB
+	/ Read Form data to save into DB
 	@PostMapping("/saveUser")
 	public String saveUser(
 			@ModelAttribute User user,
@@ -551,7 +551,7 @@ registerUser.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>User Registration</title>
@@ -584,7 +584,7 @@ homePage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -600,7 +600,7 @@ welcomePage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -616,7 +616,7 @@ adminPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -633,7 +633,7 @@ empPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -649,7 +649,7 @@ mgrPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -665,7 +665,7 @@ hrPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -681,7 +681,7 @@ commonPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -698,7 +698,7 @@ accessDeniedPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -856,12 +856,12 @@ public class SecurityConfig {
 
 1. 启动应用程序：右键单击项目，然后选择“Run As”>>“Spring Boot App”。
 
-2. 输入注册页面网址 http://localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。
+2. 输入注册页面网址 http:/localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。
 
 3. 输入必填字段值并相应地单击“注册”按钮完成注册过程。
-4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL http://localhost:8080/admin，那么它应该将您重定向到内置的登录页面。
+4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL http:/localhost:8080/admin，那么它应该将您重定向到内置的登录页面。
 5. 输入凭据（电子邮件 ID 代替用户名）并登录到应用程序。它会将您重定向到默认的成功 URL，即欢迎页面。
-6. 现在输入网址 http://localhost:8080/admin
+6. 现在输入网址 http:/localhost:8080/admin
 
 7. 对其他角色也重复上述步骤。
 
@@ -873,4 +873,4 @@ public class SecurityConfig {
 
 如果您想了解有关 Spring Security 的更多信息，请访问 spring.io 文档。另外，欢迎在评论区提出你的意见。
 
-原文链接：[https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)
+原文链接：[https:/javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/](https:/javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)

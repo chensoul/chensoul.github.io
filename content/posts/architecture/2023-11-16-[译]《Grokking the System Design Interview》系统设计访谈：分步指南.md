@@ -7,7 +7,7 @@ categories: ["Architecture"]
 tags: ["architecture"]
 ---
 
-这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《System Design Interviews: A step by step guide》系统设计访谈：分步指南。
+这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https:/github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《System Design Interviews: A step by step guide》系统设计访谈：分步指南。
 
 ---
 
@@ -125,7 +125,7 @@ Defining the data model early will clarify how data will flow among different co
 
 **FavoriteTweets:** UserID, TweetID, TimeStamp
 
-Which database system should we use? Will NoSQL like [Cassandra](https://en.wikipedia.org/wiki/Apache_Cassandra) best fit our needs, or should we use a MySQL-like solution? What kind of block storage should we use to store photos and videos?
+Which database system should we use? Will NoSQL like [Cassandra](https:/en.wikipedia.org/wiki/Apache_Cassandra) best fit our needs, or should we use a MySQL-like solution? What kind of block storage should we use to store photos and videos?
 
 > 我们应该使用哪种数据库系统？像 Cassandra 这样的 NoSQL 是否最适合我们的需求，或者我们应该使用类似 MySQL 的解决方案？我们应该使用什么样的块存储来存储照片和视频？
 
@@ -143,7 +143,7 @@ For Twitter, at a high-level, we will need multiple application servers to serve
 
 
 
-![20231116_image-20231116072253280](/images/sdi-a-step-by-step-guide-01.webp)
+![20231116_image-20231116072253280](../../../static/images/sdi-a-step-by-step-guide-01.webp)
 
 
 
@@ -217,4 +217,4 @@ Let’s apply the above guidelines to design a few systems that are asked in SDI
 
 参考文章：
 
-- https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5aac93e7ae59a1af63
+- https:/www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5aac93e7ae59a1af63

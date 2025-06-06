@@ -13,7 +13,7 @@ tags: [spring-boot]
 
 简单地说，用 `@Async` 注解 bean 的方法将使其在单独的线程中执行。换句话说，调用者不会等待被调用方法的完成。
 
-Spring 的一个有趣的方面是，框架中的事件支持还 [支持异步处理](https://www.baeldung.com/spring-events)（如果需要）。
+Spring 的一个有趣的方面是，框架中的事件支持还 [支持异步处理](https:/www.baeldung.com/spring-events)（如果需要）。
 
 ## 2.启用异步支持
 
@@ -75,7 +75,7 @@ public Future<String> asyncMethodWithReturnType() {
         Thread.sleep(5000);
         return new AsyncResult<String>("hello world !!!!");
     } catch (InterruptedException e) {
-        //
+        /
     }
 
     return null;
@@ -192,6 +192,6 @@ public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
 
 我们从非常基本的配置和注解开始，以使其正常工作。但我们也研究了更高级的配置，例如提供我们自己的执行器或异常处理策略。
 
-与往常一样，本文中提供的完整代码可以在 [GitHub](https://github.com/eugenp/tutorials/tree/master/spring-scheduling) 上找到。
+与往常一样，本文中提供的完整代码可以在 [GitHub](https:/github.com/eugenp/tutorials/tree/master/spring-scheduling) 上找到。
 
-原文链接：[https://www.baeldung.com/spring-async](https://www.baeldung.com/spring-async)
+原文链接：[https:/www.baeldung.com/spring-async](https:/www.baeldung.com/spring-async)

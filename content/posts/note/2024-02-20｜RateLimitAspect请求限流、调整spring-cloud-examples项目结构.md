@@ -20,14 +20,14 @@ tags: [spring-cloud]
      private final RedisTemplate<String, Object> redisTemplate;
      private final Logger logger = LoggerFactory.getLogger(RateLimitAspect.class);
    
-     private final int maxRequests; // Maximum number of requests
-     private final int timeWindow; // Time window in seconds
+     private final int maxRequests; / Maximum number of requests
+     private final int timeWindow; / Time window in seconds
    
      @Autowired
      public RateLimitAspect(RedisTemplate<String, Object> redisTemplate) {
          this.redisTemplate = redisTemplate;
-         this.maxRequests = 100; // Default maximum number of requests is 100
-         this.timeWindow = 60; // Default time window is 60 seconds
+         this.maxRequests = 100; / Default maximum number of requests is 100
+         this.timeWindow = 60; / Default time window is 60 seconds
      }
    
      @Before("@annotation(getMapping)")
@@ -35,7 +35,7 @@ tags: [spring-cloud]
          HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
             .getRequestAttributes()).getRequest();
          if (request != null && HttpMethod.GET.matches(request.getMethod())) {
-             String username = request.getUserPrincipal().getName(); // Get the username
+             String username = request.getUserPrincipal().getName(); / Get the username
              if (username != null && !username.isEmpty()) {
                  String rateLimitKey = "rate_limit:" + username;
                  incrementAndCheckRateLimit(rateLimitKey, request);
@@ -54,8 +54,8 @@ tags: [spring-cloud]
              return (Long) ((RedisOperations<?, ?>) nativeConnection).execute(
                      (RedisCallback<Object>) connection1 -> connection1.eval(
                              script.getBytes(),
-                             redisTemplate.getKeySerializer(), // Use custom Key serializer
-                             redisTemplate.getValueSerializer(), // Use custom Value serializer
+                             redisTemplate.getKeySerializer(), / Use custom Key serializer
+                             redisTemplate.getValueSerializer(), / Use custom Value serializer
                              Collections.singletonList(rateLimitKey.getBytes()),
                              Collections.singletonList(String.valueOf(timeWindow).getBytes())
                      )
@@ -83,6 +83,6 @@ tags: [spring-cloud]
 
    
 
-2. 调整 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples) 目录，通过源码分析 [SpringBoot 2.7.18 启动过程](https://github.com/chensoul/spring-cloud-examples/blob/main/lesson-01-bootstrap/SpringBoot%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.md)
+2. 调整 [spring-cloud-examples](https:/github.com/chensoul/spring-cloud-examples) 目录，通过源码分析 [SpringBoot 2.7.18 启动过程](https:/github.com/chensoul/spring-cloud-examples/blob/main/lesson-01-bootstrap/SpringBoot%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.md)
 
    

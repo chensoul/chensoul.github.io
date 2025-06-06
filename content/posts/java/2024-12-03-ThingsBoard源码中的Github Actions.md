@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [thingsboard]
 ---
 
-ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：
+ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：
 
 - `check-configuration-files.yml`：使用 python 脚本校验 yaml 文件
 - `license-header-format.yml`：是给文件添加 license 并提交代码到 git 仓库
@@ -76,9 +76,9 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'corretto' # https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
+          distribution: 'corretto' # https:/github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
           java-version: '21'
-          cache: 'maven' # https://github.com/actions/setup-java?tab=readme-ov-file#caching-sbt-dependencies
+          cache: 'maven' # https:/github.com/actions/setup-java?tab=readme-ov-file#caching-sbt-dependencies
 
       - name: License header format
         run: mvn -T 1C license:format
@@ -191,7 +191,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    http:/www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

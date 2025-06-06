@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [spring-security]
 ---
 
-![How to implement Security in Spring Boot Project?](/images/SpringSecurityBasics-2.webp)
+![How to implement Security in Spring Boot Project?](../../../static/images/SpringSecurityBasics-2.webp)
 
 如今，几乎每个客户都要求在实时应用程序中实现强大的安全功能。安全功能对于保持机密性、完整性和可用性的需求是非常有效的。现实世界中有很多类型的安全性，但我们作为开发人员将重点关注应用程序/软件安全性。
 
@@ -15,7 +15,7 @@ tags: [spring-security]
 
 您可能已经猜到我们将在当前主题“如何在 Spring Boot 项目中实现安全性？”中讨论什么内容。
 
-在本文中，我们将从基本原理开始学习。接下来，我们将逐步结束它，直到我们有信心在 Spring Boot 应用程序中实现安全功能。因此，让我们开始逐步讨论“如何在 Spring Boot 项目中实现安全性？”。 Spring Boot 教程页面上有一系列有关 [Spring Boot Security 的教程](https://javatechonline.com/spring-boot-tutorial/#Spring_Boot_Security)。
+在本文中，我们将从基本原理开始学习。接下来，我们将逐步结束它，直到我们有信心在 Spring Boot 应用程序中实现安全功能。因此，让我们开始逐步讨论“如何在 Spring Boot 项目中实现安全性？”。 Spring Boot 教程页面上有一系列有关 [Spring Boot Security 的教程](https:/javatechonline.com/spring-boot-tutorial/#Spring_Boot_Security)。
 
 我们在本文中介绍了两个版本的“如何在 Spring Boot 项目中实现安全性？”的示例：使用 WebSecurityConfigurerAdapter 和不使用 WebSecurityConfigurerAdapter。此外，还涵盖了使用 Spring Boot 3.0 及更高版本的“如何在 Spring Boot 项目中实现安全性？”的示例。
 
@@ -60,7 +60,7 @@ DelegatingFilterProxy 是 Spring Security 模块提供的 org.springframework.we
 
 如下图所示，当用户向应用程序发送请求时，请求会先经过安全过滤器，然后再发送给 DispatcherServlet。如果用户验证此过滤器的安全性，则只有请求才会发送到 DispatcherServlet 来满足用户的目的。
 
-![img](/images/SpringSecurity1-1-2.webp)
+![img](../../../static/images/SpringSecurity1-1-2.webp)
 
 ## Spring Boot 应用程序使用了多少种授权类型？
 
@@ -109,7 +109,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 以下是步骤：
 
-![SpringSecurity2](/images/SpringSecurity2-1-2.webp)
+![SpringSecurity2](../../../static/images/SpringSecurity2-1-2.webp)
 
 1. 编写一个类“SecurityConfig.java”，它扩展了预定义的抽象类 WebSecurityConfigurerAdapter.java
 2. 在“SecurityConfig.java”之上相应地应用注释@Configuration 和@EnableWebSecurity。不用说，注释@EnableWebSecurity 是为了在 Web 应用程序中启用安全功能。
@@ -125,7 +125,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 6. 最后，如果您不实施内存中身份验证，请更新 application.properties 文件中的数据库属性。
 
-注意：从 Spring Security 5.7.0-M2 开始，WebSecurityConfigurerAdapter 已被弃用。为了了解实现自定义配置类的新方法，请访问有关[不使用 WebSecurityConfigurerAdapter 的 Spring Security](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/) 的单独文章。
+注意：从 Spring Security 5.7.0-M2 开始，WebSecurityConfigurerAdapter 已被弃用。为了了解实现自定义配置类的新方法，请访问有关[不使用 WebSecurityConfigurerAdapter 的 Spring Security](https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/) 的单独文章。
 
 ## 如何实现内存中身份验证安全性的示例
 
@@ -138,7 +138,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 ### 步骤#1：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
 
-创建入门项目时，选择“Spring Security”、“Thymeleaf”、“Spring Web”和“Spring Boot DevTools”作为入门项目依赖项。要了解“如何创建 Spring Boot Starter 项目？”，请访问[内部链接](https://javatechonline.com/saving-data-into-database-using-spring-boot-data-jpa-step-by-step-tutorial/#Step_1_Creating_Starter_Project_using_STS)。
+创建入门项目时，选择“Spring Security”、“Thymeleaf”、“Spring Web”和“Spring Boot DevTools”作为入门项目依赖项。要了解“如何创建 Spring Boot Starter 项目？”，请访问[内部链接](https:/javatechonline.com/saving-data-into-database-using-spring-boot-data-jpa-step-by-step-tutorial/#Step_1_Creating_Starter_Project_using_STS)。
 
 ### 步骤#2：编写控制器类
 
@@ -200,7 +200,7 @@ homepage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -216,7 +216,7 @@ welcomePage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -232,7 +232,7 @@ adminPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -249,7 +249,7 @@ empPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -265,7 +265,7 @@ mgrPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -281,7 +281,7 @@ commonPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -298,7 +298,7 @@ accessDeniedPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -336,7 +336,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		// {noop} => No operation for password encoder	(no password encoding needed)
+		/ {noop} => No operation for password encoder	(no password encoding needed)
 		auth.inMemoryAuthentication().withUser("devs").password("{noop}devs").authorities("ADMIN");
 		auth.inMemoryAuthentication().withUser("ns").password("{noop}ns").authorities("EMPLOYEE");
 		auth.inMemoryAuthentication().withUser("vs").password("{noop}vs").authorities("MANAGER");
@@ -345,7 +345,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		//declares which Page(URL) will have What access type
+		/declares which Page(URL) will have What access type
 		http.authorizeRequests()
 		.antMatchers("/home").permitAll()
 		.antMatchers("/welcome").authenticated()
@@ -354,21 +354,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/mgr").hasAuthority("MANAGER")
 		.antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		// Any other URLs which are not configured in above antMatchers
-		// generally declared aunthenticated() in real time
+		/ Any other URLs which are not configured in above antMatchers
+		/ generally declared aunthenticated() in real time
 		.anyRequest().authenticated()
 
-		//Login Form Details
+		/Login Form Details
 		.and()
 		.formLogin()
 		.defaultSuccessUrl("/welcome", true)
 
-		//Logout Form Details
+		/Logout Form Details
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		//Exception Details
+		/Exception Details
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/accessDenied")
@@ -379,7 +379,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 #### 步骤#4B：Spring Security 5.7 以上版本和 Spring Security 6.0 以下版本的代码
 
-由于[根据 Spring 官网发布的公告](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/)，WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用，因此，2022 年 2 月 21 日，我们将不使用 WebSecurityConfigurerAdapter 来编写 SecurityConfig 类，如下所示：
+由于[根据 Spring 官网发布的公告](https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/)，WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用，因此，2022 年 2 月 21 日，我们将不使用 WebSecurityConfigurerAdapter 来编写 SecurityConfig 类，如下所示：
 
 SecurityConfig.java
 
@@ -431,7 +431,7 @@ public class SecurityConfig {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		//declares which Page(URL) will have What access type
+		/declares which Page(URL) will have What access type
 		http.authorizeRequests()
 		.antMatchers("/home").permitAll()
 		.antMatchers("/welcome").authenticated()
@@ -440,21 +440,21 @@ public class SecurityConfig {
 		.antMatchers("/mgr").hasAuthority("MANAGER")
 		.antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		// Any other URLs which are not configured in above antMatchers
-		// generally declared aunthenticated() in real time
+		/ Any other URLs which are not configured in above antMatchers
+		/ generally declared aunthenticated() in real time
 		.anyRequest().authenticated()
 
-		//Login Form Details
+		/Login Form Details
 		.and()
 		.formLogin()
 		.defaultSuccessUrl("/welcome", true)
 
-		//Logout Form Details
+		/Logout Form Details
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		//Exception Details
+		/Exception Details
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/accessDenied")
@@ -467,7 +467,7 @@ public class SecurityConfig {
 
 #### 步骤#4C：Spring Security 6.0.0 及更高版本的代码（Spring Boot 3.0+）
 
-从 Spring Security 6.0（2022 年 11 月发布）开始，WebSecurityConfigurerAdapter 已从 Spring Security API 中完全删除。它还影响了 2022 年 11 月[新发布的 Spring Boot 3.0](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)。因此，如果您使用 Spring Framework 6.0+ 或 Spring Boot 3.0+，无论哪种情况，SecurityConfig.java 的实现应如下所示。此外，您还可以检查[Spring Framework 6.0 中与 Spring Security 相关的更改](https://javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/#Review_Specific_to_Spring_Security_Dependency)。
+从 Spring Security 6.0（2022 年 11 月发布）开始，WebSecurityConfigurerAdapter 已从 Spring Security API 中完全删除。它还影响了 2022 年 11 月[新发布的 Spring Boot 3.0](https:/javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)。因此，如果您使用 Spring Framework 6.0+ 或 Spring Boot 3.0+，无论哪种情况，SecurityConfig.java 的实现应如下所示。此外，您还可以检查[Spring Framework 6.0 中与 Spring Security 相关的更改](https:/javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/#Review_Specific_to_Spring_Security_Dependency)。
 
 SecurityConfig.java
 
@@ -519,7 +519,7 @@ public class SecurityConfig {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		//declares which Page(URL) will have What access type
+		/declares which Page(URL) will have What access type
 		http.authorizeHttpRequests()
 		.requestMatchers("/home").permitAll()
 		.requestMatchers("/welcome").authenticated()
@@ -528,21 +528,21 @@ public class SecurityConfig {
 		.requestMatchers("/mgr").hasAuthority("MANAGER")
 		.requestMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		// Any other URLs which are not configured in above antMatchers
-		// generally declared aunthenticated() in real time
+		/ Any other URLs which are not configured in above antMatchers
+		/ generally declared aunthenticated() in real time
 		.anyRequest().authenticated()
 
-		//Login Form Details
+		/Login Form Details
 		.and()
 		.formLogin()
 		.defaultSuccessUrl("/welcome", true)
 
-		//Logout Form Details
+		/Logout Form Details
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		//Exception Details
+		/Exception Details
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/accessDenied")
@@ -557,7 +557,7 @@ public class SecurityConfig {
 
 您的项目结构将如下图所示。
 
-![img](/images/SpringSecurity6.webp)
+![img](../../../static/images/SpringSecurity6.webp)
 
 ## 如何实现 JDBC 身份验证安全性示例
 
@@ -674,7 +674,7 @@ public class AppConfig {
 #application.properties
 -------------------------------------------------------------------
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/testBootSecurity
+spring.datasource.url=jdbc:mysql:/localhost:3306/testBootSecurity
 spring.datasource.username=root
 spring.datasource.password=devs
 ```
@@ -715,7 +715,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 		auth.jdbcAuthentication()
-		.dataSource(dataSource)     //creates database connection
+		.dataSource(dataSource)     /creates database connection
 		.usersByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?")
 		.authoritiesByUsernameQuery("select user_name,user_role from user where user_name=?")
 		.passwordEncoder(passwordEncoder);
@@ -751,7 +751,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 #### 步骤#6B：Spring Security 5.7.0 以上版本和 Spring Security 6.0.0 以下版本的代码
 
-由于根据 Spring 官网发布的公告，[WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/)，因此，2022 年 2 月 21 日，我们将不使用 WebSecurityConfigurerAdapter 来编写 SecurityConfig 类，如下所示：
+由于根据 Spring 官网发布的公告，[WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用](https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/)，因此，2022 年 2 月 21 日，我们将不使用 WebSecurityConfigurerAdapter 来编写 SecurityConfig 类，如下所示：
 
 SecurityConfig.java
 
@@ -909,12 +909,12 @@ public class SecurityConfig {
 
 1. 启动应用程序，然后右键单击该项目，然后选择“Run As”>>“Spring Boot App”。
 
-2. 输入首页网址 http://localhost:8080/home，检查是否存在每个人都可以访问，甚至无需登录应用程序。
+2. 输入首页网址 http:/localhost:8080/home，检查是否存在每个人都可以访问，甚至无需登录应用程序。
 
-3. 输入管理页面 URL http://localhost:8080/admin，然后它应该被重定向到内置登录页面（由 Spring Security 提供）
+3. 输入管理页面 URL http:/localhost:8080/admin，然后它应该被重定向到内置登录页面（由 Spring Security 提供）
 
 4. 使用提供的管理员凭据登录，您将被重定向到欢迎页面。
-5. 输入 URL http://localhost:8080/admin，然后您就可以看到管理页面了。
+5. 输入 URL http:/localhost:8080/admin，然后您就可以看到管理页面了。
 6. 当您使用管理员凭据登录时，您还可以通过点击其他页面 URL 来查看所有页面。
 
 随后对其他角色也重复上述步骤并检查用户是否可以根据授予的角色访问该页面。
@@ -956,6 +956,6 @@ Spring Boot 3.0 在 Spring Security 模块中进行了重大 API 级别更改。
 
 ## 概括
 
-随后，通过“如何在 Spring Boot 项目中实现安全性？”的所有理论和示例部分，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了两种实现安全功能的方法。此外，我们可以在[另一篇文章](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)中了解 UserDetailsS​​ervice（实现安全性的第三种方式）。此外，有关 Spring Boot Security 的完整教程请访问[此处](https://javatechonline.com/spring-boot/#Spring_Boot_Security)。后续如有更新，我们也会及时更新。也请随时在下面的评论部分提供您的意见。
+随后，通过“如何在 Spring Boot 项目中实现安全性？”的所有理论和示例部分，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了两种实现安全功能的方法。此外，我们可以在[另一篇文章](https:/javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)中了解 UserDetailsS​​ervice（实现安全性的第三种方式）。此外，有关 Spring Boot Security 的完整教程请访问[此处](https:/javatechonline.com/spring-boot/#Spring_Boot_Security)。后续如有更新，我们也会及时更新。也请随时在下面的评论部分提供您的意见。
 
-原文链接：[https://javatechonline.com/how-to-implement-security-in-spring-boot-project/](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)
+原文链接：[https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/](https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/)

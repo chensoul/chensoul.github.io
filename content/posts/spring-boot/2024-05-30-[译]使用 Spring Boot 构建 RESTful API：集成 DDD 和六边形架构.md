@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ spring-boot,ddd]
 ---
 
-原文链接：[Building a RESTful API with Spring Boot: Integrating DDD and Hexagonal Architecture](https://medium.com/@juannegrin/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture-df50fe24a1ff)
+原文链接：[Building a RESTful API with Spring Boot: Integrating DDD and Hexagonal Architecture](https:/medium.com/@juannegrin/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture-df50fe24a1ff)
 
 # 介绍
 
@@ -116,7 +116,7 @@ Spring Boot 是庞大的 Spring 生态系统中的一个项目，它简化了配
 
 Spring Boot 项目的初始设置借助 Spring Initializr 等工具，创建 Spring Boot 项目非常简单，它提供了一个 Web 界面来自定义和下载基础项目。以下是设置项目的步骤：
 
-1. **访问**[**Spring Initializr**](https://start.spring.io/)**：**一个在线工具，可让您配置项目依赖项、Java 版本、构建系统（如 Maven 或 Gradle）和其他参数。
+1. **访问**[**Spring Initializr**](https:/start.spring.io/)**：**一个在线工具，可让您配置项目依赖项、Java 版本、构建系统（如 Maven 或 Gradle）和其他参数。
 2. **选择必要的依赖项：**对于 REST API，选择“Spring Web”。
 3. **生成并下载您的项目：**配置完成后，您可以下载项目并在您最喜欢的 IDE 中打开它。
 
@@ -148,7 +148,7 @@ Spring Boot 项目的初始设置借助 Spring Initializr 等工具，创建 Spr
    }
    ```
 
-4. **运行应用程序：**`mvn spring-boot:run`您可以从 IDE 执行此操作，或者如果您使用的是 Maven，则可以使用命令。从浏览器或 Postman 等 HTTP 客户端访问[http://localhost:8080/h](http://localhost:8080/hola) ello，您应该会看到“Hello World”消息。
+4. **运行应用程序：**`mvn spring-boot:run`您可以从 IDE 执行此操作，或者如果您使用的是 Maven，则可以使用命令。从浏览器或 Postman 等 HTTP 客户端访问[http:/localhost:8080/h](http:/localhost:8080/hola) ello，您应该会看到“Hello World”消息。
 
 这个基本练习不仅展示了使用 Spring Boot 创建端点的简易性，而且还为我们接下来的部分奠定了基础，在这些部分中我们将整合 DDD 和六边形架构。
 
@@ -228,7 +228,7 @@ Spring Boot 简化了启动和运行应用程序所需的许多配置，但了�
 
 对于那些希望深入了解 Spring Boot 各个方面（从高级配置到特定功能的实现）的人来说，官方文档是最全面、最新的资源。Spring Boot 文档提供指南、教程以及所有可能的功能和配置的完整参考。
 
-[Spring Boot 官方文档](https://spring.io/projects/spring-boot#learn)
+[Spring Boot 官方文档](https:/spring.io/projects/spring-boot#learn)
 
 除了官方文档外，还有许多其他资源，例如在线课程、视频教程和讨论论坛，Spring Boot 社区非常活跃并愿意提供帮助。这些资源对于解决特定问题或通过实际示例和案例研究进行学习特别有用。
 
@@ -348,7 +348,7 @@ DDD 的基石之一是有界上下文的概念。此概念指的是领域模型�
 
 为了更好地形象化地展示六边形架构的工作原理，请考虑一个说明其主要组件排列的基本图表：
 
-![img](/images/hexagonal-architecture.webp)
+![img](../../../static/images/hexagonal-architecture.webp)
 
 在此图中：
 
@@ -375,34 +375,34 @@ project-root/
 ├── application/
 │   ├── ports/
 │   │   ├── inbound/
-│   │   │   └── // Contains interfaces that define the entry points to the application. These ports are used by external agents interacting with the application, such as user interfaces or REST API requests.
+│   │   │   └── / Contains interfaces that define the entry points to the application. These ports are used by external agents interacting with the application, such as user interfaces or REST API requests.
 │   │   └── outbound/
-│   │       └── // Defines interfaces for external services that the application needs to consume, such as databases or external REST services. These ports help decouple the business logic from the implementation details of accessing external resources.
+│   │       └── / Defines interfaces for external services that the application needs to consume, such as databases or external REST services. These ports help decouple the business logic from the implementation details of accessing external resources.
 │   └── services/
-│       └── // Implements the application logic coordinating activities between the ports and the domain. Application services play a crucial role in orchestrating domain operations, executing business logic, and acting as a bridge between the domain and infrastructure adapters.
+│       └── / Implements the application logic coordinating activities between the ports and the domain. Application services play a crucial role in orchestrating domain operations, executing business logic, and acting as a bridge between the domain and infrastructure adapters.
 ├── domain/
 │   ├── exceptions/
-│   │   └── // Defines specific domain exceptions that can be thrown by the business logic.
+│   │   └── / Defines specific domain exceptions that can be thrown by the business logic.
 │   ├── entities/
-│   │   └── // Contains the domain entities that encapsulate critical business logic and data.
+│   │   └── / Contains the domain entities that encapsulate critical business logic and data.
 │   └── other domain folders/
-│       └── // May include value objects, aggregates, domain events, etc., which are fundamental to the business logic and domain rules.
+│       └── / May include value objects, aggregates, domain events, etc., which are fundamental to the business logic and domain rules.
 └── infrastructure/
     ├── adapters/
     │   ├── inbound/
     │   │   ├── rest/
-    │   │   │   └── // Implements adapters for web interfaces, handling incoming HTTP requests and transforming them into calls to the appropriate inbound ports.
+    │   │   │   └── / Implements adapters for web interfaces, handling incoming HTTP requests and transforming them into calls to the appropriate inbound ports.
     │   │   ├── tasks/
-    │   │   │   └── // For scheduled tasks that perform periodic operations within the application.
+    │   │   │   └── / For scheduled tasks that perform periodic operations within the application.
     │   │   └── events/
-    │   │       └── // Manages the capture and processing of system events or integration events with other systems.
+    │   │       └── / Manages the capture and processing of system events or integration events with other systems.
     │   └── outbound/
     │       ├── persistence/
-    │       │   └── // Implements data persistence, for example, using JPA to interact with databases, encapsulating all data access logic.
+    │       │   └── / Implements data persistence, for example, using JPA to interact with databases, encapsulating all data access logic.
     │       └── rest/
-    │           └── // Contains the adapters needed to make calls to external APIs, encapsulating the logic of how to interact with other web services.
+    │           └── / Contains the adapters needed to make calls to external APIs, encapsulating the logic of how to interact with other web services.
     └── configuration/
-        └── // Specific configurations of the framework and infrastructure, such as security settings, Spring beans configuration, etc.
+        └── / Specific configurations of the framework and infrastructure, such as security settings, Spring beans configuration, etc.
 ```
 
 
@@ -488,7 +488,7 @@ public class AccountController {
 }
 ```
 
-您可以在[Refactoring Guru](https://refactoring.guru/design-patterns)上了解有关设计模式的更多信息，强烈建议您先了解一下模式以及如何根据编程语言实现它们。我鼓励您查看一下。
+您可以在[Refactoring Guru](https:/refactoring.guru/design-patterns)上了解有关设计模式的更多信息，强烈建议您先了解一下模式以及如何根据编程语言实现它们。我鼓励您查看一下。
 
 ## 将设计模式与 DDD 和六边形架构相结合的好处
 

@@ -37,7 +37,7 @@ tags: [ spring-boot]
   <version>${maven-compiler-plugin.version}</version>
   <configuration>
     <annotationProcessorPaths>
-      <!-- https://springdoc.org/#javadoc-support -->
+      <!-- https:/springdoc.org/#javadoc-support -->
       <path>
         <groupId>com.github.therapi</groupId>
         <artifactId>therapi-runtime-javadoc-scribe</artifactId>
@@ -76,13 +76,13 @@ public class SpringdocConfig {
 	@Value("${server.port}")
 	private String port;
 
-	@Value("${openapi.prod-url:https://localhost}")
+	@Value("${openapi.prod-url:https:/localhost}")
 	private String prodUrl;
 
 	@Bean
 	public OpenAPI openAPI() {
 		Server devServer = new Server();
-		devServer.setUrl("http://localhost:" + port);
+		devServer.setUrl("http:/localhost:" + port);
 		devServer.setDescription("Server URL in Development environment");
 
 		Server prodServer = new Server();
@@ -92,15 +92,15 @@ public class SpringdocConfig {
 		Contact contact = new Contact();
 		contact.setEmail("ichensoul@gmail.com");
 		contact.setName("ChenSoul");
-		contact.setUrl("https://blog.chensoul.cc");
+		contact.setUrl("https:/blog.chensoul.cc");
 
-		License mitLicense = new License().name("Apache License").url("https://www.apache.org/licenses/LICENSE-2.0.txt");
+		License mitLicense = new License().name("Apache License").url("https:/www.apache.org/licenses/LICENSE-2.0.txt");
 
 		Info info = new Info()
 			.title("Spring Boot3 Monolith API")
 			.version("1.0")
 			.contact(contact)
-			.description("This API exposes endpoints to manage charging sessions.").termsOfService("https://blog.chensoul.cc/terms")
+			.description("This API exposes endpoints to manage charging sessions.").termsOfService("https:/blog.chensoul.cc/terms")
 			.license(mitLicense);
 
 		return new OpenAPI().info(info).servers(List.of(devServer, prodServer));

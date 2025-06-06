@@ -9,9 +9,9 @@ tags: [review]
 
 ## 前言
 
-![weekly-review-13-01](/images/weekly-review-13-01.webp)
+![weekly-review-13-01](../../../static/images/weekly-review-13-01.webp)
 
-本篇是对 `2023-03-27` 到 `2023-04-02` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-27` 到 `2023-04-02` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 本周是三月的最后一周，想到这，就想对随便对三月份做个总结。总结的方面，大概包括工作、生活、学习、健身、财务、娱乐几个方面。万事开头难，不知道能者多少，但是，相信不管写多少，都是有意义的。
 
@@ -23,11 +23,11 @@ tags: [review]
 
 完成了每天一万步的计划，并且共跑步 8 次，一共 26 公里，最高平均配速 7 分钟，还跳绳一次（550 下）。
 
-![](/images/weekly-review-13-03.webp)
+![](../../../static/images/weekly-review-13-03.webp)
 
 跑步的目的不是快，而是乐此不疲。每天跑步 5 公里，每次消耗 300 卡路里的热量，大概需要 10 周才能瘦 10 斤。
 
-![](/images/weekly-review-13-02.webp)
+![](../../../static/images/weekly-review-13-02.webp)
 
 光靠走路和跑步，想在 4 月完成瘦 10 斤的目标，应该是不可能的，打算辅助间歇性断食，看下效果。
 
@@ -43,23 +43,23 @@ tags: [review]
 
 找来找去，发现微信里没有有个『微信记账本』小程序就可以在微信里自动记账，也支持手动记账。于是，这周试了一下这个小程序，并有意的控制自己每天的输出。因为每天都有带饭，这样中饭就不用花钱了；早餐呢，是泡之前买的黑芝麻糊喝，省去了早餐费用。结果是，这周的支出只有 4.5 元。一次是早上买了一本豆浆，一次是早上跑步怕迟到就骑了一次动感单车。
 
-![](/images/weekly-review-13-05.webp)
+![](../../../static/images/weekly-review-13-05.webp)
 
 正好三月结束了，查看了一下三月的支出报表。总的来说，三月支出的有点多，超乎了我的想象。如果每个月都是支出这么多，那以后的零花钱就不够用了。还是要勒紧裤腰带过日子啊。
 
-![](/images/weekly-review-13-04.webp)
+![](../../../static/images/weekly-review-13-04.webp)
 
 ## 更新 SSL 证书
 
 安装 acme.sh
 
 ```bash
-curl https://get.acme.sh | sh -s email=chensoul.eth@gmail.com
+curl https:/get.acme.sh | sh -s email=chensoul.eth@gmail.com
 ```
 
-**我的域名托管在 cloudflare**，故需要获取 [cloudflare API key](https://dash.cloudflare.com/profile/api-tokens)，在 `API 令牌` 页面，点击查看 `Global API Key`。
+**我的域名托管在 cloudflare**，故需要获取 [cloudflare API key](https:/dash.cloudflare.com/profile/api-tokens)，在 `API 令牌` 页面，点击查看 `Global API Key`。
 
-![weekly-review-13-06](/images/weekly-review-13-06.webp)
+![weekly-review-13-06](../../../static/images/weekly-review-13-06.webp)
 
 保存 `CF_Key` 和 `CF_Email`：
 
@@ -86,13 +86,13 @@ acme.sh --remove -d chensoul.cc -d "*.chensoul.cc"
 
 ## 百度站点收录
 
-参考 [向百度主动推送网站链接](https://ifttl.com/push-urls-to-baidu/) 使用脚本定时推送网站链接到百度站点。对 `push_to_baidu.sh` 脚本的 parse 方法做了如下修改，以解决 `xmllint 解析带有命名空间的 xml 文件报错` 的问题。
+参考 [向百度主动推送网站链接](https:/ifttl.com/push-urls-to-baidu/) 使用脚本定时推送网站链接到百度站点。对 `push_to_baidu.sh` 脚本的 parse 方法做了如下修改，以解决 `xmllint 解析带有命名空间的 xml 文件报错` 的问题。
 
 ```bash
 function parse {
     local file=$1
     echo $file
-    $XMLLINT --format --xpath "//*[local-name()='loc' and namespace-uri()='http://www.sitemaps.org/schemas/sitemap/0.9']/text()" "$file" | sed -e 's/https/\nhttps/g' > "$URL_TEMP"
+    $XMLLINT --format --xpath "/*[local-name()='loc' and namespace-uri()='http:/www.sitemaps.org/schemas/sitemap/0.9']/text()" "$file" | sed -e 's/https/\nhttps/g' > "$URL_TEMP"
     echo $URL_TEMP
 }
 ```
@@ -105,31 +105,31 @@ function parse {
 
 ### Rust
 
-因为对 [Tauri](https://tauri.app/) 这个 GUI 框架挺感兴趣，所以我开始学习 Rust 了，目前在参考 https://rustwiki.org/ 上的 [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/) 和 [Rust 程序设计语言](https://rustwiki.org/zh-CN/book/) 学习 Rust。
+因为对 [Tauri](https:/tauri.app/) 这个 GUI 框架挺感兴趣，所以我开始学习 Rust 了，目前在参考 https:/rustwiki.org/ 上的 [通过例子学 Rust](https:/rustwiki.org/zh-CN/rust-by-example/) 和 [Rust 程序设计语言](https:/rustwiki.org/zh-CN/book/) 学习 Rust。
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 
-- [Go wasm 使用：Go 代码编译成 WebAssembly 及调用](https://www.lijiaocn.com/%E7%BC%96%E7%A8%8B/2023/03/28/go-wasm-usage.html)
-- [失业三个月，我都干了啥？](https://ourai.ws/posts/what-i-have-done-in-2023-q1/)
-- [介绍一下 gitea 的 action](https://www.bboy.app/2023/04/04/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bgitea%E7%9A%84action/)
+- [Go wasm 使用：Go 代码编译成 WebAssembly 及调用](https:/www.lijiaocn.com/%E7%BC%96%E7%A8%8B/2023/03/28/go-wasm-usage.html)
+- [失业三个月，我都干了啥？](https:/ourai.ws/posts/what-i-have-done-in-2023-q1/)
+- [介绍一下 gitea 的 action](https:/www.bboy.app/2023/04/04/%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bgitea%E7%9A%84action/)
 
-- [作为绝对初学者学习 Web 开发](https://blog.p2hp.com/archives/10711)
+- [作为绝对初学者学习 Web 开发](https:/blog.p2hp.com/archives/10711)
 
 ### 一些工具
 
-- 数据统计分析：[https://usefathom.com](https://usefathom.com/)
-- Cloudflare 图床：[Cloudflare Images](https://www.cloudflare.com/zh-cn/products/cloudflare-images/)
-- Java 单元测试插件：[Squaretest for IntelliJ IDEA](https://squaretest.com/)
+- 数据统计分析：[https:/usefathom.com](https:/usefathom.com/)
+- Cloudflare 图床：[Cloudflare Images](https:/www.cloudflare.com/zh-cn/products/cloudflare-images/)
+- Java 单元测试插件：[Squaretest for IntelliJ IDEA](https:/squaretest.com/)
 
-- 基于标记的科学排版系统：[Typst](https://typst.app/)。可以协同工作，且界面更友好。旨在成为 LaTeX、Word 和 Google Docs 等的替代品。
+- 基于标记的科学排版系统：[Typst](https:/typst.app/)。可以协同工作，且界面更友好。旨在成为 LaTeX、Word 和 Google Docs 等的替代品。
 
-- 数据可视化资源库：[https://vis.zone/lib/](https://vis.zone/lib/)。网站提供非常全面的可视化图表类型供参考，还收集了很多实现可视化的代码、工具、课程、书籍。
+- 数据可视化资源库：[https:/vis.zone/lib/](https:/vis.zone/lib/)。网站提供非常全面的可视化图表类型供参考，还收集了很多实现可视化的代码、工具、课程、书籍。
 
-- 一个免费的 chatgpt 在线 web：https://chatbot.theb.ai/#/chat/1002
+- 一个免费的 chatgpt 在线 web：https:/chatbot.theb.ai/#/chat/1002
 
 ### 一些视频
 

@@ -18,7 +18,7 @@ tags: ['spring-boot',docker]
 
 ## Docker 搭建 MySQL 主从复制环境
 
-参考文章 ：[基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）](https://learnku.com/articles/30439)
+参考文章 ：[基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）](https:/learnku.com/articles/30439)
 
 先创建两个容器：
 
@@ -155,7 +155,7 @@ Sharding-JDBC具有以下几个特点：
 
 ```yml
 #spring.datasource:
-#  url: jdbc:mysql://${mysql:mysql}:3306/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#  url: jdbc:mysql:/${mysql:mysql}:3306/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
 #  driver-class-name: com.mysql.cj.jdbc.Driver
 #  username: foodie
 #  password: foodie
@@ -171,13 +171,13 @@ spring.shardingsphere:
     master:
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://${mysql-master:mysql-master}:3307/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+      jdbcUrl: jdbc:mysql:/${mysql-master:mysql-master}:3307/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
       username: foodie
       password: foodie
     slave:
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://${mysql-slave:mysql-slave}:3308/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+      jdbcUrl: jdbc:mysql:/${mysql-slave:mysql-slave}:3308/foodie-cloud?connectTimeout=2000&socketTimeout=150000&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
       username: foodie
       password: foodie
   master-slave:
@@ -245,7 +245,7 @@ spring-boot2 使用 springdoc-openapi 1.7.0 版本
 
 2. 集成 springdoc 使用 javadoc 注释作为文档
 
-参考 [https://springdoc.org/#javadoc-support](https://springdoc.org/#javadoc-support) ，修改 maven-compiler-plugin 插件：
+参考 [https:/springdoc.org/#javadoc-support](https:/springdoc.org/#javadoc-support) ，修改 maven-compiler-plugin 插件：
 
 ```xml
 
@@ -256,7 +256,7 @@ spring-boot2 使用 springdoc-openapi 1.7.0 版本
     <configuration>
         <parameters>true</parameters>
         <annotationProcessorPaths>
-            <!-- https://springdoc.org/#javadoc-support -->
+            <!-- https:/springdoc.org/#javadoc-support -->
             <path>
                 <groupId>com.github.therapi</groupId>
                 <artifactId>therapi-runtime-javadoc-scribe</artifactId>
@@ -288,10 +288,10 @@ spring-boot2 使用 springdoc-openapi 1.7.0 版本
 
 访问：
 
-- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+- [http:/localhost:8080/swagger-ui.html](http:/localhost:8080/swagger-ui.html)
+- [http:/localhost:8080/v3/api-docs](http:/localhost:8080/v3/api-docs)
 
 > 说明：
 >
-> - 访问 swagger-ui.html 会显示 petstore 的 api 接口信息。具体原因，可以参考 [https://stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config](https://stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config)
+> - 访问 swagger-ui.html 会显示 petstore 的 api 接口信息。具体原因，可以参考 [https:/stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config](https:/stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config)
 > - 目前，没有找到解决办法。曲线救国的方法是使用其他 Swagger UI，如 Knife4j。

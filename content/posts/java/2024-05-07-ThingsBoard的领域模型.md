@@ -57,7 +57,7 @@ ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设
 3. 使用 http api 发送遥测数据
 
    ```bash
-   curl -v -X POST http://localhost:8080/api/v1/gs76dj5m47yd3lm1wurd/telemetry --header Content-Type:application/json --data "{temperature:25}"
+   curl -v -X POST http:/localhost:8080/api/v1/gs76dj5m47yd3lm1wurd/telemetry --header Content-Type:application/json --data "{temperature:25}"
    ```
 
 4. 查看告警

@@ -9,7 +9,7 @@ tags: [review]
 
 ## 前言
 
-本篇是对 `2023-01-30` 到 `2023-02-05` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-01-30` 到 `2023-02-05` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这周是过年后的第一个工作周，被国家安排了连上七天班，算是体会了一次 “过年七天乐，上班七天累” 的过山车。七天的工作主要是测试并发布项目，每天忙的焦头乱额，生怕项目出了问题。有句话说，怕什么来什么。没想到周六还是报出了一个故障，还在睡觉中的我被一个电话吵醒，接着忙着找问题和解决方法，一天的时间就都花在这上面。万幸的是事故影响不大，发布了一个小版本进行修复。事故原因，还是值得警惕。
 
@@ -23,9 +23,9 @@ tags: [review]
 
 ### AOP 日志记录
 
-参考 【[每天进步一点点（二）-哔哩哔哩](https://b23.tv/2HCODuM)】 在项目里添加代码对 controller 方法请求参数、返回结果、执行时间的记录。视频中讲的很清楚，这里就不贴代码了。
+参考 【[每天进步一点点（二）-哔哩哔哩](https:/b23.tv/2HCODuM)】 在项目里添加代码对 controller 方法请求参数、返回结果、执行时间的记录。视频中讲的很清楚，这里就不贴代码了。
 
-![spring-aop-customizable-trace-interceptor](/images/spring-aop-customizable-trace-interceptor.webp)
+![spring-aop-customizable-trace-interceptor](../../../static/images/spring-aop-customizable-trace-interceptor.webp)
 
 - 该方法，可以对 controller 的所有方法（不管是 get 还是 post 或其他方法），都记录日志。如果想排除 get 方法（一个项目里查询比修改请求大很多），需要添加代码进行过滤。
 
@@ -48,13 +48,13 @@ tags: [review]
 
 -《狂飙》。最近很火，也刚好完结了。我没有去看，没有时间去追，就看了前面几集。
 
--《粉红理论》。老婆在追的一部泰剧，她是在微博看些别人剪辑的几分钟的片段。叫我也去微博看看，我说我不用微博，我翻墙去找网站观看。老婆眼睛一亮，说那不是可以看到无删减版本，那个兴奋劲哟！很快，我找到了[网站](https://www.dandanzan.com/dianshiju/112399.html)，发现已经上线了 11 集，而且每集都有 60 多分钟长（老婆看的都是阉割版～ 😯）。
+-《粉红理论》。老婆在追的一部泰剧，她是在微博看些别人剪辑的几分钟的片段。叫我也去微博看看，我说我不用微博，我翻墙去找网站观看。老婆眼睛一亮，说那不是可以看到无删减版本，那个兴奋劲哟！很快，我找到了[网站](https:/www.dandanzan.com/dianshiju/112399.html)，发现已经上线了 11 集，而且每集都有 60 多分钟长（老婆看的都是阉割版～ 😯）。
 
 ## 学习
 
 最近 Damus 很火，我也去注册了一个账号，为此还重新下载了狐狸 🦊 钱包。随即，干脆也注册了 Mastodon 账号和 Crossbell 账号。
 
-![damus-profile](/images/damus-profile.webp)
+![damus-profile](../../../static/images/damus-profile.webp)
 
 - 我的 Damus 账号 npub1dav96pmjv58n60eqz7ctmhvsd7t2yljvzevf6uckmchz6zamx2wq0k7dm5
 
@@ -62,10 +62,10 @@ tags: [review]
 
 - 我的 crossbell 账号 chensoul@crossbell
 
-![xsync-profile](/images/xsync-profile.webp)
+![xsync-profile](../../../static/images/xsync-profile.webp)
 
 ## 好物分享
 
-- **[Mac 删除原生英文 ABC](https://ssnhd.com/2022/01/01/mac-inputdel/)**
+- **[Mac 删除原生英文 ABC](https:/ssnhd.com/2022/01/01/mac-inputdel/)**
 
 以上。

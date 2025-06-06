@@ -85,17 +85,17 @@ public class EmployeeServiceTests {
 
  @Test
  public void testGetEmployeeById() {
-  // Arrange
+  / Arrange
   long employeeId = 1L;
   Employee mockEmployee = new Employee(employeeId, "John Doe", "john.doe@example.com");
 
-  // Mock the behavior of the repository to return the mock employee
+  / Mock the behavior of the repository to return the mock employee
   Mockito.when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(mockEmployee));
 
-  // Act
+  / Act
   Employee result = employeeService.getEmployeeById(employeeId);
 
-  // Assert
+  / Assert
   assertNotNull(result);
   assertEquals(employeeId, result.getId());
   assertEquals("John Doe", result.getName());
@@ -156,19 +156,19 @@ public class UserServiceTest {
 
   @Test
   public void testFindUserByUsername() {
-   // Define a sample user
+   / Define a sample user
    User sampleUser = new User();
    sampleUser.setId(1L);
    sampleUser.setUsername("john_doe");
    sampleUser.setEmail("john@example.com");
   
-   // Mock the repository behavior
+   / Mock the repository behavior
    when(userRepository.findByUsername("john_doe")).thenReturn(sampleUser);
   
-   // Perform the test
+   / Perform the test
    User foundUser = userService.findUserByUsername("john_doe");
   
-   // Assertions
+   / Assertions
    assertThat(foundUser).isNotNull();
    assertThat(foundUser.getUsername()).isEqualTo("john_doe");
    assertThat(foundUser.getEmail()).isEqualTo("john@example.com");
@@ -258,13 +258,13 @@ public class EmployeeServiceTest {
   
   @BeforeEach
   public void setUp() {
-    // Initialize the EmployeeService or set up resources if needed
+    / Initialize the EmployeeService or set up resources if needed
     employeeService = new EmployeeService();    
   }
   
   @AfterEach
   public void tearDown() {
-    // Clean up resources or perform other cleanup tasks
+    / Clean up resources or perform other cleanup tasks
     employeeService = null;
   }
   
@@ -375,7 +375,7 @@ public class AppProperties {
   
   private String appVersion;
   
-  // Getters and setters
+  / Getters and setters
 }
 ```
 
@@ -518,7 +518,7 @@ public class ExternalServiceTest {
   @Test
   public void testExampleApi() {
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http://api.example.com/data";
+    String url = "http:/api.example.com/data";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     
     assertFalse(response.getStatusCode() == HttpStatusCode.valueOf(404))
@@ -557,7 +557,7 @@ public class LocalEndpointTest {
   
   @Test
   public void testGetBusinesses(){
-    String url = "http://localhost:" + port + "/getBusinesses";
+    String url = "http:/localhost:" + port + "/getBusinesses";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -579,13 +579,13 @@ public class IntegrationTest {
   @Test
   @Sql(scripts = { "/init-database.sql", "/populate-data.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   public void testWithSqlScripts() {
-    // Sql scripts get executed before the execution of this block
+    / Sql scripts get executed before the execution of this block
   }
 
   @Test
   @Sql(scripts = "/cleanup.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
   public void testWithCleanupSql() {
-    // Sql scripts get executed after the execution of this block
+    / Sql scripts get executed after the execution of this block
   }
 }
 
@@ -610,14 +610,14 @@ public class EmployeeServiceTest {
   @Disabled("Temporarily disabled until bug XYZ is fixed")
   @Test
   public void testGetEmployees() {
-    // Test will be skipped
+    / Test will be skipped
     Employee employee = employeeService.getEmployeeByName("Harry");
     assertNotNull(employee);
   }
   
   @Test
   public void testGetEmployeeCount() {
-    // Test will be executed
+    / Test will be executed
     int empCount = employeeService.getEmployeeCount();
     assertTrue(empCount>0);
   }
@@ -643,20 +643,20 @@ public class UserServiceTest {
   @Autowired
   private UserService userService;
 
-  @RepeatedTest(5) //This test will run 5 times
+  @RepeatedTest(5) /This test will run 5 times
   public void testGetUserCount() {
     int count = userService.getUserCount();
     assertTrue(count>0);
   }
 
-  @RepeatedTest(3) //This test will run 3 times
+  @RepeatedTest(3) /This test will run 3 times
   public void testGetLoggedInUsers(RepetitionInfo repetitionInfo) {
     int currentRepetition = repetitionInfo.getCurrentRepetition();
     int totalRepetitions = repetitionInfo.getTotalRepetitions();
   
-    // Test logic, using currentRepetition and totalRepetitions
+    / Test logic, using currentRepetition and totalRepetitions
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http://api.example.com/getLoggedInUsers";
+    String url = "http:/api.example.com/getLoggedInUsers";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     if(response.getBody() != null) {   
       System.out.println("CurrentRepetition: " + currentRepetition);
@@ -688,10 +688,10 @@ Spring Boot 应用程序中常用有几种测试工具，包括：
 
 *快乐学习！*
 
-> **请继续关注**[**Simform Engineering**](https://medium.com/simform-engineering)**博客，了解有关最新工具和技术的更多更新。**
+> **请继续关注**[**Simform Engineering**](https:/medium.com/simform-engineering)**博客，了解有关最新工具和技术的更多更新。**
 >
-> **关注我们：**[**Twitter**](https://twitter.com/simform) **|** [**LinkedIn**](https://www.linkedin.com/company/simform/)
+> **关注我们：**[**Twitter**](https:/twitter.com/simform) **|** [**LinkedIn**](https:/www.linkedin.com/company/simform/)
 
 
 
-原文链接：[https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516](https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516)
+原文链接：[https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516](https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516)

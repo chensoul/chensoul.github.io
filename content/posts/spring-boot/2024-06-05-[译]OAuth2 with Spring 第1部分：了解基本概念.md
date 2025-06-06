@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ oauth2,java]
 ---
 
-原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a>
+原文地址：<https:/mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a>
 
 
 
@@ -15,7 +15,7 @@ tags: [ oauth2,java]
 
 ## 什么是 OAuth2 以及为什么？
 
-根据[Octa](https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)的说法，OAuth2 是一种用于身份验证和授权的开放标准。它实际上不是一种服务，但它通过 TLS 提供基于令牌的安全性来保护服务。它使用令牌而不是凭据来授权设备、服务器、API 和应用程序。
+根据[Octa](https:/developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth)的说法，OAuth2 是一种用于身份验证和授权的开放标准。它实际上不是一种服务，但它通过 TLS 提供基于令牌的安全性来保护服务。它使用令牌而不是凭据来授权设备、服务器、API 和应用程序。
 
 OAuth2 的主要目的是让用户能够从单个点或提供商访问多个应用程序，这些应用程序可以使用相同的身份验证和授权信息。这意味着，并不总是需要使用用户 ID 和密码登录。相反，用户将被重定向到拥有用户身份的授权服务器，用户只需单击一下即可允许其他应用程序使用其身份验证信息。一旦获得授权，用户就可以使用来自授权服务器的相同 ID。
 
@@ -34,15 +34,15 @@ OAuth2 的主要目的是让用户能够从单个点或提供商访问多个应�
 
 OAuth2 有几种授权类型来请求访问令牌。授权类型的唯一目的是生成访问令牌。授权类型包括：
 
-- **授权码**— 为了接收访问令牌，授权客户端向授权服务器发送请求以及先前从授权服务器收到的授权码。本系列的[第 3 部分](https://medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a)专门介绍此授权码授予。
+- **授权码**— 为了接收访问令牌，授权客户端向授权服务器发送请求以及先前从授权服务器收到的授权码。本系列的[第 3 部分](https:/medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a)专门介绍此授权码授予。
 - **PKCE —**代码交换证明密钥 (PKCE) 是授权代码授予的扩展版本，旨在支持单页应用程序或移动应用程序，以防止 CSRF 或授权代码注入攻击。PKCE
-  最初旨在保护移动应用程序中的授权代码流，但其防止授权代码注入的能力使其适用于每种类型的 OAuth 客户端，甚至是使用客户端身份验证的 Web 应用程序。本系列的[第 5 部分](https://medium.com/@mainul35/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769)描述了此流程的代码示例。
-- **客户端凭证**— 在此流程中，客户端应用程序使用 client_id 和 client_secret 进行请求，授权类型为 client_credential。这通常发生在使用服务的第三方应用程序中。本系列的[第 2 部分](https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)专门介绍此客户端凭证。
+  最初旨在保护移动应用程序中的授权代码流，但其防止授权代码注入的能力使其适用于每种类型的 OAuth 客户端，甚至是使用客户端身份验证的 Web 应用程序。本系列的[第 5 部分](https:/medium.com/@mainul35/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769)描述了此流程的代码示例。
+- **客户端凭证**— 在此流程中，客户端应用程序使用 client_id 和 client_secret 进行请求，授权类型为 client_credential。这通常发生在使用服务的第三方应用程序中。本系列的[第 2 部分](https:/mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)专门介绍此客户端凭证。
 - **刷新令牌授权**— 此授权类型由客户端使用。当访问令牌过期时，存储在客户端内存中的刷新令牌将以授权类型 refresh_token 发送到授权服务器。服务器将返回一个新的 access_token。我们不会专门写一篇文章，因为它主要由应用程序内部处理。
 
 ## 了解接收访问令牌的工作流程
 
-![img](/images/oauth2-with-spring-part-1-01.webp)
+![img](../../../static/images/oauth2-with-spring-part-1-01.webp)
 
 OAuth 工作流
 
@@ -59,5 +59,5 @@ OAuth 工作流
 
 ## 参考：
 
-1. OAuth2 授权类型 — https://oauth.net/2/grant-types/
-2. OAuth2 角色 - http://websystique.com/spring-security/secure-spring-rest-api-using-oauth2/
+1. OAuth2 授权类型 — https:/oauth.net/2/grant-types/
+2. OAuth2 角色 - http:/websystique.com/spring-security/secure-spring-rest-api-using-oauth2/

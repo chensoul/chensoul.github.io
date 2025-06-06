@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [ websocket]
 ---
 
-原文链接：[https://ably.com/topic/websocket-vs-rest](https://ably.com/topic/websocket-vs-rest)
+原文链接：[https:/ably.com/topic/websocket-vs-rest](https:/ably.com/topic/websocket-vs-rest)
 
 
 
@@ -35,7 +35,7 @@ tags: [ websocket]
 
 
 
-![img](/images/client-server-communication-over-rest.webp)
+![img](../../../static/images/client-server-communication-over-rest.webp)
 
 让我们快速了解一下 REST 与其他方法的区别。
 
@@ -57,7 +57,7 @@ REST 适用于短暂、无状态的通信，而 WebSocket 则提供持续、低�
 
 
 
-![img](/images/websockets.webp)
+![img](../../../static/images/websockets.webp)
 
 
 
@@ -104,7 +104,7 @@ REST 适用于短暂、无状态的通信，而 WebSocket 则提供持续、低�
 
 | **使用案例**   | **休息**                                                     | **WebSocket**                                            |
 | -------------- | ------------------------------------------------------------ | -------------------------------------------------------- |
-| 聊天           | 效率低下，因为它需要频繁的手动轮询或[长轮询](https://ably.com/topic/long-polling)等解决方法。 | 具有低延迟的持久双向连接非常适合 WebSocket 聊天。        |
+| 聊天           | 效率低下，因为它需要频繁的手动轮询或[长轮询](https:/ably.com/topic/long-polling)等解决方法。 | 具有低延迟的持久双向连接非常适合 WebSocket 聊天。        |
 | 在线游戏       | 不适合，因为多个请求-响应周期的开销会增加太多的延迟。        | 更好地匹配参与在线游戏的多个玩家的实时更新。             |
 | 数据更新       | 适用于不频繁更新，其中立即数据刷新并不重要。                 | 非常适合更新对时间敏感的仪表板、体育数据和财务数据。     |
 | 实时协作       | 不切实际，因为延迟太高，而且 REST 缺乏服务器启动消息传输的方法，没有解决方法。 | 双向即时同步意味着所有参与者的更改会同时共享。           |
@@ -118,7 +118,7 @@ REST 适用于短暂、无状态的通信，而 WebSocket 则提供持续、低�
 
 ### REST API 可以使用 WebSocket 吗？
 
-REST 的灵活性意味着您可以精确选择如何实现 REST API。例如，与其他协议相比，HTTP 的延迟可能会让您感到沮丧。你能把它换成 WebSocket 吗？理论上，你可以。 SwaggerSocket开源项目试图做到这一点[。](https://github.com/swagger-api/swagger-socket)但 REST 和 HTTP 可以很好地结合在一起，因为它们都是围绕请求-响应模型设计的。 WebSocket 的有状态、基于事件的模型意味着它不是一对一的替代品。如果您想要解决的问题需要 REST，那么就使用 REST。
+REST 的灵活性意味着您可以精确选择如何实现 REST API。例如，与其他协议相比，HTTP 的延迟可能会让您感到沮丧。你能把它换成 WebSocket 吗？理论上，你可以。 SwaggerSocket开源项目试图做到这一点[。](https:/github.com/swagger-api/swagger-socket)但 REST 和 HTTP 可以很好地结合在一起，因为它们都是围绕请求-响应模型设计的。 WebSocket 的有状态、基于事件的模型意味着它不是一对一的替代品。如果您想要解决的问题需要 REST，那么就使用 REST。
 
 
 

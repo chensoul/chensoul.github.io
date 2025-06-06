@@ -47,9 +47,9 @@ Revision:	a1c9a43d543
 Directory:	/opt/gitlab/embedded/service/gitlab-rails
 DB Adapter:	PostgreSQL
 DB Version:	14.11
-URL:		https://gitlab.wesine.com.cn
-HTTP Clone URL:	https://gitlab.wesine.com.cn/some-group/some-project.git
-SSH Clone URL:	ssh://git@gitlab.wesine.com.cn:3122/some-group/some-project.git
+URL:		https:/gitlab.wesine.com.cn
+HTTP Clone URL:	https:/gitlab.wesine.com.cn/some-group/some-project.git
+SSH Clone URL:	ssh:/git@gitlab.wesine.com.cn:3122/some-group/some-project.git
 Using LDAP:	no
 Using Omniauth:	yes
 Omniauth Providers:
@@ -70,10 +70,10 @@ Gitaly
 
 ### yum安装
 
-参考 https://docs.gitlab.com/runner/install/linux-repository.html ，CentOS 上安装：
+参考 https:/docs.gitlab.com/runner/install/linux-repository.html ，CentOS 上安装：
 
 ```bash
-curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh" | sudo bash
+curl -L "https:/packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh" | sudo bash
 
 yum list gitlab-runner --showduplicates | sort -r
 sudo yum install gitlab-runner-17.1.1
@@ -81,10 +81,10 @@ sudo yum install gitlab-runner-17.1.1
 
 ### rpm包安装
 
-在 https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/ 查找合适版本的软件包并下载 
+在 https:/mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/ 查找合适版本的软件包并下载 
 
 ```bash
-wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/gitlab-runner-17.1.0-1.x86_64.rpm
+wget https:/mirrors.tuna.tsinghua.edu.cn/gitlab-runner/yum/el7-x86_64/gitlab-runner-17.1.0-1.x86_64.rpm
 rpm -ivh gitlab-runner-17.1.0-1.x86_64.rpm
 ```
 
@@ -121,7 +121,7 @@ Gitlab Runner类型有三种，注册方法如下：
 生成注册命令：
 
 ```bash
-gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
+gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
 ```
 
 Runner 执行器的类型有：
@@ -134,7 +134,7 @@ docker, docker-windows, instance, virtualbox, docker+machine, kubernetes, docker
 
 ```bash
 gitlab-runner register \
-	--url https://gitlab.example.com \
+	--url https:/gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz \
 	--executor "shell" 
 ```
@@ -145,7 +145,7 @@ gitlab-runner register \
 gitlab-runner register \
   --non-interactive \
   --executor "docker" \
-	--url https://gitlab.example.com \
+	--url https:/gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz \
   --docker-privileged
 ```
@@ -171,7 +171,7 @@ docker 类型的执行器的有两种：
 
 ```bash
 sudo gitlab-runner register \
-	--url https://gitlab.example.com \
+	--url https:/gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-image docker:latest \
@@ -191,7 +191,7 @@ connection_max_age = "15m0s"
 
 [[runners]]
   name = "runner"
-  url = "http://192.168.1.107:8000/"
+  url = "http:/192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
   [runners.cache]
@@ -217,7 +217,7 @@ connection_max_age = "15m0s"
 
 ```bash
 sudo gitlab-runner register \
-	--url https://gitlab.example.com \
+	--url https:/gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-image docker:latest 
@@ -236,7 +236,7 @@ connection_max_age = "15m0s"
 
 [[runners]]
   name = "runner"
-  url = "http://192.168.1.107:8000/"
+  url = "http:/192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
   [runners.cache]
@@ -252,7 +252,7 @@ connection_max_age = "15m0s"
     volumes = ["/etc/docker/daemon.json ","/root/.m2","/cache"] # 配置挂载路径
     shm_size = 0
     network_mtu = 0
-    extra_hosts = ["https://gitlab.example.com:192.168.1.107"]
+    extra_hosts = ["https:/gitlab.example.com:192.168.1.107"]
     network_mode = "host"
 ```
 
@@ -261,7 +261,7 @@ connection_max_age = "15m0s"
 - 在 docker 执行器内是无法访问没有通过 DNS 解析的 gitlab 域名的。需要配置 host 文件，一种方式是挂载 /etc/hosts 文件，另一种方式是添加下面配置：
 
   ```bash
-      extra_hosts = ["https://gitlab.example.com:192.168.1.107"]
+      extra_hosts = ["https:/gitlab.example.com:192.168.1.107"]
       network_mode = "host"
   ```
 
@@ -270,7 +270,7 @@ connection_max_age = "15m0s"
 ```json
 {
    "registry-mirrors" : [
-    "https://docker.1panel.live"
+    "https:/docker.1panel.live"
    ]
 }
 ```
@@ -280,13 +280,13 @@ connection_max_age = "15m0s"
 - Maven 镜像加速。在宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。
 
   ```xml
-  <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <settings xmlns="http:/maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http:/maven.apache.org/SETTINGS/1.0.0 https:/maven.apache.org/xsd/settings-1.0.0.xsd">
     <mirrors>
       <mirror>
         <id>alimaven</id>
         <name>aliyun maven</name>
-        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        <url>http:/maven.aliyun.com/nexus/content/groups/public/</url>
         <mirrorOf>central</mirrorOf>
       </mirror>
     </mirrors>
@@ -313,7 +313,7 @@ shutdown_timeout = 0
 
 [[runners]]
   name = "runner"
-  url = "https://gitlab.example.com"
+  url = "https:/gitlab.example.com"
   id = 1 
   token = "glrt-JhEv5bxs4ezxY53uyYiz"
   executor = "docker"
@@ -328,7 +328,7 @@ shutdown_timeout = 0
 
 ### 修改runner为特权用户
 
-参考文档：https://docs.gitlab.com/runner/commands/index.html#gitlab-runner-run ，以rpm方式安装的runner为例。
+参考文档：https:/docs.gitlab.com/runner/commands/index.html#gitlab-runner-run ，以rpm方式安装的runner为例。
 
 ```bash
 $ vim /etc/systemd/system/gitlab-runner.service
@@ -358,7 +358,7 @@ gitlab-runner verify    #此命令检查注册的runner是否可以连接，但�
 gitlab-runner unregister   #该命令使用GitLab取消已注册的runner。
 
 #使用令牌注销
-gitlab-runner unregister --url http://gitlab.example.com/ --token t0k3n
+gitlab-runner unregister --url http:/gitlab.example.com/ --token t0k3n
 
 #使用名称注销（同名删除第一个）
 gitlab-runner unregister --name test-runner
@@ -403,4 +403,4 @@ GitLab Runner支持的执行器有以下几种：
 
 GitLab Runner 支持的执行器有GitLab Runner的安装方式有关也和宿主机环境有关。
 
-执行器功能对比，可参考文档：https://docs.gitlab.com/runner/executors/#selecting-the-executor 。
+执行器功能对比，可参考文档：https:/docs.gitlab.com/runner/executors/#selecting-the-executor 。

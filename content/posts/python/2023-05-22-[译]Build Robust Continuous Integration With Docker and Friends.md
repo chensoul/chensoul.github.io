@@ -7,7 +7,7 @@ categories: ["Python"]
 tags: [docker]
 ---
 
-![Build Robust Continuous Integration With Docker and Friends](/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp)
+![Build Robust Continuous Integration With Docker and Friends](../../../static/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp)
 
 持续集成 (CI) 已成为软件开发的关键，它允许团队频繁合并代码更改并及早发现错误。
 
@@ -28,7 +28,7 @@ Docker 容器通过提供一致的环境帮助促进持续集成过程，您可�
 - 在任何地方复制类似生产的基础设施
 - 使用 GitHub Actions 定义持续集成工作流
 
-理想情况下，您应该具有使用 Python 进行 [Web 开发](https://realpython.com/learning-paths/become-python-web-developer/)、[测试自动化](https://realpython.com/learning-paths/test-your-python-apps/)、将 [Redis 与 Python 结合使用](https://realpython.com/python-redis/)以及[使用 Git 和 GitHub 进行源代码版本控制](https://realpython.com/python-git-github-intro/)的经验。以前接触过 [Docker](https://realpython.com/python-versions-docker/) 会更好，但不是必需的。您还应该拥有一个 Git 客户端和一个 GitHub 帐户，以便跟随并复制本教程的步骤。
+理想情况下，您应该具有使用 Python 进行 [Web 开发](https:/realpython.com/learning-paths/become-python-web-developer/)、[测试自动化](https:/realpython.com/learning-paths/test-your-python-apps/)、将 [Redis 与 Python 结合使用](https:/realpython.com/python-redis/)以及[使用 Git 和 GitHub 进行源代码版本控制](https:/realpython.com/python-git-github-intro/)的经验。以前接触过 [Docker](https:/realpython.com/python-versions-docker/) 会更好，但不是必需的。您还应该拥有一个 Git 客户端和一个 GitHub 帐户，以便跟随并复制本教程的步骤。
 
 > 注意：本教程大致基于名为 Docker in Action - Fitter, Happier, More Productive 的旧教程，该教程由 Michael Herman 编写，他于 2015 年 2 月 8 日在 PyTennessee 展示了他的 CI 工作流程。如果你有兴趣，您可以查看展示的相应幻灯片在会议上。
 >
@@ -36,7 +36,7 @@ Docker 容器通过提供一致的环境帮助促进持续集成过程，您可�
 
 如果您想跳过在计算机上设置 Docker 和构建示例 Web 应用程序的初始步骤，那么直接跳到定义持续集成管道。无论哪种方式，您都需要下载支持材料，它们与完成的 Flask Web 应用程序和相关资源一起提供，它们将帮助您学习本教程：
 
-> 免费下载：单击[此处](https://realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
+> 免费下载：单击[此处](https:/realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
 
 ## 项目架构概览
 
@@ -44,7 +44,7 @@ Docker 容器通过提供一致的环境帮助促进持续集成过程，您可�
 
 它将是一个由 Docker Compose 编排的多容器应用程序，您将能够在本地和云端构建和测试，为持续集成铺平道路：
 
-![The Architecture of the Page Tracker Application](/images/page_tracker_architecture-0765910.webp)
+![The Architecture of the Page Tracker Application](../../../static/images/page_tracker_architecture-0765910.webp)
 
 该应用程序由两个 Docker 容器组成。第一个容器将在 Gunicorn 之上运行一个 Flask 应用程序，响应 HTTP 请求并更新页面浏览量。
 
@@ -69,7 +69,7 @@ Docker 是一个总称，根据上下文，它对不同的人有不同的含义�
 - Docker Hub
 - Docker Swarm Mode Docker 集群模式
 
-在本教程中，您将使用上面列表中除最后一个之外的所有内容。顺便说一句，不要将遗留的 [Docker Classic Swarm](https://github.com/docker-archive/classicswarm) 与 1.12 版以来内置于 Docker 引擎中的 Docker Swarm Mode 混淆，后者是一个外部工具。
+在本教程中，您将使用上面列表中除最后一个之外的所有内容。顺便说一句，不要将遗留的 [Docker Classic Swarm](https:/github.com/docker-archive/classicswarm) 与 1.12 版以来内置于 Docker 引擎中的 Docker Swarm Mode 混淆，后者是一个外部工具。
 
 > 注意：您可能听说过 Docker Machine 和 Docker Toolbox。这些是不再维护的旧工具。
 
@@ -77,18 +77,18 @@ Docker 解决的主要问题是能够在几乎没有或没有配置的情况下�
 
 安装 Docker 有两种选择：
 
-1. [Docker Engine](https://docs.docker.com/engine/)
-2. [Docker Desktop](https://docs.docker.com/desktop/)
+1. [Docker Engine](https:/docs.docker.com/engine/)
+2. [Docker Desktop](https:/docs.docker.com/desktop/)
 
 如果您熟悉终端并喜欢额外的控制级别，那么开源 Docker 引擎就是您的最佳选择，它提供核心运行时和用于管理容器的命令行界面。另一方面，如果您更喜欢具有直观图形用户界面的一站式解决方案，那么您应该考虑使用 Docker Desktop。
 
-> 注意：开箱即用的桌面应用程序附带 [Docker Compose](https://docs.docker.com/compose/)，稍后在[编排容器](https://realpython.com/docker-continuous-integration/#orchestrate-containers-using-docker-compose)以进行持续集成时将需要它。
+> 注意：开箱即用的桌面应用程序附带 [Docker Compose](https:/docs.docker.com/compose/)，稍后在[编排容器](https:/realpython.com/docker-continuous-integration/#orchestrate-containers-using-docker-compose)以进行持续集成时将需要它。
 
-当您浏览 [Docker 官方文档](https://docs.docker.com/)时，您可能会觉得 Docker Desktop 占据了聚光灯下。这是一个非常棒的工具，但您必须记住，Docker Desktop 仍然免费供个人使用。自 2021 年 8 月起，您需要[付费订阅](https://www.docker.com/pricing/)才能在商业项目中使用它。
+当您浏览 [Docker 官方文档](https:/docs.docker.com/)时，您可能会觉得 Docker Desktop 占据了聚光灯下。这是一个非常棒的工具，但您必须记住，Docker Desktop 仍然免费供个人使用。自 2021 年 8 月起，您需要[付费订阅](https:/www.docker.com/pricing/)才能在商业项目中使用它。
 
-虽然在技术上可以并排安装这两种工具，但您通常应该避免同时使用它们，以尽量减少虚拟网络或端口绑定之间任何潜在干扰的风险。您可以通过停止其中之一并在 Docker Engine 和 Docker Desktop 之间[切换上下文](https://docs.docker.com/desktop/faqs/linuxfaqs/#context)来实现。
+虽然在技术上可以并排安装这两种工具，但您通常应该避免同时使用它们，以尽量减少虚拟网络或端口绑定之间任何潜在干扰的风险。您可以通过停止其中之一并在 Docker Engine 和 Docker Desktop 之间[切换上下文](https:/docs.docker.com/desktop/faqs/linuxfaqs/#context)来实现。
 
-> 注意：Docker Desktop 过去只能在 Windows 和 macOS 上使用，但现在情况发生了变化，您现在也可以在某些 Linux 发行版上安装它，包括 [Ubuntu](https://docs.docker.com/desktop/install/ubuntu/)、[Debian](https://docs.docker.com/desktop/install/debian/) 和 [Fedora](https://docs.docker.com/desktop/install/fedora/)。但是，Linux 版本的 Docker Desktop 运行在[虚拟机](https://docs.docker.com/desktop/faqs/linuxfaqs/#why-does-docker-desktop-for-linux-run-a-vm)之上，以模仿在其他操作系统上使用它的用户体验。
+> 注意：Docker Desktop 过去只能在 Windows 和 macOS 上使用，但现在情况发生了变化，您现在也可以在某些 Linux 发行版上安装它，包括 [Ubuntu](https:/docs.docker.com/desktop/install/ubuntu/)、[Debian](https:/docs.docker.com/desktop/install/debian/) 和 [Fedora](https:/docs.docker.com/desktop/install/fedora/)。但是，Linux 版本的 Docker Desktop 运行在[虚拟机](https:/docs.docker.com/desktop/faqs/linuxfaqs/#why-does-docker-desktop-for-linux-run-a-vm)之上，以模仿在其他操作系统上使用它的用户体验。
 
 要验证您是否已在系统上成功安装 Docker（作为 Docker Engine 或 Docker Desktop 包装器应用程序），请打开终端并键入以下命令：
 
@@ -97,29 +97,29 @@ $ docker --version
 Docker version 23.0.4, build f480fb1
 ```
 
-您应该会看到您的 Docker 版本以及内部版本号。如果您使用的是 Linux，那么您可能希望按照[安装后的步骤](https://docs.docker.com/engine/install/linux-postinstall/)使用 `docker` 命令，而无需在其前面加上 `sudo` 以获得管理权限。
+您应该会看到您的 Docker 版本以及内部版本号。如果您使用的是 Linux，那么您可能希望按照[安装后的步骤](https:/docs.docker.com/engine/install/linux-postinstall/)使用 `docker` 命令，而无需在其前面加上 `sudo` 以获得管理权限。
 
 在开始使用 Docker 来帮助进行持续集成之前，您需要创建一个基本的 Web 应用程序。
 
 ## 在 Flask 中开发页面视图跟踪器
 
-在接下来的几节中，您将使用 [Flask](https://realpython.com/tutorials/flask/) 框架实现一个基本的 Web 应用程序。您的应用程序将跟踪页面浏览总数，并在每次请求时向用户显示该数字：
+在接下来的几节中，您将使用 [Flask](https:/realpython.com/tutorials/flask/) 框架实现一个基本的 Web 应用程序。您的应用程序将跟踪页面浏览总数，并在每次请求时向用户显示该数字：
 
-![A web application for tracking page views](/images/screenshot-browser-0765910.webp)
+![A web application for tracking page views](../../../static/images/screenshot-browser-0765910.webp)
 
-应用程序的当前状态将保存在 [Redis](https://redis.io/) 数据存储中，该存储通常用于缓存和其他类型的数据持久化。这样，停止您的网络服务器不会重置观看次数。您可以将 Redis 视为一种数据库。
+应用程序的当前状态将保存在 [Redis](https:/redis.io/) 数据存储中，该存储通常用于缓存和其他类型的数据持久化。这样，停止您的网络服务器不会重置观看次数。您可以将 Redis 视为一种数据库。
 
-如果您对从头开始构建此应用程序不感兴趣，请随时通过单击下面的链接下载其完整源代码，然后跳到对您的 Flask Web 应用程序[进行 docker 化](https://realpython.com/docker-continuous-integration/#dockerize-your-flask-web-application)：
+如果您对从头开始构建此应用程序不感兴趣，请随时通过单击下面的链接下载其完整源代码，然后跳到对您的 Flask Web 应用程序[进行 docker 化](https:/realpython.com/docker-continuous-integration/#dockerize-your-flask-web-application)：
 
 即使您打算自己编写代码，下载完成的项目并将其用作参考与您的实现进行比较仍然是个好主意，以防您遇到困难。
 
-> 免费下载：单击[此处](https://realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
+> 免费下载：单击[此处](https:/realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
 
 在开始开发应用程序之前，您需要设置工作环境。
 
 ### 准备环境
 
-与每个 [Python 项目](https://realpython.com/tutorials/projects/)一样，您在开始时应该遵循大致相同的步骤，包括创建一个新目录，然后为您的项目创建并激活一个隔离的[虚拟环境](https://realpython.com/python-virtual-environments-a-primer/)。您可以直接从您最喜欢的[代码编辑器](https://realpython.com/python-ides-code-editors-guide/)（如 [Visual Studio Code](https://realpython.com/python-development-visual-studio-code/)）或功能齐全的 IDE（如 [PyCharm](https://realpython.com/pycharm-guide/)）执行此操作，或者您可以在终端中键入一些命令：
+与每个 [Python 项目](https:/realpython.com/tutorials/projects/)一样，您在开始时应该遵循大致相同的步骤，包括创建一个新目录，然后为您的项目创建并激活一个隔离的[虚拟环境](https:/realpython.com/python-virtual-environments-a-primer/)。您可以直接从您最喜欢的[代码编辑器](https:/realpython.com/python-ides-code-editors-guide/)（如 [Visual Studio Code](https:/realpython.com/python-development-visual-studio-code/)）或功能齐全的 IDE（如 [PyCharm](https:/realpython.com/pycharm-guide/)）执行此操作，或者您可以在终端中键入一些命令：
 
 Windows：
 
@@ -141,11 +141,11 @@ $ source venv/bin/activate
 (page-tracker) $ python -m pip install --upgrade pip
 ```
 
-首先，创建一个名为 `page-tracker/` 的新目录，然后在其中创建一个名为 `venv/` 的 Python 虚拟环境。为虚拟环境提供描述性提示，使其易于识别。最后，激活新建的虚拟环境后，将 [`pip`](https://realpython.com/what-is-pip/) 升级到最新版本，以免以后安装[Python 包](https://realpython.com/python-modules-packages/)时出现问题。
+首先，创建一个名为 `page-tracker/` 的新目录，然后在其中创建一个名为 `venv/` 的 Python 虚拟环境。为虚拟环境提供描述性提示，使其易于识别。最后，激活新建的虚拟环境后，将 [`pip`](https:/realpython.com/what-is-pip/) 升级到最新版本，以免以后安装[Python 包](https:/realpython.com/python-modules-packages/)时出现问题。
 
-> 注意：在 Windows 上，您可能需要先以管理员身份运行 [Windows Terminal](https://realpython.com/python-coding-setup-windows/#discovering-the-windows-terminal) 并在创建虚拟环境之前[放宽脚本执行策略](https://realpython.com/python-coding-setup-windows/#loosening-your-execution-policy)。
+> 注意：在 Windows 上，您可能需要先以管理员身份运行 [Windows Terminal](https:/realpython.com/python-coding-setup-windows/#discovering-the-windows-terminal) 并在创建虚拟环境之前[放宽脚本执行策略](https:/realpython.com/python-coding-setup-windows/#loosening-your-execution-policy)。
 
-在本教程中，您将使用现代方式通过 [pyproject.toml](https://realpython.com/courses/packaging-with-pyproject-toml/) 配置文件和 [setuptools](https://setuptools.pypa.io/en/latest/) 指定项目的依赖项和元数据[作为构建后端](https://peps.python.org/pep-0517/)。此外，您将遵循 [src 布局](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)，将应用程序的源代码放在单独的 `src/` 子目录中，以更好地组织项目中的文件。这将使您可以直接打包代码，而无需稍后添加的自动化测试。
+在本教程中，您将使用现代方式通过 [pyproject.toml](https:/realpython.com/courses/packaging-with-pyproject-toml/) 配置文件和 [setuptools](https:/setuptools.pypa.io/en/latest/) 指定项目的依赖项和元数据[作为构建后端](https:/peps.python.org/pep-0517/)。此外，您将遵循 [src 布局](https:/packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)，将应用程序的源代码放在单独的 `src/` 子目录中，以更好地组织项目中的文件。这将使您可以直接打包代码，而无需稍后添加的自动化测试。
 
 继续使用以下命令构建您的 Python 项目占位符：
 
@@ -185,9 +185,9 @@ page-tracker/
 └── pyproject.toml
 ```
 
-如您所见，您将只有一个 Python 模块， `app` ，定义在一个名为 `page_tracker` 的包中，位于 `src/` 目录中。 `constraints.txt` 文件将指定项目依赖项的固定版本，以实现可[重复安装](https://pip.pypa.io/en/stable/topics/repeatable-installs/)。
+如您所见，您将只有一个 Python 模块， `app` ，定义在一个名为 `page_tracker` 的包中，位于 `src/` 目录中。 `constraints.txt` 文件将指定项目依赖项的固定版本，以实现可[重复安装](https:/pip.pypa.io/en/stable/topics/repeatable-installs/)。
 
-该项目将依赖于两个外部库， [Flask](https://pypi.org/project/Flask/) 和 [Redis](https://pypi.org/project/redis/) ，您可以在 `pyproject.toml` 文件中声明它们：
+该项目将依赖于两个外部库， [Flask](https:/pypi.org/project/Flask/) 和 [Redis](https:/pypi.org/project/redis/) ，您可以在 `pyproject.toml` 文件中声明它们：
 
 ```toml
 # pyproject.toml
@@ -205,16 +205,16 @@ dependencies = [
 ]
 ```
 
-请注意，您通常不会在此处指定依赖项版本。相反，您可以将它们与[需求](https://pip.pypa.io/en/stable/user_guide/#requirements-files)或[约束文件](https://pip.pypa.io/en/stable/user_guide/#constraints-files)中的任何[传递依赖项](https://en.wikipedia.org/wiki/Transitive_dependency)一起[冻结](https://pip.pypa.io/en/stable/cli/pip_freeze/#pip-freeze)。第一个告诉 `pip` 要安装什么包，后者强制执行传递依赖项的特定包版本，类似于 [Pipenv](https://realpython.com/pipenv-guide/) 或 [Poetry](https://realpython.com/dependency-management-python-poetry/) 锁定文件。
+请注意，您通常不会在此处指定依赖项版本。相反，您可以将它们与[需求](https:/pip.pypa.io/en/stable/user_guide/#requirements-files)或[约束文件](https:/pip.pypa.io/en/stable/user_guide/#constraints-files)中的任何[传递依赖项](https:/en.wikipedia.org/wiki/Transitive_dependency)一起[冻结](https:/pip.pypa.io/en/stable/cli/pip_freeze/#pip-freeze)。第一个告诉 `pip` 要安装什么包，后者强制执行传递依赖项的特定包版本，类似于 [Pipenv](https:/realpython.com/pipenv-guide/) 或 [Poetry](https:/realpython.com/dependency-management-python-poetry/) 锁定文件。
 
-要生成约束文件，您必须首先将您的 `page-tracker` 项目安装到活动的虚拟环境中，这将从 [Python 包索引 (PyPI)](https://pypi.org/) 中获取所需的外部库。确保您已经创建了所需的文件夹结构，然后发出以下命令：
+要生成约束文件，您必须首先将您的 `page-tracker` 项目安装到活动的虚拟环境中，这将从 [Python 包索引 (PyPI)](https:/pypi.org/) 中获取所需的外部库。确保您已经创建了所需的文件夹结构，然后发出以下命令：
 
 ```bash
 (page-tracker) $ python -m pip install --editable .
 (page-tracker) $ python -m pip freeze --exclude-editable > constraints.txt
 ```
 
-即使您还没有输入一行代码，Python 也会识别并安装您的包占位符。因为您的包遵循 `src` 布局，所以在开发期间以[可编辑模式](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)安装它很方便。这将允许您更改源代码并立即将它们反映在虚拟环境中，而无需重新安装。但是，您想从约束文件中排除可编辑包。
+即使您还没有输入一行代码，Python 也会识别并安装您的包占位符。因为您的包遵循 `src` 布局，所以在开发期间以[可编辑模式](https:/setuptools.pypa.io/en/latest/userguide/development_mode.html)安装它很方便。这将允许您更改源代码并立即将它们反映在虚拟环境中，而无需重新安装。但是，您想从约束文件中排除可编辑包。
 
 > 注意：如果您打算共享您的项目，生成的约束文件非常有价值。这意味着其他人可以在他们的终端中运行以下命令来重现与您相同的环境：
 >
@@ -228,13 +228,13 @@ dependencies = [
 
 ### 通过 Docker 运行 Redis 服务器
 
-Redis 这个名字是单词远程字典服务器的合成词，它非常准确地表达了它作为远程内存数据结构存储的目的。作为一个键值存储，Redis 就像一个远程 [Python 字典](https://realpython.com/python-dicts/)，您可以从任何地方连接到它。它也被认为是在许多不同环境中使用的最流行的 NoSQL 数据库之一。通常，它用于关系数据库之上的[缓存](https://realpython.com/caching-in-django-with-redis/)。
+Redis 这个名字是单词远程字典服务器的合成词，它非常准确地表达了它作为远程内存数据结构存储的目的。作为一个键值存储，Redis 就像一个远程 [Python 字典](https:/realpython.com/python-dicts/)，您可以从任何地方连接到它。它也被认为是在许多不同环境中使用的最流行的 NoSQL 数据库之一。通常，它用于关系数据库之上的[缓存](https:/realpython.com/caching-in-django-with-redis/)。
 
 > 注意：虽然 Redis 将其所有数据保存在易失性内存中，这使其速度极快，但该服务器具有多种持久性选项。在断电或重启的情况下，它们可以确保不同级别的数据持久性。然而，正确配置 Redis 通常很困难，这就是为什么许多团队决定使用外包给云提供商的托管服务的原因。
 
 在您的计算机上安装 Redis 非常简单，但假设您之前已经安装和配置了 Docker，通过 Docker 运行它会更加简单和优雅。当您在 Docker 容器中运行诸如 Redis 之类的服务时，它会与系统的其余部分保持隔离，而不会造成混乱或占用有限的网络端口号等系统资源。
 
-要在不将 Redis 安装在主机上的情况下运行 Redis，您可以通过调用以下命令从[官方 Redis 镜像](https://hub.docker.com/_/redis)运行新的 Docker 容器：
+要在不将 Redis 安装在主机上的情况下运行 Redis，您可以通过调用以下命令从[官方 Redis 镜像](https:/hub.docker.com/_/redis)运行新的 Docker 容器：
 
 ```bash
 $ docker run -d --name redis-server redis
@@ -482,7 +482,7 @@ $ source venv/bin/activate
 
 ```python
 >>> from redis import Redis
->>> redis = Redis.from_url("redis://localhost:6379/")
+>>> redis = Redis.from_url("redis:/localhost:6379/")
 >>> redis.incr("page_views")
 7
 ```
@@ -524,7 +524,7 @@ def index():
  * Debug mode: off
 WARNING: This is a development server. Do not use it in a production
 ⮑ deployment. Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
+ * Running on http:/127.0.0.1:5000
 Press CTRL+C to quit
 ```
 
@@ -541,8 +541,8 @@ Press CTRL+C to quit
 WARNING: This is a development server. Do not use it in a production
 ⮑ deployment. Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:8080
- * Running on http://192.168.0.115:8080
+ * Running on http:/127.0.0.1:8080
+ * Running on http:/192.168.0.115:8080
 Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
@@ -561,9 +561,9 @@ Press CTRL+C to quit
 
 ### 用单元测试覆盖源代码
 
-单元测试涉及测试程序的各个单元或组件，以确保它们按预期工作。如今，它已成为软件开发的必要组成部分。许多工程师甚至更进一步，严格遵循[测试驱动开发](https://realpython.com/python-hash-table/#take-a-crash-course-in-test-driven-development)方法，首先编写单元测试来驱动代码设计。
+单元测试涉及测试程序的各个单元或组件，以确保它们按预期工作。如今，它已成为软件开发的必要组成部分。许多工程师甚至更进一步，严格遵循[测试驱动开发](https:/realpython.com/python-hash-table/#take-a-crash-course-in-test-driven-development)方法，首先编写单元测试来驱动代码设计。
 
-在编写单元测试时，Python 社区中的人们选择 [pytest](https://realpython.com/pytest-python-testing/) 而不是标准库的 `unittest` 模块是很常见的。由于 `pytest` 相对简单，这个测试框架上手很快。继续并将 `pytest` 添加为项目的可选依赖项：
+在编写单元测试时，Python 社区中的人们选择 [pytest](https:/realpython.com/pytest-python-testing/) 而不是标准库的 `unittest` 模块是很常见的。由于 `pytest` 相对简单，这个测试框架上手很快。继续并将 `pytest` 添加为项目的可选依赖项：
 
 ```toml
 # pyproject.toml
@@ -638,7 +638,7 @@ def http_client():
 
 当您打算编写单元测试时，您必须始终通过消除代码单元可能具有的任何依赖关系来隔离它。这意味着您应该模拟或存根您的代码所依赖的任何外部服务、数据库或库。在您的情况下，Redis 服务器就是这样的依赖项。
 
-不幸的是，您的代码目前使用硬编码的 Redis 客户端，这会阻止模拟。这是从一开始就遵循测试驱动开发的一个很好的论据，但这并不意味着您必须返回并重新开始。相反，您将通过实施依赖注入设计模式来[重构](https://realpython.com/python-refactoring/)您的代码：
+不幸的是，您的代码目前使用硬编码的 Redis 客户端，这会阻止模拟。这是从一开始就遵循测试驱动开发的一个很好的论据，但这并不意味着您必须返回并重新开始。相反，您将通过实施依赖注入设计模式来[重构](https:/realpython.com/python-refactoring/)您的代码：
 
 ```diff
 # src/page_tracker/app.py
@@ -662,7 +662,7 @@ def http_client():
 +    return Redis()
 ```
 
-本质上，您将 Redis 客户端创建代码从[全局范围](https://realpython.com/python-scope-legb-rule/#modules-the-global-scope)移动到一个新的 `redis()` 函数，您的控制器函数会在运行时针对每个传入请求调用该函数。这将允许您的测试用例在正确的时间用模拟对应物替换返回的 Redis 实例。但是，为了确保内存中只有一个客户端实例，有效地使其成为一个单例，您还[缓存](https://realpython.com/lru-cache-python/)了新函数的结果。
+本质上，您将 Redis 客户端创建代码从[全局范围](https:/realpython.com/python-scope-legb-rule/#modules-the-global-scope)移动到一个新的 `redis()` 函数，您的控制器函数会在运行时针对每个传入请求调用该函数。这将允许您的测试用例在正确的时间用模拟对应物替换返回的 Redis 实例。但是，为了确保内存中只有一个客户端实例，有效地使其成为一个单例，您还[缓存](https:/realpython.com/lru-cache-python/)了新函数的结果。
 
 现在回到您的测试模块并实施以下单元测试：
 
@@ -894,9 +894,9 @@ def redis():
     return Redis()
 ```
 
-您拦截顶级异常类 `redis.RedisError` ，它是 Redis 客户端引发的所有异常类型的祖先。如果出现任何问题，您将返回预期的 HTTP 状态代码和一条消息。为方便起见，您还使用 Flask 内置的[记录](https://realpython.com/python-logging/)器记录异常。
+您拦截顶级异常类 `redis.RedisError` ，它是 Redis 客户端引发的所有异常类型的祖先。如果出现任何问题，您将返回预期的 HTTP 状态代码和一条消息。为方便起见，您还使用 Flask 内置的[记录](https:/realpython.com/python-logging/)器记录异常。
 
-> 注意：虽然父类是子类直接扩展的直接基类，但祖先类可以位于[继承](https://realpython.com/python-classes/#using-inheritance-and-building-class-hierarchies)层次结构中更上层的任何位置。
+> 注意：虽然父类是子类直接扩展的直接基类，但祖先类可以位于[继承](https:/realpython.com/python-classes/#using-inheritance-and-building-class-hierarchies)层次结构中更上层的任何位置。
 
 好极了！由于测试，您修改了单元测试，实施了集成测试，并在发现代码中的缺陷后修复了它。
 
@@ -940,7 +940,7 @@ page-tracker/
 
 您将要实施的测试场景将类似于您的集成测试。不过，主要区别在于您将通过网络将实际的 HTTP 请求发送到实时 Web 服务器，而不是依赖 Flask 的测试客户端。
 
-为此，您将使用第三方 [requests](https://realpython.com/python-requests/) 库，您必须首先在 `pyproject.toml` 文件中将其指定为另一个可选依赖项：
+为此，您将使用第三方 [requests](https:/realpython.com/python-requests/) 库，您必须首先在 `pyproject.toml` 文件中将其指定为另一个可选依赖项：
 
 ```toml
 # pyproject.toml
@@ -1020,7 +1020,7 @@ def index():
 
 @cache
 def redis():
-    return Redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379"))
+    return Redis.from_url(os.getenv("REDIS_URL", "redis:/localhost:6379"))
 ```
 
 通常使用环境变量来设置敏感数据，例如数据库 URL，因为它提供了额外级别的安全性和灵活性。在这种情况下，您的程序需要一个自定义的 `REDIS_URL` 变量。如果在给定环境中未指定该变量，则您将回退到默认主机和端口。
@@ -1066,8 +1066,8 @@ def redis_client(redis_url):
 
 ```bash
 (page-tracker) $ python -m pytest -v test/e2e/ \
-  --flask-url http://127.0.0.1:5000 \
-  --redis-url redis://127.0.0.1:6379
+  --flask-url http:/127.0.0.1:5000 \
+  --redis-url redis:/127.0.0.1:6379
 ```
 
 在这种情况下，您可以通过本地主机 ( `127.0.0.1` ) 访问 Flask 和 Redis，但您的应用程序可能会部署到由多台远程计算机组成的地理分布式环境中。当你在本地执行此命令时，确保 Redis 正在运行并首先单独启动你的 Flask 服务器：
@@ -1199,7 +1199,7 @@ def index():
 
 @cache
 def redis():
-    return Redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379"))
+    return Redis.from_url(os.getenv("REDIS_URL", "redis:/localhost:6379"))
 ```
 
 在这种情况下，您告诉 `pylint` 忽略错误 E1101 的特定实例，而不是完全抑制它。这是一个误报，因为 `.logger` 是 Flask 在运行时生成的动态属性，在静态分析过程中不可用。
@@ -1214,9 +1214,9 @@ def redis():
 
 您会注意到 `pylint` 为您的代码打分并对其进行跟踪。当您以某种方式解决问题并再次运行该工具时，它会报告一个新分数并告诉您它改善或恶化了多少。使用您的最佳判断来决定 `pylint` 报告的问题是否值得修复。
 
-最后，无意中通过源代码泄露敏感数据或暴露其他安全漏洞的情况非常普遍。它甚至发生在最好的软件工程师身上。最近，GitHub 在一个公共存储库中[暴露了它的私钥](https://github.blog/2023-03-23-we-updated-our-rsa-ssh-host-key/#what-happened-and-what-actions-have-we-taken)，这可能让攻击者冒充这个巨头。为了降低此类事件的风险，您应该在将源代码部署到任何地方之前对其进行安全或漏洞扫描。
+最后，无意中通过源代码泄露敏感数据或暴露其他安全漏洞的情况非常普遍。它甚至发生在最好的软件工程师身上。最近，GitHub 在一个公共存储库中[暴露了它的私钥](https:/github.blog/2023-03-23-we-updated-our-rsa-ssh-host-key/#what-happened-and-what-actions-have-we-taken)，这可能让攻击者冒充这个巨头。为了降低此类事件的风险，您应该在将源代码部署到任何地方之前对其进行安全或漏洞扫描。
 
-要扫描您的代码，您可以使用 [bandit](https://bandit.readthedocs.io/en/latest/) ，它是您之前作为可选依赖项安装的：
+要扫描您的代码，您可以使用 [bandit](https:/bandit.readthedocs.io/en/latest/) ，它是您之前作为可选依赖项安装的：
 
 ```bash
 (page-tracker) $ python -m bandit -r src/
@@ -1233,7 +1233,7 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 ```
 
-这种 [name-main 惯用语](https://realpython.com/if-name-main-python/)是许多 Flask 应用程序中常见的模式，因为它使开发更方便，让您直接运行 Python 模块。另一方面，它暴露了 Flask 的调试器，允许执行任意代码，并通过地址 `0.0.0.0` 绑定到所有网络接口，为公共流量打开您的服务。
+这种 [name-main 惯用语](https:/realpython.com/if-name-main-python/)是许多 Flask 应用程序中常见的模式，因为它使开发更方便，让您直接运行 Python 模块。另一方面，它暴露了 Flask 的调试器，允许执行任意代码，并通过地址 `0.0.0.0` 绑定到所有网络接口，为公共流量打开您的服务。
 
 因此，为了确保您的 Flask 应用程序是安全的，您应该始终在将代码部署到生产环境之前运行 `bandit` 或类似工具。
 
@@ -1255,7 +1255,7 @@ if __name__ == "__main__":
 
 这回避了经典，但它适用于我的机器问题。
 
-Docker 镜像是 Docker 容器的蓝图。每个 Docker 容器都是 Docker 镜像的一个实例。一个容器有独立的状态和资源，包括它自己的文件系统、环境变量和网络接口。单个 Docker 容器通常运行单个进程，使其成为托管特定[微服务](https://realpython.com/python-microservices-grpc/)的理想选择。
+Docker 镜像是 Docker 容器的蓝图。每个 Docker 容器都是 Docker 镜像的一个实例。一个容器有独立的状态和资源，包括它自己的文件系统、环境变量和网络接口。单个 Docker 容器通常运行单个进程，使其成为托管特定[微服务](https:/realpython.com/python-microservices-grpc/)的理想选择。
 
 通过添加更多容器，您可以临时扩展一个或多个微服务以处理流量高峰，例如，这在假期期间可能很常见。但是，您的微服务必须架构良好并保持无状态才能使其有效。
 
@@ -1374,7 +1374,7 @@ WORKDIR /home/realpython
 > WARNING: Running pip as the 'root' user can result in broken permissions
 > and conflicting behaviour with the system package manager. It is
 > ⮑recommended to use a virtual environment instead:
-> ⮑https://pip.pypa.io/warnings/venv
+> ⮑https:/pip.pypa.io/warnings/venv
 > ```
 >
 > 在 Debian 或 Ubuntu 等衍生发行版上尝试使用系统的全局 `pip` 命令安装 Python 包后，您可能会看到这一点。
@@ -1723,7 +1723,7 @@ $ pwd
 $ git init
 Initialized empty Git repository in /home/realpython/page-tracker/.git/
 
-$ curl -sL https://www.gitignore.io/api/python,pycharm+all > .gitignore
+$ curl -sL https:/www.gitignore.io/api/python,pycharm+all > .gitignore
 ```
 
 在这里，您使用 `curl` 从 gitignore.io 下载内容，请求 Git 从跟踪中排除 Python 和 PyCharm 相关的文件模式。 `-L` 标志是跟随重定向所必需的，因为该网站最近移动到具有更长域的不同地址。或者，您可以从 GitHub 的 `gitignore` 存储库中获取其中一个模板，某些代码编辑器会使用该模板。
@@ -1811,7 +1811,7 @@ GitHub 是您通常上传源代码的地方，而 Docker Registry 是存储构�
 
 如果还没有，请立即在 Docker Hub 上注册一个帐户。请注意，除了电子邮件地址和密码外，您还需要提供唯一的用户名，就像在 GitHub 上一样：
 
-![img](/images/docker_hub-0765910.webp)
+![img](../../../static/images/docker_hub-0765910.webp)
 
 选择一个好记的用户名至关重要，因为它将成为您在 Docker Hub 上的独特句柄。为了避免不同用户拥有的镜像之间的名称冲突，Docker Hub 通过用户名和存储库名称的组合来识别每个存储库。
 
@@ -1819,7 +1819,7 @@ GitHub 是您通常上传源代码的地方，而 Docker Registry 是存储构�
 
 在 Web 浏览器中注册并登录到您的新 Docker Hub 帐户后，您应该做的第一件事是为您的镜像创建一个存储库。单击“创建存储库”磁贴或转到顶部导航栏中的“存储库”选项卡，然后单击“创建存储库”按钮。然后，将您的存储库命名为 `page-tracker` ，如果需要，请为其提供有意义的描述，然后选择 Private 选项以使其仅对您可见：
 
-![img](/images/docker_hub2-0765910.webp)
+![img](../../../static/images/docker_hub2-0765910.webp)
 
 之后，您将看到带有终端命令的说明，这些命令将允许您将 Docker 镜像推送到您的存储库。但首先，您必须从命令行登录 Docker Hub，提供您的用户名和密码：
 
@@ -1871,7 +1871,7 @@ $ docker push realpython/page-tracker:latest
 
 当您在 Docker Hub 上刷新您的配置文件时，它应该反映您刚刚推送到存储库中的两个标签：
 
-![Tagged Docker Images on Docker Hub](/images/docker_hub3-0765910.webp)
+![Tagged Docker Images on Docker Hub](../../../static/images/docker_hub3-0765910.webp)
 
 现在，当您将协作者添加到您的私有存储库时，他们将能够推送或拉取镜像。请记住，这需要在 Docker Hub 上升级订阅计划。
 
@@ -1916,14 +1916,14 @@ $ docker run -p 80:5000 --name web-service realpython/page-tracker
 WARNING: This is a development server. Do not use it in a production
 ⮑ deployment. Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.17.0.3:5000
+ * Running on http:/127.0.0.1:5000
+ * Running on http:/172.17.0.3:5000
 Press CTRL+C to quit
 ```
 
-当您在本地开发项目时，使用端口转发通过主机的 localhost 访问 Web 服务器通常很方便。在这种情况下， `-p` 选项可让您导航到地址 `http://localhost:80` 或只是 `http://localhost` ，而无需知道正在运行的 Docker 容器的确切 IP 地址。端口 `80` 是 HTTP 协议的默认端口，这意味着您可以在 Web 浏览器中键入地址时省略它。
+当您在本地开发项目时，使用端口转发通过主机的 localhost 访问 Web 服务器通常很方便。在这种情况下， `-p` 选项可让您导航到地址 `http:/localhost:80` 或只是 `http:/localhost` ，而无需知道正在运行的 Docker 容器的确切 IP 地址。端口 `80` 是 HTTP 协议的默认端口，这意味着您可以在 Web 浏览器中键入地址时省略它。
 
-此外，此端口映射将确保在 `http://localhost:5000` 处没有网络端口冲突，以防您没有停止本地 Flask 实例。请记住，您之前启动了一个来执行端到端测试。如果进程仍在后台某处运行，它将占用 Flask 的默认端口 `5000` 。
+此外，此端口映射将确保在 `http:/localhost:5000` 处没有网络端口冲突，以防您没有停止本地 Flask 实例。请记住，您之前启动了一个来执行端到端测试。如果进程仍在后台某处运行，它将占用 Flask 的默认端口 `5000` 。
 
 > 注意：为您的 Docker 容器提供一个描述性名称也很有用，例如 `web-service` ，这样您就可以通过名称重新启动或删除它，而无需查找相应的容器标识符。如果你不这样做，那么 Docker 会给你的容器一个愚蠢的名字，比如随机选择的 `admiring_jang` 或 `frosty_almeida` 。
 >
@@ -1931,10 +1931,10 @@ Press CTRL+C to quit
 
 正如您在上面的输出中看到的，Flask 服务器正在其容器内的所有网络接口 ( `0.0.0.0` ) 上运行，正如您在 Dockerfile 的 `CMD` 层中指示的那样。
 
-继续并在您的 Web 浏览器中访问地址 `http://localhost` 或使用 `curl` 之类的命令行工具来访问 dockerized 页面跟踪器：
+继续并在您的 Web 浏览器中访问地址 `http:/localhost` 或使用 `curl` 之类的命令行工具来访问 dockerized 页面跟踪器：
 
 ```bash
-$ curl http://localhost
+$ curl http:/localhost
 Sorry, something went wrong 😔
 ```
 
@@ -1992,7 +1992,7 @@ $ docker run -d \
 ```bash
 $ docker run -d \
              -p 80:5000 \
-             -e REDIS_URL=redis://redis-service:6379 \
+             -e REDIS_URL=redis:/redis-service:6379 \
              --network page-tracker-network \
              --name web-service \
              realpython/page-tracker
@@ -2009,13 +2009,13 @@ $ docker run -d \
 现在，当您在 Web 浏览器或终端中访问 Flask Web 应用程序时，您应该观察到正确的行为：
 
 ```bash
-$ curl http://localhost
+$ curl http:/localhost
 This page has been seen 1 times.
 
-$ curl http://localhost
+$ curl http:/localhost
 This page has been seen 2 times.
 
-$ curl http://localhost
+$ curl http:/localhost
 This page has been seen 3 times.
 ```
 
@@ -2031,11 +2031,11 @@ This page has been seen 3 times.
 
 大多数现实世界的应用程序由多个组件组成，这些组件自然会转化为 Docker 容器。例如，一个涉及更多的 Web 应用程序可能具有以下内容：
 
-- **Back end:** [Django](https://realpython.com/learning-paths/django-web-development/), [FastAPI](https://realpython.com/fastapi-python-web-apis/), [Flask](https://realpython.com/learning-paths/flask-by-example/)
-- **Front end:** [Angular](https://realpython.com/flask-by-example-integrating-flask-and-angularjs/), [React](https://realpython.com/the-ultimate-flask-front-end/#react-explained), [Vue](https://realpython.com/python-django-blog/#step-5-set-up-vuejs)
-- **Cache:** Couchbase, [Memcached](https://realpython.com/python-memcache-efficient-caching/), [Redis](https://realpython.com/python-redis/)
-- **Queue:** ActiveMQ, [Kafka](https://realpython.com/queue-in-python/#apache-kafka-kafka-python3), [RabbitMQ](https://realpython.com/queue-in-python/#rabbitmq-pika)
-- **Database:** [MySQL](https://realpython.com/python-mysql/), [PostgreSQL](https://realpython.com/python-sql-libraries/#postgresql), [SQLite](https://realpython.com/python-sqlite-sqlalchemy/)
+- **Back end:** [Django](https:/realpython.com/learning-paths/django-web-development/), [FastAPI](https:/realpython.com/fastapi-python-web-apis/), [Flask](https:/realpython.com/learning-paths/flask-by-example/)
+- **Front end:** [Angular](https:/realpython.com/flask-by-example-integrating-flask-and-angularjs/), [React](https:/realpython.com/the-ultimate-flask-front-end/#react-explained), [Vue](https:/realpython.com/python-django-blog/#step-5-set-up-vuejs)
+- **Cache:** Couchbase, [Memcached](https:/realpython.com/python-memcache-efficient-caching/), [Redis](https:/realpython.com/python-redis/)
+- **Queue:** ActiveMQ, [Kafka](https:/realpython.com/queue-in-python/#apache-kafka-kafka-python3), [RabbitMQ](https:/realpython.com/queue-in-python/#rabbitmq-pika)
+- **Database:** [MySQL](https:/realpython.com/python-mysql/), [PostgreSQL](https:/realpython.com/python-sql-libraries/#postgresql), [SQLite](https:/realpython.com/python-sqlite-sqlalchemy/)
 
 更大的应用程序可能会选择将其后端或前端组件细分为更多的微服务，负责身份验证、用户管理、订单处理、支付或消息传递等。
 
@@ -2154,7 +2154,7 @@ services:
     ports:
       - "80:5000"
     environment:
-      REDIS_URL: "redis://redis-service:6379"
+      REDIS_URL: "redis:/redis-service:6379"
     networks:
       - backend-network
     depends_on:
@@ -2254,8 +2254,8 @@ page-tracker-web-service-1     "flask --app page_tr…"   web-service    ...
 $ docker compose logs --follow
 (...)
 page-tracker-web-service-1    |  * Running on all addresses (0.0.0.0)
-page-tracker-web-service-1    |  * Running on http://127.0.0.1:5000
-page-tracker-web-service-1    |  * Running on http://172.20.0.3:5000
+page-tracker-web-service-1    |  * Running on http:/127.0.0.1:5000
+page-tracker-web-service-1    |  * Running on http:/172.20.0.3:5000
 page-tracker-web-service-1    | Press CTRL+C to quit
 
 $ docker compose stop
@@ -2354,7 +2354,7 @@ services:
     ports:
       - "80:8000"
     environment:
-      REDIS_URL: "redis://redis-service:6379"
+      REDIS_URL: "redis:/redis-service:6379"
     networks:
       - backend-network
     depends_on:
@@ -2370,7 +2370,7 @@ volumes:
 
 此命令将优先于 Dockerfile 的默认命令，后者依赖于 Flask 的开发服务器。从现在开始，Docker Compose 将改为使用 Gunicorn 运行您的 Web 应用程序。为了显示差异，您将在端口 `8000` 而不是 `5000` 上运行服务器，因此您还更改了端口映射。
 
-通过在主机上公开端口 `80` ，您仍然可以在不指定端口号的情况下访问 `http://localhost` 上的应用程序。
+通过在主机上公开端口 `80` ，您仍然可以在不指定端口号的情况下访问 `http:/localhost` 上的应用程序。
 
 不要忘记提交更改以将您的工作保存在本地 Git 存储库中：
 
@@ -2419,7 +2419,7 @@ services:
     ports:
       - "80:8000"
     environment:
-      REDIS_URL: "redis://redis-service:6379"
+      REDIS_URL: "redis:/redis-service:6379"
     networks:
       - backend-network
     depends_on:
@@ -2451,8 +2451,8 @@ page-tracker-web-service-1     ...   0.0.0.0:80->8000/tcp
 
 ```bash
 (page-tracker) $ python -m pytest web/test/e2e/ \
-  --flask-url http://localhost \
-  --redis-url redis://localhost:6379
+  --flask-url http:/localhost \
+  --redis-url redis:/localhost:6379
 ```
 
 由于端口映射，您可以使用 localhost 连接到容器，而无需知道它们各自的 IP 地址。
@@ -2500,7 +2500,7 @@ services:
     ports:
       - "80:8000"
     environment:
-      REDIS_URL: "redis://redis-service:6379"
+      REDIS_URL: "redis:/redis-service:6379"
     networks:
       - backend-network
     depends_on:
@@ -2513,8 +2513,8 @@ services:
       context: ./web
       dockerfile: Dockerfile.dev
     environment:
-      REDIS_URL: "redis://redis-service:6379"
-      FLASK_URL: "http://web-service:8000"
+      REDIS_URL: "redis:/redis-service:6379"
+      FLASK_URL: "http:/web-service:8000"
     networks:
       - backend-network
     depends_on:
@@ -2611,11 +2611,11 @@ test/e2e/test_app_redis_http.py::test_should_update_redis ... PASSED [100%]
 
 像 Git 这样的版本控制系统允许多人同时处理同一段代码。根据您的团队结构、经验和其他因素，您可以选择不同的源代码控制分支模型，也称为工作流。一些最受欢迎的包括：
 
-- [Trunk-Based Development](https://trunkbaseddevelopment.com/)
-- [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)
-- [Forking Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
-- [Release Branching](https://martinfowler.com/articles/branching-patterns.html#release-branch)
-- [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Trunk-Based Development](https:/trunkbaseddevelopment.com/)
+- [GitHub Flow](https:/docs.github.com/en/get-started/quickstart/github-flow)
+- [Forking Workflow](https:/www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
+- [Release Branching](https:/martinfowler.com/articles/branching-patterns.html#release-branch)
+- [Git Flow](https:/nvie.com/posts/a-successful-git-branching-model/)
 
 各有利弊，适用于不同的场景。例如，分叉策略在开源项目中运作良好，因为它允许任何人在没有特别许可的情况下做出贡献。在本教程中，您将使用称为 GitHub Flow 的流行功能分支工作流程。它只有一个长期存在的主线或主干，传统上称为 master 分支，您可以从中分支出几个短期存在的功能分支。
 
@@ -2870,7 +2870,7 @@ jobs:
 
 通过单击顶部工具栏中带有齿轮图标的选项卡打开 GitHub 存储库的设置，找到并展开安全部分下的秘密和变量，然后单击操作。这将带您进入一个面板，您可以在该面板中为 GitHub Actions 运行器定义环境变量和加密机密。现在，指定您的 `DOCKERHUB_USERNAME` 和 `DOCKERHUB_TOKEN` 机密：
 
-![GitHub Actions Repository Secrets](/images/secrets.b7e62f0e5830.webp)
+![GitHub Actions Repository Secrets](../../../static/images/secrets.b7e62f0e5830.webp)
 
 请注意，这些秘密是加密的，GitHub 不会再次向您显示它们，因此请确保将它们保存在安全的地方。但是，如果您足够努力，那么您将能够恢复它们——例如，通过您工作流程中的 shell 命令。
 
@@ -2900,19 +2900,19 @@ $ git push
 
 再次转到存储库的设置，单击代码和自动化部分下的分支，然后单击标记为添加分支保护规则的按钮。然后，在 Branch name pattern 字段中输入您的主线名称。如果您遵循本教程中使用的命名约定，则应在输入字段中键入 `master` ：
 
-![GitHub Repository's Protected Branch](/images/rule_master.8167b2b061aa.webp)
+![GitHub Repository's Protected Branch](../../../static/images/rule_master.8167b2b061aa.webp)
 
-接下来，启用其正下方的一个选项，该选项显示 Require a pull request before merging。这将自动需要至少一位审阅者的批准。如果您在 GitHub 上没有其他帐户，您可以暂时取消选中此选项。否则，如果没有其他人批准，您将无法合并您的拉取请求：![Require a Pull Request Before Merging](/images/rule_approvals.4cc8505f0715.webp)
+接下来，启用其正下方的一个选项，该选项显示 Require a pull request before merging。这将自动需要至少一位审阅者的批准。如果您在 GitHub 上没有其他帐户，您可以暂时取消选中此选项。否则，如果没有其他人批准，您将无法合并您的拉取请求：![Require a Pull Request Before Merging](../../../static/images/rule_approvals.4cc8505f0715.webp)
 
 向下滚动一点后，您会看到一个选项，上面写着 Require status checks to pass before merging。选择它以显示更多选项。当你这样做时，检查另一个选项 Require branches to be update before merging，这将防止在你的 `master` 分支有新提交时关闭拉取请求。最后，在下面的搜索框中输入您的工作名称 `build` ：
 
-![Require Status Checks to Pass Before Merging](/images/rule_status_check.6e4a5e464e77.webp)
+![Require Status Checks to Pass Before Merging](../../../static/images/rule_status_check.6e4a5e464e77.webp)
 
 现在，每个拉取请求都需要在允许合并之前通过端到端测试。
 
 要在不允许管理员和其他具有提升权限的用户绕过这些规则的情况下强制执行这些规则，您可以在底部选择一个标记为不允许绕过上述设置的选项：
 
-![Don't Allow Bypassing the Above Settings](/images/rule_dont_allow.3a38d146c315.webp)
+![Don't Allow Bypassing the Above Settings](../../../static/images/rule_dont_allow.3a38d146c315.webp)
 
 好的。一切就绪！如何使用您的 Docker 应用程序来测试您的持续集成工作流程？
 
@@ -2937,7 +2937,7 @@ PS> git commit -am "Replace the emoji in an error message"
 PS> git push --set-upstream origin feature/replace-emoji-face
 ⋮
 remote: Create a pull request for 'feature/replace-emoji-face' on GitHub...
-remote:      https://github.com/realpython/page-tracker/pull/new/feature...
+remote:      https:/github.com/realpython/page-tracker/pull/new/feature...
 ```
 
 Linx + MacOS：
@@ -2955,7 +2955,7 @@ $ git commit -am "Replace the emoji in an error message"
 $ git push --set-upstream origin feature/replace-emoji-face
 ⋮
 remote: Create a pull request for 'feature/replace-emoji-face' on GitHub...
-remote:      https://github.com/realpython/page-tracker/pull/new/feature...
+remote:      https:/github.com/realpython/page-tracker/pull/new/feature...
 ⋮
 ```
 
@@ -2963,7 +2963,7 @@ remote:      https://github.com/realpython/page-tracker/pull/new/feature...
 
 当 GitHub Actions 运行器完成其工作时，由于检查失败，您将无法合并您的分支：
 
-![GitHub Status Check Failed With a Conflict](/images/failed_pr2.e4e611e3f3cf.webp)
+![GitHub Status Check Failed With a Conflict](../../../static/images/failed_pr2.e4e611e3f3cf.webp)
 
 在这种情况下，您只有一个检查对应于工作流中的 `build` 作业，您在上一节中将其配置为分支保护规则之一。您可以单击右侧的 Details 链接来调查失败检查的日志，并且您可以选择以调试模式重新运行相应的作业以收集更多数据。
 
@@ -2975,7 +2975,7 @@ remote:      https://github.com/realpython/page-tracker/pull/new/feature...
 
 即使没有任何冲突，如果主线在您的功能分支之前有几个提交，那么无论测试结果如何，您仍然必须将 `master` 中的最新更改合并到您的分支中。这是因为您之前制定的另一个分支保护规则：
 
-![GitHub Status Check Passed With an Outdated Branch](/images/pr_update2.f48575db3caa.webp)
+![GitHub Status Check Passed With an Outdated Branch](../../../static/images/pr_update2.f48575db3caa.webp)
 
 合并拉取请求按钮将保持灰色和禁用状态，直到您采取措施解决所有这些问题。
 
@@ -3013,11 +3013,11 @@ $ git push
 
 拉取请求应该接受您的更改并开始另一个 CI 构建。一旦满足所有保护规则，您最终可以通过单击绿色按钮将您的功能分支合并到受保护的主线中：
 
-![GitHub Status Checks Passed](/images/pr_success.0d326c26e9ad.webp)
+![GitHub Status Checks Passed](../../../static/images/pr_success.0d326c26e9ad.webp)
 
 请注意，合并将触发针对 `master` 分支的另一个 CI 构建，以测试您的更改是否与代码库的其余部分很好地集成。事情总是有可能出错。另一方面，如果 CI 构建成功，则工作流将标记并将镜像推送到您的 Docker Hub 存储库：
 
-![Docker Image Tagged and Pushed By a GitHub Action](/images/docker_hub_push.93959f48b437.webp)
+![Docker Image Tagged and Pushed By a GitHub Action](../../../static/images/docker_hub_push.93959f48b437.webp)
 
 每次 CI 工作流成功时，推送的 Docker 镜像都会被标记为当前 Git 提交哈希和标签 `latest` 。
 
@@ -3057,6 +3057,6 @@ $ git push
 
 您准备好构建自己的持续集成管道了吗？在评论中让大家知道！
 
-> 免费下载：单击[此处](https://realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
+> 免费下载：单击[此处](https:/realpython.com/bonus/docker-continuous-integration-code/)下载您的 Flask 应用程序和相关资源，以便您可以使用 Docker 定义持续集成管道。
 
-原文链接：[Build Robust Continuous Integration With Docker and Friends ](https://realpython.com/docker-continuous-integration/)
+原文链接：[Build Robust Continuous Integration With Docker and Friends ](https:/realpython.com/docker-continuous-integration/)

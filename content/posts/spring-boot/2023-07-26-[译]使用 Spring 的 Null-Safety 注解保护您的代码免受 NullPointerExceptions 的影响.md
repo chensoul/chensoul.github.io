@@ -13,11 +13,11 @@ tags: [spring-boot]
 
 由于 `NullPointerException` 是一个运行时异常，因此在代码编译过程中很难找出这种情况。 Java 的类型系统没有办法快速消除危险的空对象引用。
 
-幸运的是，Spring 框架提供了一些注释来解决这个问题。在本文中，我们将学习如何使用这些注释通过 [Spring Boot](https://reflectoring.io/categories/spring-boot/) 编写空安全代码。
+幸运的是，Spring 框架提供了一些注释来解决这个问题。在本文中，我们将学习如何使用这些注释通过 [Spring Boot](https:/reflectoring.io/categories/spring-boot/) 编写空安全代码。
 
 ## 示例代码
 
-本文附有 GitHub 上的工作[代码示例](https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-null-safe-annotations)。
+本文附有 GitHub 上的工作[代码示例](https:/github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-null-safe-annotations)。
 
 ## Spring 中的空安全注解
 
@@ -42,13 +42,13 @@ Eclipse 和 IntelliJ IDEA 等流行的 IDE 可以理解这些注释。它们可�
 
 对于 IntelliJ，我们可以在“Build, Execution, Deployment -> Compiler”下激活注释检查：
 
-![IntelliJ compiler config](/images/spring-boot-null-safety-annotations-01.webp)
+![IntelliJ compiler config](../../../static/images/spring-boot-null-safety-annotations-01.webp)
 
 ### Eclipse
 
 对于 Eclipse，我们可以在“Java -> Compiler -> Errors/Warnings”下找到设置：
 
-![Eclipse compiler config](/images/spring-boot-null-safety-annotations-02.webp)
+![Eclipse compiler config](../../../static/images/spring-boot-null-safety-annotations-02.webp)
 
 ## 示例代码
 
@@ -57,7 +57,7 @@ Eclipse 和 IntelliJ IDEA 等流行的 IDE 可以理解这些注释。它们可�
 ```java
 package io.reflectoring.nullsafety;
 
-// imports
+/ imports
 
 class Employee {
   String id;
@@ -65,7 +65,7 @@ class Employee {
   LocalDate joiningDate;
   String pastEmployment;
 
-  // standard constructor, getters, setters
+  / standard constructor, getters, setters
 }
 ```
 
@@ -79,13 +79,13 @@ class Employee {
   @NonNull
   String id;
 
-  //...
+  /...
 }
 ```
 
 现在，如果我们不小心尝试在代码中的任何位置将 `id` 的值设置为 null，IDE 将显示编译警告：
 
-![IDE warning for NonNull](/images/spring-boot-null-safety-annotations-03.webp)
+![IDE warning for NonNull](../../../static/images/spring-boot-null-safety-annotations-03.webp)
 
 `@NonNull` 注释可以在方法、参数或字段级别使用。\*\*
 
@@ -115,11 +115,11 @@ import org.springframework.lang.NonNullFields;
 
 现在，我们不再需要使用 `@NonNull` 注释来注释字段。因为默认情况下，该包中类的所有字段现在都被视为非空。而且，我们仍然会看到与以前相同的警告：
 
-![IDE warning for NonNullFields](/images/nonnull-ide-warning_hu5348352c54dfc5689093e49bbc5394b7_33745_1138x0_resize_box_3.webp)
+![IDE warning for NonNullFields](../../../static/images/nonnull-ide-warning_hu5348352c54dfc5689093e49bbc5394b7_33745_1138x0_resize_box_3.webp)
 
 这里要注意的另一点是，如果有任何未初始化的字段，那么我们将看到初始化这些字段的警告：
 
-![IDE warning for NonNull](/images/spring-boot-null-safety-annotations-05.webp)
+![IDE warning for NonNull](../../../static/images/spring-boot-null-safety-annotations-05.webp)
 
 以下是 `@NonNullFields` 的快速摘要：
 
@@ -148,7 +148,7 @@ import org.springframework.lang.NonNullApi;
 ```java
 package io.reflectoring.nullsafety;
 
-// imports
+/ imports
 
 class Employee {
 
@@ -156,13 +156,13 @@ class Employee {
     return null;
   }
 
-  //...
+  /...
 }
 ```
 
 我们可以看到 IDE 现在警告我们有关不可为 null 的返回值：
 
-![IDE warning for NonNullApi](/images/spring-boot-null-safety-annotations-06.webp)
+![IDE warning for NonNullApi](../../../static/images/spring-boot-null-safety-annotations-06.webp)
 
 以下是 `@NonNullApi` 的快速摘要：
 
@@ -179,7 +179,7 @@ class Employee {
 
 例如， `pastEmployment` 字段在 `Employee` 类中可以为空（对于以前没有工作过的人）。但根据我们的安全检查，IDE 认为不可能。
 
-我们可以使用字段上的 `@Nullable` 注释来表达我们的意图。这将告诉 IDE 该字段在某些情况下可以为空，因此无需触发警报。正如 [JavaDoc](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/lang/Nullable.html) 所建议的：
+我们可以使用字段上的 `@Nullable` 注释来表达我们的意图。这将告诉 IDE 该字段在某些情况下可以为空，因此无需触发警报。正如 [JavaDoc](https:/docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/lang/Nullable.html) 所建议的：
 
 > 可以与 `@NonNullApi` 或 `@NonNullFields` 结合使用，将默认的不可为空语义覆盖为可为空。
 
@@ -190,7 +190,7 @@ class Employee {
 ```java
 package io.reflectoring.nullsafety;
 
-// imports
+/ imports
 
 class Employee {
 
@@ -201,7 +201,7 @@ class Employee {
     return pastEmployment;
   }
 
-  //...
+  /...
 }
 ```
 
@@ -218,9 +218,9 @@ class Employee {
 
 到目前为止，我们正在讨论现代 IDE 如何使编写空安全代码变得更容易。然而，如果我们想在构建管道中进行一些自动代码检查，这在某种程度上也是可行的。
 
-[SpotBugs](https://spotbugs.github.io/)（著名但已废弃的 [FindBugs](http://findbugs.sourceforge.net/) 项目的转世）提供了一个 Maven/Gradle 插件，可以检测由于可空性而导致的代码异味。让我们看看如何使用它。
+[SpotBugs](https:/spotbugs.github.io/)（著名但已废弃的 [FindBugs](http:/findbugs.sourceforge.net/) 项目的转世）提供了一个 Maven/Gradle 插件，可以检测由于可空性而导致的代码异味。让我们看看如何使用它。
 
-对于 Maven 项目，我们需要更新 `pom.xml` 以添加 [SpotBugs Maven](https://spotbugs.readthedocs.io/en/latest/maven.html) 插件：
+对于 Maven 项目，我们需要更新 `pom.xml` 以添加 [SpotBugs Maven](https:/spotbugs.readthedocs.io/en/latest/maven.html) 插件：
 
 ```xml
 <plugin>
@@ -258,7 +258,7 @@ spotbugs {
 
 项目更新后，我们可以使用 `gradle check` 命令运行检查。
 
-SpotBugs 提供了一些规则，通过在 Maven 构建期间处理 `@NonNull` 注释来标记潜在问题。您可以查看[错误描述的详细列表](https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html)。
+SpotBugs 提供了一些规则，通过在 Maven 构建期间处理 `@NonNull` 注释来标记潜在问题。您可以查看[错误描述的详细列表](https:/spotbugs.readthedocs.io/en/latest/bugDescriptions.html)。
 
 例如，如果任何用 `@NonNull` 注释的方法意外返回 null，则 SpotBugs 检查将失败，并显示类似以下内容的错误：
 
@@ -274,4 +274,4 @@ Kotlin 使用这些注释来推断 Spring API 的可为空性。
 
 我希望您现在已经准备好在 Spring Boot 中编写 null 安全代码！
 
-原文链接：[https://reflectoring.io/spring-boot-null-safety-annotations/](https://reflectoring.io/spring-boot-null-safety-annotations/)
+原文链接：[https:/reflectoring.io/spring-boot-null-safety-annotations/](https:/reflectoring.io/spring-boot-null-safety-annotations/)

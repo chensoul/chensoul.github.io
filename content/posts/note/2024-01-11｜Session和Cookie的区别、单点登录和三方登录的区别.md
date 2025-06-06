@@ -9,9 +9,9 @@ tags: [review]
 
 今天做了什么：
 
-- [x] 1、观看 B 站 《[SSO单点登录](https://www.bilibili.com/video/BV1ht4y1E7EL?p=1)》视频
+- [x] 1、观看 B 站 《[SSO单点登录](https:/www.bilibili.com/video/BV1ht4y1E7EL?p=1)》视频
 
-- [x] 2、参考  https://github.com/jOOQ/jOOL 和 https://github.com/vavr-io/vavr ，将 CheckedXXX 的类加入公司项目中。
+- [x] 2、参考  https:/github.com/jOOQ/jOOL 和 https:/github.com/vavr-io/vavr ，将 CheckedXXX 的类加入公司项目中。
 
   涉及的类有：Async.java、Blocking.java、CheckedBiConsumer.java、CheckedBiFunction.java、CheckedBiPredicate.java、CheckedComparator.java、CheckedConsumer.java、CheckedFunction.java、CheckedPredicate.java、CheckedRunnable.java、CheckedSupplier.java、FunctionUtils.java、OnceConsumer.java、SameExecutorCompletionStage.java、UncheckedException.java，并添加单元测试类。
 

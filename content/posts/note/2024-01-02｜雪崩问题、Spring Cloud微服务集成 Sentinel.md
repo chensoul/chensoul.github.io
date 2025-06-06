@@ -160,12 +160,12 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
 
         Object result;
         InvocationHandlerFactory.MethodHandler methodHandler = this.dispatch.get(method);
-        // only handle by HardCodedTarget
+        / only handle by HardCodedTarget
         if (target instanceof Target.HardCodedTarget) {
             Target.HardCodedTarget<?> hardCodedTarget = (Target.HardCodedTarget) target;
             MethodMetadata methodMetadata = SentinelContractHolder.METADATA_MAP
                 .get(hardCodedTarget.type().getName() + Feign.configKey(hardCodedTarget.type(), method));
-            // resource default is HttpMethod:protocol://url
+            / resource default is HttpMethod:protocol:/url
             if (methodMetadata == null) {
                 result = methodHandler.invoke(args);
             } else {
@@ -177,7 +177,7 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                     entry = SphU.entry(resourceName, EntryType.OUT, 1, args);
                     result = methodHandler.invoke(args);
                 } catch (Throwable ex) {
-                    // fallback handle
+                    / fallback handle
                     if (!BlockException.isBlockException(ex)) {
                         Tracer.trace(ex);
                     }
@@ -185,14 +185,14 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                         try {
                             return fallbackMethodMap.get(method).invoke(fallbackFactory.create(ex), args);
                         } catch (IllegalAccessException e) {
-                            // shouldn't happen as method is public due to being an
-                            // interface
+                            / shouldn't happen as method is public due to being an
+                            / interface
                             throw new AssertionError(e);
                         } catch (InvocationTargetException e) {
                             throw new AssertionError(e.getCause());
                         }
                     } else {
-                        // 若是Result类型 并且不包含@FeignRetry 执行自动降级返回
+                        / 若是Result类型 并且不包含@FeignRetry 执行自动降级返回
                         FeignRetry feignRetry = AnnotationUtils.findAnnotation(method, FeignRetry.class);
                         if (Result.class == method.getReturnType() && Objects.isNull(feignRetry)) {
                             log.error("服务调用异常", ex);
@@ -209,7 +209,7 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                 }
             }
         } else {
-            // other target type using default strategy
+            / other target type using default strategy
             result = methodHandler.invoke(args);
         }
 
@@ -280,7 +280,7 @@ public final class AutoFallbackSentinelFeign {
             super.invocationHandlerFactory(new InvocationHandlerFactory() {
                 @Override
                 public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
-                    // 查找 FeignClient 上的 降级策略
+                    / 查找 FeignClient 上的 降级策略
                     FeignClient feignClient = AnnotationUtils.findAnnotation(target.type(), FeignClient.class);
                     Class<?> fallback = feignClient.fallback();
                     Class<?> fallbackFactory = feignClient.fallbackFactory();
@@ -299,7 +299,7 @@ public final class AutoFallbackSentinelFeign {
                     }
 
                     if (void.class != fallbackFactory) {
-                        //针对 hystrix fallbackFactory 特殊处理
+                        /针对 hystrix fallbackFactory 特殊处理
                         try {
                             fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName, "fallbackFactory",
                                 fallbackFactory, FallbackFactory.class);
@@ -337,7 +337,7 @@ public final class AutoFallbackSentinelFeign {
             try {
                 return field.get(instance);
             } catch (IllegalAccessException e) {
-                // ignore
+                / ignore
             }
             return null;
         }

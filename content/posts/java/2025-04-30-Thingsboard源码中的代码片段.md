@@ -31,7 +31,7 @@ public class UUIDConverter {
             throw new IllegalArgumentException("Only Time-Based UUID (Version 1) is supported!");
         }
         String str = src.toString();
-        // 58e0a7d7-eebc-11d8-9669-0800200c9a66 => 1d8eebc58e0a7d796690800200c9a66. Note that [11d8] -> [1d8]
+        / 58e0a7d7-eebc-11d8-9669-0800200c9a66 => 1d8eebc58e0a7d796690800200c9a66. Note that [11d8] -> [1d8]
         return str.substring(15, 18) + str.substring(9, 13) + str.substring(0, 8) + str.substring(19, 23) + str.substring(24);
     }
 
@@ -176,7 +176,7 @@ public class MiscUtils {
     public static final Charset UTF8 = Charset.forName("UTF-8");
 
     public static String constructBaseUrl(HttpServletRequest request) {
-        return String.format("%s://%s:%d",
+        return String.format("%s:/%s:%d",
                 getScheme(request),
                 getDomainName(request),
                 getPort(request));

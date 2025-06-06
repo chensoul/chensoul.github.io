@@ -7,11 +7,11 @@ categories: ["Java"]
 tags: [ kafka,rabbitmq]
 ---
 
-原文链接：[https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs](https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs)
+原文链接：[https:/ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs](https:/ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs)
 
 将消息从一个组件获取到另一个组件是微服务架构中最重要的部分之一。每个服务必须能够与任何其他服务异步、可靠且大规模地通信。
 
-这就是消息代理的用武之地。消息代理（例如 Apache Kafka、RabbitMQ 和[AWS SNS/SQS](https://ably.com/topic/aws-sns-vs-sqs)）为您提供一个通用接口和一组保证，而不是手动协调可能数千个微服务之间的通信。这简化了集成并更容易推理您的系统。
+这就是消息代理的用武之地。消息代理（例如 Apache Kafka、RabbitMQ 和[AWS SNS/SQS](https:/ably.com/topic/aws-sns-vs-sqs)）为您提供一个通用接口和一组保证，而不是手动协调可能数千个微服务之间的通信。这简化了集成并更容易推理您的系统。
 
 然而，比较消息代理可能很棘手，因为每个消息代理都采用不同的方法来完成工作。那么，您如何决定哪个消息代理最适合您的用例？
 
@@ -19,13 +19,13 @@ tags: [ kafka,rabbitmq]
 
 ## 比较消息代理：您应该寻找什么？
 
-![img](/images/comparing-message-brokers-what-should-you-look-for.webp)
+![img](../../../static/images/comparing-message-brokers-what-should-you-look-for.webp)
 
 消息代理是一个广泛的类别。虽然我们正在考虑的三个选项中的每一个都在更大系统中的组件之间移动数据，但在它们之间做出决定取决于它们*如何*做到这一点。
 
 因此，我们需要检查每个消息代理的特征，根据它们如何影响其移动数据的能力以及它的工作方式。我们将研究以下六个因素以及它们如何应用于 Apache Kafka、RabbitMQ 和 AWS SNS/SQS：
 
-- **消息传递模式：**消息代理组织和分发消息的方式（例如[发布/订阅](https://ably.com/topic/pub-sub)或请求回复）比其他架构和用例更适合某些架构和用例。
+- **消息传递模式：**消息代理组织和分发消息的方式（例如[发布/订阅](https:/ably.com/topic/pub-sub)或请求回复）比其他架构和用例更适合某些架构和用例。
 - **消息路由：**消息代理能否根据消息的内容和其他标准来路由消息？
 - **可扩展性：**并非每种情况都需要每秒处理数百万条消息。确保消息代理可以扩展到您需要的吞吐量级别，同时牢记这将如何影响设置和操作的复杂性。
 - **可靠性：**消息代理如何处理故障？它会保留消息还是仅通过系统传递消息？
@@ -36,7 +36,7 @@ tags: [ kafka,rabbitmq]
 
 ## 介绍 Apache Kafka、RabbitMQ 以及 AWS SNS 和 SQS
 
-在详细进行比较之前，我们先来谈谈为什么我们关注这三种解决方案。原因之一是它们是您可能遇到的最常见的消息代理解决方案之一。研究表明，[全球有近 50,000 家公司使用 RabbitMQ](https://discovery.hgdata.com/product/rabbitmq)，而超过[60,000 家公司正在使用 Apache Kafka](https://discovery.hgdata.com/product/apache-kafka)。尽管 AWS SQS 的用户群似乎较小，但只有[超过 24,000 家公司](https://discovery.hgdata.com/product/apache-kafka)，但它在更广泛的 Amazon Web Services 生态系统中发挥着重要作用。这种广泛的部署使得您可以更轻松地招募经验丰富的员工、与现有技术堆栈集成，以及当您需要时寻求支持。但还有另一个考虑因素。我们正在研究的每个消息代理都从不同的角度解决该问题。 Apache Kafka 专为吞吐量而设计，而 RabbitMQ 更关注复杂的消息路由。与 RabbitMQ 一样，SNS 和 SQS 这两种 AWS 解决方案更关注路由而不是吞吐量，我们在这里考虑它们是因为 AWS 生态系统的重要性。
+在详细进行比较之前，我们先来谈谈为什么我们关注这三种解决方案。原因之一是它们是您可能遇到的最常见的消息代理解决方案之一。研究表明，[全球有近 50,000 家公司使用 RabbitMQ](https:/discovery.hgdata.com/product/rabbitmq)，而超过[60,000 家公司正在使用 Apache Kafka](https:/discovery.hgdata.com/product/apache-kafka)。尽管 AWS SQS 的用户群似乎较小，但只有[超过 24,000 家公司](https:/discovery.hgdata.com/product/apache-kafka)，但它在更广泛的 Amazon Web Services 生态系统中发挥着重要作用。这种广泛的部署使得您可以更轻松地招募经验丰富的员工、与现有技术堆栈集成，以及当您需要时寻求支持。但还有另一个考虑因素。我们正在研究的每个消息代理都从不同的角度解决该问题。 Apache Kafka 专为吞吐量而设计，而 RabbitMQ 更关注复杂的消息路由。与 RabbitMQ 一样，SNS 和 SQS 这两种 AWS 解决方案更关注路由而不是吞吐量，我们在这里考虑它们是因为 AWS 生态系统的重要性。
 
 
 
@@ -50,7 +50,7 @@ Apache Kafka 是一个实时流平台，旨在构建可扩展、容错的分布�
 
 ### RabbitMQ
 
-与 Apache Kafka 专注于流数据不同，RabbitMQ 是一个开源分布式消息代理，支持多种不同的消息传递模式，例如发布/订阅和生产者/消费者。尽管它确实拥有高吞吐量，但它的重点更多地是根据消息内容、一天中的时间、发送者和其他标准智能地路由数据，这使得它非常适合[事件驱动的架构](https://ably.com/blog/introduction-event-driven-architecture)。
+与 Apache Kafka 专注于流数据不同，RabbitMQ 是一个开源分布式消息代理，支持多种不同的消息传递模式，例如发布/订阅和生产者/消费者。尽管它确实拥有高吞吐量，但它的重点更多地是根据消息内容、一天中的时间、发送者和其他标准智能地路由数据，这使得它非常适合[事件驱动的架构](https:/ably.com/blog/introduction-event-driven-architecture)。
 
 与 Apache Kafka 一样，RabbitMQ 得到了广泛的支持，具有丰富的集成生态系统。
 
@@ -92,7 +92,7 @@ AWS Simple Queue Service (SQS) 是一种先进先出 (FIFO) 队列服务，可�
 | **图案**                                               | **描述**                                                     | **可用性**                           |
 | :----------------------------------------------------- | :----------------------------------------------------------- | :----------------------------------- |
 | 发布/订阅（Pub/Sub）                                   | Pub/Sub 是围绕主题构建的。发布者将消息推送到主题，由多个订阅者使用。一个简单的例子是天气系统。每个地点都有一个主题。覆盖该位置的气象站将更新推送到该主题，然后移动应用程序、警报服务等作为该主题的订阅者接收这些更新。 Pub/Sub 主要是一种单向广播方法。选择 Pub/Sub 的原因包括：-**松散耦合：**发布者和订阅者不需要互相了解或直接依赖对方。**- 有利于扩展：**发布者推送消息一次，然后专门的代理负责将其推送给订阅者**- 灵活性：**添加新主题、发布者和订阅者非常简单，这意味着系统可以轻松适应不断变化的需求。 | 阿帕奇·卡夫卡RabbitMQAWS社交网络服务 |
-| [点对点消息传递](https://ably.com/docs/general/queues) | 消息队列或点对点消息传递与 Pub/Sub 的不同之处在于，消息仅由一个订阅者而不是多个订阅者使用。通常，消费者会确认收货，这可以更深入地了解交付能力。选择点对点消息传递的原因包括：- 需要向特定收件人发送消息。- 保证交货。- 按特定顺序交付。 | RabbitMQAWS 服务质量体系             |
+| [点对点消息传递](https:/ably.com/docs/general/queues) | 消息队列或点对点消息传递与 Pub/Sub 的不同之处在于，消息仅由一个订阅者而不是多个订阅者使用。通常，消费者会确认收货，这可以更深入地了解交付能力。选择点对点消息传递的原因包括：- 需要向特定收件人发送消息。- 保证交货。- 按特定顺序交付。 | RabbitMQAWS 服务质量体系             |
 | 请求-回复                                              | 当服务需要系统另一部分的某些内容时，在请求-答复模式下，它会主动请求，然后实时等待答案。请求-答复最适合数据或操作对时间敏感的情况。例如，银行应用程序可能会在进行货币转换之前请求最新的汇率。选择请求-回复消息传递的原因包括：- 及时响应很重要，例如请求者在继续之前需要响应的情况。- 需要双向通信。- 与无法支持发布/订阅通信的遗留系统集成。 | RabbitMQ                             |
 
 
@@ -120,9 +120,9 @@ AWS SNS 和 SQS 的组合提供了两种方法的组合。正如我们之前看�
 
 RabbitMQ 和 Apache Kafka 都是水平扩展的。换句话说，您可以创建 RabbitMQ 或 Apache Kafka 节点的集群。每个主题可以跨多个节点进行分区，因此添加更多实例可以增加集群的容量。
 
-尽管两者之间的一些架构决策有所不同，但它们都相对容易扩展。然而，在扩展如何影响吞吐量方面，它们存在显着差异。通常，RabbitMQ[每秒](https://www.linkedin.com/pulse/kafka-vs-rabbitmq-ahmed-el-sayed/)处理数千条消息，而即使相对较小的 Apache Kafka 集群[每秒也可以处理数百万条消息](https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines)。
+尽管两者之间的一些架构决策有所不同，但它们都相对容易扩展。然而，在扩展如何影响吞吐量方面，它们存在显着差异。通常，RabbitMQ[每秒](https:/www.linkedin.com/pulse/kafka-vs-rabbitmq-ahmed-el-sayed/)处理数千条消息，而即使相对较小的 Apache Kafka 集群[每秒也可以处理数百万条消息](https:/engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines)。
 
-作为托管服务，扩展 AWS SNS 和 SQS 的重点不是可以启动多少个实例，而是吞吐量限制。例如，AWS SQS[每秒最多引用 30,000 条消息](https://aws.amazon.com/sqs/features/)，并且只有在消息批量发送的情况下才如此。
+作为托管服务，扩展 AWS SNS 和 SQS 的重点不是可以启动多少个实例，而是吞吐量限制。例如，AWS SQS[每秒最多引用 30,000 条消息](https:/aws.amazon.com/sqs/features/)，并且只有在消息批量发送的情况下才如此。
 
 
 
@@ -146,15 +146,15 @@ AWS SNS 和 SQS 采用类似的方法。它们跨多个可用区（即 AWS 区�
 - **授权：**使用访问控制列表 (ACL) 来确定每个发布者和消费者可以使用哪些主题和功能。
 - **数据加密：**在数据通过系统（传输中）和磁盘上（静态）时保护数据。
 
-与许多事情一样，Apache Kafka 的身份验证可通过使用第三方附加组件进行配置。默认情况下，Apache Kafka 提供 TLS 或[SASL](https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer)身份验证。 TLS 身份验证使用公私密钥对来确认是否允许客户端访问 Apache Kafka 实例。 SASL 提供不同级别的身份验证，从用户名和密码到 OAUTH 2.0。
+与许多事情一样，Apache Kafka 的身份验证可通过使用第三方附加组件进行配置。默认情况下，Apache Kafka 提供 TLS 或[SASL](https:/en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer)身份验证。 TLS 身份验证使用公私密钥对来确认是否允许客户端访问 Apache Kafka 实例。 SASL 提供不同级别的身份验证，从用户名和密码到 OAUTH 2.0。
 
-同样，[RabbitMQ](https://www.rabbitmq.com/access-control.html#authentication)使用 X.509 证书提供基于 TLS 的身份验证。或者，RabbitMQ 可以支持用户名/密码对进行身份验证。
+同样，[RabbitMQ](https:/www.rabbitmq.com/access-control.html#authentication)使用 X.509 证书提供基于 TLS 的身份验证。或者，RabbitMQ 可以支持用户名/密码对进行身份验证。
 
 Apache Kafka 和 RabbitMQ 都允许通过 ACL 授予细粒度的权限，例如读取、写入、配置和管理。
 
 与此处的许多因素一样，AWS SNS/SQS 略有不同，因为它们是 AWS 生态系统的一部分。因此，他们主要使用 Amazon 的 IAM 证书进行身份验证和访问控制。
 
-不过，在数据加密方面，这些产品之间的差异较小。默认情况下，Apache Kafka 和 RabbitMQ 都以明文形式发送数据，但也可以使用 TLS 加密传输中的数据。就 Apache Kafka 而言，有许多第三方插件可以支持其他形式的传输中加密。 Apache Kafka 和 RabbitMQ 都不加密静态数据，而是建议使用第三方工具，例如加密文件系统。 AWS SNS 和 SQS 依赖[AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)来加密静态和传输中的数据。
+不过，在数据加密方面，这些产品之间的差异较小。默认情况下，Apache Kafka 和 RabbitMQ 都以明文形式发送数据，但也可以使用 TLS 加密传输中的数据。就 Apache Kafka 而言，有许多第三方插件可以支持其他形式的传输中加密。 Apache Kafka 和 RabbitMQ 都不加密静态数据，而是建议使用第三方工具，例如加密文件系统。 AWS SNS 和 SQS 依赖[AWS Key Management Service](https:/docs.aws.amazon.com/kms/latest/developerguide/overview.html)来加密静态和传输中的数据。
 
 
 
@@ -162,7 +162,7 @@ Apache Kafka 和 RabbitMQ 都允许通过 ACL 授予细粒度的权限，例如�
 
 计算总拥有成本 (TCO) 可能很复杂。 RabbitMQ 和 Apache Kafka 都是开源项目，使用时不需要许可费用。然而，值得注意的是，Apache Kafka 在设置和操作方面可能会带来挑战，这可能意味着您需要聘请专门的员工或顾问来管理和管理部署。
 
-在较小的规模下，RabbitMQ 比 Apache Kafka 更容易运行，并且以其[操作稳定性](https://thenewstack.io/rabbitmq-is-boring-and-i-love-it/)而闻名。如果您选择 Apache Kafka 或 RabbitMQ 的商业版本，显然这会带来许可成本，但您也将受益于附加功能、增强的文档和支持，这反过来又可以降低其他方面的成本。
+在较小的规模下，RabbitMQ 比 Apache Kafka 更容易运行，并且以其[操作稳定性](https:/thenewstack.io/rabbitmq-is-boring-and-i-love-it/)而闻名。如果您选择 Apache Kafka 或 RabbitMQ 的商业版本，显然这会带来许可成本，但您也将受益于附加功能、增强的文档和支持，这反过来又可以降低其他方面的成本。
 
 同样，AWS 产品在这里很奇怪，因为它们不是开源的，只能作为托管服务提供。这将许可、云和运营成本整合到一张账单中。
 

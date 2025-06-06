@@ -7,9 +7,9 @@ categories: ["spring-boot"]
 tags: [spring-security]
 ---
 
-![WebSecurityConfigurerAdapter Deprecated](/images/WebSecurityConfigurerAdapter-Deprecated-1.webp)
+![WebSecurityConfigurerAdapter Deprecated](../../../static/images/WebSecurityConfigurerAdapter-Deprecated-1.webp)
 
-在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 [Spring 官方网站](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter) 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展 configure() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。
+在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 [Spring 官方网站](https:/spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter) 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展 configure() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。
 
 了解这一变化很重要，因为迟早我们将使用最新版本的 Spring Security 来开发安全功能。让我们讨论“没有 WebSecurityConfigurerAdapter 的 Spring Security”主题及其相关概念。
 
@@ -25,12 +25,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-         // configure Authentication ......
+         / configure Authentication ......
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // configure Authorization ......
+        / configure Authorization ......
     }
 }
 ```
@@ -154,10 +154,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-      // {noop} => No operation for password encoder (no password encoding needed)
+      / {noop} => No operation for password encoder (no password encoding needed)
       auth.inMemoryAuthentication()
           .withUser("devs")
-          .password ("{noop} devs") //no password encoding needed
+          .password ("{noop} devs") /no password encoding needed
           .authorities("ADMIN");
 
       auth.inMemoryAuthentication().withUser("ns").password("{noop}ns").authorities("EMPLOYEE");
@@ -167,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
    protected void configure(HttpSecurity http) throws Exception {
 
-      //declares which Page(URL) will have What access type
+      /declares which Page(URL) will have What access type
       http.authorizeRequests()
           .antMatchers("/home").permitAll()
           .antMatchers("/welcome").authenticated()
@@ -176,21 +176,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .antMatchers("/mgr").hasAuthority("MANAGER")
           .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-      // Any other URLs which are not configured in above antMatchers
-      // generally declared aunthenticated() in real time
+      / Any other URLs which are not configured in above antMatchers
+      / generally declared aunthenticated() in real time
           .anyRequest().authenticated()
 
-      // Login Form Details
+      / Login Form Details
          .and()
          .formLogin()
          .defaultSuccessUrl("/welcome", true)
 
-      // Logout Form Details
+      / Logout Form Details
         .and()
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-      // Exception Details
+      / Exception Details
         .and()
         .exceptionHandling()
         .accessDeniedPage("/accessDenied")
@@ -247,7 +247,7 @@ public class SecurityConfigNew {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        //declares which Page(URL) will have What access type
+        /declares which Page(URL) will have What access type
         http.authorizeRequests()
             .antMatchers("/home").permitAll()
             .antMatchers("/welcome").authenticated()
@@ -256,21 +256,21 @@ public class SecurityConfigNew {
             .antMatchers("/mgr").hasAuthority("MANAGER")
             .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-        // Any other URLs which are not configured in above antMatchers
-        // generally declared aunthenticated() in real time
+        / Any other URLs which are not configured in above antMatchers
+        / generally declared aunthenticated() in real time
            .anyRequest().authenticated()
 
-        // Login Form Details
+        / Login Form Details
            .and()
            .formLogin()
            .defaultSuccessUrl("/welcome", true)
 
-        // Logout Form Details
+        / Logout Form Details
           .and()
           .logout()
          .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-        // Exception Details
+        / Exception Details
          .and()
          .exceptionHandling()
         .accessDeniedPage("/accessDenied")
@@ -373,7 +373,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
        auth.jdbcAuthentication()
-           .dataSource(dataSource) //creates database connection
+           .dataSource(dataSource) /creates database connection
            .usersByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?")
            .authoritiesByUsernameQuery("select user_name,user_role from user where user_name=?")
            .passwordEncoder(passwordEncoder);
@@ -426,14 +426,14 @@ public class SecurityConfig {
 
 以下是查找“没有 WebSecurityConfigurerAdapter 的 Spring Security”完整示例的链接：
 
-1. [How To Implement Security In Spring Boot Project?](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)
+1. [How To Implement Security In Spring Boot Project?](https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/)
 
-2. [How to implement Role Based Spring Security Without WebSecurityConfigurerAdapter in Spring Boot using UserDetailsService?](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)
+2. [How to implement Role Based Spring Security Without WebSecurityConfigurerAdapter in Spring Boot using UserDetailsService?](https:/javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)
 
-3. [How to implement JWT Authentication in Spring Boot Project?](https://javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/)
+3. [How to implement JWT Authentication in Spring Boot Project?](https:/javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/)
 
 ## 结论
 
 在完成了“没有 WebSecurityConfigurerAdapter 的 Spring Security”的所有理论和示例部分之后，最后，我们应该准备好在实时项目中处理警告“WebSecurityConfigurerAdapter Deprecated”。此外，我们希望您扩展“没有 WebSecurityConfigurerAdapter 的 Spring Security”一文中提供的知识，并在您的项目中相应地实现该概念。如需进一步学习 Spring Security，您可以访问 Spring Security 使用 Spring Boot 系列教程。另外，如果后续有任何更新，我们也会对文章进行相应的更新。此外，请随时在下面的评论部分提供您的意见。
 
-原文链接：[https://javatechonline.com/spring-security-without-websecurityconfigureradapter/](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/)
+原文链接：[https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/](https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/)

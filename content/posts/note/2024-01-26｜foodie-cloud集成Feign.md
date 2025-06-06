@@ -16,5 +16,5 @@ tags: [eureka,feign]
    - 认证服务负责用户的维护和登录
 
 2. 整理 Feign、Eureka、Seata、Sentinel 相关文档
-   - [eureka分区的深入讲解](https://segmentfault.com/a/1190000014107639)
-   - [Spring Cloud Eureka详解](https://cloud.tencent.com/developer/article/2106187)
+   - [eureka分区的深入讲解](https:/segmentfault.com/a/1190000014107639)
+   - [Spring Cloud Eureka详解](https:/cloud.tencent.com/developer/article/2106187)

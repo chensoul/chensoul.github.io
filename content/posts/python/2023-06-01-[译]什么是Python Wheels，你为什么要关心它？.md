@@ -7,9 +7,9 @@ categories: ["Python"]
 tags: ["python"]
 ---
 
-![What Are Python Wheels and Why Should You Care?](/images/What-are-Python-Wheels-and-Why-Should-You-Care_Watermarked.22246cad13be.webp)
+![What Are Python Wheels and Why Should You Care?](../../../static/images/What-are-Python-Wheels-and-Why-Should-You-Care_Watermarked.22246cad13be.webp)
 
-Python `.whl` 文件或 [wheels](https://packaging.python.org/glossary/#term-wheel) 是 Python 中很少被讨论的部分，但它们对 [Python 包](https://realpython.com/python-modules-packages/)的安装过程大有裨益。如果您使用 [pip](https://realpython.com/what-is-pip/) 安装了 Python 包，那么 Wheels 很可能使安装更快、更高效。
+Python `.whl` 文件或 [wheels](https:/packaging.python.org/glossary/#term-wheel) 是 Python 中很少被讨论的部分，但它们对 [Python 包](https:/realpython.com/python-modules-packages/)的安装过程大有裨益。如果您使用 [pip](https:/realpython.com/what-is-pip/) 安装了 Python 包，那么 Wheels 很可能使安装更快、更高效。
 
 Wheels 是 Python 生态系统的一个组件，有助于使包安装正常工作。它们允许更快的安装和更稳定的包分发过程。在本教程中，您将深入了解 Wheels 是什么，它们有什么好处，以及它们如何获得牵引力并使 Python 使用起来更加愉快。
 
@@ -21,7 +21,7 @@ Wheels 是 Python 生态系统的一个组件，有助于使包安装正常工�
 
 您将从用户和开发人员的角度看到使用流行的开源 Python 包的示例。
 
-> 免费赠品：单击[此处](https://realpython.com/python-wheels/)获取 Python 备忘单并学习 Python 3 的基础知识，例如使用数据类型、字典、列表和 Python 函数。
+> 免费赠品：单击[此处](https:/realpython.com/python-wheels/)获取 Python 备忘单并学习 Python 3 的基础知识，例如使用数据类型、字典、列表和 Python 函数。
 
 ## 安装
 
@@ -39,7 +39,7 @@ Successfully installed pip 20.1 setuptools-46.1.3 wheel-0.34.2
 
 在学习如何将项目打包到 wheel 之前，从用户的角度了解使用 wheel 的样子会很有帮助。这听起来可能有点落后，但了解 Wheels 如何工作的一个好方法是从安装一个不是 Wheels 的东西开始。
 
-您可以像往常一样，通过将 Python 包安装到您的环境中来开始这个实验。在这种情况下，安装 [uWSGI](https://github.com/unbit/uwsgi) 版本 2.0.x：
+您可以像往常一样，通过将 Python 包安装到您的环境中来开始这个实验。在这种情况下，安装 [uWSGI](https:/github.com/unbit/uwsgi) 版本 2.0.x：
 
 ```bash
 $ python -m pip install 'uwsgi==2.0.*'
@@ -57,7 +57,7 @@ Successfully installed uwsgi-2.0.18
 
 为了完全安装 uWSGI， `pip` 通过几个不同的步骤进行：
 
-- 在第 3 行，它下载了一个名为 `uwsgi-2.0.18.tar.gz` 的 TAR 文件 (tarball)，该文件已使用 [gzip](https://www.gnu.org/software/gzip/manual/gzip.html) 压缩。
+- 在第 3 行，它下载了一个名为 `uwsgi-2.0.18.tar.gz` 的 TAR 文件 (tarball)，该文件已使用 [gzip](https:/www.gnu.org/software/gzip/manual/gzip.html) 压缩。
 
 - 在第 6 行，它获取 tarball 并通过调用 `setup.py` 构建一个 `.whl` 文件。
 - 在第 7 行，它将 wheel 标记为 `uWSGI-2.0.18-cp38-cp38-macosx_10_15_x86_64.whl` 。
@@ -65,9 +65,9 @@ Successfully installed uwsgi-2.0.18
 
 `pip` 检索到的 `tar.gz` tarball 是源代码分发版或 `sdist` ，而不是 wheel。在某些方面， `sdist` 与 wheel 相反。
 
-> 注意：如果您看到 uWSGI 安装错误，您可能需要[安装 Python 开发头文件](https://uwsgi-docs.readthedocs.io/en/latest/Install.html#installing-from-source)。
+> 注意：如果您看到 uWSGI 安装错误，您可能需要[安装 Python 开发头文件](https:/uwsgi-docs.readthedocs.io/en/latest/Install.html#installing-from-source)。
 
-[源代码分发](https://packaging.python.org/glossary/#term-source-distribution-or-sdist)包含源代码。这不仅包括 Python 代码，还包括与包捆绑在一起的任何扩展模块（通常是 C 或 C++）的源代码。对于源代码分发，扩展模块是在用户端而不是开发人员端编译的。
+[源代码分发](https:/packaging.python.org/glossary/#term-source-distribution-or-sdist)包含源代码。这不仅包括 Python 代码，还包括与包捆绑在一起的任何扩展模块（通常是 C 或 C++）的源代码。对于源代码分发，扩展模块是在用户端而不是开发人员端编译的。
 
 源分发版还包含一组元数据，位于名为 `<package-name>.egg-info` 的目录中。此元数据有助于构建和安装包，但用户实际上不需要对其执行任何操作。
 
@@ -77,7 +77,7 @@ Successfully installed uwsgi-2.0.18
 $ python setup.py sdist
 ```
 
-现在尝试安装不同的包 [chardet](https://github.com/chardet/chardet/blob/master/docs/index.rst)：
+现在尝试安装不同的包 [chardet](https:/github.com/chardet/chardet/blob/master/docs/index.rst)：
 
 ```bash
 $ python -m pip install 'chardet==3.*'
@@ -100,9 +100,9 @@ $ python setup.py bdist_wheel
 
 为什么 uWSGI 给你一个源代码分发而 chardet 提供一个 wheel？您可以通过查看 PyPI 上每个项目的页面并导航到下载文件区域来了解其原因。本节将向您展示 `pip` 在 PyPI 索引服务器上实际看到的内容：
 
-- 出于与项目复杂性相关的原因，uWSGI 仅提供了一个[源代码分发](https://pypi.org/project/uWSGI/2.0.18/#files)（ `uwsgi-2.0.18.tar.gz` ）。
+- 出于与项目复杂性相关的原因，uWSGI 仅提供了一个[源代码分发](https:/pypi.org/project/uWSGI/2.0.18/#files)（ `uwsgi-2.0.18.tar.gz` ）。
 
-- chardet 提供了 [wheel 和源代码分发](https://pypi.org/project/chardet/3.0.4/#files)，但如果它与您的系统兼容， `pip` 会更喜欢 wheel。稍后您将看到如何确定兼容性。
+- chardet 提供了 [wheel 和源代码分发](https:/pypi.org/project/chardet/3.0.4/#files)，但如果它与您的系统兼容， `pip` 会更喜欢 wheel。稍后您将看到如何确定兼容性。
 
 用于 wheel 安装的兼容性检查的另一个示例是 `psycopg2` ，它为 Windows 提供了广泛的 wheels，但不为 Linux 或 macOS 客户端提供任何 wheels。这意味着 `pip install psycopg2` 可以根据您的特定设置获取 Wheels 或源代码分发。
 
@@ -131,11 +131,11 @@ $ time python -m pip install \
       cryptography
 ```
 
-此命令计时 [cryptography](https://pypi.org/project/cryptography/) 包的安装，告诉 `pip` 使用源代码分发，即使有合适的 Wheels 可用。包含 `:all:` 会使规则适用于 `cryptography` 及其所有[依赖项](https://realpython.com/courses/managing-python-dependencies/)。
+此命令计时 [cryptography](https:/pypi.org/project/cryptography/) 包的安装，告诉 `pip` 使用源代码分发，即使有合适的 Wheels 可用。包含 `:all:` 会使规则适用于 `cryptography` 及其所有[依赖项](https:/realpython.com/courses/managing-python-dependencies/)。
 
 在我的机器上，这从开始到结束大约需要 32 秒。不仅安装需要很长时间，而且构建 `cryptography` 还需要您拥有 OpenSSL 开发标头并可供 Python 使用。
 
-注意：对于 `--no-binary` ，您很可能会看到有关缺少 `cryptography` 安装所需的头文件的错误，这是使用源代码分发令人沮丧的部分原因。如果是这样， `cryptography` 文档的[安装部分](https://cryptography.io/en/latest/installation/#building-cryptography-on-linux)会就特定操作系统需要哪些库和头文件提供建议。
+注意：对于 `--no-binary` ，您很可能会看到有关缺少 `cryptography` 安装所需的头文件的错误，这是使用源代码分发令人沮丧的部分原因。如果是这样， `cryptography` 文档的[安装部分](https:/cryptography.io/en/latest/installation/#building-cryptography-on-linux)会就特定操作系统需要哪些库和头文件提供建议。
 
 现在您可以重新安装 `cryptography` ，但这次要确保 `pip` 使用 PyPI 的 Wheels 。因为 `pip` 更喜欢 Wheels ，这类似于不带任何参数调用 `pip install` 。但在这种情况下，您可以通过要求带有 `--only-binary` 的 Wheels 来明确意图：
 
@@ -153,7 +153,7 @@ $ time python -m pip install \
 
 Python `.whl` 文件本质上是一个 ZIP ( `.zip` ) 存档，带有特制的文件名，告诉安装者 Wheels 将支持哪些 Python 版本和平台。
 
-Wheels 是一种[内置分发](https://packaging.python.org/glossary/#term-built-distribution)。在这种情况下，built 意味着 wheel 以可立即安装的格式出现，并允许您跳过源代码分发所需的构建阶段。
+Wheels 是一种[内置分发](https:/packaging.python.org/glossary/#term-built-distribution)。在这种情况下，built 意味着 wheel 以可立即安装的格式出现，并允许您跳过源代码分发所需的构建阶段。
 
 > 注意：值得一提的是，尽管使用了术语构建，但 Wheels 不包含 `.pyc` 文件或编译的 Python 字节码。
 
@@ -175,8 +175,8 @@ cryptography-2.9.2-cp35-abi3-macosx_10_9_x86_64.whl
 
 - `cryptography` 是包名。
 - `2.9.2` 是 `cryptography` 的包版本。版本是符合 PEP 440 的字符串，例如 `2.9.2` 、 `3.4` 或 `3.9.0.a3` 。
-- `cp35` 是 [Python 标签](https://www.python.org/dev/peps/pep-0425/#python-tag)，表示 Wheels 需要的 Python 实现和版本。 `cp` 代表 [CPython](https://realpython.com/cpython-source-code-guide/)，Python 的参考实现，而 `35` 代表 Python [3.5](https://docs.python.org/3/whatsnew/3.5.html)。例如，这个 Wheels 与 [Jython](https://www.jython.org/) 不兼容。
-- `abi3` 是 ABI 标签。 ABI 代表[应用程序二进制接口](https://docs.python.org/3/c-api/stable.html)。你真的不需要担心它需要什么，但是 `abi3` 是一个单独的版本，用于 Python C API 的二进制兼容性。
+- `cp35` 是 [Python 标签](https:/www.python.org/dev/peps/pep-0425/#python-tag)，表示 Wheels 需要的 Python 实现和版本。 `cp` 代表 [CPython](https:/realpython.com/cpython-source-code-guide/)，Python 的参考实现，而 `35` 代表 Python [3.5](https:/docs.python.org/3/whatsnew/3.5.html)。例如，这个 Wheels 与 [Jython](https:/www.jython.org/) 不兼容。
+- `abi3` 是 ABI 标签。 ABI 代表[应用程序二进制接口](https:/docs.python.org/3/c-api/stable.html)。你真的不需要担心它需要什么，但是 `abi3` 是一个单独的版本，用于 Python C API 的二进制兼容性。
 - `macosx_10_9_x86_64` 是平台标签，正好比较啰嗦。在这种情况下，它可以进一步细分为子部分：
   - `macosx` 是 macOS 操作系统。
   - `10_9` 是用于编译 Python 的 macOS 开发人员工具 SDK 版本，而 Python 又构建了这个 Wheels 。
@@ -198,9 +198,9 @@ chardet-3.0.4-py2.py3-none-any.whl
 - `none` 是 ABI 标签，意味着 ABI 不是一个因素。
 - `any` 是平台。这个 Wheels 几乎可以在任何平台上运行。
 
-Wheels 名称的 `py2.py3-none-any.whl` 段很常见。这是一个万能 Wheels ，可以在具有任何 [ABI](https://stackoverflow.com/a/2456882/7954504) 的任何平台上与 Python 2 或 3 一起安装。如果 Wheels 以 `none-any.whl` 结尾，那么它很可能是一个不关心特定 Python ABI 或 CPU 架构的纯 Python 包。
+Wheels 名称的 `py2.py3-none-any.whl` 段很常见。这是一个万能 Wheels ，可以在具有任何 [ABI](https:/stackoverflow.com/a/2456882/7954504) 的任何平台上与 Python 2 或 3 一起安装。如果 Wheels 以 `none-any.whl` 结尾，那么它很可能是一个不关心特定 Python ABI 或 CPU 架构的纯 Python 包。
 
-另一个例子是 `jinja2` 模板引擎。如果您导航到 Jinja 3.x alpha 版本的[下载页面](https://pypi.org/project/Jinja2/3.0.0a1/#files)，您将看到以下 Wheels ：
+另一个例子是 `jinja2` 模板引擎。如果您导航到 Jinja 3.x alpha 版本的[下载页面](https:/pypi.org/project/Jinja2/3.0.0a1/#files)，您将看到以下 Wheels ：
 
 ```bash
 Jinja2-3.0.0a1-py3-none-any.whl
@@ -214,28 +214,28 @@ Jinja2-3.0.0a1-py3-none-any.whl
 
 | Wheel                                          | What It Is 这是什么                                                                                                                |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `PyYAML-5.3.1-cp38-cp38-win_amd64.whl`         | [PyYAML](https://pypi.org/project/PyYAML/5.3.1/#files) for CPython 3.8 on Windows with AMD64 (x86-64) architecture                 |
-| `numpy-1.18.4-cp38-cp38-win32.whl`             | [NumPy](https://pypi.org/project/numpy/1.18.4/#files) for CPython 3.8 on Windows 32-bit                                            |
-| `scipy-1.4.1-cp36-cp36m-macosx_10_6_intel.whl` | [SciPy](https://pypi.org/project/scipy/1.4.1/#files) for CPython 3.6 on macOS 10.6 SDK with fat binary (multiple instruction sets) |
+| `PyYAML-5.3.1-cp38-cp38-win_amd64.whl`         | [PyYAML](https:/pypi.org/project/PyYAML/5.3.1/#files) for CPython 3.8 on Windows with AMD64 (x86-64) architecture                 |
+| `numpy-1.18.4-cp38-cp38-win32.whl`             | [NumPy](https:/pypi.org/project/numpy/1.18.4/#files) for CPython 3.8 on Windows 32-bit                                            |
+| `scipy-1.4.1-cp36-cp36m-macosx_10_6_intel.whl` | [SciPy](https:/pypi.org/project/scipy/1.4.1/#files) for CPython 3.6 on macOS 10.6 SDK with fat binary (multiple instruction sets) |
 
 现在您已经彻底了解什么是 Wheels ，是时候谈谈它们有什么好处了。
 
 ### Wheels 的优势
 
-这是来自 [Python Packaging Authority](https://www.pypa.io/en/latest/) (PyPA) 的 wheels 证明：
+这是来自 [Python Packaging Authority](https:/www.pypa.io/en/latest/) (PyPA) 的 wheels 证明：
 
-> 并非所有开发人员都有正确的工具或经验来构建这些用这些编译语言编写的组件，因此 Python 创造了 wheel，这是一种旨在运送带有编译工件的库的包格式。事实上，Python 的包安装程序 `pip` 总是更喜欢 wheel，因为安装总是更快，所以即使是纯 Python 包也能更好地使用 wheel。 （ [来源](https://packaging.python.org/overview/#python-binary-distributions)）
+> 并非所有开发人员都有正确的工具或经验来构建这些用这些编译语言编写的组件，因此 Python 创造了 wheel，这是一种旨在运送带有编译工件的库的包格式。事实上，Python 的包安装程序 `pip` 总是更喜欢 wheel，因为安装总是更快，所以即使是纯 Python 包也能更好地使用 wheel。 （ [来源](https:/packaging.python.org/overview/#python-binary-distributions)）
 
-更完整的描述是，wheels 在以下几个方面使 [Python 包的用户和维护者](https://pythonwheels.com/#advantages)都受益：
+更完整的描述是，wheels 在以下几个方面使 [Python 包的用户和维护者](https:/pythonwheels.com/#advantages)都受益：
 
-- 对于纯 Python 包和[扩展模块](https://realpython.com/build-python-c-extension-module/)，Wheels 的安装速度比源代码分发快。
-- Wheels 比源分布小。例如， [six](https://pypi.org/project/six/#files) Wheels 大约是相应源分布[大小的三分之一](https://pypi.org/project/six/#files)。当您考虑到单个包的 `pip install` 实际上可能会开始下载依赖项链时，这种差异变得更加重要。
-- Wheels 将 `setup.py` 执行排除在外。从源分发版安装会运行该项目的 `setup.py` 中包含的任何内容。正如 [PEP 427](https://www.python.org/dev/peps/pep-0427/#rationale) 所指出的，这相当于任意代码执行。 Wheels 完全避免了这种情况。
+- 对于纯 Python 包和[扩展模块](https:/realpython.com/build-python-c-extension-module/)，Wheels 的安装速度比源代码分发快。
+- Wheels 比源分布小。例如， [six](https:/pypi.org/project/six/#files) Wheels 大约是相应源分布[大小的三分之一](https:/pypi.org/project/six/#files)。当您考虑到单个包的 `pip install` 实际上可能会开始下载依赖项链时，这种差异变得更加重要。
+- Wheels 将 `setup.py` 执行排除在外。从源分发版安装会运行该项目的 `setup.py` 中包含的任何内容。正如 [PEP 427](https:/www.python.org/dev/peps/pep-0427/#rationale) 所指出的，这相当于任意代码执行。 Wheels 完全避免了这种情况。
 - 编译器不需要安装包含已编译扩展模块的 Wheels 。扩展模块包含在针对特定平台和 Python 版本的 wheel 中。
 - `pip` 自动在 wheel 中生成与正确的 Python 解释器匹配的 `.pyc` 文件。
 - Wheels 通过减少安装软件包时涉及的许多变量来提供一致性。
 
-您可以使用 PyPI 上项目的下载文件选项卡来查看可用的不同发行版。例如，[pandas](https://pypi.org/project/pandas/#files) 分发了各种各样的 Wheels 。
+您可以使用 PyPI 上项目的下载文件选项卡来查看可用的不同发行版。例如，[pandas](https:/pypi.org/project/pandas/#files) 分发了各种各样的 Wheels 。
 
 ### 告诉 `pip` 要下载什么
 
@@ -293,11 +293,11 @@ $ popd
 `--no-binary` 什么时候有用？以下是几个案例：
 
 - 对应的 Wheels 坏了。这是对 Wheels 的讽刺。它们旨在减少故障的发生，但在某些情况下， Wheels 可能会配置错误。在这种情况下，为自己下载和构建源代码分发可能是一个可行的选择。
-- 您想要对项目应用一个小的更改或[补丁文件](https://en.wikipedia.org/wiki/Patch_%28Unix%29)，然后安装它。这是从[版本控制系统](https://realpython.com/python-git-github-intro/#version-control) URL 克隆项目的替代方法。
+- 您想要对项目应用一个小的更改或[补丁文件](https:/en.wikipedia.org/wiki/Patch_%28Unix%29)，然后安装它。这是从[版本控制系统](https:/realpython.com/python-git-github-intro/#version-control) URL 克隆项目的替代方法。
 
 您还可以将上述标志与 `pip install` 一起使用。此外，与 `:all:` 不同， `--only-binary` 规则不仅适用于您正在安装的包，还适用于它的所有依赖项，您可以传递特定包的列表 `--only-binary` 和 `--no-binary` 来应用该规则规则到。
 
-下面是几个安装 URL 库 [yarl](https://github.com/aio-libs/yarl/) 的例子。它包含 Cython 代码并依赖于 [multidict](https://github.com/aio-libs/multidict) ，其中包含纯 C 代码。有几个选项可以严格使用或严格忽略 `yarl` 及其依赖项的 Wheels ：
+下面是几个安装 URL 库 [yarl](https:/github.com/aio-libs/yarl/) 的例子。它包含 Cython 代码并依赖于 [multidict](https:/github.com/aio-libs/multidict) ，其中包含纯 C 代码。有几个选项可以严格使用或严格忽略 `yarl` 及其依赖项的 Wheels ：
 
 ```bash
 $ # Install `yarl` and use only wheels for yarl and all dependencies
@@ -325,9 +325,9 @@ Linux 有许多变体和风格，例如 Debian、CentOS、Fedora 和 Pacman。�
 
 幸运的是，答案是否定的，这要归功于一组专门设计的标签，称为 `manylinux` 平台标签系列。目前有以下三种变体：
 
-1. `manylinux1` 是 [PEP 513](https://www.python.org/dev/peps/pep-0513/) 中指定的原始格式。
-2. `manylinux2010` 是 [PEP 571](https://www.python.org/dev/peps/pep-0571/) 中指定的更新，它升级到 CentOS 6 作为 Docker 镜像所基于的底层操作系统。理由是 CentOS 5.11，即 `manylinux1` 中允许的库列表的来源，于 2017 年 3 月达到 EOL 并停止接收安全补丁和错误修复。
-3. `manylinux2014` 是 [PEP 599](https://www.python.org/dev/peps/pep-0599/) 中指定的升级到 CentOS 7 的更新，因为 CentOS 6 计划于 2020 年 11 月达到 EOL。
+1. `manylinux1` 是 [PEP 513](https:/www.python.org/dev/peps/pep-0513/) 中指定的原始格式。
+2. `manylinux2010` 是 [PEP 571](https:/www.python.org/dev/peps/pep-0571/) 中指定的更新，它升级到 CentOS 6 作为 Docker 镜像所基于的底层操作系统。理由是 CentOS 5.11，即 `manylinux1` 中允许的库列表的来源，于 2017 年 3 月达到 EOL 并停止接收安全补丁和错误修复。
+3. `manylinux2014` 是 [PEP 599](https:/www.python.org/dev/peps/pep-0599/) 中指定的升级到 CentOS 7 的更新，因为 CentOS 6 计划于 2020 年 11 月达到 EOL。
 
 您可以在 pandas 项目中找到 `manylinux` 分布的示例。以下是 PyPI 的可用 pandas 下载列表中的两个（最多的）：
 
@@ -336,11 +336,11 @@ pandas-1.0.3-cp37-cp37m-manylinux1_x86_64.whl
 pandas-1.0.3-cp37-cp37m-manylinux1_i686.whl
 ```
 
-在这种情况下，pandas 为支持 x86-64 和 [i686](<https://en.wikipedia.org/wiki/P6_(microarchitecture)>) 架构的 CPython 3.7 构建了 `manylinux1` wheels。
+在这种情况下，pandas 为支持 x86-64 和 [i686](<https:/en.wikipedia.org/wiki/P6_(microarchitecture)>) 架构的 CPython 3.7 构建了 `manylinux1` wheels。
 
 `manylinux` 的核心是基于特定版本的 CentOS 操作系统构建的 Docker 镜像。它捆绑了一个编译器套件、多个版本的 Python 和 `pip` ，以及一组允许的共享库。
 
-> 注意：术语 allowed 表示[默认情况下假定存在](https://www.python.org/dev/peps/pep-0513/#rationale)于几乎所有 Linux 系统上的低级库。这个想法是，依赖项应该存在于基本操作系统上，而不需要额外安装。
+> 注意：术语 allowed 表示[默认情况下假定存在](https:/www.python.org/dev/peps/pep-0513/#rationale)于几乎所有 Linux 系统上的低级库。这个想法是，依赖项应该存在于基本操作系统上，而不需要额外安装。
 
 截至 2020 年年中， `manylinux1` 仍然是主要的 `manylinux` 标签。原因之一可能只是习惯。另一个可能是客户端（用户）端对 `manylinux2010` 及更高版本的支持仅限于更新版本的 `pip` ：
 
@@ -356,11 +356,11 @@ pandas-1.0.3-cp37-cp37m-manylinux1_i686.whl
 
 这就是说，如果您要在 Linux 主机上安装 Python 包，那么如果包维护者不遗余力地创建 `manylinux` Wheels ，您就认为自己很幸运。这几乎可以保证无论您的特定 Linux 变体或版本如何，都可以轻松安装软件包。
 
-> 警告：请注意 [PyPI wheels 不能在 Alpine Linux](https://pythonspeed.com/articles/alpine-docker-python/)（或 [BusyBox](https://hub.docker.com/_/busybox/)）上运行。这是因为 Alpine 使用 [musl](https://wiki.musl-libc.org/) 代替标准的 [glibc](https://www.gnu.org/software/libc/libc.html) 。 `musl libc` 库自称是“一个新的 `libc` ，力求快速、简单、轻量级、免费和正确”。不幸的是，说到 Wheels ， `glibc` 不是。
+> 警告：请注意 [PyPI wheels 不能在 Alpine Linux](https:/pythonspeed.com/articles/alpine-docker-python/)（或 [BusyBox](https:/hub.docker.com/_/busybox/)）上运行。这是因为 Alpine 使用 [musl](https:/wiki.musl-libc.org/) 代替标准的 [glibc](https:/www.gnu.org/software/libc/libc.html) 。 `musl libc` 库自称是“一个新的 `libc` ，力求快速、简单、轻量级、免费和正确”。不幸的是，说到 Wheels ， `glibc` 不是。
 
 ### 平台 Wheels 的安全注意事项
 
-从用户安全的角度来看，wheels 的一个值得考虑的特性是 wheels [可能会受到版本腐烂](https://github.com/asottile/no-manylinux#what-why)的影响，因为它们捆绑了二进制依赖项，而不是允许系统包管理器更新该依赖项。
+从用户安全的角度来看，wheels 的一个值得考虑的特性是 wheels [可能会受到版本腐烂](https:/github.com/asottile/no-manylinux#what-why)的影响，因为它们捆绑了二进制依赖项，而不是允许系统包管理器更新该依赖项。
 
 例如，如果一个 wheel 合并了 `libfortran` 共享库，那么即使您使用包管理器（如 @ 3#、 `yum` 或 `brew` 。
 
@@ -406,7 +406,7 @@ wheel 类型之间的差异取决于它们支持的 Python 版本以及它们是
 $ python setup.py sdist bdist_wheel
 ```
 
-这将创建一个源代码分发 ( `sdist` ) 和一个 Wheels ( `bdist_wheel` )。默认情况下，两者都会放在当前目录下的 `dist/` 中。要亲眼看看，您可以为 [HTTPie](https://github.com/jakubroztocil/httpie) 构建一个 Wheels ，一个用 Python 编写的命令行 HTTP 客户端，以及一个 `sdist` 。
+这将创建一个源代码分发 ( `sdist` ) 和一个 Wheels ( `bdist_wheel` )。默认情况下，两者都会放在当前目录下的 `dist/` 中。要亲眼看看，您可以为 [HTTPie](https:/github.com/jakubroztocil/httpie) 构建一个 Wheels ，一个用 Python 编写的命令行 HTTP 客户端，以及一个 `sdist` 。
 
 下面是为 HTTPie 包构建两种类型的发行版的结果：
 
@@ -447,7 +447,7 @@ $ python setup.py sdist -d "$tempdir" bdist_wheel -d "$tempdir"
 
 通用 Wheels 是用于同时支持 Python 2 和 3 的纯 Python 项目的 Wheels 。有多种方法可以告诉 `setuptools` 和 `distutils` Wheels 应该是通用的。
 
-选项 1 是在项目的 [setup.cfg](https://docs.python.org/3/distutils/configfile.html) 文件中指定选项：
+选项 1 是在项目的 [setup.cfg](https:/docs.python.org/3/distutils/configfile.html) 文件中指定选项：
 
 ```toml
 [bdist_wheel]
@@ -473,7 +473,7 @@ setup(
 )
 ```
 
-虽然这三个选项中的任何一个都应该有效，但前两个选项最常用。您可以在 [chardet 设置配置](https://github.com/chardet/chardet/blob/master/setup.cfg)中看到这样的示例。之后，您可以使用 `bdist_wheel` 命令，如前所示：
+虽然这三个选项中的任何一个都应该有效，但前两个选项最常用。您可以在 [chardet 设置配置](https:/github.com/chardet/chardet/blob/master/setup.cfg)中看到这样的示例。之后，您可以使用 `bdist_wheel` 命令，如前所示：
 
 ```bash
 $ python setup.py sdist bdist_wheel
@@ -491,13 +491,13 @@ $ python setup.py sdist bdist_wheel
 
 根据您现有的开发环境，您可能需要完成一个或两个额外的先决条件步骤来构建平台 Wheels 。下面的步骤将帮助您设置构建 C 和 C++ 扩展模块，这是迄今为止最常见的类型。
 
-在 macOS 上，您需要通过 [xcode](https://www.unix.com/man-page/OSX/1/xcode-select/) 获得的命令行开发人员工具：
+在 macOS 上，您需要通过 [xcode](https:/www.unix.com/man-page/OSX/1/xcode-select/) 获得的命令行开发人员工具：
 
 ```bash
 $ xcode-select --install
 ```
 
-在 Windows 上，您需要安装 [Microsoft Visual C++](https://docs.microsoft.com/en-us/cpp/?view=vs-2019)：
+在 Windows 上，您需要安装 [Microsoft Visual C++](https:/docs.microsoft.com/en-us/cpp/?view=vs-2019)：
 
 - 在浏览器中打开 Visual Studio 下载页面。
 - 选择 Visual Studio 工具 → Visual Studio 构建工具 → 下载。
@@ -507,9 +507,9 @@ $ xcode-select --install
 
 在 Linux 上，您需要一个编译器，例如 `gcc` 或 `g++` / `c++` 。
 
-有了这些，您就可以为 UltraJSON ( `ujson` ) 构建一个平台 Wheels ，UltraJSON 是一个用纯 C 语言编写并带有 Python 3 绑定的 [JSON](https://realpython.com/python-json/) 编码器和解码器。使用 `ujson` 是一个很好的玩具示例，因为它涵盖了几个基础：
+有了这些，您就可以为 UltraJSON ( `ujson` ) 构建一个平台 Wheels ，UltraJSON 是一个用纯 C 语言编写并带有 Python 3 绑定的 [JSON](https:/realpython.com/python-json/) 编码器和解码器。使用 `ujson` 是一个很好的玩具示例，因为它涵盖了几个基础：
 
-- 它包含一个扩展模块， [ujson](https://github.com/ultrajson/ultrajson/blob/master/python/ujson.c) 。
+- 它包含一个扩展模块， [ujson](https:/github.com/ultrajson/ultrajson/blob/master/python/ujson.c) 。
 - 它依赖于 Python 开发标头进行编译 ( `#include <Python.h>` )，但并不过分复杂。 `ujson` 旨在做一件事并且做好，就是读写 JSON！
 
 您可以从 GitHub 克隆该项目，导航到其目录并构建它：
@@ -577,7 +577,7 @@ adding 'ujson.cpython-38-darwin.so'
 > $ yum install -y python3-devel  # CentOS, Fedora, RHEL
 > ```
 
-如果你检查 UltraJSON 的 [setup.py](https://github.com/ultrajson/ultrajson/blob/master/setup.py) ，你会看到它自定义了一些编译器标志，例如 `-D_GNU_SOURCE` 。通过 `setup.py` 控制编译过程的复杂性超出了本教程的范围，但您应该知道可以[对编译和链接的发生方式进行细粒度控制](https://pythonextensionpatterns.readthedocs.io/en/latest/compiler_flags.html#setting-flags-automatically-in-setup-py)。
+如果你检查 UltraJSON 的 [setup.py](https:/github.com/ultrajson/ultrajson/blob/master/setup.py) ，你会看到它自定义了一些编译器标志，例如 `-D_GNU_SOURCE` 。通过 `setup.py` 控制编译过程的复杂性超出了本教程的范围，但您应该知道可以[对编译和链接的发生方式进行细粒度控制](https:/pythonextensionpatterns.readthedocs.io/en/latest/compiler_flags.html#setting-flags-automatically-in-setup-py)。
 
 如果您查看 `dist` ，那么您应该会看到创建的 Wheels ：
 
@@ -617,7 +617,7 @@ $ unzip -l dist/ujson-*.whl
 
 重点是构建环境由一个普通的 Linux 操作系统和一组有限的外部共享库组成，这些共享库对于不同的 Linux 变体是通用的。
 
-值得庆幸的是，您不必自己执行此操作。 PyPA 提供了一组 [Docker 镜像](https://github.com/pypa/manylinux)，只需单击几下鼠标即可为您提供此环境：
+值得庆幸的是，您不必自己执行此操作。 PyPA 提供了一组 [Docker 镜像](https:/github.com/pypa/manylinux)，只需单击几下鼠标即可为您提供此环境：
 
 - 选项 1 是从您的开发机器运行 `docker` 并使用 Docker 卷挂载您的项目，以便它可以在容器文件系统中访问。
 - 选项 2 是使用 CI/CD 解决方案，例如 CircleCI、GitHub Actions、Azure DevOps 或 Travis-CI，这将拉取您的项目并在推送或标记等操作上运行构建。
@@ -626,17 +626,17 @@ $ unzip -l dist/ujson-*.whl
 
 | `manylinux` Tag | Architecture | Docker Image                                                                     |
 | --------------- | ------------ | -------------------------------------------------------------------------------- |
-| `manylinux1`    | x86-64       | [quay.io/pypa/manylinux1_x86_64](https://quay.io/pypa/manylinux1_x86_64)         |
-| `manylinux1`    | i686         | [quay.io/pypa/manylinux1_i686](https://quay.io/pypa/manylinux1_i686)             |
-| `manylinux2010` | x86-64       | [quay.io/pypa/manylinux2010_x86_64](https://quay.io/pypa/manylinux2010_x86_64)   |
-| `manylinux2010` | i686         | [quay.io/pypa/manylinux2010_i686](https://quay.io/pypa/manylinux2010_i686)       |
-| `manylinux2014` | x86-64       | [quay.io/pypa/manylinux2014_x86_64](https://quay.io/pypa/manylinux2014_x86_64)   |
-| `manylinux2014` | i686         | [quay.io/pypa/manylinux2014_i686](https://quay.io/pypa/manylinux2014_i686)       |
-| `manylinux2014` | aarch64      | [quay.io/pypa/manylinux2014_aarch64](https://quay.io/pypa/manylinux2014_aarch64) |
-| `manylinux2014` | ppc64le      | [quay.io/pypa/manylinux2014_ppc64le](https://quay.io/pypa/manylinux2014_ppc64le) |
-| `manylinux2014` | s390x        | [quay.io/pypa/manylinux2014_s390x](https://quay.io/pypa/manylinux2014_s390x)     |
+| `manylinux1`    | x86-64       | [quay.io/pypa/manylinux1_x86_64](https:/quay.io/pypa/manylinux1_x86_64)         |
+| `manylinux1`    | i686         | [quay.io/pypa/manylinux1_i686](https:/quay.io/pypa/manylinux1_i686)             |
+| `manylinux2010` | x86-64       | [quay.io/pypa/manylinux2010_x86_64](https:/quay.io/pypa/manylinux2010_x86_64)   |
+| `manylinux2010` | i686         | [quay.io/pypa/manylinux2010_i686](https:/quay.io/pypa/manylinux2010_i686)       |
+| `manylinux2014` | x86-64       | [quay.io/pypa/manylinux2014_x86_64](https:/quay.io/pypa/manylinux2014_x86_64)   |
+| `manylinux2014` | i686         | [quay.io/pypa/manylinux2014_i686](https:/quay.io/pypa/manylinux2014_i686)       |
+| `manylinux2014` | aarch64      | [quay.io/pypa/manylinux2014_aarch64](https:/quay.io/pypa/manylinux2014_aarch64) |
+| `manylinux2014` | ppc64le      | [quay.io/pypa/manylinux2014_ppc64le](https:/quay.io/pypa/manylinux2014_ppc64le) |
+| `manylinux2014` | s390x        | [quay.io/pypa/manylinux2014_s390x](https:/quay.io/pypa/manylinux2014_s390x)     |
 
-首先，PyPA 还提供了一个示例存储库 [python-manylinux-demo](https://github.com/pypa/python-manylinux-demo)，这是一个用于与 Travis-CI 一起构建 `manylinux` wheels 的演示项目。
+首先，PyPA 还提供了一个示例存储库 [python-manylinux-demo](https:/github.com/pypa/python-manylinux-demo)，这是一个用于与 Travis-CI 一起构建 `manylinux` wheels 的演示项目。
 
 虽然构建 wheels 作为远程托管 CI 解决方案的一部分很常见，但您也可以在本地构建 `manylinux` wheels。为此，您需要安装 Docker。 Docker Desktop 适用于 macOS、Windows 和 Linux。
 
@@ -654,7 +654,7 @@ $ DOCKER_IMAGE='quay.io/pypa/manylinux1_x86_64'
 $ PLAT='manylinux1_x86_64'
 ```
 
-`DOCKER_IMAGE` 变量是由 PyPA 维护的用于构建 `manylinux` Wheels 的图像，托管在 [Quay.io](https://quay.io/)。平台 ( `PLAT` ) 是提供给 `auditwheel` 的必要信息，让它知道要应用哪个平台标签。
+`DOCKER_IMAGE` 变量是由 PyPA 维护的用于构建 `manylinux` Wheels 的图像，托管在 [Quay.io](https:/quay.io/)。平台 ( `PLAT` ) 是提供给 `auditwheel` 的必要信息，让它知道要应用哪个平台标签。
 
 现在您可以拉取 Docker 镜像并在容器中运行 wheel-builder 脚本：
 
@@ -739,9 +739,9 @@ setup(
 
 ### 在持续集成中构建 Wheels
 
-在本地机器上构建 Wheels 的替代方法是在项目的 [CI 管道](https://realpython.com/python-continuous-integration/)中自动构建它们。
+在本地机器上构建 Wheels 的替代方法是在项目的 [CI 管道](https:/realpython.com/python-continuous-integration/)中自动构建它们。
 
-有无数与主要代码托管服务集成的 CI 解决方案。其中包括 [Appveyor](https://www.appveyor.com/)、[Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)、[BitBucket Pipelines](https://bitbucket.org/product/features/pipelines)、[Circle CI](https://circleci.com/)、[GitLab](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)、[GitHub Actions](https://github.com/features/actions)、[Jenkins](https://www.jenkins.io/) 和 [Travis CI](https://travis-ci.org/)，仅举几例。
+有无数与主要代码托管服务集成的 CI 解决方案。其中包括 [Appveyor](https:/www.appveyor.com/)、[Azure DevOps](https:/azure.microsoft.com/en-us/services/devops/)、[BitBucket Pipelines](https:/bitbucket.org/product/features/pipelines)、[Circle CI](https:/circleci.com/)、[GitLab](https:/about.gitlab.com/stages-devops-lifecycle/continuous-integration/)、[GitHub Actions](https:/github.com/features/actions)、[Jenkins](https:/www.jenkins.io/) 和 [Travis CI](https:/travis-ci.org/)，仅举几例。
 
 本教程的目的不是要判断哪种 CI 服务最适合构建 Wheels ，以及考虑到 CI 支持的发展速度，任何支持哪些容器的 CI 服务列表很快就会过时。
 
@@ -785,12 +785,12 @@ jobs:
 
 但是，如果您有一个复杂的项目（可能是一个带有 C 扩展或 Cython 代码的项目）并且您正在努力构建一个 CI/CD 管道以自动构建 Wheels ，那么可能会涉及额外的步骤。以下是一些您可以通过示例学习的项目：
 
-- [`yarl`](https://github.com/aio-libs/yarl)
-- [`msgpack`](https://github.com/msgpack/msgpack-python)
-- [`markupsafe`](https://github.com/pallets/markupsafe)
-- [`cryptography`](https://github.com/pyca/cryptography)
+- [`yarl`](https:/github.com/aio-libs/yarl)
+- [`msgpack`](https:/github.com/msgpack/msgpack-python)
+- [`markupsafe`](https:/github.com/pallets/markupsafe)
+- [`cryptography`](https:/github.com/pyca/cryptography)
 
-许多项目推出了自己的 CI 配置。然而，一些解决方案已经出现，用于减少配置文件中指定的代码量来构建 Wheels 。您可以直接在 CI 服务器上使用 [cibuildwheel](https://github.com/joerick/cibuildwheel) 工具来减少构建多个平台 Wheels 所需的代码行和配置。还有 [multibuild](https://github.com/matthew-brett/multibuild)，它提供了一组 shell 脚本，用于协助在 Travis CI 和 AppVeyor 上构建 Wheels 。
+许多项目推出了自己的 CI 配置。然而，一些解决方案已经出现，用于减少配置文件中指定的代码量来构建 Wheels 。您可以直接在 CI 服务器上使用 [cibuildwheel](https:/github.com/joerick/cibuildwheel) 工具来减少构建多个平台 Wheels 所需的代码行和配置。还有 [multibuild](https:/github.com/matthew-brett/multibuild)，它提供了一组 shell 脚本，用于协助在 Travis CI 和 AppVeyor 上构建 Wheels 。
 
 ### 确保你的 Wheels 旋转正确
 
@@ -809,7 +809,7 @@ dist/ujson-2.0.3-cp38-cp38-macosx_10_15_x86_64.whl: OK
 
 ```bash
 $ python -m twine upload \
-      --repository-url https://test.pypi.org/legacy/ \
+      --repository-url https:/test.pypi.org/legacy/ \
       dist/*
 ```
 
@@ -817,7 +817,7 @@ $ python -m twine upload \
 
 ```bash
 $ python -m pip install \
-      --index-url https://test.pypi.org/simple/ \
+      --index-url https:/test.pypi.org/simple/ \
       <pkg-name>
 ```
 
@@ -853,36 +853,36 @@ $ python -m twine upload dist/*
 
 ## 资源
 
-[Python Wheels](https://pythonwheels.com/)页面专门跟踪 PyPI 上下载次数最多的 360 个包中对 wheels 的支持。在编写本教程时，采用率非常可观，为 360 分之 331，即 91% 左右。
+[Python Wheels](https:/pythonwheels.com/)页面专门跟踪 PyPI 上下载次数最多的 360 个包中对 wheels 的支持。在编写本教程时，采用率非常可观，为 360 分之 331，即 91% 左右。
 
 已经有许多 Python 增强提案 (PEP) 帮助了 wheel 格式的规范和发展：
 
-- [PEP 425 - Compatibility Tags for Built Distributions](https://www.python.org/dev/peps/pep-0425/)
-- [PEP 427 - The Wheel Binary Package Format 1.0](https://www.python.org/dev/peps/pep-0427/)
-- [PEP 491 - The Wheel Binary Package Format 1.9](https://www.python.org/dev/peps/pep-0491/)
-- [PEP 513 - A Platform Tag for Portable Linux Built Distributions](https://www.python.org/dev/peps/pep-0513/)
-- [PEP 571 - The manylinux2010 Platform Tag](https://www.python.org/dev/peps/pep-0571/)
-- [PEP 599 - The manylinux2014 Platform Tag](https://www.python.org/dev/peps/pep-0599/)
+- [PEP 425 - Compatibility Tags for Built Distributions](https:/www.python.org/dev/peps/pep-0425/)
+- [PEP 427 - The Wheel Binary Package Format 1.0](https:/www.python.org/dev/peps/pep-0427/)
+- [PEP 491 - The Wheel Binary Package Format 1.9](https:/www.python.org/dev/peps/pep-0491/)
+- [PEP 513 - A Platform Tag for Portable Linux Built Distributions](https:/www.python.org/dev/peps/pep-0513/)
+- [PEP 571 - The manylinux2010 Platform Tag](https:/www.python.org/dev/peps/pep-0571/)
+- [PEP 599 - The manylinux2014 Platform Tag](https:/www.python.org/dev/peps/pep-0599/)
 
 以下是本教程中提到的各种 wheel 打包工具的候选清单：
 
-- [pypa/wheel](https://github.com/pypa/wheel)
-- [pypa/auditwheel](https://github.com/pypa/auditwheel)
-- [pypa/manylinux](https://github.com/pypa/manylinux)
-- [pypa/python-manylinux-demo](https://github.com/pypa/python-manylinux-demo)
-- [jwodder/check-wheel-contents](https://github.com/jwodder/check-wheel-contents)
-- [matthew-brett/delocate](https://github.com/matthew-brett/delocate)
-- [matthew-brett/multibuild](https://github.com/matthew-brett/multibuild)
-- [joerick/cibuildwheel](https://github.com/joerick/cibuildwheel)
+- [pypa/wheel](https:/github.com/pypa/wheel)
+- [pypa/auditwheel](https:/github.com/pypa/auditwheel)
+- [pypa/manylinux](https:/github.com/pypa/manylinux)
+- [pypa/python-manylinux-demo](https:/github.com/pypa/python-manylinux-demo)
+- [jwodder/check-wheel-contents](https:/github.com/jwodder/check-wheel-contents)
+- [matthew-brett/delocate](https:/github.com/matthew-brett/delocate)
+- [matthew-brett/multibuild](https:/github.com/matthew-brett/multibuild)
+- [joerick/cibuildwheel](https:/github.com/joerick/cibuildwheel)
 
 Python 文档有几篇文章涵盖了 Wheels 和源代码分发：
 
-- [Generating Distribution Archives](https://packaging.python.org/tutorials/packaging-projects/#generating-distribution-archives)
-- [Creating a Source Distribution](https://docs.python.org/3/distutils/sourcedist.html)
+- [Generating Distribution Archives](https:/packaging.python.org/tutorials/packaging-projects/#generating-distribution-archives)
+- [Creating a Source Distribution](https:/docs.python.org/3/distutils/sourcedist.html)
 
 最后，这里有一些来自 PyPA 的更有用的链接：
 
-- [Packaging your Project](https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-your-project)
-- [An Overview of Packaging for Python](https://packaging.python.org/overview/)
+- [Packaging your Project](https:/packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-your-project)
+- [An Overview of Packaging for Python](https:/packaging.python.org/overview/)
 
-原文地址：[https://realpython.com/python-wheels/](https://realpython.com/python-wheels/)
+原文地址：[https:/realpython.com/python-wheels/](https:/realpython.com/python-wheels/)

@@ -11,7 +11,7 @@ tags: [spring-cloud]
 
 今天做了什么：
 
-1. 参考 《[Microservices with Spring Boot 3 and Spring Cloud](https://download.packt.com/free-ebook/9781805128694)》，重构 foodie-cloud 项目
+1. 参考 《[Microservices with Spring Boot 3 and Spring Cloud](https:/download.packt.com/free-ebook/9781805128694)》，重构 foodie-cloud 项目
    - 集成 Spring Cloud Config 使用文件保存配置文件
    
    - 集成 SpringDoc OpenAPI 基于 Javadoc 生成 API 文档

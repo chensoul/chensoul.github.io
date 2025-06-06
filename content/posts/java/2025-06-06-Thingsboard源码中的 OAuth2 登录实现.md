@@ -11,11 +11,11 @@ tags: [thingsboard,oauth2]
 
 使用 [sysadmin@thingsboard.org](mailto:sysadmin@thingsboard.org) / sysadmin 账号登录 Thingsboard 系统之后，在安全 -> OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。
 
-![create-oauth2-client-in-thingsboard](/images/create-oauth2-client-in-thingsboard.webp)
+![create-oauth2-client-in-thingsboard](../../../static/images/create-oauth2-client-in-thingsboard.webp)
 
 然后，创建一个域：
 
-![create-domain-in-thingsboard](/images/create-domain-in-thingsboard.webp)
+![create-domain-in-thingsboard](../../../static/images/create-domain-in-thingsboard.webp)
 
 域名的名称可以是 ip 加端口，也可以是域名，如果是名称，需要做好 DNS 解析。
 
@@ -27,7 +27,7 @@ tags: [thingsboard,oauth2]
 
 注销登录之后，在登录页面可以看到 使用 Github 登录的按钮。
 
-![login-github-page-in-thingsboard](/images/login-github-page-in-thingsboard.webp)
+![login-github-page-in-thingsboard](../../../static/images/login-github-page-in-thingsboard.webp)
 
 ## 源码实现
 
@@ -78,14 +78,14 @@ security:
     loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL:/login/oauth2/code/}"
     githubMapper:
       # The email addresses that will be mapped from the URL
-      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}"
+      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https:/api.github.com/user/emails}"
 ```
 
 CustomOAuth2AuthorizationRequestResolver 相对于默认实现 DefaultOAuth2AuthorizationRequestResolver 的主要修改之处在于代expandRedirectUri 方法：
 
 ```java
 		private String expandRedirectUri(HttpServletRequest request, ClientRegistration clientRegistration, String action) {
-        //.....
+        /.....
 
         String redirectUri = getRedirectUri(request);
         log.trace("Redirect URI - {}.", redirectUri);
@@ -163,15 +163,15 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 }  
 ```
 
-CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 https://github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c ，调用 authenticationManager 进行认证。
+CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 https:/github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http:/localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c ，调用 authenticationManager 进行认证。
 
 ```java
-	// OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段
+	/ OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段
 	String redirectUri = UriComponentsBuilder.fromHttpUrl(UrlUtils.buildFullRequestUrl(request))
 				.replaceQuery(null)
 				.build()
 				.toUriString();
-		// @formatter:on
+		/ @formatter:on
 		OAuth2AuthorizationResponse authorizationResponse = OAuth2AuthorizationResponseUtils.convert(params,
 				redirectUri);
 		Object authenticationDetails = this.authenticationDetailsSource.buildDetails(request);
@@ -214,7 +214,7 @@ OAuth2LoginAuthenticationFilter 通过 AuthorizationRequestRepository 可以取�
 		}
 		String registrationId = authorizationRequest.getAttribute(OAuth2ParameterNames.REGISTRATION_ID);
 		ClientRegistration clientRegistration = this.clientRegistrationRepository.findByRegistrationId(registrationId);
-    //....
+    /....
 }    
 ```
 
@@ -247,10 +247,10 @@ spring:
           github:
             user-name-attribute: login
           okta:
-            authorization-uri: https://your-subdomain.oktapreview.com/oauth2/v1/authorize
-            token-uri: https://your-subdomain.oktapreview.com/oauth2/v1/token
-            user-info-uri: https://your-subdomain.oktapreview.com/oauth2/v1/userinfo
-            jwk-set-uri: https://your-subdomain.oktapreview.com/oauth2/v1/keys
+            authorization-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/authorize
+            token-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/token
+            user-info-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/userinfo
+            jwk-set-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/keys
 
 ```
 
@@ -274,7 +274,7 @@ public class HybridClientRegistrationRepository implements ClientRegistrationRep
     }
 
     private ClientRegistration toSpringClientRegistration(OAuth2Client oAuth2Client){
-    	//...
+    	/...
     }
 }
 ```
@@ -373,10 +373,10 @@ apple_config.json
 {
   "providerId": "Apple",
   "additionalInfo": null,
-  "accessTokenUri": "https://appleid.apple.com/auth/token",
-  "authorizationUri": "https://appleid.apple.com/auth/authorize?response_mode=form_post",
+  "accessTokenUri": "https:/appleid.apple.com/auth/token",
+  "authorizationUri": "https:/appleid.apple.com/auth/authorize?response_mode=form_post",
   "scope": ["email","openid","name"],
-  "jwkSetUri": "https://appleid.apple.com/auth/keys",
+  "jwkSetUri": "https:/appleid.apple.com/auth/keys",
   "userInfoUri": null,
   "clientAuthenticationMethod": "POST",
   "userNameAttributeName": "email",
@@ -392,7 +392,7 @@ apple_config.json
   "comment": null,
   "loginButtonIcon": "apple-logo",
   "loginButtonLabel": "Apple",
-  "helpLink": "https://developer.apple.com/sign-in-with-apple/get-started/"
+  "helpLink": "https:/developer.apple.com/sign-in-with-apple/get-started/"
 }
 ```
 
@@ -401,11 +401,11 @@ facebook_config.json：
 ```json
 {
   "providerId": "Facebook",
-  "accessTokenUri": "https://graph.facebook.com/v2.8/oauth/access_token",
-  "authorizationUri": "https://www.facebook.com/v2.8/dialog/oauth",
+  "accessTokenUri": "https:/graph.facebook.com/v2.8/oauth/access_token",
+  "authorizationUri": "https:/www.facebook.com/v2.8/dialog/oauth",
   "scope": ["email","public_profile"],
   "jwkSetUri": null,
-  "userInfoUri": "https://graph.facebook.com/me?fields=id,name,first_name,last_name,email",
+  "userInfoUri": "https:/graph.facebook.com/me?fields=id,name,first_name,last_name,email",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "email",
   "mapperConfig": {
@@ -420,7 +420,7 @@ facebook_config.json：
   "comment": null,
   "loginButtonIcon": "facebook-logo",
   "loginButtonLabel": "Facebook",
-  "helpLink": "https://developers.facebook.com/docs/facebook-login/web#logindialog"
+  "helpLink": "https:/developers.facebook.com/docs/facebook-login/web#logindialog"
 }
 ```
 
@@ -429,11 +429,11 @@ github_config.json：
 ```json
 {
   "providerId": "Github",
-  "accessTokenUri": "https://github.com/login/oauth/access_token",
-  "authorizationUri": "https://github.com/login/oauth/authorize",
+  "accessTokenUri": "https:/github.com/login/oauth/access_token",
+  "authorizationUri": "https:/github.com/login/oauth/authorize",
   "scope": ["read:user","user:email"],
   "jwkSetUri": null,
-  "userInfoUri": "https://api.github.com/user",
+  "userInfoUri": "https:/api.github.com/user",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "login",
   "mapperConfig": {
@@ -443,10 +443,10 @@ github_config.json：
       "tenantNameStrategy": "DOMAIN"
     }
   },
-  "comment": "In order to log into ThingsBoard you need to have user's email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to <a href=\"https://docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\">Github Documentation</a>",
+  "comment": "In order to log into ThingsBoard you need to have user's email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to <a href=\"https:/docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\">Github Documentation</a>",
   "loginButtonIcon": "github-logo",
   "loginButtonLabel": "Github",
-  "helpLink": "https://docs.github.com/en/developers/apps/creating-an-oauth-app"
+  "helpLink": "https:/docs.github.com/en/developers/apps/creating-an-oauth-app"
 }
 
 ```
@@ -457,11 +457,11 @@ google_config.json：
 {
   "providerId": "Google",
   "additionalInfo": null,
-  "accessTokenUri": "https://oauth2.googleapis.com/token",
-  "authorizationUri": "https://accounts.google.com/o/oauth2/v2/auth",
+  "accessTokenUri": "https:/oauth2.googleapis.com/token",
+  "authorizationUri": "https:/accounts.google.com/o/oauth2/v2/auth",
   "scope": ["email","openid","profile"],
-  "jwkSetUri": "https://www.googleapis.com/oauth2/v3/certs",
-  "userInfoUri": "https://openidconnect.googleapis.com/v1/userinfo",
+  "jwkSetUri": "https:/www.googleapis.com/oauth2/v3/certs",
+  "userInfoUri": "https:/openidconnect.googleapis.com/v1/userinfo",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "email",
   "mapperConfig": {
@@ -476,7 +476,7 @@ google_config.json：
   "comment": null,
   "loginButtonIcon": "google-logo",
   "loginButtonLabel": "Google",
-  "helpLink": "https://developers.google.com/adwords/api/docs/guides/authentication"
+  "helpLink": "https:/developers.google.com/adwords/api/docs/guides/authentication"
 }
 ```
 
@@ -524,7 +524,7 @@ User 对象主要定义了 email、firstName、lastName、phone，其他用户�
 @Data
 public class User {
     private String email;
-    //    private String authority;
+    /    private String authority;
     private String firstName;
     private String lastName;
     private String phone;

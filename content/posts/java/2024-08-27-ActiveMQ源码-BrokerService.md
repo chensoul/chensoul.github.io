@@ -16,9 +16,9 @@ public class IDERunner {
     public static void main(String[]args) throws Exception {
         BrokerService brokerService = new BrokerService();
 
-//        brokerService.addConnector(
-//            "tcp://0.0.0.0:61616?trace=" + TRANSPORT_TRACE +
-//                "&transport.wireFormat.maxFrameSize=104857600");
+/        brokerService.addConnector(
+/            "tcp:/0.0.0.0:61616?trace=" + TRANSPORT_TRACE +
+/                "&transport.wireFormat.maxFrameSize=104857600");
 
         brokerService.setPersistent(false);
         brokerService.setUseJmx(false);
@@ -65,7 +65,7 @@ static {
             LOG.info("Loaded the Bouncy Castle security provider at position: {}", ret);
         }
     } catch(Throwable e) {
-        // No BouncyCastle found so we use the default Java Security Provider
+        / No BouncyCastle found so we use the default Java Security Provider
     }
 
     String localHostName = "localhost";
@@ -104,15 +104,15 @@ start 方法：
 - 1、判断是否已经启动。用到了 stopped 和 started 两个变量。
 
   ```java
-  //private final AtomicBoolean started = new AtomicBoolean(false);
-  //private final AtomicBoolean stopped = new AtomicBoolean(false);
+  /private final AtomicBoolean started = new AtomicBoolean(false);
+  /private final AtomicBoolean stopped = new AtomicBoolean(false);
   
   if (stopped.get() || !started.compareAndSet(false, true)) {
-      // lets just ignore redundant start() calls
-      // as its way too easy to not be completely sure if start() has been
-      // called or not with the gazillion of different configuration
-      // mechanisms
-      // throw new IllegalStateException("Already started.");
+      / lets just ignore redundant start() calls
+      / as its way too easy to not be completely sure if start() has been
+      / called or not with the gazillion of different configuration
+      / mechanisms
+      / throw new IllegalStateException("Already started.");
       return;
   }
   ```
@@ -365,22 +365,22 @@ PersistenceAdapter 接口的定义：
 public interface PersistenceAdapter extends Service {
   Set<ActiveMQDestination> getDestinations();
 
-  // 创建 MessageStore
+  / 创建 MessageStore
   MessageStore createQueueMessageStore(ActiveMQQueue destination) throws IOException;
   TopicMessageStore createTopicMessageStore(ActiveMQTopic destination) throws IOException;
   JobSchedulerStore createJobSchedulerStore() throws IOException, UnsupportedOperationException;
   TransactionStore createTransactionStore() throws IOException;
   
-  // 删除 MessageStore
+  / 删除 MessageStore
   void removeQueueMessageStore(ActiveMQQueue destination);
   void removeTopicMessageStore(ActiveMQTopic destination);
 
-  // 事务
+  / 事务
   void beginTransaction(ConnectionContext context) throws IOException;
   void commitTransaction(ConnectionContext context) throws IOException;
   void rollbackTransaction(ConnectionContext context) throws IOException;
   
-  // 删除消息
+  / 删除消息
   void deleteAllMessages() throws IOException;
 
   void setUsageManager(SystemUsage usageManager);
@@ -478,7 +478,7 @@ abstract public class AbstractMessageStore implements MessageStore {
     public AbstractMessageStore(ActiveMQDestination destination) {
         this.destination = destination;
     }
-    //...
+    /...
 }
 ```
 
@@ -501,14 +501,14 @@ public interface Statistic {
     public long getLastSampleTime();
 }
 
-// Statistic
-	// StatisticImpl
-		// CountStatisticImpl
-    // SizeStatisticImpl
+/ Statistic
+	/ StatisticImpl
+		/ CountStatisticImpl
+    / SizeStatisticImpl
 
-// Stats
-	// StatsImpl
-		// MessageStoreStatistics
+/ Stats
+	/ StatsImpl
+		/ MessageStoreStatistics
 ```
 
 创建 Queue 和 Topic 时，需要事务支持，ActiveMQ 定义了 TransactionStore 接口：
@@ -591,7 +591,7 @@ public void deleteAllMessages() throws IOException {
 设置方法，第一种是设置 activemq.xml 文件：
 
 ```xml
-<broker xmlns="http://activemq.apache.org/schema/core" persistent="false" brokerName="brokerName" dataDirectory="${activemq.data}">
+<broker xmlns="http:/activemq.apache.org/schema/core" persistent="false" brokerName="brokerName" dataDirectory="${activemq.data}">
 ```
 
 第二种方法是通过 BrokerService 对象进行设置：
@@ -642,7 +642,7 @@ recover 方法：
 ```java
 @Override
 public void recover(MessageRecoveryListener listener) throws Exception {
-    // the message table is a synchronizedMap - so just have to synchronize here
+    / the message table is a synchronizedMap - so just have to synchronize here
     synchronized (messageTable) {
         for (Message message : messageTable.values()) {
             listener.recoverMessage(message);
@@ -725,6 +725,6 @@ MemoryTransactionStore 类的 `proxy` 方法会对 MessageStore、TopicMessageSt
 
 ### KahaDBPersistenceAdapter
 
-KahaDB 是 ActiveMQ 框架的基于文件的持久性数据库。它位于使用它的消息代理的本地，已针对快速持久性进行了优化。它是自ActiveMQ Classic 5.4以来的默认存储机制。与其前身[AMQ 消息存储](https://activemq.apache.org/components/classic/documentation/amq-message-store)相比，KahaDB 使用更少的文件描述符并提供更快的恢复速度。
+KahaDB 是 ActiveMQ 框架的基于文件的持久性数据库。它位于使用它的消息代理的本地，已针对快速持久性进行了优化。它是自ActiveMQ Classic 5.4以来的默认存储机制。与其前身[AMQ 消息存储](https:/activemq.apache.org/components/classic/documentation/amq-message-store)相比，KahaDB 使用更少的文件描述符并提供更快的恢复速度。
 
-![KahaDB Architecture](https://access.redhat.com/webassets/avalon/d/Red_Hat_AMQ-6.3-Tuning_Guide-en-US/images/e0a0cfdb72b20fd6a0e40b5767cec38c/persist_01.gif)
+![KahaDB Architecture](https:/access.redhat.com/webassets/avalon/d/Red_Hat_AMQ-6.3-Tuning_Guide-en-US../../../static/images/e0a0cfdb72b20fd6a0e40b5767cec38c/persist_01.gif)

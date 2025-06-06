@@ -36,7 +36,7 @@ tags: [spring-security]
 
 ## Spring Security 架构的组件
 
-![Components of Spring Security Architecture](/images/components_of_spring_security_architecture.webp)
+![Components of Spring Security Architecture](../../../static/images/components_of_spring_security_architecture.webp)
 
 正如我们在上图中看到的那样，Spring Security 的基本组件如下所示。我们将在讨论过程中简要讨论它们。我们还将讨论它们在身份验证和授权过程中的角色。
 
@@ -102,7 +102,7 @@ Spring Security 只需要了解登录表单的详细信息，例如登录表单�
 
 - **A Java IDE** − 最好是 STS 4，但 Eclipse、IntelliJ Idea 或任何其他 IDE 都可以。
 - MySql Server Community Edition - 我们需要在我们的系统中下载并安装 MySql Community Server。我们可以点击这里进入官方网站。
-- [MySql Workbench](https://dev.mysql.com/downloads/workbench/) − 它是一个 GUI 工具，我们可以用来与 MySql 数据库交互。
+- [MySql Workbench](https:/dev.mysql.com/downloads/workbench/) − 它是一个 GUI 工具，我们可以用来与 MySql 数据库交互。
 
 ### 数据库设置
 
@@ -135,7 +135,7 @@ VALUES ('user','12345', true);
 
 像往常一样，我们将使用 Spring 初始化程序来设置我们的项目。我们将使用 Spring Boot 版本 2.3.2 创建一个 Maven 项目。让我们将项目命名为 formlogin（我们可以选择任何我们想要的名称）和组 id 为 com.tutorial.spring.security。此外，我们将在该项目中使用 Java 版本 8。
 
-![Project Setup](/images/project_setup.webp)
+![Project Setup](../../../static/images/project_setup.webp)
 
 ### 依赖关系
 
@@ -155,10 +155,10 @@ pom.xml
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-   https://maven.apache.org/xsd/maven-4.0.0.xsd"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns="http://maven.apache.org/POM/4.0.0">
+<project xsi:schemaLocation="http:/maven.apache.org/POM/4.0.0
+   https:/maven.apache.org/xsd/maven-4.0.0.xsd"
+   xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
+   xmlns="http:/maven.apache.org/POM/4.0.0">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.springframework.boot</groupId>
@@ -236,7 +236,7 @@ We can see that our project details along with our dependencies are enlisted her
 我们将在 application.properties 文件中配置数据源。由于我们将使用本地 MySQL 数据库作为数据源，因此我们在此处提供本地数据库实例的 URL、用户名和密码。我们将我们的数据库命名为“spring”。
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/spring
+spring.datasource.url=jdbc:mysql:/localhost:3306/spring
 spring.datasource.username=root
 spring.datasource.password=root
 ```
@@ -708,9 +708,9 @@ public class HelloController {
 ```html
 <!DOCTYPE html>
 <html
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:th="https://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+  xmlns="http:/www.w3.org/1999/xhtml"
+  xmlns:th="https:/www.thymeleaf.org"
+  xmlns:sec="https:/www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 >
   <head>
     <title>Hello World!</title>
@@ -729,7 +729,7 @@ public class HelloController {
 
 ```html
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"      xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http:/www.w3.org/1999/xhtml"      xmlns:th="https:/www.thymeleaf.org" xmlns:sec="https:/www.thymeleaf.org/thymeleaf-extras-springsecurity3">
    <head>
       <title>Spring Security Example</title>
    </head>
@@ -799,28 +799,28 @@ public class HelloController {
 
 我们最终的项目结构应该与此类似。
 
-![Form Login](/images/form_login.webp)
+![Form Login](../../../static/images/form_login.webp)
 
 **运行应用程序**
 
 然后我们可以将应用程序作为 SpringBootApp 运行。当我们在浏览器上访问 localhost:8080 时，它会将我们重定向回登录页面。
 
-![Running the Application](/images/running_the_application.webp)
+![Running the Application](../../../static/images/running_the_application.webp)
 
 身份验证成功后，它将带我们进入带有问候语的索引视图。
 
-![Hello Users](/images/hello_users.webp)
+![Hello Users](../../../static/images/hello_users.webp)
 
 因为，在帐户被锁定之前，我们只允许三次失败的尝试，因此在第三次失败的身份验证中，用户将被锁定，并且该消息会显示在屏幕上。
 
-![Third Failed Authentication](/images/third_failed_authentication.webp)
+![Third Failed Authentication](../../../static/images/third_failed_authentication.webp)
 
 在点击 /register 端点时，我们还可以注册一个新用户。
 
-![Register](/images/register.webp)
+![Register](../../../static/images/register.webp)
 
 ## **结论**
 
 从今天的文章中，我们学习了如何使用基于注释的配置使用数据库来使用自定义表单进行登录。我们还学习了如何防止多次登录尝试失败。在这样做的过程中，我们已经看到了如何实现我们自己的 AuthenticationProvider 和 UserDetailsS​​ervice 来使用我们的自定义身份验证流程对用户进行身份验证。
 
-原文链接：[https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm](https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm)
+原文链接：[https:/www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm](https:/www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm)

@@ -51,15 +51,15 @@ Spring Security 是一个功能强大且广泛使用的安全框架，为企业�
 
 10. Spring Security 5.5：是当前最新的版本，于 2022 年发布。Spring Security 5.5 带来了一些新的功能和改进，包括对 Spring Framework 6 和 Java 17 的支持、更好的密码编码和认证管理、更好的 OAuth2 和 OpenID Connect 支持、更好的 WebFlux 和 RSocket 支持、更好的测试和性能等。
 
-11. Spring Security 5.7：由于[根据 Spring 官网发布的公告](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/)，WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用。
+11. Spring Security 5.7：由于[根据 Spring 官网发布的公告](https:/javatechonline.com/spring-security-without-websecurityconfigureradapter/)，WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用。
 
-12. Spring Security 6.0：2022 年 11 月发布，WebSecurityConfigurerAdapter 已从 Spring Security API 中完全删除。它还影响了 2022 年 11 月新发布的 [Spring Boot 3.0](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)。
+12. Spring Security 6.0：2022 年 11 月发布，WebSecurityConfigurerAdapter 已从 Spring Security API 中完全删除。它还影响了 2022 年 11 月新发布的 [Spring Boot 3.0](https:/javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)。
 
     除了不断改进和增强现有功能之外，Spring Security 还增加了对新的安全威胁的防御和支持，例如 CSRF、XSS、CSP 等。此外，Spring Security 还提供了许多有用的扩展和插件，例如 Spring Security OAuth、Spring Security SAML、Spring Security Kerberos 等，以满足不同的安全需求。
 
 ## Spring Security OAuth2 发展
 
-[Spring Security OAuth2](https://github.com/spring-attic/spring-security-oauth) 是一个用于构建安全的 OAuth2-based 网络应用的框架，它是 Spring Security 的一部分。下面是 Spring Security OAuth2 的发展过程：
+[Spring Security OAuth2](https:/github.com/spring-attic/spring-security-oauth) 是一个用于构建安全的 OAuth2-based 网络应用的框架，它是 Spring Security 的一部分。下面是 Spring Security OAuth2 的发展过程：
 
 ### 1. Spring Security OAuth2 V1.x – V2.0
 
@@ -96,9 +96,9 @@ Spring Security 是一个功能强大且广泛使用的安全框架，为企业�
 
 ### 7. Spring Security 5.3 and beyond
 
-在 Spring Security 5.3 和之后的版本中，Spring Security OAuth2 的所有功能都被合并到了 Spring Security 中，而 [Spring Security OAuth2](https://github.com/spring-attic/spring-security-oauth) 作为一个独立的项目已经停止开发。与之相对应的 [Spring Security OAuth Boot 2 Autoconfig](https://github.com/spring-attic/spring-security-oauth2-boot) 也停止了开发。
+在 Spring Security 5.3 和之后的版本中，Spring Security OAuth2 的所有功能都被合并到了 Spring Security 中，而 [Spring Security OAuth2](https:/github.com/spring-attic/spring-security-oauth) 作为一个独立的项目已经停止开发。与之相对应的 [Spring Security OAuth Boot 2 Autoconfig](https:/github.com/spring-attic/spring-security-oauth2-boot) 也停止了开发。
 
-总结一下，目前，Spring Security OAuth2 的最新版本为 2.5.2.RELEASE，并且所有类都标注为 @Deprecated，官方也提供了一个迁移文档 [OAuth 2.0 Migration Guide](https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Migration-Guide)。
+总结一下，目前，Spring Security OAuth2 的最新版本为 2.5.2.RELEASE，并且所有类都标注为 @Deprecated，官方也提供了一个迁移文档 [OAuth 2.0 Migration Guide](https:/github.com/spring-projects/spring-security/wiki/OAuth-2.0-Migration-Guide)。
 
 ## Spring Boot 和 Spring OAuth2 版本关系
 
@@ -373,7 +373,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 客户端访问示例：
 
 ```bash
-curl -X POST http://localhost:8080/oauth/token -d "grant_type=password&username=user&password=password&client_id=clientapp&client_secret=secret"
+curl -X POST http:/localhost:8080/oauth/token -d "grant_type=password&username=user&password=password&client_id=clientapp&client_secret=secret"
 ```
 
 让客户端在后台获取访问令牌，资源服务再使用令牌验证授权。

@@ -8,7 +8,7 @@ tags: ["architecture"]
 
 ---
 
-这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing Pastebin》设计 Pastebin。
+这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https:/github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing Pastebin》设计 Pastebin。
 
 ---
 
@@ -24,7 +24,7 @@ Pastebin like services enable users to store plain text or images over the netwo
 
 > Pastebin 之类的服务使用户能够通过网络（通常是互联网）存储纯文本或图像，并生成唯一的 URL 来访问上传的数据。此类服务还用于通过网络快速共享数据，因为用户只需传递 URL 即可让其他用户看到它。
 
-If you haven’t used [pastebin.com](http://pastebin.com/) before, please try creating a new ‘Paste’ there and spend some time going through the different options their service offers. This will help you a lot in understanding this chapter.
+If you haven’t used [pastebin.com](http:/pastebin.com/) before, please try creating a new ‘Paste’ there and spend some time going through the different options their service offers. This will help you a lot in understanding this chapter.
 
 > 如果您以前没有使用过 pastebin.com，请尝试在那里创建一个新的“粘贴”，并花一些时间浏览他们的服务提供的不同选项。这将对你理解本章有很大帮助。
 
@@ -92,7 +92,7 @@ Our Pastebin service should meet the following requirements:
 
 > 3. 一些设计考虑
 
-Pastebin shares some requirements with [URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904), but there are some additional design considerations we should keep in mind.
+Pastebin shares some requirements with [URL Shortening service](https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904), but there are some additional design considerations we should keep in mind.
 
 > Pastebin 与 URL 缩短服务有一些共同的要求，但我们还应该牢记一些额外的设计注意事项。
 
@@ -283,11 +283,11 @@ Here, ‘URlHash’ is the URL equivalent of the TinyURL and ‘ContentKey’ is
 
 > 7. 高层设计
 
-At a high level, we need an application layer that will serve all the read and write requests. Application layer will talk to a storage layer to store and retrieve data. We can segregate our storage layer with one database storing metadata related to each paste, users, etc., while the other storing the paste contents in some object storage (like [Amazon S3](https://en.wikipedia.org/wiki/Amazon_S3)). This division of data will also allow us to scale them individually.
+At a high level, we need an application layer that will serve all the read and write requests. Application layer will talk to a storage layer to store and retrieve data. We can segregate our storage layer with one database storing metadata related to each paste, users, etc., while the other storing the paste contents in some object storage (like [Amazon S3](https:/en.wikipedia.org/wiki/Amazon_S3)). This division of data will also allow us to scale them individually.
 
 > 在较高的层面上，我们需要一个应用程序层来服务所有的读写请求。应用层将与存储层通信以存储和检索数据。我们可以将存储层隔离，一个数据库存储与每个粘贴、用户等相关的元数据，而另一个数据库将粘贴内容存储在某些对象存储（如 Amazon S3）中。这种数据划分还允许我们单独缩放它们。
 
-![image-20231116090334771](/images/pastebin-01.webp)
+![image-20231116090334771](../../../static/images/pastebin-01.webp)
 
 ## 8. Component Design 
 
@@ -335,7 +335,7 @@ We can divide our datastore layer into two:
 
    > 对象存储：我们可以将内容存储在对象存储中，例如 Amazon 的 S3。每当我们想要充分利用内容存储容量时，我们都可以通过添加更多服务器来轻松增加容量。
 
-![image-20231116090313481](/images/pastebin-02.webp)
+![image-20231116090313481](../../../static/images/pastebin-02.webp)
 
 Detailed component design for Pastebin
 
@@ -345,7 +345,7 @@ Detailed component design for Pastebin
 
 > 9. 清除或数据库清理
 
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+Please see [Designing a URL Shortening service](https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 
@@ -353,7 +353,7 @@ Please see [Designing a URL Shortening service](https://www.educative.io/collect
 
 > 10. 数据分区和复制
 
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+Please see [Designing a URL Shortening service](https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 
@@ -361,7 +361,7 @@ Please see [Designing a URL Shortening service](https://www.educative.io/collect
 
 > 11. 缓存和负载均衡器
 
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+Please see [Designing a URL Shortening service](https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 
@@ -369,7 +369,7 @@ Please see [Designing a URL Shortening service](https://www.educative.io/collect
 
 > 12. 安全和权限
 
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+Please see [Designing a URL Shortening service](https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 

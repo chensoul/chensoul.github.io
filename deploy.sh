@@ -30,6 +30,9 @@ cp static/raw-images/*.webp static/images/
 
 echo "\033[0;32mDeploying updates to GitHub...\033[0m"
 
+sed -i "" "s#/images#../../../static/images#g" content/posts/*/*.md
+sed -i "" "s#../../../static/images#/images#g" content/posts/*/*.md
+
 # Build the project.
 hugo # if using a theme, replace by `hugo -t <yourtheme>`
 

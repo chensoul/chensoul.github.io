@@ -8,7 +8,7 @@ tags: ["architecture"]
 
 ---
 
-这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing Facebook Messenger》设计 Facebook Messenger。
+这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https:/github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing Facebook Messenger》设计 Facebook Messenger。
 
 ---
 

@@ -11,11 +11,11 @@ Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和
 
 
 
-最近在开发 Spring Cloud 微服务时，需要对 OAuth2 的异常处理进行定制，从网上搜到一个 github 仓库：[oauth2](https://github.com/selfancy/oauth2)。这篇仓库的代码实现了 OAuth2 的四种授权模式、I18N 国际化、异常处理、JWT Token，我 fork 了一份代码，做了一些改动，去掉了 webflux、eureka 相关代码。
+最近在开发 Spring Cloud 微服务时，需要对 OAuth2 的异常处理进行定制，从网上搜到一个 github 仓库：[oauth2](https:/github.com/selfancy/oauth2)。这篇仓库的代码实现了 OAuth2 的四种授权模式、I18N 国际化、异常处理、JWT Token，我 fork 了一份代码，做了一些改动，去掉了 webflux、eureka 相关代码。
 
 
 
-代码仓库地址：https://github.com/chensoul/spring-security-oauth2-legacy，相关依赖的版本：
+代码仓库地址：https:/github.com/chensoul/spring-security-oauth2-legacy，相关依赖的版本：
 
 - spring-boot: 2.7.18
 - org.springframework.security.oauth:spring-security-oauth2-autoconfigure: 2.6.8
@@ -104,9 +104,9 @@ openssl pkcs12 -in private.p12 -nodes -nocerts -out private.key
 | -------------------------------- | ---------------- | -------- | ---------------------------------------------- | ------------------------------------------------------------ |
 | 用户名密码(password)             | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:password<br/>username:user<br/>password:123456<br/>scope:server<br/>client_id:client<br/>client_secret:secret |
 | 客户端凭证(client_credentials)   | /oauth/token     | post     | Content-Type:application/x-www-form-urlencoded | grant_type:client_credentials<br/>scope:userinfo resource<br/>client_id:client<br/>client_secret:secret |
-| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type=code&scope=server&client_id=client&redirect_uri=https://www.taobao.com |
-| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:authorization_code<br/>code:gE3Eka<br/>redirect_uri:https://www.jd.com<br/>scope:server |
-| 简化模式(implicit)               | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:token<br/>client_id:client<br/>redirect_uri:https://www.jd.com<br/>scope:server <br/>state:123456 |
+| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type=code&scope=server&client_id=client&redirect_uri=https:/www.taobao.com |
+| 客户端授权码(authorization_code) | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:authorization_code<br/>code:gE3Eka<br/>redirect_uri:https:/www.jd.com<br/>scope:server |
+| 简化模式(implicit)               | /oauth/authorize | get      | Content-Type:application/x-www-form-urlencoded | response_type:token<br/>client_id:client<br/>redirect_uri:https:/www.jd.com<br/>scope:server <br/>state:123456 |
 
 ### 小结
 
@@ -117,5 +117,5 @@ openssl pkcs12 -in private.p12 -nodes -nocerts -out private.key
 
 ## 参考资料
 
-- [spring-security-oauth-samples](https://github.com/spring-projects/spring-security-oauth/tree/master/samples)
-- [官方schema.sql](https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql)
+- [spring-security-oauth-samples](https:/github.com/spring-projects/spring-security-oauth/tree/master/samples)
+- [官方schema.sql](https:/github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql)

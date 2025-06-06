@@ -9,7 +9,7 @@ tags: [spring-security,oauth2]
 
 ## OAuth 2.0 基础知识
 
-![OAuth 2.0 Fundamentals](https://www.tutorialspoint.com/spring_security/images/oauth_2_fundamentals.webp)
+![OAuth 2.0 Fundamentals](https:/www.tutorialspoint.com/spring_security../../../static/images/oauth_2_fundamentals.webp)
 
 OAuth 2.0 由 IETF OAuth 工作组开发并于 2012 年 10 月发布。它作为一种开放授权协议，使第三方应用程序能够代表资源所有者对 HTTP 服务进行有限访问。它可以在不泄露用户身份或长期凭证的情况下做到这一点。第三方应用程序本身也可以代表其使用它。
 
@@ -38,22 +38,22 @@ OAuth 系统涉及五个关键角色。让我们把它们列出来 -
 - Cloud OAuth2
 - Spring Boot Devtools
 
-![Start Spring](https://www.tutorialspoint.com/spring_security/images/start_spring.webp)![Project Metadata](https://www.tutorialspoint.com/spring_security/images/project_metadata.webp)
+![Start Spring](https:/www.tutorialspoint.com/spring_security../../../static/images/start_spring.webp)![Project Metadata](https:/www.tutorialspoint.com/spring_security../../../static/images/project_metadata.webp)
 
 通过上面的配置，我们点击 Generate 按钮生成一个项目。该项目将以 zip 文件形式下载。我们将 zip 解压到一个文件夹中。然后我们可以在我们选择的 IDE 中打开该项目。我在这里使用 Spring Tools Suite，因为它针对 Spring 应用程序进行了优化。我们也可以根据需要使用 Eclipse 或 IntelliJ Idea。
 
 因此，我们在 STS 中打开项目，让依赖项被下载。然后我们可以在包资源管理器窗口中看到项目结构。它应该类似于下面的屏幕截图。
 
-![Project in STS](https://www.tutorialspoint.com/spring_security/images/project_in_sts.webp)
+![Project in STS](https:/www.tutorialspoint.com/spring_security../../../static/images/project_in_sts.webp)
 
 如果我们打开 pom.xml 文件，我们可以查看与项目相关的依赖项和其他详细信息。它应该看起来像这样。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-   https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http:/maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http:/maven.apache.org/POM/4.0.0
+   https:/maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.springframework.boot</groupId>
@@ -213,39 +213,39 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 我们重写的另一个 configure()方法使用 AuthorizationServerEndpointsConfigurer 作为参数，用于将 AuthenticationManager 附加到授权服务器配置。
 
-通过这些基本配置，我们的授权服务器就可以使用了。让我们继续启动并使用它。我们将使用 Postman (h ttps://www.postman.com/downloads/) 来提出我们的请求。
+通过这些基本配置，我们的授权服务器就可以使用了。让我们继续启动并使用它。我们将使用 Postman (h ttps:/www.postman.com/downloads/) 来提出我们的请求。
 
 使用 STS 时，我们可以启动应用程序并开始在控制台中查看日志。当应用程序启动时，我们可以在控制台中找到应用程序公开的 oauth2 端点。在这些端点中，我们现在将使用以下令牌 -
 
 **/oauth/token – 用于获取令牌。**
 
-![Obtaining the Token](https://www.tutorialspoint.com/spring_security/images/obtaining_the_token.webp)
+![Obtaining the Token](https:/www.tutorialspoint.com/spring_security../../../static/images/obtaining_the_token.webp)
 
 如果我们检查这里的邮递员快照，我们可以注意到一些事情。让我们在下面列出它们。
 
-- URL - 我们的 Spring Boot 应用程序在本地计算机的端口 8080 上运行，因此请求指向 http://localhost:8080。接下来的部分是 /oauth/token，我们知道它是 OAuth 公开的用于生成令牌的端点。
+- URL - 我们的 Spring Boot 应用程序在本地计算机的端口 8080 上运行，因此请求指向 http:/localhost:8080。接下来的部分是 /oauth/token，我们知道它是 OAuth 公开的用于生成令牌的端点。
 - 查询参数 - 由于这是“密码”授权授予类型，因此用户需要向我们的客户端应用程序提供他/她的用户名、密码和范围，然后客户端应用程序使用这些凭据及其凭据发送给我们想要令牌的授权服务器从。
 - 客户端授权- Oauth 系统要求客户端获得授权才能提供令牌。因此，在授权标头下，我们提供客户端身份验证信息，即我们在应用程序中配置的用户名和密码。
 
 让我们仔细看看查询参数和授权标头 -
 
-![Authorization Header](https://www.tutorialspoint.com/spring_security/images/authorization_header.webp)
+![Authorization Header](https:/www.tutorialspoint.com/spring_security../../../static/images/authorization_header.webp)
 
 查询参数
 
-![Client Credentials](https://www.tutorialspoint.com/spring_security/images/client_credentials.webp)
+![Client Credentials](https:/www.tutorialspoint.com/spring_security../../../static/images/client_credentials.webp)
 
 客户凭证
 
 如果一切正确，我们将能够在响应中看到生成的令牌以及 200 ok 状态。
 
-![Response](https://www.tutorialspoint.com/spring_security/images/response.webp)
+![Response](https:/www.tutorialspoint.com/spring_security../../../static/images/response.webp)
 
 响应
 
 我们可以通过输入错误的凭据或不输入凭据来测试我们的服务器，我们将收到一个错误，表明请求未经授权或凭据错误。
 
-![OAuth Authorization Server](https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server.webp)
+![OAuth Authorization Server](https:/www.tutorialspoint.com/spring_security../../../static/images/oauth_authorization_server.webp)
 
 这是我们的基本 oauth 授权服务器，它使用密码授予类型来生成并提供密码。
 
@@ -278,7 +278,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
       .scopes("read") .authorizedGrantTypes("password")
       .and() .withClient("oauthclient2") .secret("oauthsecret2")
       .scopes("read") .authorizedGrantTypes("authorization_code")
-      .redirectUris("http://locahost:9090");
+      .redirectUris("http:/locahost:9090");
    }
    @Override public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
       endpoints.authenticationManager(authenticationManager);
@@ -328,20 +328,20 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 http://localhost:8080/oauth/authorize?response_type=code&client_id=oauthclient2&scope=read 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。
+这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 http:/localhost:8080/oauth/authorize?response_type=code&client_id=oauthclient2&scope=read 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。
 
-![OAuth Authorization Server Signin](https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server_signin.webp)
+![OAuth Authorization Server Signin](https:/www.tutorialspoint.com/spring_security../../../static/images/oauth_authorization_server_signin.webp)
 
 这里，响应类型代码意味着授权服务器将返回一个访问代码，客户端将使用该访问代码进行登录。当我们使用用户凭据时，我们将被询问是否要授予客户端请求的权限，在类似的屏幕如下所示。
 
-![OAuth Approval](https://www.tutorialspoint.com/spring_security/images/oauth_approval.webp)
+![OAuth Approval](https:/www.tutorialspoint.com/spring_security../../../static/images/oauth_approval.webp)
 
-如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 http://locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为 Postman 中的客户端来登录授权服务器。
+如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 http:/locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为 Postman 中的客户端来登录授权服务器。
 
-![Postman Authorization](https://www.tutorialspoint.com/spring_security/images/postman_authorization.webp)
+![Postman Authorization](https:/www.tutorialspoint.com/spring_security../../../static/images/postman_authorization.webp)
 
 正如我们在这里所看到的，我们在 URL 中使用了从授权服务器收到的代码，并且 grant_type 作为授权代码，范围作为读取。我们充当客户端并提供应用程序中配置的客户端凭据。当我们发出这个请求时，我们会得到我们可以进一步使用的 access_token。
 
 我们已经了解了如何使用 OAuth 2.0 配置 Spring Security。该应用程序非常简单且易于理解，可以帮助我们相当轻松地理解该过程。我们使用了两种授权授予类型，并了解了如何使用它们来获取客户端应用程序的访问令牌。
 
-原文链接：[https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm](https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm)
+原文链接：[https:/www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm](https:/www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm)

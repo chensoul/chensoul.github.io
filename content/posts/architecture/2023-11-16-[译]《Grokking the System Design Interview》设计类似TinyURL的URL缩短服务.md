@@ -8,7 +8,7 @@ tags: ["architecture"]
 
 ---
 
-这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing a URL Shortening service like TinyURL》设计类似 TinyURL 的 URL 缩短服务。
+这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https:/github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing a URL Shortening service like TinyURL》设计类似 TinyURL 的 URL 缩短服务。
 
 ---
 
@@ -34,13 +34,13 @@ For example, if we shorten this page through TinyURL:
 
 > 例如，如果我们通过 TinyURL 缩短这个页面：
 
-https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904/
+https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904/
 
 We would get: 
 
 > 我们会得到：
 
-http://tinyurl.com/jlg8zpc
+http:/tinyurl.com/jlg8zpc
 
 The shortened URL is nearly one-third the size of the actual URL.
 
@@ -289,7 +289,7 @@ We would need two tables: one for storing information about the URL mappings, an
 
 > 我们需要两张表：一张用于存储有关 URL 映射的信息，一张用于创建短链接的用户数据。
 
-![tinyurl-1](/images/tinyurl-1-0727878.webp)
+![tinyurl-1](../../../static/images/tinyurl-1-0727878.webp)
 
 **What kind of database should we use?** Since we anticipate storing billions of rows, and we don’t need to use relationships between objects – a NoSQL key-value store like DynamoDB, Cassandra or Riak is a better choice. A NoSQL choice would also be easier to scale. Please see SQL vs NoSQL for more details.
 
@@ -303,9 +303,9 @@ The problem we are solving here is, how to generate a short and unique key for a
 
 > 我们这里要解决的问题是，如何为给定的 URL 生成一个简短且唯一的密钥。
 
-In the TinyURL example in Section 1, the shortened URL is “http://tinyurl.com/jlg8zpc”. The last six characters of this URL is the short key we want to generate. We’ll explore two solutions here:
+In the TinyURL example in Section 1, the shortened URL is “http:/tinyurl.com/jlg8zpc”. The last six characters of this URL is the short key we want to generate. We’ll explore two solutions here:
 
-> 在第 1 节的 TinyURL 示例中，缩短的 URL 是“http://tinyurl.com/jlg8zpc”。该URL的最后六个字符是我们要生成的短密钥。我们将在这里探索两种解决方案：
+> 在第 1 节的 TinyURL 示例中，缩短的 URL 是“http:/tinyurl.com/jlg8zpc”。该URL的最后六个字符是我们要生成的短密钥。我们将在这里探索两种解决方案：
 
 **a. Encoding actual URL**
 
@@ -335,9 +335,9 @@ If we use the MD5 algorithm as our hash function, it’ll produce a 128-bit hash
 
    > 如果多个用户输入相同的 URL，他们可以获得相同的缩短的 URL，这是不可接受的。
 
-2. What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
+2. What if parts of the URL are URL-encoded? e.g., http:/www.educative.io/distributed.php?id=design, and http:/www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
 
-   > 如果 URL 的一部分是 URL 编码的怎么办？例如，http://www.eduative.io/distributed.php?id=design 和 http://www.educative.io/distributed.php%3Fid%3Ddesign 除了 URL 编码之外，完全相同。
+   > 如果 URL 的一部分是 URL 编码的怎么办？例如，http:/www.eduative.io/distributed.php?id=design 和 http:/www.educative.io/distributed.php%3Fid%3Ddesign 除了 URL 编码之外，完全相同。
 
 **Workaround for the issues:** We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.
 
@@ -347,7 +347,7 @@ Another solution could be to append user id (which should be unique) to the inpu
 
 > 另一种解决方案是将用户 ID（应该是唯一的）附加到输入 URL。但是，如果用户尚未登录，我们将不得不要求用户选择唯一性密钥。即使在此之后，如果出现冲突，我们也必须继续生成密钥，直到获得唯一的密钥。
 
-![tinyurl-2](/images/tinyurl-2-0727878.webp)
+![tinyurl-2](../../../static/images/tinyurl-2-0727878.webp)
 
 **b. Generating keys offline**
 
@@ -395,7 +395,7 @@ KGS also has to make sure not to give the same key to multiple servers. For that
 
 > 我们应该对自定义别名施加大小限制吗？我们的服务支持自定义别名。用户可以选择他们喜欢的任何“键”，但提供自定义别名不是强制性的。然而，对自定义别名施加大小限制以确保我们拥有一致的 URL 数据库是合理的（并且通常是可取的）。假设用户可以为每个客户密钥指定最多 16 个字符（如上面的数据库架构所示）。
 
-![tinyurl-3](/images/tinyurl-3-0727878.webp)
+![tinyurl-3](../../../static/images/tinyurl-3-0727878.webp)
 
 High level system design for URL shortening
 
@@ -453,7 +453,7 @@ To further increase the efficiency, we can replicate our caching servers to dist
 
 > 如何更新每个缓存副本？每当出现缓存未命中时，我们的服务器就会访问后端数据库。每当发生这种情况时，我们都可以更新缓存并将新条目传递给所有缓存副本。每个副本都可以通过添加新条目来更新其缓存。如果副本已经具有该条目，则可以简单地忽略它。
 
-![tinyurl-4](/images/tinyurl-4-0727878.webp)
+![tinyurl-4](../../../static/images/tinyurl-4-0727878.webp)
 
 ## 9. Load Balancer (LB) 
 
@@ -520,7 +520,7 @@ If we chose to actively search for expired links to remove them, it would put a 
   > 我们是否应该删除一段时间内（例如六个月）未访问过的链接？这可能会很棘手。由于存储变得越来越便宜，我们可以决定永远保留链接。
 
 
-![tinyurl-5](/images/tinyurl-5-0727878.webp)
+![tinyurl-5](../../../static/images/tinyurl-5-0727878.webp)
 
 Detailed component design for URL shortening
 
@@ -556,5 +556,5 @@ We can store permission level (public/private) with each URL in the database. We
 
 参考文章
 
-- [Designing a URL Shortening service like TinyURL](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b)
-- [Design a URL Shortening Service / TinyURL](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl)
+- [Designing a URL Shortening service like TinyURL](https:/www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b)
+- [Design a URL Shortening Service / TinyURL](https:/www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl)

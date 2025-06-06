@@ -9,7 +9,7 @@ tags: [review]
 
 ## 前言
 
-本篇是对 `2023-02-13` 到 `2023-02-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-02-13` 到 `2023-02-19` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 ## 练车
 
@@ -19,7 +19,7 @@ tags: [review]
 
 一天下来，总共开车有五个多小时，感觉开车好累。作为新手，开车的过程中要全神贯注，铭记开车最重要的是慢这一原则，速度不敢过快。
 
-![weekly-review-06](/images/weekly-review-07-06.webp)
+![weekly-review-06](../../../static/images/weekly-review-07-06.webp)
 
 回顾这一天的练车过程，发现自己存在以下问题：
 
@@ -38,7 +38,7 @@ tags: [review]
 
 基于以上表现，接下来一周还是坐地铁上班。目前来说还是更喜欢坐地铁上班，可以看视频听音频，可以查看 RSS 订阅文章，可以写周报，可以闭目养神。
 
-![weekly-review-07](/images/weekly-review-07-07.webp)
+![weekly-review-07](../../../static/images/weekly-review-07-07.webp)
 
 老婆给我买的实习期贴牌到了，后面司机看到这么可爱的牌子，估计以为是个妹子在开车吧，应该会喇叭下留情了吧 😄。
 
@@ -54,11 +54,11 @@ tags: [review]
 
 - 去掉对 font-awesome css 的引用。这个对博客来说可有可无，所以直接去掉。
 - 去掉对 jquery、bootstrap js 的引用。同样也不是必须的，自定义的 javascript 直接使用原生的操作就行。
-- 移除未使用的 css。想参考这篇文章 [CleanCSS - 移除未使用的 CSS 代码](https://dujun.io/cleancss-remove-unused-css.html)，对 css 进行瘦身，无奈文章中的服务器出现故障，无法访问服务。故，暂时搁浅。
+- 移除未使用的 css。想参考这篇文章 [CleanCSS - 移除未使用的 CSS 代码](https:/dujun.io/cleancss-remove-unused-css.html)，对 css 进行瘦身，无奈文章中的服务器出现故障，无法访问服务。故，暂时搁浅。
 
 ### 2、修改网站字体
 
-参考这篇文章 [字体漫谈-网站字体最佳实践](https://www.albertaz.com/blog/web-font-best-practice) 引入 open-sans 字体：
+参考这篇文章 [字体漫谈-网站字体最佳实践](https:/www.albertaz.com/blog/web-font-best-practice) 引入 open-sans 字体：
 
 ```html
 <link
@@ -87,7 +87,7 @@ body {
 
 ### 3、修改关于页面内容
 
-参考这篇文章 [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)，对 GitHub [首页](https://github.com/chensoul/chensoul) 进行改造。
+参考这篇文章 [GitHub Profile README Generator](https:/rahuldkjain.github.io/gh-profile-readme-generator/)，对 GitHub [首页](https:/github.com/chensoul/chensoul) 进行改造。
 
 ### 4、dns 解析迁移到 cloudflare
 
@@ -95,18 +95,18 @@ body {
 
 ### 5、博客测速
 
-以上优化完成之后，在 [PageSpeed Insights](https://pagespeed.web.dev/) 网站上对博客首页加载速度进行了测速。移动端测试结果为 93 分，如下图：
+以上优化完成之后，在 [PageSpeed Insights](https:/pagespeed.web.dev/) 网站上对博客首页加载速度进行了测速。移动端测试结果为 93 分，如下图：
 
-![weekly-review-07-01](/images/weekly-review-07-01.webp)
+![weekly-review-07-01](../../../static/images/weekly-review-07-01.webp)
 
 影响评分的原因在于：
 
 - First Contentful Paint (3G)
-- 加载的 [bootstrap.min.css](https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css) 文件过大，包括了一些未使用的 CSS
+- 加载的 [bootstrap.min.css](https:/stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css) 文件过大，包括了一些未使用的 CSS
 
 桌面端测试结果评分为 99 分：
 
-![weekly-review-07-02](/images/weekly-review-07-02.webp)
+![weekly-review-07-02](../../../static/images/weekly-review-07-02.webp)
 
 另外，试了一下使用 chatgpt 来给出网站优化建议，回答如下：
 
@@ -114,7 +114,7 @@ body {
 
 新增了 3 个 workflow：
 
-- 定时获取 [BTC 价格](https://www.bitstamp.net/api/v2/ticker/btcusd)，并发送到 [我的电报群组](https://t.me/chensouls)
+- 定时获取 [BTC 价格](https:/www.bitstamp.net/api/v2/ticker/btcusd)，并发送到 [我的电报群组](https:/t.me/chensouls)
 
 - 定时获取 spotify 喜欢列表，并发送到电报和 memos
 
@@ -122,18 +122,18 @@ body {
 
 修改了以下 workflow：
 
-- 将豆瓣最近动态同步到电报群组以及 [memos](https://memos.chensoul.cc/)
-- 将 GitHub 最近动态同步到电报群组以及 [memos](https://memos.chensoul.cc/)
-- 将 [博客 RSS](https://blog.chensoul.cc/index.xml) 同步到电报群组以及 [memos](https://memos.chensoul.cc/)
+- 将豆瓣最近动态同步到电报群组以及 [memos](https:/memos.chensoul.cc/)
+- 将 GitHub 最近动态同步到电报群组以及 [memos](https:/memos.chensoul.cc/)
+- 将 [博客 RSS](https:/blog.chensoul.cc/index.xml) 同步到电报群组以及 [memos](https:/memos.chensoul.cc/)
 
 此外，在苹果手机上添加了两个捷径：
 
-- [捷径一](https://sharecuts.cn/shortcut/12640)：调用 memos API 创建 memos
-- [捷径二](https://www.icloud.com/shortcuts/d990253f43e148469af5e85c296961cf)：对网站通过 RSSBud 获取 RSS 订阅地址并发送到电报的 flowerrss 机器人进行订阅
+- [捷径一](https:/sharecuts.cn/shortcut/12640)：调用 memos API 创建 memos
+- [捷径二](https:/www.icloud.com/shortcuts/d990253f43e148469af5e85c296961cf)：对网站通过 RSSBud 获取 RSS 订阅地址并发送到电报的 flowerrss 机器人进行订阅
 
 ## ChatGPT 注册账号
 
-参考 [注册 ChatGPT 详细指南](https://sms-activate.org/cn/info/ChatGPT) 注册账号，我在 sms-activate 网站是购买的巴西的手机号来接验证码。
+参考 [注册 ChatGPT 详细指南](https:/sms-activate.org/cn/info/ChatGPT) 注册账号，我在 sms-activate 网站是购买的巴西的手机号来接验证码。
 
 解决地区受限问题：在浏览器地址栏里输入 `javascript:`，然后粘贴下面代码：
 
@@ -152,7 +152,7 @@ window.localStorage.removeItem(
 - 『专业前端开发老师』：在今后的对话里，你是一个专业的前端开发者老师，会回答我所有关于前端语言开发相关的问题，尤其是 TypeScript、React、Vuejs、CSS、Html 和 Nextjs，每次都会给出代码示例，不需要我再额外提醒。
 - 『个人搜索引擎』：在今后的会话里，请你扮演我的专业搜索引擎，为我搜索查阅相关问题的答案和信息，每个问题尽量给出链接和出处，不需要我额外再说明。
 
-点击 [链接](https://platform.openai.com/account/api-keys)，可以创建应用。给飞书用户准备的 ChatGPT 机器人，参看 [ChatGPT-Feishu](https://github.com/bestony/ChatGPT-Feishu)。
+点击 [链接](https:/platform.openai.com/account/api-keys)，可以创建应用。给飞书用户准备的 ChatGPT 机器人，参看 [ChatGPT-Feishu](https:/github.com/bestony/ChatGPT-Feishu)。
 
 # 💻 好物分享
 
@@ -160,34 +160,34 @@ window.localStorage.removeItem(
 
 - 技术类：
 
-  - [我的个人 IT 基础设施（英文）](https://writings.stephenwolfram.com/2019/02/seeking-the-productive-life-some-details-of-my-personal-infrastructure/)
+  - [我的个人 IT 基础设施（英文）](https:/writings.stephenwolfram.com/2019/02/seeking-the-productive-life-some-details-of-my-personal-infrastructure/)
 
-  - [打造我的家庭办公环境（英文）](https://arun.is/blog/desk-setup/)
+  - [打造我的家庭办公环境（英文）](https:/arun.is/blog/desk-setup/)
 
-  - [科技爱好者周刊（第 191 期）：一个程序员的财务独立之路](https://www.ruanyifeng.com/blog/2022/01/weekly-issue-191.html)
+  - [科技爱好者周刊（第 191 期）：一个程序员的财务独立之路](https:/www.ruanyifeng.com/blog/2022/01/weekly-issue-191.html)
 
-  - [入行 14 年，我还是觉得编程很难](https://www.zlovezl.cn/articles/programming-is-still-hard-after-14-years/)
-  - [设计服务端软件配置的 4 条建议](https://www.piglei.com/articles/how-to-design-config-file-for-software/)
+  - [入行 14 年，我还是觉得编程很难](https:/www.zlovezl.cn/articles/programming-is-still-hard-after-14-years/)
+  - [设计服务端软件配置的 4 条建议](https:/www.piglei.com/articles/how-to-design-config-file-for-software/)
 
 - 非技术类：
 
-  - [除了健康，都是小事](https://tingtalk.me/health/)
+  - [除了健康，都是小事](https:/tingtalk.me/health/)
 
-  - [驾考指南](https://tingtalk.me/driving-test/)
+  - [驾考指南](https:/tingtalk.me/driving-test/)
 
 ### 一些工具
 
-- 1、[亲戚关系计算器](https://passer-by.com/relationship/vue/#/)
+- 1、[亲戚关系计算器](https:/passer-by.com/relationship/vue/#/)
 
-- 2、[ImageOptim](https://imageoptim.com/mac)
+- 2、[ImageOptim](https:/imageoptim.com/mac)
 
 开源图片压缩软件：一款 Mac 小工具，可以方便的进行图片压缩，支持多格式、批量处理。值得注意的是，它压缩之后的图片会覆盖之前的图片。使用了这个工具之后，我就把 TinyPNG4Mac 卸载了。
 
-- 3、[沉浸式双语网页翻译扩展 – immersive-translate](https://immersive-translate.owenyoung.com/)
+- 3、[沉浸式双语网页翻译扩展 – immersive-translate](https:/immersive-translate.owenyoung.com/)
 
-强烈推荐这个网页翻译插件，和其他插件翻译整个页面相比，这个插件的优势是可以同时显示双语，中英文对照非常棒，是一个 [开源](https://github.com/immersive-translate/immersive-translate) 的项目，完全免费使用。也支持 PDF，配合任何 [epub 在线阅读网站](https://epub-reader.online/)对照翻译阅读书也非常方便。也支持了 Deepl，腾讯翻译等等的翻译服务。开发者 [@OwenYoungZh](https://twitter.com/OwenYoungZh)
+强烈推荐这个网页翻译插件，和其他插件翻译整个页面相比，这个插件的优势是可以同时显示双语，中英文对照非常棒，是一个 [开源](https:/github.com/immersive-translate/immersive-translate) 的项目，完全免费使用。也支持 PDF，配合任何 [epub 在线阅读网站](https:/epub-reader.online/)对照翻译阅读书也非常方便。也支持了 Deepl，腾讯翻译等等的翻译服务。开发者 [@OwenYoungZh](https:/twitter.com/OwenYoungZh)
 
-- 4、[Input Source Pro](https://inputsource.pro/zh-CN)
+- 4、[Input Source Pro](https:/inputsource.pro/zh-CN)
 
 Input Source Pro 可以根据应用或是网站自动切换输入法，并且在切换窗口的时候还会贴心的提示当前的输入法是什么，比如设置 VSCode、iTerm、Xcode 默认为英文输入法，而笔记软件和企业微信默认为中文输入法，切换软件时再也不需要按 shift 键了！
 

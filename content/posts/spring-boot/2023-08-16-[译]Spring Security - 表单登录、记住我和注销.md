@@ -31,7 +31,7 @@ Spring Security 附带了大量内置功能和工具，为我们提供方便。�
 ```java
 protected void configure(HttpSecurity http) throws Exception {
 http
-   // ...
+   / ...
    .formLogin(
       form -> form.loginPage("/login")
       .permitAll()
@@ -64,21 +64,21 @@ http
 
 - Spring Web
 - Spring Security
-- [Thymeleaf](https://www.thymeleaf.org/)
+- [Thymeleaf](https:/www.thymeleaf.org/)
 - Spring Boot DevTools
 
-![Spring Initializr](https://www.tutorialspoint.com/spring_security/images/spring_initializr.webp)
+![Spring Initializr](https:/www.tutorialspoint.com/spring_security../../../static/images/spring_initializr.webp)
 
 Thymeleaf 是 Java 的模板引擎。它允许我们快速开发静态或动态网页以在浏览器中呈现。它具有极强的可扩展性，允许我们详细定义和自定义模板的处理。除此之外，我们还可以通过点击此链接了解有关 Thymeleaf 的更多信息。
 
-让我们继续生成项目并下载它。然后，我们将其解压到我们选择的文件夹中，并使用任何 IDE 将其打开。我将使用 Spring Tools Suite 4。它可以从 https://spring.io/tools 网站免费下载，并且针对 Spring 应用程序进行了优化。
+让我们继续生成项目并下载它。然后，我们将其解压到我们选择的文件夹中，并使用任何 IDE 将其打开。我将使用 Spring Tools Suite 4。它可以从 https:/spring.io/tools 网站免费下载，并且针对 Spring 应用程序进行了优化。
 
 让我们看一下 pom.xml 文件。它应该看起来与此类似 -
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http:/maven.apache.org/POM/4.0.0"    xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http:/maven.apache.org/POM/4.0.0 https:/maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.springframework.boot</groupId>
@@ -268,7 +268,7 @@ http.csrf().disable()
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      href="https:/stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
@@ -280,17 +280,17 @@ http.csrf().disable()
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      src="https:/code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      src="https:/cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      src="https:/stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
@@ -325,18 +325,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 ### 运行应用程序
 
-让我们将应用程序作为 Spring Boot 应用程序运行。当应用程序启动时，我们可以在浏览器上访问 http://localhost:8080。它应该要求我们提供用户名和密码。此外，我们还可以看到“记住我”复选框。
+让我们将应用程序作为 Spring Boot 应用程序运行。当应用程序启动时，我们可以在浏览器上访问 http:/localhost:8080。它应该要求我们提供用户名和密码。此外，我们还可以看到“记住我”复选框。
 
-![Sign In](https://www.tutorialspoint.com/spring_security/images/sign_in.webp)
+![Sign In](https:/www.tutorialspoint.com/spring_security../../../static/images/sign_in.webp)
 
 ### 登录页面
 
 现在，如果我们提供在 WebSecurity 配置文件中配置的用户信息，我们将能够登录。此外，如果我们勾选“记住我”复选框，我们将能够在我们的 WebSecurity 配置文件中看到“记住我”cookie 浏览器的开发者工具部分。
 
-![Console Application](https://www.tutorialspoint.com/spring_security/images/console_application.webp)![Console Network](https://www.tutorialspoint.com/spring_security/images/console_network.webp)
+![Console Application](https:/www.tutorialspoint.com/spring_security../../../static/images/console_application.webp)![Console Network](https:/www.tutorialspoint.com/spring_security../../../static/images/console_network.webp)
 
 正如我们所看到的，cookie 是与我们的登录请求一起发送的。
 
 此外，网页中还包含一个用于注销的链接。单击该链接后，我们将退出我们的应用程序并返回到我们的登录页面。
 
-原文链接：[https://www.tutorialspoint.com/spring_security/spring_security_form_login_remember_me_and_logout.htm](https://www.tutorialspoint.com/spring_security/spring_security_form_login_remember_me_and_logout.htm)
+原文链接：[https:/www.tutorialspoint.com/spring_security/spring_security_form_login_remember_me_and_logout.htm](https:/www.tutorialspoint.com/spring_security/spring_security_form_login_remember_me_and_logout.htm)

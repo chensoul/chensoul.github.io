@@ -40,7 +40,7 @@ $ yum install -y curl openssh-server openssh-clients postfix cronie  policycoreu
 #### 2、添加官方源
 
 ```shell
-$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+$ curl https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
 因为官方源太慢，可以使用国内清华yum源，配置如下
@@ -49,7 +49,7 @@ $ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.
 $ vim /etc/yum.repos.d/gitlab-ce.repo
 [gitlab-ce]
 name=Gitlab CE Repository
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
+baseurl=https:/mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
 gpgcheck=0
 enabled=1
 ```
@@ -80,12 +80,12 @@ $ vim /etc/gitlab/gitlab.rb
 ## GitLab URL
 ##! URL on which GitLab will be reachable.
 ##! For more details on configuring external_url see:
-##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
+##! https:/docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 # 没有域名，可以设置为本机IP地址
-external_url 'http://172.17.0.61'
+external_url 'http:/172.17.0.61'
 ***
 $ grep "^external_url" /etc/gitlab/gitlab.rb
-external_url 'http://172.17.0.61'     #绑定监听的域名或IP
+external_url 'http:/172.17.0.61'     #绑定监听的域名或IP
 ```
 
 ##### 3、初始化 Gitlab
@@ -152,7 +152,7 @@ nginx   22501 gitlab-www    7u  IPv4  50923      0t0  TCP *:http (LISTEN)
 
 ```shell
 $ vim /etc/gitlab/gitlab.rb
-letsencrypt['enable'] = true //如果因为这行报错，改成false即可
+letsencrypt['enable'] = true /如果因为这行报错，改成false即可
 letsencrypt['contact_emails'] = ['testqq@qq.com']     # 添加联系人的电子邮件地址
 ```
 
@@ -224,7 +224,7 @@ $ gitlab-rails console
 ---------------------------------------------------------------------
 Loading production environment (Rails 6.0.2)
 irb(main):003:0> 
-irb(main):004:0> Notify.test_email('testqq@qq.com', 'Message Subject', 'Message Body').deliver_now  //输入测试命令，回车
+irb(main):004:0> Notify.test_email('testqq@qq.com', 'Message Subject', 'Message Body').deliver_now  /输入测试命令，回车
 
 Notify#test_email: processed outbound mail in 5.2ms
 Delivered mail 5eafceaa250a_1d063fb777add9a08601a@wing.mail (1430.1ms)
@@ -241,7 +241,7 @@ Content-Transfer-Encoding: 7bit
 Auto-Submitted: auto-generated
 X-Auto-Response-Suppress: All
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html PUBLIC "-/W3C/DTD HTML 4.0 Transitional/EN" "http:/www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>Message Body</p></body></html>
 
 => #<Mail::Message:70056859616080, Multipart: false, Headers: <Date: Mon, 04 May 2020 16:13:30 +0800>, <From: gitlab <testqq@qq.com>>, <Reply-To: gitlab <testqq@qq.com>>, <To: testqq@qq.com>, <Message-ID: <5eafceaa250a_1d063fb777add9a08601a@wing.mail>>, <Subject: Message Subject>, <Mime-Version: 1.0>, <Content-Type: text/html; charset=UTF-8>, <Content-Transfer-Encoding: 7bit>, <Auto-Submitted: auto-generated>, <X-Auto-Response-Suppress: All>>
@@ -253,14 +253,14 @@ irb(main):005:0>
 ### 3、一键安装
 
 ```bash
-curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+curl -s https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
 
 
 ## Gitlab 的使用
 
-**在浏览器中输入 http://192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
+**在浏览器中输入 http:/192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
 
 ### 1、Gitlab 命令行修改密码
 
@@ -422,7 +422,7 @@ $ gitlab-ctl restart
 
 ```yaml
 $ kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print $NF}'
-https://192.168.19.200:6443
+https:/192.168.19.200:6443
 ```
 
 ### 3、获取k8s集群默认CA证书
@@ -441,9 +441,9 @@ $ kubectl get secret default-token-cvfqx  -o jsonpath="{['data']['ca\.crt']}" | 
 MIICyDCCAbCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
 cm5ldGVzMB4XDTIwMDgxNzA5MjAwMFoXDTMwMDgxNTA5MjAwMFowFTETMBEGA1UE
 AxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANIM
-iOGHeolaxkE+kqZtc8kDbGFhwqGxNxg4orbIjrz//Z6vrgqo2COn2NjKrVM11bmz
+iOGHeolaxkE+kqZtc8kDbGFhwqGxNxg4orbIjrz/Z6vrgqo2COn2NjKrVM11bmz
 VhHPCruc3snfTLIS+/Z6gZqgpw5ruX8OjfH4nhr9npKxdBon3soa10EovPwMz1KW
-laqbuLKTbtTm+oCtAKYXUlzqrFGR//GW2D3bjl1QGOPbAR0pggdxSpPo6oUgtEQJ
+laqbuLKTbtTm+oCtAKYXUlzqrFGR/GW2D3bjl1QGOPbAR0pggdxSpPo6oUgtEQJ
 QAsNOJ40qMjevi3fnrNDrMqmcNKlSlkw8+Gf4TqM1EfAERRHiEcb/W3hOGWV0gdm
 vaq7CE/ENeD1O11NE76BMmk5WO0u6ot4OmP35TTlx8K0N/WPyq76RlH7somiIb8S
 1NpAzg+9K0vv1QmILScCAwEAAaMjMCEwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB

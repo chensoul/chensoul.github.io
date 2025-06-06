@@ -68,11 +68,11 @@ tags: [spring-security]
 
 #### 为什么使用 Servlet 过滤器？
 
-回想一下我的[另一篇文章](https://www.marcobehler.com/guides/spring-framework)，我们发现基本上任何 Spring Web 应用程序都只是一个 servlet：Spring 的旧式 [DispatcherServlet](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet)，它将传入的 HTTP 请求（例如来自浏览器）重定向到 @Controllers 或 @RestControllers。
+回想一下我的[另一篇文章](https:/www.marcobehler.com/guides/spring-framework)，我们发现基本上任何 Spring Web 应用程序都只是一个 servlet：Spring 的旧式 [DispatcherServlet](https:/docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet)，它将传入的 HTTP 请求（例如来自浏览器）重定向到 @Controllers 或 @RestControllers。
 问题是：DispatcherServlet 中没有硬编码安全性，而且您也很可能不想在 @Controllers 中摸索原始 HTTP Basic Auth 标头。最佳情况下，身份验证和授权应该在请求到达 @Controller 之前完成。
 幸运的是，在 Java Web 世界中有一种方法可以做到这一点：您可以将过滤器放在 servlet 前面，这意味着您可以考虑编写一个 SecurityFilter 并在 Tomcat（servlet 容器/应用程序服务器）中配置它来过滤每个传入的内容 HTTP 请求在到达您的 servlet 之前。
 
-![servletfilter 1a](/images/servletfilter-1a.webp)
+![servletfilter 1a](../../../static/images/servletfilter-1a.webp)
 
 #### 一个原生的安全过滤器
 
@@ -90,41 +90,41 @@ public class SecurityServletFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        UsernamePasswordToken token = extractUsernameAndPasswordFrom(request);  // (1)
+        UsernamePasswordToken token = extractUsernameAndPasswordFrom(request);  / (1)
 
-        if (notAuthenticated(token)) {  // (2)
-            // either no or wrong username/password
-            // unfortunately the HTTP status code is called "unauthorized", instead of "unauthenticated"
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // HTTP 401.
+        if (notAuthenticated(token)) {  / (2)
+            / either no or wrong username/password
+            / unfortunately the HTTP status code is called "unauthorized", instead of "unauthenticated"
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); / HTTP 401.
             return;
         }
 
-        if (notAuthorized(token, request)) { // (3)
-            // you are logged in, but don't have the proper rights
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // HTTP 403
+        if (notAuthorized(token, request)) { / (3)
+            / you are logged in, but don't have the proper rights
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN); / HTTP 403
             return;
         }
 
-        // allow the HttpRequest to go to Spring's DispatcherServlet
-        // and @RestControllers/@Controllers.
-        chain.doFilter(request, response); // (4)
+        / allow the HttpRequest to go to Spring's DispatcherServlet
+        / and @RestControllers/@Controllers.
+        chain.doFilter(request, response); / (4)
     }
 
     private UsernamePasswordToken extractUsernameAndPasswordFrom(HttpServletRequest request) {
-        // Either try and read in a Basic Auth HTTP Header, which comes in the form of user:password
-        // Or try and find form login request parameters or POST bodies, i.e. "username=me" & "password="myPass"
+        / Either try and read in a Basic Auth HTTP Header, which comes in the form of user:password
+        / Or try and find form login request parameters or POST bodies, i.e. "username=me" & "password="myPass"
         return checkVariousLoginOptions(request);
     }
 
 
     private boolean notAuthenticated(UsernamePasswordToken token) {
-        // compare the token with what you have in your database...or in-memory...or in LDAP...
+        / compare the token with what you have in your database...or in-memory...or in LDAP...
         return false;
     }
 
     private boolean notAuthorized(UsernamePasswordToken token, HttpServletRequest request) {
-       // check if currently authenticated user has the permission/role to access this request's /URI
-       // e.g. /admin needs a ROLE_ADMIN , /callcenter needs ROLE_CALLCENTER, etc.
+       / check if currently authenticated user has the permission/role to access this request's /URI
+       / e.g. /admin needs a ROLE_ADMIN , /callcenter needs ROLE_CALLCENTER, etc.
        return false;
     }
 }
@@ -174,7 +174,7 @@ chain.doFilter(request, response);
 
 因此，当 HTTPRequest 传入时，它将通过所有这 15 个过滤器，然后您的请求最终到达 @RestControllers。顺序也很重要，从列表的顶部开始一直到底部。
 
-![filterchain 1a](/images/filterchain-1a.webp)
+![filterchain 1a](../../../static/images/filterchain-1a.webp)
 
 ### 分析 Spring 的 FilterChain
 
@@ -203,24 +203,24 @@ chain.doFilter(request, response);
 
 ```java
 @Configuration
-@EnableWebSecurity // (1)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // (1)
+@EnableWebSecurity / (1)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter { / (1)
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {  // (2)
+  protected void configure(HttpSecurity http) throws Exception {  / (2)
       http
         .authorizeRequests()
-          .antMatchers("/", "/home").permitAll() // (3)
-          .anyRequest().authenticated() // (4)
+          .antMatchers("/", "/home").permitAll() / (3)
+          .anyRequest().authenticated() / (4)
           .and()
-       .formLogin() // (5)
-         .loginPage("/login") // (5)
+       .formLogin() / (5)
+         .loginPage("/login") / (5)
          .permitAll()
          .and()
-      .logout() // (6)
+      .logout() / (6)
         .permitAll()
         .and()
-      .httpBasic(); // (7)
+      .httpBasic(); / (7)
   }
 }
 ```
@@ -235,7 +235,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // (1)
 
 #### 如何使用 Spring Security 的配置 DSL
 
-习惯该 DSL 需要一些时间，但您可以在常见问题解答部分找到更多示例：[AntMatchers：常见示例](https://www.marcobehler.com/guides/spring-security#security-examples)。
+习惯该 DSL 需要一些时间，但您可以在常见问题解答部分找到更多示例：[AntMatchers：常见示例](https:/www.marcobehler.com/guides/spring-security#security-examples)。
 
 现在重要的是，您可以在这个 `*configure*` 方法中指定：
 
@@ -252,10 +252,10 @@ public abstract class WebSecurityConfigurerAdapter implements
     protected void configure(HttpSecurity http) throws Exception {
             http
                 .authorizeRequests()
-                    .anyRequest().authenticated()  // (1)
+                    .anyRequest().authenticated()  / (1)
                     .and()
-                .formLogin().and()   // (2)
-                .httpBasic();  // (3)
+                .formLogin().and()   / (2)
+                .httpBasic();  / (3)
         }
 }
 ```
@@ -304,7 +304,7 @@ create table users (id int auto_increment primary key, username varchar(255), pa
 ```java
 @Bean
 public UserDetailsService userDetailsService() {
-    return new MyDatabaseUserDetailsService(); // (1)
+    return new MyDatabaseUserDetailsService(); / (1)
 }
 ```
 
@@ -313,22 +313,22 @@ public UserDetailsService userDetailsService() {
 ```java
 public class MyDatabaseUserDetailsService implements UserDetailsService {
 
-	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // (1)
-         // 1. Load the user from the users table by username. If not found, throw UsernameNotFoundException.
-         // 2. Convert/wrap the user to a UserDetails object and return it.
+	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { / (1)
+         / 1. Load the user from the users table by username. If not found, throw UsernameNotFoundException.
+         / 2. Convert/wrap the user to a UserDetails object and return it.
         return someUserDetails;
     }
 }
 
-public interface UserDetails extends Serializable { // (2)
+public interface UserDetails extends Serializable { / (2)
 
     String getUsername();
 
     String getPassword();
 
-    // <3> more methods:
-    // isAccountNonExpired,isAccountNonLocked,
-    // isCredentialsNonExpired,isEnabled
+    / <3> more methods:
+    / isAccountNonExpired,isAccountNonLocked,
+    / isCredentialsNonExpired,isEnabled
 }
 ```
 
@@ -424,18 +424,18 @@ AuthenticationProvider 主要包含一种方法，简单的实现可能如下所
 ```java
 public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvider {
 
-        Authentication authenticate(Authentication authentication)  // (1)
+        Authentication authenticate(Authentication authentication)  / (1)
                 throws AuthenticationException {
-            String username = authentication.getPrincipal().toString(); // (1)
-            String password = authentication.getCredentials().toString(); // (1)
+            String username = authentication.getPrincipal().toString(); / (1)
+            String password = authentication.getCredentials().toString(); / (1)
 
-            User user = callAtlassianCrowdRestService(username, password); // (2)
-            if (user == null) {                                     // (3)
+            User user = callAtlassianCrowdRestService(username, password); / (2)
+            if (user == null) {                                     / (3)
                 throw new AuthenticationException("could not login");
             }
-            return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()); // (4)
+            return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()); / (4)
         }
-	    // other method ignored
+	    / other method ignored
 }
 ```
 
@@ -530,8 +530,8 @@ public class MyDatabaseUserDetailsService implements UserDetailsService {
 
   UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
      User user = userDao.findByUsername(username);
-     List<SimpleGrantedAuthority> grantedAuthorities = user.getAuthorities().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList()); // (1)
-     return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities); // (2)
+     List<SimpleGrantedAuthority> grantedAuthorities = user.getAuthorities().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList()); / (1)
+     return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities); / (2)
   }
 
 }
@@ -554,13 +554,13 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
         String username = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
 
-        atlassian.crowd.User user = callAtlassianCrowdRestService(username, password); // (1)
+        atlassian.crowd.User user = callAtlassianCrowdRestService(username, password); / (1)
         if (user == null) {
             throw new AuthenticationException("could not login");
         }
-        return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), mapToAuthorities(user.getGroups())); // (2)
+        return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), mapToAuthorities(user.getGroups())); / (2)
     }
-	    // other method ignored
+	    / other method ignored
 }
 ```
 
@@ -580,9 +580,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
         http
           .authorizeRequests()
-            .antMatchers("/admin").hasAuthority("ROLE_ADMIN") // (1)
-            .antMatchers("/callcenter").hasAnyAuthority("ROLE_ADMIN", "ROLE_CALLCENTER") // (2)
-            .anyRequest().authenticated() // (3)
+            .antMatchers("/admin").hasAuthority("ROLE_ADMIN") / (1)
+            .antMatchers("/callcenter").hasAnyAuthority("ROLE_ADMIN", "ROLE_CALLCENTER") / (2)
+            .anyRequest().authenticated() / (3)
             .and()
          .formLogin()
            .and()
@@ -600,8 +600,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
   http
     .authorizeRequests()
-      .antMatchers("/admin").hasRole("ADMIN") // (1)
-      .antMatchers("/callcenter").hasAnyRole("ADMIN", "CALLCENTER") // (2)
+      .antMatchers("/admin").hasRole("ADMIN") / (1)
+      .antMatchers("/callcenter").hasAnyRole("ADMIN", "CALLCENTER") / (2)
 ```
 
 1.  现在，您不再调用“hasAuthority”，而是调用“hasRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 的权限。
@@ -614,12 +614,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
   http
     .authorizeRequests()
-      .antMatchers("/admin").access("hasRole('admin') and hasIpAddress('192.168.1.0/24') and @myCustomBean.checkAccess(authentication,request)") // (1)
+      .antMatchers("/admin").access("hasRole('admin') and hasIpAddress('192.168.1.0/24') and @myCustomBean.checkAccess(authentication,request)") / (1)
 ```
 
 1. 您正在检查用户是否具有 ROLE_ADMIN、特定的 IP 地址以及自定义 bean 检查。
 
-要全面了解 Spring 基于表达式的访问控制的功能，请查看[官方文档](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#el-access)。
+要全面了解 Spring 基于表达式的访问控制的功能，请查看[官方文档](https:/docs.spring.io/spring-security/site/docs/current/reference/html5/#el-access)。
 
 ## 常见漏洞保护
 
@@ -679,7 +679,7 @@ Spring Security 可以帮助您防范多种常见攻击。它从计时攻击开�
 1. 在这里，我们手动添加 CSRF 参数。
 2. 在这里，我们使用 Thymeleaf 的表单支持。
 
-注意：有关 Thymeleaf 的 CSRF 支持的更多信息，请参阅[官方文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)。
+注意：有关 Thymeleaf 的 CSRF 支持的更多信息，请参阅[官方文档](https:/www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)。
 
 #### CSRF 和其他模板库
 
@@ -690,7 +690,7 @@ Spring Security 可以帮助您防范多种常见攻击。它从计时攻击开�
 public class MyController {
     @GetMaping("/login")
     public String login(Model model, CsrfToken token) {
-        // the token will be injected automatically
+        / the token will be injected automatically
         return "/templates/login";
     }
 }
@@ -703,7 +703,7 @@ public class MyController {
 1. 配置 Spring Security 以使用 CookieCsrfTokenRepository，它将把 CSRFToken 放入 cookie“XSRF-TOKEN”（并将其发送到浏览器）。
 2. 让您的 Javascript 应用程序采用该 cookie 值，并将其作为“X-XSRF-TOKEN”标头与每个 POST(/PUT/PATCH/DELETE) 请求一起发送。
 
-有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。
+有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：https:/developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。
 
 #### 禁用 CSRF
 
@@ -742,9 +742,9 @@ Spring Security 的 OAuth2 集成是一个复杂的主题，另外 7,000 字就�
 ```java
 @Configuration
 @EnableGlobalMethodSecurity(
-  prePostEnabled = true, // (1)
-  securedEnabled = true, // (2)
-  jsr250Enabled = true) // (3)
+  prePostEnabled = true, / (1)
+  securedEnabled = true, / (2)
+  jsr250Enabled = true) / (3)
 public class YourSecurityConfig extends WebSecurityConfigurerAdapter{
 }
 ```
@@ -767,15 +767,15 @@ public class YourSecurityConfig extends WebSecurityConfigurerAdapter{
 @Service
 public class SomeService {
 
-    @Secured("ROLE_CALLCENTER") // (1)
-    // == @RolesAllowed("ADMIN")
+    @Secured("ROLE_CALLCENTER") / (1)
+    / == @RolesAllowed("ADMIN")
     public BankAccountInfo get(...) {
 
     }
 
-    @PreAuthorize("isAnonymous()") // (2)
-    // @PreAuthorize("#contact.name == principal.name")
-    // @PreAuthorize("ROLE_ADMIN")
+    @PreAuthorize("isAnonymous()") / (2)
+    / @PreAuthorize("#contact.name == principal.name")
+    / @PreAuthorize("ROLE_ADMIN")
     public void trackVisit(Long id);
 
     }
@@ -807,9 +807,9 @@ public class SomeService {
 public class MyController {
 
     @RequestMapping("/messages/inbox")
-    public ModelAndView findMessagesForUser(@AuthenticationPrincipal CustomUser customUser, CsrfToken token) {  // (1) (2)
+    public ModelAndView findMessagesForUser(@AuthenticationPrincipal CustomUser customUser, CsrfToken token) {  / (1) (2)
 
-    // .. find messages for this user and return them ...
+    / .. find messages for this user and return them ...
     }
 }
 ```
@@ -830,10 +830,10 @@ public class MyController {
 
          if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
              CustomUser customUser = (CustomUser) authentication.getPrincipal();
-             // .. find messages for this user and return them ...
+             / .. find messages for this user and return them ...
          }
 
-         // todo
+         / todo
     }
 }
 ```
@@ -876,10 +876,10 @@ Spring Security 与 Thymeleaf 集成良好。它提供了一种特殊的 Spring 
 
 Spring Security 最近经历了一些重大变化。因此，您需要找到目标版本的迁移指南并完成它们：
 
-- Spring Security 3.x 到 4.x → https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html
-- Spring Security 4.x 到 5.x(< 5.3) → https://docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new （不是迁移指南，但有什么新鲜事）
-- Spring Security 5.x 到 5.3 → https://docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new （不是迁移指南，而是新功能）
-- Spring Security 最新版本 → https://docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）
+- Spring Security 3.x 到 4.x → https:/docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html
+- Spring Security 4.x 到 5.x(< 5.3) → https:/docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new （不是迁移指南，但有什么新鲜事）
+- Spring Security 5.x 到 5.3 → https:/docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new （不是迁移指南，而是新功能）
+- Spring Security 最新版本 → https:/docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）
 
 ### 我需要添加哪些依赖项才能使 Spring Security 正常工作？
 
@@ -900,7 +900,7 @@ Spring Security 最近经历了一些重大变化。因此，您需要找到目�
 </dependency>
 ```
 
-您还需要在 web.xml 或 Java 配置中配置 SecurityFilterChain。请参阅[此处](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#ns-web-xml)如何操作。
+您还需要在 web.xml 或 Java 配置中配置 SecurityFilterChain。请参阅[此处](https:/docs.spring.io/spring-security/site/docs/current/reference/html5/#ns-web-xml)如何操作。
 
 #### Spring Boot Project
 
@@ -954,7 +954,7 @@ protected void configure(HttpSecurity http) throws Exception {
           .anyRequest().authenticated()
           .and()
       .formLogin()
-          .loginPage("/login") // (1)
+          .loginPage("/login") / (1)
           .permitAll();
 }
 ```
@@ -995,4 +995,4 @@ context.setAuthentication(authentication);
 
 向 Patricio "Pato" Moschcovich 致以深深的谢意，他不仅对本文进行了校对，还提供了宝贵的反馈！
 
-原文链接：[https://www.marcobehler.com/guides/spring-security](https://www.marcobehler.com/guides/spring-security)
+原文链接：[https:/www.marcobehler.com/guides/spring-security](https:/www.marcobehler.com/guides/spring-security)

@@ -25,7 +25,7 @@ ENTRYPOINT ["java","-jar","app.jar"]
 # container here (e.g., local build artifacts, temporary files, etc.).
 #
 # For more help, visit the .dockerignore file reference guide at
-# https://docs.docker.com/go/build-context-dockerignore/
+# https:/docs.docker.com/go/build-context-dockerignore/
 
 **/.classpath
 **/.dockerignore
@@ -74,7 +74,7 @@ docker run -p 8080:8080 my-spring-boot-app
 
 ## 使用 Docker init 创建 Dockerfile
 
-参考 [Containerize a Java application](https://docs.docker.com/language/java/containerize/)，首先需要安装 docker desktop，这样才能使用 docker init 命令。
+参考 [Containerize a Java application](https:/docs.docker.com/language/java/containerize/)，首先需要安装 docker desktop，这样才能使用 docker init 命令。
 
 ```bash
 $ docker init
@@ -104,9 +104,9 @@ WARNING: The following Docker files already exist in this directory:
 
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
+# https:/docs.docker.com/go/dockerfile-reference/
 
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
+# Want to help us make this template better? Share your feedback here: https:/forms.gle/ybq9Krt8jtBL3iCk7
 
 ################################################################################
 
@@ -132,7 +132,7 @@ RUN --mount=type=bind,source=pom.xml,target=pom.xml \
 # all the dependencies needed to run your app inside a JVM. If your app doesn't output an uber
 # jar and instead relies on an application server like Apache Tomcat, you'll need to update this
 # stage with the correct filename of your package and update the base image of the "final" stage
-# use the relevant app server, e.g., using tomcat (https://hub.docker.com/_/tomcat/) as a base image.
+# use the relevant app server, e.g., using tomcat (https:/hub.docker.com/_/tomcat/) as a base image.
 FROM deps as package
 
 WORKDIR /build
@@ -149,7 +149,7 @@ RUN --mount=type=bind,source=pom.xml,target=pom.xml \
 # Take advantage of Spring Boot's layer tools and Docker's caching by extracting
 # the packaged application into separate layers that can be copied into the final stage.
 # See Spring's docs for reference:
-# https://docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
+# https:/docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
 FROM package as extract
 
 WORKDIR /build
@@ -171,7 +171,7 @@ RUN java -Djarmode=tools -jar target/app.jar extract --layers --launcher --desti
 FROM eclipse-temurin:21-jre-jammy AS final
 
 # Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
+# See https:/docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -204,18 +204,18 @@ ENTRYPOINT [ "java", "org.springframework.boot.loader.launch.JarLauncher" ]
 
 这个Dockerfile文件是用于构建和运行Java应用程序的Docker镜像。它使用多个阶段（stages）来完成不同的任务。
 
-参考《[使用 Docker 容器化并运行 Spring Boot 应用程序](https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/)》，修改 Dockerfile 后的文件如下：
+参考《[使用 Docker 容器化并运行 Spring Boot 应用程序](https:/blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/)》，修改 Dockerfile 后的文件如下：
 
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-# https://docs.docker.com/reference/dockerfile/
-# https://docs.docker.com/build/guide/multi-stage/
+# https:/docs.docker.com/reference/dockerfile/
+# https:/docs.docker.com/build/guide/multi-stage/
 
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http:/maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
 
 FROM base AS test
 WORKDIR /build
@@ -244,7 +244,7 @@ CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socke
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
+# See https:/docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -360,7 +360,7 @@ jib {
                     </ports>
                 </run>
             </image>
-        </images>
+        <../../../static/images>
     </configuration>
 </plugin>
 ```
@@ -427,7 +427,7 @@ jib {
                     </ports>
                 </build>
             </image>
-        </images>
+        <../../../static/images>
     </configuration>
     <executions>
         <execution>
@@ -445,7 +445,7 @@ jib {
 
 ### exec-maven-plugin
 
-参考 [spring-petclinic-microservices](https://github.com/odedia/spring-petclinic-microservices/blob/main/pom.xml) 项目：
+参考 [spring-petclinic-microservices](https:/github.com/odedia/spring-petclinic-microservices/blob/main/pom.xml) 项目：
 
 ```xml
 <properties>
@@ -581,7 +581,7 @@ mvn spring-boot:build-image -DskipTests \
 </build>
 ```
 
-使用 layer 之后，[Spring 官方文档](https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html)中提供dockerfile如下：
+使用 layer 之后，[Spring 官方文档](https:/docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html)中提供dockerfile如下：
 
 ```dockerfile
 FROM bellsoft/liberica-runtime-container:jre-17-cds-slim-glibc as builder
@@ -611,7 +611,7 @@ ENTRYPOINT ["java", "-jar", "application.jar"]
 
 ### 使用 dockerfile
 
-参考 《[Build a Docker Image using Maven and Spring boot](https://medium.com/@ramanamuttana/build-a-docker-image-using-maven-and-spring-boot-418e24c00776)》不使用分层构建：
+参考 《[Build a Docker Image using Maven and Spring boot](https:/medium.com/@ramanamuttana/build-a-docker-image-using-maven-and-spring-boot-418e24c00776)》不使用分层构建：
 
 ```dockerfile
 # Use an official Maven image as the base image
@@ -662,13 +662,13 @@ ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-# https://docs.docker.com/reference/dockerfile/
-# https://docs.docker.com/build/guide/multi-stage/
+# https:/docs.docker.com/reference/dockerfile/
+# https:/docs.docker.com/build/guide/multi-stage/
 
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http:/maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
 
 FROM base AS package
 WORKDIR /build
@@ -683,7 +683,7 @@ RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/e
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
+# See https:/docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -735,6 +735,6 @@ docker-compose app -f docker-compose.yml up -d
 
 ## 参考文章
 
-- [使用Spring Boot创建docker image](https://www.cnblogs.com/flydean/p/13824496.html)
-- [https://github.com/jhipster/jhipster-lite/blob/main/Dockerfile](https://github.com/jhipster/jhipster-lite/blob/main/Dockerfile)
-- [https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html](https://docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html)
+- [使用Spring Boot创建docker image](https:/www.cnblogs.com/flydean/p/13824496.html)
+- [https:/github.com/jhipster/jhipster-lite/blob/main/Dockerfile](https:/github.com/jhipster/jhipster-lite/blob/main/Dockerfile)
+- [https:/docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html](https:/docs.spring.io/spring-boot/reference/packaging/container-images/dockerfiles.html)

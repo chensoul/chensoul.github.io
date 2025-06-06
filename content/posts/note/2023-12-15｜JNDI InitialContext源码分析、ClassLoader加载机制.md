@@ -77,7 +77,7 @@ public class DNSClient {
 	public static void main(String[] args) {
 		Hashtable<String, String> env = new Hashtable<>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
-		env.put(Context.PROVIDER_URL, "dns://114.114.114.114");
+		env.put(Context.PROVIDER_URL, "dns:/114.114.114.114");
 
 		try {
 			DirContext ctx = new InitialDirContext(env);
@@ -142,7 +142,7 @@ InitialDirContext 构造方法初始化过程：
   public abstract class VersionHelper {
       private static VersionHelper helper = null;
     	
-    	VersionHelper() {} // Disallow anyone from creating one of these.
+    	VersionHelper() {} / Disallow anyone from creating one of these.
   
       static {
           helper = new VersionHelper12();
@@ -161,7 +161,7 @@ InitialDirContext 构造方法初始化过程：
   > `WeakHashMap` 是 Java 中的一种特殊类型的 `Map` 实现，它使用弱引用（Weak Reference）来存储键对象。在 `WeakHashMap` 中，当键对象没有被其他强引用所引用时，它们可以被垃圾回收器回收，即使它们存在于 `WeakHashMap` 中。
 
   ```java
-  // WeakHashMap<Class | ClassLoader, Hashtable>
+  / WeakHashMap<Class | ClassLoader, Hashtable>
   private static final WeakHashMap<Object, Hashtable<? super String, Object>>
           propertiesCache = new WeakHashMap<>(11);
   ```
@@ -281,13 +281,13 @@ ClassLoader 类继承结构：
 
 Java中的ClassLoader是一个层次结构，由多个ClassLoader组成。每个ClassLoader都有一个父ClassLoader，除了顶层的原生类加载器（bootstrap class loader）之外。当需要加载一个类时，ClassLoader会首先尝试委托给其父ClassLoader进行加载。只有当父ClassLoader无法加载时，ClassLoader才会尝试自己加载。
 
-![ClassLoader in Java - Javatpoint](/images/classloader-in-java.webp)
+![ClassLoader in Java - Javatpoint](../../../static/images/classloader-in-java.webp)
 
 ### ClassLoader 如何工作
 
 
 
-![How does Classloader work in Java? | by Deepti Swain | InterviewNoodle](/images/classloader-request.webp)
+![How does Classloader work in Java? | by Deepti Swain | InterviewNoodle](../../../static/images/classloader-request.webp)
 
 类加载器是 Java 运行时环境的一部分。当 JVM 请求一个类时，类加载器会尝试定位该类，并使用完全限定的类名将类定义加载到运行时中。
 
@@ -359,7 +359,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 throws ClassNotFoundException {
 
   synchronized (getClassLoadingLock(name)) {
-      // First, check if the class has already been loaded
+      / First, check if the class has already been loaded
       Class<?> c = findLoadedClass(name);
       if (c == null) {
           long t0 = System.nanoTime();
@@ -370,13 +370,13 @@ throws ClassNotFoundException {
                       c = findBootstrapClassOrNull(name);
                   }
               } catch (ClassNotFoundException e) {
-                  // ClassNotFoundException thrown if class not found
-                  // from the non-null parent class loader
+                  / ClassNotFoundException thrown if class not found
+                  / from the non-null parent class loader
               }
 
               if (c == null) {
-                  // If still not found, then invoke findClass in order
-                  // to find the class.
+                  / If still not found, then invoke findClass in order
+                  / to find the class.
                   c = findClass(name);
               }
           }
@@ -467,7 +467,7 @@ final class VersionHelper12 extends VersionHelper {
                     ClassLoader loader =
                             Thread.currentThread().getContextClassLoader();
                     if (loader == null) {
-                        // Don't use bootstrap class loader directly!
+                        / Don't use bootstrap class loader directly!
                         loader = ClassLoader.getSystemClassLoader();
                     }
 
@@ -483,6 +483,6 @@ final class VersionHelper12 extends VersionHelper {
 
 ### 参考
 
--  [ClassLoader](https://javasec.org/javase/ClassLoader/) 
+-  [ClassLoader](https:/javasec.org/javase/ClassLoader/) 
 
-- [Class Loaders in Java](https://www.baeldung.com/java-classloaders)
+- [Class Loaders in Java](https:/www.baeldung.com/java-classloaders)

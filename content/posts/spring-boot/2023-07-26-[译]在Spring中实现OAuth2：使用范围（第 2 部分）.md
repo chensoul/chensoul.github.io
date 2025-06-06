@@ -17,9 +17,9 @@ tags: [spring-security,oauth2]
 
 ## 实现
 
-为了演示范围，我们将使用第 1 部分中的[示例](https://github.com/zak905/oauth2-example)。
+为了演示范围，我们将使用第 1 部分中的[示例](https:/github.com/zak905/oauth2-example)。
 
-在[资源服务器](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceController.java)的控制器中，我们有以下端点：
+在[资源服务器](https:/github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceController.java)的控制器中，我们有以下端点：
 
 ```java
 @RestController("/")
@@ -47,7 +47,7 @@ public class ResourceController {
 }
 ```
 
-第一步是使用所需的范围配置[授权服务器](https://github.com/zak905/oauth2-example/blob/master/authorization-server/src/main/java/com/gwidgets/examples/authorizationserver/AuthorizationSecurityConfig.java#L34)：
+第一步是使用所需的范围配置[授权服务器](https:/github.com/zak905/oauth2-example/blob/master/authorization-server/src/main/java/com/gwidgets/examples/authorizationserver/AuthorizationSecurityConfig.java#L34)：
 
 ```java
  clients.inMemory().withClient("my-trusted-client")
@@ -56,7 +56,7 @@ public class ResourceController {
                 .authorities("CLIENT")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(60)
-                .redirectUris("http://localhost:8081/test.html")
+                .redirectUris("http:/localhost:8081/test.html")
                 .resourceIds("resource")
                 .secret("mysecret");
 
@@ -109,9 +109,9 @@ public class ResourceController {
     }
 ```
 
-另外，我们需要将 `@EnableGlobalMethodSecurity(prePostEnabled = true)` 添加到 Spring 可以获取的任何类（ `@Configuration` 、 `@Service` 等）。在我们的示例中，我们已将其添加到 [ResourceSecurityConfiguration](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18) 类中。 `prePostEnabled = true` 告诉 Spring 启用前注解和后注解，例如 `@PreAuthorize` 、 `@PostFilter` 等......
+另外，我们需要将 `@EnableGlobalMethodSecurity(prePostEnabled = true)` 添加到 Spring 可以获取的任何类（ `@Configuration` 、 `@Service` 等）。在我们的示例中，我们已将其添加到 [ResourceSecurityConfiguration](https:/github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18) 类中。 `prePostEnabled = true` 告诉 Spring 启用前注解和后注解，例如 `@PreAuthorize` 、 `@PostFilter` 等......
 
-对于那些想了解 `#oauth2.hasScope('trust')` 这样的表达式的人来说，它们是使用 [Spring 表达式语言](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)（SpEL）构建的。
+对于那些想了解 `#oauth2.hasScope('trust')` 这样的表达式的人来说，它们是使用 [Spring 表达式语言](https:/docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)（SpEL）构建的。
 
 ## 行动范围
 
@@ -186,4 +186,4 @@ bar
 
 范围是 OAuth 的一个重要方面，因为令牌不携带有关其用户或请求者的信息。范围允许限制对资源的访问，以实现更好的访问控制和安全性。在下一篇文章中，我们将了解如何将 Google 和 Facebook 等外部 OAuth 提供商集成到流程中。
 
-原文链接：[http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/](http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/)
+原文链接：[http:/www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/](http:/www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/)

@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ spring-security,oauth2]
 ---
 
-原文地址：[https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
+原文地址：[https:/mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https:/mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
 
 
 
@@ -15,9 +15,9 @@ Spring 团队最近发布了他们的授权服务器。OAuth2 一直是一个热
 
 # 设置授权服务器
 
-让我们转到[Spring Initializr](https://start.spring.io/)并生成项目。
+让我们转到[Spring Initializr](https:/start.spring.io/)并生成项目。
 
-![img](/images/oauth2-with-spring-part-2-01.webp)
+![img](../../../static/images/oauth2-with-spring-part-2-01.webp)
 
 为了创建授权服务器，我们需要 Oauth2 授权服务器依赖。
 
@@ -61,21 +61,21 @@ spring:
 
 
 
-![img](/images/oauth2-with-spring-part-2-02.webp)
+![img](../../../static/images/oauth2-with-spring-part-2-02.webp)
 
 接下来，在 postman 中，我们向*/oauth2/token*端点发出 POST 请求以获取令牌。为什么是*/oauth2/token*端点？
 
-![img](/images/oauth2-with-spring-part-2-03.webp)
+![img](../../../static/images/oauth2-with-spring-part-2-03.webp)
 
 
 
-![img](/images/oauth2-with-spring-part-2-04.webp)
+![img](../../../static/images/oauth2-with-spring-part-2-04.webp)
 
 我们可以看到，一旦我们提交请求，我们就会收到详细的令牌信息。
 
 瞧，我们最小的授权服务器现在已经启动并运行了。
 
-该项目的链接可以[在这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/getting-refresh-token)找到。
+该项目的链接可以[在这里](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/getting-refresh-token)找到。
 
 ## 问题
 
