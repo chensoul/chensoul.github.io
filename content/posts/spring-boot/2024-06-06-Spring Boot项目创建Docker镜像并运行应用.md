@@ -360,7 +360,7 @@ jib {
                     </ports>
                 </run>
             </image>
-        <../../../static/images>
+        </images>
     </configuration>
 </plugin>
 ```
@@ -427,7 +427,7 @@ jib {
                     </ports>
                 </build>
             </image>
-        <../../../static/images>
+        </images>
     </configuration>
     <executions>
         <execution>

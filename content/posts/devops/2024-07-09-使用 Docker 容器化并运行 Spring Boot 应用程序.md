@@ -7,7 +7,7 @@ categories: ["devops"]
 tags: [ spring-boot,docker]
 ---
 
-> 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/language/java/)》文章，并做了一些改动。
+> 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/guides/java/)》文章，并做了一些改动。
 
 Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用程序。在本模块中，您将学习如何：
 
@@ -302,7 +302,7 @@ $ curl  --request GET \
 
 您将使用 IntelliJ IDEA 自带的调试器。您可以使用此 IDE 的社区版本。在 IntelliJ IDEA 中打开您的项目，转到**“运行”**菜单，然后**转到“编辑配置”**。添加类似于以下内容的新远程 JVM 调试配置：
 
-![Java 连接调试器](https://docs.docker.com/language/java../../../static/images/connect-debugger.webp)
+![Java 连接调试器](https://docs.docker.com/guides/java/images/connect-debugger.webp)
 
 设置断点。
 
@@ -310,11 +310,11 @@ $ curl  --request GET \
 
 要启动调试会话，请选择**运行**菜单，然后**选择调试\*NameOfYourConfiguration\***。
 
-![调试菜单](https://docs.docker.com/language/java../../../static/images/debug-menu.webp)
+![调试菜单](https://docs.docker.com/guides/java/images/debug-menu.webp)
 
 您现在应该可以在 Compose 应用程序的日志中看到该连接。
 
-![撰写日志文件](https://docs.docker.com/language/java../../../static/images/compose-logs.webp)
+![撰写日志文件](https://docs.docker.com/guides/java/images/compose-logs.webp)
 
 您现在可以调用服务器端点。
 
@@ -324,7 +324,7 @@ $ curl --request GET --url http://localhost:8080/vets
 
 您应该已经看到代码在标记的行上中断，现在您可以像平常一样使用调试器。您还可以检查和观察变量、设置条件断点、查看堆栈跟踪以及执行许多其他操作。
 
-![调试器代码断点](https://docs.docker.com/language/java../../../static/images/debugger-breakpoint.webp)
+![调试器代码断点](https://docs.docker.com/guides/java/images/debugger-breakpoint.webp)
 
 按下`ctrl+c`终端即可停止您的应用程序。
 
@@ -506,7 +506,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 ## 先决条件
 
-完成本指南的前面部分，从 [容器化您的应用](https://docs.docker.com/language/java/containerize/)开始。您必须拥有 [GitHub](https://github.com/signup)帐户和 [Docker](https://hub.docker.com/signup)帐户才能完成此部分。
+完成本指南的前面部分，从 [容器化您的应用](https://docs.docker.com/guides/java/containerize/)开始。您必须拥有 [GitHub](https://github.com/signup)帐户和 [Docker](https://hub.docker.com/signup)帐户才能完成此部分。
 
 ## 概述
 
@@ -645,7 +645,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 ## 先决条件
 
-- 完成本指南前面的所有部分，从 [“容器化你的应用”](https://docs.docker.com/language/java/containerize/)开始。
+- 完成本指南前面的所有部分，从 [“容器化你的应用”](https://docs.docker.com/guides/java/containerize/)开始。
 - 在 Docker Desktop 中[打开 Kubernetes](https://docs.docker.com/desktop/kubernetes/#install-and-turn-on-kubernetes)。
 
 ## 概述
@@ -654,7 +654,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 ## 创建 Kubernetes YAML 文件
 
-在您的`spring-petclinic`目录中，创建一个名为 的文件 `docker-java-kubernetes.yaml`。在 IDE 或文本编辑器中打开该文件并添加以下内容。将其替换为您的 Docker 用户名和您在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/language/java/configure-ci-cd/)`DOCKER_USERNAME/REPO_NAME`中创建的存储库的名称 。
+在您的`spring-petclinic`目录中，创建一个名为 的文件 `docker-java-kubernetes.yaml`。在 IDE 或文本编辑器中打开该文件并添加以下内容。将其替换为您的 Docker 用户名和您在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/guides/java/configure-ci-cd/)`DOCKER_USERNAME/REPO_NAME`中创建的存储库的名称 。
 
 ```yaml
 apiVersion: apps/v1
@@ -694,7 +694,7 @@ spec:
 
 在此 Kubernetes YAML 文件中，有两个对象，由以下字符分隔`---`：
 
-- 部署，描述一组可扩展的相同 Pod。在这种情况下，您将只获得一个副本或 Pod 的副本。该 Pod（如下所述）中只有一个容器。该容器是根据 GitHub Actions 在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/language/java/configure-ci-cd/)`template`中构建的映像创建的 。
+- 部署，描述一组可扩展的相同 Pod。在这种情况下，您将只获得一个副本或 Pod 的副本。该 Pod（如下所述）中只有一个容器。该容器是根据 GitHub Actions 在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/guides/java/configure-ci-cd/)`template`中构建的映像创建的 。
 - NodePort 服务会将流量从主机上的端口 30001 路由到其路由到的 pod 内的端口 8080，从而允许您从网络访问您的应用程序。
 
 要了解有关 Kubernetes 对象的更多信息，请参阅 [Kubernetes 文档](https://kubernetes.io/docs/home/)。

@@ -25,7 +25,7 @@ docker run -d --name=gitea -p 2222:2222 -p 3000:3000 -v /data/gitea/data://var/l
 
 注意：
 
-- Gitea 的 SSH 服务端口，默认为 2222 。具体可以参考 [gitea/gitea:1.23-rootless dockerfile](https://hub.docker.com/layers/gitea/gitea/1.23-rootless../../../static/images/sha256-5436192de9b42c7a1b3f456a3b19d58855a5c7959077258901f2f6a3b593af95)
+- Gitea 的 SSH 服务端口，默认为 2222 。具体可以参考 [gitea/gitea:1.23-rootless dockerfile](https://hub.docker.com/layers/gitea/gitea/1.23-rootless/images/sha256-5436192de9b42c7a1b3f456a3b19d58855a5c7959077258901f2f6a3b593af95)
 - Gitea 的 HTTP 服务端口，默认为 3000
 
 启动成功之后，可以通过 http://ip:3000/ 访问。
