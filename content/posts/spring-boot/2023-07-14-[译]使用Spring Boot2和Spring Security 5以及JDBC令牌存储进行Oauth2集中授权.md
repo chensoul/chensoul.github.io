@@ -23,7 +23,7 @@ tags: [spring-security,oauth2]
 
 OAuth 2.0 是行业标准授权协议。 OAuth 2.0 取代了 2006 年创建的原始 OAuth 协议上所做的工作。OAuth 2.0 注重客户端开发人员的简单性，同时为 Web 应用程序、桌面应用程序、移动电话和客厅设备提供特定的授权流程。
 
-该规范及其扩展正在 [IETF OAuth 工作组内](https:/www.ietf.org/mailman/listinfo/oauth)开发。
+该规范及其扩展正在 [IETF OAuth 工作组内](https://www.ietf.org/mailman/listinfo/oauth)开发。
 
 ## Oauth 2 角色
 
@@ -65,12 +65,12 @@ OAuth 2 为不同的用例提供了多种“授权类型”。定义的授权类
 
 要设置 Oauth 2 客户端，我们需要创建下表 [有关更多详细信息，请参阅链接]
 
-- [OAUTH_CLIENT_DETAILS](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java)
-- [OAUTH_CLIENT_TOKEN](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/JdbcClientTokenServices.java)
-- [OAUTH_ACCESS_TOKEN](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
-- [OAUTH_REFRESH_TOKEN](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
-- [OAUTH CODE ](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
-- [OAUTH_APPROVALS](https:/github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/JdbcApprovalStore.java)
+- [OAUTH_CLIENT_DETAILS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java)
+- [OAUTH_CLIENT_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/JdbcClientTokenServices.java)
+- [OAUTH_ACCESS_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
+- [OAUTH_REFRESH_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
+- [OAUTH CODE ](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
+- [OAUTH_APPROVALS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/JdbcApprovalStore.java)
 
 我们将调用像“product_api”这样的资源服务器 对于该服务器，我们定义一个客户端，称为：
 
@@ -86,9 +86,9 @@ VALUES ('read-write-client', 'product-api','$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBu
 
 Spring Security 附带两个有用的接口：
 
-- [UserDetails](https:/docs.spring.io/spring-security/site/docs/5.0.x/api/org/springframework/security/core/userdetails/UserDetails.html) — 提供核心用户信息。
+- [UserDetails](https://docs.spring.io/spring-security/site/docs/5.0.x/api/org/springframework/security/core/userdetails/UserDetails.html) — 提供核心用户信息。
 
-- [GrantedAuthority](https:/docs.spring.io/spring-security/site/docs/5.0.x/api/org/springframework/security/core/GrantedAuthority.html) — 表示授予身份验证对象的权限。
+- [GrantedAuthority](https://docs.spring.io/spring-security/site/docs/5.0.x/api/org/springframework/security/core/GrantedAuthority.html) — 表示授予身份验证对象的权限。
 
 下面的脚本将加载所有权限和凭据（用户）：
 
@@ -116,11 +116,11 @@ INSERT INTO credentials_authorities VALUES (3, 2);
 
 ### Spring 安全配置
 
-我们必须提供 [UserDetailsService](https:/docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/core/userdetails/UserDetailsService.html) 接口的实现，以便获取用户凭据和权限，如下所示
+我们必须提供 [UserDetailsService](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/core/userdetails/UserDetailsService.html) 接口的实现，以便获取用户凭据和权限，如下所示
 
 ![img](../../../static/images/oauth-2-centralized-authorization-03.webp)
 
-为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https:/docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注解和 WebSecurityConfigurerAdapter
+为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注解和 WebSecurityConfigurerAdapter
 
 ```java
 @EnableWebSecurity
@@ -296,13 +296,13 @@ Got token for curl client as : 3be01519–0cab-4049-b87d-617c48bda502
 [{“version”:0,”name”:”product_1",”available”:false},{“version”:0,”name”:”product_2",”available”:true}]
 ```
 
-从 github 上查看整个代码：https:/github.com/Akourtiim/oauth2-spring-boot-2.0.2.git
+从 github 上查看整个代码：https://github.com/Akourtiim/oauth2-spring-boot-2.0.2.git
 
 **参考：**
 
-- https:/tools.ietf.org/html/rfc6749
-- https:/dzone.com/articles/secure-spring-rest-with-spring-security-and-oauth2
-- http:/www.bubblecode.net/en/2016/01/22/understanding-oauth2/
-- https:/github.com/FrontierPsychiatrist/spring-oauth-example
+- https://tools.ietf.org/html/rfc6749
+- https://dzone.com/articles/secure-spring-rest-with-spring-security-and-oauth2
+- http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/
+- https://github.com/FrontierPsychiatrist/spring-oauth-example
 
-原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https:/akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4)
+原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https://akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4)

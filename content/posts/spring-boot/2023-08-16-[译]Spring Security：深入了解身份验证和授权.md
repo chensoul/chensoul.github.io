@@ -68,7 +68,7 @@ tags: [spring-security]
 
 #### 为什么使用 Servlet 过滤器？
 
-回想一下我的[另一篇文章](https:/www.marcobehler.com/guides/spring-framework)，我们发现基本上任何 Spring Web 应用程序都只是一个 servlet：Spring 的旧式 [DispatcherServlet](https:/docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet)，它将传入的 HTTP 请求（例如来自浏览器）重定向到 @Controllers 或 @RestControllers。
+回想一下我的[另一篇文章](https://www.marcobehler.com/guides/spring-framework)，我们发现基本上任何 Spring Web 应用程序都只是一个 servlet：Spring 的旧式 [DispatcherServlet](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet)，它将传入的 HTTP 请求（例如来自浏览器）重定向到 @Controllers 或 @RestControllers。
 问题是：DispatcherServlet 中没有硬编码安全性，而且您也很可能不想在 @Controllers 中摸索原始 HTTP Basic Auth 标头。最佳情况下，身份验证和授权应该在请求到达 @Controller 之前完成。
 幸运的是，在 Java Web 世界中有一种方法可以做到这一点：您可以将过滤器放在 servlet 前面，这意味着您可以考虑编写一个 SecurityFilter 并在 Tomcat（servlet 容器/应用程序服务器）中配置它来过滤每个传入的内容 HTTP 请求在到达您的 servlet 之前。
 
@@ -235,7 +235,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { / (1)
 
 #### 如何使用 Spring Security 的配置 DSL
 
-习惯该 DSL 需要一些时间，但您可以在常见问题解答部分找到更多示例：[AntMatchers：常见示例](https:/www.marcobehler.com/guides/spring-security#security-examples)。
+习惯该 DSL 需要一些时间，但您可以在常见问题解答部分找到更多示例：[AntMatchers：常见示例](https://www.marcobehler.com/guides/spring-security#security-examples)。
 
 现在重要的是，您可以在这个 `*configure*` 方法中指定：
 
@@ -619,7 +619,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 1. 您正在检查用户是否具有 ROLE_ADMIN、特定的 IP 地址以及自定义 bean 检查。
 
-要全面了解 Spring 基于表达式的访问控制的功能，请查看[官方文档](https:/docs.spring.io/spring-security/site/docs/current/reference/html5/#el-access)。
+要全面了解 Spring 基于表达式的访问控制的功能，请查看[官方文档](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#el-access)。
 
 ## 常见漏洞保护
 
@@ -679,7 +679,7 @@ Spring Security 可以帮助您防范多种常见攻击。它从计时攻击开�
 1. 在这里，我们手动添加 CSRF 参数。
 2. 在这里，我们使用 Thymeleaf 的表单支持。
 
-注意：有关 Thymeleaf 的 CSRF 支持的更多信息，请参阅[官方文档](https:/www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)。
+注意：有关 Thymeleaf 的 CSRF 支持的更多信息，请参阅[官方文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)。
 
 #### CSRF 和其他模板库
 
@@ -703,7 +703,7 @@ public class MyController {
 1. 配置 Spring Security 以使用 CookieCsrfTokenRepository，它将把 CSRFToken 放入 cookie“XSRF-TOKEN”（并将其发送到浏览器）。
 2. 让您的 Javascript 应用程序采用该 cookie 值，并将其作为“X-XSRF-TOKEN”标头与每个 POST(/PUT/PATCH/DELETE) 请求一起发送。
 
-有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：https:/developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。
+有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。
 
 #### 禁用 CSRF
 
@@ -876,10 +876,10 @@ Spring Security 与 Thymeleaf 集成良好。它提供了一种特殊的 Spring 
 
 Spring Security 最近经历了一些重大变化。因此，您需要找到目标版本的迁移指南并完成它们：
 
-- Spring Security 3.x 到 4.x → https:/docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html
-- Spring Security 4.x 到 5.x(< 5.3) → https:/docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new （不是迁移指南，但有什么新鲜事）
-- Spring Security 5.x 到 5.3 → https:/docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new （不是迁移指南，而是新功能）
-- Spring Security 最新版本 → https:/docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）
+- Spring Security 3.x 到 4.x → https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html
+- Spring Security 4.x 到 5.x(< 5.3) → https://docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new （不是迁移指南，但有什么新鲜事）
+- Spring Security 5.x 到 5.3 → https://docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new （不是迁移指南，而是新功能）
+- Spring Security 最新版本 → https://docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）
 
 ### 我需要添加哪些依赖项才能使 Spring Security 正常工作？
 
@@ -900,7 +900,7 @@ Spring Security 最近经历了一些重大变化。因此，您需要找到目�
 </dependency>
 ```
 
-您还需要在 web.xml 或 Java 配置中配置 SecurityFilterChain。请参阅[此处](https:/docs.spring.io/spring-security/site/docs/current/reference/html5/#ns-web-xml)如何操作。
+您还需要在 web.xml 或 Java 配置中配置 SecurityFilterChain。请参阅[此处](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#ns-web-xml)如何操作。
 
 #### Spring Boot Project
 
@@ -995,4 +995,4 @@ context.setAuthentication(authentication);
 
 向 Patricio "Pato" Moschcovich 致以深深的谢意，他不仅对本文进行了校对，还提供了宝贵的反馈！
 
-原文链接：[https:/www.marcobehler.com/guides/spring-security](https:/www.marcobehler.com/guides/spring-security)
+原文链接：[https://www.marcobehler.com/guides/spring-security](https://www.marcobehler.com/guides/spring-security)

@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [spring-security]
 ---
 
-原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https:/www.danvega.dev/blog/spring-security-jwt)
+原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https://www.danvega.dev/blog/spring-security-jwt)
 
 如果您快速搜索如何使用 JSON Web Tokens 在 Spring Boot 中保护 REST API，您会发现很多相同的结果。这些结果包含一种方法，该方法涉及编写自定义过滤器链并引入第三方库来编码和解码 JWT。
 
@@ -15,7 +15,7 @@ tags: [spring-security]
 
 在本教程中，您将学习如何使用 JSON Web Tokens (JWT) 和 Spring Security 来保护您的 API。我并不是说这种方法无论如何都很容易，但对我来说，它比其他选择更有意义。
 
-[Github 仓库](https:/github.com/danvega/jwt)
+[Github 仓库](https://github.com/danvega/jwt)
 
 ## 应用架构
 
@@ -83,7 +83,7 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 
 您需要做的第一件事是创建一个您想要保护的 REST API。出于演示目的并保持简单，使用返回字符串的单个方法在 `controller` 包中创建 `HomeController` 。请求映射处理程序方法可以接受一系列参数，其中之一是 `java.security.Principal` 。这将允许您打印出当前经过身份验证的用户的用户名。
 
-Spring Security 采用默认安全的安全方法。这意味着，如果您启动应用程序并尝试访问 http:/localhost:8080，您将被重定向到登录页面。如果您想登录，可以输入用户名 `user` ，密码将生成并应在控制台输出中列出。
+Spring Security 采用默认安全的安全方法。这意味着，如果您启动应用程序并尝试访问 http://localhost:8080，您将被重定向到登录页面。如果您想登录，可以输入用户名 `user` ，密码将生成并应在控制台输出中列出。
 
 ```java
 @RestController
@@ -101,7 +101,7 @@ public class HomeController {
 
 ## SPRING 安全配置
 
-默认的安全配置足以让您启动并运行，但您需要提供自己的安全配置来满足应用程序的需求。过去，您可以扩展 `WebSecurityConfigurerAdapter` ，但这在 Spring Security 5.7.x 中已被弃用。如果您有兴趣了解有关此更改的更多信息，可以查看[本教程](https:/youtu.be/s4X4SJv2RrU)。
+默认的安全配置足以让您启动并运行，但您需要提供自己的安全配置来满足应用程序的需求。过去，您可以扩展 `WebSecurityConfigurerAdapter` ，但这在 Spring Security 5.7.x 中已被弃用。如果您有兴趣了解有关此更改的更多信息，可以查看[本教程](https://youtu.be/s4X4SJv2RrU)。
 
 首先，在 `config` 包中创建一个名为 `SecurityConfig` 的新类。该类将具有以下配置：
 
@@ -146,7 +146,7 @@ public InMemoryUserDetailsManager users() {
 }
 ```
 
-配置新用户后，您应该能够重新启动应用程序并访问 http:/localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用 `dvega` + `password` 登录。
+配置新用户后，您应该能够重新启动应用程序并访问 http://localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用 `dvega` + `password` 登录。
 
 ![Spring Security HTTP Basic](../../../static/images/http-basic-auth.webp)
 
@@ -157,7 +157,7 @@ public InMemoryUserDetailsManager users() {
 - JWT
 - Opaque Tokens
 
-在应用程序将其权限管理委托给[授权服务器](https:/tools.ietf.org/html/rfc6749)（例如，Okta 或 [Spring 授权服务器](https:/spring.io/projects/spring-authorization-server)）的情况下，这非常方便。资源服务器可以咨询该授权服务器来授权请求 ​​。
+在应用程序将其权限管理委托给[授权服务器](https://tools.ietf.org/html/rfc6749)（例如，Okta 或 [Spring 授权服务器](https://spring.io/projects/spring-authorization-server)）的情况下，这非常方便。资源服务器可以咨询该授权服务器来授权请求 ​​。
 
 在本教程中，您将使用自签名 JWT，这将无需引入授权服务器。虽然这适用于本示例，但您的应用程序要求可能有所不同，因此什么时候不再接受使用自签名 JWT？我也向 Spring Security 团队提出了这个问题，并得到了一些非常好的答案。
 
@@ -167,9 +167,9 @@ public InMemoryUserDetailsManager users() {
 
 我们可能会花很多时间讨论授权和资源服务器。为了让本教程围绕这个主题，我将给您留下一些非常好的资源，我建议您在有时间时阅读它们。
 
-- [OAuth2 Resource Server](https:/docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
-- [OAuth2 Resource Server JWT](https:/docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
-- [Spring Authorization Server](https:/spring.io/projects/spring-authorization-server)
+- [OAuth2 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
+- [OAuth2 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
+- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
 
 ### OAUTH 2 资源服务器配置
 
@@ -398,13 +398,13 @@ public class AuthController {
 
 ![Postman Basic Auth](../../../static/images/postman-basic-auth.webp)
 
-复制 JWT 并为 http:/localhost:8080 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
+复制 JWT 并为 http://localhost:8080 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
 
 ![Postman with JWT Response](../../../static/images/postman-with-jwt-response.webp)
 
 **命令行**
 
-我非常喜欢命令行和 [httpie](https:/httpie.io/) 工具。它简化了在终端中测试 API 的命令的编写。您可以使用以下命令使用您的凭据向令牌端点发送请求：
+我非常喜欢命令行和 [httpie](https://httpie.io/) 工具。它简化了在终端中测试 API 的命令的编写。您可以使用以下命令使用您的凭据向令牌端点发送请求：
 
 ```bash
 http POST :8080/token --auth dvega:password -v
@@ -476,7 +476,7 @@ class HomeControllerTest {
 
 ## 结论
 
-当我开始创建本教程时，我的全部目标是让您知道有一种更简单的方法可以使用 JWT 来保护您的 API。我希望现在您知道 Spring Security 使用 oAuth2 资源服务器内置了对 JSON Web 令牌的支持，您可以在下一个项目中使用它。这只是如何在 Spring Boot 应用程序中使用 JWT 的起跑线，绝不是终点线。如果您对具体配置有疑问，请[与我联系](https:/twitter.com/therealdanvega)。
+当我开始创建本教程时，我的全部目标是让您知道有一种更简单的方法可以使用 JWT 来保护您的 API。我希望现在您知道 Spring Security 使用 oAuth2 资源服务器内置了对 JSON Web 令牌的支持，您可以在下一个项目中使用它。这只是如何在 Spring Boot 应用程序中使用 JWT 的起跑线，绝不是终点线。如果您对具体配置有疑问，请[与我联系](https://twitter.com/therealdanvega)。
 
 我感到非常幸运，能够在 VMware 这样的公司工作，并且能够接触到一些非常聪明的人。当您与一群总是愿意分享知识和提供帮助的优秀人士一起工作时，这种访问就意味着更重要。我要特别感谢以下帮助我将这些内容整合在一起的人：
 

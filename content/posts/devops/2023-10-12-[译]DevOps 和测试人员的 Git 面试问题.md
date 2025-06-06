@@ -13,7 +13,7 @@ tags: [git]
 
 ## 1.什么是版本控制系统？
 
-[版本控制系统](https:/www.atlassian.com/git/tutorials/what-is-version-control) (VCS) 是一种帮助跟踪和管理文件和代码随时间变化的软件。它允许多人协作处理一个项目，跟踪修订，并在需要时轻松恢复到以前的版本。
+[版本控制系统](https://www.atlassian.com/git/tutorials/what-is-version-control) (VCS) 是一种帮助跟踪和管理文件和代码随时间变化的软件。它允许多人协作处理一个项目，跟踪修订，并在需要时轻松恢复到以前的版本。
 
 版本控制系统主要分为三种类型：
 
@@ -37,8 +37,8 @@ tags: [git]
 
 ```bash
 git remote -v
-origin https:/github.com/lokeshgupta1981/Spring-Boot3-Demos.git (fetch)
-origin https:/github.com/lokeshgupta1981/Spring-Boot3-Demos.git (push)
+origin https://github.com/lokeshgupta1981/Spring-Boot3-Demos.git (fetch)
+origin https://github.com/lokeshgupta1981/Spring-Boot3-Demos.git (push)
 ```
 
 请注意，“origin”只是一个未硬编码的别名，可以使用以下命令提示符进行更改：
@@ -676,4 +676,4 @@ git reset HEAD -- .
 
 快乐学习！
 
-原文链接：[Git Interview Questions for DevOps and Testers ](https:/howtodoinjava.com/interview-questions/git-interview-questions/)
+原文链接：[Git Interview Questions for DevOps and Testers ](https://howtodoinjava.com/interview-questions/git-interview-questions/)

@@ -9,7 +9,7 @@ tags: [ maven]
 
 ## 安装 Artifactory
 
-官方下载安装地址：[https:/jfrog.com/community/download-artifactory-oss/](https:/jfrog.com/community/download-artifactory-oss/) ，支持三种安装方式：
+官方下载安装地址：[https://jfrog.com/community/download-artifactory-oss/](https://jfrog.com/community/download-artifactory-oss/) ，支持三种安装方式：
 
 - Windows Installer
 - Linux Installers
@@ -24,10 +24,10 @@ tags: [ maven]
 
 ### 手动下载并安装
 
-安装包文件地址在 [https:/releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/](https:/releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/) 。以当前最新版本 7.84.15 为例，在 linux 服务器上下载：
+安装包文件地址在 [https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/](https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/) 。以当前最新版本 7.84.15 为例，在 linux 服务器上下载：
 
 ```bash
-wget https:/releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/7.84.15/jfrog-artifactory-oss-7.84.15-linux.tar.gz
+wget https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/7.84.15/jfrog-artifactory-oss-7.84.15-linux.tar.gz
 
  tar -zxvf jfrog-artifactory-oss-7.84.15-linux.tar.gz
  cd jfrog-artifactory-oss-7.84.15/app/bin
@@ -50,7 +50,7 @@ sudo chmod -R 777 $JFROG_HOME/artifactory/var
 touch $JFROG_HOME/artifactory/var/etc/system.yaml
 ```
 
-配置数据库。参考 [JFrog Recommends Using PostgreSQL](https:/jfrog.com/help/r/jfrog-installation-setup-documentation/database-configuration) ，Artifactory 7.84.7 之后，默认使用 postgresql 数据库。
+配置数据库。参考 [JFrog Recommends Using PostgreSQL](https://jfrog.com/help/r/jfrog-installation-setup-documentation/database-configuration) ，Artifactory 7.84.7 之后，默认使用 postgresql 数据库。
 
 ```bash
 cat <<EOF > $JFROG_HOME/artifactory/var/etc/system.yaml
@@ -58,7 +58,7 @@ shared:
     database:
         type: postgresql
         driver: org.postgresql.Driver
-        url: jdbc:postgresql:/192.168.2.39:5432/artifactory
+        url: jdbc:postgresql://192.168.2.39:5432/artifactory
         username: artifactory
         password: password
 EOF
@@ -73,7 +73,7 @@ shared:
         allowNonPostgresql: true
         type: mysql
         driver: com.mysql.jdbc.Driver
-        url: "jdbc:mysql:/192.168.2.214:3306/artifactory?characterEncoding=UTF-8&elideSetAutoCommits=true&useSSL=false"
+        url: "jdbc:mysql://192.168.2.214:3306/artifactory?characterEncoding=UTF-8&elideSetAutoCommits=true&useSSL=false"
         username: artifactory
         password: password
 EOF
@@ -93,13 +93,13 @@ EOF
 >   ```bash
 >   mkdir -p $JFROG_HOME/artifactory/var/bootstrap/artifactory/tomcat/lib
 >       
->   wget https:/repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar -P $JFROG_HOME/artifactory/var/bootstrap/artifactory/tomcat/lib
+>   wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar -P $JFROG_HOME/artifactory/var/bootstrap/artifactory/tomcat/lib
 >   ```
 
 下载镜像并运行容器：
 
 ```bash
-docker run --name artifactory-oss -v $JFROG_HOME/artifactory/var/:/var/opt/jfrog/artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-pro:7.84.15
+docker run --name artifactory-oss -v $JFROG_HOME/artifactory/var/://var/opt/jfrog/artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-pro:7.84.15
 ```
 
 查看日志，稍等片刻，可以看到应用启动成功：
@@ -133,8 +133,8 @@ services:
         ports:
             - "5432:5432"
         volumes:
-            - postgres_data:/var/lib/postgresql/data
-            - /etc/localtime:/etc/localtime:ro
+            - postgres_data://var/lib/postgresql/data
+            - /etc/localtime://etc/localtime:ro
 
     artifactory-oss:
         image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.84.15
@@ -143,26 +143,26 @@ services:
             # The following must match the POSTGRES_USER and POSTGRES_PASSWORD values passed to PostgreSQL
             - JF_SHARED_DATABASE_USERNAME=artifactory
             - JF_SHARED_DATABASE_PASSWORD=password
-            - JF_SHARED_DATABASE_URL=jdbc:postgresql:/postgresql:5432/artifactory
+            - JF_SHARED_DATABASE_URL=jdbc:postgresql://postgresql:5432/artifactory
             - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
         ports:
             - "8081:8081"
             - "8082:8082"
         volumes:
-            - artifactory_data:/var/opt/jfrog/artifactory
-            - /etc/localtime:/etc/localtime:ro
+            - artifactory_data://var/opt/jfrog/artifactory
+            - /etc/localtime://etc/localtime:ro
 ```
 
 
 
 ## 访问 artifactory
 
-通过浏览器访问 http:/127.0.0.1:8082 ，用户名和密码为：admin/password 。
+通过浏览器访问 http://127.0.0.1:8082 ，用户名和密码为：admin/password 。
 
 登录成功之后：
 
 - 1、提示修改密码（必须）。密码改为 Admin123.
-- 2、设置项目访问地址（可选）。例如：http:/127.0.0.1:8082 ，或者 http:/artifactory.local。如果设置了域名，则需要配反向代理，将域名代理到 127.0.0.1:8082
+- 2、设置项目访问地址（可选）。例如：http://127.0.0.1:8082 ，或者 http://artifactory.local。如果设置了域名，则需要配反向代理，将域名代理到 127.0.0.1:8082
 
 - 3、设置默认代理（可选）。
 - 4、创建仓库（可选）。选择 Maven
@@ -192,7 +192,7 @@ artifactory 默认有两个本地仓库，可以不用再创建本地仓库。
 
 2. 包类型选择 maven
 3. 填入仓库Key。例如：jcenter
-4. URL 填入：https:/*jcenter*.bintray.com/
+4. URL 填入：https://*jcenter*.bintray.com/
 
 ### 创建虚拟仓库
 
@@ -217,8 +217,8 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http:/maven.apache.org/SETTINGS/1.2.0 http:/maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http:/maven.apache.org/SETTINGS/1.2.0"
-    xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance">
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
       <username>admin</username>
@@ -241,13 +241,13 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-release</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-snapshot</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -257,13 +257,13 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-release</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-snapshot</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
@@ -294,12 +294,12 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
     <repository>
         <id>central</id>
         <name>c42aa455c510-releases</name>
-        <url>http:/127.0.0.1:8081/artifactory/libs-release</url>
+        <url>http://127.0.0.1:8081/artifactory/libs-release</url>
     </repository>
     <snapshotRepository>
         <id>snapshots</id>
         <name>c42aa455c510-snapshots</name>
-        <url>http:/127.0.0.1:8081/artifactory/libs-snapshot</url>
+        <url>http://127.0.0.1:8081/artifactory/libs-snapshot</url>
     </snapshotRepository>
 </distributionManagement>
 ```
@@ -313,8 +313,8 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http:/maven.apache.org/SETTINGS/1.2.0 http:/maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http:/maven.apache.org/SETTINGS/1.2.0"
-    xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance">
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <servers>
     <server>
       <username>admin</username>
@@ -332,10 +332,10 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
     <profile>
       <properties>
           <altReleaseDeploymentRepository>
-              central::http:/127.0.0.1:8081/artifactory/libs-release
+              central::http://127.0.0.1:8081/artifactory/libs-release
           </altReleaseDeploymentRepository>
           <altSnapshotDeploymentRepository>
-              snapshots::http:/127.0.0.1:8081/artifactory/libs-snapshot
+              snapshots::http://127.0.0.1:8081/artifactory/libs-snapshot
           </altSnapshotDeploymentRepository>
       </properties>
       
@@ -346,13 +346,13 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-release</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-snapshot</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -362,13 +362,13 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-release</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-release</url>
         </pluginRepository>
         <pluginRepository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http:/127.0.0.1:8081/artifactory/libs-snapshot</url>
+          <url>http://127.0.0.1:8081/artifactory/libs-snapshot</url>
         </pluginRepository>
       </pluginRepositories>
       <id>artifactory</id>
@@ -382,9 +382,9 @@ artifactory 默认创建了两个虚拟仓库：libs-release 和 libs-snapshot�
 
 ## 参考文章
 
-- [手把手教你用artifactory搭建maven私有仓库](https:/blog.csdn.net/u013515980/article/details/120927392)
-- [JFrog Artifactory 和 Maven 包类型](https:/medium.com/@vniranjan251203/jfrog-artifactory-and-maven-package-type-2fe0af1765b0)
-- [Artifactory Jfrog与Nexus](https:/blog.csdn.net/jianghuafeng0/article/details/109518353)
+- [手把手教你用artifactory搭建maven私有仓库](https://blog.csdn.net/u013515980/article/details/120927392)
+- [JFrog Artifactory 和 Maven 包类型](https://medium.com/@vniranjan251203/jfrog-artifactory-and-maven-package-type-2fe0af1765b0)
+- [Artifactory Jfrog与Nexus](https://blog.csdn.net/jianghuafeng0/article/details/109518353)
 
-- [从 Nexus 迁移到 JFrog Artifactory](https:/blog.csdn.net/2301_76601027/article/details/130646586)
-- [如何从Nexus迁移到Artifactory](https:/cloud.tencent.com/developer/article/1616310?from=15425)
+- [从 Nexus 迁移到 JFrog Artifactory](https://blog.csdn.net/2301_76601027/article/details/130646586)
+- [如何从Nexus迁移到Artifactory](https://cloud.tencent.com/developer/article/1616310?from=15425)

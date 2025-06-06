@@ -32,7 +32,7 @@ Spring 3.0 版本的亮点包括：
 
 我们需要 Java 17 作为最低版本才能与 Spring 3.0 配合使用。如果您当前使用的是 Java 8、Java 11 或 Java 14 等较低版本，则需要先将 JDK 升级到 JDK 17，然后再开始使用 Spring Boot 3.0 开发应用程序。目前 Java 的最新版本是 JDK 19。不过，Spring Boot 3.0 也运行良好，并且已经在 JDK 19 上进行了测试。
 
-您还可以阅读：[Java 17 特性](https:/javatechonline.com/java-17-features/)。
+您还可以阅读：[Java 17 特性](https://javatechonline.com/java-17-features/)。
 
 ### 第三方库升级
 
@@ -288,7 +288,7 @@ GraalVM 是一种高性能 JDK，旨在加快用 Java 和其他 JVM 语言编写
 
 GraalVM 本机映像是独立的可执行文件，可以通过提前处理已编译的 Java 应用程序来生成。原生映像通常比 JVM 映像具有更小的内存占用并且启动速度更快。它们非常适合使用容器映像部署的应用程序。 GraalVM Native Image 是一个完整的、特定于平台的可执行文件。我们不需要提供 Java 虚拟机来运行本机映像。
 
-如果您想了解更多信息并尝试使用 GraalVM，您可以继续阅读有关“[GraalVM Native Image Support](https:/docs.spring.io/spring-boot/docs/3.0.0/reference/html/native-image.html#native-image)”的官方文档。
+如果您想了解更多信息并尝试使用 GraalVM，您可以继续阅读有关“[GraalVM Native Image Support](https://docs.spring.io/spring-boot/docs/3.0.0/reference/html/native-image.html#native-image)”的官方文档。
 
 ### 通过测微计和测微计追踪提高可观测性
 
@@ -321,11 +321,11 @@ public class MyCustomObservation {
 
 ## 使用 Spring Boot 3.0 的 Spring Security UserDetailsService 示例
 
-此外，我们还有一篇单独的文章作为 [Spring Security UserDetailsS​​ervice 使用 Spring Boot 3](https:/javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的示例，该文章完全使用 Spring Boot 3.0 并遵循 Spring 官方文档提供的分步指南进行开发。此外，您可以阅读《[Spring Boot 3.0 迁移指南](https:/javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/)》来彻底了解迁移过程。
+此外，我们还有一篇单独的文章作为 [Spring Security UserDetailsS​​ervice 使用 Spring Boot 3](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的示例，该文章完全使用 Spring Boot 3.0 并遵循 Spring 官方文档提供的分步指南进行开发。此外，您可以阅读《[Spring Boot 3.0 迁移指南](https://javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/)》来彻底了解迁移过程。
 
 这是目前的功能列表。显然，还有更多。我们将不时更新文章。
 
-有关 Spring Boot 的其他教程，您可以访问 [Spring Boot 教程](https:/javatechonline.com/spring-boot-tutorial/)页面。
+有关 Spring Boot 的其他教程，您可以访问 [Spring Boot 教程](https://javatechonline.com/spring-boot-tutorial/)页面。
 
 ## Spring Boot 3 和 Spring 6 版本如何互连？
 
@@ -345,4 +345,4 @@ public class MyCustomObservation {
 
 根本不需要。为了使用 Spring Boot 3，您的系统中必须至少安装 Java 17。不仅安装了，您的代码还必须使用 JDK 17 进行编译。使用 JDK 17 或更高版本编译的代码将仅被 Spring Boot 3 接受。
 
-原文链接：[https:/javatechonline.com/new-features-in-spring-boot-3-and-spring-6/](https:/javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)
+原文链接：[https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)

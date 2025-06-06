@@ -9,7 +9,7 @@ tags: [ thingsboard]
 
 
 
-原文链接：[https:/ably.com/topic/websockets-vs-http](https:/ably.com/topic/websockets-vs-http)
+原文链接：[https://ably.com/topic/websockets-vs-http](https://ably.com/topic/websockets-vs-http)
 
 
 
@@ -89,7 +89,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 但是假设您有成百上千个客户端（在 BBC 的情况下有数十万个）向服务器发送请求，而这些请求在更新之间没有产生任何新内容。 
 
-这不仅浪费带宽和服务器资源，而且在最近的请求完成后不久更新就会中断 - 可能需要几秒钟才能发送下一个请求并且用户获得更新。一般来说，这种方法称为[HTTP 轮询](https:/ably.com/topic/long-polling)，它既不高效也不实时！ 
+这不仅浪费带宽和服务器资源，而且在最近的请求完成后不久更新就会中断 - 可能需要几秒钟才能发送下一个请求并且用户获得更新。一般来说，这种方法称为[HTTP 轮询](https://ably.com/topic/long-polling)，它既不高效也不实时！ 
 
 ![img](../../../static/images/http-long-polling-20241105080917667.webp)
 
@@ -108,7 +108,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 基于上一节的突发新闻示例，通过 HTTP 流，服务器可以在每次新闻更新中断时将部分响应（如果您愿意，可以是块）附加到响应流 - 连接无限期保持打开状态，使服务器能够推送当新信息可用时，以最短的延迟向客户端提供新信息。
 
-如果您有兴趣了解有关此模式在实践中如何工作的更多信息，我们已经在 Ably 网站上的其他地方撰写了有关[HTTP 流](https:/ably.com/blog/websockets-vs-http-streaming-vs-sse)和[服务器发送事件（HTTP 流的标准实现）的文章。](https:/ably.com/topic/server-sent-events)
+如果您有兴趣了解有关此模式在实践中如何工作的更多信息，我们已经在 Ably 网站上的其他地方撰写了有关[HTTP 流](https://ably.com/blog/websockets-vs-http-streaming-vs-sse)和[服务器发送事件（HTTP 流的标准实现）的文章。](https://ably.com/topic/server-sent-events)
 
 使用 HTTP 流，服务器必须维护大量长期连接的状态，并且不能再被视为无状态。这给扩展 HTTP 流带来了新的挑战，并且还带来了单点故障。 
 
@@ -116,13 +116,13 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 **HTTP 流式传输的缺点**
 
-HTTP流是实现[实时更新的](https:/ably.com/blog/building-realtime-updates-into-your-application)可行方法，但是，我们不能将其视为全面的实时解决方案。
+HTTP流是实现[实时更新的](https://ably.com/blog/building-realtime-updates-into-your-application)可行方法，但是，我们不能将其视为全面的实时解决方案。
 
 与 WebSocket 等其他实时解决方案相比，HTTP 流的主要缺点是 HTTP 是半双工协议。这意味着，就像对讲机一样，信息一次只能通过连接向一个方向流动。 
 
 对于突发新闻或实时图表等实时更新（更新主要从服务器到客户端的单向流动），HTTP 是半双工这一事实不太可能立即带来限制（尽管您可能希望通过以下方式来保证消息传递层的未来安全）从本质上全双工的东西开始）。
 
-然而，对于信息需要通过同一连接同时在两个方向流动的情况，如多人游戏、[聊天](https:/ably.com/blog/live-chat-features)或Figma 等[协作应用程序](https:/ably.com/blog/the-rise-of-realtime-collaboration)，即使流媒体出现，HTTP 也显然不合适。
+然而，对于信息需要通过同一连接同时在两个方向流动的情况，如多人游戏、[聊天](https://ably.com/blog/live-chat-features)或Figma 等[协作应用程序](https://ably.com/blog/the-rise-of-realtime-collaboration)，即使流媒体出现，HTTP 也显然不合适。
 
 对于此类情况，我们需要考虑 WebSocket，这是一种用于实时更新和双向通信的一体化解决方案。 
 
@@ -134,7 +134,7 @@ HTTP流是实现[实时更新的](https:/ably.com/blog/building-realtime-updates
 
 ### 什么是 WebSocket？
 
-与 HTTP 一样，[WebSocket](https:/ably.com/topic/websockets)是一种通信协议，使客户端（通常是 Web 浏览器，因此得名）和服务器能够相互通信
+与 HTTP 一样，[WebSocket](https://ably.com/topic/websockets)是一种通信协议，使客户端（通常是 Web 浏览器，因此得名）和服务器能够相互通信
 
 与具有请求-响应模型的 HTTP 不同，WebSocket 专门设计用于实现服务器和客户端之间的实时双向通信。 
 
@@ -172,11 +172,11 @@ Websocket 连接/断开的顺序
 
 HTTP 通常由 Web 浏览器无缝处理（例如，当您加载此页面时），而 WebSocket 始终要求您编写自定义代码。
 
-为了将这个想法变为现实，下面是一个使用 JavaScript 和内置[WebSocket Web API](https:/developer.mozilla.org/en-US/docs/Web/API/WebSocket)运行 WebSocket 的示例：
+为了将这个想法变为现实，下面是一个使用 JavaScript 和内置[WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)运行 WebSocket 的示例：
 
 ```Javascript
 / Create WebSocket connection.
-const socket = new WebSocket("ws:/localhost:8080");
+const socket = new WebSocket("ws://localhost:8080");
 
 / Connection opened
 socket.addEventListener("open", (event) => {
@@ -189,15 +189,15 @@ socket.addEventListener("message", (event) => {
 });
 ```
 
-上面，我们使用 WebSocket 服务器的 URL 启动[WebSocket构造函数（本文中未显示）。](https:/developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+上面，我们使用 WebSocket 服务器的 URL 启动[WebSocket构造函数（本文中未显示）。](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 
-请注意 URL 的前缀`ws:/`是“WebSocket”而不是`http:/`“HTTP”。同样，当使用加密时，您将使用`wss:/`而不是。`https:/`
+请注意 URL 的前缀`ws://`是“WebSocket”而不是`http://`“HTTP”。同样，当使用加密时，您将使用`wss://`而不是。`https://`
 
 就协议而言，WebSocket 并不是低级协议，但它们很灵活。
 
 在您需要对 WebSockets 代码进行绝对细粒度控制的特殊情况下，所提供的灵活性可能非常有利。然而，对于许多开发人员来说，WebSocket 的准系统实际上是一种负担，因为它会带来大量额外的工作。
 
-- WebSocket 不知道如何检测断开连接或如何从断开连接中恢复。您需要自己实现称为[心跳的](https:/ably.com/topic/websockets-javascript#device-power-management-and-heartbeats)东西。
+- WebSocket 不知道如何检测断开连接或如何从断开连接中恢复。您需要自己实现称为[心跳的](https://ably.com/topic/websockets-javascript#device-power-management-and-heartbeats)东西。
 - 因为 WebSockets 是一个完全独立于 HTTP 的协议，所以您无法从 HTTP 从 HTTP 代理获得的增值内容（例如压缩）中受益。 
 - 与相当标准化的 HTTP 相比，您需要决定自己的身份验证和错误代码实现方式。 
 
@@ -209,7 +209,7 @@ socket.addEventListener("message", (event) => {
 
 虽然开源库提供了全面的前端解决方案，但如果您想确保实时代码稳健可靠且延迟较低，通常需要在服务器上完成更多工作。
 
-开发人员越来越依赖[Ably](http:/ably.com/)等实时体验平台来解决所有烦人的数据和基础设施问题，以便您可以专注于为用户构建出色的实时体验。 
+开发人员越来越依赖[Ably](http://ably.com/)等实时体验平台来解决所有烦人的数据和基础设施问题，以便您可以专注于为用户构建出色的实时体验。 
 
 
 
@@ -232,7 +232,7 @@ socket.addEventListener("message", (event) => {
 - **请求可缓存资源：**经常访问但不经常更改的资源可以从 HTTP 缓存中受益。 WebSocket 不支持缓存。
 - **实现 REST API：** POST、GET 和 UPDATE 等 HTTP 方法与 REST 原则完美契合。 
 - **同步事件：**请求-响应模式非常适合需要同步或需要按特定顺序执行的操作。这是因为 HTTP 请求总是伴随着一个响应，告诉您操作的结果（无论是“200 OK”还是不是）。相比之下，WebSocket 不保证消息将以任何形式立即得到确认。
-- **最大限度地提高兼容性：** HTTP 无处不在且得到广泛支持。在越来越罕见的情况下，过时的企业防火墙配置错误可能会干扰 WebSocket 升级握手，从而阻止建立连接。在这种情况下，需要回退到 HTTP 流或[长轮询。](https:/ably.com/topic/long-polling)
+- **最大限度地提高兼容性：** HTTP 无处不在且得到广泛支持。在越来越罕见的情况下，过时的企业防火墙配置错误可能会干扰 WebSocket 升级握手，从而阻止建立连接。在这种情况下，需要回退到 HTTP 流或[长轮询。](https://ably.com/topic/long-polling)
 
 
 

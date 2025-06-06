@@ -213,7 +213,7 @@ maven-project
 
 3. 创建项目
 
-spring init 使用的是  [start.spring.io](https:/start.spring.io/) 创建项目，而目前  [start.spring.io](https:/start.spring.io/) 支持的 spring boot 版本最低为 3.1.0。如果想创建 spring boot2 的项目，需要创建项目之后手动修改版本号。
+spring init 使用的是  [start.spring.io](https://start.spring.io/) 创建项目，而目前  [start.spring.io](https://start.spring.io/) 支持的 spring boot 版本最低为 3.1.0。如果想创建 spring boot2 的项目，需要创建项目之后手动修改版本号。
 
 ```bash
 spring init \

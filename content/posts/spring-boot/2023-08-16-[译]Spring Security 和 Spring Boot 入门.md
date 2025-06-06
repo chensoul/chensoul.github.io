@@ -7,11 +7,11 @@ categories: ["spring-boot"]
 tags: [spring-security]
 ---
 
-[Spring Security](https:/docs.spring.io/spring-security/reference/index.html) 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。
+[Spring Security](https://docs.spring.io/spring-security/reference/index.html) 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。
 
 ## 示例代码
 
-本文附有 [GitHub](https:/github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上的工作代码示例。
+本文附有 [GitHub](https://github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上的工作代码示例。
 
 ## 创建示例应用程序
 
@@ -96,15 +96,15 @@ org.springframework.security.web.access.intercept.
   FilterSecurityInterceptor@7ce85af2]
 ```
 
-要了解 `FilterChain` 的工作原理，让我们看一下 [Spring Security 文档](https:/docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-securityfilterchain)中的流程图
+要了解 `FilterChain` 的工作原理，让我们看一下 [Spring Security 文档](https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-securityfilterchain)中的流程图
 
 ![settings](../../../static/images/spring-security-04.webp)
 
 现在，让我们看看参与过滤器链的核心组件：
 
-1. [DelegatingFilterProxy](https:/docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-delegatingfilterproxy) Spring 提供的一个 servlet 过滤器，充当 Servlet 容器和 Spring Application Context 之间的桥梁。 `DelegatingFilterProxy` 类负责将任何实现 `javax.servlet.Filter` 的类连接到过滤器链中。
-2. [FilterChainProxy](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/FilterChainProxy.html) Spring 安全性在内部创建一个名为 `springSecurityFilterChain` 的 `FilterChainProxy` bean，包装在 `DelegatingFilterProxy` 中。 `FilterChainProxy` 是一个过滤器，它根据安全配置链接多个过滤器。因此， `DelegatingFilterProxy` 将请求委托给 `FilterChainProxy` ，后者确定要调用的过滤器。
-3. [SecurityFilterChain](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/SecurityFilterChain.html): `SecurityFilterChain` 中的安全过滤器是用 `FilterChainProxy` 注册的 bean。一个应用程序可以有多个 `SecurityFilterChain` 。 `FilterChainProxy` 使用 `HttpServletRequest` 上的 `RequestMatcher` 接口来确定需要调用哪个 `SecurityFilterChain` 。
+1. [DelegatingFilterProxy](https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-delegatingfilterproxy) Spring 提供的一个 servlet 过滤器，充当 Servlet 容器和 Spring Application Context 之间的桥梁。 `DelegatingFilterProxy` 类负责将任何实现 `javax.servlet.Filter` 的类连接到过滤器链中。
+2. [FilterChainProxy](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/FilterChainProxy.html) Spring 安全性在内部创建一个名为 `springSecurityFilterChain` 的 `FilterChainProxy` bean，包装在 `DelegatingFilterProxy` 中。 `FilterChainProxy` 是一个过滤器，它根据安全配置链接多个过滤器。因此， `DelegatingFilterProxy` 将请求委托给 `FilterChainProxy` ，后者确定要调用的过滤器。
+3. [SecurityFilterChain](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/SecurityFilterChain.html): `SecurityFilterChain` 中的安全过滤器是用 `FilterChainProxy` 注册的 bean。一个应用程序可以有多个 `SecurityFilterChain` 。 `FilterChainProxy` 使用 `HttpServletRequest` 上的 `RequestMatcher` 接口来确定需要调用哪个 `SecurityFilterChain` 。
 
 #### Spring Security Chain 补充说明
 
@@ -120,15 +120,15 @@ org.springframework.security.web.access.intercept.
 
 现在我们知道 Spring Security 为我们提供了一个默认的过滤器链，它调用一组预定义且有序的过滤器，让我们尝试简要了解链中几个重要过滤器的角色。
 
-1. **[org.springframework.security.web.csrf.CsrfFilter](https:/docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/csrf/CsrfFilter.html)** : 此过滤器默认将 CSRF 保护应用于所有 REST 端点。要详细了解 Spring Boot 和 Spring Security 中的 CSRF 功能，请参考这篇文章。
-2. **[org.springframework.security.web.authentication.logout.LogoutFilter](https:/docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/logout/LogoutFilter.html)** : 当用户注销应用程序时调用此过滤器。调用默认注册的 `LogoutHandler` 实例，负责使会话无效并清除 `SecurityContext` 。接下来， `LogoutSuccessHandler` 的默认实现将用户重定向到新页面 ( `/login?logout` )。
-3. **[org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)** : 使用启动时提供的默认凭据验证 URL ( `/login` ) 的用户名和密码。
-4. **[org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLoginPageGeneratingFilter.html)** : 在 `/login` 处生成默认登录页面 html
-5. **[org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLogoutPageGeneratingFilter.html)** : 在 `/login?logout` 处生成默认注销页面 html
-6. **[org.springframework.security.web.authentication.www.BasicAuthenticationFilter](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html)** : 此过滤器负责处理任何具有授权、基本身份验证方案、Base64 编码的用户名密码的 HTTP 请求标头的请求。身份验证成功后， `Authentication` 对象将被放置在 `SecurityContextHolder` 中。
-7. **[org.springframework.security.web.authentication.AnonymousAuthenticationFilter](https:/docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/AnonymousAuthenticationFilter.html)** : 如果在 `SecurityContext` 中找不到 `Authentication` 对象，它会创建一个具有主体 `anonymousUser` 和角色。
-8. **[org.springframework.security.web.access.ExceptionTranslationFilter](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/access/ExceptionTranslationFilter.html)** :处理过滤器链中抛出的 `AccessDeniedException` 和 `AuthenticationException` 。对于 `AuthenticationException` ，需要 `AuthenticationEntryPoint` 实例来处理响应。对于 `AccessDeniedException` ，此过滤器将委托给 `AccessDeniedHandler` ，其默认实现为 `AccessDeniedHandlerImpl` 。
-9. **[org.springframework.security.web.access.intercept.FilterSecurityInterceptor](https:/docs.spring.io/spring-security/site/docs/6.0.0/api/org/springframework/security/web/access/intercept/FilterSecurityInterceptor.html)** : 此过滤器负责在请求到达控制器之前对通过过滤器链的每个请求进行授权。
+1. **[org.springframework.security.web.csrf.CsrfFilter](https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/csrf/CsrfFilter.html)** : 此过滤器默认将 CSRF 保护应用于所有 REST 端点。要详细了解 Spring Boot 和 Spring Security 中的 CSRF 功能，请参考这篇文章。
+2. **[org.springframework.security.web.authentication.logout.LogoutFilter](https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/logout/LogoutFilter.html)** : 当用户注销应用程序时调用此过滤器。调用默认注册的 `LogoutHandler` 实例，负责使会话无效并清除 `SecurityContext` 。接下来， `LogoutSuccessHandler` 的默认实现将用户重定向到新页面 ( `/login?logout` )。
+3. **[org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)** : 使用启动时提供的默认凭据验证 URL ( `/login` ) 的用户名和密码。
+4. **[org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLoginPageGeneratingFilter.html)** : 在 `/login` 处生成默认登录页面 html
+5. **[org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/ui/DefaultLogoutPageGeneratingFilter.html)** : 在 `/login?logout` 处生成默认注销页面 html
+6. **[org.springframework.security.web.authentication.www.BasicAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html)** : 此过滤器负责处理任何具有授权、基本身份验证方案、Base64 编码的用户名密码的 HTTP 请求标头的请求。身份验证成功后， `Authentication` 对象将被放置在 `SecurityContextHolder` 中。
+7. **[org.springframework.security.web.authentication.AnonymousAuthenticationFilter](https://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/org/springframework/security/web/authentication/AnonymousAuthenticationFilter.html)** : 如果在 `SecurityContext` 中找不到 `Authentication` 对象，它会创建一个具有主体 `anonymousUser` 和角色。
+8. **[org.springframework.security.web.access.ExceptionTranslationFilter](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/access/ExceptionTranslationFilter.html)** :处理过滤器链中抛出的 `AccessDeniedException` 和 `AuthenticationException` 。对于 `AuthenticationException` ，需要 `AuthenticationEntryPoint` 实例来处理响应。对于 `AccessDeniedException` ，此过滤器将委托给 `AccessDeniedHandler` ，其默认实现为 `AccessDeniedHandlerImpl` 。
+9. **[org.springframework.security.web.access.intercept.FilterSecurityInterceptor](https://docs.spring.io/spring-security/site/docs/6.0.0/api/org/springframework/security/web/access/intercept/FilterSecurityInterceptor.html)** : 此过滤器负责在请求到达控制器之前对通过过滤器链的每个请求进行授权。
 
 ### Authentication
 
@@ -164,7 +164,7 @@ org.springframework.security.web.access.intercept.
 #### 关于 Spring 身份验证的附加说明
 
 - 在某些情况下，我们可能需要在单独授权的情况下使用 Spring Security，因为在访问我们的应用程序之前它已经由外部系统进行了可靠的身份验证。请参阅预认证文档了解如何配置和处理此类场景。
-- Spring 允许通过多种方式来[定制身份验证机制](https:/docs.spring.io/spring-security/reference/servlet/authentication/passwords/storage.html)，我们将在后面的部分中介绍其中的几种。
+- Spring 允许通过多种方式来[定制身份验证机制](https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/storage.html)，我们将在后面的部分中介绍其中的几种。
 
 ### Authorization 授权
 
@@ -197,8 +197,8 @@ Spring Security 分别使用 `hasAuthority()` 和 `hasRole()` 方法通过授予
 
 默认的 spring security 配置带有默认启用的针对各种攻击的保护功能。我们不会在本文中介绍这些细节。您可以参考 Spring 文档以获取详细指南。但是，要了解 CORS 和 CSRF 上的深入 Spring Security 配置，请参阅以下文章：
 
-- [CORS in Spring Security](https:/reflectoring.io/spring-cors/)
-- [CSRF in Spring Security](https:/reflectoring.io/spring-csrf/)
+- [CORS in Spring Security](https://reflectoring.io/spring-cors/)
+- [CSRF in Spring Security](https://reflectoring.io/spring-csrf/)
 
 ## 实现安全配置
 
@@ -238,7 +238,7 @@ Spring 使用上述配置来创建默认的 `SecurityFilterChainBean` ：
 #### Spring Security 与 `SecurityFilterChain`
 
 - 从 Spring Security 5.7.0-M2 开始， `WebSecurityConfigurerAdapter` 已被弃用并替换为 `SecurityFilterChain` ，从而进入基于组件的安全配置。
-- 要了解差异，请参阅这篇 [Spring 博客文章](https:/spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)。
+- 要了解差异，请参阅这篇 [Spring 博客文章](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)。
 - 本文中的所有示例都将使用使用 `SecurityFilterChain` 的较新配置。
 
 ### 常见用例
@@ -816,13 +816,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 #### 自定义授权
 
 - 要自定义表达式的处理方式，我们需要将 `MethodSecurityExpressionHandler` 公开为 bean。
-- Spring 方法安全性是使用 Spring AOP 构建的。有关更多示例，请参阅[方法安全文档](https:/docs.spring.io/spring-security/reference/servlet/authorization/method-security.html)。
+- Spring 方法安全性是使用 Spring AOP 构建的。有关更多示例，请参阅[方法安全文档](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html)。
 
 #### 8. 基于数据库的认证和授权
 
 在之前的所有示例中，我们都使用 `InMemoryUserDetailsManager` 配置用户、密码、角色。 Spring Security 允许我们自定义身份验证和授权过程。我们还可以在数据库中配置这些详细信息，并让 Spring Security 相应地访问它们。
 
-有关工作示例，请参阅[本文](https:/reflectoring.io/spring-security-password-handling/)。它还解释了为了提高安全性而应采用的不同方式处理密码。
+有关工作示例，请参阅[本文](https://reflectoring.io/spring-security-password-handling/)。它还解释了为了提高安全性而应采用的不同方式处理密码。
 
 让我们概述一下使此配置正常工作所需的步骤。
 
@@ -836,7 +836,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 - 在 Spring Security 5.0 之前，默认的 `PasswordEncoder` 是 `NoOpPasswordEncoder` ，它需要纯文本密码。
 - 从 Spring Security 5.0 开始，我们使用 `DelegatingPasswordEncoder` 确保使用当前密码存储建议对密码进行编码。
-- 有关 `DelegatingPasswordEncoder` 的更多信息，请参阅[此文档](https:/docs.spring.io/spring-security/reference/features/authentication/password-storage.html)
+- 有关 `DelegatingPasswordEncoder` 的更多信息，请参阅[此文档](https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html)
 
 ## 使用 Spring Security 进行测试
 
@@ -1005,8 +1005,8 @@ public class BookControllerTest {
 
 ## 结论
 
-在本文中，我们研究了适用于 Spring Security 的基本概念。此外，我们还解释了 spring 提供的默认配置以及如何覆盖它们。此外，我们还研究了一些常见的用例，并通过单元测试对其进行了验证。正如我们所看到的，Spring 提供了很大的灵活性，允许我们为复杂的应用程序定制安全性。我们可以扩展 [GitHub](https:/github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上应用程序中应用的示例配置以满足我们的需求。
+在本文中，我们研究了适用于 Spring Security 的基本概念。此外，我们还解释了 spring 提供的默认配置以及如何覆盖它们。此外，我们还研究了一些常见的用例，并通过单元测试对其进行了验证。正如我们所看到的，Spring 提供了很大的灵活性，允许我们为复杂的应用程序定制安全性。我们可以扩展 [GitHub](https://github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上应用程序中应用的示例配置以满足我们的需求。
 
 
 
-原文链接：[https:/reflectoring.io/spring-security/](https:/reflectoring.io/spring-security/)
+原文链接：[https://reflectoring.io/spring-security/](https://reflectoring.io/spring-security/)

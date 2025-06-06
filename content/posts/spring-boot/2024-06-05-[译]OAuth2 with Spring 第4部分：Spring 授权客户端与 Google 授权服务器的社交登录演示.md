@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ oauth2,java]
 ---
 
-原文地址：<https:/mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5>
+原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5>
 
 
 
@@ -21,13 +21,13 @@ tags: [ oauth2,java]
 
 我们需要在 Google 开发者控制台中创建一个应用程序并配置必要的内容。
 
-打开浏览器并转到[https:/console.developers.google.com/](https:/console.developers.google.com/)。您将看到如图 1 所示的屏幕。
+打开浏览器并转到[https://console.developers.google.com/](https://console.developers.google.com/)。您将看到如图 1 所示的屏幕。
 
 ![oauth2-with-spring-part-4-02](../../../static/images/oauth2-with-spring-part-4-02.webp)
 
 从这里，选择下拉菜单以选择一个项目（1.1）。它将显示一个像上面一样的弹出窗口。从弹出窗口中，单击**“新建项目”**按钮（1.2）。由于我已经创建了我的应用程序并将我的应用程序命名为google-auth-server-demo（1.3），所以我不会再创建新的应用程序了*。*
 
-创建应用程序后，从上面的屏幕中选择您的应用程序，您将看到仪表板。从左侧导航中，单击**API 和服务**和页面。由于我们目前对列表中的任何 Google 服务都不感兴趣，我们可以单击左侧导航中的**凭据 (2.1) 。但如果您有兴趣从客户端应用程序中使用任何 Google 服务，您可能会发现**[这篇文章](https:/medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)很有趣，[我在其中演示了如何访问 Google Drive 数据](https:/medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)。
+创建应用程序后，从上面的屏幕中选择您的应用程序，您将看到仪表板。从左侧导航中，单击**API 和服务**和页面。由于我们目前对列表中的任何 Google 服务都不感兴趣，我们可以单击左侧导航中的**凭据 (2.1) 。但如果您有兴趣从客户端应用程序中使用任何 Google 服务，您可能会发现**[这篇文章](https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)很有趣，[我在其中演示了如何访问 Google Drive 数据](https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)。
 
 ![oauth2-with-spring-part-4-02](../../../static/images/oauth2-with-spring-part-4-03.webp)
 
@@ -51,7 +51,7 @@ tags: [ oauth2,java]
 
 **在授权客户端 application.yml 文件中使用上述信息：**
 
-[该配置与我们第 3 部分](https:/medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a)的客户端配置部分非常相似。
+[该配置与我们第 3 部分](https://medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a)的客户端配置部分非常相似。
 
 ```yml
 spring:
@@ -112,8 +112,8 @@ spring:
             client-secret: "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"
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
-              - https:/www.googleapis.com/auth/userinfo.email
-              - https:/www.googleapis.com/auth/userinfo.profile
+              - https://www.googleapis.com/auth/userinfo.email
+              - https://www.googleapis.com/auth/userinfo.profile
               - openid
 ```
 
@@ -123,7 +123,7 @@ spring:
 
 图 9
 
-现在让我们测试一下我们的应用程序。让我们访问http:/localhost:8081/private-data，它将带我们进入登录页面 (10.1)。从这里选择 Google 作为授权服务器 (10.2)。
+现在让我们测试一下我们的应用程序。让我们访问http://localhost:8081/private-data，它将带我们进入登录页面 (10.1)。从这里选择 Google 作为授权服务器 (10.2)。
 
 ![img](../../../static/images/oauth2-with-spring-part-4-11.webp)
 
@@ -141,6 +141,6 @@ spring:
 
 图 12
 
-感谢您的耐心阅读。源代码可以[在这里](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-third-party-auth-server/social-login-client)找到。
+感谢您的耐心阅读。源代码可以[在这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-third-party-auth-server/social-login-client)找到。
 
 在[下一篇文章](/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/)中，我们将讨论用于增强安全性的 PKCE。

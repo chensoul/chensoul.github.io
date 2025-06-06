@@ -77,7 +77,7 @@ public class DNSClient {
 	public static void main(String[] args) {
 		Hashtable<String, String> env = new Hashtable<>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
-		env.put(Context.PROVIDER_URL, "dns:/114.114.114.114");
+		env.put(Context.PROVIDER_URL, "dns://114.114.114.114");
 
 		try {
 			DirContext ctx = new InitialDirContext(env);
@@ -483,6 +483,6 @@ final class VersionHelper12 extends VersionHelper {
 
 ### 参考
 
--  [ClassLoader](https:/javasec.org/javase/ClassLoader/) 
+-  [ClassLoader](https://javasec.org/javase/ClassLoader/) 
 
-- [Class Loaders in Java](https:/www.baeldung.com/java-classloaders)
+- [Class Loaders in Java](https://www.baeldung.com/java-classloaders)

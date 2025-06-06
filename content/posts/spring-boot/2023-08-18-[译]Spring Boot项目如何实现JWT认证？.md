@@ -9,7 +9,7 @@ tags: [spring-security]
 
 ![How to implement JWT Authentication in Spring Boot Project?](../../../static/images/JWT_With_SpringBoot-1.webp)
 
-没有人可以否认这样一个事实：安全性是生产就绪应用程序的一项重要功能。尽管我们可以[使用内存身份验证](https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/)、[JDBC 身份验证](https:/javatechonline.com/how-to-implement-security-in-spring-boot-project/)或通过 [UserDetailsS](https:/javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)​​ervice 来保护一个 Web 应用程序的安全。但是，当一个应用程序在内部使用其他应用程序的服务时，使用 Web 服务概念实现安全性就变得很重要。在这种情况下，我们使用具有特定有效期的令牌来保护我们的应用程序。此外，我们将学习“如何在 Spring Boot 项目中实现 JWT 身份验证？”以整体了解 JWT（JSON Web Token）身份验证背后的概念。
+没有人可以否认这样一个事实：安全性是生产就绪应用程序的一项重要功能。尽管我们可以[使用内存身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)、[JDBC 身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)或通过 [UserDetailsS](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)​​ervice 来保护一个 Web 应用程序的安全。但是，当一个应用程序在内部使用其他应用程序的服务时，使用 Web 服务概念实现安全性就变得很重要。在这种情况下，我们使用具有特定有效期的令牌来保护我们的应用程序。此外，我们将学习“如何在 Spring Boot 项目中实现 JWT 身份验证？”以整体了解 JWT（JSON Web Token）身份验证背后的概念。
 
 由于 JWT 代表“JSON Web Token”，很明显，该令牌仅以 JSON 形式保存数据。
 
@@ -353,7 +353,7 @@ server.port=8080
 #--------------------- DB Connection Properties ------------------
 #AutoLoading of driver class since JDBC 4
 #spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql:/localhost:3306/testJWTSecurity
+spring.datasource.url=jdbc:mysql://localhost:3306/testJWTSecurity
 spring.datasource.username=root
 spring.datasource.password=devs
 
@@ -1028,7 +1028,7 @@ Finally, your project structure should look like below screenshot.
 
 ### 1) 使用 Postman 通过 REST 调用注册用户
 
-在 Postman 中输入 URL http:/localhost:8080/user/saveUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
+在 Postman 中输入 URL http://localhost:8080/user/saveUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
 
 ```json
 {
@@ -1047,7 +1047,7 @@ User with id ‘1’ saved succssfully!
 
 ### 2）以用户身份登录生成令牌
 
-在 Postman 中输入 URL http:/localhost:8080/user/loginUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
+在 Postman 中输入 URL http://localhost:8080/user/loginUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
 
 ```json
 {
@@ -1080,7 +1080,7 @@ User with id ‘1’ saved succssfully!
 
 ### 3）在 token 有效期内访问数据/资源
 
-在 Postman URL 栏中输入 URL http:/localhost:8080/user/getData，选择 POST 方法，然后选择 Headers。在标题下选择密钥作为“授权”。现在将令牌粘贴为授权值，如下面的屏幕截图所示。然后单击“发送”按钮。
+在 Postman URL 栏中输入 URL http://localhost:8080/user/getData，选择 POST 方法，然后选择 Headers。在标题下选择密钥作为“授权”。现在将令牌粘贴为授权值，如下面的屏幕截图所示。然后单击“发送”按钮。
 
 ![How To Implement JWT Authentication In Spring Boot Project?](../../../static/images/JWT1-3.webp)
 
@@ -1096,4 +1096,4 @@ You are accessing data after a valid Login. You are :ds2525
 
 另外，欢迎在评论区提出你的意见。
 
-原文链接：[https:/javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/](https:/javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/)
+原文链接：[https://javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/](https://javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/)

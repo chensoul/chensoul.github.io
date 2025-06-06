@@ -40,7 +40,7 @@ $ yum install -y curl openssh-server openssh-clients postfix cronie  policycoreu
 #### 2、添加官方源
 
 ```shell
-$ curl https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
 因为官方源太慢，可以使用国内清华yum源，配置如下
@@ -49,7 +49,7 @@ $ curl https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.r
 $ vim /etc/yum.repos.d/gitlab-ce.repo
 [gitlab-ce]
 name=Gitlab CE Repository
-baseurl=https:/mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el$releasever/
 gpgcheck=0
 enabled=1
 ```
@@ -80,12 +80,12 @@ $ vim /etc/gitlab/gitlab.rb
 ## GitLab URL
 ##! URL on which GitLab will be reachable.
 ##! For more details on configuring external_url see:
-##! https:/docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
+##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 # 没有域名，可以设置为本机IP地址
-external_url 'http:/172.17.0.61'
+external_url 'http://172.17.0.61'
 ***
 $ grep "^external_url" /etc/gitlab/gitlab.rb
-external_url 'http:/172.17.0.61'     #绑定监听的域名或IP
+external_url 'http://172.17.0.61'     #绑定监听的域名或IP
 ```
 
 ##### 3、初始化 Gitlab
@@ -241,7 +241,7 @@ Content-Transfer-Encoding: 7bit
 Auto-Submitted: auto-generated
 X-Auto-Response-Suppress: All
 
-<!DOCTYPE html PUBLIC "-/W3C/DTD HTML 4.0 Transitional/EN" "http:/www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html PUBLIC "-/W3C/DTD HTML 4.0 Transitional/EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><p>Message Body</p></body></html>
 
 => #<Mail::Message:70056859616080, Multipart: false, Headers: <Date: Mon, 04 May 2020 16:13:30 +0800>, <From: gitlab <testqq@qq.com>>, <Reply-To: gitlab <testqq@qq.com>>, <To: testqq@qq.com>, <Message-ID: <5eafceaa250a_1d063fb777add9a08601a@wing.mail>>, <Subject: Message Subject>, <Mime-Version: 1.0>, <Content-Type: text/html; charset=UTF-8>, <Content-Transfer-Encoding: 7bit>, <Auto-Submitted: auto-generated>, <X-Auto-Response-Suppress: All>>
@@ -253,14 +253,14 @@ irb(main):005:0>
 ### 3、一键安装
 
 ```bash
-curl -s https:/packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
 
 
 ## Gitlab 的使用
 
-**在浏览器中输入 http:/192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
+**在浏览器中输入 http://192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
 
 ### 1、Gitlab 命令行修改密码
 
@@ -375,7 +375,7 @@ $ gitlab-ctl stop sidekiq
 将老服务器/data/gitlab/backups目录下的备份文件拷贝到新服务器上的/data/gitlab/backups
 
 ```shell
-$ rsync -avz 1530773117_2019_03_05_gitlab_backup.tar 192.168.95.135:/data/gitlab/backups/ 
+$ rsync -avz 1530773117_2019_03_05_gitlab_backup.tar 192.168.95.135://data/gitlab/backups/ 
 ```
 
 - 注意权限：600权限是无权恢复的。 实验环境可改成了777，生产环境建议修改属主属组
@@ -422,7 +422,7 @@ $ gitlab-ctl restart
 
 ```yaml
 $ kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print $NF}'
-https:/192.168.19.200:6443
+https://192.168.19.200:6443
 ```
 
 ### 3、获取k8s集群默认CA证书

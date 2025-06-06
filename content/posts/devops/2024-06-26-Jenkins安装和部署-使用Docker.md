@@ -12,7 +12,7 @@ tags: [ jenkins ]
 ```bash
 $ docker volume create --name jenkins_data
 
-$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data:/var/jenkins_home jenkins/jenkins:jdk21
+$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
 ```
 
 第一次启动 Jenkins 时，Docker 日志将包含如下消息：
@@ -38,9 +38,9 @@ services:
             - "8080:8080"
             - "50000:50000"
         volumes:
-            - jenkins_data:/var/jenkins_home
-            - /var/run/docker.sock:/var/run/docker.sock
-            - /etc/localtime:/etc/localtime:ro
+            - jenkins_data://var/jenkins_home
+            - /var/run/docker.sock://var/run/docker.sock
+            - /etc/localtime://etc/localtime:ro
 
 volumes:
     jenkins_data:
@@ -48,7 +48,7 @@ volumes:
 
 ## 在 Docker 中下载并运行 Jenkins
 
-参考 [在 Docker 中下载并运行 Jenkins](https:/www.jenkins.io/doc/book/installing/docker/)。
+参考 [在 Docker 中下载并运行 Jenkins](https://www.jenkins.io/doc/book/installing/docker/)。
 
 定制官方 Jenkins Docker 镜像，例如，安装 curl、maven、docker-ce-cli
 
@@ -57,17 +57,17 @@ FROM jenkins/jenkins:jdk21
 USER root
 RUN apt-get update && apt-get install -y curl maven lsb-release
 RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
-  https:/download.docker.com/linux/debian/gpg
+  https://download.docker.com/linux/debian/gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) \
   signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
-  https:/download.docker.com/linux/debian \
+  https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 RUN apt-get update && apt-get install -y docker-ce-cli
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
 ```
 
-> 更多定制，可以参考 <https:/github.com/taypo/jenkins/blob/master/Dockerfile>
+> 更多定制，可以参考 <https://github.com/taypo/jenkins/blob/master/Dockerfile>
 
 从该 Dockerfile 构建一个新的 Docker 镜像，并为该镜像分配一个有意义的名称，例如“myjenkins-blueocean：2.452.2-1”：
 
@@ -86,21 +86,21 @@ services:
         ports:
             - "2376:2376"
         volumes:
-            - jenkins_docker_certs:/certs/client
-            - jenkins_data:/var/jenkins_home
+            - jenkins_docker_certs://certs/client
+            - jenkins_data://var/jenkins_home
 
     jenkins-blueocean:
         image: myjenkins-blueocean:2.452.2-1
         environment:
-            - DOCKER_HOST=tcp:/jenkins-docker:2376
+            - DOCKER_HOST=tcp://jenkins-docker:2376
             - DOCKER_CERT_PATH=/certs/client
             - DOCKER_TLS_VERIFY=1
         ports:
             - "8080:8080"
             - "50000:50000"
         volumes:
-            - jenkins_docker_certs:/certs/client:ro
-            - jenkins_data:/var/jenkins_home
+            - jenkins_docker_certs://certs/client:ro
+            - jenkins_data://var/jenkins_home
 
 volumes:
     jenkins_data:
@@ -128,7 +128,7 @@ Maven 可以进入容器安装，或者在 jenkins 配置通过命令自动安�
 <sites>
   <site>
     <id>default</id>
-    <url>https:/mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</url>
+    <url>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</url>
   </site>
 </sites>
 ```
@@ -151,7 +151,7 @@ No ECDSA host key is known for github.houston.softwaregrp.net and you have reque
 
 ### 配置反向代理
 
-参考 《[CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？](https:/akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c)》。
+参考 《[CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？](https://akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c)》。
 
 
 
@@ -170,7 +170,7 @@ map $http_upgrade $connection_upgrade {
 server {
     listen 80;
     server_name jenkins.chensoul.cc;
-    rewrite ^ https:/$http_host$request_uri? permanent;
+    rewrite ^ https://$http_host$request_uri? permanent;
 }
 
 server {
@@ -197,7 +197,7 @@ server {
     }
 
     location / {
-        proxy_pass http:/192.168.1.107:8080;
+        proxy_pass http://192.168.1.107:8080;
         proxy_redirect     default;
         proxy_http_version 1.1;
 
@@ -237,7 +237,7 @@ RUN apt update && \
 USER jenkins
 ```
 
-安装新插件的最简单方法是使用 Jenkins Web UI，另外也可以使用 jenkins-plugin-cli，Jenkins 插件可以从 [Jenkins 插件网站](https:/plugins.jenkins.io/) 查找。
+安装新插件的最简单方法是使用 Jenkins Web UI，另外也可以使用 jenkins-plugin-cli，Jenkins 插件可以从 [Jenkins 插件网站](https://plugins.jenkins.io/) 查找。
 
 比如，下面 Dockerfile 文件安装了 Git 插件：
 
@@ -257,7 +257,7 @@ RUN jenkins-plugin-cli --plugins git:5.2.2
 ## 备份
 
 ```bash
-docker run --rm -v jenkins_data:/var/jenkins_home -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /var/jenkins_home
+docker run --rm -v jenkins_data://var/jenkins_home -v $(pwd)://backup ubuntu tar cvf /backup/backup.tar /var/jenkins_home
 ```
 
 ## 将 Docker 镜像作为服务运行
@@ -304,6 +304,6 @@ sudo journalctl -u docker-jenkins -f
 
 ## 参考文章
 
-- [Docker 安装 Jenkins 并实现项目自动化部署](https:/cloud.tencent.com/developer/article/2347137)
+- [Docker 安装 Jenkins 并实现项目自动化部署](https://cloud.tencent.com/developer/article/2347137)
 
-- [How to install Jenkins using Docker Compose?](https:/www.czerniga.it/2021/11/07/how-to-install-jenkins-using-docker-compose/)
+- [How to install Jenkins using Docker Compose?](https://www.czerniga.it/2021/11/07/how-to-install-jenkins-using-docker-compose/)

@@ -20,7 +20,7 @@ tags: [ jms]
 
 ### 步骤 1，下载 Glassfish 并解压缩
 
-您需要从 [**Glassfish GitHub repo**](https:/javaee.github.io/glassfish/download)下载开源 Glassfish 版本，然后将其解压缩到我们将运行服务器的文件夹中。我使用的是带有 JDK 8 的 GlassFish 5.0。
+您需要从 [**Glassfish GitHub repo**](https://javaee.github.io/glassfish/download)下载开源 Glassfish 版本，然后将其解压缩到我们将运行服务器的文件夹中。我使用的是带有 JDK 8 的 GlassFish 5.0。
 
 ![Glassfish 5.0 GitHub 存储库](../../../static/images/Download-Glassfish-min-1024x508.webp)
 
@@ -34,7 +34,7 @@ tags: [ jms]
 
 ### 步骤 3，打开管理控制台
 
-完成上述步骤后，接下来访问管理控制台[http:/localhost:4848](http:/localhost:4848/)。
+完成上述步骤后，接下来访问管理控制台[http://localhost:4848](http://localhost:4848/)。
 
 现在，查看“ *JMS 资源/连接工厂*”，您可以看到 Glassfish 为您创建的默认 JMS 工厂。我们将`jms/__defaultConnectionFactory`在整个课程中使用它。
 
@@ -125,10 +125,10 @@ java.naming.factory.url.pkgs=com.sun.enterprise.naming
 java.naming.factory.state=com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl
 ```
 
-您还可以从 GitHub 存储库下载整个工作[代码示例](https:/github.com/jstobigdata/jms-parent-app)。
+您还可以从 GitHub 存储库下载整个工作[代码示例](https://github.com/jstobigdata/jms-parent-app)。
 
-完成 Glassfish for JMS 的设置后，请继续阅读下一篇文章，了解如何[在 JMS 中发送和接收消息](https:/jstobigdata.com/jms/send-and-receive-message-in-jms/)。
+完成 Glassfish for JMS 的设置后，请继续阅读下一篇文章，了解如何[在 JMS 中发送和接收消息](https://jstobigdata.com/jms/send-and-receive-message-in-jms/)。
 
 
 
-原文链接：[Install and Setup Glassfish for JMS](https:/jstobigdata.com/jms/install-and-setup-glassfish-for-jms/)
+原文链接：[Install and Setup Glassfish for JMS](https://jstobigdata.com/jms/install-and-setup-glassfish-for-jms/)

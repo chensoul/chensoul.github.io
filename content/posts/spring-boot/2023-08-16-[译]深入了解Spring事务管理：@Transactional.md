@@ -89,7 +89,7 @@ connection.rollback(savePoint);
 ```
 
 1.  这就是 Spring 在数据库连接上设置隔离级别的方式。不完全是火箭科学，是吗？
-2.  Spring 中的嵌套事务只是 JDBC/数据库保存点。例如，如果您不知道什么是保存点，请查看本[教程](https:/docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)。请注意，保存点支持取决于您的 JDBC 驱动程序/数据库。
+2.  Spring 中的嵌套事务只是 JDBC/数据库保存点。例如，如果您不知道什么是保存点，请查看本[教程](https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)。请注意，保存点支持取决于您的 JDBC 驱动程序/数据库。
 
 ## Spring 或 Spring Boot 的事务管理如何工作
 
@@ -475,7 +475,7 @@ public class UserService {
 connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
 ```
 
-然而，数据库隔离级别是一个复杂的主题，您应该花一些时间来完全掌握它们。一个好的开始是 Postgres [官方文档](https:/www.postgresql.org/docs/9.5/transaction-iso.html)及其有关隔离级别的部分。
+然而，数据库隔离级别是一个复杂的主题，您应该花一些时间来完全掌握它们。一个好的开始是 Postgres [官方文档](https://www.postgresql.org/docs/9.5/transaction-iso.html)及其有关隔离级别的部分。
 
 另请注意，在事务期间切换隔离级别时，您必须确保咨询 JDBC 驱动程序/数据库以了解支持哪些场景，哪些不支持。
 
@@ -626,4 +626,4 @@ public class UserService {
 
 感谢 Andreas Eisele 对本指南早期版本的反馈。感谢 Ben Horsfield 提供了急需的 Javascript 片段来增强本指南。
 
-原文链接：[https:/www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth](https:/www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth)
+原文链接：[https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth](https://www.marcobehler.com/guides/spring-transaction-management-transactional-in-depth)

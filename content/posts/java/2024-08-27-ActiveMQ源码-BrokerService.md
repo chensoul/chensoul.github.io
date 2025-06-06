@@ -17,7 +17,7 @@ public class IDERunner {
         BrokerService brokerService = new BrokerService();
 
 /        brokerService.addConnector(
-/            "tcp:/0.0.0.0:61616?trace=" + TRANSPORT_TRACE +
+/            "tcp://0.0.0.0:61616?trace=" + TRANSPORT_TRACE +
 /                "&transport.wireFormat.maxFrameSize=104857600");
 
         brokerService.setPersistent(false);
@@ -591,7 +591,7 @@ public void deleteAllMessages() throws IOException {
 设置方法，第一种是设置 activemq.xml 文件：
 
 ```xml
-<broker xmlns="http:/activemq.apache.org/schema/core" persistent="false" brokerName="brokerName" dataDirectory="${activemq.data}">
+<broker xmlns="http://activemq.apache.org/schema/core" persistent="false" brokerName="brokerName" dataDirectory="${activemq.data}">
 ```
 
 第二种方法是通过 BrokerService 对象进行设置：
@@ -725,6 +725,6 @@ MemoryTransactionStore 类的 `proxy` 方法会对 MessageStore、TopicMessageSt
 
 ### KahaDBPersistenceAdapter
 
-KahaDB 是 ActiveMQ 框架的基于文件的持久性数据库。它位于使用它的消息代理的本地，已针对快速持久性进行了优化。它是自ActiveMQ Classic 5.4以来的默认存储机制。与其前身[AMQ 消息存储](https:/activemq.apache.org/components/classic/documentation/amq-message-store)相比，KahaDB 使用更少的文件描述符并提供更快的恢复速度。
+KahaDB 是 ActiveMQ 框架的基于文件的持久性数据库。它位于使用它的消息代理的本地，已针对快速持久性进行了优化。它是自ActiveMQ Classic 5.4以来的默认存储机制。与其前身[AMQ 消息存储](https://activemq.apache.org/components/classic/documentation/amq-message-store)相比，KahaDB 使用更少的文件描述符并提供更快的恢复速度。
 
-![KahaDB Architecture](https:/access.redhat.com/webassets/avalon/d/Red_Hat_AMQ-6.3-Tuning_Guide-en-US../../../static/images/e0a0cfdb72b20fd6a0e40b5767cec38c/persist_01.gif)
+![KahaDB Architecture](https://access.redhat.com/webassets/avalon/d/Red_Hat_AMQ-6.3-Tuning_Guide-en-US../../../static/images/e0a0cfdb72b20fd6a0e40b5767cec38c/persist_01.gif)

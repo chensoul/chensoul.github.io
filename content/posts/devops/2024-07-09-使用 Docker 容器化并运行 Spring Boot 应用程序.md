@@ -7,7 +7,7 @@ categories: ["devops"]
 tags: [ spring-boot,docker]
 ---
 
-> 本文翻译自 Docker 官方网站的《[Java language-specific guide](https:/docs.docker.com/language/java/)》文章，并做了一些改动。
+> 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/language/java/)》文章，并做了一些改动。
 
 Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用程序。在本模块中，您将学习如何：
 
@@ -23,16 +23,16 @@ Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用
 
 ## 先决条件
 
-- 您已安装最新版本的 [Docker Desktop](https:/docs.docker.com/get-docker/)，Docker 会定期添加新功能，本指南的某些部分可能仅适用于最新版本的 Docker Desktop。
+- 您已安装最新版本的 [Docker Desktop](https://docs.docker.com/get-docker/)，Docker 会定期添加新功能，本指南的某些部分可能仅适用于最新版本的 Docker Desktop。
 
-- 您有一个 [Git 客户端](https:/git-scm.com/downloads)。本节中的示例使用基于命令行的 Git 客户端，但您可以使用任何客户端。
+- 您有一个 [Git 客户端](https://git-scm.com/downloads)。本节中的示例使用基于命令行的 Git 客户端，但您可以使用任何客户端。
 
 ## 获取示例应用程序
 
 将要使用的示例应用程序克隆到本地开发机器。在终端中运行以下命令来克隆存储库。
 
 ```bash
-$ git clone https:/github.com/spring-projects/spring-petclinic.git
+$ git clone https://github.com/spring-projects/spring-petclinic.git
 $ cd spring-petclinic
 ```
 
@@ -63,9 +63,9 @@ WARNING: The following Docker files already exist in this directory:
 
 您的目录中现在应该有以下三个新文件`spring-petclinic` 。
 
-- [Dockerfile](https:/docs.docker.com/reference/dockerfile/)
-- [.dockerignore](https:/docs.docker.com/reference/dockerfile/#dockerignore-file)
-- [docker-compose.yaml](https:/docs.docker.com/compose/compose-file/)
+- [Dockerfile](https://docs.docker.com/reference/dockerfile/)
+- [.dockerignore](https://docs.docker.com/reference/dockerfile/#dockerignore-file)
+- [docker-compose.yaml](https://docs.docker.com/compose/compose-file/)
 
 ## 运行应用程序
 
@@ -77,7 +77,7 @@ $ docker compose up --build
 
 首次构建并运行应用程序时，Docker 会下载依赖项并构建应用程序。这可能需要几分钟，具体取决于您的网络连接。
 
-打开浏览器并通过 [http:/localhost:8080](http:/localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
+打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
 
 在终端中，按`ctrl`+`c`停止应用程序。
 
@@ -87,7 +87,7 @@ $ docker compose up --build
 $ docker compose up --build -d
 ```
 
-打开浏览器并通过 [http:/localhost:8080](http:/localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
+打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
 
 在终端中，运行以下命令来停止应用程序。
 
@@ -95,7 +95,7 @@ $ docker compose up --build -d
 $ docker compose down
 ```
 
-有关 Compose 命令的更多信息，请参阅 [Compose CLI 参考](https:/docs.docker.com/compose/reference/)。
+有关 Compose 命令的更多信息，请参阅 [Compose CLI 参考](https://docs.docker.com/compose/reference/)。
 
 ## 概括
 
@@ -103,7 +103,7 @@ $ docker compose down
 
 相关信息：
 
-- [docker init 参考](https:/docs.docker.com/reference/cli/docker/init/)
+- [docker init 参考](https://docs.docker.com/reference/cli/docker/init/)
 
 
 
@@ -126,7 +126,7 @@ $ docker compose down
 - 取消注释所有数据库指令。现在您将使用数据库服务而不是本地存储来存储数据。
 - 删除顶级`secrets`元素以及`db` 服务内的元素。此示例使用环境变量作为密码而不是机密。
 - `user`从服务中删除元素`db`。此示例在环境变量中指定用户。
-- 更新数据库环境变量。这些由 Postgres 镜像定义。有关更多详细信息，请参阅 [Postgres 官方 Docker 镜像](https:/hub.docker.com/_/postgres)。
+- 更新数据库环境变量。这些由 Postgres 镜像定义。有关更多详细信息，请参阅 [Postgres 官方 Docker 镜像](https://hub.docker.com/_/postgres)。
 - 更新服务的健康检查测试`db`并指定用户。默认情况下，健康检查使用 root 用户，而不是`petclinic`您定义的用户。
 - 将数据库 URL 添加为服务中的环境变量`server`。这将覆盖 中定义的默认值 `spring-petclinic/src/main/resources/application-postgres.properties`。
 
@@ -143,12 +143,12 @@ services:
       db:
         condition: service_healthy
     environment:
-      - POSTGRES_URL=jdbc:postgresql:/db:5432/petclinic
+      - POSTGRES_URL=jdbc:postgresql://db:5432/petclinic
   db:
     image: postgres
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data://var/lib/postgresql/data
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
@@ -179,7 +179,7 @@ volumes:
 $ docker compose up --build
 ```
 
-打开浏览器并通过 [http:/localhost:8080](http:/localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
+打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
 
 在终端中，按`ctrl`+`c`停止应用程序。
 
@@ -196,13 +196,13 @@ $ docker compose up --build
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-# https:/docs.docker.com/reference/dockerfile/
-# https:/docs.docker.com/build/guide/multi-stage/
+# https://docs.docker.com/reference/dockerfile/
+# https://docs.docker.com/build/guide/multi-stage/
 
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http:/maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
 
 FROM base AS package
 WORKDIR /build
@@ -217,7 +217,7 @@ RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/e
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
-# See https:/docs.docker.com/go/dockerfile-user-best-practices/
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -257,12 +257,12 @@ services:
       db:
         condition: service_healthy
     environment:
-      - POSTGRES_URL=jdbc:postgresql:/db:5432/petclinic
+      - POSTGRES_URL=jdbc:postgresql://db:5432/petclinic
   db:
     image: postgres
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data://var/lib/postgresql/data
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
@@ -288,7 +288,7 @@ $ docker compose up --build
 
 ```bash
 $ curl  --request GET \
-  --url http:/localhost:8080/vets \
+  --url http://localhost:8080/vets \
   --header 'content-type: application/json'
 ```
 
@@ -302,7 +302,7 @@ $ curl  --request GET \
 
 您将使用 IntelliJ IDEA 自带的调试器。您可以使用此 IDE 的社区版本。在 IntelliJ IDEA 中打开您的项目，转到**“运行”**菜单，然后**转到“编辑配置”**。添加类似于以下内容的新远程 JVM 调试配置：
 
-![Java 连接调试器](https:/docs.docker.com/language/java../../../static/images/connect-debugger.webp)
+![Java 连接调试器](https://docs.docker.com/language/java../../../static/images/connect-debugger.webp)
 
 设置断点。
 
@@ -310,27 +310,27 @@ $ curl  --request GET \
 
 要启动调试会话，请选择**运行**菜单，然后**选择调试\*NameOfYourConfiguration\***。
 
-![调试菜单](https:/docs.docker.com/language/java../../../static/images/debug-menu.webp)
+![调试菜单](https://docs.docker.com/language/java../../../static/images/debug-menu.webp)
 
 您现在应该可以在 Compose 应用程序的日志中看到该连接。
 
-![撰写日志文件](https:/docs.docker.com/language/java../../../static/images/compose-logs.webp)
+![撰写日志文件](https://docs.docker.com/language/java../../../static/images/compose-logs.webp)
 
 您现在可以调用服务器端点。
 
 ```bash
-$ curl --request GET --url http:/localhost:8080/vets
+$ curl --request GET --url http://localhost:8080/vets
 ```
 
 您应该已经看到代码在标记的行上中断，现在您可以像平常一样使用调试器。您还可以检查和观察变量、设置条件断点、查看堆栈跟踪以及执行许多其他操作。
 
-![调试器代码断点](https:/docs.docker.com/language/java../../../static/images/debugger-breakpoint.webp)
+![调试器代码断点](https://docs.docker.com/language/java../../../static/images/debugger-breakpoint.webp)
 
 按下`ctrl+c`终端即可停止您的应用程序。
 
 ## 自动更新服务
 
-使用 Compose Watch 可在您编辑和保存代码时自动更新正在运行的 Compose 服务。有关 Compose Watch 的更多详细信息，请参阅 [使用 Compose Watch](https:/docs.docker.com/compose/file-watch/)。
+使用 Compose Watch 可在您编辑和保存代码时自动更新正在运行的 Compose 服务。有关 Compose Watch 的更多详细信息，请参阅 [使用 Compose Watch](https://docs.docker.com/compose/file-watch/)。
 
 在 IDE 或文本编辑器中打开您的`docker-compose.yaml`文件，然后添加 Compose Watch 指令。以下是更新后的`docker-compose.yaml` 文件。
 
@@ -347,7 +347,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      - POSTGRES_URL=jdbc:postgresql:/db:5432/petclinic
+      - POSTGRES_URL=jdbc:postgresql://db:5432/petclinic
     develop:
       watch:
         - action: rebuild
@@ -356,7 +356,7 @@ services:
     image: postgres
     restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data://var/lib/postgresql/data
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
@@ -378,7 +378,7 @@ volumes:
 $ docker compose watch
 ```
 
-打开 Web 浏览器并通过 http:/localhost:8080 查看应用程序 。您应该会看到 Spring Pet Clinic 主页。
+打开 Web 浏览器并通过 http://localhost:8080 查看应用程序 。您应该会看到 Spring Pet Clinic 主页。
 
 现在，对本地计算机上应用程序源文件的任何更改都将自动反映在正在运行的容器中。
 
@@ -391,7 +391,7 @@ $ docker compose watch
 
 保存更改`layout.html`，然后您可以在容器自动重建时继续开发。
 
-容器重建并运行后，刷新 [http:/localhost:8080](http:/localhost:8080/)，然后验证 **Home！**现在是否出现在菜单中。
+容器重建并运行后，刷新 [http://localhost:8080](http://localhost:8080/)，然后验证 **Home！**现在是否出现在菜单中。
 
 按下`ctrl+c`终端即可停止 Compose Watch。
 
@@ -401,9 +401,9 @@ $ docker compose watch
 
 相关信息：
 
-- [Compose file reference](https:/docs.docker.com/compose/compose-file/)
-- [Compose Watch](https:/docs.docker.com/compose/file-watch/)
-- [Dockerfile reference](https:/docs.docker.com/reference/dockerfile/)
+- [Compose file reference](https://docs.docker.com/compose/compose-file/)
+- [Compose Watch](https://docs.docker.com/compose/file-watch/)
+- [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
 
 # 运行 Java 测试
 
@@ -418,13 +418,13 @@ $ docker compose watch
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-# https:/docs.docker.com/reference/dockerfile/
-# https:/docs.docker.com/build/guide/multi-stage/
+# https://docs.docker.com/reference/dockerfile/
+# https://docs.docker.com/build/guide/multi-stage/
 
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http:/maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
 
 FROM base AS test
 WORKDIR /build
@@ -453,7 +453,7 @@ CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socke
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
-# See https:/docs.docker.com/go/dockerfile-user-best-practices/
+# See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
 RUN adduser \
     --disabled-password \
@@ -500,13 +500,13 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 相关信息：
 
-- [使用 Docker 指南进行构建](https:/docs.docker.com/build/guide/)
+- [使用 Docker 指南进行构建](https://docs.docker.com/build/guide/)
 
 # 为 Java 应用程序配置 CI/CD
 
 ## 先决条件
 
-完成本指南的前面部分，从 [容器化您的应用](https:/docs.docker.com/language/java/containerize/)开始。您必须拥有 [GitHub](https:/github.com/signup)帐户和 [Docker](https:/hub.docker.com/signup)帐户才能完成此部分。
+完成本指南的前面部分，从 [容器化您的应用](https://docs.docker.com/language/java/containerize/)开始。您必须拥有 [GitHub](https://github.com/signup)帐户和 [Docker](https://hub.docker.com/signup)帐户才能完成此部分。
 
 ## 概述
 
@@ -520,20 +520,20 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 创建 GitHub 存储库，配置 Docker Hub 凭据并推送源代码。
 
-1. 在 GitHub 上[创建一个新的存储库](https:/github.com/new)。
+1. 在 GitHub 上[创建一个新的存储库](https://github.com/new)。
 
 2. 打开存储库**设置**，然后转到**机密和变量**> **操作**。
 
 3. 创建一个名为的新**Repository 变量**`DOCKER_USERNAME`，并以您的 Docker ID 作为值。
 
-4. 为 Docker Hub创建一个新的 [个人访问令牌 (PAT)](https:/docs.docker.com/security/for-developers/access-tokens/#create-an-access-token)。您可以将此令牌命名为  `docker-tutorial` 。确保访问权限包括读取和写入。
+4. 为 Docker Hub创建一个新的 [个人访问令牌 (PAT)](https://docs.docker.com/security/for-developers/access-tokens/#create-an-access-token)。您可以将此令牌命名为  `docker-tutorial` 。确保访问权限包括读取和写入。
 
 5. 将 PAT 作为**存储库机密**添加到您的 GitHub 存储库中，名称为 `DOCKER_TOKEN`。
 
 6. 在您机器上的本地存储库中，运行以下命令将源更改为您刚刚创建的存储库。确保更改 `your-username`为您的 GitHub 用户名和`your-repository`您创建的存储库的名称。
 
    ```bash
-   $ git remote set-url origin https:/github.com/your-username/your-repository.git
+   $ git remote set-url origin https://github.com/your-username/your-repository.git
    ```
 
 7. 运行以下命令将本地存储库暂存、提交并推送到 GitHub。
@@ -559,7 +559,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 4. 在编辑器窗口中，复制并粘贴以下 YAML 配置。
 
    ```yaml
-   # https:/github.com/docker/metadata-action
+   # https://github.com/docker/metadata-action
    
    name: Build Docker Image
    
@@ -614,7 +614,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
              labels: ${{ steps.meta.outputs.labels }}
    ```
    
-   有关的 YAML 语法的更多信息`docker/build-push-action`，请参阅 [GitHub Action README](https:/github.com/docker/build-push-action/blob/master/README.md)。
+   有关的 YAML 语法的更多信息`docker/build-push-action`，请参阅 [GitHub Action README](https://github.com/docker/build-push-action/blob/master/README.md)。
 
 ## 第三步：运行工作流程
 
@@ -628,7 +628,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
    选择工作流程可以显示所有步骤的细目。
 
-3. 工作流程完成后，转到 [Docker Hub 上的存储库](https:/hub.docker.com/repositories)。
+3. 工作流程完成后，转到 [Docker Hub 上的存储库](https://hub.docker.com/repositories)。
 
    如果您在该列表中看到新的存储库，则表示 GitHub Actions 已成功将映像推送到 Docker Hub。
 
@@ -638,15 +638,15 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 相关信息：
 
-- [GitHub Actions 简介](https:/docs.docker.com/build/ci/github-actions/)
-- [GitHub Actions 的工作流程语法](https:/docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+- [GitHub Actions 简介](https://docs.docker.com/build/ci/github-actions/)
+- [GitHub Actions 的工作流程语法](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 # 测试 Kubernetes 部署
 
 ## 先决条件
 
-- 完成本指南前面的所有部分，从 [“容器化你的应用”](https:/docs.docker.com/language/java/containerize/)开始。
-- 在 Docker Desktop 中[打开 Kubernetes](https:/docs.docker.com/desktop/kubernetes/#install-and-turn-on-kubernetes)。
+- 完成本指南前面的所有部分，从 [“容器化你的应用”](https://docs.docker.com/language/java/containerize/)开始。
+- 在 Docker Desktop 中[打开 Kubernetes](https://docs.docker.com/desktop/kubernetes/#install-and-turn-on-kubernetes)。
 
 ## 概述
 
@@ -654,7 +654,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 
 ## 创建 Kubernetes YAML 文件
 
-在您的`spring-petclinic`目录中，创建一个名为 的文件 `docker-java-kubernetes.yaml`。在 IDE 或文本编辑器中打开该文件并添加以下内容。将其替换为您的 Docker 用户名和您在[为 Java 应用程序配置 CI/CD](https:/docs.docker.com/language/java/configure-ci-cd/)`DOCKER_USERNAME/REPO_NAME`中创建的存储库的名称 。
+在您的`spring-petclinic`目录中，创建一个名为 的文件 `docker-java-kubernetes.yaml`。在 IDE 或文本编辑器中打开该文件并添加以下内容。将其替换为您的 Docker 用户名和您在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/language/java/configure-ci-cd/)`DOCKER_USERNAME/REPO_NAME`中创建的存储库的名称 。
 
 ```yaml
 apiVersion: apps/v1
@@ -694,10 +694,10 @@ spec:
 
 在此 Kubernetes YAML 文件中，有两个对象，由以下字符分隔`---`：
 
-- 部署，描述一组可扩展的相同 Pod。在这种情况下，您将只获得一个副本或 Pod 的副本。该 Pod（如下所述）中只有一个容器。该容器是根据 GitHub Actions 在[为 Java 应用程序配置 CI/CD](https:/docs.docker.com/language/java/configure-ci-cd/)`template`中构建的映像创建的 。
+- 部署，描述一组可扩展的相同 Pod。在这种情况下，您将只获得一个副本或 Pod 的副本。该 Pod（如下所述）中只有一个容器。该容器是根据 GitHub Actions 在[为 Java 应用程序配置 CI/CD](https://docs.docker.com/language/java/configure-ci-cd/)`template`中构建的映像创建的 。
 - NodePort 服务会将流量从主机上的端口 30001 路由到其路由到的 pod 内的端口 8080，从而允许您从网络访问您的应用程序。
 
-要了解有关 Kubernetes 对象的更多信息，请参阅 [Kubernetes 文档](https:/kubernetes.io/docs/home/)。
+要了解有关 Kubernetes 对象的更多信息，请参阅 [Kubernetes 文档](https://kubernetes.io/docs/home/)。
 
 ## 部署并检查您的应用程序
 
@@ -747,7 +747,7 @@ spec:
 
    ```bash
    $ curl --request GET \
-     --url http:/localhost:30001/actuator/health \
+     --url http://localhost:30001/actuator/health \
      --header 'content-type: application/json'
    ```
 
@@ -769,6 +769,6 @@ spec:
 
 相关信息：
 
-- [Kubernetes 文档](https:/kubernetes.io/docs/home/)
-- [使用 Docker Desktop 在 Kubernetes 上部署](https:/docs.docker.com/desktop/kubernetes/)
-- [Swarm 模式概述](https:/docs.docker.com/engine/swarm/)
+- [Kubernetes 文档](https://kubernetes.io/docs/home/)
+- [使用 Docker Desktop 在 Kubernetes 上部署](https://docs.docker.com/desktop/kubernetes/)
+- [Swarm 模式概述](https://docs.docker.com/engine/swarm/)

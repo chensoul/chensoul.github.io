@@ -11,9 +11,9 @@ tags: [review]
 
 ![weekly-review-10-00](../../../static/images/weekly-review-10-00.webp)
 
-本篇是对 `2023-03-06` 到 `2023-03-12` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-06` 到 `2023-03-12` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
-这周发现 VPS 上 [某些使用 docker 部署的服务](https:/blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/)（cusdis、umami、uptime、n8n、rsshub、memos）国内用户无法访问了，于是就折腾了一下使用 Cloudflare Tunnel 来代理这些服务。配置成功之后，又发现本地如果开启 VPN，Cloudflare Tunnel 代理的域名还是无法访问，于是放弃了使用 Cloudflare Tunnel，改为将这些国内无法访问的服务部署到免费的 VPS 服务器上，比如：Railway、Vercel。
+这周发现 VPS 上 [某些使用 docker 部署的服务](https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/)（cusdis、umami、uptime、n8n、rsshub、memos）国内用户无法访问了，于是就折腾了一下使用 Cloudflare Tunnel 来代理这些服务。配置成功之后，又发现本地如果开启 VPN，Cloudflare Tunnel 代理的域名还是无法访问，于是放弃了使用 Cloudflare Tunnel，改为将这些国内无法访问的服务部署到免费的 VPS 服务器上，比如：Railway、Vercel。
 
 这周工作忙完之后，就开始着手通知系统的重构改造服务，想着 chatgpt 这么火，于是就试试让它来写代码。在不断地修改需求的情况下，chatgpt 写出来的代码稍加调整逐渐可以使用了。
 
@@ -43,11 +43,11 @@ tags: [review]
 
 ## 通过 Cloudflare Tunnel 访问服务
 
-以下内容参考 [初探 Cloudflare 零信任 - 通过 Cloudflare Tunnel 访问服务](https:/dejavu.moe/posts/cloudflare-tunnel-access-uptime/)。
+以下内容参考 [初探 Cloudflare 零信任 - 通过 Cloudflare Tunnel 访问服务](https://dejavu.moe/posts/cloudflare-tunnel-access-uptime/)。
 
 ### 1、创建 Cloudflare Tunnel
 
-登录 [Cloudflare Zero Trust](https:/one.dash.cloudflare.com/) 控制台，选择左侧导航栏的 Access 菜单，进入 Tunnels 配置，点击 Create a tunnel 创建一个 Tunnel，输入 Tunnel 隧道名称
+登录 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) 控制台，选择左侧导航栏的 Access 菜单，进入 Tunnels 配置，点击 Create a tunnel 创建一个 Tunnel，输入 Tunnel 隧道名称
 
 ![weekly-review-10-01](../../../static/images/weekly-review-10-01.webp)
 
@@ -78,7 +78,7 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 ![weekly-review-10-04](../../../static/images/weekly-review-10-04.webp)
 
-如果需要对 ssh 服务开启代理，请参考：[Connect with SSH through Cloudflare Tunnel](https:/developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/)。
+如果需要对 ssh 服务开启代理，请参考：[Connect with SSH through Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/)。
 
 ![weekly-review-10-05](../../../static/images/weekly-review-10-05.webp)
 
@@ -86,7 +86,7 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 - 为 ssh 通道创建 Hostname
 
-- 在本地安装 [`cloudflared`](https:/developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/)
+- 在本地安装 [`cloudflared`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/)
 
 - 配置 ~/.ssh/config，添加下面配置（注意：我使用 Homebrew 安装的 cloudflared）：
 
@@ -111,13 +111,13 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 ## Vercel 部署 Cusdis、umami
 
-参考 [轻量级开源免费博客评论系统解决方案（Cusdis + Railway）](https:/www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/) 在 Railway 上部署 cusdis，数据库还是可以使用 vps 上部署的 postgresql，只需要配置一个 jdbc 链接即可：
+参考 [轻量级开源免费博客评论系统解决方案（Cusdis + Railway）](https://www.pseudoyu.com/zh/2022/05/24/free_and_lightweight_blog_comment_system_using_cusdis_and_railway/) 在 Railway 上部署 cusdis，数据库还是可以使用 vps 上部署的 postgresql，只需要配置一个 jdbc 链接即可：
 
-- postgresql:/cusdis:xxxxxx@postgres.chensoul.cc:5432/cusdis
+- postgresql://cusdis:xxxxxx@postgres.chensoul.cc:5432/cusdis
 
 部署完之后，发现存在跨域问题，故全部改为使用 Vercel 来部署。
 
-参考 [Cusdis 官方文档](https:/cusdis.com/doc#/self-host/vercel) 来部署 Cusdis，对于 Cusdis 存在跨域问题，参考 [Sometimes form shows on page, sometimes not - CORS issue #135](https:/github.com/djyde/cusdis/issues/135)，修改你的 github 的 cusdis 仓库中的 next.config.js 文件：
+参考 [Cusdis 官方文档](https://cusdis.com/doc#/self-host/vercel) 来部署 Cusdis，对于 Cusdis 存在跨域问题，参考 [Sometimes form shows on page, sometimes not - CORS issue #135](https://github.com/djyde/cusdis/issues/135)，修改你的 github 的 cusdis 仓库中的 next.config.js 文件：
 
 ```javascript
 async headers() {
@@ -132,13 +132,13 @@ async headers() {
   },
 ```
 
-参考 [Umami 官方文档](https:/umami.is/docs/running-on-vercel) 来部署 Umami，umami 的 postgresql jdbc 链接还是使用 vps 上面部署的 postgresql
+参考 [Umami 官方文档](https://umami.is/docs/running-on-vercel) 来部署 Umami，umami 的 postgresql jdbc 链接还是使用 vps 上面部署的 postgresql
 
-- postgresql:/umami:xxxxxxpostgres.chensoul.cc:5432/umami
+- postgresql://umami:xxxxxxpostgres.chensoul.cc:5432/umami
 
 ## Chatgpt 写代码
 
-在 https:/poe.com/chatgpt 里面输入下面文字：
+在 https://poe.com/chatgpt 里面输入下面文字：
 
 > 请用 java 实现一个通知系统，给出完整的代码，需求如下：
 >
@@ -167,21 +167,21 @@ chatgpt 回答如下：
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 
-- [Java 近期新闻：Gradle 8.0、Maven、Payara 平台、Piranha、Spring Framework、MyFaces 和 Piranha](https:/www.infoq.cn/article/txS9hHTfxasv2uHBATgL)
+- [Java 近期新闻：Gradle 8.0、Maven、Payara 平台、Piranha、Spring Framework、MyFaces 和 Piranha](https://www.infoq.cn/article/txS9hHTfxasv2uHBATgL)
 
-- [RackNerd VPS 推荐](https:/blognas.hwb0307.com/ad)
+- [RackNerd VPS 推荐](https://blognas.hwb0307.com/ad)
 
 ### 一些工具
 
-#### [Zed](https:/zed.dev/)
+#### [Zed](https://zed.dev/)
 
 Atom 作者新开发的编辑器 Zed 速度确实非常快，基本的功能也都支持，现在还在内测阶段，暂时不支持安装 extension。
 
-#### [图片转 webp](https:/developers.google.com/speed/webp/docs/cwebp?hl=zh-cn)
+#### [图片转 webp](https://developers.google.com/speed/webp/docs/cwebp?hl=zh-cn)
 
 mac 上安装：
 
@@ -199,8 +199,8 @@ cwebp -sns 70 -f 50 -size 60000 picture.png -o picture.webp
 
 ### 一些影视
 
-- [冰海陷落](https:/movie.douban.com/subject/6538807/)，推荐指数：☆☆☆☆。疯狂的芭堤雅将军杜罗夫（米哈伊尔・戈尔沃伊 Mikhail Gorevoy 饰）预谋发动第三次世界大战，他制造了一场巨大的水域爆炸，致使附近的美军潜艇队遇袭。美国海军派出了海底经验丰富但名声寥寥的乔・格拉斯潜水艇船长（杰拉德・巴特勒 Gerard Butler 饰）率领潜艇队前去调查。
+- [冰海陷落](https://movie.douban.com/subject/6538807/)，推荐指数：☆☆☆☆。疯狂的芭堤雅将军杜罗夫（米哈伊尔・戈尔沃伊 Mikhail Gorevoy 饰）预谋发动第三次世界大战，他制造了一场巨大的水域爆炸，致使附近的美军潜艇队遇袭。美国海军派出了海底经验丰富但名声寥寥的乔・格拉斯潜水艇船长（杰拉德・巴特勒 Gerard Butler 饰）率领潜艇队前去调查。
 
-- [黑暗荣耀第二季](https:/movie.douban.com/subject/36193784/)，推荐指数：☆☆☆☆。
+- [黑暗荣耀第二季](https://movie.douban.com/subject/36193784/)，推荐指数：☆☆☆☆。
 
 以上。

@@ -11,7 +11,7 @@ tags: [spring-cloud]
 
 今天做了什么：
 
-1. 创建项目 [spring-cloud-examples](https:/github.com/chensoul/spring-cloud-examples)，测试 *Spring Cloud* Config 使用本地文件和 git 仓库作为配置中心
+1. 创建项目 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples)，测试 *Spring Cloud* Config 使用本地文件和 git 仓库作为配置中心
    
 
 ---
@@ -27,7 +27,7 @@ tags: [spring-cloud]
 
 
 
-本文主要分享 Spring Cloud Config 使用本地文件和Git 仓库存储配置文件、配置文件加解密、集成 Spring Cloud Bus 等内容，源码在 github：[spring-cloud-examples](https:/github.com/chensoul/spring-cloud-examples)。
+本文主要分享 Spring Cloud Config 使用本地文件和Git 仓库存储配置文件、配置文件加解密、集成 Spring Cloud Bus 等内容，源码在 github：[spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples)。
 
 ## 本地文件
 
@@ -89,7 +89,7 @@ spring.profiles.active: native
 management.endpoint.health.show-details: ALWAYS
 management.endpoints.web.exposure.include: "*"
 
-# default value: classpath:/, classpath:/config, file:./, file:./config
+# default value: classpath://, classpath://config, file:./, file:./config
 spring.cloud.config.server.native.search-locations: file:${PWD}/config-repo
 ```
 
@@ -117,20 +117,20 @@ foo: hello world
 启动应用之后，可以访问 /actuator 。
 
 ```bash
-$ curl http:/localhost:8888/actuator/ -s | jq
+$ curl http://localhost:8888/actuator/ -s | jq
 {
   "_links": {
     "self": {
-      "href": "http:/localhost:8888/actuator",
+      "href": "http://localhost:8888/actuator",
       "templated": false
     },
     ...
     "refresh": {
-      "href": "http:/localhost:8888/actuator/refresh",
+      "href": "http://localhost:8888/actuator/refresh",
       "templated": false
     },
     "features": {
-      "href": "http:/localhost:8888/actuator/features",
+      "href": "http://localhost:8888/actuator/features",
       "templated": false
     }
   }
@@ -155,18 +155,18 @@ $ curl http:/localhost:8888/actuator/ -s | jq
 针对当前项目的 foo.yml 配置文件，可以访问的路径有：
 
 ```bash
-http:/localhost:8888/foo/native
-http:/localhost:8888/foo-native.yml
-http:/localhost:8888/foo-native.yaml
-http:/localhost:8888/foo-native.properties
-http:/localhost:8888/foo-native.json
+http://localhost:8888/foo/native
+http://localhost:8888/foo-native.yml
+http://localhost:8888/foo-native.yaml
+http://localhost:8888/foo-native.properties
+http://localhost:8888/foo-native.json
 
-http:/localhost:8888/foo/native/master
-http:/localhost:8888/foo/native,default/master
-http:/localhost:8888/master/foo-native.properties
-http:/localhost:8888/master/foo-native.yml
-http:/localhost:8888/master/foo-native.yaml
-http:/localhost:8888/master/foo-native.json
+http://localhost:8888/foo/native/master
+http://localhost:8888/foo/native,default/master
+http://localhost:8888/master/foo-native.properties
+http://localhost:8888/master/foo-native.yml
+http://localhost:8888/master/foo-native.yaml
+http://localhost:8888/master/foo-native.json
 ```
 
 例如，访问 localhost:8888/foo/native :
@@ -183,7 +183,7 @@ $ curl -s localhost:8888/foo/native | jq
   "state": null,
   "propertySources": [
     {
-      "name": "file:/Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo/foo.yml",
+      "name": "file://Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo/foo.yml",
       "source": {
         "foo": "hello world"
       }
@@ -192,7 +192,7 @@ $ curl -s localhost:8888/foo/native | jq
 }
 ```
 
-访问 http:/localhost:8888/actuator/env 可以查看所有 propertySources 配置：
+访问 http://localhost:8888/actuator/env 可以查看所有 propertySources 配置：
 
 ```bash
 $ curl -s localhost:8080/actuator/env | jq
@@ -245,7 +245,7 @@ $ curl -s localhost:8080/actuator/env | jq
       }
     },
     {
-      "name": "Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'",
+      "name": "Config resource 'class path resource [application.yml]' via location 'optional:classpath://'",
       "properties": {
         "server.port": {
           "value": 8888,
@@ -256,7 +256,7 @@ $ curl -s localhost:8080/actuator/env | jq
           "origin": "class path resource [application.yml] - 6:13"
         },
         "spring.cloud.config.server.native.search-locations": {
-          "value": "file:/Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo",
+          "value": "file://Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo",
           "origin": "class path resource [application.yml] - 9:53"
         },
         "management.endpoints.web.exposure.include": {
@@ -281,12 +281,12 @@ propertySources 包括：
 - `systemEnvironment`
 - `configServerClient`
 - `springCloudClientHostInfo`
-- `optional:classpath:/` 中的 `application.yml`
+- `optional:classpath://` 中的 `application.yml`
 
 查看 foo.yml 配置文件内容：
 
 ```bash
-$ curl http:/localhost:8888/foo-native.yml
+$ curl http://localhost:8888/foo-native.yml
 foo: hello world
 ```
 
@@ -317,7 +317,7 @@ spring.security.user.password: ${SPRING_SECURITY_USER_PASSWORD:123456}
 重启应用，再次访问配置服务器时需要指定用户名和密码，例如，查看 foo.yml 配置文件内容：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/foo/native -s | jq 
+$ curl http://root:123456@localhost:8888/foo/native -s | jq 
 test: hello world
 ```
 
@@ -366,14 +366,14 @@ test: hello world
 重启应用，加密 "hello world"：
 
 ```bash
-$ curl -s http:/root:123456@localhost:8888/encrypt --data-urlencode "hello world" 
+$ curl -s http://root:123456@localhost:8888/encrypt --data-urlencode "hello world" 
 1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e                    
 ```
 
 解密：
 
 ```bash
-$ curl -s http:/root:123456@localhost:8888/decrypt -d 1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e
+$ curl -s http://root:123456@localhost:8888/decrypt -d 1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e
 hello world
 ```
 
@@ -386,7 +386,7 @@ foo: '{cipher}1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e'
 重启应用，查看 foo.yml 文件内容：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/foo/native -s | jq 
+$ curl http://root:123456@localhost:8888/foo/native -s | jq 
 foo: hello world
 ```
 
@@ -414,7 +414,7 @@ eureka:
     leaseExpirationDurationInSeconds: 30
   client:
     service-url:
-      defaultZone: http:/localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
     initialInstanceInfoReplicationIntervalSeconds: 5
     registryFetchIntervalSeconds: 5
 ```
@@ -460,7 +460,7 @@ spring.application.name: config-client
 management.endpoint.health.show-details: ALWAYS
 management.endpoints.web.exposure.include: "*"
 
-# 1. 默认从 http:/localhost:8888 获取配置
+# 1. 默认从 http://localhost:8888 获取配置
 # 2. 如果没有配置 optional: 则 Config Client 连接不到 Config Server 时就会失败
 # 3. import 配置优先于 uri 配置
 # 4. 配置了后就不需要 bootstrap 引导文件
@@ -469,7 +469,7 @@ spring.config.import: "optional:configserver:"
 spring:
   cloud:
   	config:
-    	uri: http:/localhost:8888
+    	uri: http://localhost:8888
 ```
 
 在 config-repo 目录添加客户端配置文件 config-client.yml
@@ -505,14 +505,14 @@ public class ConfigClientApplication {
 查看 test 的值
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 test: hello world
 ```
 
 查看 config-client 应用的配置：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/config-client.yml
+$ curl http://root:123456@localhost:8888/config-client.yml
 test: hello world
 ```
 
@@ -540,7 +540,7 @@ test: hello world
 spring:
   cloud:
     config:
-      uri: http:/localhost:8888
+      uri: http://localhost:8888
       # 客户端配置快速失败
       fail-fast: true
       # 配置重试，需要引入 spring-retry
@@ -554,7 +554,7 @@ spring:
 注意：重试参数也可以添加到 url 后面：
 
 ```yml
-spring.config.import: configserver:http:/configserver.example.com?fail-fast=true&max-attempts=10&max-interval=1500&multiplier=1.2&initial-interval=1100"
+spring.config.import: configserver:http://configserver.example.com?fail-fast=true&max-attempts=10&max-interval=1500&multiplier=1.2&initial-interval=1100"
 ```
 
 
@@ -567,7 +567,7 @@ spring.config.import: configserver:http:/configserver.example.com?fail-fast=true
 spring:
   cloud:
   	config:
-  		uri: http:/localhost:8888
+  		uri: http://localhost:8888
       # 客户端配置快速失败
       fail-fast: true
       # 配置重试，需要引入 spring-retry
@@ -598,7 +598,7 @@ Caused by: org.springframework.web.client.UnknownContentTypeException: Could not
 spring:
   cloud:
     config:
-      uri: http:/localhost:8888
+      uri: http://localhost:8888
       username: ${SPRING_SECURITY_USER_NAME:root}
       password: ${SPRING_SECURITY_USER_PASSWORD:123456}
 ```
@@ -606,7 +606,7 @@ spring:
 重启之后，再次查看 test 的值：
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world
 ```
 
@@ -627,7 +627,7 @@ hello world
 spring:
   cloud:
     config:
-      # uri: http:/localhost:8888
+      # uri: http://localhost:8888
       discovery:
         enabled: true
         service-id: config-server-file
@@ -686,7 +686,7 @@ spring.application.name: config-server-git
 management.endpoint.health.show-details: ALWAYS
 management.endpoints.web.exposure.include: "*"
 
-spring.cloud.config.server.git.uri: https:/github.com/chensoul/spring-cloud-examples
+spring.cloud.config.server.git.uri: https://github.com/chensoul/spring-cloud-examples
 spring.cloud.config.server.git.search-paths: config-repo 
 spring.cloud.config.server.git.default-label: config # 使用 config 分支
 ```
@@ -716,14 +716,14 @@ spring:
           tryMasterBranch: false
 ```
 
-如果是私有仓库，则需要配置认证，或者使用 ssh 私钥，配置方式，请参考 [Git SSH configuration using properties](https:/docs.spring.io/spring-cloud-config/docs/3.1.9/reference/html/#_git_ssh_configuration_using_properties)。
+如果是私有仓库，则需要配置认证，或者使用 ssh 私钥，配置方式，请参考 [Git SSH configuration using properties](https://docs.spring.io/spring-cloud-config/docs/3.1.9/reference/html/#_git_ssh_configuration_using_properties)。
 
 #### 5. 启动应用
 
 查看 test 的值
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world
 ```
 
@@ -752,14 +752,14 @@ spring.security.user.password: ${SPRING_SECURITY_USER_PASSWORD:123456}
 重启应用，再次访问配置服务器时需要指定用户名和密码，例如，查看 foo.yml 配置文件内容：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/foo-native.yml
+$ curl http://root:123456@localhost:8888/foo-native.yml
 foo: hello world
 ```
 
 查看 config-client 应用的配置：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/config-client.yml
+$ curl http://root:123456@localhost:8888/config-client.yml
 test: hello world
 ```
 
@@ -780,7 +780,7 @@ spring.application.name: config-client
 management.endpoint.health.show-details: ALWAYS
 management.endpoints.web.exposure.include: "*"
 
-# 1. 默认从 http:/localhost:8888 获取配置
+# 1. 默认从 http://localhost:8888 获取配置
 # 2. 如果没有配置 optional: 则 Config Client 连接不到 Config Server 时就会失败
 # 3. import 配置优先于 uri 配置
 # 4. 配置了后就不需要 bootstrap 引导文件
@@ -789,7 +789,7 @@ spring.config.import: "optional:configserver:"
 spring:
   cloud:
     config:
-    	uri: http:/localhost:8888
+    	uri: http://localhost:8888
     	label: config
       # 客户端配置快速失败
       fail-fast: true
@@ -806,7 +806,7 @@ spring:
 重启应用，查看 test 的值
 
 ```bash
-$ curl http:/root:123456@localhost:8080/test
+$ curl http://root:123456@localhost:8080/test
 hello world
 ```
 
@@ -818,7 +818,7 @@ hello world
 spring:
   cloud:
     config:
-      uri: http:/localhost:8888
+      uri: http://localhost:8888
       label: config
       username: ${SPRING_SECURITY_USER_NAME:root}
       password: ${SPRING_SECURITY_USER_PASSWORD:123456}
@@ -827,7 +827,7 @@ spring:
 重启之后，再次查看 test 的值：
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world
 ```
 
@@ -840,21 +840,21 @@ hello world
 通过配置服务，查看 config-client 应用的配置，发现 test 的值已经更新。
 
 ```bash
-$ curl http:/root:123456@localhost:8888/config-client.yml
+$ curl http://root:123456@localhost:8888/config-client.yml
 test: hello world
 ```
 
 然后，再次查看客户端的 test 的值：
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world
 ```
 
 发现 test 值并没有更新，这时候需要调用客户端的 /actuator/refresh 手动更新。
 
 ```bash
-$ curl -X POST http:/localhost:8080/actuator/refresh
+$ curl -X POST http://localhost:8080/actuator/refresh
 ["config.client.version","test"]%  
 ```
 
@@ -863,7 +863,7 @@ $ curl -X POST http:/localhost:8080/actuator/refresh
 再次查看客户端的 test 的值，发现 test 值已修改为 "hello world 1111"：
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world 1111
 ```
 
@@ -932,10 +932,10 @@ spring.rabbitmq:
 查看 test 的值
 
 ```bash
-$ curl http:/root:123456@localhost:8888/config-client-default.yml
+$ curl http://root:123456@localhost:8888/config-client-default.yml
 test: hello world 1111
 
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world 1111
 ```
 
@@ -949,7 +949,7 @@ spring cloud bus 提供了两个端点：
 使用 POST 请求访问 /actuator/busenv，修改 config-client.yml 文件中 test 的值为 "hello world 2222"：
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' -d '{"name":"test","value":"hello world 2222"}' http:/localhost:8080/actuator/busenv
+curl -X POST -H 'Content-Type: application/json' -d '{"name":"test","value":"hello world 2222"}' http://localhost:8080/actuator/busenv
 ```
 
 查看客户端日志：
@@ -963,23 +963,23 @@ curl -X POST -H 'Content-Type: application/json' -d '{"name":"test","value":"hel
 这时候查看，返回内容为：
 
 ```bash
-$ curl http:/root:123456@localhost:8888/config-client-default.yml
+$ curl http://root:123456@localhost:8888/config-client-default.yml
 test: hello world 1111
 
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world 1111
 ```
 
 可以看到 test 属性的值还没有刷新。通过 /actuator/busrefresh 刷新配置：
 
 ```bash
-curl -X POST http:/localhost:8080/actuator/busrefresh
+curl -X POST http://localhost:8080/actuator/busrefresh
 ```
 
 再次查看，可以看到 test 属性的值已经刷新。
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world 2222
 ```
 
@@ -988,7 +988,7 @@ hello world 2222
 在 git 仓库中修改 test 的值为 "hello world 3333"，然后执行刷新操作：
 
 ```
-curl -X POST http:/localhost:8080/actuator/busrefresh
+curl -X POST http://localhost:8080/actuator/busrefresh
 ```
 
 查看客户端日志：
@@ -996,7 +996,7 @@ curl -X POST http:/localhost:8080/actuator/busrefresh
 ```bash
 Received remote refresh request.
 
-Fetching config from server at : http:/localhost:8888
+Fetching config from server at : http://localhost:8888
 
 Located environment: name=config-client, profiles=[default], label=config, version=cfcb38e6d396ce6b85e0aa0e8839f38538b7f221, state=null
 Keys refreshed [config.client.version, test]
@@ -1005,7 +1005,7 @@ Keys refreshed [config.client.version, test]
 再次查看，可以看到 test 属性的值已经刷新。
 
 ```bash
-$ curl http:/localhost:8080/test
+$ curl http://localhost:8080/test
 hello world 3333% 
 ```
 

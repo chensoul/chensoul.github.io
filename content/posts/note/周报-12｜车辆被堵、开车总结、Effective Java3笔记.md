@@ -11,7 +11,7 @@ tags: [review]
 
 ![weekly-review-12-01](../../../static/images/weekly-review-12-01.webp)
 
-本篇是对 `2023-03-20` 到 `2023-03-26` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-20` 到 `2023-03-26` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 上周去同济医院检查鼾症，检查结果是轻度症状，医生建议多运动减肥。这周每天走路 1 万步的目标已达成。
 
@@ -33,9 +33,9 @@ tags: [review]
 
 ### Machine-Learning-With-Go
 
-B 站视频：[「课程」使用 Go 做机器学习](https:/www.bilibili.com/video/BV1iW411w7ev)
+B 站视频：[「课程」使用 Go 做机器学习](https://www.bilibili.com/video/BV1iW411w7ev)
 
-源代码：[Machine-Learning-With-Go](https:/github.com/PacktPublishing/Machine-Learning-With-Go)
+源代码：[Machine-Learning-With-Go](https://github.com/PacktPublishing/Machine-Learning-With-Go)
 
 ## 生活
 
@@ -67,28 +67,28 @@ B 站视频：[「课程」使用 Go 做机器学习](https:/www.bilibili.com/vi
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 
-- [做了 6 年程序员，我学到的 10 条经验](https:/lutaonan.com/blog/things-i-learnt-after-6-years-as-software-engineer/)
+- [做了 6 年程序员，我学到的 10 条经验](https://lutaonan.com/blog/things-i-learnt-after-6-years-as-software-engineer/)
 
-- [JetBrains 常用插件](https:/mritd.com/2021/06/06/jetbrains-plugins/)
-- [v2ray + warp-go 非全局使用 Cloudflare WARP 解锁 New Bing 等服务](https:/blog.skyju.cc/post/v2ray-warp-go-unlock-new-bing/)
-- [如何创建属于自己的私人资料库与私人搜索引擎 \_](https:/blog.17lai.site/posts/8f152670/)
-- [如何高效地协作开发：一些 Google 的实践](https:/1byte.io/google-large-scale-dev/)
-- [Java 高性能缓存库 Caffeine](https:/jasonkayzk.github.io/2023/03/28/Java%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%93%E5%AD%98%E5%BA%93Caffeine/)
+- [JetBrains 常用插件](https://mritd.com/2021/06/06/jetbrains-plugins/)
+- [v2ray + warp-go 非全局使用 Cloudflare WARP 解锁 New Bing 等服务](https://blog.skyju.cc/post/v2ray-warp-go-unlock-new-bing/)
+- [如何创建属于自己的私人资料库与私人搜索引擎 \_](https://blog.17lai.site/posts/8f152670/)
+- [如何高效地协作开发：一些 Google 的实践](https://1byte.io/google-large-scale-dev/)
+- [Java 高性能缓存库 Caffeine](https://jasonkayzk.github.io/2023/03/28/Java%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%93%E5%AD%98%E5%BA%93Caffeine/)
 
 ### 一些工具
 
-- [优设导航官网](https:/hao.uisdc.com/)：设计导航 2013 年上线至今，是优设网旗下最专业好用的设计师导航网站！设计导航为设计师提供 UI 设计、设计教程、素材下载、高清图库、配色方案、App 设计、网页设计等设计网站导航指引。设计导航每周更新，设计风向标就看优设网！
+- [优设导航官网](https://hao.uisdc.com/)：设计导航 2013 年上线至今，是优设网旗下最专业好用的设计师导航网站！设计导航为设计师提供 UI 设计、设计教程、素材下载、高清图库、配色方案、App 设计、网页设计等设计网站导航指引。设计导航每周更新，设计风向标就看优设网！
 
-- [Zeabur 属于国人的免费托管平台](https:/dusays.com/567/)
+- [Zeabur 属于国人的免费托管平台](https://dusays.com/567/)
 
-- [Neovim 使用体验](https:/luyuhuang.tech/2023/03/21/nvim.html)
-- [Github Copilot 免费平替 - Codeium](https:/www.domon.cn/github-copilotmian-fei-ping-ti-codeium/)
-- [Chat with documents](https:/chatdoc.com/)
-- [Codeium](https:/codeium.com/)：一款免费的类 Github Copilot 的 AI 代码辅助产品，可以便捷的和 AI 进行结对编程。初步使用下来和主流的 IDE 的集成很好，感兴趣的朋友可以先到[浏览器里在线尝试一番](https:/codeium.com/playground)。
+- [Neovim 使用体验](https://luyuhuang.tech/2023/03/21/nvim.html)
+- [Github Copilot 免费平替 - Codeium](https://www.domon.cn/github-copilotmian-fei-ping-ti-codeium/)
+- [Chat with documents](https://chatdoc.com/)
+- [Codeium](https://codeium.com/)：一款免费的类 Github Copilot 的 AI 代码辅助产品，可以便捷的和 AI 进行结对编程。初步使用下来和主流的 IDE 的集成很好，感兴趣的朋友可以先到[浏览器里在线尝试一番](https://codeium.com/playground)。
 
 ![codeium](../../../static/images/weekly-review-12-05.webp)
 

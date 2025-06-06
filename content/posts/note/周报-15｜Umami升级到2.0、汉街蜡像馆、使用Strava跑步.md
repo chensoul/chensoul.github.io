@@ -13,7 +13,7 @@ tags: [review]
 
 _题图：楚河汉街蜡像馆_
 
-本篇是对 `2023-04-10` 到 `2023-04-16` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-04-10` 到 `2023-04-16` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这周的工作不算忙碌，继续学习《Effective Java 3》这本书，并花了一些时间学习 Rust、Python 的基础语法。
 
@@ -35,11 +35,11 @@ _题图：楚河汉街蜡像馆_
 
 ![](../../../static/images/weekly-review-15-06.webp)
 
-受 [@Conge](https:/conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https:/github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.cc](https:/run.chensoul.cc/)。
+受 [@Conge](https://conge.livingwithfcs.org/) 博客影响，开始记录每天的跑步数据。首先是注册了 strava 账号，然后参考 [running_page](https://github.com/yihong0618/running_page) 部署了一个我的跑步主页 [run.chensoul.cc](https://run.chensoul.cc/)。
 
 ![weekly-review-15-02](../../../static/images/weekly-review-15-02.webp)
 
-因为我之前是使用悦跑圈 APP 记录跑步，所以又参考[这篇文章](https:/github.com/yihong0618/running_page/blob/master/README-CN.md#joyrun%E6%82%A6%E8%B7%91%E5%9C%88)导出 gpx 数据，然后[同步](https:/github.com/yihong0618/running_page/blob/master/README-CN.md#gpx_to_strava)到 Strava。最后，可以把悦跑圈 APP 卸载了。
+因为我之前是使用悦跑圈 APP 记录跑步，所以又参考[这篇文章](https://github.com/yihong0618/running_page/blob/master/README-CN.md#joyrun%E6%82%A6%E8%B7%91%E5%9C%88)导出 gpx 数据，然后[同步](https://github.com/yihong0618/running_page/blob/master/README-CN.md#gpx_to_strava)到 Strava。最后，可以把悦跑圈 APP 卸载了。
 
 ![weekly-review-15-03](../../../static/images/weekly-review-15-03.webp)
 
@@ -47,7 +47,7 @@ _题图：楚河汉街蜡像馆_
 
 ![weekly-review-15-04](../../../static/images/weekly-review-15-04.webp)
 
-上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，效果如下。
+上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，效果如下。
 
 ![](../../../static/images/weekly-review-15-07.webp)
 
@@ -58,7 +58,7 @@ _题图：楚河汉街蜡像馆_
 2、升级数据库
 
 ```bash
-git clone https:/github.com/umami-software/migrate-v1-v2.git
+git clone https://github.com/umami-software/migrate-v1-v2.git
 cd migrate-v1-v2
 yarn install
 yarn build
@@ -68,7 +68,7 @@ yarn build
 
 ```properties
 #修改为你的数据库地址
-DATABASE_URL=postgresql:/umami:xxxxx@postgres.chensoul.cc:5432/umami
+DATABASE_URL=postgresql://umami:xxxxx@postgres.chensoul.cc:5432/umami
 ```
 
 运行：
@@ -89,7 +89,7 @@ yarn start
 
 4、修改跟踪脚本，把站点中所有追踪脚本名字`umami.js`改为`script.js`。
 
-5、最后查看实时仪表盘。我的 umami 实时 [访问地址](https:/umami.chensoul.cc/realtime/f110cfa0-b737-4690-a032-2b9073a57fc3)
+5、最后查看实时仪表盘。我的 umami 实时 [访问地址](https://umami.chensoul.cc/realtime/f110cfa0-b737-4690-a032-2b9073a57fc3)
 
 ## 工作
 
@@ -119,28 +119,28 @@ yarn start
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 
-1、[Java 编程教程](https:/www3.ntu.edu.sg/home/ehchua/programming/index.html)
+1、[Java 编程教程](https://www3.ntu.edu.sg/home/ehchua/programming/index.html)
 
-![img](https:/cdn.beekka.com/blogimg/asset/202301/bg2023011504.webp)
+![img](https://cdn.beekka.com/blogimg/asset/202301/bg2023011504.webp)
 
 这个网站是新加坡南洋理工大学的一位老师的教案（英文），主要内容为新生的 Java 编程
 
-2、[offsec.tools](https:/offsec.tools/)
+2、[offsec.tools](https://offsec.tools/)
 
-![img](https:/cdn.beekka.com/blogimg/asset/202301/bg2023012101.webp)
+![img](https://cdn.beekka.com/blogimg/asset/202301/bg2023012101.webp)
 
 这个网站收集各种安全相关的软件工具，目前共有 600 多个。
 
-3、[我的习惯养成计划：五分钟规则+打卡](https:/juemuren4449.com/archives/habit-formation-plan)
+3、[我的习惯养成计划：五分钟规则+打卡](https://juemuren4449.com/archives/habit-formation-plan)
 
-4、[我编程 20 年的指导原则](https:/www.jitao.tech/posts/my-guiding-principles-after-20-years-of-programming/)
+4、[我编程 20 年的指导原则](https://www.jitao.tech/posts/my-guiding-principles-after-20-years-of-programming/)
 
-5、[用 zmv 批量重命名文件](https:/lenciel.com/2022/10/renaming-with-zmv/)
+5、[用 zmv 批量重命名文件](https://lenciel.com/2022/10/renaming-with-zmv/)
 
 ### 一些工具
 
-- [WebPerformance Report](https:/webperformancereport.com/) 这个网站可以用邮箱订阅你的网站性能的个性化报告。它会监控指定网站的性能，每周会发送一封报告邮件给你。
+- [WebPerformance Report](https://webperformancereport.com/) 这个网站可以用邮箱订阅你的网站性能的个性化报告。它会监控指定网站的性能，每周会发送一封报告邮件给你。

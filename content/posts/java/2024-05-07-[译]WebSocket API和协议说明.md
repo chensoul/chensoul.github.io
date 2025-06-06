@@ -9,21 +9,21 @@ tags: [ websocket]
 
 
 
-原文地址：[https:/ably.com/topic/websockets](https:/ably.com/topic/websockets)
+原文地址：[https://ably.com/topic/websockets](https://ably.com/topic/websockets)
 
 
 
 WebSocket 标志着 Web 开发的转折点。 WebSocket 技术旨在以事件为驱动，并针对低延迟进行了优化，已成为许多寻求构建交互式实时数字体验以提供令人愉悦的用户体验的组织和开发人员的首选。本文探讨了与 WebSocket 相关的关键主题：
 
-- [WebSocket 协议和 API 解释](https:/ably.com/topic/websockets#web-sockets-the-web-socket-protocol-and-api-explained)
+- [WebSocket 协议和 API 解释](https://ably.com/topic/websockets#web-sockets-the-web-socket-protocol-and-api-explained)
 
-- [WebSockets 是如何工作的？](https:/ably.com/topic/websockets#how-do-web-sockets-work)
-- [WebSockets的优缺点是什么？](https:/ably.com/topic/websockets#what-are-the-pros-and-cons-of-web-sockets)
-- [WebSockets 是否可扩展？](https:/ably.com/topic/websockets#are-web-sockets-scalable)
-- [WebSocket 的用途是什么？](https:/ably.com/topic/websockets#what-are-web-sockets-used-for)
-- [WebSockets 的最佳替代品是什么？](https:/ably.com/topic/websockets#what-are-the-best-alternatives-to-web-sockets)
-- [如何开始使用 WebSockets 构建实时体验](https:/ably.com/topic/websockets#how-to-start-building-realtime-experiences-with-web-sockets)
-- [WebSocket 常见问题解答](https:/ably.com/topic/websockets#web-sockets-fa-qs)
+- [WebSockets 是如何工作的？](https://ably.com/topic/websockets#how-do-web-sockets-work)
+- [WebSockets的优缺点是什么？](https://ably.com/topic/websockets#what-are-the-pros-and-cons-of-web-sockets)
+- [WebSockets 是否可扩展？](https://ably.com/topic/websockets#are-web-sockets-scalable)
+- [WebSocket 的用途是什么？](https://ably.com/topic/websockets#what-are-web-sockets-used-for)
+- [WebSockets 的最佳替代品是什么？](https://ably.com/topic/websockets#what-are-the-best-alternatives-to-web-sockets)
+- [如何开始使用 WebSockets 构建实时体验](https://ably.com/topic/websockets#how-to-start-building-realtime-experiences-with-web-sockets)
+- [WebSocket 常见问题解答](https://ably.com/topic/websockets#web-sockets-fa-qs)
 
 ## WebSocket：协议和 API 解释
 
@@ -38,17 +38,17 @@ WebSocket 技术由两个核心构建块组成：
 
 第一个实时 Web 应用程序开始出现在 2000 年代，试图提供响应迅速、动态和交互式的最终用户体验。然而，在那个时候，实时网络很难实现，而且比我们现在习惯的要慢;它是通过入侵现有的基于HTTP的技术（AJAX和Comet）来实现的，这些技术不是为实时应用程序设计和优化的。很明显，需要一个更好的替代方案。
 
-在 2008 年，开发人员 Michael Carter 和 Ian Hickson 特别敏锐地感受到了在实现任何类似实时的东西时使用 AJAX 和 Comet 的痛苦和局限性。通过在 [IRC](https:/krijnhoetmer.nl/irc-logs/whatwg/20080618#l-1145) 和 [W3C 邮件列表](https:/lists.w3.org/Archives/Public/public-whatwg-archive/2008Jun/0165.html)上的合作，他们提出了一个计划，为网络上的现代、真正的实时通信引入一个新标准。[因此，“WebSocket”这个名字被创造出来](https:/lists.w3.org/Archives/Public/public-whatwg-archive/2008Jun/0186.html)。
+在 2008 年，开发人员 Michael Carter 和 Ian Hickson 特别敏锐地感受到了在实现任何类似实时的东西时使用 AJAX 和 Comet 的痛苦和局限性。通过在 [IRC](https://krijnhoetmer.nl/irc-logs/whatwg/20080618#l-1145) 和 [W3C 邮件列表](https://lists.w3.org/Archives/Public/public-whatwg-archive/2008Jun/0165.html)上的合作，他们提出了一个计划，为网络上的现代、真正的实时通信引入一个新标准。[因此，“WebSocket”这个名字被创造出来](https://lists.w3.org/Archives/Public/public-whatwg-archive/2008Jun/0186.html)。
 
 ### 什么是 WebSocket 协议？
 
 WebSocket 协议支持 Web 客户端和 Web 服务器之间通过基础 TCP 连接进行持续的全双工双向通信。该协议旨在允许客户端和服务器实时通信，从而在 Web 应用程序中实现高效且响应迅速的数据传输。
 
-2011 年 12 月，互联网工程任务组 （IETF） 通过 [RFC 6455](https:/www.rfc-editor.org/rfc/rfc6455) 对 WebSocket 协议进行了标准化。互联网号码分配机构 （IANA） 与 IETF 协调维护 [WebSocket 协议注册管理机构](https:/www.iana.org/assignments/websocket/websocket.xml)，该注册管理机构定义了协议使用的许多代码和参数标识符。
+2011 年 12 月，互联网工程任务组 （IETF） 通过 [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455) 对 WebSocket 协议进行了标准化。互联网号码分配机构 （IANA） 与 IETF 协调维护 [WebSocket 协议注册管理机构](https://www.iana.org/assignments/websocket/websocket.xml)，该注册管理机构定义了协议使用的许多代码和参数标识符。
 
 ### 什么是 WebSocket API？
 
-WebSocket API 包含在 [HTML Living Standard](https:/websockets.spec.whatwg.org/) 中，是一个编程接口，用于创建 WebSocket 连接并管理 Web 应用程序中客户端和服务器之间的数据交换。它为开发人员提供了一种简单且标准化的方法，可以在其应用程序中使用 WebSocket 协议。
+WebSocket API 包含在 [HTML Living Standard](https://websockets.spec.whatwg.org/) 中，是一个编程接口，用于创建 WebSocket 连接并管理 Web 应用程序中客户端和服务器之间的数据交换。它为开发人员提供了一种简单且标准化的方法，可以在其应用程序中使用 WebSocket 协议。
 
 如今，几乎所有现代浏览器都支持 WebSocket API。此外，还有许多框架和库（包括开源和商业解决方案）实现了 WebSocket API。
 
@@ -69,9 +69,9 @@ WebSocket 提供低延迟通信功能，适用于各种类型的实时用例。�
 
 概括地说，使用 WebSockets 涉及三个主要步骤：
 
-- 打开 WebSocket 连接。建立 WebSocket 连接的过程称为开始握手，由客户端和服务器之间的 HTTP 请求/响应交换组成。有关详细信息，请参阅[如何建立 WebSocket 连接](https:/ably.com/topic/how-do-websockets-work#how-to-establish-a-web-socket-connection)。
-- 通过WebSocket进行数据传输。成功打开握手后，客户端和服务器可以通过持久 WebSocket 连接交换消息（帧）。WebSocket 消息可能包含字符串（纯文本）或二进制数据。[详细了解通过 WebSocket 传输数据](https:/ably.com/topic/how-do-websockets-work#how-to-transmit-data-over-web-sockets)。
-- 关闭 WebSocket 连接。一旦持久的 WebSocket 连接达到其目的，它就可以终止;客户端和服务器都可以通过发送关闭消息来启动关闭握手。[阅读有关关闭 WebSocket 连接的详细信息](https:/ably.com/topic/how-do-websockets-work#how-to-close-web-socket-connections)。
+- 打开 WebSocket 连接。建立 WebSocket 连接的过程称为开始握手，由客户端和服务器之间的 HTTP 请求/响应交换组成。有关详细信息，请参阅[如何建立 WebSocket 连接](https://ably.com/topic/how-do-websockets-work#how-to-establish-a-web-socket-connection)。
+- 通过WebSocket进行数据传输。成功打开握手后，客户端和服务器可以通过持久 WebSocket 连接交换消息（帧）。WebSocket 消息可能包含字符串（纯文本）或二进制数据。[详细了解通过 WebSocket 传输数据](https://ably.com/topic/how-do-websockets-work#how-to-transmit-data-over-web-sockets)。
+- 关闭 WebSocket 连接。一旦持久的 WebSocket 连接达到其目的，它就可以终止;客户端和服务器都可以通过发送关闭消息来启动关闭握手。[阅读有关关闭 WebSocket 连接的详细信息](https://ably.com/topic/how-do-websockets-work#how-to-close-web-socket-connections)。
 
 ![img](../../../static/images/websockets-02.webp)
 
@@ -79,12 +79,12 @@ WebSocket 提供低延迟通信功能，适用于各种类型的实时用例。�
 
 #### 在 WebSocket 协议级别建立连接
 
-根据 [WebSocket 协议规范](https:/www.rfc-editor.org/rfc/rfc6455)，建立 WebSocket 连接的过程称为打开握手，由客户端和服务器之间的 HTTP/1.1 请求/响应交换组成。客户端始终发起握手;它向服务器发送请求 `GET` ，指示它想要将连接从 HTTP 协议升级到 WebSocket。
+根据 [WebSocket 协议规范](https://www.rfc-editor.org/rfc/rfc6455)，建立 WebSocket 连接的过程称为打开握手，由客户端和服务器之间的 HTTP/1.1 请求/响应交换组成。客户端始终发起握手;它向服务器发送请求 `GET` ，指示它想要将连接从 HTTP 协议升级到 WebSocket。
 
 下面是客户端发出的启动开场握手 `GET` 的请求的基本示例：
 
 ```HTML
-GET wss:/example.com:8181/ HTTP/1.1
+GET wss://example.com:8181/ HTTP/1.1
 Host: localhost: 8181
 Connection: Upgrade
 Upgrade: websocket
@@ -139,14 +139,14 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 浏览器（以及大多数 WebSocket 库）中的 WebSocket API 会自动为您处理开场握手。您所要做的就是实例化 `WebSocket` 对象，该对象将自动尝试打开与服务器的连接：
 
 ```Javascript
-const socket = new WebSocket('wss:/example.org');
+const socket = new WebSocket('wss://example.org');
 ```
 
 建立 WebSocket 连接时会引发 `open` 事件。它表示客户端和服务器之间的打开握手成功，现在可以使用 WebSocket 连接来发送和接收数据。下面是一个示例（请注意， `open` 该事件是通过 `onopen` 属性处理的）：
 
 ```Javascript
 / Create WebSocket connection
-const socket = new WebSocket('wss:/example.org');
+const socket = new WebSocket('wss://example.org');
 
 
 / Connection opened
@@ -343,11 +343,11 @@ WebSocket 的优点是它们支持客户端和服务器之间的实时通信，�
 
 WebSocket 是实时或近乎实时发送和使用数据的关键（或至少是可取的）用例的绝佳选择。然而，很少有放之四海而皆准的协议——不同的协议比其他协议更好地服务于不同的目的。WebSockets 的实时替代方案包括：
 
-- [Server-Sent Events](https:/ably.com/topic/server-sent-events)
-- [HTTP 长轮询](https:/ably.com/topic/long-polling)
-- [MQTT ](https:/ably.com/topic/mqtt)
-- [WebRTC](https:/ably.com/blog/what-is-webrtc)
-- [WebTransport](https:/ably.com/blog/can-webtransport-replace-websockets)
+- [Server-Sent Events](https://ably.com/topic/server-sent-events)
+- [HTTP 长轮询](https://ably.com/topic/long-polling)
+- [MQTT ](https://ably.com/topic/mqtt)
+- [WebRTC](https://ably.com/blog/what-is-webrtc)
+- [WebTransport](https://ably.com/blog/can-webtransport-replace-websockets)
 
 ## 如何开始使用 WebSockets 构建实时体验
 
@@ -380,7 +380,7 @@ Ably 的主要特性和功能：
 
 ### WebSockets 是否可扩展？
 
-是的，WebSocket 是可扩展的。Slack、Netflix 和 Uber 等公司使用 WebSockets 为其应用程序中的实时功能提供支持，为数百万最终用户提供支持。例如，[Slack 使用 WebSockets 在聊天用户之间进行即时消息传递](https:/slack.engineering/migrating-millions-of-concurrent-websockets-to-envoy/)。
+是的，WebSocket 是可扩展的。Slack、Netflix 和 Uber 等公司使用 WebSockets 为其应用程序中的实时功能提供支持，为数百万最终用户提供支持。例如，[Slack 使用 WebSockets 在聊天用户之间进行即时消息传递](https://slack.engineering/migrating-millions-of-concurrent-websockets-to-envoy/)。
 
 
 然而，扩展 WebSocket 并非易事，涉及大量工程决策和技术权衡。其中：
@@ -395,7 +395,7 @@ Ably 的主要特性和功能：
 
 ### WebSocket 安全吗？
 
-如果 WebSocket 采用适当的安全措施来实施，它们是安全的。安全 WebSocket 连接使用“wss:/”URI。这表示连接是使用 SSL/TLS 加密的，这确保了 WebSocket 客户端和 WebSocket 服务器之间传输的数据是加密的，不会被第三方拦截或篡改。
+如果 WebSocket 采用适当的安全措施来实施，它们是安全的。安全 WebSocket 连接使用“wss://”URI。这表示连接是使用 SSL/TLS 加密的，这确保了 WebSocket 客户端和 WebSocket 服务器之间传输的数据是加密的，不会被第三方拦截或篡改。
 
 此外，WebSocket 连接可能受到与 HTTP 连接相同的安全策略的约束，例如跨域资源共享 （CORS） 限制，可防止跨不同域对资源进行未经授权的访问。
 

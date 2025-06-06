@@ -119,7 +119,7 @@ public AuthorizationServerSettings authorizationServerSettings() {
 现在我们已经配置了一切，让我们尝试运行应用程序并获取令牌：
 
 ```bash
-curl -X POST 'http:/localhost:9090/oauth2/token?grant_type=client_credentials' \
+curl -X POST 'http://localhost:9090/oauth2/token?grant_type=client_credentials' \
   --header 'Authorization: Basic b2F1dGgtY2xpZW50Om9hdXRoLXNlY3JldA=='
 ```
 
@@ -200,7 +200,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http:/localhost:9090
+          issuer-uri: http://localhost:9090
 ```
 
 我们在这里定义 oauth2 配置，注意将 issuer-url 的端口更新为正确的端口。
@@ -279,7 +279,7 @@ spring:
             client-name: spring-client
         provider:
           articles-client:
-            token-uri: http:/localhost:9090/oauth2/token
+            token-uri: http://localhost:9090/oauth2/token
 ```
 
 - 客户端 API（向资源服务器发出请求）
@@ -295,7 +295,7 @@ public class ArticlesController {
     public String[] test() {
         return this.webClient
           .get()
-          .uri("http:/127.0.0.1:9091/articles")
+          .uri("http://127.0.0.1:9091/articles")
           .attributes(clientRegistrationId("articles-client"))
           .retrieve()
           .bodyToMono(String[].class)
@@ -316,6 +316,6 @@ public class ArticlesController {
 
 在本文中，我们学习了如何使用 Spring Boot 创建授权服务器以及如何在资源服务器和客户端服务器中配置它。
 
-您可以在此 GitHub 存储库中找到此 [示例的代码](https:/github.com/kumarprabhashanand/spring-authorization-server)。
+您可以在此 GitHub 存储库中找到此 [示例的代码](https://github.com/kumarprabhashanand/spring-authorization-server)。
 
-原文链接：[https:/blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2](https:/blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2)
+原文链接：[https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2](https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2)

@@ -110,7 +110,7 @@ basedir /Users/chensoul/workspace/IdeaProjects/cocktail/cocktail-cloud/cocktail/
 
 GitHub 上类似的问题：
 
-- https:/github.com/apache/maven-compiler-plugin/pull/191
+- https://github.com/apache/maven-compiler-plugin/pull/191
 
   
 
@@ -193,7 +193,7 @@ mvn deploy -DskipTests=true
 spring.sql.init.platform=mysql
 db.num=1
 
-db.url.0=jdbc:mysql:/${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/nacos_2.2.4?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+db.url.0=jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/nacos_2.2.4?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
 db.user=${MYSQL_USER:root}
 db.password=${MYSQL_PASS:123456}
 ```

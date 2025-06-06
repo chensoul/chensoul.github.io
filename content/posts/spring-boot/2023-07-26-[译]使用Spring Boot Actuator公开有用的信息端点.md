@@ -15,20 +15,20 @@ Spring Boot Actuator 帮助我们监控和管理应用程序。它公开了提�
 
 ## 示例代码
 
-本文附有 GitHub 上的工作[代码示例](https:/github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-app-info)。
+本文附有 GitHub 上的工作[代码示例](https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-app-info)。
 
 ## 启用 Spring Boot 执行器
 
-Spring Boot Actuator 是 Spring Boot 的一个子项目。在本节中，我们将快速了解如何引导示例项目并启用 `/info` 端点。如果您想了解更多有关 Spring Boot Actuator 的信息，已经有一个很棒的[教程](https:/reflectoring.io/exploring-a-spring-boot-app-with-actuator-and-jq/)了。
+Spring Boot Actuator 是 Spring Boot 的一个子项目。在本节中，我们将快速了解如何引导示例项目并启用 `/info` 端点。如果您想了解更多有关 Spring Boot Actuator 的信息，已经有一个很棒的[教程](https://reflectoring.io/exploring-a-spring-boot-app-with-actuator-and-jq/)了。
 
-让我们使用 [Spring Initializr](https:/start.spring.io/) 快速创建一个 Spring Boot 项目。我们将需要以下依赖项：
+让我们使用 [Spring Initializr](https://start.spring.io/) 快速创建一个 Spring Boot 项目。我们将需要以下依赖项：
 
 | 依赖性               | 目的                                 |
 | -------------------- | ------------------------------------ |
 | Spring Boot Actuator | 公开应用程序管理端点，例如 `info` 。 |
 | Spring Web           | 启用 Web 应用程序行为。              |
 
-如果有帮助，这里是 [Maven](https:/start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.4&packaging=jar&jvmVersion=11&groupId=io.reflectoring&artifactId=demo&name=Demo%20Application&description=Demo%20project%20for%20Spring%20Boot%20Application%20Info&packageName=io.reflectoring.demo&dependencies=web,actuator) 和 [Gradle](https:/start.spring.io/#!type=gradle-project&language=java&platformVersion=2.6.4&packaging=jar&jvmVersion=11&groupId=io.reflectoring&artifactId=demo&name=Demo%20Application&description=Demo%20project%20for%20Spring%20Boot%20Application%20Info&packageName=io.reflectoring.demo&dependencies=web,actuator) 中预填充项目的链接。
+如果有帮助，这里是 [Maven](https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.6.4&packaging=jar&jvmVersion=11&groupId=io.reflectoring&artifactId=demo&name=Demo%20Application&description=Demo%20project%20for%20Spring%20Boot%20Application%20Info&packageName=io.reflectoring.demo&dependencies=web,actuator) 和 [Gradle](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.6.4&packaging=jar&jvmVersion=11&groupId=io.reflectoring&artifactId=demo&name=Demo%20Application&description=Demo%20project%20for%20Spring%20Boot%20Application%20Info&packageName=io.reflectoring.demo&dependencies=web,actuator) 中预填充项目的链接。
 
 项目构建后，我们将通过 HTTP 公开内置的 `/info` 端点。默认情况下， `/info` Web 端点处于禁用状态。我们可以通过在 `application.properties` 配置中添加 `management.endpoints.web.exposure.include` 属性来简单地启用它：
 
@@ -36,15 +36,15 @@ Spring Boot Actuator 是 Spring Boot 的一个子项目。在本节中，我们�
 management.endpoints.web.exposure.include=health,info
 ```
 
-让我们运行 Spring Boot 应用程序并在浏览器中打开 URL `http:/localhost:8080/actuator/info` 。目前还看不到任何有用的东西，因为我们仍然需要进行一些配置更改。在下一节中，我们将了解如何在此响应中添加信息丰富的构建信息。
+让我们运行 Spring Boot 应用程序并在浏览器中打开 URL `http://localhost:8080/actuator/info` 。目前还看不到任何有用的东西，因为我们仍然需要进行一些配置更改。在下一节中，我们将了解如何在此响应中添加信息丰富的构建信息。
 
 > #### 保护端点
 >
-> 如果您公开公开端点，请确保适当[保护](https:/docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.security)它们。我们不应在不知情的情况下泄露任何敏感信息。
+> 如果您公开公开端点，请确保适当[保护](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.security)它们。我们不应在不知情的情况下泄露任何敏感信息。
 
 ## Spring Boot 应用程序信息
 
-Spring 从应用程序上下文中定义的各种 [InfoContributor](https:/docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/info/InfoContributor.html) bean 收集有用的应用程序信息。下面是默认 `InfoContributor` beans 的摘要：
+Spring 从应用程序上下文中定义的各种 [InfoContributor](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/info/InfoContributor.html) bean 收集有用的应用程序信息。下面是默认 `InfoContributor` beans 的摘要：
 
 | ID      | Bean Name                    | 用法                                               |
 | ------- | ---------------------------- | -------------------------------------------------- |
@@ -106,7 +106,7 @@ info.app.website=reflectoring.io
 
 ## 添加构建信息
 
-添加有用的[构建信息](https:/docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-info)有助于快速识别构建工件名称、版本、创建时间等。它可以方便地检查团队是否部署了应用程序的相关版本。 Spring Boot 允许使用 Maven 或 Gradle 构建插件轻松添加此内容。
+添加有用的[构建信息](https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-info)有助于快速识别构建工件名称、版本、创建时间等。它可以方便地检查团队是否部署了应用程序的相关版本。 Spring Boot 允许使用 Maven 或 Gradle 构建插件轻松添加此内容。
 
 ### 使用 Maven 插件
 
@@ -159,7 +159,7 @@ build.version=0.0.1-SNAPSHOT
 </execution>
 ```
 
-如果我们现在运行应用程序并在浏览器中打开 `http:/localhost:8080/actuator/info` 端点，我们将看到类似于以下内容的响应：
+如果我们现在运行应用程序并在浏览器中打开 `http://localhost:8080/actuator/info` 端点，我们将看到类似于以下内容的响应：
 
 ```json
 {
@@ -187,7 +187,7 @@ build.version=0.0.1-SNAPSHOT
 </configuration>
 ```
 
-请参阅 Spring Boot [官方文档](https:/docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#goals-build-info)了解更多信息。
+请参阅 Spring Boot [官方文档](https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#goals-build-info)了解更多信息。
 
 现在，是时候看看我们如何使用 Spring Boot Gradle 插件实现相同的输出了。
 
@@ -216,7 +216,7 @@ springBoot {
 }
 ```
 
-是时候使用 `./gradlew bootRun` （对于 macOS/Linux）或 `gradlew.bat bootRun` （对于 Windows）命令运行应用程序了。应用程序运行后，我们可以在浏览器中打开 `http:/localhost:8080/actuator/info` 端点并找到响应：
+是时候使用 `./gradlew bootRun` （对于 macOS/Linux）或 `gradlew.bat bootRun` （对于 Windows）命令运行应用程序了。应用程序运行后，我们可以在浏览器中打开 `http://localhost:8080/actuator/info` 端点并找到响应：
 
 ```json
 {
@@ -239,13 +239,13 @@ properties {
 }
 ```
 
-想了解更多关于该插件的信息，可以参考 Spring Boot [官方文档](https:/docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#integrating-with-actuator)。
+想了解更多关于该插件的信息，可以参考 Spring Boot [官方文档](https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#integrating-with-actuator)。
 
 ## 添加 Git 信息
 
-[Git 信息](https:/docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-git-info)可以方便地快速识别生产中是否存在相关代码或者分布式部署是否与预期同步。 Spring Boot 可以使用 Maven 和 Gradle 插件轻松地将 Git 属性包含在 Actuator 端点中。
+[Git 信息](https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-git-info)可以方便地快速识别生产中是否存在相关代码或者分布式部署是否与预期同步。 Spring Boot 可以使用 Maven 和 Gradle 插件轻松地将 Git 属性包含在 Actuator 端点中。
 
-使用这个插件我们可以生成一个 `git.properties` 文件。此文件的存在将自动配置 [GitProperties](https:/docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/info/GitProperties.html) bean，供 [GitInfoContributor](https:/docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/info/GitInfoContributor.html) bean 使用来整理相关信息。
+使用这个插件我们可以生成一个 `git.properties` 文件。此文件的存在将自动配置 [GitProperties](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/info/GitProperties.html) bean，供 [GitInfoContributor](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/info/GitInfoContributor.html) bean 使用来整理相关信息。
 
 **默认情况下，将公开以下信息：**
 
@@ -262,7 +262,7 @@ properties {
 
 ### 使用 Maven 插件
 
-[Maven Git Commit ID 插件](https:/github.com/git-commit-id/git-commit-id-maven-plugin)通过 `spring-boot-starter-parent` pom.xml 进行管理。要使用它，我们必须编辑 `pom.xml` 如下：
+[Maven Git Commit ID 插件](https://github.com/git-commit-id/git-commit-id-maven-plugin)通过 `spring-boot-starter-parent` pom.xml 进行管理。要使用它，我们必须编辑 `pom.xml` 如下：
 
 ```xml
 <plugin>
@@ -316,7 +316,7 @@ git.tags=
 git.total.commit.count=2
 ```
 
-这个插件带有很多[配置](https:/github.com/git-commit-id/git-commit-id-maven-plugin/blob/master/docs/using-the-plugin.md)选项。例如，要包含/排除特定属性，我们可以添加 `configuration` 部分，如下所示：
+这个插件带有很多[配置](https://github.com/git-commit-id/git-commit-id-maven-plugin/blob/master/docs/using-the-plugin.md)选项。例如，要包含/排除特定属性，我们可以添加 `configuration` 部分，如下所示：
 
 ```xml
 <configuration>
@@ -415,6 +415,6 @@ gitProperties {
 
 在本文中，我们学习了如何使用 Spring Actuator 来公开有关我们应用程序的相关信息。我们了解了如何将有关构建、环境、Git 和 Java 环境的信息添加到 Actuator `/info` 端点。我们还研究了如何通过 Maven/Gradle 构建插件配置和控制所有这些信息。
 
-您可以使用 GitHub 上的[代码](https:/github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-app-info)来尝试一个完整的应用程序来说明这些想法。
+您可以使用 GitHub 上的[代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-app-info)来尝试一个完整的应用程序来说明这些想法。
 
-原文链接：[https:/reflectoring.io/spring-boot-info-endpoint/](https:/reflectoring.io/spring-boot-info-endpoint/)
+原文链接：[https://reflectoring.io/spring-boot-info-endpoint/](https://reflectoring.io/spring-boot-info-endpoint/)

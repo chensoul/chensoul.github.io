@@ -9,13 +9,13 @@ tags: [ websocket]
 
 
 
-原文链接：[https:/www.pubnub.com/guides/websockets/](https:/www.pubnub.com/guides/websockets/)
+原文链接：[https://www.pubnub.com/guides/websockets/](https://www.pubnub.com/guides/websockets/)
 
 
 
 ## 什么是 WebSocket？
 
-[WebSocket 是一种通过单个TCP](https:/www.pubnub.com/guides/tcp-ip/)连接提供全双工通信通道的通信协议。它支持客户端和服务器之间的实时、事件驱动的连接。
+[WebSocket 是一种通过单个TCP](https://www.pubnub.com/guides/tcp-ip/)连接提供全双工通信通道的通信协议。它支持客户端和服务器之间的实时、事件驱动的连接。
 
 与遵循请求-响应模型的传统 HTTP 软件不同，WebSocket 允许双向（双向）通信。这意味着客户端和服务器可以随时向对方发送数据，而无需持续轮询。
 
@@ -37,18 +37,18 @@ WebSocket 的缺点包括：
 
 - 浏览器支持：虽然大多数现代浏览器支持 WebSocket，但一些旧浏览器不支持。这可能会限制应用程序的范围，并且需要针对旧版浏览器的额外后备机制。
 - 代理和防火墙限制：某些代理服务器和防火墙可能会阻止或干扰 WebSocket 连接。这可能会导致连接问题，尤其是在安全的公司或受限的网络环境中。
-- 可扩展性：Web Sockets 在客户端和服务器之间维护持久连接，这在处理许多并发连接时可能会导致服务器资源紧张。必须实施适当的[负载平衡](https:/www.pubnub.com/guides/load-balancing/)和资源管理技术以确保可扩展性。像 Socket.io 这样的开源资源不适合大规模运营或快速增长。
+- 可扩展性：Web Sockets 在客户端和服务器之间维护持久连接，这在处理许多并发连接时可能会导致服务器资源紧张。必须实施适当的[负载平衡](https://www.pubnub.com/guides/load-balancing/)和资源管理技术以确保可扩展性。像 Socket.io 这样的开源资源不适合大规模运营或快速增长。
 - 有状态性：与无状态的传统 HTTP 不同，WebSocket 是有状态的。这意味着服务器需要维护每个客户端的连接状态，从而导致内存使用量增加和潜在的可扩展性挑战。
-- 安全注意事项：通过 WebSocket 建立持久连接，需要采取适当的安全措施来防止潜在的漏洞，例如跨站点脚本 (XSS) 和[跨站点请求伪造](https:/owasp.org/www-community/attacks/csrf)(CSRF)。应实施使用[SSL/TLS](https:/www.pubnub.com/guides/ssl-tls/)加密的安全 WebSocket 连接 (wss:/)，以确保数据隐私和完整性。
+- 安全注意事项：通过 WebSocket 建立持久连接，需要采取适当的安全措施来防止潜在的漏洞，例如跨站点脚本 (XSS) 和[跨站点请求伪造](https://owasp.org/www-community/attacks/csrf)(CSRF)。应实施使用[SSL/TLS](https://www.pubnub.com/guides/ssl-tls/)加密的安全 WebSocket 连接 (wss://)，以确保数据隐私和完整性。
 - 如果通过 Web 套接字的连接丢失，则不包含负载平衡或重新连接机制。
-- 在可能不支持 Web Sockets 的环境中，仍然需要有后备选项，例如[HTTP 流或长轮询。](https:/www.pubnub.com/guides/what-is-http-streaming/)
-- [像Presence](https:/www.pubnub.com/docs/sdks/redux/api-reference/presence)这样的功能在 WebSocket 连接上不能很好地工作，因为断开连接很难检测到。
+- 在可能不支持 Web Sockets 的环境中，仍然需要有后备选项，例如[HTTP 流或长轮询。](https://www.pubnub.com/guides/what-is-http-streaming/)
+- [像Presence](https://www.pubnub.com/docs/sdks/redux/api-reference/presence)这样的功能在 WebSocket 连接上不能很好地工作，因为断开连接很难检测到。
 
 ## WebSockets、HTTP、Web 服务器、轮询
 
 ### HTTP 连接与 WebSockets
 
-要了解[WebSocket API](https:/www.pubnub.com/blog/websocket-api-an-introduction/)，了解其构建基础 — HTTP（超文本传输协议）及其请求/响应模型也很重要。 HTTP 是一种应用层协议，是所有基于 Web 的通信和数据传输的基础。
+要了解[WebSocket API](https://www.pubnub.com/blog/websocket-api-an-introduction/)，了解其构建基础 — HTTP（超文本传输协议）及其请求/响应模型也很重要。 HTTP 是一种应用层协议，是所有基于 Web 的通信和数据传输的基础。
 
 使用 HTTP 时，客户端（例如 Web 浏览器）向服务器发送请求，然后服务器发回消息（称为响应）。我们今天所知道的网络是建立在这种基本的客户端-服务器循环之上的，尽管对 HTTP 进行了许多添加和更新以使其更具交互性。当前有一些可行且受支持的 HTTP 版本（HTTP/1.1 和 HTTP/2）以及称为 HTTPS 的安全版本。
 
@@ -66,13 +66,13 @@ HTTP 轮询是接收定期数据更新的第一个解决方案。轮询是一种
 
 ### 长轮询与 Web 套接字
 
-改善延迟的下一个逻辑步骤是[HTTP 长轮询](https:/www.pubnub.com/blog/http-long-polling/)。当长轮询时，客户端轮询服务器，并且该连接保持打开状态，直到服务器有新数据。服务器发送带有相关信息的响应，然后客户端立即打开另一个请求，再次保留直到下一次更新。长轮询可以使连接保持打开状态最多 280 秒，然后自动发送另一个请求。此方法有效地模拟 HTTP 服务器推送。
+改善延迟的下一个逻辑步骤是[HTTP 长轮询](https://www.pubnub.com/blog/http-long-polling/)。当长轮询时，客户端轮询服务器，并且该连接保持打开状态，直到服务器有新数据。服务器发送带有相关信息的响应，然后客户端立即打开另一个请求，再次保留直到下一次更新。长轮询可以使连接保持打开状态最多 280 秒，然后自动发送另一个请求。此方法有效地模拟 HTTP 服务器推送。
 
-[长轮询在许多环境中提供快速通信，并且被广泛使用，通常与 WebSocket 连接或服务器端事件 (SSE)](https:/www.pubnub.com/guides/server-sent-events/)等真正的基于推送的方法相反。长轮询在服务器端看起来可能很密集，因为它需要连续的资源来保持连接打开，但它使用的资源比重复发送轮询请求要少得多。
+[长轮询在许多环境中提供快速通信，并且被广泛使用，通常与 WebSocket 连接或服务器端事件 (SSE)](https://www.pubnub.com/guides/server-sent-events/)等真正的基于推送的方法相反。长轮询在服务器端看起来可能很密集，因为它需要连续的资源来保持连接打开，但它使用的资源比重复发送轮询请求要少得多。
 
 ![img](../../../static/images/Long-Polling-Diagram.webp)
 
-[阅读更多内容：长轮询与 Websockets](https:/www.pubnub.com/blog/long-polling-vs-websockets/)
+[阅读更多内容：长轮询与 Websockets](https://www.pubnub.com/blog/long-polling-vs-websockets/)
 
 ## WebSocket 有何用途？
 
@@ -80,7 +80,7 @@ HTTP 轮询是接收定期数据更新的第一个解决方案。轮询是一种
 
 WebSocket 连接支持通过消息传输文本字符串和二进制数据。 WebSocket 消息包括帧、有效负载和数据部分。通过这种方式通过现有网络连接发送的非有效负载数据非常少，这有助于减少延迟和开销，特别是与 HTTP 请求和流模型相比。
 
-Google Chrome 于 2009 年成为第一个包含 WebSocket 标准支持的浏览器。RFC [6455](https:/datatracker.ietf.org/doc/html/rfc6455)（WebSocket 协议）于 2011 年正式在线发布。WebSocket[协议](https:/tools.ietf.org/html/rfc6455)和[WebSocket API](https:/html.spec.whatwg.org/multipage/web-sockets.html)由 W3C 和 IETF 标准化，跨浏览器的支持非常广泛。常见的。
+Google Chrome 于 2009 年成为第一个包含 WebSocket 标准支持的浏览器。RFC [6455](https://datatracker.ietf.org/doc/html/rfc6455)（WebSocket 协议）于 2011 年正式在线发布。WebSocket[协议](https://tools.ietf.org/html/rfc6455)和[WebSocket API](https://html.spec.whatwg.org/multipage/web-sockets.html)由 W3C 和 IETF 标准化，跨浏览器的支持非常广泛。常见的。
 
 ### WebSockets 如何工作（及其连接）
 
@@ -94,17 +94,17 @@ Google Chrome 于 2009 年成为第一个包含 WebSocket 标准支持的浏览�
 
 在实时聊天和消息传递应用程序中实现 WebSocket 时，多个库可以提供必要的工具和功能。这些库提供了广泛的功能并支持不同的编程语言，使开发人员可以更轻松地将 WebSocket 集成到他们的应用程序中。以下是您可以考虑的一些流行库：
 
-1. Socket.IO 是一个广泛使用的库，它提供浏览器和服务器之间基于事件的实时双向通信。它提供自动重新连接、后备选项以及对各种传输的支持等功能，使其成为构建可扩展且可靠的应用程序的绝佳选择。 Socket.IO 支持多种编程语言，包括[JavaScript](https:/www.pubnub.com/guides/javascript/)、Python 和 Java。
-2. [SignalR](https:/www.pubnub.com/guides/what-is-signalr/)是微软开发的实时通信库。它允许您通过提供用于创建 WebSocket 连接的简单 API 来构建实时 Web 应用程序。 SignalR 支持服务器端和客户端实现，并且可以与 .NET、JavaScript 和其他语言一起使用。它还提供自动连接管理、广播消息以及跨多个服务器的扩展。
-3. SockJS是一个JavaScript库，即使服务器不支持WebSockets，它也可以在浏览器中提供类似WebSocket的对象。它提供了一种使用替代传输协议（例如 HTTP 长轮询）的回退机制，允许您的应用程序在 Websocket 不可用的环境中工作。 SockJS 可以与各种后端和编程语言一起使用，包括[Node.js](https:/www.pubnub.com/blog/nodejs-websocket-programming-examples/)、 Java 和[Python](https:/www.pubnub.com/blog/socket-programming-in-python-client-server-p2p/)。
+1. Socket.IO 是一个广泛使用的库，它提供浏览器和服务器之间基于事件的实时双向通信。它提供自动重新连接、后备选项以及对各种传输的支持等功能，使其成为构建可扩展且可靠的应用程序的绝佳选择。 Socket.IO 支持多种编程语言，包括[JavaScript](https://www.pubnub.com/guides/javascript/)、Python 和 Java。
+2. [SignalR](https://www.pubnub.com/guides/what-is-signalr/)是微软开发的实时通信库。它允许您通过提供用于创建 WebSocket 连接的简单 API 来构建实时 Web 应用程序。 SignalR 支持服务器端和客户端实现，并且可以与 .NET、JavaScript 和其他语言一起使用。它还提供自动连接管理、广播消息以及跨多个服务器的扩展。
+3. SockJS是一个JavaScript库，即使服务器不支持WebSockets，它也可以在浏览器中提供类似WebSocket的对象。它提供了一种使用替代传输协议（例如 HTTP 长轮询）的回退机制，允许您的应用程序在 Websocket 不可用的环境中工作。 SockJS 可以与各种后端和编程语言一起使用，包括[Node.js](https://www.pubnub.com/blog/nodejs-websocket-programming-examples/)、 Java 和[Python](https://www.pubnub.com/blog/socket-programming-in-python-client-server-p2p/)。
 4. WS 是 Node.js 的一个简单且轻量级的 WebSocket 实现。它提供了一个简单的 API 用于创建 WebSocket 服务器和客户端，从而可以轻松地将 websocket 集成到 Node.js 应用程序中。 ws 提供每消息压缩、自动重新连接以及用于处理传入和传出消息的可自定义选项。
-5. Django Channels：[Django Channels](https:/channels.readthedocs.io/en/latest/)是一个扩展 Django Web 框架处理实时应用程序功能的库。它支持 websockets 和其他协议，如 HTTP 长轮询和服务器发送事件。 Django Channels 允许您使用熟悉的 Django 语法和工具构建实时聊天和消息传递应用程序。
+5. Django Channels：[Django Channels](https://channels.readthedocs.io/en/latest/)是一个扩展 Django Web 框架处理实时应用程序功能的库。它支持 websockets 和其他协议，如 HTTP 长轮询和服务器发送事件。 Django Channels 允许您使用熟悉的 Django 语法和工具构建实时聊天和消息传递应用程序。
 
 ## 考虑使用 WebSocket 进行实时通信的原因
 
 - Websockets 提供实时更新和开放的通信线路。
 - Websocket 符合 HTML5 标准，并提供与旧版 HTML 文档的向后兼容性。因此，所有现代网络浏览器（Google Chrome、Mozilla Firefox、Apple Safari 等）都支持它们。 
-- WebSockets 兼容[Android](https:/www.pubnub.com/docs/sdks/android)、iOS、Web 和桌面平台。
+- WebSockets 兼容[Android](https://www.pubnub.com/docs/sdks/android)、iOS、Web 和桌面平台。
 - 单个服务器可以同时打开多个 WebSocket 连接，并且可以与同一客户端建立多个连接，这为可扩展性打开了大门。
 - WebSocket 可以通过许多代理和防火墙进行流式传输。
 - 有许多开源资源和教程可用于将 WebSocket 合并到应用程序中，例如 Javascript 库 Socket.io。 
@@ -117,7 +117,7 @@ PubNub 采取与协议无关的立场，但在我们当前的操作中，我们�
 
 PubNub 使用长轮询来确保所有网络环境（而不仅仅是大多数）的可靠性、安全性和可扩展性。在许多现实世界的实时实现中，长轮询可以与 WebSocket 一样高效。我们开发了一种高效长轮询的方法——用 C 语言编写，并针对规模进行了多个内核优化。
 
-PubNub 是一个实时通信平台，为真实的虚拟体验提供基础，例如实时更新、应用内聊天、推送通知等。我们平台的构建块结构允许合并额外的功能，例如状态、操作仪表板或[地理定位](https:/www.pubnub.com/solutions/geolocation/)。 PubNub 还使其非常容易扩展，特别是与 Socket.io 或 SocksJS 等套接字框架相比。
+PubNub 是一个实时通信平台，为真实的虚拟体验提供基础，例如实时更新、应用内聊天、推送通知等。我们平台的构建块结构允许合并额外的功能，例如状态、操作仪表板或[地理定位](https://www.pubnub.com/solutions/geolocation/)。 PubNub 还使其非常容易扩展，特别是与 Socket.io 或 SocksJS 等套接字框架相比。
 
 ## 概括
 

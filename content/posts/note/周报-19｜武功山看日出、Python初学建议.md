@@ -11,9 +11,9 @@ tags: [review]
 
 ![weekly-review-19-00](../../../static/images/weekly-review-19-00.webp)
 
-本篇是对 `2023-05-08` 到 `2023-05-14` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-05-08` 到 `2023-05-14` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
-本周继续学习 python，发现一个质量非常高的 python 学习网站 [Real Python](https:/realpython.com/)，该网站有学习 python 的一些教程，是收费的，部分章节是可以免费观看的。
+本周继续学习 python，发现一个质量非常高的 python 学习网站 [Real Python](https://realpython.com/)，该网站有学习 python 的一些教程，是收费的，部分章节是可以免费观看的。
 
 另外，周五晚上老婆临时起意想去武功山看日出，于是立即规划行程并购买火车票。因为一年半之前，我去过一次，所以规划起来还是很轻松的。上一次去是国庆节碰到下雨，没有看到日出。幸运的是，这次是晴天，不仅看到了日落还看到了日出。这一次没有选择住帐篷，而是住在了云中雾客栈，没想到这个客栈离金顶需要 40 分钟左右的路程，而且有段路程是坑坑洼洼。
 
@@ -51,7 +51,7 @@ tags: [review]
 
 ![weekly-review-19-04](../../../static/images/weekly-review-19-04.webp)
 
-周末出去旅游，路过长沙，在长沙跑了两天，累计跑了 6 公里。这样，我的[跑步数据](https:/run.chensoul.cc/) 从 `2 年里我跑过 1 个省份 1 个城市` 变成了` 2 年里我跑过 2 个省份 2 个城市`。
+周末出去旅游，路过长沙，在长沙跑了两天，累计跑了 6 公里。这样，我的[跑步数据](https://run.chensoul.cc/) 从 `2 年里我跑过 1 个省份 1 个城市` 变成了` 2 年里我跑过 2 个省份 2 个城市`。
 
 ![.](../../../static/images/weekly-review-19-03.webp)
 
@@ -74,15 +74,15 @@ tags: [review]
 
 推荐几篇文章：
 
-- [cPython - 给大学生的入门教程](http:/cpython.org/)
+- [cPython - 给大学生的入门教程](http://cpython.org/)
 
-- [如何学 Python？](https:/www.kawabangga.com/how-to-learn-python)
+- [如何学 Python？](https://www.kawabangga.com/how-to-learn-python)
 
 **2、学习 python 编程的 11 个建议**
 
 ![weekly-review-19-06](../../../static/images/weekly-review-19-06.webp)
 
-原文：[11 Beginner Tips for Learning Python Programming](https:/realpython.com/python-beginner-tips/)，总结出以下 11 条新手编程建议：
+原文：[11 Beginner Tips for Learning Python Programming](https://realpython.com/python-beginner-tips/)，总结出以下 11 条新手编程建议：
 
 - 提示 #1：每天编写代码
 - 提示#2：写出来
@@ -96,39 +96,39 @@ tags: [review]
 - 技巧#10：构建一些东西
 - 技巧#11：为开源做贡献
 
-  **3、Pyhton 播客：** [Ep 01. 新人到底需要什么](https:/pythonhunter.org/episodes/1)
+  **3、Pyhton 播客：** [Ep 01. 新人到底需要什么](https://pythonhunter.org/episodes/1)
 
 ![weekly-review-19-07](../../../static/images/weekly-review-19-07.webp)
 
 播客中提到的内容：
 
-- [Tech lead](https:/www.youtube.com/channel/UC4xKdmAXFh4ACyhpiQ_3qBw)
-- [starlette](https:/github.com/encode/starlette)
-- [Python’s super() considered super!](https:/rhettinger.wordpress.com/2011/05/26/super-considered-super/)
-- [huey](https:/github.com/coleifer/huey)
-- [apscheduler](https:/github.com/agronholm/apscheduler)
-- [Python 3: ten years later - PyCon 2018](https:/www.youtube.com/watch?v=Aj3KMefwOqI)
-- [David Beazley - Python Concurrency From the Ground Up: LIVE! - PyCon 2015](https:/www.youtube.com/watch?v=MCs5OvhV9S4)
-- [pyflame](https:/github.com/uber/pyflame)
-- [提问的智慧](https:/github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)
-- [XY 问题](http:/xyproblem.info/)
-- [Python Logger](https:/docs.python.org/3/library/logging.html)
-- [pdb](https:/docs.python.org/3/library/pdb.html)
-- [PyCharm](https:/www.jetbrains.com/pycharm/)
-- [Jupyter notebook](https:/jupyter.org/)
-- [Let me google that](http:/www.letmegooglethat.com/), [let me google that for you](https:/lmgtfy.com/)
-- [学习操作系统的知识，看哪本书好？](https:/www.zhihu.com/question/27871198)
-- [PHP 黑系列之二：PHP 为什么函数命名是如此不一致？](https:/zhuanlan.zhihu.com/p/27288770)
-- [Scheme](<https:/en.wikipedia.org/wiki/Scheme_(programming_language)>)
-- [The Little Schemer](https:/7chan.org/pr/src/The_Little_Schemer_4th_2.pdf)
-- [SICP](https:/en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs)
-- [CS 61A: Structure and Interpretation of Computer Programs](https:/cs61a.org/)
+- [Tech lead](https://www.youtube.com/channel/UC4xKdmAXFh4ACyhpiQ_3qBw)
+- [starlette](https://github.com/encode/starlette)
+- [Python’s super() considered super!](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/)
+- [huey](https://github.com/coleifer/huey)
+- [apscheduler](https://github.com/agronholm/apscheduler)
+- [Python 3: ten years later - PyCon 2018](https://www.youtube.com/watch?v=Aj3KMefwOqI)
+- [David Beazley - Python Concurrency From the Ground Up: LIVE! - PyCon 2015](https://www.youtube.com/watch?v=MCs5OvhV9S4)
+- [pyflame](https://github.com/uber/pyflame)
+- [提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)
+- [XY 问题](http://xyproblem.info/)
+- [Python Logger](https://docs.python.org/3/library/logging.html)
+- [pdb](https://docs.python.org/3/library/pdb.html)
+- [PyCharm](https://www.jetbrains.com/pycharm/)
+- [Jupyter notebook](https://jupyter.org/)
+- [Let me google that](http://www.letmegooglethat.com/), [let me google that for you](https://lmgtfy.com/)
+- [学习操作系统的知识，看哪本书好？](https://www.zhihu.com/question/27871198)
+- [PHP 黑系列之二：PHP 为什么函数命名是如此不一致？](https://zhuanlan.zhihu.com/p/27288770)
+- [Scheme](<https://en.wikipedia.org/wiki/Scheme_(programming_language)>)
+- [The Little Schemer](https://7chan.org/pr/src/The_Little_Schemer_4th_2.pdf)
+- [SICP](https://en.wikipedia.org/wiki/Structure_and_Interpretation_of_Computer_Programs)
+- [CS 61A: Structure and Interpretation of Computer Programs](https://cs61a.org/)
 
 #### Python Tips
 
 ![weekly-review-19-08](../../../static/images/weekly-review-19-08.webp)
 
-本周订阅了 [**Real Python**](https:/realpython.com/) 的 Python Tricks，收到两封邮件，分享如下：
+本周订阅了 [**Real Python**](https://realpython.com/) 的 Python Tricks，收到两封邮件，分享如下：
 
 **1、如何一行代码合并两个字典**
 
@@ -154,7 +154,7 @@ tags: [review]
 # in the order listed in the expression, overwriting
 # duplicates from left to right.
 #
-# See: https:/www.youtube.com/watch?v=Duexw08KaC8
+# See: https://www.youtube.com/watch?v=Duexw08KaC8
 ```
 
 > **说明：**
@@ -245,9 +245,9 @@ if reduce(lambda a, b: a or b, (i == 1 for i in (x, y, z))):
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道或者我的 [memos](https:/memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
-- **2023-05-10** 一些非常有趣的 python 爬虫例子,对新手比较友好,主要爬取淘宝、天猫、微信、微信读书、豆瓣、QQ 等网站。[查看链接](https:/github.com/shengqiangzhang/examples-of-web-crawlers) `#memos` `#python` `#tool`
-- **2023-05-08** 这个网站整理了开发者的学习成长路线图，有比较详细的技能树，推荐学习内容等等，偏向开发者。 [查看链接](https:/roadmap.sh/python) `#memos` `#tool`
+- **2023-05-10** 一些非常有趣的 python 爬虫例子,对新手比较友好,主要爬取淘宝、天猫、微信、微信读书、豆瓣、QQ 等网站。[查看链接](https://github.com/shengqiangzhang/examples-of-web-crawlers) `#memos` `#python` `#tool`
+- **2023-05-08** 这个网站整理了开发者的学习成长路线图，有比较详细的技能树，推荐学习内容等等，偏向开发者。 [查看链接](https://roadmap.sh/python) `#memos` `#tool`
 
 以上。

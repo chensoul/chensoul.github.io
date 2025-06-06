@@ -8,7 +8,7 @@ tags: ["architecture"]
 
 ---
 
-这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https:/github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing a URL Shortening service like TinyURL》设计类似 TinyURL 的 URL 缩短服务。
+这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing a URL Shortening service like TinyURL》设计类似 TinyURL 的 URL 缩短服务。
 
 ---
 
@@ -34,13 +34,13 @@ For example, if we shorten this page through TinyURL:
 
 > 例如，如果我们通过 TinyURL 缩短这个页面：
 
-https:/www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904/
+https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904/
 
 We would get: 
 
 > 我们会得到：
 
-http:/tinyurl.com/jlg8zpc
+http://tinyurl.com/jlg8zpc
 
 The shortened URL is nearly one-third the size of the actual URL.
 
@@ -303,9 +303,9 @@ The problem we are solving here is, how to generate a short and unique key for a
 
 > 我们这里要解决的问题是，如何为给定的 URL 生成一个简短且唯一的密钥。
 
-In the TinyURL example in Section 1, the shortened URL is “http:/tinyurl.com/jlg8zpc”. The last six characters of this URL is the short key we want to generate. We’ll explore two solutions here:
+In the TinyURL example in Section 1, the shortened URL is “http://tinyurl.com/jlg8zpc”. The last six characters of this URL is the short key we want to generate. We’ll explore two solutions here:
 
-> 在第 1 节的 TinyURL 示例中，缩短的 URL 是“http:/tinyurl.com/jlg8zpc”。该URL的最后六个字符是我们要生成的短密钥。我们将在这里探索两种解决方案：
+> 在第 1 节的 TinyURL 示例中，缩短的 URL 是“http://tinyurl.com/jlg8zpc”。该URL的最后六个字符是我们要生成的短密钥。我们将在这里探索两种解决方案：
 
 **a. Encoding actual URL**
 
@@ -335,9 +335,9 @@ If we use the MD5 algorithm as our hash function, it’ll produce a 128-bit hash
 
    > 如果多个用户输入相同的 URL，他们可以获得相同的缩短的 URL，这是不可接受的。
 
-2. What if parts of the URL are URL-encoded? e.g., http:/www.educative.io/distributed.php?id=design, and http:/www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
+2. What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
 
-   > 如果 URL 的一部分是 URL 编码的怎么办？例如，http:/www.eduative.io/distributed.php?id=design 和 http:/www.educative.io/distributed.php%3Fid%3Ddesign 除了 URL 编码之外，完全相同。
+   > 如果 URL 的一部分是 URL 编码的怎么办？例如，http://www.eduative.io/distributed.php?id=design 和 http://www.educative.io/distributed.php%3Fid%3Ddesign 除了 URL 编码之外，完全相同。
 
 **Workaround for the issues:** We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.
 
@@ -556,5 +556,5 @@ We can store permission level (public/private) with each URL in the database. We
 
 参考文章
 
-- [Designing a URL Shortening service like TinyURL](https:/www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b)
-- [Design a URL Shortening Service / TinyURL](https:/www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl)
+- [Designing a URL Shortening service like TinyURL](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b)
+- [Design a URL Shortening Service / TinyURL](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl)

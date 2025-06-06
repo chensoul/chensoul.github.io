@@ -9,12 +9,12 @@ tags: [ thingsboard]
 
 ## docker-compose 运行
 
-参考：[https:/thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/](https:/thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/)
+参考：[https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/](https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/)
 
 1. 下载源代码
 
    ```bash
-   git clone -b release-1.3.0 https:/github.com/thingsboard/tbmq.git
+   git clone -b release-1.3.0 https://github.com/thingsboard/tbmq.git
    cd tbmq/docker
    ```
 
@@ -31,7 +31,7 @@ tags: [ thingsboard]
    ./scripts/docker-start-services.sh
    ```
 
-   浏览器访问：[http:/localhost:8083](http:/localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin
+   浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin
 
    
 
@@ -50,7 +50,7 @@ tags: [ thingsboard]
          - "8084"
    ```
    
-   然后，通过浏览器访问 浏览器访问：**http:/localhost:8081**
+   然后，通过浏览器访问 浏览器访问：**http://localhost:8081**
 
 ## 源码编译并运行
 
@@ -59,7 +59,7 @@ tags: [ thingsboard]
 2. 下载源代码
 
    ```bash
-   git clone -b release-1.3.0 https:/github.com/thingsboard/tbmq.git
+   git clone -b release-1.3.0 https://github.com/thingsboard/tbmq.git
    cd tbmq
    ```
 
@@ -86,7 +86,7 @@ tags: [ thingsboard]
          POSTGRES_DB: thingsboard_mqtt_broker
          POSTGRES_PASSWORD: postgres
        volumes:
-         - postgres-data:/var/lib/postgresql/data
+         - postgres-data://var/lib/postgresql/data
    
    
    volumes:
@@ -106,7 +106,7 @@ tags: [ thingsboard]
        ports:
          - '6379:6379'
        volumes:
-         - redis-data:/bitnami/redis/data
+         - redis-data://bitnami/redis/data
        command: redis-server --requirepass 123456
        healthcheck:
          test: [ "CMD", "redis-cli","-a","123456","--raw", "incr","ping" ]
@@ -139,8 +139,8 @@ tags: [ thingsboard]
    KAFKA_CFG_NODE_ID=0
    KAFKA_CFG_PROCESS_ROLES=controller,broker
    KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
-   KAFKA_CFG_LISTENERS=PLAINTEXT:/:9092,CONTROLLER:/:9093
-   KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT:/:9092
+   KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+   KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
    KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
    KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
    KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
@@ -163,4 +163,4 @@ tags: [ thingsboard]
 
    先运行 `ThingsboardMqttBrokerInstallApplication` 类执行安装程序。然后，运行 `ThingsboardMqttBrokerApplication` 类，启动应用。
 
-   启动成功之后，浏览器访问：[http:/localhost:8083](http:/localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin
+   启动成功之后，浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin

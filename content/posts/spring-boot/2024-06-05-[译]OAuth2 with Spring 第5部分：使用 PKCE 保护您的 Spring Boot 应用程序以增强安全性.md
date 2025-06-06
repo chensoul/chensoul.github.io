@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ oauth2,java]
 ---
 
-原文地址：<https:/mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769>
+原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769>
 
 
 > 免责声明：本文技术性很强，需要清楚了解本系列前几篇文章，特别是第 1 部分和第 3 部分。
@@ -68,7 +68,7 @@ public class SecurityConfig {
 
     / This first SecurityFilterChain Bean is only specific to authorization server specific configurations
     / More on this can be found in this stackoverflow question answers:
-    / https:/stackoverflow.com/questions/69126874/why-two-formlogin-configured-in-spring-authorization-server-sample-code
+    / https://stackoverflow.com/questions/69126874/why-two-formlogin-configured-in-spring-authorization-server-sample-code
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -117,7 +117,7 @@ public class SecurityConfig {
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope("write")
-                .redirectUri("http:/127.0.0.1:8080/login/oauth2/code/oidc-client")
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/oidc-client")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -217,7 +217,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http:/localhost:9001
+          issuer-uri: http://localhost:9001
 ```
 
 三.****SecurityConfig****
@@ -272,7 +272,7 @@ spring:
             # The following redirect URL is the redirect URL definition of our client Server application.
             # It is generally the current application host address. The authorization server's redirect URL
             # definition means that this URL will be triggered when auth server redirects data to here.
-            redirect-uri: http:/127.0.0.1:8080/login/oauth2/code/oidc-client
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/oidc-client
 
             # Scopes that will be displayed for requesting in the consent page.
             # Authorization server must have equal or more scopes than these in number
@@ -289,7 +289,7 @@ spring:
         # for any unknown provider with their issuer URI
         provider:
           spring:
-            issuer-uri: http:/localhost:9001
+            issuer-uri: http://localhost:9001
 ```
 
 三.**SecurityConfig**
@@ -381,7 +381,7 @@ v.**调用资源服务器**
 我们需要定义一个
 
 ```java
-@HttpExchange("http:/localhost:8090")
+@HttpExchange("http://localhost:8090")
 public interface HelloClient {
 
     @GetExchange("/")
@@ -441,21 +441,21 @@ logging:
       - warn
 ```
 
-现在，我们在浏览器中输入**(1)** [http:/localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是](http:/localhost:8080/hello)http:/localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。
+现在，我们在浏览器中输入**(1)** [http://localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是](http://localhost:8080/hello)http://localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。
 
 ![img](../../../static/images/oauth2-with-spring-part-5-03.webp)
 
 网络响应
 
-如果我们注意到上述网络响应，我们可以看到，当我们请求 /hello 端点时，它首先将我们重定向到**(2)** http:/localhost:8080/oauth2/authorization/oidc-client端点。
+如果我们注意到上述网络响应，我们可以看到，当我们请求 /hello 端点时，它首先将我们重定向到**(2)** http://localhost:8080/oauth2/authorization/oidc-client端点。
 
 然后，从客户端授权端点，我们再次被重定向到授权服务器的以下端点。**（3）**
 
-[http:/localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&redirect_uri=http:/127.0.0.1:8080/login/oauth2/code/oidc-client&nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&code_challenge_method=S256](http:/localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&code_challenge_method=S256)
+[http://localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&redirect_uri=http://127.0.0.1:8080/login/oauth2/code/oidc-client&nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&code_challenge_method=S256](http://localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&code_challenge_method=S256)
 
 当授权服务器发现该请求尚未获得授权时，它会再次重定向到授权服务器的登录端点。（4）
 
-[http:/localhost:9001/登录](http:/localhost:9001/login)
+[http://localhost:9001/登录](http://localhost:9001/login)
 
 现在，让我们提供正确的用户凭证并观察。
 
@@ -467,7 +467,7 @@ logging:
 
 接下来，如果身份验证成功，我们将进入授权同意屏幕。网址如下。**（5）**
 
-[http:/localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&redirect_uri=http:/127.0.0.1:8080/login/oauth2/code/oidc-client&nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&code_challenge_method=S256&continue](http:/localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&code_challenge_method=S256&continue=)
+[http://localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&redirect_uri=http://127.0.0.1:8080/login/oauth2/code/oidc-client&nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&code_challenge_method=S256&continue](http://localhost:9001/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&code_challenge_method=S256&continue=)
 
 > 注意，如果我们授权应用程序但未获得所有同意，则可能会将我们重定向到相同的同意屏幕。因此，在提供一些同意后，我们可以点击取消，或提供所有同意。
 
@@ -489,18 +489,18 @@ logging:
 
 ![img](../../../static/images/oauth2-with-spring-part-5-07.webp)
 
-以下是草案的链接：[draft-ietf-oauth-browser-based-apps-10](https:/datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
+以下是草案的链接：[draft-ietf-oauth-browser-based-apps-10](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
 
-如果我们仍然想获取令牌，在我的客户端应用程序中，我提供了一个端点[127.0.0.1:8080/private-data](http:/127.0.0.1:8080/private-data)，我们可以通过它获取令牌。
+如果我们仍然想获取令牌，在我的客户端应用程序中，我提供了一个端点[127.0.0.1:8080/private-data](http://127.0.0.1:8080/private-data)，我们可以通过它获取令牌。
 
 ![img](../../../static/images/oauth2-with-spring-part-5-08.webp)
 
-完整的源代码可以在[这里](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到
+完整的源代码可以在[这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到
 
 
 
 ## 参考：
 
-1. [draft-ietf-oauth-基于浏览器的应用程序-10](https:/datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
-2. [基于浏览器的应用程序 (SPA) 的实施指南 · 问题 #297 · spring-projects/spring-authorization-server (github.com)](https:/github.com/spring-projects/spring-authorization-server/issues/297)
-3. [Spring Boot 3 教程：使用 PKCE 实现安全 Oauth2 — Spring 授权服务器 — 和 OAuth2 客户端 — YouTube](https:/www.youtube.com/watch?v=mKvi9RWGn3M)
+1. [draft-ietf-oauth-基于浏览器的应用程序-10](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
+2. [基于浏览器的应用程序 (SPA) 的实施指南 · 问题 #297 · spring-projects/spring-authorization-server (github.com)](https://github.com/spring-projects/spring-authorization-server/issues/297)
+3. [Spring Boot 3 教程：使用 PKCE 实现安全 Oauth2 — Spring 授权服务器 — 和 OAuth2 客户端 — YouTube](https://www.youtube.com/watch?v=mKvi9RWGn3M)

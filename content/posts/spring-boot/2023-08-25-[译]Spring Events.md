@@ -215,7 +215,7 @@ Spring 表达式语言 (SpEL) 是一种功能强大的表达式语言，在另�
 
 ## 7. 交易绑定事件
 
-本节介绍如何使用 `@TransactionalEventListener` 注释。要了解有关事务管理的更多信息，请查看 [Transactions With Spring and JPA](https:/www.baeldung.com/transaction-configuration-with-jpa-and-spring)。
+本节介绍如何使用 `@TransactionalEventListener` 注释。要了解有关事务管理的更多信息，请查看 [Transactions With Spring and JPA](https://www.baeldung.com/transaction-configuration-with-jpa-and-spring)。
 
 从 Spring 4.2 开始，框架提供了一个新的 `@TransactionalEventListener` 注解，它是`@EventListener` 的扩展，允许将事件的监听器绑定到事务的某个阶段。
 
@@ -247,6 +247,6 @@ public void handleCustom(CustomSpringEvent event) {
 
 然后我们了解了 Spring 4.2 中引入的改进，例如注释驱动的侦听器、更好的泛型支持以及绑定到事务阶段的事件。
 
-与往常一样，本文中提供的代码可以在 [GitHub](https:/github.com/eugenp/tutorials/tree/master/spring-core-2) 上获取。这是一个基于 Maven 的项目，因此应该很容易导入并按原样运行。
+与往常一样，本文中提供的代码可以在 [GitHub](https://github.com/eugenp/tutorials/tree/master/spring-core-2) 上获取。这是一个基于 Maven 的项目，因此应该很容易导入并按原样运行。
 
-原文链接：[https:/www.baeldung.com/spring-events](https:/www.baeldung.com/spring-events)
+原文链接：[https://www.baeldung.com/spring-events](https://www.baeldung.com/spring-events)

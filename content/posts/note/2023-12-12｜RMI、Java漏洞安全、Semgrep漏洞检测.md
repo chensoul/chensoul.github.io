@@ -82,43 +82,43 @@ RMI（Remote Method Invocation）在过去的一段时间中曾发现一些安�
 
 ### 文章
 
-- [关于Java中RMI的个人拙见](https:/chenlvtang.top/2021/07/09/%E5%85%B3%E4%BA%8EJava%E4%B8%ADRMI%E7%9A%84%E4%B8%AA%E4%BA%BA%E6%8B%99%E8%A7%81/)
+- [关于Java中RMI的个人拙见](https://chenlvtang.top/2021/07/09/%E5%85%B3%E4%BA%8EJava%E4%B8%ADRMI%E7%9A%84%E4%B8%AA%E4%BA%BA%E6%8B%99%E8%A7%81/)
 
-- [Java JNDI其它注入点分析](http:/nekopunch.cn/?p=1470) 
-- [Java JNDI注入源码分析](http:/nekopunch.cn/?p=1417) 
-- [Java RMI反序列化&JNDI注入](http:/nekopunch.cn/?p=769) 
-- [JNDI 注入漏洞的前世今生](https:/evilpan.com/2021/12/13/jndi-injection/)
-- [攻击Java中的JNDI、RMI、LDAP\(一\)](https:/y4er.com/posts/attack-java-jndi-rmi-ldap-1) 
-- [攻击Java中的JNDI、RMI、LDAP\(二\)](https:/y4er.com/posts/attack-java-jndi-rmi-ldap-2) 
-- [攻击Java中的JNDI、RMI、LDAP\(三\)](https:/y4er.com/posts/attack-java-jndi-rmi-ldap-3) 
-- [攻击Java Web应用-[Java Web安全]](https:/javasec.org/)
+- [Java JNDI其它注入点分析](http://nekopunch.cn/?p=1470) 
+- [Java JNDI注入源码分析](http://nekopunch.cn/?p=1417) 
+- [Java RMI反序列化&JNDI注入](http://nekopunch.cn/?p=769) 
+- [JNDI 注入漏洞的前世今生](https://evilpan.com/2021/12/13/jndi-injection/)
+- [攻击Java中的JNDI、RMI、LDAP\(一\)](https://y4er.com/posts/attack-java-jndi-rmi-ldap-1) 
+- [攻击Java中的JNDI、RMI、LDAP\(二\)](https://y4er.com/posts/attack-java-jndi-rmi-ldap-2) 
+- [攻击Java中的JNDI、RMI、LDAP\(三\)](https://y4er.com/posts/attack-java-jndi-rmi-ldap-3) 
+- [攻击Java Web应用-[Java Web安全]](https://javasec.org/)
 
 ### 视频
 
-- [B站最全的Java安全学习路线](https:/www.bilibili.com/video/BV1Sv4y1i7jf/)
-- [Java反序列化RMI专题-没有人比我更懂RMI](https:/www.bilibili.com/video/BV1L3411a7ax/)
+- [B站最全的Java安全学习路线](https://www.bilibili.com/video/BV1Sv4y1i7jf/)
+- [Java反序列化RMI专题-没有人比我更懂RMI](https://www.bilibili.com/video/BV1L3411a7ax/)
 
 ### 博客
 
-- https:/paper.seebug.org/
+- https://paper.seebug.org/
 
-- https:/su18.org/
-- https:/www.03sec.com/
-- https:/y4er.com/
-- https:/evilpan.com/
-- http:/nekopunch.cn/
-- https:/4ra1n.github.io/
-- https:/chenlvtang.top/
-- https:/www.yulegeyu.com/
+- https://su18.org/
+- https://www.03sec.com/
+- https://y4er.com/
+- https://evilpan.com/
+- http://nekopunch.cn/
+- https://4ra1n.github.io/
+- https://chenlvtang.top/
+- https://www.yulegeyu.com/
 
 ### 社区
 
-- https:/xz.aliyun.com/
-- https:/web.sqlsec.com/
+- https://xz.aliyun.com/
+- https://web.sqlsec.com/
 
 ## Semgrep
 
-semgrep 是一款由Facebook开源的白盒代码扫描工具，项目地址：https:/github.com/returntocorp/semgrep，其规则编写简单，易用，扫描速度快。相较于CodeQL 而言，入门门槛较低，编写规则简单，且非常方便地接入到CI流程中。
+semgrep 是一款由Facebook开源的白盒代码扫描工具，项目地址：https://github.com/returntocorp/semgrep，其规则编写简单，易用，扫描速度快。相较于CodeQL 而言，入门门槛较低，编写规则简单，且非常方便地接入到CI流程中。
 
 ### 安装步骤
 
@@ -163,7 +163,7 @@ semgrep --pro --config "p/default"
 ### 使用
 
 ```bash
-git clone https:/github.com/WebGoat/WebGoat
+git clone https://github.com/WebGoat/WebGoat
 semgrep -c p/sql-injection WebGoat -o WebGoat.json --json
 ```
 
@@ -172,7 +172,7 @@ semgrep -c p/sql-injection WebGoat -o WebGoat.json --json
 - `-o`：输出扫描结果到文件
 - `--json`：指定输出 json 格式文件。可以输出json格式/xml/sarif 等格式
 
-- `--config`：配置扫描规则文件 官方也提供了一些规则文件，在 https:/semgrep.dev/r 里可以查看各种分类的规则集。
+- `--config`：配置扫描规则文件 官方也提供了一些规则文件，在 https://semgrep.dev/r 里可以查看各种分类的规则集。
 
 输出结果如下：
 
@@ -221,7 +221,7 @@ Successfully installed Semgrep Pro Engine (version 3e84760)!
 
 ### 注意隐私策略
 
-根据官方的隐私策略 [Semgrep Privacy Policy - Semgrep](https:/semgrep.dev/docs/metrics/) 的相关描述。
+根据官方的隐私策略 [Semgrep Privacy Policy - Semgrep](https://semgrep.dev/docs/metrics/) 的相关描述。
 
 ```bash
 $ semgrep --config=myrule.yaml  # → no metrics (loading rules from local file)
@@ -233,7 +233,7 @@ $ semgrep login && semgrep ci   # → metrics enabled (logged in to semgrep.dev)
 2. 当使用 Registry 中的规则时，官方会收集所需数据以帮助维护人员完善规则。
 3. 当使用云平台时，官方也会收集这些数据，并且将结果存放在云平台中。
 
-收集数据的具体内容可见：[Data collected as metrics](https:/semgrep.dev/docs/metrics/#data-collected-as-metrics)
+收集数据的具体内容可见：[Data collected as metrics](https://semgrep.dev/docs/metrics/#data-collected-as-metrics)
 
 用户也可以通过指定 `--metrics` 选项来控制数据的发送。
 
@@ -247,8 +247,8 @@ $ semgrep login && semgrep ci   # → metrics enabled (logged in to semgrep.dev)
 
 ### 参考
 
-- [轻量级代码审计工具: Semgrep](https:/xz.aliyun.com/t/12696)
-- [https:/github.com/chenlvtang/CodeReview-Java](https:/github.com/chenlvtang/CodeReview-Java) 使用 Semgrep 规则检测开源 CMS 系统的漏洞
+- [轻量级代码审计工具: Semgrep](https://xz.aliyun.com/t/12696)
+- [https://github.com/chenlvtang/CodeReview-Java](https://github.com/chenlvtang/CodeReview-Java) 使用 Semgrep 规则检测开源 CMS 系统的漏洞
 
 
 

@@ -7,17 +7,17 @@ categories: ["spring-boot"]
 tags: [ spring-security, jwt]
 ---
 
-[Spring Security](https:/docs.spring.io/spring-security/reference/index.html) 为 Java 应用程序提供了一套全面的安全功能，涵盖身份验证、授权、会话管理以及针对[CSRF（跨站点请求伪造）](https:/reflectoring.io/spring-csrf/)等常见安全威胁的防护。Spring Security 框架具有高度可定制性，允许开发人员根据其应用程序需求来管理安全配置。它提供了一个灵活的架构，支持各种身份验证机制，如基本身份验证、JWT 和 OAuth。
+[Spring Security](https://docs.spring.io/spring-security/reference/index.html) 为 Java 应用程序提供了一套全面的安全功能，涵盖身份验证、授权、会话管理以及针对[CSRF（跨站点请求伪造）](https://reflectoring.io/spring-csrf/)等常见安全威胁的防护。Spring Security 框架具有高度可定制性，允许开发人员根据其应用程序需求来管理安全配置。它提供了一个灵活的架构，支持各种身份验证机制，如基本身份验证、JWT 和 OAuth。
 
-Spring Security 提供了开箱即用的基本身份验证。要了解其工作原理，请参阅[本文](https:/reflectoring.io/spring-security/)。在本文中，我们将深入探讨 JWT 的工作原理以及如何使用 Spring Security 对其进行配置。
+Spring Security 提供了开箱即用的基本身份验证。要了解其工作原理，请参阅[本文](https://reflectoring.io/spring-security/)。在本文中，我们将深入探讨 JWT 的工作原理以及如何使用 Spring Security 对其进行配置。
 
 ## 示例代码
 
-本文附带了[GitHub ](https:/github.com/thombergs/code-examples/tree/master/spring-security-jwt/getting-started)可用的代码示例。
+本文附带了[GitHub ](https://github.com/thombergs/code-examples/tree/master/spring-security-jwt/getting-started)可用的代码示例。
 
 ## 什么是 JWT
 
-JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式。它是[RFC 7519](https:/www.rfc-editor.org/rfc/rfc7519)中定义的标准。JWT 令牌中包含的信息可以验证和信任，因为它是经过数字签名的。可以使用密钥（使用 HMAC 算法）或使用 RSA 或 ECDSA 的公钥/私钥对对 JWT 进行签名。
+JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式。它是[RFC 7519](https://www.rfc-editor.org/rfc/rfc7519)中定义的标准。JWT 令牌中包含的信息可以验证和信任，因为它是经过数字签名的。可以使用密钥（使用 HMAC 算法）或使用 RSA 或 ECDSA 的公钥/私钥对对 JWT 进行签名。
 
 对于本文，我们将使用密钥创建一个 JWT 令牌，并使用它来保护我们的 REST 端点。
 
@@ -48,7 +48,7 @@ JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式
 
 #### 已登记的索赔
 
-它们是一组预定义的三个字符声明，定义在[RFC7519](https:/datatracker.ietf.org/doc/html/rfc7519#section-4.1)中。一些常用的声明包括**iss (Issuer Claim)**、**sub (Subject Claim)**、**aud (Audience Claim)**、**exp (Expiration Time Claim)**、**iat (Issued At Time)**、**nbf (Not Before)**。让我们详细了解一下它们：
+它们是一组预定义的三个字符声明，定义在[RFC7519](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1)中。一些常用的声明包括**iss (Issuer Claim)**、**sub (Subject Claim)**、**aud (Audience Claim)**、**exp (Expiration Time Claim)**、**iat (Issued At Time)**、**nbf (Not Before)**。让我们详细了解一下它们：
 
 - **iss**：此声明用于指定 JWT 的颁发者。它用于标识颁发令牌的实体，例如身份验证服务器或身份提供者。
 - **sub**：此声明用于识别 JWT 的主题，即颁发令牌的用户或实体。
@@ -57,7 +57,7 @@ JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式
 - **iat**：签发 JWT 的时间。可用于确定 JWT 的年龄。以自 Unix 纪元以来的秒数表示。
 - **nbf**：标识在此之前 JWT 不能被接受处理的时间。
 
-[在此处](https:/www.iana.org/assignments/jwt/jwt.xhtml#claims)查看已注册声明的完整列表。在后续章节中，我们将介绍几个如何使用它们的示例。
+[在此处](https://www.iana.org/assignments/jwt/jwt.xhtml#claims)查看已注册声明的完整列表。在后续章节中，我们将介绍几个如何使用它们的示例。
 
 #### 公开声明
 
@@ -78,7 +78,7 @@ JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式
 - 公共声明应该具有清晰且描述性的名称。
 - 遵循一致的命名约定以保持一致性和可读性。
 - 避免包含 PII 信息以最大限度地降低数据泄露的风险。
-- 确保使用注册声明中指定[的推荐算法](https:/www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms)对 JWT 进行加密`alg`。声明`none`中的值`alg`表示 JWT 未签名且不推荐使用。
+- 确保使用注册声明中指定[的推荐算法](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms)对 JWT 进行加密`alg`。声明`none`中的值`alg`表示 JWT 未签名且不推荐使用。
 
 ### JWT 签名
 
@@ -109,7 +109,7 @@ JWT 用途广泛，可用于如下所述的各种场景：
 
 ## 使用 Java 创建 JWT 令牌
 
-[JJWT](https:/github.com/jwtk/jjwt)是在 Java 和 Android 中创建 JWT 令牌最常用的 Java 库。我们将首先将其依赖项添加到我们的应用程序中。
+[JJWT](https://github.com/jwtk/jjwt)是在 Java 和 Android 中创建 JWT 令牌最常用的 Java 库。我们将首先将其依赖项添加到我们的应用程序中。
 
 ### 配置 JWT 依赖项
 
@@ -178,7 +178,7 @@ lc3RBcHBsaWNhdGlvbiIsImlhdCI6MTcxMTY2MTA1MiwiZXhwIjoxNzExNjYxNjUyfQ.
 - `setIssuedAt`：此方法对应于已注册的声明`iat`。此方法以`java.util.Date`作为参数。这里我们将此值设置为当前时刻。
 - `setExpiration`：此方法对应于已注册的声明`exp`。此方法以`java.util.Date`作为参数。这里我们将此值设置为从当前时刻开始的 10 分钟。
 
-让我们尝试使用在线[JWT 解码器](https:/jwt.is/)解码该 JWT ：
+让我们尝试使用在线[JWT 解码器](https://jwt.is/)解码该 JWT ：
 
 ![设置](../../../static/images/spring-security-jwt-02.webp)
 
@@ -256,7 +256,7 @@ public static Jws<Claims> parseJwt(String jwtString) {
     }
 ```
 
-有关可用解析方法的完整列表，请参阅[文档](https:/javadoc.io/doc/io.jsonwebtoken/jjwt-api/0.11.2/io/jsonwebtoken/JwtParser.html)。
+有关可用解析方法的完整列表，请参阅[文档](https://javadoc.io/doc/io.jsonwebtoken/jjwt-api/0.11.2/io/jsonwebtoken/JwtParser.html)。
 
 ### Spring Security 中基本身份验证和 JWT 的比较
 
@@ -313,7 +313,7 @@ mvnw clean verify spring-boot:run (for Windows)
 
 ![设置](../../../static/images/spring-security-jwt-04.webp)
 
-这是因为，我们在pom.xml中添加的依赖项会自动为所有创建的端点引入基本身份验证。spring-boot-starter-security 由于我们没有在 Postman 中指定任何凭据，因此我们收到`UnAuthorized`错误。就本文而言，我们需要用基于 JWT 的身份验证替换基本身份验证。我们知道 Spring 通过触发处理每个请求的身份验证和授权的过滤器链来为我们的端点提供安全性。[`UsernamePasswordAuthenticationFilter`](https:/docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)负责验证每个请求的凭据。为了覆盖此过滤器，让我们创建一个`Filter`名为的新过滤器`JwtFilter`。此过滤器将扩展`OncePerRequestFilter`类，因为我们希望每个请求仅调用一次过滤器：
+这是因为，我们在pom.xml中添加的依赖项会自动为所有创建的端点引入基本身份验证。spring-boot-starter-security 由于我们没有在 Postman 中指定任何凭据，因此我们收到`UnAuthorized`错误。就本文而言，我们需要用基于 JWT 的身份验证替换基本身份验证。我们知道 Spring 通过触发处理每个请求的身份验证和授权的过滤器链来为我们的端点提供安全性。[`UsernamePasswordAuthenticationFilter`](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)负责验证每个请求的凭据。为了覆盖此过滤器，让我们创建一个`Filter`名为的新过滤器`JwtFilter`。此过滤器将扩展`OncePerRequestFilter`类，因为我们希望每个请求仅调用一次过滤器：
 
 ```java
 @Component
@@ -713,11 +713,11 @@ org.springframework.security.web.access.intercept.
 
 在本节中，我们将了解`io.jsonwebtoken`包中一些常见的异常：
 
-1. [ExpiredJwtException](https:/javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/ExpiredJwtException.html) - JWT token 包含过期时间，解析 token 时，如果已经超过过期时间，则会抛出 ExpiredJwtException。
-2. [UnsupportedJwtException](https:/javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/UnsupportedJwtException.html) - 当收到的 JWT 格式不符合预期时，会抛出此异常。此错误最常见的用例是当我们尝试使用方法`Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey()) .build().parseClaimsJwt`而不是`Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey()) .build().parseClaimsJws`
-3. [MalformedJwtException](https:/javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/MalformedJwtException.html) - 此异常表示 JWT 构造不正确。
-4. [IncorrectClaimException](https:/javadoc.io/doc/io.jsonwebtoken/jjwt-api/latest/io/jsonwebtoken/IncorrectClaimException.html) - 表示所需声明没有预期值。因此，JWT 无效。
-5. [MissingClaimException](https:/javadoc.io/doc/io.jsonwebtoken/jjwt-api/latest/io/jsonwebtoken/MissingClaimException.html) - 此异常表示 JWT 中缺少所需声明，因此无效。
+1. [ExpiredJwtException](https://javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/ExpiredJwtException.html) - JWT token 包含过期时间，解析 token 时，如果已经超过过期时间，则会抛出 ExpiredJwtException。
+2. [UnsupportedJwtException](https://javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/UnsupportedJwtException.html) - 当收到的 JWT 格式不符合预期时，会抛出此异常。此错误最常见的用例是当我们尝试使用方法`Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey()) .build().parseClaimsJwt`而不是`Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey()) .build().parseClaimsJws`
+3. [MalformedJwtException](https://javadoc.io/doc/io.jsonwebtoken/jjwt/0.9.1/io/jsonwebtoken/MalformedJwtException.html) - 此异常表示 JWT 构造不正确。
+4. [IncorrectClaimException](https://javadoc.io/doc/io.jsonwebtoken/jjwt-api/latest/io/jsonwebtoken/IncorrectClaimException.html) - 表示所需声明没有预期值。因此，JWT 无效。
+5. [MissingClaimException](https://javadoc.io/doc/io.jsonwebtoken/jjwt-api/latest/io/jsonwebtoken/MissingClaimException.html) - 此异常表示 JWT 中缺少所需声明，因此无效。
 
 通常，妥善处理与身份验证相关的异常被认为是一种很好的做法。在基本身份验证的情况下，Spring Security**默认将添加`BasicAuthenticationEntryPoint`到安全过滤器链中，该过滤器链将基本身份验证相关错误包装为 401 Unauthorized。** 同样，在我们的示例中，我们明确创建了`JwtAuthenticationEntryPoint`处理可能的身份验证错误，例如 Spring Security`BadCredentialsException`或 JJwt 的`MalformedJwtException`：
 
@@ -813,7 +813,7 @@ public class GlobalExceptionHandler {
                 version = "1.0.0",
                 license = @License(
                         name = "Apache 2.0",
-                        url = "http:/www.apache.org/licenses/LICENSE-2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0"
                 )),
         security = {
                 @SecurityRequirement(
@@ -833,7 +833,7 @@ public class OpenApiConfig {
 }
 ```
 
-这里，使用一个或多个 来描述安全性`@SecurityScheme`。`type`此处定义的`SecuritySchemeType.HTTP`适用于基本身份验证和 JWT。其他属性（如 和`scheme`）`bearerFormat`依赖于此`type`属性。定义安全方案后，我们可以通过 `security`在根级别或操作级别添加 部分将它们应用于整个应用程序或单个操作。在我们的示例中，所有 API 操作都将使用 bearer token 身份验证方案。有关配置多个安全方案以及在 API 级别应用不同方案的更多信息，请参阅其[文档](https:/swagger.io/docs/specification/authentication/)。
+这里，使用一个或多个 来描述安全性`@SecurityScheme`。`type`此处定义的`SecuritySchemeType.HTTP`适用于基本身份验证和 JWT。其他属性（如 和`scheme`）`bearerFormat`依赖于此`type`属性。定义安全方案后，我们可以通过 `security`在根级别或操作级别添加 部分将它们应用于整个应用程序或单个操作。在我们的示例中，所有 API 操作都将使用 bearer token 身份验证方案。有关配置多个安全方案以及在 API 级别应用不同方案的更多信息，请参阅其[文档](https://swagger.io/docs/specification/authentication/)。
 
 接下来，让我们向控制器类添加一些基本的 swagger 注释，以便为 API 操作添加描述。
 
@@ -857,7 +857,7 @@ springdoc:
     path: /swagger-ui
 ```
 
-通过此配置，Swagger UI 现在可在`http:/localhost:8083/swagger-ui/index.html`
+通过此配置，Swagger UI 现在可在`http://localhost:8083/swagger-ui/index.html`
 
 让我们尝试运行该应用程序并在上述 URL 处加载 Swagger 页面。当我们尝试访问端点时，我们会看到以下内容：
 
@@ -1017,4 +1017,4 @@ public class BookControllerTest {
 
 
 
-原文链接：[https:/reflectoring.io/spring-security-jwt/](https:/reflectoring.io/spring-security-jwt/)
+原文链接：[https://reflectoring.io/spring-security-jwt/](https://reflectoring.io/spring-security-jwt/)

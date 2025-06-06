@@ -16,12 +16,12 @@ tags: [ maven]
 ## 前提条件
 
 1. 在 Github 创建一个 Maven 项目
-2. 安装 gpg 并创建 gpg 秘钥和公钥，参考 [How to Publish Artifacts to Maven Central](https:/dzone.com/articles/how-to-publish-artifacts-to-maven-central)
-3. 创建 OSSRH 账号，参考 [Generate a Token on OSSRH Sonatype Nexus Repository Manager servers](https:/central.sonatype.org/publish/generate-token/#generate-a-token-on-ossrh-sonatype-nexus-repository-manager-servers)
+2. 安装 gpg 并创建 gpg 秘钥和公钥，参考 [How to Publish Artifacts to Maven Central](https://dzone.com/articles/how-to-publish-artifacts-to-maven-central)
+3. 创建 OSSRH 账号，参考 [Generate a Token on OSSRH Sonatype Nexus Repository Manager servers](https://central.sonatype.org/publish/generate-token/#generate-a-token-on-ossrh-sonatype-nexus-repository-manager-servers)
 
 ## 创建 Maven 项目
 
-首先在Github上面创建项目：[https:/github.com/chensoul/maven-hello-world](https:/github.com/chensoul/maven-hello-world)
+首先在Github上面创建项目：[https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world)
 
 增加两个 Maven 插件：
 
@@ -46,14 +46,14 @@ tags: [ maven]
   <extensions>true</extensions>
   <configuration>
     <serverId>ossrh</serverId>
-    <nexusUrl>https:/s01.oss.sonatype.org/</nexusUrl>
+    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
     <autoReleaseAfterClose>true</autoReleaseAfterClose>
     <keepStagingRepositoryOnCloseRuleFailure>false</keepStagingRepositoryOnCloseRuleFailure>
   </configuration>
 </plugin>
 ```
 
-可以将上面的两个插件加入到 pom.xml 的 build 节点下面，也可以配置到 profile 节点下。[https:/github.com/chensoul/maven-hello-world](https:/github.com/chensoul/maven-hello-world) 项目中使用的是第二种方式，具体见 https:/github.com/chensoul/chensoul-parent 的 pom.xml 文件。
+可以将上面的两个插件加入到 pom.xml 的 build 节点下面，也可以配置到 profile 节点下。[https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world) 项目中使用的是第二种方式，具体见 https://github.com/chensoul/chensoul-parent 的 pom.xml 文件。
 
 ```xml
 <profiles>
@@ -89,7 +89,7 @@ tags: [ maven]
               <goals>deploy</goals>
             </configuration>
           </plugin>
-          <!-- https:/blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
+          <!-- https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -110,7 +110,7 @@ tags: [ maven]
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
-              <nexusUrl>https:/s01.oss.sonatype.org/</nexusUrl>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
               <keepStagingRepositoryOnCloseRuleFailure>false</keepStagingRepositoryOnCloseRuleFailure>
             </configuration>
@@ -128,16 +128,16 @@ nexus-staging-maven-plugin 插件配置的 serverId 是 ossrh ，需要和 distr
 <distributionManagement>
   <snapshotRepository>
     <id>ossrh</id>
-    <url>https:/s01.oss.sonatype.org/content/repositories/snapshots</url>
+    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
   </snapshotRepository>
   <repository>
     <id>ossrh</id>
-    <url>https:/s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
   </repository>
 </distributionManagement>
 ```
 
-您需要在 [Sonatype JIRA](https:/issues.sonatype.org/secure/Dashboard.jspa) 上注册一个帐户并为此创建一个[Issure](https:/issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134)。
+您需要在 [Sonatype JIRA](https://issues.sonatype.org/secure/Dashboard.jspa) 上注册一个帐户并为此创建一个[Issure](https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134)。
 
 将您的 Sonatype JIRA 凭证添加到您的`~/.m2/settings.xml`文件中，如下所示：
 
@@ -159,7 +159,7 @@ macos 上安装 gpg：
 brew install gpg
 ```
 
-参考 [Generating a Key Pair](https:/central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair) 生成 GPG 密钥。
+参考 [Generating a Key Pair](https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair) 生成 GPG 密钥。
 
 ```bash
 $ gpg --gen-key
@@ -221,27 +221,27 @@ mvn -P release clean deploy
 mvn -P release clean deploy
 ```
 
-如果当前项目的版本为快照版，则发布后的 jar 在 [https:/s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/](https:/s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/)
+如果当前项目的版本为快照版，则发布后的 jar 在 [https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/](https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/maven-hello-world/)
 
 如果当前项目的版本为正式版，稍等几分钟，可以在以下仓库查看发布的 jar:
-- https:/central.sonatype.com/artifact/com.chensoul/maven-hello-world
-- https:/s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world
-- https:/repo.maven.apache.org/maven2/com/chensoul/maven-hello-world
+- https://central.sonatype.com/artifact/com.chensoul/maven-hello-world
+- https://s01.oss.sonatype.org/service/local/repositories/releases/content/com/chensoul/maven-hello-world
+- https://repo.maven.apache.org/maven2/com/chensoul/maven-hello-world
 
 ## 配置Github Actions
 
 使用 Github Actions 发布 jar 到 maven 仓库，目前发现有两个 action 可以实现该目的：
 
-- [actions/setup-java](https:/github.com/actions/setup-java)
+- [actions/setup-java](https://github.com/actions/setup-java)
 
-- [qcastel/github-actions-maven-release](https:/github.com/qcastel/github-actions-maven-release)
+- [qcastel/github-actions-maven-release](https://github.com/qcastel/github-actions-maven-release)
 
-- [action-maven-publish](https:/github.com/marketplace/actions/action-maven-publish)
+- [action-maven-publish](https://github.com/marketplace/actions/action-maven-publish)
 
 
 ### actions/setup-java
 
-使用 [actions/setup-java](https:/github.com/actions/setup-java) ，参考使用文档，在项目的 .github/workflows 目录下创建 maven-release.yml文件：
+使用 [actions/setup-java](https://github.com/actions/setup-java) ，参考使用文档，在项目的 .github/workflows 目录下创建 maven-release.yml文件：
 
 ```yaml
 name: Maven Release
@@ -323,7 +323,7 @@ S3ee7QZPNjtkA2s/eQsPAQ==
 
 ### qcastel/github-actions-maven-release
 
-使用 [qcastel/github-actions-maven-release](https:/github.com/qcastel/github-actions-maven-release) ，参考使用文档，在项目的 .github/workflows 目录下创建 maven-release.yml文件：
+使用 [qcastel/github-actions-maven-release](https://github.com/qcastel/github-actions-maven-release) ，参考使用文档，在项目的 .github/workflows 目录下创建 maven-release.yml文件：
 
 ```yaml
 name: Maven Release
@@ -436,7 +436,7 @@ echo -e "Copy the encoded SSH public key and add it as one of your repo deploy k
 cat ~/.ssh/id_rsa.pub
 ```
 
-将私钥粘贴到 Secrets 中 **SSH_PRIVATE_KEY** 的值内，将公钥添加到你的 github 账号的 [SSH keys](https:/github.com/settings/ssh/new) 中。
+将私钥粘贴到 Secrets 中 **SSH_PRIVATE_KEY** 的值内，将公钥添加到你的 github 账号的 [SSH keys](https://github.com/settings/ssh/new) 中。
 
 
 
@@ -490,7 +490,7 @@ UG4hxtEyhpsA+QEFCr+az0NnkYDblmlK44dLd57tBk82O2QDaz95Cw8B
 LS0tLS1CRUdJTiBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLQoKbElZRVpqcm5wQllKS3dZQkJBSGFSdzhCQVFkQW1NdFVmN2sycG9VQllobGNhN1U3bGUydkdQRUhnQXRIWjFNSApER09TWlIzK0J3TUNwOTJOaVVIQnU0VDZ3UHRFSWt1cGtTM2M0c21WOWZUUXRtRDM3bTJuOTlzbnRWNmllYU8vCi9TKzUvR2FyWDNMTUhoTmtkdnVpOHZSMk1hNDNhNFdzVmFpR1RiZWF6eHNHbVE1TGo4ZXUvTFFlWTJobGJuTnYKZFd3Z1BHbGphR1Z1YzI5MWJFQm5iV0ZwYkM1amIyMCtpSmtFRXhZS0FFRVdJUVRJTVJueHVRSTRZejEyYlV1VAp4Wms3bjN0RDdnVUNaanJucEFJYkF3VUpCYU9hZ0FVTENRZ0hBZ0lpQWdZVkNna0lDd0lFRmdJREFRSWVCd0lYCmdBQUtDUkNUeFprN24zdEQ3c2dHQVFDQlJzYmRWRG4xTnVWWVhPUEVBS0FGVUZXZ293YjB0a0g3dzVWeldXRDIKaHdEK0lIUjVKaWVnbkkzNzZ1cE9MaVV6UTVjWk44Z0ozZm4wb2F1NUVMcDFsUVNjaXdSbU91ZWtFZ29yQmdFRQpBWmRWQVFVQkFRZEFuZmtjSXVPT3lVK2loVVgvWjhuVTk2MzRNYlRHME9IZkVaQ2JtOXBnZEg0REFRZ0gvZ2NECkFtYllUMStNNjB6bStna1lyMk54Yys1U3hqYmd6bTA1ajFURW42TnUwVTUyUmRoMzJvTVRYU2ZIa2RlakdiVmkKMDNKemRkVnZ6Kzl6U2FzQVpMMVA1ZytBa0dGbTBHYVFLTldnOUVRQzVBK0lmZ1FZRmdvQUpoWWhCTWd4R2ZHNQpBamhqUFhadFM1UEZtVHVmZTBQdUJRSm1PdWVrQWhzTUJRa0ZvNXFBQUFvSkVKUEZtVHVmZTBQdWJTa0EvUjZJCi83K29hdnkvRlA5cjZQZl
 ```
 
-将上面输出私钥的内容添加到 Secrets 中 **MAVEN_GPG_KEY** 的值里面，将公钥内容添加到你的 github 账号的 [GPG keys](https:/github.com/settings/gpg/new) 中。
+将上面输出私钥的内容添加到 Secrets 中 **MAVEN_GPG_KEY** 的值里面，将公钥内容添加到你的 github 账号的 [GPG keys](https://github.com/settings/gpg/new) 中。
 
 
 
@@ -570,7 +570,7 @@ jobs:
 
 ## 总结
 
-如果使用 [qcastel/github-actions-maven-release](https:/github.com/qcastel/github-actions-maven-release) ，maven-release-plugin 插件会修改版本，并且创建 tag ，但是并不会创建 github release。
+如果使用 [qcastel/github-actions-maven-release](https://github.com/qcastel/github-actions-maven-release) ，maven-release-plugin 插件会修改版本，并且创建 tag ，但是并不会创建 github release。
 
-使用 https:/github.com/release-drafter/release-drafter 这个 actions 可以更加 pull request 自动创建 github releae，基于此，更倾向于使用 [actions/setup-java](https:/github.com/actions/setup-java) 来发布 jar 到 Maven 仓库。
+使用 https://github.com/release-drafter/release-drafter 这个 actions 可以更加 pull request 自动创建 github releae，基于此，更倾向于使用 [actions/setup-java](https://github.com/actions/setup-java) 来发布 jar 到 Maven 仓库。
 

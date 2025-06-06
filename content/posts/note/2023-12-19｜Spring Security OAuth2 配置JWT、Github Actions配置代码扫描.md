@@ -7,7 +7,7 @@ categories: ["Review"]
 tags: [review,"spring-security"]
 ---
 
-Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 [spring-security-oauth2-legacy](https:/github.com/chensoul/spring-security-oauth2-legacy) 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。 
+Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 [spring-security-oauth2-legacy](https://github.com/chensoul/spring-security-oauth2-legacy) 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。 
 
 
 
@@ -101,7 +101,7 @@ public class RSAUtil {
 > openssl pkcs12 -in private.p12 -nodes -nocerts -out private.key
 > ```
 
-于是，找到一个 RSA 的仓库 https:/github.com/xuxiaowei-com-cn/RSA，Fork 之后，对代码做了一些修改：
+于是，找到一个 RSA 的仓库 https://github.com/xuxiaowei-com-cn/RSA，Fork 之后，对代码做了一些修改：
 
 - 修改代码包名为我的域名 com.chensoul，以便能够部署到 sonatype 仓库。
 - 去掉 Apache Common Codec 依赖
@@ -111,7 +111,7 @@ public class RSAUtil {
 
 提交代码到仓库，发现 Github Actions 中有个 Workflow codeql-analysis.yml 没有执行，于是在仓库中启用 Action，并且修改 codeql-analysis.yml 中 github/codeql-action/autobuild 版本为 v2。于是，该 workflow 可以正常执行。
 
-参考 [Github Actions — Scan Code](https:/janelifelog.medium.com/github-actions-scan-code-41c82ec82140)，启用 Code scanning alerts ，发现有一个代码扫描警告：
+参考 [Github Actions — Scan Code](https://janelifelog.medium.com/github-actions-scan-code-41c82ec82140)，启用 Code scanning alerts ，发现有一个代码扫描警告：
 
 ![daily-review-20231219-02](../../../static/images/daily-review-20231219-02.webp)
 
@@ -121,7 +121,7 @@ public class RSAUtil {
 
 ![image-20231219120104154](../../../static/images/daily-review-20231219-03.webp)
 
-点击  [.github/dependabot.yml](https:/github.com/chensoul/RSA/edit/master/.github/dependabot.yml) ，修改 package-ecosystem 值为 maven。因为当前仓库是 maven 构建，所以这里设置为 maven。
+点击  [.github/dependabot.yml](https://github.com/chensoul/RSA/edit/master/.github/dependabot.yml) ，修改 package-ecosystem 值为 maven。因为当前仓库是 maven 构建，所以这里设置为 maven。
 
 ![daily-review-20231219-04](../../../static/images/daily-review-20231219-04.webp)
 

@@ -33,7 +33,7 @@ tags: [spring-security, oauth2]
 
 有时某些版本与其他版本冲突。因此，列出经过测试可以相互协作的组合。下面是经过测试的软件组合，用于使用 Spring Boot 3 开发 Spring Security UserDetailsS​​ervice。它也使实现完美无缺。
 
-1. [Spring Boot 3.0.0](https:/javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)
+1. [Spring Boot 3.0.0](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)
 2. JDK 17 or later
 
 3. Maven 3.8.1 
@@ -241,7 +241,7 @@ server.port=8080
 #--------------------- DB Connection ------------------
 #AutoLoading of driver class since JDBC 4
 #spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql:/localhost:3306/testBootSecurity
+spring.datasource.url=jdbc:mysql://localhost:3306/testBootSecurity
 spring.datasource.username=root
 spring.datasource.password=devs
 
@@ -536,7 +536,7 @@ registerUser.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>User Registration</title>
@@ -569,7 +569,7 @@ homePage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -585,7 +585,7 @@ welcomePage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -601,7 +601,7 @@ adminPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -618,7 +618,7 @@ empPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -634,7 +634,7 @@ mgrPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -650,7 +650,7 @@ hrPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -666,7 +666,7 @@ commonPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -683,7 +683,7 @@ accessDeniedPage.html
 
 ```html
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1" />
     <title>Insert title here</title>
@@ -786,13 +786,13 @@ public class SecurityConfig {
 虽然“测试”这个词对于开发人员来说看起来很容易，但它同样重要，因为它提供了我们整体实现的结果。在测试应用程序时，您应该将 SecurityConfig 类的 configure(HttpSecurity http) 方法保留在您面前，然后按照以下步骤操作：
 
 1. 启动应用程序：右键单击项目，然后选择“Run As”>>“Spring Boot App”。
-2. 输入注册页面 URL http:/localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。
+2. 输入注册页面 URL http://localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。
 
 3. 输入必填字段值并相应地单击“注册”按钮完成注册过程。
-4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL http:/localhost:8080/admin，那么它应该将您重定向到内置的登录页面。
+4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL http://localhost:8080/admin，那么它应该将您重定向到内置的登录页面。
 5. 输入凭据并登录到应用程序。它会将您重定向到默认的成功 URL，即欢迎页面。
 
-6. 现在再次输入 URL http:/localhost:8080/admin，这次您将能够访问管理页面。
+6. 现在再次输入 URL http://localhost:8080/admin，这次您将能够访问管理页面。
 7. 对其他角色也重复上述步骤。
 
 此外，如上所述，将 SecurityConfig.java 代码保留在您面前，并随后测试每个场景。
@@ -860,4 +860,4 @@ public class SecurityConfig {
 
 如果您想了解 Spring Boot 3.0 中的新增功能，请访问我们关于“Spring Boot 3 中的新功能”的单独文章。另外，欢迎在评论区提出你的意见。
 
-原文链接：[https:/javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/](https:/javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/)
+原文链接：[https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/)

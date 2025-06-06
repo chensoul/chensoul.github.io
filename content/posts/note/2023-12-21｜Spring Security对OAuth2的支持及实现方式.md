@@ -13,20 +13,20 @@ Today I Learned. 今天分享内容：Spring Security 对 OAuth2 的支持
 
 Spring Security 提供了对 OAuth 的支持，并且有几个相关的项目可以用于实现 OAuth 功能。以下是一些常见的 Spring Security OAuth 项目及其相关信息：
 
-1. Spring Security OAuth（[https:/github.com/spring-attic/spring-security-oauth](https:/github.com/spring-attic/spring-security-oauth)）：官方提供的 Spring Security OAuth 项目，为 Spring 应用程序提供了 OAuth 1.0 和 OAuth 2.0 的支持。该项目在 Spring Security 5.x 版本后已不再维护，建议使用后续提到的 Spring Authorization Server。
-2. Spring Security 5（[https:/github.com/spring-attic/spring-security](https:/github.com/spring-attic/spring-security)）：Spring Security 5.x 版本开始将 OAuth 2.0 客户端支持集成到核心库中，使得在 Spring Security 中实现 OAuth 2.0 认证变得更加简单。你可以使用 Spring Security 5.x 以及后续版本来实现 OAuth 2.0 客户端功能。
-3. Spring Security OAuth2 Boot（[https:/github.com/spring-attic/spring-security-oauth2-boot](https:/github.com/spring-attic/spring-security-oauth2-boot)），该项目是 `spring-attic` 组织维护的，提供了 Spring Boot 2 和旧版 Spring Security OAuth 的自动配置。该项目已经停止了活跃的开发和更新，最新的提交日期是 2022 年 5 月 20 日。
+1. Spring Security OAuth（[https://github.com/spring-attic/spring-security-oauth](https://github.com/spring-attic/spring-security-oauth)）：官方提供的 Spring Security OAuth 项目，为 Spring 应用程序提供了 OAuth 1.0 和 OAuth 2.0 的支持。该项目在 Spring Security 5.x 版本后已不再维护，建议使用后续提到的 Spring Authorization Server。
+2. Spring Security 5（[https://github.com/spring-attic/spring-security](https://github.com/spring-attic/spring-security)）：Spring Security 5.x 版本开始将 OAuth 2.0 客户端支持集成到核心库中，使得在 Spring Security 中实现 OAuth 2.0 认证变得更加简单。你可以使用 Spring Security 5.x 以及后续版本来实现 OAuth 2.0 客户端功能。
+3. Spring Security OAuth2 Boot（[https://github.com/spring-attic/spring-security-oauth2-boot](https://github.com/spring-attic/spring-security-oauth2-boot)），该项目是 `spring-attic` 组织维护的，提供了 Spring Boot 2 和旧版 Spring Security OAuth 的自动配置。该项目已经停止了活跃的开发和更新，最新的提交日期是 2022 年 5 月 20 日。
 4. Spring Authorization Server（https:[]()/github.com/spring-projects/spring-authorization-server）：官方提供的用于构建 OAuth 2.0 授权服务器的实验性项目。它是 Spring Security 5.3 之后推出的替代方案，旨在提供更简化和灵活的 OAuth 2.0 授权服务器功能。
 
 > Authorization Server
 >
 > - 目前，Spring Security 不支持实现 OAuth 2.0 授权服务器。
-> - 但是，此功能可从 [Spring Security OAuth](https:/spring.io/projects/spring-security-oauth) 项目中获得，该项目最终将被 Spring Security 完全取代。
-> - 在此之前，您可以使用该 `spring-security-oauth2-autoconfigure` 模块轻松设置 OAuth 2.0 授权服务器；有关说明，请参阅其 [文档](https:/docs.spring.io/spring-security-oauth2-boot/)。
+> - 但是，此功能可从 [Spring Security OAuth](https://spring.io/projects/spring-security-oauth) 项目中获得，该项目最终将被 Spring Security 完全取代。
+> - 在此之前，您可以使用该 `spring-security-oauth2-autoconfigure` 模块轻松设置 OAuth 2.0 授权服务器；有关说明，请参阅其 [文档](https://docs.spring.io/spring-security-oauth2-boot/)。
 
 |          | Spring OAuth 2.0                                             | Spring Security OAuth Boot                                   | Spring Cloud Security                                        | Spring OAuth 2.1                                             |
 | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 仓库地址 | [spring-security-oauth](https:/github.com/spring-attic/spring-security-oauth) | [spring-security-oauth2-boot](https:/github.com/spring-attic/spring-security-oauth2-boot) | [spring-cloud-security](https:/github.com/spring-attic/spring-cloud-security) | [spring-authorization-server](https:/github.com/spring-projects/spring-authorization-server) |
+| 仓库地址 | [spring-security-oauth](https://github.com/spring-attic/spring-security-oauth) | [spring-security-oauth2-boot](https://github.com/spring-attic/spring-security-oauth2-boot) | [spring-cloud-security](https://github.com/spring-attic/spring-cloud-security) | [spring-authorization-server](https://github.com/spring-projects/spring-authorization-server) |
 | 是否更新 | 2022年6月1日归档                                             | 2022年5月31日归档                                            | 2022年4月4日归档                                             |                                                              |
 | 最新版本 | 2.5.2.RELEASE                                                | 2.6.8                                                        | 2.2.5                                                        | 1.2.1                                                        |
 | 授权方式 | 授权码 客户凭证                                              |                                                              |                                                              | 授权码 客户端凭据 隐式 密码 设备授权                         |
@@ -34,7 +34,7 @@ Spring Security 提供了对 OAuth 的支持，并且有几个相关的项目可
 | JDK 11   | 支持，接口已全面废弃                                         |                                                              |                                                              | 1.0 之前的版本支持                                           |
 | JDK 17   | 不支持                                                       |                                                              |                                                              | 1.0 之后的版本支持                                           |
 
-参考 [https:/github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix](https:/github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix)
+参考 [https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix](https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Features-Matrix)
 
 1、***Spring Security 中 OAuth 2.0 支持的未来是什么？***
 
@@ -50,7 +50,7 @@ Spring Boot 2.0 已放弃对 Spring Security OAuth 的支持。但是，它在 S
 
 4、***有没有办法在 Spring Boot 2.0 中集成 Spring Security OAuth？***
 
-Spring [Security OAuth Boot 2 Autoconfig](https:/github.com/spring-projects/spring-security-oauth2-boot)项目是 Spring Boot 1.5.x 中包含的 Spring Security OAuth 自动配置的端口。如果您想在 Spring Boot 2.0 中使用 Spring Security OAuth，则必须在项目中显式包含以下依赖项：
+Spring [Security OAuth Boot 2 Autoconfig](https://github.com/spring-projects/spring-security-oauth2-boot)项目是 Spring Boot 1.5.x 中包含的 Spring Security OAuth 自动配置的端口。如果您想在 Spring Boot 2.0 中使用 Spring Security OAuth，则必须在项目中显式包含以下依赖项：
 
 - **组ID:** `org.springframework.security.oauth.boot`
 - **工件ID：** `spring-security-oauth2-autoconfigure`
@@ -59,11 +59,11 @@ Spring [Security OAuth Boot 2 Autoconfig](https:/github.com/spring-projects/spri
 
 ---
 
-我创建了一个项目 [spring-security-oauth2-legacy](https:/github.com/chensoul/spring-security-oauth2-legacy)，使用 Spring Security OAuth2 Boot 来自动装配资源服务器。目前，还在测试中。
+我创建了一个项目 [spring-security-oauth2-legacy](https://github.com/chensoul/spring-security-oauth2-legacy)，使用 Spring Security OAuth2 Boot 来自动装配资源服务器。目前，还在测试中。
 
 
 
-如果想基于 [spring-authorization-server](https:/github.com/spring-projects/spring-authorization-server) 创建认证服务器和资源服务器，可以参考 github 上这个仓库：[xuxiaowei-cloud](https:/github.com/xuxiaowei-cloud/xuxiaowei-cloud)。
+如果想基于 [spring-authorization-server](https://github.com/spring-projects/spring-authorization-server) 创建认证服务器和资源服务器，可以参考 github 上这个仓库：[xuxiaowei-cloud](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud)。
 
 
 
@@ -71,4 +71,4 @@ Spring [Security OAuth Boot 2 Autoconfig](https:/github.com/spring-projects/spri
 
 
 
-其[archive/OAuth2.0](https:/github.com/xuxiaowei-cloud/xuxiaowei-cloud/blob/archive/OAuth2.0/) 分支是基于 [spring-security-oauth2-boot](https:/github.com/spring-attic/spring-security-oauth2-boot) 实现的，可以参考代码。
+其[archive/OAuth2.0](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud/blob/archive/OAuth2.0/) 分支是基于 [spring-security-oauth2-boot](https://github.com/spring-attic/spring-security-oauth2-boot) 实现的，可以参考代码。

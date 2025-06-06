@@ -13,7 +13,7 @@ tags: [review]
 
 图片：_涨渡湖湿地水上森林公园_
 
-本篇是对 `2023-03-13` 到 `2023-03-19` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-03-13` 到 `2023-03-19` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这周的工作主要是重构、优化系统，工作节奏比之前轻缓了很多。这周也开始了开车上下班，除去周五去医院做检查，一共开了 4 天车。从汉口到光谷，一共 29 公里，如果早上 6:30 出发，就只需要 50 分钟；如果 6:45 出发，竟然需要两个小时，真是无语了。无奈之下，只能每天早点出门早点到公司，然后，打完卡之后，在公司楼下走路。
 
@@ -44,7 +44,7 @@ tags: [review]
 
 ### 导出语雀文档为 markdown
 
-参考 [yuque/yuque-exporter](https:/github.com/yuque/yuque-exporter) 文档，下载 yuque-exporter 之后进行导出操作，发现以下问题：
+参考 [yuque/yuque-exporter](https://github.com/yuque/yuque-exporter) 文档，下载 yuque-exporter 之后进行导出操作，发现以下问题：
 
 - 该项目需要使用的 nodejs 版本为 18.0.4
 - nodejs 使用正确的版本还是导出失败
@@ -54,7 +54,7 @@ tags: [review]
 1、先下载代码：
 
 ```bash
-git clone https:/github.com/yuque/yuque-exporter.git
+git clone https://github.com/yuque/yuque-exporter.git
 ```
 
 2、修改 main.ts 中需要导出的语雀知识库地址为自己的仓库地址：
@@ -70,7 +70,7 @@ if (import.meta.url.startsWith("file:")) {
 }
 ```
 
-3、参考 [文档](https:/www.yuque.com/yuque/developer/api#785a3731) 申请语雀 TOKEN。
+3、参考 [文档](https://www.yuque.com/yuque/developer/api#785a3731) 申请语雀 TOKEN。
 
 4、下载项目依赖：
 
@@ -152,16 +152,16 @@ find . -type f -name '*.md' -exec sed -i '' 's/<a name=\"[^\"]*\"><\/a>/g' {} +
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https:/t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 
-- [GitHub Actions 成本优化：让你的团队更具竞争力](https:/moelove.info/2023/03/21/GitHub-Actions-%E6%88%90%E6%9C%AC%E4%BC%98%E5%8C%96%E8%AE%A9%E4%BD%A0%E7%9A%84%E5%9B%A2%E9%98%9F%E6%9B%B4%E5%85%B7%E7%AB%9E%E4%BA%89%E5%8A%9B/)
+- [GitHub Actions 成本优化：让你的团队更具竞争力](https://moelove.info/2023/03/21/GitHub-Actions-%E6%88%90%E6%9C%AC%E4%BC%98%E5%8C%96%E8%AE%A9%E4%BD%A0%E7%9A%84%E5%9B%A2%E9%98%9F%E6%9B%B4%E5%85%B7%E7%AB%9E%E4%BA%89%E5%8A%9B/)
 
-- [Nginx 开启 gzip 压缩](https:/juemuren4449.com/archives/open-gzip-on-nginx)
-- [Obsidan 日记、记账与自动同步](https:/www.superheaoz.top/2022/06/57091/)
-- [Doprax 搭建免费 V2ray 节点](https:/elmagnifico.tech/2023/03/16/Doprax-V2ray/)
-- [Hi，土区 iCloud](https:/elizen.me/posts/2023/03/hi-icloud/)
-- [国区使用土耳其 iCloud 服务，手把手保姆级上车教程](https:/btsogiwudc.feishu.cn/docx/CgoJdHyWKopl3UxV12GcG3psnjf)
+- [Nginx 开启 gzip 压缩](https://juemuren4449.com/archives/open-gzip-on-nginx)
+- [Obsidan 日记、记账与自动同步](https://www.superheaoz.top/2022/06/57091/)
+- [Doprax 搭建免费 V2ray 节点](https://elmagnifico.tech/2023/03/16/Doprax-V2ray/)
+- [Hi，土区 iCloud](https://elizen.me/posts/2023/03/hi-icloud/)
+- [国区使用土耳其 iCloud 服务，手把手保姆级上车教程](https://btsogiwudc.feishu.cn/docx/CgoJdHyWKopl3UxV12GcG3psnjf)
 
 以上。

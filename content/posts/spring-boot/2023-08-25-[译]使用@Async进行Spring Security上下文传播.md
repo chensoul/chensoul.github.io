@@ -26,7 +26,7 @@ tags: [spring-security]
 </dependency>
 ```
 
-可以在[此处](https:/search.maven.org/classic/#search|ga|1|g%3A%22org.springframework.security%22)找到最新版本的 Spring Security 依赖项。
+可以在[此处](https://search.maven.org/classic/#search|ga|1|g%3A%22org.springframework.security%22)找到最新版本的 Spring Security 依赖项。
 
 ## 3.使用@Async 进行 Spring Security 传播
 
@@ -140,6 +140,6 @@ web - 2016-12-30 22:45:18,019 [SimpleAsyncTaskExecutor-1] INFO
 
 请注意，如果先前以同步方式将多个方法调用链接在一起，则转换为异步方法可能需要同步结果。
 
-此 [示例](https:/github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest) 也可作为 Github 上的 Maven 项目提供。
+此 [示例](https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest) 也可作为 Github 上的 Maven 项目提供。
 
-原文链接：[https:/www.baeldung.com/spring-security-async-principal-propagation](https:/www.baeldung.com/spring-security-async-principal-propagation)
+原文链接：[https://www.baeldung.com/spring-security-async-principal-propagation](https://www.baeldung.com/spring-security-async-principal-propagation)

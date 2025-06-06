@@ -9,7 +9,7 @@ tags: [spring-security,jwt]
 
 **免责声明：Spring Security 5+ 已发布 OAuth JWT 支持。建议使用最新版本的 OAuth 来支持 JWT，而不是使用自定义安全性或过滤器。**
 
-[Spring](https:/spring.io/) 被认为是 Java 生态系统中值得信赖的框架，并且被广泛使用。将 Spring 称为框架不再有效，因为它更多的是涵盖各种框架的总括术语。其中一个框架是 [Spring Security](https:/spring.io/projects/spring-security)，它是一个功能强大且可定制的身份验证和授权框架。它被认为是保护基于 Spring 的应用程序的事实标准，因此，如果您希望实现 Spring JWT 令牌解决方案，那么将其基于 Spring Security 是有意义的。
+[Spring](https://spring.io/) 被认为是 Java 生态系统中值得信赖的框架，并且被广泛使用。将 Spring 称为框架不再有效，因为它更多的是涵盖各种框架的总括术语。其中一个框架是 [Spring Security](https://spring.io/projects/spring-security)，它是一个功能强大且可定制的身份验证和授权框架。它被认为是保护基于 Spring 的应用程序的事实标准，因此，如果您希望实现 Spring JWT 令牌解决方案，那么将其基于 Spring Security 是有意义的。
 
 尽管它很受欢迎，但我必须承认，当涉及到单页应用程序时，Spring 的配置并不简单和直接。我怀疑原因是它更多地是作为一个面向应用程序的 MVC 框架开始的，其中网页渲染发生在服务器端，并且通信是基于会话的。
 
@@ -60,8 +60,8 @@ public class HelloRestController {
 
 之后，如果我们构建并运行该项目，我们可以在 Web 浏览器中访问以下 URL：
 
-- `http:/localhost:8080/hello/user` 将返回字符串 `Hello User` 。
-- `http:/localhost:8080/hello/admin` 将返回字符串 `Hello Admin` 。
+- `http://localhost:8080/hello/user` 将返回字符串 `Hello User` 。
+- `http://localhost:8080/hello/admin` 将返回字符串 `Hello Admin` 。
 
 现在，我们可以将 Spring Security 框架添加到我们的项目中，我们可以通过将以下依赖项添加到 `pom.xml` 文件中来完成此操作：
 
@@ -74,7 +74,7 @@ public class HelloRestController {
 </dependencies>
 ```
 
-在我们提供相应的配置之前，添加其他 Spring 框架依赖项通常不会立即对应用程序产生影响，但 Spring Security 的不同之处在于它确实会立即产生影响，这通常会让新用户感到困惑。添加后，如果我们重建并运行项目，然后尝试访问上述 URL 之一而不是查看结果，我们将被重定向到 `http:/localhost:8080/login` 。这是默认行为，因为 Spring Security 框架要求对所有 URL 进行开箱即用的身份验证。
+在我们提供相应的配置之前，添加其他 Spring 框架依赖项通常不会立即对应用程序产生影响，但 Spring Security 的不同之处在于它确实会立即产生影响，这通常会让新用户感到困惑。添加后，如果我们重建并运行项目，然后尝试访问上述 URL 之一而不是查看结果，我们将被重定向到 `http://localhost:8080/login` 。这是默认行为，因为 Spring Security 框架要求对所有 URL 进行开箱即用的身份验证。
 
 为了通过身份验证，我们可以使用默认用户名 `user` 并在控制台中找到自动生成的密码：
 
@@ -88,11 +88,11 @@ Using generated security password: 1fc15145-dfee-4bec-a009-e32ca21c77ce
 spring.security.user.password=Test12345_
 ```
 
-现在，如果我们在登录表单中输入凭据，我们将被重定向回我们的 URL，我们将看到正确的结果。请注意，开箱即用的身份验证过程是基于会话的，如果我们想注销，可以访问以下 URL： `http:/localhost:8080/logout`
+现在，如果我们在登录表单中输入凭据，我们将被重定向回我们的 URL，我们将看到正确的结果。请注意，开箱即用的身份验证过程是基于会话的，如果我们想注销，可以访问以下 URL： `http://localhost:8080/logout`
 
 这种开箱即用的行为对于具有基于会话身份验证的经典 MVC Web 应用程序可能很有用，但对于单页应用程序来说，它通常没有用，因为在大多数用例中，我们有客户端渲染和基于 JWT 的无状态身份验证。在这种情况下，我们将不得不大量定制 Spring Security 框架，我们将在本文的其余部分中进行此操作。
 
-例如，我们将实现一个经典的[书店 Web 应用程序](https:/github.com/Yoh0xFF/java-spring-security-example)，并创建一个后端，该后端将提供用于创建作者和书籍的 CRUD API 以及用于用户管理和身份验证的 API。
+例如，我们将实现一个经典的[书店 Web 应用程序](https://github.com/Yoh0xFF/java-spring-security-example)，并创建一个后端，该后端将提供用于创建作者和书籍的 CRUD API 以及用于用户管理和身份验证的 API。
 
 ## Spring Security 架构概述
 
@@ -756,6 +756,6 @@ public class WithUserClassLevelAuthenticationTests {
 
 最后，我想提一下，Spring Security 框架可能不会赢得任何选美比赛，而且它的学习曲线肯定很陡峭。我遇到过很多情况，由于其初始配置的复杂性，它被一些自行开发的解决方案所取代。但是，一旦开发人员了解其内部结构并设法设置初始配置，它的使用就会变得相对简单。
 
-在本 Spring Security 教程中，我尝试演示配置的所有微妙细节，希望您会发现这些示例很有用。有关完整的代码示例，请参阅我的示例 [Spring Security 项目](https:/github.com/Yoh0xFF/java-spring-security-example)的 Git 存储库。
+在本 Spring Security 教程中，我尝试演示配置的所有微妙细节，希望您会发现这些示例很有用。有关完整的代码示例，请参阅我的示例 [Spring Security 项目](https://github.com/Yoh0xFF/java-spring-security-example)的 Git 存储库。
 
-原文链接：[https:/www.toptal.com/spring/spring-security-tutorial](https:/www.toptal.com/spring/spring-security-tutorial)
+原文链接：[https://www.toptal.com/spring/spring-security-tutorial](https://www.toptal.com/spring/spring-security-tutorial)

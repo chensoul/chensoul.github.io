@@ -9,13 +9,13 @@ tags: [review]
 
 ## 前言
 
-本篇是对 `2023-01-16` 到 `2023-01-22` 这周生活的记录与思考。首发在我的个人 [博客](https:/blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
+本篇是对 `2023-01-16` 到 `2023-01-22` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
 这是过年前的最后一周，上了三天班，请了两天假回去准备年货、去亲戚家吃年饭。趁放假之前，继续对博客做了一些定制，也在我的 VPS 上通过 Docker 部署了一些服务。
 
 ## 定制博客
 
-基于 [pseudoyu](https:/www.pseudoyu.com/) 的博客和主题定制博客，发现并修复了 bug，还做了一些改进，并在他的 github 提交 [issue](https:/github.com/pseudoyu/pseudoyu/issues/2) 和 merge request。
+基于 [pseudoyu](https://www.pseudoyu.com/) 的博客和主题定制博客，发现并修复了 bug，还做了一些改进，并在他的 github 提交 [issue](https://github.com/pseudoyu/pseudoyu/issues/2) 和 merge request。
 
 ![](../../../static/images/github-issue-build-aboutme-py.webp)
 
@@ -29,14 +29,14 @@ tags: [review]
 
 ## 博客个人介绍
 
-我的博客源文件托管在 [gihub](https:/github.com/chensoul/chensoul.github.io)，在这个仓库可以看到我的一些个人介绍。
+我的博客源文件托管在 [gihub](https://github.com/chensoul/chensoul.github.io)，在这个仓库可以看到我的一些个人介绍。
 
 ## vps 上服务部署
 
 购买了新的 VPS 之后，就将原来的 VPS 导出镜像，然后导入到新的 VPS，最后再安装了以下服务：
 
-- [flowerss-bot](https:/github.com/indes/flowerss-bot)：一个支持应用内阅读的 Telegram RSS Bot。
-- [n8n](https:/n8n.io/)：一款开源的自动工作流服务，类似 IFTTT、Zapier，可以互联互通包括 GitHub、Dropbox、Google、NextCLoud、RSS、Slack、Telegram 在内的几十款在线服务。
+- [flowerss-bot](https://github.com/indes/flowerss-bot)：一个支持应用内阅读的 Telegram RSS Bot。
+- [n8n](https://n8n.io/)：一款开源的自动工作流服务，类似 IFTTT、Zapier，可以互联互通包括 GitHub、Dropbox、Google、NextCLoud、RSS、Slack、Telegram 在内的几十款在线服务。
 - memos：一个开源且免费的自托管知识库
 - cusdis：一个界面清爽、注重隐私的轻量级 (~5kb gzip) 评论系统，可以很方便地与 React、Vue 或其他博客系统结合，并且还提供了一个后台来管理所有的评论
 - umami：一个简单易用、自托管的开源网站访问流量*统计*分析工具

@@ -75,10 +75,10 @@ public class OAuth2Configuration {
 security:
   oauth2:
     # Redirect URL where access code from external user management system will be processed
-    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL:/login/oauth2/code/}"
+    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL://login/oauth2/code/}"
     githubMapper:
       # The email addresses that will be mapped from the URL
-      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https:/api.github.com/user/emails}"
+      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}"
 ```
 
 CustomOAuth2AuthorizationRequestResolver 相对于默认实现 DefaultOAuth2AuthorizationRequestResolver 的主要修改之处在于代expandRedirectUri 方法：
@@ -163,7 +163,7 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 }  
 ```
 
-CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 https:/github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http:/localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c ，调用 authenticationManager 进行认证。
+CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 https://github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c ，调用 authenticationManager 进行认证。
 
 ```java
 	/ OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段
@@ -192,7 +192,7 @@ OAuth2AuthorizationRequestRedirectFilter 和 OAuth2LoginAuthenticationFilter 之
 security:
   oauth2:
     # Redirect URL where access code from external user management system will be processed
-    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL:/login/oauth2/code/{registrationId}}"
+    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL://login/oauth2/code/{registrationId}}"
 ```
 
 OAuth2LoginAuthenticationFilter 通过 AuthorizationRequestRepository 可以取到 OAuth2AuthorizationRequest 对象，通过 authorizationRequest 的参数可以获取到 registrationId，然后，通过 clientRegistrationRepository 可以查询到 ClientRegistration 对象。
@@ -247,10 +247,10 @@ spring:
           github:
             user-name-attribute: login
           okta:
-            authorization-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/authorize
-            token-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/token
-            user-info-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/userinfo
-            jwk-set-uri: https:/your-subdomain.oktapreview.com/oauth2/v1/keys
+            authorization-uri: https://your-subdomain.oktapreview.com/oauth2/v1/authorize
+            token-uri: https://your-subdomain.oktapreview.com/oauth2/v1/token
+            user-info-uri: https://your-subdomain.oktapreview.com/oauth2/v1/userinfo
+            jwk-set-uri: https://your-subdomain.oktapreview.com/oauth2/v1/keys
 
 ```
 
@@ -373,10 +373,10 @@ apple_config.json
 {
   "providerId": "Apple",
   "additionalInfo": null,
-  "accessTokenUri": "https:/appleid.apple.com/auth/token",
-  "authorizationUri": "https:/appleid.apple.com/auth/authorize?response_mode=form_post",
+  "accessTokenUri": "https://appleid.apple.com/auth/token",
+  "authorizationUri": "https://appleid.apple.com/auth/authorize?response_mode=form_post",
   "scope": ["email","openid","name"],
-  "jwkSetUri": "https:/appleid.apple.com/auth/keys",
+  "jwkSetUri": "https://appleid.apple.com/auth/keys",
   "userInfoUri": null,
   "clientAuthenticationMethod": "POST",
   "userNameAttributeName": "email",
@@ -392,7 +392,7 @@ apple_config.json
   "comment": null,
   "loginButtonIcon": "apple-logo",
   "loginButtonLabel": "Apple",
-  "helpLink": "https:/developer.apple.com/sign-in-with-apple/get-started/"
+  "helpLink": "https://developer.apple.com/sign-in-with-apple/get-started/"
 }
 ```
 
@@ -401,11 +401,11 @@ facebook_config.json：
 ```json
 {
   "providerId": "Facebook",
-  "accessTokenUri": "https:/graph.facebook.com/v2.8/oauth/access_token",
-  "authorizationUri": "https:/www.facebook.com/v2.8/dialog/oauth",
+  "accessTokenUri": "https://graph.facebook.com/v2.8/oauth/access_token",
+  "authorizationUri": "https://www.facebook.com/v2.8/dialog/oauth",
   "scope": ["email","public_profile"],
   "jwkSetUri": null,
-  "userInfoUri": "https:/graph.facebook.com/me?fields=id,name,first_name,last_name,email",
+  "userInfoUri": "https://graph.facebook.com/me?fields=id,name,first_name,last_name,email",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "email",
   "mapperConfig": {
@@ -420,7 +420,7 @@ facebook_config.json：
   "comment": null,
   "loginButtonIcon": "facebook-logo",
   "loginButtonLabel": "Facebook",
-  "helpLink": "https:/developers.facebook.com/docs/facebook-login/web#logindialog"
+  "helpLink": "https://developers.facebook.com/docs/facebook-login/web#logindialog"
 }
 ```
 
@@ -429,11 +429,11 @@ github_config.json：
 ```json
 {
   "providerId": "Github",
-  "accessTokenUri": "https:/github.com/login/oauth/access_token",
-  "authorizationUri": "https:/github.com/login/oauth/authorize",
+  "accessTokenUri": "https://github.com/login/oauth/access_token",
+  "authorizationUri": "https://github.com/login/oauth/authorize",
   "scope": ["read:user","user:email"],
   "jwkSetUri": null,
-  "userInfoUri": "https:/api.github.com/user",
+  "userInfoUri": "https://api.github.com/user",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "login",
   "mapperConfig": {
@@ -443,10 +443,10 @@ github_config.json：
       "tenantNameStrategy": "DOMAIN"
     }
   },
-  "comment": "In order to log into ThingsBoard you need to have user's email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to <a href=\"https:/docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\">Github Documentation</a>",
+  "comment": "In order to log into ThingsBoard you need to have user's email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to <a href=\"https://docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\">Github Documentation</a>",
   "loginButtonIcon": "github-logo",
   "loginButtonLabel": "Github",
-  "helpLink": "https:/docs.github.com/en/developers/apps/creating-an-oauth-app"
+  "helpLink": "https://docs.github.com/en/developers/apps/creating-an-oauth-app"
 }
 
 ```
@@ -457,11 +457,11 @@ google_config.json：
 {
   "providerId": "Google",
   "additionalInfo": null,
-  "accessTokenUri": "https:/oauth2.googleapis.com/token",
-  "authorizationUri": "https:/accounts.google.com/o/oauth2/v2/auth",
+  "accessTokenUri": "https://oauth2.googleapis.com/token",
+  "authorizationUri": "https://accounts.google.com/o/oauth2/v2/auth",
   "scope": ["email","openid","profile"],
-  "jwkSetUri": "https:/www.googleapis.com/oauth2/v3/certs",
-  "userInfoUri": "https:/openidconnect.googleapis.com/v1/userinfo",
+  "jwkSetUri": "https://www.googleapis.com/oauth2/v3/certs",
+  "userInfoUri": "https://openidconnect.googleapis.com/v1/userinfo",
   "clientAuthenticationMethod": "BASIC",
   "userNameAttributeName": "email",
   "mapperConfig": {
@@ -476,7 +476,7 @@ google_config.json：
   "comment": null,
   "loginButtonIcon": "google-logo",
   "loginButtonLabel": "Google",
-  "helpLink": "https:/developers.google.com/adwords/api/docs/guides/authentication"
+  "helpLink": "https://developers.google.com/adwords/api/docs/guides/authentication"
 }
 ```
 

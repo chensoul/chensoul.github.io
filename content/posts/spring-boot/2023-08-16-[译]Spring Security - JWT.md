@@ -72,7 +72,7 @@ j-v0mHdJrLbxD7LcZJEGRScCSyITzo6Z59_jG_97oNLFgBKJbh12nvvPibHpUYWmZuHkoGvuy5RLUA
 - Spring Web
 - Spring Security
 
-![Maven Project Java](https:/www.tutorialspoint.com/spring_security../../../static/images/maven_project_java.webp)
+![Maven Project Java](https://www.tutorialspoint.com/spring_security../../../static/images/maven_project_java.webp)
 
 我们生成项目，下载后将其解压到我们选择的文件夹中。然后我们可以使用我们选择的任何 IDE。我将使用 Spring Tools Suite 4，因为它针对 Spring 应用程序进行了最优化。
 
@@ -89,10 +89,10 @@ j-v0mHdJrLbxD7LcZJEGRScCSyITzo6Z59_jG_97oNLFgBKJbh12nvvPibHpUYWmZuHkoGvuy5RLUA
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http:/maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http:/maven.apache.org/POM/4.0.0
-   https:/maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   https://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <groupId>org.springframework.boot</groupId>
@@ -549,14 +549,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 正如我们所看到的，我们已经完成了所有这些，现在我们的应用程序已准备就绪。让我们启动应用程序并使用邮递员来发出我们的请求。
 
-![Postman Body](https:/www.tutorialspoint.com/spring_security../../../static/images/postman_body.webp)
+![Postman Body](https://www.tutorialspoint.com/spring_security../../../static/images/postman_body.webp)
 
 在这里，我们发出了第一个获取令牌的请求，正如我们所看到的，在提供正确的用户名/密码组合后，我们将取回令牌。
 
 现在，在标头中使用该标记，让我们调用 /hello 端点。
 
-![Postman Authorization Body](https:/www.tutorialspoint.com/spring_security../../../static/images/postman_authorization_body.webp)
+![Postman Authorization Body](https://www.tutorialspoint.com/spring_security../../../static/images/postman_authorization_body.webp)
 
 正如我们所看到的，由于请求已通过身份验证，我们得到了所需的响应。现在，如果我们篡改令牌或不发送 Authorization 标头，我们将收到应用程序中配置的 401 错误。这确保了使用 JWT 保护我们的请求。
 
-原文链接：[https:/www.tutorialspoint.com/spring_security/spring_security_with_jwt.htm](https:/www.tutorialspoint.com/spring_security/spring_security_with_jwt.htm)
+原文链接：[https://www.tutorialspoint.com/spring_security/spring_security_with_jwt.htm](https://www.tutorialspoint.com/spring_security/spring_security_with_jwt.htm)

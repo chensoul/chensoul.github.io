@@ -13,7 +13,7 @@ tags: [ gitlab,docker ]
 
 ### 配置 external_url
 
-参考 https:/docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
+参考 https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
 
 ```yaml
 services:
@@ -24,15 +24,15 @@ services:
     hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https:/gitlab.example.com'
+        external_url 'https://gitlab.example.com'
     ports:
       - '80:80'
       - '443:443'
       - '22:22'
     volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
+      - '/srv/gitlab/config://etc/gitlab'
+      - '/srv/gitlab/logs://var/log/gitlab'
+      - '/srv/gitlab/data://var/opt/gitlab'
     shm_size: '256m'
 ```
 
@@ -61,7 +61,7 @@ docker logs -f gitlab
 127.0.0.1 gitlab.example.com
 ```
 
-打开浏览器访问：https:/gitlab.example.com/ ，用户名 root，密码通过下面命令查看：
+打开浏览器访问：https://gitlab.example.com/ ，用户名 root，密码通过下面命令查看：
 
 ```bash
 cat /srv/gitlab/config/initial_root_password
@@ -69,7 +69,7 @@ cat /srv/gitlab/config/initial_root_password
 
 ### 修改默认端口
 
-参考 https:/github.com/hutchgrant/gitlab-docker-local/，
+参考 https://github.com/hutchgrant/gitlab-docker-local/，
 
 ```yaml
 services:
@@ -80,15 +80,15 @@ services:
     hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https:/gitlab.example.com:3143'
+        external_url 'https://gitlab.example.com:3143'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
     ports:
       - '3143:443'
       - '3122:22'
     volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
+      - '/srv/gitlab/config://etc/gitlab'
+      - '/srv/gitlab/logs://var/log/gitlab'
+      - '/srv/gitlab/data://var/opt/gitlab'
     shm_size: '256m'
 ```
 
@@ -105,8 +105,8 @@ gitlab_rails['time_zone'] = 'Asia/Shanghai'
 
 ```toml
 # 解决头像显示异常问题
-gitlab_rails['gravatar_plain_url'] = 'http:/cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
-gitlab_rails['gravatar_ssl_url'] = 'https:/cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
+gitlab_rails['gravatar_plain_url'] = 'http://cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
+gitlab_rails['gravatar_ssl_url'] = 'https://cravatar.cn/avatar/%{hash}?s=%{size}&d=identicon'
 ```
 
 ### 关闭不需要的服务
@@ -202,7 +202,7 @@ postgresql['max_connections'] = 60
 
 ### 使用自签名证书（不建议）
 
-参考 https:/github.com/danieleagle/gitlab-https-docker#generating-a-self-signed-certificate ，生成服务端 key：
+参考 https://github.com/danieleagle/gitlab-https-docker#generating-a-self-signed-certificate ，生成服务端 key：
 
 ```bash
 sudo openssl genrsa -out server-key.pem 4096
@@ -244,7 +244,7 @@ services:
     hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https:/gitlab.example.com:3143'
+        external_url 'https://gitlab.example.com:3143'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
         nginx['listen_port'] = 443
         nginx['redirect_http_to_https'] = true
@@ -254,16 +254,16 @@ services:
       - '3143:443'
       - '3122:22'
     volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
+      - '/srv/gitlab/config://etc/gitlab'
+      - '/srv/gitlab/logs://var/log/gitlab'
+      - '/srv/gitlab/data://var/opt/gitlab'
     shm_size: '256m'
 ```
 
 为了从主机或网络上的其他地方的 gitlab 克隆，我们需要告诉 git 接受我们的自签名证书。
 
 ```bash
-git config --global http."https:/gitlab.example.com:3143/".sslCAInfo /srv/gitlab/ssl/server-cert.pem
+git config --global http."https://gitlab.example.com:3143/".sslCAInfo /srv/gitlab/ssl/server-cert.pem
 ```
 
 ### 使用外部 Nginx（建议）
@@ -279,7 +279,7 @@ services:
     hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https:/gitlab.example.com'
+        external_url 'https://gitlab.example.com'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
 
         gitlab_workhorse['listen_network'] = "tcp"
@@ -290,9 +290,9 @@ services:
       - '8000:8000'
       - '3122:22'
     volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
+      - '/srv/gitlab/config://etc/gitlab'
+      - '/srv/gitlab/logs://var/log/gitlab'
+      - '/srv/gitlab/data://var/opt/gitlab'
     shm_size: '256m'
 ```
 
@@ -314,7 +314,7 @@ map $http_upgrade $connection_upgrade {
 server {
     listen 80;
     server_name gitlab.example.com;
-    rewrite ^ https:/$http_host$request_uri? permanent;
+    rewrite ^ https://$http_host$request_uri? permanent;
 }
 
 server {
@@ -331,7 +331,7 @@ server {
      access_log /var/log/nginx/gitlab.log;
 
      location / {
-        proxy_pass     http:/127.0.0.1:8000;
+        proxy_pass     http://127.0.0.1:8000;
 				proxy_read_timeout  90;
     		proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -356,7 +356,7 @@ sudo cp server-*.pem /etc/nginx/ssl/
 
 ### 使用外部 Redis（可选）
 
-参考 [Using a non-packaged Redis instance](https:/github.com/shamithmc/gitlab-docker/blob/master/doc/settings/redis.md#using-a-non-packaged-redis-instance)，进入容器，修改 /etc/gitlab/gitlab.rb
+参考 [Using a non-packaged Redis instance](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/redis.md#using-a-non-packaged-redis-instance)，进入容器，修改 /etc/gitlab/gitlab.rb
 
 ```bash
 redis['enable'] = false
@@ -366,7 +366,7 @@ gitlab_rails['redis_port'] = 6379
 
 ### 使用外部 Postgres（可选）
 
-参考 [Using a non-packaged PostgreSQL database management server](https:/github.com/shamithmc/gitlab-docker/blob/master/doc/settings/database.md#using-a-non-packaged-postgresql-database-management-server)
+参考 [Using a non-packaged PostgreSQL database management server](https://github.com/shamithmc/gitlab-docker/blob/master/doc/settings/database.md#using-a-non-packaged-postgresql-database-management-server)
 
 在 Postgres 修改 `/var/lib/pgsql/data/pg_hba.conf` 令其支持密码登录
 
@@ -446,7 +446,7 @@ services:
     hostname: 'gitlab.wesine.com.cn'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https:/gitlab.wesine.com.cn'
+        external_url 'https://gitlab.wesine.com.cn'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
         
 				# 使用外部 Niginx
@@ -458,8 +458,8 @@ services:
         # 时区
         gitlab_rails['time_zone'] = 'Asia/Shanghai'
         # 解决头像显示异常问题
-        gitlab_rails['gravatar_plain_url'] = 'http:/gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
-        gitlab_rails['gravatar_ssl_url'] = 'https:/gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+        gitlab_rails['gravatar_plain_url'] = 'http://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
+        gitlab_rails['gravatar_ssl_url'] = 'https://gravatar.loli.net/avatar/%{hash}?s=%{size}&d=identicon'
         
         # 关闭容器仓库功能
         gitlab_rails['gitlab_default_projects_features_container_registry'] = false
@@ -526,9 +526,9 @@ services:
       - '8000:8000'
       - '3122:22'
     volumes:
-      - '/srv/config:/etc/gitlab'
-      - '/srv/logs:/var/log/gitlab'
-      - '/srv/data:/var/opt/gitlab'
+      - '/srv/config://etc/gitlab'
+      - '/srv/logs://var/log/gitlab'
+      - '/srv/data://var/opt/gitlab'
     shm_size: '256m'
 
   gitlab-runner:
@@ -536,8 +536,8 @@ services:
     container_name: gitlab-runner
     restart: always
     volumes:
-      - '/srv/gitlab-runner:/etc/gitlab-runner'
-      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/srv/gitlab-runner://etc/gitlab-runner'
+      - '/var/run/docker.sock://var/run/docker.sock'
 ```
 
 将上面文件保存为 gitlab.yaml，然后执行安装命令：
@@ -564,7 +564,7 @@ febd4b504da8   gitlab-runner   0.00%     21.61MiB / 31.26GiB   0.07%     54kB / 
 
 ## 安装 Gitlab Runner
 
-参考 [部署gitlab-runner](https:/xubiaosunny.top/post/gitlab_container_registry_and_auto_build_images_pfkb.html#%E9%83%A8%E7%BD%B2gitlab-runner)，在 docker-compose.yaml 文件中添加：
+参考 [部署gitlab-runner](https://xubiaosunny.top/post/gitlab_container_registry_and_auto_build_images_pfkb.html#%E9%83%A8%E7%BD%B2gitlab-runner)，在 docker-compose.yaml 文件中添加：
 
 ```yaml
   gitlab-runner:
@@ -572,7 +572,7 @@ febd4b504da8   gitlab-runner   0.00%     21.61MiB / 31.26GiB   0.07%     54kB / 
     container_name: gitlab-runner
     restart: always
     volumes:
-      - '/srv/gitlab-runner:/etc/gitlab-runner'
+      - '/srv/gitlab-runner://etc/gitlab-runner'
 ```
 
 在 管理中心 -> CICD -> Runner ，新建实例 Runner，标签名称设置为 docker-runner，记住 Runner 身份验证令牌
@@ -586,20 +586,20 @@ docker exec -it gitlab-runner bash
 复制并粘贴以下命令到您的命令行中，注册 runner。
 
 ```bash
-gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
+gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
 ```
 
 - `glrt-JhEv5bxs4ezxY53uyYiz` 为新建 Runner 实例时的 Runner 身份验证令牌
 
-如果提示：`couldn't execute POST against https:/gitlab.example.com/api/v4/runners/verify: Post "https:/gitlab.example.com/api/v4/runners/verify": dial tcp 172.28.0.2:443: connect: connection refused`，原因是 gitlab.example.com 这个域名无法通过 DNS 解析。
+如果提示：`couldn't execute POST against https://gitlab.example.com/api/v4/runners/verify: Post "https://gitlab.example.com/api/v4/runners/verify": dial tcp 172.28.0.2:443: connect: connection refused`，原因是 gitlab.example.com 这个域名无法通过 DNS 解析。
 
 解决办法两种：
 
 - 给该域名进行 DNS 解析，这个需要自己注册域名
 
-- 通过 extra_hosts 添加域名映射，可以参考 https:/gitee.com/xuxiaowei-com-cn/GitLab/blob/main/docker-compose.yml
+- 通过 extra_hosts 添加域名映射，可以参考 https://gitee.com/xuxiaowei-com-cn/GitLab/blob/main/docker-compose.yml
 
-- 自定义网络并添加别名，参考：https:/github.com/hutchgrant/gitlab-docker-local/blob/master/docker-compose.yml
+- 自定义网络并添加别名，参考：https://github.com/hutchgrant/gitlab-docker-local/blob/master/docker-compose.yml
 
   ```yaml
   services:
@@ -610,7 +610,7 @@ gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezx
       hostname: 'gitlab.example.com'
       environment:
         GITLAB_OMNIBUS_CONFIG: |
-          external_url 'https:/gitlab.example.com'
+          external_url 'https://gitlab.example.com'
           gitlab_rails['gitlab_shell_ssh_port'] = 3122
   
           gitlab_workhorse['listen_network'] = "tcp"
@@ -618,7 +618,7 @@ gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezx
           nginx['enable'] = false
           unicorn['enable'] = false
   
-          registry_external_url 'https:/gitlab.example.com:4567'
+          registry_external_url 'https://gitlab.example.com:4567'
           registry_nginx['enable'] = false
       ports:
         - '8000:8000'
@@ -629,9 +629,9 @@ gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezx
           aliases:
             - gitlab.example.com
       volumes:
-        - '/srv/gitlab/config:/etc/gitlab'
-        - '/srv/gitlab/logs:/var/log/gitlab'
-        - '/srv/gitlab/data:/var/opt/gitlab'
+        - '/srv/gitlab/config://etc/gitlab'
+        - '/srv/gitlab/logs://var/log/gitlab'
+        - '/srv/gitlab/data://var/opt/gitlab'
       shm_size: '256m'
   
     gitlab-runner:
@@ -639,7 +639,7 @@ gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezx
       container_name: gitlab-runner
       restart: always
       volumes:
-        - '/srv/gitlab-runner:/etc/gitlab-runner'
+        - '/srv/gitlab-runner://etc/gitlab-runner'
       networks:
         - dev-net
   
@@ -649,21 +649,21 @@ gitlab-runner register --url https:/gitlab.example.com --token glrt-JhEv5bxs4ezx
         name: development
   ```
   
-- 不使用域名，而是使用 IP:Port，例如：http:/192.168.1.107:8000/
+- 不使用域名，而是使用 IP:Port，例如：http://192.168.1.107:8000/
 
 ### 注册一个使用 Docker executor 的 runner
 
-参考 [使用 Docker 构建 Docker 镜像](https:/docs.gitlab.cn/jh/ci/docker/using_docker_build.html) 。要为 CI/CD 作业启用 Docker 命令，您可以使用：
+参考 [使用 Docker 构建 Docker 镜像](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html) 。要为 CI/CD 作业启用 Docker 命令，您可以使用：
 
-- [Shell executor](https:/docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-shell-executor)
-- [Docker-in-Docker](https:/docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-in-docker)
-- [Docker 套接字绑定](https:/docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-套接字绑定)
+- [Shell executor](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-shell-executor)
+- [Docker-in-Docker](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-in-docker)
+- [Docker 套接字绑定](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-套接字绑定)
 
 #### 使用 Docker-in-Docker 
 
 ```bash
 sudo gitlab-runner register \
-	--url https:/gitlab.example.com \
+	--url https://gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-privileged \
@@ -689,7 +689,7 @@ connection_max_age = "15m0s"
 
 [[runners]]
   name = "runner"
-  url = "http:/192.168.1.107:8000/"
+  url = "http://192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
   [runners.cache]
@@ -701,7 +701,7 @@ connection_max_age = "15m0s"
     disable_entrypoint_overwrite = false
     oom_kill_disable = false
     disable_cache = false
-    volumes = ["/root/.m2:/root/.m2"] # 配置挂载路径
+    volumes = ["/root/.m2://root/.m2"] # 配置挂载路径
     shm_size = 0
     network_mtu = 0
 ```
@@ -714,15 +714,15 @@ docker exec -it gitlab-runner gitlab-runner restart
 
 #### 使用 Docker Socket
 
-要使 Docker 在镜像上下文中可用，您需要将 `/var/run/docker.sock` 挂载到启动的容器中。要使用 Docker executor 执行此操作，您需要将 `"/var/run/docker.sock:/var/run/docker.sock"` 添加到 `[runners.docker]` 部分的卷中。
+要使 Docker 在镜像上下文中可用，您需要将 `/var/run/docker.sock` 挂载到启动的容器中。要使用 Docker executor 执行此操作，您需要将 `"/var/run/docker.sock://var/run/docker.sock"` 添加到 `[runners.docker]` 部分的卷中。
 
 ```bash
 sudo gitlab-runner register \
-	--url https:/gitlab.example.com \
+	--url https://gitlab.example.com \
 	--token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-image docker:latest \
-  --docker-volumes /var/run/docker.sock:/var/run/docker.sock
+  --docker-volumes /var/run/docker.sock://var/run/docker.sock
 ```
 
 修改 /srv/gitlab/gitlab-runner/config.toml ：
@@ -738,7 +738,7 @@ connection_max_age = "15m0s"
 
 [[runners]]
   name = "runner"
-  url = "http:/192.168.1.107:8000/"
+  url = "http://192.168.1.107:8000/"
   token = "glrt-bEe2isyLds2kaxxS74hP"
   executor = "docker"
   [runners.cache]
@@ -751,7 +751,7 @@ connection_max_age = "15m0s"
     oom_kill_disable = false
     disable_cache = false
     pull_policy = "if-not-present"
-    volumes = ["/etc/docker/daemon.json:ro","/var/run/docker.sock","/root/.m2:/root/.m2"]
+    volumes = ["/etc/docker/daemon.json:ro","/var/run/docker.sock","/root/.m2://root/.m2"]
     shm_size = 0
     network_mtu = 0
 ```
@@ -761,7 +761,7 @@ connection_max_age = "15m0s"
 - 在 docker 执行器内是无法访问没有通过 DNS 解析的 gitlab 域名的。需要配置 host 文件，一种方式是挂载 /etc/hosts 文件，另一种方式是添加下面配置：
 
   ```bash
-      extra_hosts = ["https:/gitlab.example.com:192.168.1.107"]
+      extra_hosts = ["https://gitlab.example.com:192.168.1.107"]
       network_mode = "host"
   ```
 
@@ -770,7 +770,7 @@ connection_max_age = "15m0s"
 ```json
 {
    "registry-mirrors" : [
-    "https:/docker.1panel.live"
+    "https://docker.1panel.live"
    ]
 }
 ```
@@ -780,13 +780,13 @@ connection_max_age = "15m0s"
 - Maven 镜像加速。在宿主机的 /root/.m2 目录下创建 settings.xml，使用阿里云 Maven 仓库。
 
   ```xml
-  <settings xmlns="http:/maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http:/maven.apache.org/SETTINGS/1.0.0 https:/maven.apache.org/xsd/settings-1.0.0.xsd">
+  <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
     <mirrors>
       <mirror>
         <id>alimaven</id>
         <name>aliyun maven</name>
-        <url>http:/maven.aliyun.com/nexus/content/groups/public/</url>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         <mirrorOf>central</mirrorOf>
       </mirror>
     </mirrors>
@@ -858,7 +858,7 @@ connection_max_age = "15m0s"
 
 | 键                 | 值                                                      | 描述                                    | 说明                                                         |
 | ------------------ | ------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------ |
-| `SETTINGS_RAW_URL` | `http:/172.25.25.14:48081/repository/raw/settings.xml` | 自建 Maven 私库的 settings.xml 配置文件 | 使用 Nexus 搭建了一个 Maven 私库，包含了众多 Maven (镜像)仓库 ，用于加速依赖下载 |
+| `SETTINGS_RAW_URL` | `http://172.25.25.14:48081/repository/raw/settings.xml` | 自建 Maven 私库的 settings.xml 配置文件 | 使用 Nexus 搭建了一个 Maven 私库，包含了众多 Maven (镜像)仓库 ，用于加速依赖下载 |
 
 ### 修改初始密码
 
@@ -933,24 +933,24 @@ sudo sh gitlab_service.sh root /opt/docker/gitlab.yaml
 
 ### 访问
 
-访问 https:/gitlab.example.com，修改默认密码，创建一个测试用户：test
+访问 https://gitlab.example.com，修改默认密码，创建一个测试用户：test
 
 ### 添加 SSH Key
 
-[Add](https:/docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) / [generate](https:/docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) a ssh key
+[Add](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) / [generate](https://docs.gitlab.com/ce/ssh/README.html#generating-a-new-ssh-key-pair) a ssh key
 
 ```
 tail ~/.ssh/id_rsa.pub
 ```
 
-拷贝并保存到 https:/gitlab.example.com/profile/keys
+拷贝并保存到 https://gitlab.example.com/profile/keys
 
 ### 创建新项目
 
 创建一个项目 example ，克隆项目：
 
 ```bash
-git clone ssh:/git@gitlab.example.com:3122/root/example.git
+git clone ssh://git@gitlab.example.com:3122/root/example.git
 ```
 
 测试添加文件并提交：
@@ -968,7 +968,7 @@ git push -u origin main
 
 ### 备份数据
 
-参考 [Official Docs](https:/docs.gitlab.com/ee/raketasks/backup_restore.html)，备份：
+参考 [Official Docs](https://docs.gitlab.com/ee/raketasks/backup_restore.html)，备份：
 
 ```bash
 docker exec -it gitlab gitlab-rake gitlab:backup:create
@@ -984,7 +984,7 @@ $ ls -l --color=auto /srv/gitlab/data/backups/
 
 ### 备份 Gitlab 配置
 
-参考 [recommends storing the configuration backups seperate from your application backups](https:/docs.gitlab.com/omnibus/settings/backups.html)：
+参考 [recommends storing the configuration backups seperate from your application backups](https://docs.gitlab.com/omnibus/settings/backups.html)：
 
 ```bash
 sudo sh -c 'umask 0077; tar cfz /data/backups/$(date "+%s-gitlab-config.tgz") -C /srv/gitlab config ssl'
@@ -998,7 +998,7 @@ sudo sh -c 'umask 0077; tar cfz /data/backups/$(date "+%s-gitlab-runner-ssl.tgz"
 
 ### 定时备份
 
-参考 [gitlab_backup.sh](https:/github.com/hutchgrant/gitlab-docker-local/blob/master/gitlab_backup.sh)，备份脚本：
+参考 [gitlab_backup.sh](https://github.com/hutchgrant/gitlab-docker-local/blob/master/gitlab_backup.sh)，备份脚本：
 
 ```bash
 CONTAINER="gitlab"
@@ -1115,7 +1115,7 @@ docker compose up -d
 
 ## 参考文章
 
-- [Running Gitlab CE Via Docker Behind A Reverse Proxy On Ubuntu](https:/techoverflow.net/2018/12/17/running-gitlab-ce-via-docker-behind-a-reverse-proxy-on-ubuntu/)
-- https:/github.com/hutchgrant/gitlab-docker-local/
-- https:/gitee.com/xuxiaowei-com-cn/GitLab
-- [Gitlab系列（3）—— 基于Gitlab-runner 的CI/CD集成](https:/blog.csdn.net/tergou/article/details/120397845)
+- [Running Gitlab CE Via Docker Behind A Reverse Proxy On Ubuntu](https://techoverflow.net/2018/12/17/running-gitlab-ce-via-docker-behind-a-reverse-proxy-on-ubuntu/)
+- https://github.com/hutchgrant/gitlab-docker-local/
+- https://gitee.com/xuxiaowei-com-cn/GitLab
+- [Gitlab系列（3）—— 基于Gitlab-runner 的CI/CD集成](https://blog.csdn.net/tergou/article/details/120397845)

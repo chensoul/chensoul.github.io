@@ -13,15 +13,15 @@ tags: [spring-boot]
 
 ## 示例代码
 
-本文附有 GitHub 上的工作[代码示例](https:/github.com/thombergs/code-examples/tree/master/spring-boot/exception-handling)。
+本文附有 GitHub 上的工作[代码示例](https://github.com/thombergs/code-examples/tree/master/spring-boot/exception-handling)。
 
 ## 介绍
 
 Spring Boot 为我们提供了处理异常的工具，而不仅仅是简单的“try-catch”块。为了使用这些工具，我们应用了一些注释，使我们能够将异常处理视为横切关注点：
 
-- [`@ResponseStatus`](https:/reflectoring.io/spring-boot-exception-handling/#responsestatus)
-- [`@ExceptionHandler`](https:/reflectoring.io/spring-boot-exception-handling/#exceptionhandler)
-- [`@ControllerAdvice`](https:/reflectoring.io/spring-boot-exception-handling/#controlleradvice)
+- [`@ResponseStatus`](https://reflectoring.io/spring-boot-exception-handling/#responsestatus)
+- [`@ExceptionHandler`](https://reflectoring.io/spring-boot-exception-handling/#exceptionhandler)
+- [`@ControllerAdvice`](https://reflectoring.io/spring-boot-exception-handling/#controlleradvice)
 
 在深入了解这些注释之前，我们将首先了解 Spring 如何处理 Web 控制器抛出的异常——这是捕获异常的最后一道防线。
 
@@ -76,7 +76,7 @@ server:
     include-exception: false
 ```
 
-在 `application.yml` 中使用这些 [Spring Boot 服务器属性](https:/docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#server-properties)，我们可以在某种程度上改变错误响应。
+在 `application.yml` 中使用这些 [Spring Boot 服务器属性](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#server-properties)，我们可以在某种程度上改变错误响应。
 
 现在，如果我们使用无效的 `id` 再次调用 `/product` API，我们将得到以下响应：
 
@@ -215,7 +215,7 @@ public ResponseEntity<String> handleNoSuchElementFoundException(
 
 同样，处理程序方法支持各种返回类型，例如 `ResponseEntity` 、 `String` 甚至 `void` 。
 
-在 `@ExceptionHandler` [java 文档](https:/docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html)中查找更多输入和返回类型。
+在 `@ExceptionHandler` [java 文档](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html)中查找更多输入和返回类型。
 
 在异常处理函数中，我们可以通过输入参数和返回类型的形式使用许多不同的选项，因此我们可以完全控制错误响应。
 
@@ -369,12 +369,12 @@ public class ProductController {
 
 在错误响应中提供堆栈跟踪可以使我们的开发人员和 QA 工程师免去爬行日志文件的麻烦。
 
-正如我们在 [Spring Boot 的默认异常处理机制](https:/reflectoring.io/spring-boot-exception-handling/#spring-boots-default-exception-handling-mechanism)中看到的，Spring 已经为我们提供了这个功能。但现在，由于我们自己处理错误响应，因此这也需要我们自己处理。
+正如我们在 [Spring Boot 的默认异常处理机制](https://reflectoring.io/spring-boot-exception-handling/#spring-boots-default-exception-handling-mechanism)中看到的，Spring 已经为我们提供了这个功能。但现在，由于我们自己处理错误响应，因此这也需要我们自己处理。
 
 为了实现这一点，我们首先引入了一个名为 `reflectoring.trace` 的服务器端配置属性，如果将其设置为 `true` ，为了实现此目的，我们首先引入了一个名为 `reflectoring.trace` 的服务器端配置属性，如果将其设置为 `true` ，将启用响应中的 `stackTrace` 字段。要实际在 API 响应中获取 `stackTrace` ，我们的客户端还必须传递带有值 `true` 的 `trace` 参数：
 
 ```bash
-curl --location --request GET 'http:/localhost:8080/product/1?trace=true'
+curl --location --request GET 'http://localhost:8080/product/1?trace=true'
 ```
 
 现在，由于 `stackTrace` 的行为由属性文件中的功能标志控制，因此当我们在生产环境中部署时，我们可以将其删除或将其设置为 `false` 。
@@ -479,7 +479,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 }
 ```
 
-处理函数的主体和其他支持代码被省略，因为它们与我们在 @ExceptionHandler 部分看到的代码几乎相同。请在 Github Repo 的 [GlobalExceptionHandler](https:/github.com/thombergs/code-examples/blob/master/spring-boot/exception-handling/src/main/java/io/reflectoring/exception/exception/GlobalExceptionHandler.java) 类中找到完整的代码。
+处理函数的主体和其他支持代码被省略，因为它们与我们在 @ExceptionHandler 部分看到的代码几乎相同。请在 Github Repo 的 [GlobalExceptionHandler](https://github.com/thombergs/code-examples/blob/master/spring-boot/exception-handling/src/main/java/io/reflectoring/exception/exception/GlobalExceptionHandler.java) 类中找到完整的代码。
 
 有几件事是新的，我们稍后会讨论。这里的一个主要区别是这些处理程序将处理应用程序中所有控制器抛出的异常，而不仅仅是 `ProductController` 。
 
@@ -488,7 +488,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 - `@ControllerAdvice("com.reflectoring.controller")` ：我们可以在注释的 `value` 或 `basePackages` 参数中传递包名称或包名称列表。这样，控制器建议将仅处理该包控制器的异常。
 - `@ControllerAdvice(annotations = Advised.class)` ：只有标有 `@Advised` 注释的控制器才会由控制器建议处理。
 
-在 `@ControllerAdvice` [注释文档](https:/www.javadoc.io/doc/org.springframework/spring-web/4.3.8.RELEASE/org/springframework/web/bind/annotation/ControllerAdvice.html)中查找其他参数。
+在 `@ControllerAdvice` [注释文档](https://www.javadoc.io/doc/org.springframework/spring-web/4.3.8.RELEASE/org/springframework/web/bind/annotation/ControllerAdvice.html)中查找其他参数。
 
 ### `ResponseEntityExceptionHandler`
 
@@ -527,4 +527,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 感谢您的阅读！您可以在 GitHub 上找到工作代码。
 
-原文链接：[https:/reflectoring.io/spring-boot-exception-handling/](https:/reflectoring.io/spring-boot-exception-handling/)
+原文链接：[https://reflectoring.io/spring-boot-exception-handling/](https://reflectoring.io/spring-boot-exception-handling/)

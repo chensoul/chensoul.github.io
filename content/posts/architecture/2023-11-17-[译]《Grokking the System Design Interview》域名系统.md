@@ -7,7 +7,7 @@ categories: ["Architecture"]
 tags: ["architecture"]
 ---
 
-这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https:/www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-name-system-dns) 这篇章节。
+这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-name-system-dns) 这篇章节。
 
 ---
 
@@ -25,7 +25,7 @@ Let’s consider the example of a mobile phone where a unique number is associat
 
 > 让我们考虑一个移动电话的示例，其中每个用户都有一个唯一的号码。为了给朋友打电话，我们首先可以尝试记住一些电话号码。然而，随着联系人数量的增加，我们将不得不使用电话簿来跟踪所有联系人。这样，每当我们需要打电话时，我们都会查阅电话簿并拨打我们需要的号码。
 
-Similarly, computers are uniquely identified by IP addresses—for example, `104.18.2.119` is an IP address. We use IP addresses to visit a website hosted on a machine. Since humans cannot easily remember IP addresses to visit domain names (an example domain name being [educative.io](http:/educative.io/)), we need a phone book-like repository that can maintain all mappings of domain names to IP addresses. In this chapter, we’ll see how DNS serves as the Internet’s phone book.
+Similarly, computers are uniquely identified by IP addresses—for example, `104.18.2.119` is an IP address. We use IP addresses to visit a website hosted on a machine. Since humans cannot easily remember IP addresses to visit domain names (an example domain name being [educative.io](http://educative.io/)), we need a phone book-like repository that can maintain all mappings of domain names to IP addresses. In this chapter, we’ll see how DNS serves as the Internet’s phone book.
 
 > 同样，计算机由 IP 地址唯一标识，例如， `104.18.2.119` 是一个 IP 地址。我们使用 IP 地址来访问计算机上托管的网站。由于人类无法轻易记住 IP 地址来访问域名（例如域名 eduducative.io），因此我们需要一个类似电话簿的存储库来维护域名到 IP 地址的所有映射。在本章中，我们将了解 DNS 如何充当互联网的电话簿。
 
@@ -128,7 +128,7 @@ There are mainly four types of servers in the DNS hierarchy:
 
    > DNS 解析器：解析器启动查询序列并将请求转发到其他 DNS 名称服务器。通常，DNS 解析器位于用户网络的内部。然而，DNS 解析器还可以通过缓存技术来满足用户的 DNS 查询，我们很快就会看到。这些服务器也可以称为本地或默认服务器。
 
-2. **Root-level name servers:** These servers receive requests from local servers. Root name servers maintain name servers based on top-level domain names, such as `.com`, `.edu`, `.us`, and so on. For instance, when a user requests the IP address of [educative.io](http:/educative.io/), root-level name servers will return a list of top-level domain (TLD) servers that hold the IP addresses of the `.io` domain.
+2. **Root-level name servers:** These servers receive requests from local servers. Root name servers maintain name servers based on top-level domain names, such as `.com`, `.edu`, `.us`, and so on. For instance, when a user requests the IP address of [educative.io](http://educative.io/), root-level name servers will return a list of top-level domain (TLD) servers that hold the IP addresses of the `.io` domain.
 
    > 根级名称服务器：这些服务器接收来自本地服务器的请求。根名称服务器维护基于顶级域名的名称服务器，例如 `.com` 、 `.edu` 、 `.us` 等。例如，当用户请求 educative.io 的 IP 地址时，根级名称服务器将返回保存 `.io` 域的 IP 地址的顶级域 (TLD) 服务器列表。
 
@@ -146,11 +146,11 @@ There are mainly four types of servers in the DNS hierarchy:
 >
 > > 问题
 >
-> How are DNS names processed? For example, will [educative.io](http:/educative.io/) be processed from left to right or right to left?
+> How are DNS names processed? For example, will [educative.io](http://educative.io/) be processed from left to right or right to left?
 >
 > > DNS 名称是如何处理的？例如，educative.io 是从左到右还是从右到左处理？
 >
-> Unlike UNIX files, which are processed from left to right, DNS names are processed from right to left. In the case of [educative.io](http:/educative.io/), the resolvers will first resolve the `.io` part, then `educative`, and so on.
+> Unlike UNIX files, which are processed from left to right, DNS names are processed from right to left. In the case of [educative.io](http://educative.io/), the resolvers will first resolve the `.io` part, then `educative`, and so on.
 >
 > > 与从左到右处理的 UNIX 文件不同，DNS 名称是从右到左处理的。对于 educative.io，解析器将首先解析 `.io` 部分，然后解析 `educative` ，依此类推。
 >
@@ -194,7 +194,7 @@ These days, we’ll find many third-party public DNS resolvers offered by Google
 
 >缓存
 
-**Caching** refers to the temporary storage of frequently requested [resource records](https:/www.educative.io/edpresso/what-is-the-difference-between-dns-a-record-and-cname). A record is a data unit within the DNS database that shows a name-to-value binding. Caching reduces response time to the user and decreases network traffic. When we use caching at different hierarchies, it can reduce a lot of querying burden on the DNS infrastructure. Caching can be implemented in the browser, operating systems, local name server within the user’s network, or the ISP’s DNS resolvers.
+**Caching** refers to the temporary storage of frequently requested [resource records](https://www.educative.io/edpresso/what-is-the-difference-between-dns-a-record-and-cname). A record is a data unit within the DNS database that shows a name-to-value binding. Caching reduces response time to the user and decreases network traffic. When we use caching at different hierarchies, it can reduce a lot of querying burden on the DNS infrastructure. Caching can be implemented in the browser, operating systems, local name server within the user’s network, or the ISP’s DNS resolvers.
 
 > 缓存是指临时存储经常请求的资源记录。 记录是 DNS 数据库中的一个数据单元，显示名称到值的绑定。缓存减少了用户的响应时间并减少了网络流量。当我们在不同的层次结构中使用缓存时，它可以减轻 DNS 基础设施的大量查询负担。缓存可以在浏览器、操作系统、用户网络内的本地名称服务器或 ISP 的 DNS 解析器中实现。
 
@@ -337,7 +337,7 @@ Let’s go through the meaning of the output:
 
   > `Non-authoritative answer` ，顾名思义，是由非 Google 权威服务器提供的答案。它不在 Google 维护的权威域名服务器列表中。那么，答案从何而来？答案由配置为回复我们的 DNS 查询的第二手、第三手和第四手名称服务器提供，例如，我们的大学或办公室 DNS 解析器、我们的 ISP 名称服务器、我们 ISP 的 ISP 名称服务器等。简而言之，它可以被视为 Google 权威域名服务器响应的缓存版本。如果我们尝试多个域名，我们会发现大多数时候我们都会收到缓存的响应。
 
-- If we run the same command multiple times, we’ll receive the same IP addresses list but in a different order each time. The reason for that is DNS is indirectly performing [load balancing](https:/www.educative.io/collection/page/10370001/4941429335392256/4521972679049216). It’s an important term that we’ll gain familiarity with in the coming lessons.
+- If we run the same command multiple times, we’ll receive the same IP addresses list but in a different order each time. The reason for that is DNS is indirectly performing [load balancing](https://www.educative.io/collection/page/10370001/4941429335392256/4521972679049216). It’s an important term that we’ll gain familiarity with in the coming lessons.
 
   > 如果我们多次运行相同的命令，我们将收到相同的 IP 地址列表，但每次的顺序不同。原因是 DNS 间接执行负载平衡。这是一个重要的术语，我们将在接下来的课程中熟悉它。
 
@@ -367,7 +367,7 @@ Let’s go through the meaning of the output:
 >
 > 
 >
-> End users’ operating systems have configuration files (`/etc/resolv.conf` in Linux) with the DNS resolvers’ IP addresses, which in turn obtain all information for them. (Often, DHCP provides the default DNS resolver IP address along with other configurations.) The end-systems request DNS resolves for any DNS queries. DNS resolvers have special software installed to resolve queries through the DNS infrastructure. The root server’s IP addresses are within the special software. Typically, the Berkeley Internet Name Domain (BIND) software is used on DNS resolvers. The [InterNIC](https:/www.internic.net/domain/named.root) maintains the updated list of 13 root servers.
+> End users’ operating systems have configuration files (`/etc/resolv.conf` in Linux) with the DNS resolvers’ IP addresses, which in turn obtain all information for them. (Often, DHCP provides the default DNS resolver IP address along with other configurations.) The end-systems request DNS resolves for any DNS queries. DNS resolvers have special software installed to resolve queries through the DNS infrastructure. The root server’s IP addresses are within the special software. Typically, the Berkeley Internet Name Domain (BIND) software is used on DNS resolvers. The [InterNIC](https://www.internic.net/domain/named.root) maintains the updated list of 13 root servers.
 >
 > > 最终用户的操作系统具有包含 DNS 解析器 IP 地址的配置文件（Linux 中为 `/etc/resolv.conf` ），而 DNS 解析器又会获取其所有信息。 （通常，DHCP 提供默认 DNS 解析器 IP 地址以及其他配置。）终端系统请求 DNS 解析任何 DNS 查询。 DNS 解析器安装了特殊软件来通过 DNS 基础设施解析查询。根服务器的IP地址位于特殊软件内。通常，伯克利互联网名称域 (BIND) 软件用于 DNS 解析器。 InterNIC 维护着 13 个根服务器的更新列表。
 >

@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ spring-security,oauth2]
 ---
 
-原文地址：[https:/mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https:/mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
+原文地址：[https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
 
 
 
@@ -15,7 +15,7 @@ Spring 团队最近发布了他们的授权服务器。OAuth2 一直是一个热
 
 # 设置授权服务器
 
-让我们转到[Spring Initializr](https:/start.spring.io/)并生成项目。
+让我们转到[Spring Initializr](https://start.spring.io/)并生成项目。
 
 ![img](../../../static/images/oauth2-with-spring-part-2-01.webp)
 
@@ -75,7 +75,7 @@ spring:
 
 瞧，我们最小的授权服务器现在已经启动并运行了。
 
-该项目的链接可以[在这里](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/getting-refresh-token)找到。
+该项目的链接可以[在这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/getting-refresh-token)找到。
 
 ## 问题
 

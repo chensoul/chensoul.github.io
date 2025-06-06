@@ -518,7 +518,7 @@ public class ExternalServiceTest {
   @Test
   public void testExampleApi() {
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http:/api.example.com/data";
+    String url = "http://api.example.com/data";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     
     assertFalse(response.getStatusCode() == HttpStatusCode.valueOf(404))
@@ -557,7 +557,7 @@ public class LocalEndpointTest {
   
   @Test
   public void testGetBusinesses(){
-    String url = "http:/localhost:" + port + "/getBusinesses";
+    String url = "http://localhost:" + port + "/getBusinesses";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -656,7 +656,7 @@ public class UserServiceTest {
   
     / Test logic, using currentRepetition and totalRepetitions
     RestTemplate restTemplate = new RestTemplate();
-    String url = "http:/api.example.com/getLoggedInUsers";
+    String url = "http://api.example.com/getLoggedInUsers";
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
     if(response.getBody() != null) {   
       System.out.println("CurrentRepetition: " + currentRepetition);
@@ -688,10 +688,10 @@ Spring Boot 应用程序中常用有几种测试工具，包括：
 
 *快乐学习！*
 
-> **请继续关注**[**Simform Engineering**](https:/medium.com/simform-engineering)**博客，了解有关最新工具和技术的更多更新。**
+> **请继续关注**[**Simform Engineering**](https://medium.com/simform-engineering)**博客，了解有关最新工具和技术的更多更新。**
 >
-> **关注我们：**[**Twitter**](https:/twitter.com/simform) **|** [**LinkedIn**](https:/www.linkedin.com/company/simform/)
+> **关注我们：**[**Twitter**](https://twitter.com/simform) **|** [**LinkedIn**](https://www.linkedin.com/company/simform/)
 
 
 
-原文链接：[https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516](https:/medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516)
+原文链接：[https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516](https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516)

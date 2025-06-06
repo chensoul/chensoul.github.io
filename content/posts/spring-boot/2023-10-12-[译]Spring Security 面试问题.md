@@ -44,7 +44,7 @@ Spring Security 与其他框架和库无缝集成，以增强应用程序的安�
 - **Jackson**：Jackson 的支持可以实现 Spring Security 相关类的高效序列化和反序列化，特别是在使用分布式会话或 Spring Session 等框架时，从而提高效率和可扩展性。
 - **密码学**：Spring Security 与各种密码库和算法集成，以提供敏感信息的安全存储和传输。这种集成包括密码散列、加密和安全通信协议等功能，以保护数据的机密性和完整性。
 
-有关 Spring Security 功能的更详细信息，请参阅[官方文档](https:/docs.spring.io/spring-security/reference/features/index.html)。
+有关 Spring Security 功能的更详细信息，请参阅[官方文档](https://docs.spring.io/spring-security/reference/features/index.html)。
 
 ## 2.解释一下 Spring Security 的核心组件？
 
@@ -88,7 +88,7 @@ Spring Security 中的一些重要安全过滤器包括：
 
 当应用程序中使用多种身份验证机制时，可以配置多个 `AuthenticationProvider` 实例来单独处理每种机制。
 
-更多信息请参考[官方文档](https:/docs.spring.io/spring-security/reference/servlet/architecture.html)。
+更多信息请参考[官方文档](https://docs.spring.io/spring-security/reference/servlet/architecture.html)。
 
 ## 3. Spring Security 如何处理用户认证？
 
@@ -342,13 +342,13 @@ JWT（JSON Web Token）身份验证是一种流行的身份验证机制，它使
 - **使用 Spring Security 配置 JWT 身份验证过滤器**：我们应该配置 JWT 身份验证过滤器以用于处理身份验证请求
 - **实现用户详细信息服务**：创建一个用户详细信息服务，根据 JWT 令牌中存储的信息检索用户的详细信息。该服务负责从用户存储库或任何其他数据源获取用户详细信息。
 
-有关实现细节的更多信息，请阅读 [Spring Security 中的 JWT 身份验证](https:/howtodoinjava.com/spring-security/jwt-auth-vuejs-spring-boot-security/)一文。
+有关实现细节的更多信息，请阅读 [Spring Security 中的 JWT 身份验证](https://howtodoinjava.com/spring-security/jwt-auth-vuejs-spring-boot-security/)一文。
 
 ## 14. 如何实现 OAuth2 安全性？
 
 OAuth2 是一个授权框架，允许应用程序获得对用户帐户的有限访问权限。它涉及多个组件，包括授权服务器和资源服务器。授权服务器处理身份验证并颁发访问令牌，而资源服务器托管受保护的资源并验证访问令牌。
 
-要[实现 OAuth2 安全性](https:/howtodoinjava.com/spring-security/oauth2-login-with-spring-boot-security/)，您需要[配置授权服务器和资源服务器](https:/howtodoinjava.com/spring-boot2/oauth2-auth-server/)。
+要[实现 OAuth2 安全性](https://howtodoinjava.com/spring-security/oauth2-login-with-spring-boot-security/)，您需要[配置授权服务器和资源服务器](https://howtodoinjava.com/spring-boot2/oauth2-auth-server/)。
 
 ### 授权服务器
 
@@ -411,7 +411,7 @@ public ResourceServerTokenServices tokenService() {
    RemoteTokenServices tokenServices = new RemoteTokenServices();
    tokenServices.setClientId("client-id");
    tokenServices.setClientSecret("client-secret");
-   tokenServices.setCheckTokenEndpointUrl("http:/localhost:8080/oauth/check_token");
+   tokenServices.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
    return tokenServices;
 }
 ```
@@ -452,7 +452,7 @@ CORS（跨源资源共享）是 Web 浏览器强制执行的一种安全机制�
 
 ### 全局配置
 
-我们可以通过创建 CorsConfigurationSource 类的 bean 来全局配置 CORS 支持。在此示例中，我们将 CORS 策略配置为允许来自指定源（本例中为 `http:/localhost:8081` ）的跨源请求。
+我们可以通过创建 CorsConfigurationSource 类的 bean 来全局配置 CORS 支持。在此示例中，我们将 CORS 策略配置为允许来自指定源（本例中为 `http://localhost:8081` ）的跨源请求。
 
 ```java
 @Bean
@@ -461,7 +461,7 @@ public CorsConfigurationSource corsConfigurationSource() {
     config.setAllowCredentials(true);
     config.addAllowedHeader("*");
     config.addAllowedMethod("*");
-    config.addAllowedOrigin("http:/localhost:8081");
+    config.addAllowedOrigin("http://localhost:8081");
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);
     return source;
@@ -472,13 +472,13 @@ public CorsConfigurationSource corsConfigurationSource() {
 
 如果我们只需要特定端点的 CORS，我们可以在方法级别使用 `@CrossOrigin` 注释。这允许我们指定允许的源、HTTP 方法和其他配置。
 
-在此示例中， `/api/resource` 端点仅允许使用指定 HTTP 方法来自 `http:/example.com` 的跨源请求。
+在此示例中， `/api/resource` 端点仅允许使用指定 HTTP 方法来自 `http://example.com` 的跨源请求。
 
 ```java
 @RestController
 public class MyController {
     @GetMapping("/api/resource")
-    @CrossOrigin(origins = "http:/example.com", methods = {RequestMethod.GET, RequestMethod.POST})
+    @CrossOrigin(origins = "http://example.com", methods = {RequestMethod.GET, RequestMethod.POST})
     public String getResource() {
         /...
     }
@@ -570,4 +570,4 @@ Spring Security 能够与移动应用程序安全性无缝集成，提供强大�
 
 快乐学习！
 
-原文链接：[Spring Security Interview Questions](https:/howtodoinjava.com/interview-questions/spring-security-interview-questions/)
+原文链接：[Spring Security Interview Questions](https://howtodoinjava.com/interview-questions/spring-security-interview-questions/)

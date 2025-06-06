@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [ thingsboard]
 ---
 
-ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/github.com/thingsboard/thingsboard)，从 [3.7](https:/github.com/thingsboard/thingsboard/releases/tag/v3.7) 版本之后，要求 JDK17。官方提供了源码编译的文档：[Building from sources](https:/thingsboard.io/docs/user-guide/install/building-from-source/)
+ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，从 [3.7](https://github.com/thingsboard/thingsboard/releases/tag/v3.7) 版本之后，要求 JDK17。官方提供了源码编译的文档：[Building from sources](https://thingsboard.io/docs/user-guide/install/building-from-source/)
 
 ## 源码编译
 
@@ -34,7 +34,7 @@ mvn clean install -Dmaven.test.skip=true
 > 1. 如果在编译过程中提示找不到 Gradle：
 >
 > ```
-> [ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution 'https:/services.gradle.org/distributions/gradle-7.3.3-bin.zip'. -> [Help 1]
+> [ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution 'https://services.gradle.org/distributions/gradle-7.3.3-bin.zip'. -> [Help 1]
 > ```
 >
 > 往上查看详细异常日志：
@@ -58,20 +58,20 @@ mvn clean install -Dmaven.test.skip=true
         <id>maven-default-http-blocker</id>
         <mirrorOf>external:dont-match-anything-mate:*</mirrorOf>
         <name>Pseudo repository to mirror external repositories initially using HTTP.</name>
-        <url>http:/0.0.0.0/</url>
+        <url>http://0.0.0.0/</url>
     </mirror>
 
     <mirror>
         <id>aliyun-central</id>
         <name>aliyun-central</name>
-        <url>https:/maven.aliyun.com/nexus/content/repositories/central</url>
+        <url>https://maven.aliyun.com/nexus/content/repositories/central</url>
         <mirrorOf>central</mirrorOf>
     </mirror>
 
     <mirror>
         <id>aliyun-jcenter</id>
         <name>aliyun-jcenter</name>
-        <url>https:/maven.aliyun.com/nexus/content/repositories/jcenter</url>
+        <url>https://maven.aliyun.com/nexus/content/repositories/jcenter</url>
         <mirrorOf>jcenter</mirrorOf>
     </mirror>
 </mirrors>
@@ -107,7 +107,7 @@ docker compose -f docker-compose.postgres-1.yml up -d
 
 运行 application 模块下的 ThingsboardServerApplication 类，启动 thingsboard。
 
-启动成功之后，在浏览器访问 [http:/localhost:8080/login](http:/localhost:8080/login)， ThingsBoard 默认账户
+启动成功之后，在浏览器访问 [http://localhost:8080/login](http://localhost:8080/login)， ThingsBoard 默认账户
 
 - 系统管理员： sysadmin@thingsboard.org / sysadmin
 - 租户管理员：tenant@thingsboard.org / tenant

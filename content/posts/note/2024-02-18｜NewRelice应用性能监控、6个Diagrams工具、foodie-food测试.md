@@ -9,15 +9,15 @@ tags: [review]
 
 今天做了什么：
 
-1. [NewRelice](https:/newrelic.com/)：应用性能监控
-   - https:/www.cnblogs.com/caoweixiong/p/14798449.html
+1. [NewRelice](https://newrelic.com/)：应用性能监控
+   - https://www.cnblogs.com/caoweixiong/p/14798449.html
    
-2. [Top 6 Tools to Turn Code into Beautiful Diagrams](https:/www.youtube.com/watch?v=jCd6XfWLZsg) ：
-   - [Diagrams](https:/diagrams.mingrammer.com/)
-   - [Go Diagrams](https:/godiagram.com/winforms/latest/)
-   - [Mermaid](https:/mermaid.js.org/)
-   - [PlantUML](https:/plantuml.com/)
-   - ASCII diagrams，[asciiflow](https:/asciiflow.com/#/) & [monodraw](https:/monodraw.helftone.com/) 
-   - [Markmap](https:/markmap.js.org/)
+2. [Top 6 Tools to Turn Code into Beautiful Diagrams](https://www.youtube.com/watch?v=jCd6XfWLZsg) ：
+   - [Diagrams](https://diagrams.mingrammer.com/)
+   - [Go Diagrams](https://godiagram.com/winforms/latest/)
+   - [Mermaid](https://mermaid.js.org/)
+   - [PlantUML](https://plantuml.com/)
+   - ASCII diagrams，[asciiflow](https://asciiflow.com/#/) & [monodraw](https://monodraw.helftone.com/) 
+   - [Markmap](https://markmap.js.org/)
 
    

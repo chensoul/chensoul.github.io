@@ -7,7 +7,7 @@ categories: ["Architecture"]
 tags: ["architecture"]
 ---
 
-这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [System Design Master Template](https:/www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1) 这篇章节。
+这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [System Design Master Template](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1) 这篇章节。
 
 ---
 
@@ -45,7 +45,7 @@ With this master template in mind, we will discuss the 18 essential system desig
 
 > 1.域名系统（DNS）
 
-The Domain Name System (DNS) serves as a fundamental component of the internet infrastructure, translating user-friendly domain names into their corresponding IP addresses. It acts as a phonebook for the internet, enabling users to access websites and services by entering easily memorable domain names, such as [www.designgurus.io](http:/www.designgurus.io/), rather than the numerical IP addresses like "192.0.2.1" that computers utilize to identify each other.
+The Domain Name System (DNS) serves as a fundamental component of the internet infrastructure, translating user-friendly domain names into their corresponding IP addresses. It acts as a phonebook for the internet, enabling users to access websites and services by entering easily memorable domain names, such as [www.designgurus.io](http://www.designgurus.io/), rather than the numerical IP addresses like "192.0.2.1" that computers utilize to identify each other.
 
 > 域名系统 (DNS) 是互联网基础设施的基本组成部分，它将用户友好的域名转换为其相应的 IP 地址。它充当互联网的电话簿，使用户能够通过输入易于记忆的域名（例如 www.designgurus.io）来访问网站和服务，而不是计算机用来识别彼此的数字 IP 地址（例如“192.0.2.1”） 。
 
@@ -241,7 +241,7 @@ The primary characteristics of microservices include:
 
 >11.NoSQL 数据库
 
-[NoSQL databases](https:/www.designgurus.io/blog/no-slq-database), or “Not Only SQL” databases, are non-relational databases designed to store, manage, and retrieve unstructured or semi-structured data. They offer an alternative to traditional relational databases, which rely on structured data and predefined schemas. NoSQL databases have become popular due to their flexibility, scalability, and ability to handle large volumes of data, making them well-suited for modern applications, big data processing, and real-time analytics.
+[NoSQL databases](https://www.designgurus.io/blog/no-slq-database), or “Not Only SQL” databases, are non-relational databases designed to store, manage, and retrieve unstructured or semi-structured data. They offer an alternative to traditional relational databases, which rely on structured data and predefined schemas. NoSQL databases have become popular due to their flexibility, scalability, and ability to handle large volumes of data, making them well-suited for modern applications, big data processing, and real-time analytics.
 
 > NoSQL 数据库或“Not Only SQL”数据库是非关系数据库，旨在存储、管理和检索非结构化或半结构化数据。它们提供了传统关系数据库的替代方案，传统关系数据库依赖于结构化数据和预定义模式。 NoSQL 数据库因其灵活性、可扩展性和处理大量数据的能力而变得流行，使其非常适合现代应用程序、大数据处理和实时分析。
 

@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [ maven]
 ---
 
-本文源代码：[https:/github.com/chensoul/maven-site-github-example/](https:/github.com/chensoul/maven-site-github-example/) 。
+本文源代码：[https://github.com/chensoul/maven-site-github-example/](https://github.com/chensoul/maven-site-github-example/) 。
 
 ## 创建 Java Maven 项目
 
@@ -70,7 +70,7 @@ echo "It works" > index.html
 git add . && git commit -m "initial site content" && git push origin gh-pages 
 ```
 
-相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：https:/chensoul.github.io/maven-site-github-example：
+相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：https://chensoul.github.io/maven-site-github-example：
 
 ![maven-my-app-github-page-index](../../../static/images/maven-my-app-github-page-index.webp)
 
@@ -106,7 +106,7 @@ git checkout main
 
 
 
-maven-scm-publish-plugin 插件需要以下参数，参考 https:/maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html：
+maven-scm-publish-plugin 插件需要以下参数，参考 https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html：
 
 -  **tryUpdate**： 参数用于指定是否尝试更新源代码管理（SCM）提供商中的项目文件。
 
@@ -234,7 +234,7 @@ mvn clean site scm-publish:publish-scm
   >   <scm>
   >     <connection>scm:git:git@github.com:<username>/<repository>.git</connection>
   >     <developerConnection>scm:git:git@github.com:<username>/<repository>.git</developerConnection>
-  >     <url>https:/github.com/<username>/<repository></url>
+  >     <url>https://github.com/<username>/<repository></url>
   >   </scm>
   >   ```
   >
@@ -266,7 +266,7 @@ mvn clean site scm-publish:publish-scm
 [INFO] ------------------------------------------------------------------------
 ```
 
-这里使用的是通过 ssh 协议提交，能够提交成功，是因为我已将本地的 ssh 公钥配置到 [github](https:/github.com/settings/keys)。
+这里使用的是通过 ssh 协议提交，能够提交成功，是因为我已将本地的 ssh 公钥配置到 [github](https://github.com/settings/keys)。
 
 现在该网站位于 GitHub Pages 上：
 
@@ -297,7 +297,7 @@ mvn clean site scm-publish:publish-scm
 
 ## 美化网站
 
-使用 [maven-archetype-site](https:/maven.apache.org/archetypes/maven-archetype-site/) 美化网站：
+使用 [maven-archetype-site](https://maven.apache.org/archetypes/maven-archetype-site/) 美化网站：
 
 ```bash
 mvn archetype:generate \
@@ -351,17 +351,17 @@ mvn archetype:generate \
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="${artifactId}"
-  xmlns="http:/maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http:/www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http:/maven.apache.org/DECORATION/1.8.0 http:/maven.apache.org/xsd/decoration-1.8.0.xsd">
+  xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
   <bannerLeft>
     <name>${artifactId}</name>
-    <src>https:/maven.apache.org../../../static/images/apache-maven-project.webp</src>
-    <href>https:/www.apache.org/</href>
+    <src>https://maven.apache.org../../../static/images/apache-maven-project.webp</src>
+    <href>https://www.apache.org/</href>
   </bannerLeft>
 
   <bannerRight>
-    <src>https:/maven.apache.org../../../static/images/maven-logo-black-on-white.webp</src>
-    <href>https:/maven.apache.org/</href>
+    <src>https://maven.apache.org../../../static/images/maven-logo-black-on-white.webp</src>
+    <href>https://maven.apache.org/</href>
   </bannerRight>
 
   <skin>
@@ -372,8 +372,8 @@ mvn archetype:generate \
 
   <body>
     <links>
-      <item name="Apache" href="http:/www.apache.org/" />
-      <item name="Maven" href="https:/maven.apache.org/"/>
+      <item name="Apache" href="http://www.apache.org/" />
+      <item name="Maven" href="https://maven.apache.org/"/>
     </links>
 
     <menu name="Examples">
@@ -399,7 +399,7 @@ mvn clean site scm-publish:publish-scm
 
 ![maven-my-app-github-skin-index](../../../static/images/maven-my-app-github-skin-index.webp)
 
-可以在 https:/github.com/chensoul/maven-site-github-example/actions 查看网站的部署：
+可以在 https://github.com/chensoul/maven-site-github-example/actions 查看网站的部署：
 
 ![maven-my-app-github-page-deploy](../../../static/images/maven-my-app-github-page-deploy.webp)
 
@@ -466,7 +466,7 @@ jobs:
 mvn --ntp --batch-mode --update-snapshots clean site scm-publish:publish-scm -Dscmpublish.serverId=github
 ```
 
-server-id 相关信息可以在 actions/setup-java@v4 中设置，参考 [actions/setup-java](https:/github.com/actions/setup-java?tab=readme-ov-file#maven-options) 的文档：
+server-id 相关信息可以在 actions/setup-java@v4 中设置，参考 [actions/setup-java](https://github.com/actions/setup-java?tab=readme-ov-file#maven-options) 的文档：
 
 ```bash
       - name: Java ${{ matrix.Java }}
@@ -536,7 +536,7 @@ and the repository exists.
 从日志可以看到 git 从 `git@github.com:chensoul/maven-site-github-example.git `下载代码，没有权限，原因是没有配置 ssh。故需要修改  scmpublish.pubScmUrl 为 https 协议，将 `<scmpublish.pubScmUrl>scm:git:git@github.com:chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>`改为：
 
 ```xml
-<scmpublish.pubScmUrl>scm:git:https:/github.com/chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>
+<scmpublish.pubScmUrl>scm:git:https://github.com/chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>
 ```
 
 再次提交代码，action 运行成功。
@@ -562,8 +562,8 @@ and the repository exists.
   ```xml
   <bannerLeft>
       <name>${this.artifactId}</name>
-      <src>https:/maven.apache.org../../../static/images/apache-maven-project.webp</src>
-      <href>https:/www.apache.org/</href>
+      <src>https://maven.apache.org../../../static/images/apache-maven-project.webp</src>
+      <href>https://www.apache.org/</href>
   </bannerLeft>
   ```
   

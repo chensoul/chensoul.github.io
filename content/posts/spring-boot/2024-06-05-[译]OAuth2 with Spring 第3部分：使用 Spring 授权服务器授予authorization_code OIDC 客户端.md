@@ -7,7 +7,7 @@ categories: ["spring-boot"]
 tags: [ oauth2,java]
 ---
 
-原文地址：<https:/mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a>
+原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a>
 
 
 
@@ -22,14 +22,14 @@ tags: [ oauth2,java]
 
 由于这是一个复杂的主题，让我们首先查看 UI 中的应用程序身份验证和授权流程，然后再讨论配置。
 
-要继续阅读本文，请从[此处](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc)获取项目源代码。首先启动授权服务器应用程序，然后在您最喜欢的 IDE 上启动社交登录客户端应用程序。
+要继续阅读本文，请从[此处](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc)获取项目源代码。首先启动授权服务器应用程序，然后在您最喜欢的 IDE 上启动社交登录客户端应用程序。
 
 我们的社交登录客户端有 2 个端点：
 
 - “/” 将使我们能够访问公共数据
 - “/private-data” 将为我们提供 JWT 令牌
 
-在浏览器上，导航到“ http:/127.0.0.1:8081/private-data ”。这将带我们进入客户端应用程序的登录页面。
+在浏览器上，导航到“ http://127.0.0.1:8081/private-data ”。这将带我们进入客户端应用程序的登录页面。
 
 ![img](../../../static/images/oauth2-with-spring-part-3-01.webp)
 
@@ -41,14 +41,14 @@ tags: [ oauth2,java]
 
 这将带您进入同意页面。请注意同意页面的以下 URL：
 
-[http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http:/127.0.0.1:8081/login/oauth2/code/oidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
+[http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid%20profile%20read%20write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http://127.0.0.1:8081/login/oauth2/code/oidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
 
 从上面的URL我们可以找到几条信息：
 
-- [response_type=code](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
-- [client_id=oidc-client](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
-- [scope = openid](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [profile](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [read](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [write](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
-- [redirect_uri=http:/127.0.0.1:8081/login/oauth2/code/oidc-client](http:/localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
+- [response_type=code](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
+- [client_id=oidc-client](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
+- [scope = openid](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [profile](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [read](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [write](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
+- [redirect_uri=http://127.0.0.1:8081/login/oauth2/code/oidc-client](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
 
 
 
@@ -112,9 +112,9 @@ spring:
               # Client application after the resource owner (user) provides necessary consents.
 
               redirect-uris:
-                - http:/127.0.0.1:8081/login/oauth2/code/oidc-client
+                - http://127.0.0.1:8081/login/oauth2/code/oidc-client
               post-logout-redirect-uris:
-                - http:/127.0.0.1:8081/logout
+                - http://127.0.0.1:8081/logout
 
               # The scopes are defined in the authorization server.
               # These won't display in the consent page
@@ -137,7 +137,7 @@ spring:
               refresh-token-time-to-live: 7200s
 #        endpoint:
 #          token-uri: "/oauth2/token"
-#        issuer-uri: http:/127.0.0.1:8080/issuer
+#        issuer-uri: http://127.0.0.1:8080/issuer
 logging:
   level:
     org:
@@ -206,13 +206,13 @@ spring:
         # for any unknown provider with their issuer URI
         provider:
           spring:
-            issuer-uri: http:/localhost:8080
+            issuer-uri: http://localhost:8080
 
       # Since our application acts as both authorization client and resource server,
       # here is the configuration for resource server
       resource-server:
         jwt:
-          issuer-uri: http:/localhost:8080
+          issuer-uri: http://localhost:8080
 ```
 
 **Controller**：
@@ -333,7 +333,7 @@ public class SocialLoginClientApplication {
 }
 ```
 
-根据[Spring Security 文档](https:/docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-refresh-token-grant)，对于“ authorization_code”授予，如果`OAuth2AuthorizedClient.getRefreshToken()`可用并且`OAuth2AuthorizedClient.getAccessToken()`已过期，则会自动刷新`RefreshTokenOAuth2AuthorizedClientProvider`。
+根据[Spring Security 文档](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-refresh-token-grant)，对于“ authorization_code”授予，如果`OAuth2AuthorizedClient.getRefreshToken()`可用并且`OAuth2AuthorizedClient.getAccessToken()`已过期，则会自动刷新`RefreshTokenOAuth2AuthorizedClientProvider`。
 
 
 
@@ -341,5 +341,5 @@ public class SocialLoginClientApplication {
 
 感谢您的耐心阅读。在[下一篇文章](/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/)中，我们将尝试了解如何在客户端应用程序中使用 Google 作为授权服务器。
 
-此示例的完整代码可在[此处](https:/github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc)找到。
+此示例的完整代码可在[此处](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc)找到。
 

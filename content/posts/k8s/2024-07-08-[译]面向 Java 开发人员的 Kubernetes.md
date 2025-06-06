@@ -14,9 +14,9 @@ categories: ["kubernetes"]
 - 将应用程序打包到 Docker 等容器中。这涉及编写 Dockerfile。
 - 将容器部署到 Kubernetes 等编排器。这涉及编写一些资源；服务描述文件、部署等。
 
-用开发人员熟悉的术语来说，这就是“阻抗不匹配”。为了解决这个问题，我们需要一类能够使用开发人员的语言并使整个部署步骤对他们透明的工具。其中最著名的是[Jib ](https:/github.com/GoogleContainerTools/jib)，我们在[之前的](https:/dzone.com/articles/dockerizing-a-spring-boot-application)论文中讨论过它，它可以为您的 Java 应用程序构建优化的 Docker 和[OCI](https:/github.com/opencontainers/image-spec)映像，并以 Maven 插件的形式提供。此类别中还有其他工具，例如[Dekorate](https:/dekorate.io/dekorate/)，它允许我们仅使用 Maven 和 Java 注释来生成 Kubernetes 清单。此类别中最新且最全面的条目是 RedHat 的 JKube，这是我们的*当日主题。*
+用开发人员熟悉的术语来说，这就是“阻抗不匹配”。为了解决这个问题，我们需要一类能够使用开发人员的语言并使整个部署步骤对他们透明的工具。其中最著名的是[Jib ](https://github.com/GoogleContainerTools/jib)，我们在[之前的](https://dzone.com/articles/dockerizing-a-spring-boot-application)论文中讨论过它，它可以为您的 Java 应用程序构建优化的 Docker 和[OCI](https://github.com/opencontainers/image-spec)映像，并以 Maven 插件的形式提供。此类别中还有其他工具，例如[Dekorate](https://dekorate.io/dekorate/)，它允许我们仅使用 Maven 和 Java 注释来生成 Kubernetes 清单。此类别中最新且最全面的条目是 RedHat 的 JKube，这是我们的*当日主题。*
 
-[JKube](https:/www.eclipse.org/jkube/docs/kubernetes-maven-plugin)是一个 Maven 插件，其目标包括构建 Docker 映像和创建 Kubernetes 资源描述符。映像和描述符可以在没有配置的情况下生成，基于基于 pom 文件中条目的一些默认设置，或者可以使用 pom 中的 XML 条目进行自定义，或者在极端情况下使用 Dockerfile 和资源片段进行自定义。以下是该插件的目标：
+[JKube](https://www.eclipse.org/jkube/docs/kubernetes-maven-plugin)是一个 Maven 插件，其目标包括构建 Docker 映像和创建 Kubernetes 资源描述符。映像和描述符可以在没有配置的情况下生成，基于基于 pom 文件中条目的一些默认设置，或者可以使用 pom 中的 XML 条目进行自定义，或者在极端情况下使用 Dockerfile 和资源片段进行自定义。以下是该插件的目标：
 
 | **目标**     | **描述**                     |
 | ------------ | ---------------------------- |
@@ -26,7 +26,7 @@ categories: ["kubernetes"]
 | k8s:log      | 查看容器的日志。             |
 | K8s:undeploy | 撤消部署。                   |
 
-首先，我假设您已在本地安装了 Docker 和 Kubernetes。有[几种](https:/seroter.com/2020/03/10/lets-look-at-your-options-for-local-development-with-kubernetes/)方法可以做到这一点。我还假设您具备 Docker 和 Kubernetes 的基本知识，如 [ [Docker](https:/www.oreilly.com/library/view/docker-up/9781492036722/) ] 和 [ [Kubernetes](https:/www.oreilly.com/library/view/kubernetes-up-and/9781492046523/) ] 中所述。
+首先，我假设您已在本地安装了 Docker 和 Kubernetes。有[几种](https://seroter.com/2020/03/10/lets-look-at-your-options-for-local-development-with-kubernetes/)方法可以做到这一点。我还假设您具备 Docker 和 Kubernetes 的基本知识，如 [ [Docker](https://www.oreilly.com/library/view/docker-up/9781492036722/) ] 和 [ [Kubernetes](https://www.oreilly.com/library/view/kubernetes-up-and/9781492046523/) ] 中所述。
 
 ```xml
 <plugin>
@@ -121,7 +121,7 @@ spec:
           mountPath: /deployments/config
 ```
 
-运行 `k8s:resource` 时，您将在 `target\classes\META-INF\jkube\kubernetes` 中看到 `<artifactid>-configmap.yml`。（生成配置映射的资源描述时似乎存在错误。与其他资源片段不同，它不会将资源描述的artifactid 小写。因此，您应该将artifactid 全部小写。问题是，除非您遵循 Kubernetes 命名约定，否则[您](https:/kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names)的资源将无法部署。）
+运行 `k8s:resource` 时，您将在 `target\classes\META-INF\jkube\kubernetes` 中看到 `<artifactid>-configmap.yml`。（生成配置映射的资源描述时似乎存在错误。与其他资源片段不同，它不会将资源描述的artifactid 小写。因此，您应该将artifactid 全部小写。问题是，除非您遵循 Kubernetes 命名约定，否则[您](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names)的资源将无法部署。）
 
 现在我们准备部署到 Kubernetes。
 
@@ -163,10 +163,10 @@ mvn install k8s:build k8s:resource k8s:apply -Djkube.enricher.jkube-service.type
 
 最后，您可以通过取消部署资源来自行清理：`mvn k8s:undeploy`**。**
 
-源代码可以在 Github 上[找到。你可以](https:/github.com/Taruvai/DZoneJkube)[在这里](https:/gitter.im/eclipse/jkube)、[这里](https:/rohaan.medium.com/)和[这里](https:/www.eclipse.org/jkube/docs/kubernetes-maven-plugin)获取有关 JKube 的更多信息。
+源代码可以在 Github 上[找到。你可以](https://github.com/Taruvai/DZoneJkube)[在这里](https://gitter.im/eclipse/jkube)、[这里](https://rohaan.medium.com/)和[这里](https://www.eclipse.org/jkube/docs/kubernetes-maven-plugin)获取有关 JKube 的更多信息。
 
 *非常感谢 Rohan Kumar 的帮助。*
 
 
 
-原文链接：https:/dzone.com/articles/kubernetes-for-java-developers
+原文链接：https://dzone.com/articles/kubernetes-for-java-developers

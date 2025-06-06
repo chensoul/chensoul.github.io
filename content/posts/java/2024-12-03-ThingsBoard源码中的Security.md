@@ -7,7 +7,7 @@ categories: ["Java"]
 tags: [thingsboard,spring-security,oauth2]
 ---
 
-ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
+ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
 
 ## 设置和安全
 
@@ -24,9 +24,9 @@ ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/gi
    系统内置支持以下几种客户端。
 
    - Apple:
-     - 访问令牌：[https:/appleid.apple.com/auth/token](https:/appleid.apple.com/auth/token)
-     - 授权：[https:/appleid.apple.com/auth/authorize?response_mode=form_post](https:/appleid.apple.com/auth/authorize?response_mode=form_post)
-     - JSON Web 地址：[https:/appleid.apple.com/auth/keys](https:/appleid.apple.com/auth/keys)
+     - 访问令牌：[https://appleid.apple.com/auth/token](https://appleid.apple.com/auth/token)
+     - 授权：[https://appleid.apple.com/auth/authorize?response_mode=form_post](https://appleid.apple.com/auth/authorize?response_mode=form_post)
+     - JSON Web 地址：[https://appleid.apple.com/auth/keys](https://appleid.apple.com/auth/keys)
      - 用户信息：
      - 范围：openid、name、email
      - 用户名属性：email
@@ -36,11 +36,11 @@ ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/gi
      - Last Name 名称属性：lastName
      - 租户名称策略：DOMAIN
 
-   - [Google](https:/console.cloud.google.com/):
-     - 访问令牌：[https:/oauth2.googleapis.com/token](https:/oauth2.googleapis.com/token)
-     - 授权：[https:/accounts.google.com/o/oauth2/v2/auth](https:/accounts.google.com/o/oauth2/v2/auth)
-     - JSON Web 地址：[https:/www.googleapis.com/oauth2/v3/certs](https:/www.googleapis.com/oauth2/v3/certs)
-     - 用户信息：[https:/openidconnect.googleapis.com/v1/userinfo](https:/openidconnect.googleapis.com/v1/userinfo)
+   - [Google](https://console.cloud.google.com/):
+     - 访问令牌：[https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)
+     - 授权：[https://accounts.google.com/o/oauth2/v2/auth](https://accounts.google.com/o/oauth2/v2/auth)
+     - JSON Web 地址：[https://www.googleapis.com/oauth2/v3/certs](https://www.googleapis.com/oauth2/v3/certs)
+     - 用户信息：[https://openidconnect.googleapis.com/v1/userinfo](https://openidconnect.googleapis.com/v1/userinfo)
      - 范围：openid、profile、email
      - 用户名属性：email
      - 电子邮件属性：email
@@ -49,10 +49,10 @@ ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/gi
      - Last Name 名称属性：family_name
      - 租户名称策略：DOMAIN
    - Facebook:
-     - 访问令牌：[https:/graph.facebook.com/v2.8/oauth/access_token](https:/graph.facebook.com/v2.8/oauth/access_token)
-     - 授权：[https:/www.facebook.com/v2.8/dialog/oauth](https:/www.facebook.com/v2.8/dialog/oauth)
+     - 访问令牌：[https://graph.facebook.com/v2.8/oauth/access_token](https://graph.facebook.com/v2.8/oauth/access_token)
+     - 授权：[https://www.facebook.com/v2.8/dialog/oauth](https://www.facebook.com/v2.8/dialog/oauth)
      - JSON Web 地址：
-     - 用户信息：[https:/graph.facebook.com/me?fields=id,name,first_name,last_name,email](https:/graph.facebook.com/me?fields=id,name,first_name,last_name,email)
+     - 用户信息：[https://graph.facebook.com/me?fields=id,name,first_name,last_name,email](https://graph.facebook.com/me?fields=id,name,first_name,last_name,email)
      - 范围：public_profile、email
      - 用户名属性：email
      - 电子邮件属性：email
@@ -61,11 +61,11 @@ ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/gi
      - Last Name 名称属性：last_name
      - 租户名称策略：DOMAIN
 
-   - [Github](https:/github.com/settings/developers):
-     - 访问令牌：[https:/github.com/login/oauth/access_token](https:/github.com/login/oauth/access_token)
-     - 授权：[https:/github.com/login/oauth/authorize](https:/github.com/login/oauth/authorize)
+   - [Github](https://github.com/settings/developers):
+     - 访问令牌：[https://github.com/login/oauth/access_token](https://github.com/login/oauth/access_token)
+     - 授权：[https://github.com/login/oauth/authorize](https://github.com/login/oauth/authorize)
      - JSON Web 地址：
-     - 用户信息：[https:/api.github.com/user](https:/api.github.com/user)
+     - 用户信息：[https://api.github.com/user](https://api.github.com/user)
      - 范围：read:user、user:email
      - 用户名属性：login
      - 电子邮件属性：
@@ -75,7 +75,7 @@ ThingsBoard 源码地址：[https:/github.com/thingsboard/thingsboard](https:/gi
      - 租户名称策略：DOMAIN 
 
 
-​	以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：[http:/localhost:8080/login/oauth2/code/](http:/localhost:8080/login/oauth2/code/)。
+​	以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：[http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)。
 
 完成配置之后，配置的内存保证到数据库中，系统设置对应数据库表是 `admin_settings`。
 
@@ -98,7 +98,7 @@ CREATE TABLE "public"."admin_settings" (
     "id": "2fa02d60-b119-11ef-8167-dfb7a1b13a5a",
     "tenant_id": "13814000-1dd2-11b2-8080-808080808080",
     "created_time": 1733190720310,
-    "json_value": "{\"baseUrl\":\"http:/localhost:8080\",\"prohibitDifferentUrl\":false}",
+    "json_value": "{\"baseUrl\":\"http://localhost:8080\",\"prohibitDifferentUrl\":false}",
     "key": "general"
   },
   {
@@ -168,7 +168,7 @@ OAuth2 相关的表为：
 
 ## 登陆页面
 
-开启 OAuht2 之后，注销登陆，进入登陆页面。当前登陆页面会通过 [http:/localhost:8080/api/noauth/oauth2Clients?platform=WEB](http:/localhost:8080/api/noauth/oauth2Clients?platform=WEB) POST 接口（对应的 Controller 类为 `OAuth2Controller`）查询开通的 OAuth2 客户端列表。返回内容如下：
+开启 OAuht2 之后，注销登陆，进入登陆页面。当前登陆页面会通过 [http://localhost:8080/api/noauth/oauth2Clients?platform=WEB](http://localhost:8080/api/noauth/oauth2Clients?platform=WEB) POST 接口（对应的 Controller 类为 `OAuth2Controller`）查询开通的 OAuth2 客户端列表。返回内容如下：
 
 ```json
 [
@@ -225,24 +225,24 @@ public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
   - 如果 `scope` 包含 `OPENID`，则添加 `nonce` 参数
   - 如果 `clientAuthenticationMethod` 为 `none`，则添加 `pkce` 参数
 
-- 获取重定向地址，这里为 [http:/localhost:8080/login/oauth2/code/](http:/localhost:8080/login/oauth2/code/)
+- 获取重定向地址，这里为 [http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)
 
 - 构建 `OAuth2AuthorizationRequest` 对象
 
   ```json
   {
-  	"authorizationUri": "https:/accounts.google.com/o/oauth2/v2/auth",
+  	"authorizationUri": "https://accounts.google.com/o/oauth2/v2/auth",
   	"responseType": {
   		"value": "code"
   	},
   	"clientId": "385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com",
-  	"redirectUri": "http:/localhost:8080/login/oauth2/code/",
+  	"redirectUri": "http://localhost:8080/login/oauth2/code/",
   	"scopes": ["email", "openid", "profile"],
   	"state": "M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE=",
   	"additionalParameters": {
   		"nonce": "zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00"
   	},
-  	"authorizationRequestUri": "https:/accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com&scope=email%20openid%20profile&state=M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE%3D&redirect_uri=http:/localhost:8080/login/oauth2/code/&nonce=zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00",
+  	"authorizationRequestUri": "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com&scope=email%20openid%20profile&state=M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE%3D&redirect_uri=http://localhost:8080/login/oauth2/code/&nonce=zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00",
   	"attributes": {
   		"registration_id": "f02246b0-b121-11ef-983d-d79399efbf69",
   		"nonce": "_toJxm0yUite6Kzjy_yfX4eKq4NtwmygCqgYJVjN83SV2q6sZtneWpBmWeNTN6ZMth8qCIyOWY1up-m_AKmcQmjf_j9HCheruxtNvQL1zTbL9dL-rwOSSonAUtAJ3BGH"
@@ -287,10 +287,10 @@ oauth2Login 的登陆页面为 `/oauth2Login`，处理登陆请求的地址为 `
 security:
   oauth2:
     # Redirect URL where access code from external user management system will be processed
-    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL:/login/oauth2/code/}"
+    loginProcessingUrl: "${SECURITY_OAUTH2_LOGIN_PROCESSING_URL://login/oauth2/code/}"
     githubMapper:
       # The email addresses that will be mapped from the URL
-      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https:/api.github.com/user/emails}"
+      emailUrl: "${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}"
 ```
 
 oauth2Login 登陆成功的 handler 为 `Oauth2AuthenticationSuccessHandler`：

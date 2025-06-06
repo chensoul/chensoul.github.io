@@ -17,7 +17,7 @@ tags: [spring-boot, docker]
 
 ## 示例代码
 
-本文附有 [GitHub](https:/github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker) 上的工作代码示例。
+本文附有 [GitHub](https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker) 上的工作代码示例。
 
 ## 容器术语
 
@@ -92,7 +92,7 @@ adoptopenjdk        11-jre-hotspot      229MB
 
 ### 查看容器镜像内的层
 
-让我们看看图像内的图层堆栈。我们将使用 [dive tool](https:/github.com/wagoodman/dive) 来查看这些图层：
+让我们看看图像内的图层堆栈。我们将使用 [dive tool](https://github.com/wagoodman/dive) 来查看这些图层：
 
 ```text
 dive usersignup:v1
@@ -197,7 +197,7 @@ mvn compile jib:build -Dimage=<docker registry name>/usersignup:v1
 [INFO] Containerizing application to pratikdas/usersignup:v1...
 .
 .
-[INFO] Container entrypoint set to [java, -cp, /app/resources:/app/classes:/app/libs/*, io.pratik.users.UsersignupApplication]
+[INFO] Container entrypoint set to [java, -cp, /app/resources://app/classes://app/libs/*, io.pratik.users.UsersignupApplication]
 [INFO]
 [INFO] Built and pushed image as pratikdas/usersignup:v1
 [INFO] Executing tasks:
@@ -401,7 +401,7 @@ dive userssignup:v1
 
 我们还考虑通过启用分层功能来优化我们的容器，该功能提取缓存在主机中的单独层中的依赖项，并在容器运行时引擎的调度期间下载应用程序的薄层。
 
-文章中使用的所有源码可以参考[Github](https:/github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker)上的。
+文章中使用的所有源码可以参考[Github](https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker)上的。
 
 ## 命令参考
 
@@ -449,4 +449,4 @@ docker images
 dive <image ID or image tag>
 ```
 
-原文链接：[https:/reflectoring.io/spring-boot-docker/](https:/reflectoring.io/spring-boot-docker/)
+原文链接：[https://reflectoring.io/spring-boot-docker/](https://reflectoring.io/spring-boot-docker/)

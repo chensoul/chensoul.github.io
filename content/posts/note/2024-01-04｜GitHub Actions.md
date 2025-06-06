@@ -22,7 +22,7 @@ tags: ["vps",maven]
 
 
 
-以下是 [github](https:/github.com/chensoul) 上我的个人联系方式。
+以下是 [github](https://github.com/chensoul) 上我的个人联系方式。
 
 > 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------ 纳瓦尔
 
@@ -32,17 +32,17 @@ tags: ["vps",maven]
 
 ### 网站
 
-- 博客：[https:/blog.chensoul.cc/](https:/blog.chensoul.cc/)
-- 跑步：[https:/run.chensoul.cc/](https:/run.chensoul.cc/)
-- Memos：[https:/memos.chensoul.cc/](https:/memos.chensoul.cc/)
+- 博客：[https://blog.chensoul.cc/](https://blog.chensoul.cc/)
+- 跑步：[https://run.chensoul.cc/](https://run.chensoul.cc/)
+- Memos：[https://memos.chensoul.cc/](https://memos.chensoul.cc/)
 
 ### 找到我
 
 - 微信：@ichensoul
 - 邮箱：[ichensoul@gmail.com](mailto:ichensoul@gmail.com)
-- Github：[https:/github.com/chensoul](https:/github.com/chensoul)、[https:/github.com/ichensoul](https:/github.com/ichensoul)
-- Twitter：[https:/twitter.com/ichensoul](https:/twitter.com/ichensoul)
-- Telegram频道：[https:/t.me/chensouls](https:/t.me/chensouls)
+- Github：[https://github.com/chensoul](https://github.com/chensoul)、[https://github.com/ichensoul](https://github.com/ichensoul)
+- Twitter：[https://twitter.com/ichensoul](https://twitter.com/ichensoul)
+- Telegram频道：[https://t.me/chensouls](https://t.me/chensouls)
 
 
 
@@ -62,16 +62,16 @@ tags: ["vps",maven]
 
 # 利用GitHub Actions自动优雅地为项目构建Releases
 
-参考 [利用GitHub Actions自动优雅地为项目构建Releases](https:/wiki.eryajf.net/pages/f3e878) 为 github 上的项目 [https:/github.com/chensoul/chensoul-parent](https:/github.com/chensoul/chensoul-parent) 添加一个机器人字段构建 Release。
+参考 [利用GitHub Actions自动优雅地为项目构建Releases](https://wiki.eryajf.net/pages/f3e878) 为 github 上的项目 [https://github.com/chensoul/chensoul-parent](https://github.com/chensoul/chensoul-parent) 添加一个机器人字段构建 Release。
 
 
 
 使用方法：
 
-1、参考 [官方文档](https:/github.com/release-drafter/release-drafter?tab=readme-ov-file#usage)，在仓库里面配置一个 [GitHub Action](https:/github.com/marketplace/actions/release-drafter) ，例如：.github/workflows/release-drafter.yml
+1、参考 [官方文档](https://github.com/release-drafter/release-drafter?tab=readme-ov-file#usage)，在仓库里面配置一个 [GitHub Action](https://github.com/marketplace/actions/release-drafter) ，例如：.github/workflows/release-drafter.yml
 
 ```yaml
-# https:/github.com/release-drafter/release-drafter
+# https://github.com/release-drafter/release-drafter
 
 name: Release Drafter
 
@@ -107,13 +107,13 @@ jobs:
 2、添加 .github/release-drafter.yml 配置生成的 Release 内容
 
 ```yaml
-# https:/github.com/toolmantim/release-drafter
+# https://github.com/toolmantim/release-drafter
 
 # 新项目，第一次 release 为 0.1.0, 可以在 github 上手动修改为 0.0.1
 name-template: 'v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
 
-# Emoji reference: https:/gitmoji.carloscuesta.me/
+# Emoji reference: https://gitmoji.carloscuesta.me/
 categories:
   - title: 🚀 New features
     labels:
@@ -173,9 +173,9 @@ template: |
 
 
 
-3、通常普通协作者在提交 pr 的时候，大概都很少会有主动给 pr 添加 labels 的，每次还需要项目负责人自己添加，会比较麻烦，而这个功能又是依赖 pr 的 labels 的，因此可以再加一个配置 `.github/PULL_REQUEST_TEMPLATE.md`，该文件配置可以仓库 [GitHub pull request template](https:/axolo.co/blog/p/part-3-github-pull-request-template)。
+3、通常普通协作者在提交 pr 的时候，大概都很少会有主动给 pr 添加 labels 的，每次还需要项目负责人自己添加，会比较麻烦，而这个功能又是依赖 pr 的 labels 的，因此可以再加一个配置 `.github/PULL_REQUEST_TEMPLATE.md`，该文件配置可以仓库 [GitHub pull request template](https://axolo.co/blog/p/part-3-github-pull-request-template)。
 
-[spring-boot](https:/raw.githubusercontent.com/spring-projects/spring-boot/main/.github/PULL_REQUEST_TEMPLATE.md) 项目中的 `.github/PULL_REQUEST_TEMPLATE.md` 内容如下：
+[spring-boot](https://raw.githubusercontent.com/spring-projects/spring-boot/main/.github/PULL_REQUEST_TEMPLATE.md) 项目中的 `.github/PULL_REQUEST_TEMPLATE.md` 内容如下：
 
 ```markdown
 <!--
@@ -188,7 +188,7 @@ playground.
 Security Vulnerabilities
 
 STOP! If your contribution fixes a security vulnerability, please do not submit it.
-Instead, please head over to https:/spring.io/security-policy to learn how to disclose a
+Instead, please head over to https://spring.io/security-policy to learn how to disclose a
 vulnerability responsibly.
 
 Dependency Upgrades
@@ -255,7 +255,7 @@ prefixed with #.
 
 ## 利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub
 
-参考 [利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub](https:/wiki.eryajf.net/pages/5baf0a) ，给 [https:/github.com/chensoul/maven-hello-world](https:/github.com/chensoul/maven-hello-world) 添加了一个 docker action： `.github/workflows/docker-image.yml `
+参考 [利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub](https://wiki.eryajf.net/pages/5baf0a) ，给 [https://github.com/chensoul/maven-hello-world](https://github.com/chensoul/maven-hello-world) 添加了一个 docker action： `.github/workflows/docker-image.yml `
 
 ```yaml
 name: Build Docker Image
@@ -271,7 +271,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 暴漏 Github Action 关键变量 https:/wiki.eryajf.net/pages/77e2fe
+      # 暴漏 Github Action 关键变量 https://wiki.eryajf.net/pages/77e2fe
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4.5.0
 
@@ -315,7 +315,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 ```
 
-关键点：使用 rlespinasse/github-slug-action@v4  暴漏Github Action上下文中的关键变量。请参考：[利用github-slug-action暴漏Github Action上下文中的关键变量 ](https:/wiki.eryajf.net/pages/77e2fe) 。
+关键点：使用 rlespinasse/github-slug-action@v4  暴漏Github Action上下文中的关键变量。请参考：[利用github-slug-action暴漏Github Action上下文中的关键变量 ](https://wiki.eryajf.net/pages/77e2fe) 。
 
 ## Wakatime 编码统计
 
@@ -325,6 +325,6 @@ Wakatime记录的今日编码时间统计：
 
 ## 参考文章
 
-- [利用GitHub Actions自动优雅地为项目构建Releases](https:/wiki.eryajf.net/pages/f3e878)
-- [利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub](https:/wiki.eryajf.net/pages/5baf0a)
-- [利用github-slug-action暴漏Github Action上下文中的关键变量 ](https:/wiki.eryajf.net/pages/77e2fe)
+- [利用GitHub Actions自动优雅地为项目构建Releases](https://wiki.eryajf.net/pages/f3e878)
+- [利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub](https://wiki.eryajf.net/pages/5baf0a)
+- [利用github-slug-action暴漏Github Action上下文中的关键变量 ](https://wiki.eryajf.net/pages/77e2fe)

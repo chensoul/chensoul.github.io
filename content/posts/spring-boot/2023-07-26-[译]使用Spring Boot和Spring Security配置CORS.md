@@ -11,11 +11,11 @@ tags: [spring-security]
 
 这是必需的，因为浏览器默认应用同源策略以确保安全。通过在 Web 应用程序中实施 CORS，网页可以请求额外的资源并从其他域加载到浏览器中。
 
-本文将重点介绍在基于 Spring 的应用程序中实现 CORS 的各种方式。要详细了解 CORS 的工作原理，请参阅这篇优秀的[介绍性文章](https:/reflectoring.io/complete-guide-to-cors/)。
+本文将重点介绍在基于 Spring 的应用程序中实现 CORS 的各种方式。要详细了解 CORS 的工作原理，请参阅这篇优秀的[介绍性文章](https://reflectoring.io/complete-guide-to-cors/)。
 
 ## 示例代码
 
-本文附有 GitHub 上的工作[代码示例](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring)。
+本文附有 GitHub 上的工作[代码示例](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring)。
 
 ## CORS 特定 HTTP 响应标头概述
 
@@ -32,7 +32,7 @@ CORS 规范定义了服务器返回的一组响应标头，这将是后续部分
 
 ## 设置示例客户端应用程序
 
-我们将使用一个简单的角度应用程序来调用 REST 端点，我们可以使用浏览器开发人员工具检查这些端点。您可以在 GitHub 上查看[源代码](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/cors-app)。
+我们将使用一个简单的角度应用程序来调用 REST 端点，我们可以使用浏览器开发人员工具检查这些端点。您可以在 GitHub 上查看[源代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/cors-app)。
 
 ```bash
     ng serve --open
@@ -48,7 +48,7 @@ CORS 规范定义了服务器返回的一组响应标头，这将是后续部分
 
 为简单起见，两个应用程序之间的 CORS 配置相同，并且定义了相同的端点。两台服务器都从不同的端口 8091 和 8092 启动。
 
-与应用程序捆绑在一起的 Maven Wrapper 将用于启动服务。您可以查看 [Spring REST 源代码](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SimpleLibraryApplication)和 [Spring Reactive 源代码](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/LibraryWebfluxApplication)。
+与应用程序捆绑在一起的 Maven Wrapper 将用于启动服务。您可以查看 [Spring REST 源代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SimpleLibraryApplication)和 [Spring Reactive 源代码](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/LibraryWebfluxApplication)。
 
 ```bash
 mvnw clean verify spring-boot:run (for Windows)
@@ -70,7 +70,7 @@ mvnw clean verify spring-boot:run (for Windows)
 
 | 属性               | Description 描述                                                                                                                                                                                                                                                              |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `origins`          | 允许您指定允许的来源列表。默认情况下，它允许所有来源。 该属性值将在预检响应和实际响应的 `Access-Control-Allow-Origin` 标头中设置。 用法示例： `@CrossOrigin(origins = "http:/localhost:8080")` `@CrossOrigin(origins = {"http:/localhost:8080", "http:/testserver:8087"})` |
+| `origins`          | 允许您指定允许的来源列表。默认情况下，它允许所有来源。 该属性值将在预检响应和实际响应的 `Access-Control-Allow-Origin` 标头中设置。 用法示例： `@CrossOrigin(origins = "http://localhost:8080")` `@CrossOrigin(origins = {"http://localhost:8080", "http://testserver:8087"})` |
 | `allowedHeaders`   | 允许您指定浏览器发出请求时将接受的标头列表。默认情况下，任何标头都将被允许。此属性中指定的值用于预检响应中的 `Access-Control-Allow-Headers` 中。 **用法示例：** `@CrossOrigin(allowedHeaders = {"Authorization", "Origin"})`                                                  |
 | `exposedHeaders`   | 在实际响应标头中设置的标头列表。如果未指定，则只有安全列表中的标头才会被认为可以安全地由客户端脚本公开。 **用法示例：** `@CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})`                                                   |
 | `allowCredentials` | 当需要凭据来调用 API 时，请将 `Access-Control-Allow-Credentials` 标头值设置为 true。如果不需要凭据，请省略标头。 **用法示例：** `@CrossOrigin(allowCredentials = true)`                                                                                                       |
@@ -81,19 +81,19 @@ mvnw clean verify spring-boot:run (for Windows)
 考虑我们的 Spring Boot 应用程序尚未配置为 CORS 支持。如果我们尝试访问在端口 4200 上运行的 Angular 应用程序，我们会在开发人员控制台上看到以下错误：
 
 ```
-Access to XMLHttpRequest at http:/localhost:8091
-from origin http:/localhost:4200 has been blocked by CORS policy:
+Access to XMLHttpRequest at http://localhost:8091
+from origin http://localhost:4200 has been blocked by CORS policy:
 No 'Access-Control-Allow-Origin` header is present on the requested
 resource
 ```
 
 ![settings](../../../static/images/configuring-cors-with-spring-04.webp)
 
-这是因为，即使两个应用程序均由 `localhost` 提供服务，但[由于端口不同](https:/reflectoring.io/complete-guide-to-cors/#same-origin-vs-cross-origin)，它们不会被视为同一来源。
+这是因为，即使两个应用程序均由 `localhost` 提供服务，但[由于端口不同](https://reflectoring.io/complete-guide-to-cors/#same-origin-vs-cross-origin)，它们不会被视为同一来源。
 
 ## 在 Spring Web MVC 应用程序中配置 CORS
 
-使用 Spring Initializr 创建的初始设置包含所有必需的 CORS 依赖项。无需添加外部依赖项。请参阅此[示例 Spring Web 应用程序项目](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SpringWebApplication)。
+使用 Spring Initializr 创建的初始设置包含所有必需的 CORS 依赖项。无需添加外部依赖项。请参阅此[示例 Spring Web 应用程序项目](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SpringWebApplication)。
 
 ### 在类级别定义 `@CrossOrigin`
 
@@ -112,7 +112,7 @@ public class LibraryController {}
 ### 在方法级别定义 `@CrossOrigin`
 
 ```java
-@CrossOrigin(origins = "http:/localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
 @GetMapping
 public ResponseEntity<List<BookDto>> getBooks(@RequestParam String type) {
     HttpHeaders headers = new HttpHeaders();
@@ -123,7 +123,7 @@ public ResponseEntity<List<BookDto>> getBooks(@RequestParam String type) {
 
 这将产生以下效果：
 
-- 仅接受来自来源 `http:/localhost:4200` 的请求。
+- 仅接受来自来源 `http://localhost:4200` 的请求。
 - 如果我们希望只接受某些标头，则可以在 `allowedHeaders` 属性中指定这些标头。如果浏览器未发送 `Requestor-Type` 标头，则不会处理该请求。
 
 - 如果我们设置某些响应标头，为了让客户端应用程序能够使用它们，我们需要使用 `exposedHeaders` 属性显式设置要公开的响应标头列表。
@@ -144,7 +144,7 @@ public class LibraryController {
         this.libraryService = libraryService;
     }
 
-    @CrossOrigin(origins = "http:/localhost:4200", allowedHeaders = "Requestor-Type")
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type")
     @GetMapping
     public ResponseEntity<List<BookDto>> getBooks(@RequestParam String type) {
         HttpHeaders headers = new HttpHeaders();
@@ -173,7 +173,7 @@ public class LibraryController {
 ```yaml
 web:
   cors:
-    allowed-origins: "http:/localhost:4200"
+    allowed-origins: "http://localhost:4200"
     allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
     max-age: 3600
     allowed-headers: "Requestor-Type"
@@ -200,18 +200,18 @@ public WebMvcConfigurer corsMappingConfigurer() {
 
 > #### `CorsConfiguration` 默认值
 >
-> 如果未显式定义一个或多个方法（ `allowedOrigins` 、 `allowedMethods` 、 `maxAge` 、 `allowedHeaders` 、 `exposedHeaders` ），则 `addMapping()` 返回一个 `CorsRegistration` 对象，该对象应用默认的 `CorsConfiguration` 。请参阅 Spring 库方法 [CorsConfiguration.applyPermitDefaultValues()](https:/docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/cors/CorsConfiguration.html#applyPermitDefaultValues--) 以了解应用的默认值。
+> 如果未显式定义一个或多个方法（ `allowedOrigins` 、 `allowedMethods` 、 `maxAge` 、 `allowedHeaders` 、 `exposedHeaders` ），则 `addMapping()` 返回一个 `CorsRegistration` 对象，该对象应用默认的 `CorsConfiguration` 。请参阅 Spring 库方法 [CorsConfiguration.applyPermitDefaultValues()](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/cors/CorsConfiguration.html#applyPermitDefaultValues--) 以了解应用的默认值。
 
 ## 在 Spring Webflux 应用程序中配置 CORS
 
-初始设置是使用 Spring Initializr 创建的，并使用 Spring Webflux、Spring Data R2DBC 和 H2 数据库。无需添加外部依赖项。请参阅[此示例 Spring Webflux 项目](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SpringWebfluxApplication)。
+初始设置是使用 Spring Initializr 创建的，并使用 Spring Webflux、Spring Data R2DBC 和 H2 数据库。无需添加外部依赖项。请参阅[此示例 Spring Webflux 项目](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring/SpringWebfluxApplication)。
 
 ### 使用 `@CrossOrigin` 进行 Spring Webflux 的 CORS 配置
 
 与 Spring MVC 类似，在 Spring Webflux 中我们可以在类级别或方法级别定义 `@CrossOrigin` 。前面几节中描述的相同 `@CrossOrigin` 属性将适用。此外，当在类和方法中都定义了注释时，其组合属性将应用于方法。
 
 ```java
-@CrossOrigin(origins = "http:/localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
 @GetMapping
 public ResponseEntity<Mono<List<BookDto>>> getBooks(@RequestParam String type) {
     HttpHeaders headers = new HttpHeaders();
@@ -254,7 +254,7 @@ Webflux 框架允许通过 `CorsWebFilter` 全局设置 CORS 配置。我们可�
 @Bean
 public CorsWebFilter corsWebFilter() {
     CorsConfiguration corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedOrigins(Arrays.asList("http:/localhost:4200"));
+    corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
     corsConfig.setMaxAge(3600L);
     corsConfig.addAllowedMethod("*");
     corsConfig.addAllowedHeader("Requestor-Type");
@@ -325,7 +325,7 @@ public class LibraryController {
         this.libraryService = libraryService;
     }
 
-    @CrossOrigin(origins = "http:/localhost:4200", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
     @GetMapping
     public ResponseEntity<List<BookDto>> getBooks(@RequestParam String type) {
         HttpHeaders headers = new HttpHeaders();
@@ -341,7 +341,7 @@ public class LibraryController {
 @Bean
 CorsConfigurationSource corsConfigurationSource() {
   CorsConfiguration configuration = new CorsConfiguration();
-  configuration.setAllowedOrigins(Arrays.asList("http:/localhost:4200"));
+  configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
   configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
   configuration.setAllowCredentials(true);
   configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
@@ -398,7 +398,7 @@ public class SecurityConfiguration {
         corsConfig.addAllowedMethod("PATCH");
         corsConfig.addAllowedMethod("POST");
         corsConfig.addAllowedMethod("OPTIONS");
-        corsConfig.setAllowedOrigins(Arrays.asList("http:/localhost:4200"));
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
         corsConfig.setExposedHeaders(Arrays.asList("X-Get-Header"));
         UrlBasedCorsConfigurationSource source =
@@ -422,6 +422,6 @@ public class SecurityConfiguration {
 - 本地/全局 CORS 配置
 - 是否使用 Spring Security
 
-根据框架，我们可以决定哪种方法效果最好并且最容易实现，这样我们就可以避免 CORS 错误。您可以使用 [GitHub 上的示例应用程序](https:/github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring)。
+根据框架，我们可以决定哪种方法效果最好并且最容易实现，这样我们就可以避免 CORS 错误。您可以使用 [GitHub 上的示例应用程序](https://github.com/thombergs/code-examples/tree/master/spring-boot/cors/configuring-cors-with-spring)。
 
-原文链接：[https:/reflectoring.io/spring-cors/](https:/reflectoring.io/spring-cors/)
+原文链接：[https://reflectoring.io/spring-cors/](https://reflectoring.io/spring-cors/)

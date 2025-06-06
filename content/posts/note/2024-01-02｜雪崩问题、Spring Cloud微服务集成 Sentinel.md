@@ -165,7 +165,7 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
             Target.HardCodedTarget<?> hardCodedTarget = (Target.HardCodedTarget) target;
             MethodMetadata methodMetadata = SentinelContractHolder.METADATA_MAP
                 .get(hardCodedTarget.type().getName() + Feign.configKey(hardCodedTarget.type(), method));
-            / resource default is HttpMethod:protocol:/url
+            / resource default is HttpMethod:protocol://url
             if (methodMetadata == null) {
                 result = methodHandler.invoke(args);
             } else {

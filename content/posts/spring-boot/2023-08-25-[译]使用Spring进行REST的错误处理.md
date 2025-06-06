@@ -225,7 +225,7 @@ public Foo findById(@PathVariable("id") Long id, HttpServletResponse response) {
 
 但是，我们需要小心：如果可以通过多种方式处理相同的异常，我们可能会注意到一些令人惊讶的行为。一种可能的约定是始终以一种方式处理一种特定类型的异常。
 
-有关更多详细信息和更多示例，请参阅有关 [ResponseStatusException 的教程](https:/www.baeldung.com/spring-response-status-exception)。
+有关更多详细信息和更多示例，请参阅有关 [ResponseStatusException 的教程](https://www.baeldung.com/spring-response-status-exception)。
 
 ## 6.处理 Spring Security 中拒绝访问的情况
 
@@ -329,8 +329,8 @@ public class MyErrorController extends BasicErrorController {
 
 本文讨论了在 Spring 中实现 REST API 异常处理机制的几种方法，从旧的机制开始，继续提供 Spring 3.2 支持，一直到 4.x 和 5.x。
 
-与往常一样，本文中提供的代码可以在 [GitHub](https:/github.com/eugenp/tutorials/tree/master/spring-boot-rest) 上获取。
+与往常一样，本文中提供的代码可以在 [GitHub](https://github.com/eugenp/tutorials/tree/master/spring-boot-rest) 上获取。
 
-Spring Security 相关的代码可以查看 [spring-security-rest](https:/github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest) 模块。
+Spring Security 相关的代码可以查看 [spring-security-rest](https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest) 模块。
 
-原文链接：[https:/www.baeldung.com/exception-handling-for-rest-with-spring](https:/www.baeldung.com/exception-handling-for-rest-with-spring)
+原文链接：[https://www.baeldung.com/exception-handling-for-rest-with-spring](https://www.baeldung.com/exception-handling-for-rest-with-spring)

@@ -93,7 +93,7 @@ public class WebConfig {
 
     @RequestMapping(value = {"/assets", "/assets/", "/{path:^(?!api$)(?!assets$)(?!static$)(?!webjars$)(?!swagger-ui$)[^\\.]*}/**"})
     public String redirect() {
-        return "forward:/index.html";
+        return "forward://index.html";
     }
 
     @RequestMapping("/swagger-ui.html")
@@ -104,7 +104,7 @@ public class WebConfig {
 
     @RequestMapping("/swagger-ui/")
     public String redirectSwaggerIndex() throws IOException {
-        return "forward:/swagger-ui/index.html";
+        return "forward://swagger-ui/index.html";
     }
 }
 ```
@@ -176,7 +176,7 @@ public class MiscUtils {
     public static final Charset UTF8 = Charset.forName("UTF-8");
 
     public static String constructBaseUrl(HttpServletRequest request) {
-        return String.format("%s:/%s:%d",
+        return String.format("%s://%s:%d",
                 getScheme(request),
                 getDomainName(request),
                 getPort(request));
