@@ -34,7 +34,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JWTUtil</span> {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to generate Token
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to generate Token</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>generateToken</span>(String subject, String secret_key) {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> Jwts.<span style=color:#a6e22e>builder</span>()
@@ -48,7 +48,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>compact</span>();
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>code to get Claims
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//code to get Claims</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Claims <span style=color:#a6e22e>getClaims</span>(String token, String secret_key) {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> Jwts.<span style=color:#a6e22e>parser</span>()
@@ -72,14 +72,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span> code to test generated Token
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// code to test generated Token</span>
 </span></span><span style=display:flex><span>		String token<span style=color:#f92672>=</span> JWTUtil.<span style=color:#a6e22e>generateToken</span>(<span style=color:#e6db74>&#34;Token1&#34;</span>, secret_key);
 </span></span><span style=display:flex><span>		System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;------------------------TOKEN----------------------------------------------------&#34;</span>);
 </span></span><span style=display:flex><span>		System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(token);
 </span></span><span style=display:flex><span>		System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>();
 </span></span><span style=display:flex><span>		System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;------------------------CLAIMS----------------------------------------------------&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span>code to test parsed token : Claims
+</span></span><span style=display:flex><span>		<span style=color:#75715e>//code to test parsed token : Claims</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		Claims claims<span style=color:#f92672>=</span> Jwts.<span style=color:#a6e22e>parser</span>()
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>setSigningKey</span>(Base64.<span style=color:#a6e22e>getEncoder</span>().<span style=color:#a6e22e>encode</span>(secret_key.<span style=color:#a6e22e>getBytes</span>()))
@@ -277,12 +277,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> Integer <span style=color:#a6e22e>saveUser</span>(User user) {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span>Encode password before saving to DB
+</span></span><span style=display:flex><span>		<span style=color:#75715e>//Encode password before saving to DB</span>
 </span></span><span style=display:flex><span>		user.<span style=color:#a6e22e>setPassword</span>(bCryptEncoder.<span style=color:#a6e22e>encode</span>(user.<span style=color:#a6e22e>getPassword</span>()));
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> userRepo.<span style=color:#a6e22e>save</span>(user).<span style=color:#a6e22e>getId</span>();
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>find user by username
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//find user by username</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> Optional<span style=color:#f92672>&lt;</span>User<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>findByUsername</span>(String username) {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> userRepo.<span style=color:#a6e22e>findByUsername</span>(username);
@@ -334,7 +334,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Value</span>(<span style=color:#e6db74>&#34;${app.secret.key}&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> String secret_key;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to generate Token
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to generate Token</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>generateToken</span>(String subject) {
 </span></span><span style=display:flex><span>		String tokenId<span style=color:#f92672>=</span> String.<span style=color:#a6e22e>valueOf</span>(<span style=color:#66d9ef>new</span> Random().<span style=color:#a6e22e>nextInt</span>(10000));
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> Jwts.<span style=color:#a6e22e>builder</span>()
@@ -348,7 +348,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>compact</span>();
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to get Claims
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to get Claims</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> Claims <span style=color:#a6e22e>getClaims</span>(String token) {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> Jwts.<span style=color:#a6e22e>parser</span>()
@@ -357,28 +357,28 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>				.<span style=color:#a6e22e>getBody</span>();
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to check <span style=color:#66d9ef>if</span> token is valid
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to check if token is valid</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>isValidToken</span>(String token) {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> getClaims(token).<span style=color:#a6e22e>getExpiration</span>().<span style=color:#a6e22e>after</span>(<span style=color:#66d9ef>new</span> Date(System.<span style=color:#a6e22e>currentTimeMillis</span>()));
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to check <span style=color:#66d9ef>if</span> token is valid as per username
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to check if token is valid as per username</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>isValidToken</span>(String token,String username) {
 </span></span><span style=display:flex><span>		String tokenUserName<span style=color:#f92672>=</span>getSubject(token);
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> (username.<span style=color:#a6e22e>equals</span>(tokenUserName) <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>!</span>isTokenExpired(token));
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> code to check <span style=color:#66d9ef>if</span> token is expired
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// code to check if token is expired</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>isTokenExpired</span>(String token) {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> getExpirationDate(token).<span style=color:#a6e22e>before</span>(<span style=color:#66d9ef>new</span> Date(System.<span style=color:#a6e22e>currentTimeMillis</span>()));
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>code to get expiration date
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//code to get expiration date</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> Date <span style=color:#a6e22e>getExpirationDate</span>(String token) {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> getClaims(token).<span style=color:#a6e22e>getExpiration</span>();
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>code to get expiration date
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//code to get expiration date</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getSubject</span>(String token) {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> getClaims(token).<span style=color:#a6e22e>getSubject</span>();
 </span></span><span style=display:flex><span>	}
@@ -442,14 +442,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		Integer id <span style=color:#f92672>=</span> userService.<span style=color:#a6e22e>saveUser</span>(user);
 </span></span><span style=display:flex><span>		String message<span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;User with id &#39;&#34;</span><span style=color:#f92672>+</span>id<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;&#39; saved succssfully!&#34;</span>;
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span><span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> ResponseEntity<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span>(message, HttpStatus.<span style=color:#a6e22e>OK</span>);
+</span></span><span style=display:flex><span>		<span style=color:#75715e>//return new ResponseEntity&lt;String&gt;(message, HttpStatus.OK);</span>
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> ResponseEntity.<span style=color:#a6e22e>ok</span>(message);
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@PostMapping</span>(<span style=color:#e6db74>&#34;/loginUser&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> ResponseEntity<span style=color:#f92672>&lt;</span>UserResponse<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>login</span>(<span style=color:#a6e22e>@RequestBody</span> UserRequest request){
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span>Validate username<span style=color:#f92672>/</span>password with <span style=color:#a6e22e>DB</span>(required in <span style=color:#66d9ef>case</span> of Stateless Authentication)
+</span></span><span style=display:flex><span>		<span style=color:#75715e>//Validate username/password with DB(required in case of Stateless Authentication)</span>
 </span></span><span style=display:flex><span>		authenticationManager.<span style=color:#a6e22e>authenticate</span>(<span style=color:#66d9ef>new</span> UsernamePasswordAuthenticationToken(
 </span></span><span style=display:flex><span>				request.<span style=color:#a6e22e>getUsername</span>(), request.<span style=color:#a6e22e>getPassword</span>()));
 </span></span><span style=display:flex><span>		String token <span style=color:#f92672>=</span>util.<span style=color:#a6e22e>generateToken</span>(request.<span style=color:#a6e22e>getUsername</span>());
@@ -493,12 +493,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>doFilterInternal</span>(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 </span></span><span style=display:flex><span>			<span style=color:#66d9ef>throws</span> ServletException, IOException {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>		<span style=color:#f92672>/</span> Reading Token from Authorization Header
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Reading Token from Authorization Header</span>
 </span></span><span style=display:flex><span>		String token<span style=color:#f92672>=</span> request.<span style=color:#a6e22e>getHeader</span>(<span style=color:#e6db74>&#34;Authorization&#34;</span>);
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>(token <span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span>) {
 </span></span><span style=display:flex><span>			String username<span style=color:#f92672>=</span> util.<span style=color:#a6e22e>getSubject</span>(token);
-</span></span><span style=display:flex><span>			<span style=color:#f92672>/</span><span style=color:#66d9ef>if</span> username is not <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;</span> Context Authentication must be <span style=color:#66d9ef>null</span>
-</span></span><span style=display:flex><span>			<span style=color:#a6e22e>if</span>(username <span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> SecurityContextHolder.<span style=color:#a6e22e>getContext</span>().<span style=color:#a6e22e>getAuthentication</span>()<span style=color:#f92672>==</span><span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#75715e>//if username is not null &amp; Context Authentication must be null</span>
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span>(username <span style=color:#f92672>!=</span><span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> SecurityContextHolder.<span style=color:#a6e22e>getContext</span>().<span style=color:#a6e22e>getAuthentication</span>()<span style=color:#f92672>==</span><span style=color:#66d9ef>null</span>) {
 </span></span><span style=display:flex><span>				UserDetails user<span style=color:#f92672>=</span> userDetailsService.<span style=color:#a6e22e>loadUserByUsername</span>(username);
 </span></span><span style=display:flex><span>				<span style=color:#66d9ef>boolean</span> isValid<span style=color:#f92672>=</span>util.<span style=color:#a6e22e>isValidToken</span>(token, user.<span style=color:#a6e22e>getUsername</span>());
 </span></span><span style=display:flex><span>				<span style=color:#66d9ef>if</span>(isValid) {
@@ -570,7 +570,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> SecurityFilter secFilter;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>Required in <span style=color:#66d9ef>case</span> of Stateless Authentication
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//Required in case of Stateless Authentication</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Override</span> <span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> AuthenticationManager <span style=color:#a6e22e>authenticationManager</span>() <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>super</span>.<span style=color:#a6e22e>authenticationManager</span>();
@@ -597,7 +597,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>and</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>sessionManagement</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>sessionCreationPolicy</span>(SessionCreationPolicy.<span style=color:#a6e22e>STATELESS</span>)
-</span></span><span style=display:flex><span>			<span style=color:#f92672>/</span>To Verify user from second request onwards............
+</span></span><span style=display:flex><span>			<span style=color:#75715e>//To Verify user from second request onwards............</span>
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>and</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>addFilterBefore</span>(secFilter, UsernamePasswordAuthenticationFilter.<span style=color:#a6e22e>class</span>)
 </span></span><span style=display:flex><span>			;
@@ -639,7 +639,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> SecurityFilter secFilter;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>Required in <span style=color:#66d9ef>case</span> of Stateless Authentication
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//Required in case of Stateless Authentication</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> AuthenticationManager <span style=color:#a6e22e>authenticationManager</span>() <span style=color:#66d9ef>throws</span> Exception {
@@ -657,7 +657,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> SecurityFilterChain <span style=color:#a6e22e>filterChain</span>(HttpSecurity http) <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		http
-</span></span><span style=display:flex><span>			<span style=color:#f92672>/</span> .<span style=color:#a6e22e>csrf</span>().<span style=color:#a6e22e>disable</span>()    <span style=color:#f92672>/</span>Disabling CSRF as not using form based login
+</span></span><span style=display:flex><span>			<span style=color:#75715e>// .csrf().disable()    /Disabling CSRF as not using form based login</span>
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>authorizeRequests</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>antMatchers</span>(<span style=color:#e6db74>&#34;/user/saveUser&#34;</span>,<span style=color:#e6db74>&#34;/user/loginUser&#34;</span>).<span style=color:#a6e22e>permitAll</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>anyRequest</span>().<span style=color:#a6e22e>authenticated</span>()
@@ -667,7 +667,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>and</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>sessionManagement</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>sessionCreationPolicy</span>(SessionCreationPolicy.<span style=color:#a6e22e>STATELESS</span>)
-</span></span><span style=display:flex><span>			<span style=color:#f92672>/</span>To Verify user from second request onwards............
+</span></span><span style=display:flex><span>			<span style=color:#75715e>//To Verify user from second request onwards............</span>
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>and</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>addFilterBefore</span>(secFilter, UsernamePasswordAuthenticationFilter.<span style=color:#a6e22e>class</span>)
 </span></span><span style=display:flex><span>
@@ -722,7 +722,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> SecurityFilter secFilter;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span>Required in <span style=color:#66d9ef>case</span> of Stateless Authentication
+</span></span><span style=display:flex><span>	<span style=color:#75715e>//Required in case of Stateless Authentication</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> AuthenticationManager <span style=color:#a6e22e>authenticationManager</span>() <span style=color:#66d9ef>throws</span> Exception {
@@ -740,7 +740,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>protected</span> SecurityFilterChain <span style=color:#a6e22e>filterChain</span>(HttpSecurity http) <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>		http
-</span></span><span style=display:flex><span>			<span style=color:#f92672>/</span> .<span style=color:#a6e22e>csrf</span>().<span style=color:#a6e22e>disable</span>()    <span style=color:#f92672>/</span>Disabling CSRF as not using form based login
+</span></span><span style=display:flex><span>			<span style=color:#75715e>// .csrf().disable()    /Disabling CSRF as not using form based login</span>
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>authorizeHttpRequests</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>requestMatchers</span>(<span style=color:#e6db74>&#34;/user/saveUser&#34;</span>,<span style=color:#e6db74>&#34;/user/loginUser&#34;</span>).<span style=color:#a6e22e>permitAll</span>()
 </span></span><span style=display:flex><span>			.<span style=color:#a6e22e>anyRequest</span>().<span style=color:#a6e22e>authenticated</span>()

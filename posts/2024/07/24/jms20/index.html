@@ -59,16 +59,16 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p><strong>清单 3</strong></p><p>如果您使用的是简化 API，则需要<code>setDeliveryDelay</code>在<code>JMSProducer</code>发送消息之前调用。此方法返回对象<code>JMSProducer</code>，它允许您在同一行中创建 JMSProducer、设置交付延迟和发送消息，如清单 4 所示。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>sendWithDeliveryDelaySimplified</span>(ConnectionFactory connectionFactory,Queue queue)
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>throws</span> JMSException {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> send a message with a delivery delay of 20 seconds
-</span></span><span style=display:flex><span>   <span style=color:#a6e22e>try</span> (JMSContext context <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>();){
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// send a message with a delivery delay of 20 seconds</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>try</span> (JMSContext context <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>();){
 </span></span><span style=display:flex><span>      context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>setDeliveryDelay</span>(20000).<span style=color:#a6e22e>send</span>(queue,<span style=color:#e6db74>&#34;Hello world&#34;</span>);
 </span></span><span style=display:flex><span>   }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><strong>清单 4</strong></p><h4 id=异步发送消息>异步发送消息</h4><p>JMS 2.0 的另一个新特性是能够异步发送消息。</p><p>此功能适用于在 Java SE 或 Java EE 应用程序客户端容器中运行的应用程序。不适用于在 Java EE Web 或 EJB 容器中运行的应用程序。</p><p>通常，发送持久消息时，send 方法直到 JMS 客户端将消息发送到服务器并收到回复以通知客户端该消息已被安全接收并持久化后才会返回。我们称此为<em>同步发送</em>。</p><p><em>JMS 2.0 引入了执行异步发送</em>的功能。当异步发送消息时，发送方法会将消息发送到服务器，然后将控制权返回给应用程序，而无需等待服务器的回复。应用程序可以做一些有用的事情，例如发送另一条消息或执行某些处理，而不是在 JMS 客户端等待回复时被无谓地阻塞。</p><p>当收到服务器的回复以表明消息已被服务器接收并持久保存时，JMS 提供程序将通过调用<code>onCompletion</code>应用程序指定的<code>CompletionListener</code>对象上的回调方法来通知应用程序。</p><p>在应用程序中使用异步发送的主要方式有两种</p><ul><li>允许应用程序在等待服务器回复的时间间隔内执行其他操作（如更新显示或写入数据库）</li><li>允许连续发送大量消息，而无需在每条消息后等待服务器的回复</li></ul><p>清单 5 是一个示例，说明如何使用经典 API 实现其中的第一个：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>asyncSendClassic</span>(ConnectionFactory connectionFactory,Queue queue)
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> send a message asynchronously
-</span></span><span style=display:flex><span>   <span style=color:#a6e22e>try</span> (Connection connection <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createConnection</span>();){
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// send a message asynchronously</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>try</span> (Connection connection <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createConnection</span>();){
 </span></span><span style=display:flex><span>      Session session <span style=color:#f92672>=</span> connection.<span style=color:#a6e22e>createSession</span>();
 </span></span><span style=display:flex><span>      MessageProducer messageProducer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createProducer</span>(queue);
 </span></span><span style=display:flex><span>      TextMessage textMessage <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Hello world&#34;</span>);
@@ -77,10 +77,10 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      messageProducer.<span style=color:#a6e22e>send</span>(textMessage,<span style=color:#66d9ef>new</span> MyCompletionListener(latch));
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Message sent, now waiting for reply&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> at <span style=color:#66d9ef>this</span> point we can <span style=color:#66d9ef>do</span> something <span style=color:#66d9ef>else</span> before waiting <span style=color:#66d9ef>for</span> the reply
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> <span style=color:#66d9ef>this</span> is not shown here
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// at this point we can do something else before waiting for the reply</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// this is not shown here</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> now wait <span style=color:#66d9ef>for</span> the reply from the server 
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// now wait for the reply from the server </span>
 </span></span><span style=display:flex><span>      latch.<span style=color:#a6e22e>await</span>();
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> (myCompletionListener.<span style=color:#a6e22e>getException</span>()<span style=color:#f92672>==</span><span style=color:#66d9ef>null</span>){
@@ -117,15 +117,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p><strong>清单 6</strong></p><p>在清单 6 中，我们使用一种新方法<code>MessageProducer</code>发送消息，而无需等待服务器的回复。这就是<code>send(Message message, CompletionListener listener)</code>。使用此方法发送消息允许应用程序在服务器处理消息时执行其他操作。当应用程序准备继续时，它使用<code>java.util.concurrent.CountDownLatch</code>等待，直到收到来自服务器的回复。收到回复后，应用程序可以继续执行，并且对消息已成功发送的信心程度与正常同步发送后相同。</p><p>如果使用 JMS 2.0 简化 API，异步发送消息会稍微简单一些，如清单 7 所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>asyncSendSimplified</span>(ConnectionFactory connectionFactory,Queue queue) 
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> send a message asynchronously
-</span></span><span style=display:flex><span>   <span style=color:#a6e22e>try</span> (JMSContext context <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>();){
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// send a message asynchronously</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>try</span> (JMSContext context <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>();){
 </span></span><span style=display:flex><span>      CountDownLatch latch <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> CountDownLatch(1);
 </span></span><span style=display:flex><span>      MyCompletionListener myCompletionListener <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> MyCompletionListener(latch);
 </span></span><span style=display:flex><span>      context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>setAsync</span>(myCompletionListener).<span style=color:#a6e22e>send</span>(queue,<span style=color:#e6db74>&#34;Hello world&#34;</span>);
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Message sent, now waiting for reply&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> at <span style=color:#66d9ef>this</span> point we can <span style=color:#66d9ef>do</span> something <span style=color:#66d9ef>else</span> before waiting <span style=color:#66d9ef>for</span> the reply
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> <span style=color:#66d9ef>this</span> is not shown here
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// at this point we can do something else before waiting for the reply</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// this is not shown here</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      latch.<span style=color:#a6e22e>await</span>();
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> (myCompletionListener.<span style=color:#a6e22e>getException</span>()<span style=color:#f92672>==</span><span style=color:#66d9ef>null</span>){
@@ -143,15 +143,15 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>         <span style=color:#66d9ef>int</span> deliveryCount <span style=color:#f92672>=</span> message.<span style=color:#a6e22e>getIntProperty</span>(<span style=color:#e6db74>&#34;JMSXDeliveryCount&#34;</span>);
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (deliveryCount<span style=color:#f92672>&lt;</span>10){
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> now <span style=color:#66d9ef>throw</span> a RuntimeException 
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// now throw a RuntimeException </span>
 </span></span><span style=display:flex><span>            <span style=color:#f92672>/</span> to simulate a problem processing the message
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> the message will then be redelivered
-</span></span><span style=display:flex><span>       <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>RuntimeException</span>(<span style=color:#e6db74>&#34;Exception thrown to simulate a bad message&#34;</span>);
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// the message will then be redelivered</span>
+</span></span><span style=display:flex><span>       <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Exception thrown to simulate a bad message&#34;</span>);
 </span></span><span style=display:flex><span>         } <span style=color:#66d9ef>else</span> {
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> message has been redelivered ten times, 
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> let<span style=color:#960050;background-color:#1e0010>&#39;</span>s <span style=color:#66d9ef>do</span> something to prevent endless redeliveries
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> such as sending it to dead message queue
-</span></span><span style=display:flex><span>       <span style=color:#f92672>/</span> details omitted
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// message has been redelivered ten times, </span>
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// let&#39;s do something to prevent endless redeliveries</span>
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// such as sending it to dead message queue</span>
+</span></span><span style=display:flex><span>       <span style=color:#75715e>// details omitted</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>      } <span style=color:#66d9ef>catch</span> (JMSException e) {
 </span></span><span style=display:flex><span>         <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(e);

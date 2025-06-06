@@ -20,11 +20,11 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#a6e22e>@RequestMapping</span>(<span style=color:#e6db74>&#34;/product&#34;</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ProductController</span> {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> ProductService productService;
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>constructor omitted <span style=color:#66d9ef>for</span> brevity...
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//constructor omitted for brevity...</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/{id}&#34;</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> Response <span style=color:#a6e22e>getProduct</span>(<span style=color:#a6e22e>@PathVariable</span> String id){
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> <span style=color:#66d9ef>this</span> method <span style=color:#66d9ef>throws</span> a <span style=color:#e6db74>&#34;NoSuchElementFoundException&#34;</span> exception
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// this method throws a &#34;NoSuchElementFoundException&#34; exception</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> productService.<span style=color:#a6e22e>getProduct</span>(id);
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
@@ -76,7 +76,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> HttpHeaders <span style=color:#a6e22e>getResponseHeaders</span>() {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> <span style=color:#66d9ef>return</span> response headers
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// return response headers</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>当我们想要操作响应头时，这种方法会派上用场，因为我们可以重写 <code>getResponseHeaders()</code> 方法。</p><p><code>@ResponseStatus</code> 与 <code>server.error</code> 配置属性相结合，使我们能够操作 Spring 定义的错误响应负载中的几乎所有字段。</p><p>但是如果还想操纵响应负载的结构怎么办？</p><p>让我们在下一节中看看如何实现这一目标。</p><h2 id=exceptionhandler><code>@ExceptionHandler</code></h2><p><code>@ExceptionHandler</code> 注释在处理异常方面为我们提供了很大的灵活性。对于初学者来说，要使用它，我们只需在控制器本身或 <code>@ControllerAdvice</code> 类中创建一个方法，并用 <code>@ExceptionHandler</code> 注释它：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@RestController</span>
@@ -85,7 +85,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> ProductService productService;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>constructor omitted <span style=color:#66d9ef>for</span> brevity...
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//constructor omitted for brevity...</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/{id}&#34;</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> Response <span style=color:#a6e22e>getProduct</span>(<span style=color:#a6e22e>@PathVariable</span> String id) {
@@ -234,9 +234,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>现在，由于 <code>stackTrace</code> 的行为由属性文件中的功能标志控制，因此当我们在生产环境中部署时，我们可以将其删除或将其设置为 <code>false</code> 。</p><h3 id=捕获所有异常处理程序>捕获所有异常处理程序</h3><p><em>需要把他们全都抓到：</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>try</span>{
 </span></span><span style=display:flex><span>  performSomeOperation();
 </span></span><span style=display:flex><span>} <span style=color:#66d9ef>catch</span>(OperationSpecificException ex){
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>...
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//...</span>
 </span></span><span style=display:flex><span>} <span style=color:#66d9ef>catch</span>(Exception catchAllExcetion){
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>...
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//...</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>作为一项谨慎措施，我们经常用一个包罗万象的 try-catch 异常处理程序块包围顶级方法的主体，以避免任何不需要的副作用或行为。我们控制器中的 <code>handleAllUncaughtException()</code> 方法的行为类似。它将捕获我们没有特定处理程序的所有异常。</p><p>我想在这里指出的一件事是，即使我们没有这个包罗万象的异常处理程序，Spring 也会处理它。但我们希望响应采用我们的格式而不是 Spring 的格式，因此我们必须自己处理异常。</p><p>包罗万象的处理程序方法也是记录异常的好地方，因为它们可以深入了解可能的错误。我们可以跳过记录字段验证异常，例如 <code>MethodArgumentNotValidException</code> ，因为它们是由于语法上无效的输入而引发的，但我们应该始终在捕获所有处理程序中记录未知异常。</p><h3 id=异常处理程序的顺序>异常处理程序的顺序</h3><p>提及处理程序方法的顺序并不重要。 Spring 将首先寻找最具体的异常处理方法。</p><p>如果找不到它，那么它将查找父异常的处理程序，在我们的例子中是 <code>RuntimeException</code> ，如果没有找到，则 <code>handleAllUncaughtException()</code> 方法将最终处理该异常。</p><p>这应该可以帮助我们处理这个特定控制器中的异常，但是如果其他控制器也抛出这些相同的异常怎么办？我们如何处理这些？我们是否在所有控制器中创建相同的处理程序，或者创建具有公共处理程序的基类并在所有控制器中扩展它？</p><p>幸运的是，我们不必这样做。 Spring 以“控制器建议”的形式为这个问题提供了一个非常优雅的解决方案。</p><p>让我们研究一下它们。</p><h2 id=controlleradvice><code>@ControllerAdvice</code></h2><blockquote><p><strong>为什么称为“控制器建议”？</strong></p><p>“建议”一词来自面向方面编程 (AOP)，它允许我们围绕现有方法注入横切代码（称为“建议”）。控制器建议允许我们拦截和修改控制器方法的返回值，在我们的例子中是为了处理异常。</p></blockquote><p>控制器建议类允许我们将异常处理程序应用于应用程序中的多个或所有控制器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@ControllerAdvice</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GlobalExceptionHandler</span> <span style=color:#66d9ef>extends</span> ResponseEntityExceptionHandler {
@@ -254,9 +254,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      HttpStatus status,
 </span></span><span style=display:flex><span>      WebRequest request
 </span></span><span style=display:flex><span>  ) {
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Body omitted as it<span style=color:#960050;background-color:#1e0010>&#39;</span>s similar to the method of same name
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> in ProductController example...
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>.....
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// in ProductController example...</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//.....</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@ExceptionHandler</span>(ItemNotFoundException.<span style=color:#a6e22e>class</span>)
@@ -265,9 +265,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      ItemNotFoundException itemNotFoundException,
 </span></span><span style=display:flex><span>      WebRequest request
 </span></span><span style=display:flex><span>  ){
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Body omitted as it<span style=color:#960050;background-color:#1e0010>&#39;</span>s similar to the method of same name
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> in ProductController example...
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>.....
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// in ProductController example...</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//.....</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@ExceptionHandler</span>(RuntimeException.<span style=color:#a6e22e>class</span>)
@@ -276,12 +276,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      RuntimeException exception,
 </span></span><span style=display:flex><span>      WebRequest request
 </span></span><span style=display:flex><span>  ){
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Body omitted as it<span style=color:#960050;background-color:#1e0010>&#39;</span>s similar to the method of same name
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> in ProductController example...
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>.....
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// in ProductController example...</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//.....</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>....
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//..</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> ResponseEntity<span style=color:#f92672>&lt;</span>Object<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>handleExceptionInternal</span>(

@@ -100,7 +100,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span> 
 </span></span><span style=display:flex><span>      JMSConsumer consumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(queue);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Delay <span style=color:#66d9ef>for</span> testing purpose Only
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Delay for testing purpose Only</span>
 </span></span><span style=display:flex><span>      TextMessage textMsg <span style=color:#f92672>=</span> (TextMessage) consumer.<span style=color:#a6e22e>receive</span>(1000);
 </span></span><span style=display:flex><span>      Enumeration customProperties <span style=color:#f92672>=</span> textMsg.<span style=color:#a6e22e>getPropertyNames</span>();
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>while</span> (customProperties.<span style=color:#a6e22e>hasMoreElements</span>()) {

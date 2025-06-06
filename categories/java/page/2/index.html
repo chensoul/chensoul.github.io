@@ -16,9 +16,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span>args) <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>        BrokerService brokerService <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> BrokerService();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>        brokerService.<span style=color:#a6e22e>addConnector</span>(
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>            <span style=color:#e6db74>&#34;tcp://0.0.0.0:61616?trace=&#34;</span> <span style=color:#f92672>+</span> TRANSPORT_TRACE <span style=color:#f92672>+</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>                <span style=color:#e6db74>&#34;&amp;transport.wireFormat.maxFrameSize=104857600&#34;</span>);
+</span></span><span style=display:flex><span><span style=color:#75715e>//        brokerService.addConnector(</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//            &#34;tcp://0.0.0.0:61616?trace=&#34; + TRANSPORT_TRACE +</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//                &#34;&amp;transport.wireFormat.maxFrameSize=104857600&#34;);</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        brokerService.<span style=color:#a6e22e>setPersistent</span>(<span style=color:#66d9ef>false</span>);
 </span></span><span style=display:flex><span>        brokerService.<span style=color:#a6e22e>setUseJmx</span>(<span style=color:#66d9ef>false</span>);

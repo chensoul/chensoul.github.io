@@ -34,7 +34,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      LogEvent event3 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> LogEvent(<span style=color:#e6db74>&#34;Sample INFO Log&#34;</span>, UUID.<span style=color:#a6e22e>randomUUID</span>().<span style=color:#a6e22e>toString</span>(), LogLevel.<span style=color:#a6e22e>INFO</span>);
 </span></span><span style=display:flex><span>      LogEvent event4 <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> LogEvent(<span style=color:#e6db74>&#34;Sample WARN Log&#34;</span>, UUID.<span style=color:#a6e22e>randomUUID</span>().<span style=color:#a6e22e>toString</span>(), LogLevel.<span style=color:#a6e22e>WARN</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>NOTE <span style=color:#f92672>-</span> If you keep <span style=color:#e6db74>&#34;logLevel = DEBUG&#34;</span>, it will not work<span style=color:#f92672>!</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//NOTE - If you keep &#34;logLevel = DEBUG&#34;, it will not work!</span>
 </span></span><span style=display:flex><span>      JMSConsumer consumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(defaultQueue, <span style=color:#e6db74>&#34;logLevel = &#39;DEBUG&#39;&#34;</span>);
 </span></span><span style=display:flex><span> 
 </span></span><span style=display:flex><span>      consumer.<span style=color:#a6e22e>setMessageListener</span>(msg <span style=color:#f92672>-&gt;</span> {
@@ -49,25 +49,25 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>send event1
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//send event1</span>
 </span></span><span style=display:flex><span>      ObjectMessage objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event1);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event1.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event2
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event2</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event2);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event2.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event3
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event3</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event3);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event3.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event4
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event4</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event4);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event4.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
@@ -84,13 +84,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.StringJoiner;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>LogEvent</span> <span style=color:#66d9ef>implements</span> Serializable {
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>Timestamp is the primary Key
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//Timestamp is the primary Key</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> LocalDateTime id;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>Log Body
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//Log Body</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> String body;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span>Unique Server Id
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//Unique Server Id</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> String machineId;
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> LogLevel logLevel;
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>LogEvent</span>() {
@@ -193,31 +193,31 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span> 
 </span></span><span style=display:flex><span>      JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>send event1
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//send event1</span>
 </span></span><span style=display:flex><span>      ObjectMessage objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event1);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event1.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>   
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event2
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event2</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event2);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event2.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event3
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event3</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event3);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event3.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>setPriority</span>(5);
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Send event4
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Send event4</span>
 </span></span><span style=display:flex><span>      objectMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createObjectMessage</span>();
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setObject</span>(event4);
 </span></span><span style=display:flex><span>      objectMessage.<span style=color:#a6e22e>setStringProperty</span>(<span style=color:#e6db74>&#34;logLevel&#34;</span>, event4.<span style=color:#a6e22e>getLogLevel</span>().<span style=color:#a6e22e>name</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Reset to normal priority
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Reset to normal priority</span>
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>setPriority</span>(4);
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(defaultQueue, objectMessage);
 </span></span><span style=display:flex><span>      Thread.<span style=color:#a6e22e>sleep</span>(2000);

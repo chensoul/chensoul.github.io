@@ -37,12 +37,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> SecurityFilterChain <span style=color:#a6e22e>securityFilterChain</span>(HttpSecurity http) <span style=color:#66d9ef>throws</span> Exception {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> http
-</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>csrf</span>(csrf <span style=color:#f92672>-&gt;</span> csrf.<span style=color:#a6e22e>disable</span>()) <span style=color:#f92672>/</span> (1)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>csrf</span>(csrf <span style=color:#f92672>-&gt;</span> csrf.<span style=color:#a6e22e>disable</span>()) <span style=color:#75715e>// (1)</span>
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>authorizeRequests</span>( auth <span style=color:#f92672>-&gt;</span> auth
-</span></span><span style=display:flex><span>                        .<span style=color:#a6e22e>anyRequest</span>().<span style=color:#a6e22e>authenticated</span>() <span style=color:#f92672>/</span> (2)
+</span></span><span style=display:flex><span>                        .<span style=color:#a6e22e>anyRequest</span>().<span style=color:#a6e22e>authenticated</span>() <span style=color:#75715e>// (2)</span>
 </span></span><span style=display:flex><span>                )
-</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>sessionManagement</span>(session <span style=color:#f92672>-&gt;</span> session.<span style=color:#a6e22e>sessionCreationPolicy</span>(SessionCreationPolicy.<span style=color:#a6e22e>STATELESS</span>)) <span style=color:#f92672>/</span> (3)
-</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>httpBasic</span>(Customizer.<span style=color:#a6e22e>withDefaults</span>()) <span style=color:#f92672>/</span> (4)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>sessionManagement</span>(session <span style=color:#f92672>-&gt;</span> session.<span style=color:#a6e22e>sessionCreationPolicy</span>(SessionCreationPolicy.<span style=color:#a6e22e>STATELESS</span>)) <span style=color:#75715e>// (3)</span>
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>httpBasic</span>(Customizer.<span style=color:#a6e22e>withDefaults</span>()) <span style=color:#75715e>// (4)</span>
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>build</span>();
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>

@@ -32,13 +32,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>将下面的代码复制到此处或从<a href=https://github.com/noobg1/http1_vs_http2 target=_blank>此处</a><code>http1Server.js</code>克隆整个存储库。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>Hapi</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;hapi&#39;</span>);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>server</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Hapi</span>.<span style=color:#a6e22e>Server</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ define server config</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
+</span></span><span style=display:flex><span><span style=color:#75715e>// define server config
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>port</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;8000&#39;</span>
 </span></span><span style=display:flex><span>});
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ define route config</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
+</span></span><span style=display:flex><span><span style=color:#75715e>// define route config
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>method</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;GET&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;/ping&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span><span style=color:#f92672>:</span> (<span style=color:#a6e22e>request</span>, <span style=color:#a6e22e>reply</span>) =&gt; {
@@ -46,8 +46,8 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}]);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ start server</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
+</span></span><span style=display:flex><span><span style=color:#75715e>// start server
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>err</span>) <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#a6e22e>err</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`Started </span><span style=color:#e6db74>${</span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connections</span>.<span style=color:#a6e22e>length</span><span style=color:#e6db74>}</span><span style=color:#e6db74> connections`</span>)
 </span></span><span style=display:flex><span>});
@@ -60,23 +60,23 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>Http2</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;http2&#39;</span>);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>server</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Hapi</span>.<span style=color:#a6e22e>Server</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ read certificate and private key</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>serverOptions</span> <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span><span style=color:#75715e>// read certificate and private key
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>serverOptions</span> <span style=color:#f92672>=</span> {
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>key</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fs</span>.<span style=color:#a6e22e>readFileSync</span>(<span style=color:#e6db74>&#39;localhost-privkey.pem&#39;</span>),
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>cert</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fs</span>.<span style=color:#a6e22e>readFileSync</span>(<span style=color:#e6db74>&#39;localhost-cert.pem&#39;</span>)
 </span></span><span style=display:flex><span>};
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ create http2 secure server listener</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>listener</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Http2</span>.<span style=color:#a6e22e>createSecureServer</span>(<span style=color:#a6e22e>serverOptions</span>);
+</span></span><span style=display:flex><span><span style=color:#75715e>// create http2 secure server listener
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>listener</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Http2</span>.<span style=color:#a6e22e>createSecureServer</span>(<span style=color:#a6e22e>serverOptions</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ create a connection object with listener and other options</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
+</span></span><span style=display:flex><span><span style=color:#75715e>// create a connection object with listener and other options
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>listener</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>port</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;8000&#39;</span>
 </span></span><span style=display:flex><span>});
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ define routes</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
+</span></span><span style=display:flex><span><span style=color:#75715e>// define routes
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>method</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;GET&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;/ping&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span><span style=color:#f92672>:</span> (<span style=color:#a6e22e>request</span>, <span style=color:#a6e22e>reply</span>) =&gt; {
@@ -84,8 +84,8 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}]);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>/ start server</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
+</span></span><span style=display:flex><span><span style=color:#75715e>// start server
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>err</span>) <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#a6e22e>err</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`Started </span><span style=color:#e6db74>${</span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connections</span>.<span style=color:#a6e22e>length</span><span style=color:#e6db74>}</span><span style=color:#e6db74> connections`</span>)
 </span></span><span style=display:flex><span>});
@@ -93,7 +93,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 <code>➜ curl https://127.0.0.1:8000/ping curl: Unsupported protocol</code></li><li>一旦我们完成设置，我们可以尝试我们可以使用带有标志的curl来支持http2协议，我们还需要传递带有标志的证书文件，因为它是自签名的并且不能被curl识别。
 <code>curl --http2 --cacert localhost-cert.pem https://127.0.0.1:8000/ping</code>
 <code>—-http2``—-cacert</code></li></ul><p><img src=/images/exploring-http2-part-2-overview-03.webp alt=img></p><ul><li><code>-I</code>我们可以通过要求curl仅返回带有（head）或带有（verbose）的响应头来验证协议<code>-v</code>。</li></ul><p>到目前为止，一切都很好。但我们所有的客户可能支持也可能不支持 http2。我们通过添加额外的服务器选项来处理这个问题：
-<code>allowHttp1: true</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>/ read certificate and private-key
+<code>allowHttp1: true</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>// read certificate and private-key
 </span></span><span style=display:flex><span>const serverOptions <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
 </span></span><span style=display:flex><span>  key: fs.readFileSync<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;localhost-privkey.pem&#39;</span><span style=color:#f92672>)</span>,
 </span></span><span style=display:flex><span>  cert: fs.readFileSync<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;localhost-cert.pem&#39;</span><span style=color:#f92672>)</span>,

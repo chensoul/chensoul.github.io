@@ -27,24 +27,24 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>      InitialContext initialContext <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> InitialContext();
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Step<span style=color:#f92672>-</span>1 Create ConnectionFactory
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Step-1 Create ConnectionFactory</span>
 </span></span><span style=display:flex><span>      connectionFactory
 </span></span><span style=display:flex><span>          <span style=color:#f92672>=</span> (ConnectionFactory) initialContext.<span style=color:#a6e22e>lookup</span>(<span style=color:#e6db74>&#34;jms/__defaultConnectionFactory&#34;</span>);
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Step<span style=color:#f92672>-</span>2 Get the Destination
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Step-2 Get the Destination</span>
 </span></span><span style=display:flex><span>      queue <span style=color:#f92672>=</span> (Queue) initialContext.<span style=color:#a6e22e>lookup</span>(<span style=color:#e6db74>&#34;jms/PTPQueue&#34;</span>);
 </span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (NamingException e) {
 </span></span><span style=display:flex><span>      e.<span style=color:#a6e22e>printStackTrace</span>();
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>Step<span style=color:#f92672>-</span>3 Create J MSContext
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Step-3 Create J MSContext</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Step<span style=color:#f92672>-</span>4a Create a Text Message and send
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Step-4a Create a Text Message and send</span>
 </span></span><span style=display:flex><span>      TextMessage textMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Message using JMS 2.0&#34;</span>);
 </span></span><span style=display:flex><span>      JMSProducer jmsProducer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(queue, textMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Step<span style=color:#f92672>-</span>4b Receive the message
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Step-4b Receive the message</span>
 </span></span><span style=display:flex><span>      TextMessage message <span style=color:#f92672>=</span> (TextMessage) jmsContext.<span style=color:#a6e22e>createConsumer</span>(queue).<span style=color:#a6e22e>receive</span>();
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(message.<span style=color:#a6e22e>getText</span>());
 </span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (JMSException e) {
@@ -68,7 +68,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    producer.<span style=color:#a6e22e>send</span>(queue, <span style=color:#e6db74>&#34;Message 2&#34;</span>);
 </span></span><span style=display:flex><span>    producer.<span style=color:#a6e22e>send</span>(queue, <span style=color:#e6db74>&#34;Message 3&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span>Close the Consumer
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Close the Consumer</span>
 </span></span><span style=display:flex><span>    consumer.<span style=color:#a6e22e>close</span>();
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
@@ -77,7 +77,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>Message 3
 </span></span></code></pre></div><blockquote><p><strong>注意：<strong>始终建议尽可能使用</strong>异步消息侦听器</strong>。在本教程中，我为 bravity 使用了同步消息处理，但在项目中使用异步方式是正确的方式。</p></blockquote><h2 id=临时队列>临时队列</h2><p>是<code>javax.jms.TemporaryQueue</code>为连接持续时间创建的唯一临时队列对象。它只能由创建它的连接使用。<code>TemporaryQueue</code>如果没有为其分配接收者，JMS 会确保删除它。我们将在下面讨论 TemporaryQueue 在典型的请求-响应场景中的用途，其中接收者使用另一条消息响应发送者。</p><p>下面的代码演示了如何创建 TemporaryQueue 并将其链接到消息。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>TemporaryQueue tempReplyQ <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTemporaryQueue</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>Send the message
+</span></span><span style=display:flex><span><span style=color:#75715e>//Send the message</span>
 </span></span><span style=display:flex><span>Message message <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Temp Queue demo&#34;</span>);
 </span></span><span style=display:flex><span>message.<span style=color:#a6e22e>setJMSReplyTo</span>(tempReplyQ);
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>TemporaryQueue</span> <span style=color:#66d9ef>extends</span> Queue {
@@ -111,29 +111,29 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>Browsed message: Remember to do 10 mins stretching
 </span></span><span style=display:flex><span>Received message: Start your day with a glass of Water!
 </span></span><span style=display:flex><span>Received message: Remember to do 10 mins stretching
-</span></span></code></pre></div><h2 id=队列的可靠性>队列的可靠性</h2><p>队列通常由管理员创建并长期存在。即使没有消费者接收消息，队列也会保留消息。因此，即使不采取任何特殊措施，它也能使使用非常可靠。</p><h2 id=jms-中的消息请求回复>JMS 中的消息请求回复</h2><p>存在消息接收者想要回复发送者的用例。在点对点消息系统中，有两种方法可以实现请求-回复场景。</p><ol><li>通过使用<strong>TemporaryQueue</strong>。</li><li>或者使用<strong>另一个队列</strong>作为回复队列。</li></ol><h3 id=1-使用temporaryqueue进行消息请求-回复>1. 使用TemporaryQueue进行消息请求-回复</h3><p>以下代码显示了如何使用，<code>TemporaryQueue</code>消息接收者会在此队列上回复。临时队列是会话范围的（jmsContext 范围），会话关闭时会将其删除。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>SessionFactory <span style=color:#f92672>&amp;</span> Queue creation skipped <span style=color:#66d9ef>for</span> bravity
-</span></span><span style=display:flex><span><span style=color:#a6e22e>try</span>(JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
+</span></span></code></pre></div><h2 id=队列的可靠性>队列的可靠性</h2><p>队列通常由管理员创建并长期存在。即使没有消费者接收消息，队列也会保留消息。因此，即使不采取任何特殊措施，它也能使使用非常可靠。</p><h2 id=jms-中的消息请求回复>JMS 中的消息请求回复</h2><p>存在消息接收者想要回复发送者的用例。在点对点消息系统中，有两种方法可以实现请求-回复场景。</p><ol><li>通过使用<strong>TemporaryQueue</strong>。</li><li>或者使用<strong>另一个队列</strong>作为回复队列。</li></ol><h3 id=1-使用temporaryqueue进行消息请求-回复>1. 使用TemporaryQueue进行消息请求-回复</h3><p>以下代码显示了如何使用，<code>TemporaryQueue</code>消息接收者会在此队列上回复。临时队列是会话范围的（jmsContext 范围），会话关闭时会将其删除。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//SessionFactory &amp; Queue creation skipped for bravity</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>try</span>(JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
 </span></span><span style=display:flex><span>      JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Use temporary Queue to send and receive messages.
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Use temporary Queue to send and receive messages.</span>
 </span></span><span style=display:flex><span>      TemporaryQueue replyQueue <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTemporaryQueue</span>();
 </span></span><span style=display:flex><span>      TextMessage message <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Sender message - Hi there!&#34;</span>);
 </span></span><span style=display:flex><span>      message.<span style=color:#a6e22e>setJMSReplyTo</span>(replyQueue);
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(queue, message);
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(message.<span style=color:#a6e22e>getJMSMessageID</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Message received
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Message received</span>
 </span></span><span style=display:flex><span>      JMSConsumer consumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(queue);
 </span></span><span style=display:flex><span>      TextMessage messageReceived <span style=color:#f92672>=</span> (TextMessage) consumer.<span style=color:#a6e22e>receive</span>();
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(messageReceived.<span style=color:#a6e22e>getText</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Reply
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Reply</span>
 </span></span><span style=display:flex><span>      JMSProducer replyProducer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
 </span></span><span style=display:flex><span>      TextMessage replyMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Reply message - Hi, all well here!&#34;</span>);
 </span></span><span style=display:flex><span>      replyMessage.<span style=color:#a6e22e>setJMSCorrelationID</span>(messageReceived.<span style=color:#a6e22e>getJMSMessageID</span>());
 </span></span><span style=display:flex><span>      replyProducer.<span style=color:#a6e22e>send</span>(messageReceived.<span style=color:#a6e22e>getJMSReplyTo</span>(), replyMessage);
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Receive and process reply
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Receive and process reply</span>
 </span></span><span style=display:flex><span>      JMSConsumer replyConsumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(replyQueue);
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>( replyConsumer.<span style=color:#a6e22e>receiveBody</span>(String.<span style=color:#a6e22e>class</span>));
 </span></span><span style=display:flex><span>      TextMessage replyReceived <span style=color:#f92672>=</span> (TextMessage) replyConsumer.<span style=color:#a6e22e>receive</span>();
@@ -158,7 +158,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>run</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
 </span></span><span style=display:flex><span>          JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
-</span></span><span style=display:flex><span>          <span style=color:#f92672>/</span>Send the message
+</span></span><span style=display:flex><span>          <span style=color:#75715e>//Send the message</span>
 </span></span><span style=display:flex><span>          Message message <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Order placed successfully&#34;</span>);
 </span></span><span style=display:flex><span>          message.<span style=color:#a6e22e>setJMSReplyTo</span>(replyQueue);
 </span></span><span style=display:flex><span>          producer.<span style=color:#a6e22e>send</span>(queue, message);
@@ -175,12 +175,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    Thread messageConsumer <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Thread() {
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>run</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
-</span></span><span style=display:flex><span>          <span style=color:#f92672>/</span>Receive message
+</span></span><span style=display:flex><span>          <span style=color:#75715e>//Receive message</span>
 </span></span><span style=display:flex><span>          Thread.<span style=color:#a6e22e>sleep</span>(1000);
 </span></span><span style=display:flex><span>          JMSConsumer consumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(queue);
 </span></span><span style=display:flex><span>          Message msg <span style=color:#f92672>=</span> consumer.<span style=color:#a6e22e>receive</span>();
 </span></span><span style=display:flex><span>          System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Received message: &#34;</span> <span style=color:#f92672>+</span> msg.<span style=color:#a6e22e>getBody</span>(String.<span style=color:#a6e22e>class</span>));
-</span></span><span style=display:flex><span>          <span style=color:#f92672>/</span>Reply message
+</span></span><span style=display:flex><span>          <span style=color:#75715e>//Reply message</span>
 </span></span><span style=display:flex><span>          jmsContext.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(msg.<span style=color:#a6e22e>getJMSReplyTo</span>(), <span style=color:#e6db74>&#34;Order will be dispatched soon!&#34;</span>);
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (JMSException <span style=color:#f92672>|</span> InterruptedException e) {
 </span></span><span style=display:flex><span>          e.<span style=color:#a6e22e>printStackTrace</span>();
@@ -199,7 +199,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> labxx.common.settings.CommonSettings;
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.jms.*;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span> MessageId and CorrelationId test
+</span></span><span style=display:flex><span><span style=color:#75715e>// MessageId and CorrelationId test</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MessageIdCorrelationId</span> {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> JMSException, InterruptedException {
 </span></span><span style=display:flex><span>    ConnectionFactory connectionFactory <span style=color:#f92672>=</span> CommonSettings.<span style=color:#a6e22e>getConnectionFactory</span>();
@@ -208,7 +208,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>()) {
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Message listener on replyQueue
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Message listener on replyQueue</span>
 </span></span><span style=display:flex><span>      JMSConsumer replyConsumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(replyQueue);
 </span></span><span style=display:flex><span>      replyConsumer.<span style=color:#a6e22e>setMessageListener</span>(msg <span style=color:#f92672>-&gt;</span> {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
@@ -220,19 +220,19 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>      });
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Message1
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Message1</span>
 </span></span><span style=display:flex><span>      JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
 </span></span><span style=display:flex><span>      TextMessage message <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Order placed successfully&#34;</span>);
 </span></span><span style=display:flex><span>      message.<span style=color:#a6e22e>setJMSReplyTo</span>(replyQueue);
 </span></span><span style=display:flex><span>      producer.<span style=color:#a6e22e>send</span>(queue, message);
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Message1 &#34;</span> <span style=color:#f92672>+</span> message.<span style=color:#a6e22e>getJMSMessageID</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Receive Message
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Receive Message</span>
 </span></span><span style=display:flex><span>      JMSConsumer consumer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createConsumer</span>(queue);
 </span></span><span style=display:flex><span>      TextMessage receivedMsg <span style=color:#f92672>=</span> (TextMessage) consumer.<span style=color:#a6e22e>receive</span>();
 </span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Message received: &#34;</span> <span style=color:#f92672>+</span> receivedMsg.<span style=color:#a6e22e>getText</span>());
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>/</span>Reply Message
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//Reply Message</span>
 </span></span><span style=display:flex><span>      TextMessage replyMessage <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Order Acknowledged&#34;</span>);
 </span></span><span style=display:flex><span>      replyMessage.<span style=color:#a6e22e>setJMSCorrelationID</span>(receivedMsg.<span style=color:#a6e22e>getJMSMessageID</span>());
 </span></span><span style=display:flex><span>      jmsContext.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(receivedMsg.<span style=color:#a6e22e>getJMSReplyTo</span>(), replyMessage);

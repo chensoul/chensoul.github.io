@@ -5,9 +5,9 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span>args) &lt;span style="color:#66d9ef">throws&lt;/span> Exception {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> BrokerService brokerService &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> BrokerService();
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">/&lt;/span> brokerService.&lt;span style="color:#a6e22e">addConnector&lt;/span>(
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#e6db74">&amp;#34;tcp://0.0.0.0:61616?trace=&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> TRANSPORT_TRACE &lt;span style="color:#f92672">+&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;amp;transport.wireFormat.maxFrameSize=104857600&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// brokerService.addConnector(&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// &amp;#34;tcp://0.0.0.0:61616?trace=&amp;#34; + TRANSPORT_TRACE +&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// &amp;#34;&amp;amp;transport.wireFormat.maxFrameSize=104857600&amp;#34;);&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> brokerService.&lt;span style="color:#a6e22e">setPersistent&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>);
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> brokerService.&lt;span style="color:#a6e22e">setUseJmx&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>);

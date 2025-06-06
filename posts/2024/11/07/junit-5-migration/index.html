@@ -284,9 +284,9 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Statement() {
 </span></span><span style=display:flex><span>            <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>evaluate</span>() <span style=color:#66d9ef>throws</span> Throwable {
-</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> Store launch time
+</span></span><span style=display:flex><span>                <span style=color:#75715e>// Store launch time</span>
 </span></span><span style=display:flex><span>                base.<span style=color:#a6e22e>evaluate</span>();
-</span></span><span style=display:flex><span>                <span style=color:#f92672>/</span> Store elapsed time
+</span></span><span style=display:flex><span>                <span style=color:#75715e>// Store elapsed time</span>
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>        };
 </span></span><span style=display:flex><span>    }
@@ -300,12 +300,12 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>beforeEach</span>(ExtensionContext context) <span style=color:#66d9ef>throws</span> Exception {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Store launch time
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Store launch time</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>afterEach</span>(ExtensionContext context) <span style=color:#66d9ef>throws</span> Exception {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Store elapsed time
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Store elapsed time</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h3 id=自定义类规则>自定义类规则</h3><p>分别地，我们可以通过<code>@ClassRule</code>实现<code>BeforeAllCallback</code>和<code>AfterAllCallback</code>接口来重现应用的规则逻辑。</p><p>在某些情况下，我们可能在 JUnit 4 中将类规则编写为内部匿名类。在以下示例中，我们有一个服务器资源，希望能够轻松设置以用于不同的测试：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JUnit4ServerBaseTest</span> {

@@ -42,13 +42,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String accountNumber;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>double</span> balance;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>deposit</span>(<span style=color:#66d9ef>double</span> amount) {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Perform deposit logic
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Perform deposit logic</span>
 </span></span><span style=display:flex><span>        balance <span style=color:#f92672>+=</span> amount;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>withdraw</span>(<span style=color:#66d9ef>double</span> amount) {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Perform withdrawal logic
-</span></span><span style=display:flex><span>        <span style=color:#a6e22e>if</span> (balance <span style=color:#f92672>&gt;=</span> amount) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Perform withdrawal logic</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (balance <span style=color:#f92672>&gt;=</span> amount) {
 </span></span><span style=display:flex><span>            balance <span style=color:#f92672>-=</span> amount;
 </span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> InsufficientFundsException(<span style=color:#e6db74>&#34;Insufficient funds for withdrawal&#34;</span>);

@@ -37,8 +37,8 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Jwts.<span style=color:#a6e22e>builder</span>()
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>claim</span>(<span style=color:#e6db74>&#34;id&#34;</span>, <span style=color:#e6db74>&#34;abc123&#34;</span>)
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>claim</span>(<span style=color:#e6db74>&#34;role&#34;</span>, <span style=color:#e6db74>&#34;admin&#34;</span>)
-</span></span><span style=display:flex><span>                <span style=color:#75715e>/*.addClaims(Map.of(&#34;id&#34;, &#34;abc123&#34;,
-</span></span></span><span style=display:flex><span><span style=color:#75715e>                        &#34;role&#34;, &#34;admin&#34;))*/</span>
+</span></span><span style=display:flex><span>                <span style=color:#75715e>//*.addClaims(Map.of(&#34;id&#34;, &#34;abc123&#34;,</span>
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;role&#34;</span>, <span style=color:#e6db74>&#34;admin&#34;</span>))<span style=color:#f92672>*/</span>
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>setIssuer</span>(<span style=color:#e6db74>&#34;TestApplication&#34;</span>)
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>setIssuedAt</span>(java.<span style=color:#a6e22e>util</span>.<span style=color:#a6e22e>Date</span>.<span style=color:#a6e22e>from</span>(Instant.<span style=color:#a6e22e>now</span>()))
 </span></span><span style=display:flex><span>                .<span style=color:#a6e22e>setExpiration</span>(Date.<span style=color:#a6e22e>from</span>(Instant.<span style=color:#a6e22e>now</span>().<span style=color:#a6e22e>plus</span>(10, ChronoUnit.<span style=color:#a6e22e>MINUTES</span>)))
@@ -48,7 +48,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span></code></pre></div><p>此方法创建一个 JWT 令牌，如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>eyJhbGciOiJub25lIn0.eyJpZCI6ImFiYzEyMyIsInJvbGUiOiJhZG1pbiIsImlzcyI6IlR
 </span></span><span style=display:flex><span>lc3RBcHBsaWNhdGlvbiIsImlhdCI6MTcxMTY2MTA1MiwiZXhwIjoxNzExNjYxNjUyfQ.
 </span></span></code></pre></div><p>接下来我们看一下用于生成令牌的构建器方法：</p><ul><li><code>claim</code>：允许我们指定任意数量的自定义名称值对声明。我们还可以使用<code>addClaims</code>方法添加声明映射作为替代方案。</li><li><code>setIssuer</code>：此方法与已注册的权利要求相对应<code>iss</code>。</li><li><code>setIssuedAt</code>：此方法对应于已注册的声明<code>iat</code>。此方法以<code>java.util.Date</code>作为参数。这里我们将此值设置为当前时刻。</li><li><code>setExpiration</code>：此方法对应于已注册的声明<code>exp</code>。此方法以<code>java.util.Date</code>作为参数。这里我们将此值设置为从当前时刻开始的 10 分钟。</li></ul><p>让我们尝试使用在线<a href=https://jwt.is/ target=_blank>JWT 解码器</a>解码该 JWT ：</p><p><img src=/images/spring-security-jwt-02.webp alt=设置></p><p>如果我们仔细查看标头，我们会看到<code>alg:none</code>。这是因为我们没有指定要使用的任何算法。正如我们之前看到的，建议我们使用算法来生成签名。</p><p>因此，让我们在我们的方法中使用<strong>HMAC SHA256 算法</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>createJwt</span>() {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Recommended to be stored in Secret
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Recommended to be stored in Secret</span>
 </span></span><span style=display:flex><span>        String secret <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;5JzoMbk6E5qIqHSuBTgeQCARtUsxAkBiHwdjXOSW8kWdXzYmP3X51C0&#34;</span>;
 </span></span><span style=display:flex><span>        Key hmacKey <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> SecretKeySpec(Base64.<span style=color:#a6e22e>getDecoder</span>().<span style=color:#a6e22e>decode</span>(secret),
 </span></span><span style=display:flex><span>                SignatureAlgorithm.<span style=color:#a6e22e>HS256</span>.<span style=color:#a6e22e>getJcaName</span>());
@@ -65,7 +65,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>cyI6IlRlc3RBcHBsaWNhdGlvbiIsImlhdCI6MTcxMjMyODQzMSwiZXhwIjoxNzEyMzI5MDMxfQ.
 </span></span><span style=display:flex><span>pj9AvbLtwITqBYazDnaTibCLecM-cQ5RAYw2YYtkyeA
 </span></span></code></pre></div><p>解码此 JWT 可得到：</p><p><img src=/images/spring-security-jwt-03.webp alt=设置></p><h3 id=解析-jwt-令牌>解析 JWT 令牌</h3><p>现在我们已经创建了 JWT，让我们看看如何解析令牌以提取声明。只有当我们知道最初用于创建 JWT 的密钥时，我们才能解析令牌。以下代码可用于实现此目的：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Jws<span style=color:#f92672>&lt;</span>Claims<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>parseJwt</span>(String jwtString) {
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Recommended to be stored in Secret
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Recommended to be stored in Secret</span>
 </span></span><span style=display:flex><span>        String secret <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;5JzoMbk6E5qIqHSuBTgeQCARtUsxAkBiHwdjXOSW8kWdXzYmP3X51C0&#34;</span>;
 </span></span><span style=display:flex><span>        Key hmacKey <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> SecretKeySpec(Base64.<span style=color:#a6e22e>getDecoder</span>().<span style=color:#a6e22e>decode</span>(secret),
 </span></span><span style=display:flex><span>                SignatureAlgorithm.<span style=color:#a6e22e>HS256</span>.<span style=color:#a6e22e>getJcaName</span>());
@@ -140,7 +140,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                                    FilterChain filterChain) 
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>throws</span> ServletException, IOException {
 </span></span><span style=display:flex><span>        log.<span style=color:#a6e22e>info</span>(<span style=color:#e6db74>&#34;Inside JWT filter&#34;</span>);
-</span></span><span style=display:flex><span>        <span style=color:#f92672>/</span> Code to validate the Authorization header
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Code to validate the Authorization header</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>该类<code>JwtHelper</code>负责创建和验证 token。我们先看看如何创建 token：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>createToken</span>(Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;</span> claims, String subject) {
@@ -431,7 +431,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>                                   FilterChain filterChain) 
 </span></span><span style=display:flex><span>           <span style=color:#66d9ef>throws</span> ServletException, IOException {
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>try</span> {
-</span></span><span style=display:flex><span>         <span style=color:#f92672>/</span>validate token here
+</span></span><span style=display:flex><span>         <span style=color:#75715e>//validate token here</span>
 </span></span><span style=display:flex><span>      } <span style=color:#66d9ef>catch</span> (ExpiredJwtException jwtException) {
 </span></span><span style=display:flex><span>         request.<span style=color:#a6e22e>setAttribute</span>(<span style=color:#e6db74>&#34;exception&#34;</span>, jwtException);
 </span></span><span style=display:flex><span>      } <span style=color:#66d9ef>catch</span> (BadCredentialsException <span style=color:#f92672>|</span> 

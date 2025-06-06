@@ -22,7 +22,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>run</span>() {
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> (JMSContext jmsContext <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createContext</span>(JMSContext.<span style=color:#a6e22e>AUTO_ACKNOWLEDGE</span>)) {
 </span></span><span style=display:flex><span>          JMSProducer producer <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createProducer</span>();
-</span></span><span style=display:flex><span>          <span style=color:#f92672>/</span>Send the message
+</span></span><span style=display:flex><span>          <span style=color:#75715e>//Send the message</span>
 </span></span><span style=display:flex><span>          Message message <span style=color:#f92672>=</span> jmsContext.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;This is an AUTO_ACKNOWLEDGEMENT message&#34;</span>);
 </span></span><span style=display:flex><span>          producer.<span style=color:#a6e22e>send</span>(queue, message);
 </span></span><span style=display:flex><span>        }

@@ -11,7 +11,7 @@ current-menu-item current_page_item menu-item-home"><a href=/>Home</a></li><li c
 menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/spring-boot-tutorials/>Spring Boot Tutorials</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/microservice-tutorials/>Microservice Tutorials</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category"><a href=/kubernetes-tutorials/>Kubernetes Tutorials</a></li></ul></li><li class="menu-item menu-item-type-post_type menu-item-object-page"><a href=https://github.com/chensoul target=_blank>About Me</a></li></ul></nav></div></header><div id=content class="site-content container clearfix"><section id=primary class="content-archive content-area post-content-area"><main id=main class=site-main role=main><article class="post type-post"><div class=post-inner-content><header class=entry-header><h2 class=entry-title><a href=https://blog.chensoul.cc/posts/2024/07/24/what-is-new-in-jms-2-0/ rel=bookmark title="[译]JMS 2.0 中的新增功能">[译]JMS 2.0 中的新增功能</a></h2><div class=entry-meta><span class=meta-date><time class="entry-date published" datetime=2024-07-24T00:00:00>2024-07-24
 </time></span><span class=meta-author><span class="author vcard">chensoul</span>
 </span><span class="tagcloud post-tags"><i class="fa fa-tags"></i>&nbsp;
-<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/jms/ title=jms>jms</a></span></div></header><div class=entry-content><p>原文链接：<a href=https://hasithah.medium.com/what-is-new-in-jms-2-0-821266fc1bf0 target=_blank>What is new in JMS 2.0</a></p><p>在在软件集成领域，从一个软件组件到另一个软件组件进行通信是一项基本要求。虽然已经出现了许多具有这种能力的技术，但 Java 编程语言为我们提供了一个 API，以促进用 Java 编写的组件之间的消息传递。此 API 的实现将由不同的供应商（JMS 提供商）通过代理软件提供。</p><p>这个API被称为Java消息服务（JMS）。</p><p><img src=/images/jms2.webp alt=img></p><p>JMS 规范的最后一次更新是在 2002 年，当时推出了<strong>JMS 1.1</strong>。从那时起，多年来，该 API 已在全球许多软件组件中使用，证明了其对开发人员的友好性。JMS 的下一个版本（<strong>JMS 2.0</strong>）于 2013 年 4 月问世，距离 1.1 版已有数年之久。</p><p><strong>JMS 2.0 只能与Java SE 7 及更高版本</strong>一起使用。了解 JMS 2.0 中的新功能将会很有趣。</p><h1 id=易于使用的语言功能>易于使用的语言功能</h1><p>从语言角度来看，对 API 所做的最重大的更改是减少了开发人员需要编写的代码量。让我们将 JMS 2.0 与 1.1 进行比较，看看它们有什么区别。</p><h2 id=连接和会话对象纳入单个-jmscontext>连接和会话对象纳入单个 JMSContext</h2><p>不再需要创建连接和会话对象。您可以创建 JMSContext 并直接使用它来创建消息生产者。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+<a class="tag-cloud-link widget__link widget__link--taglist" href=/tags/jms/ title=jms>jms</a></span></div></header><div class=entry-content><p>原文链接：<a href=https://hasithah.medium.com/what-is-new-in-jms-2-0-821266fc1bf0 target=_blank>What is new in JMS 2.0</a></p><p>在在软件集成领域，从一个软件组件到另一个软件组件进行通信是一项基本要求。虽然已经出现了许多具有这种能力的技术，但 Java 编程语言为我们提供了一个 API，以促进用 Java 编写的组件之间的消息传递。此 API 的实现将由不同的供应商（JMS 提供商）通过代理软件提供。</p><p>这个API被称为Java消息服务（JMS）。</p><p><img src=/images/jms2.webp alt=img></p><p>JMS 规范的最后一次更新是在 2002 年，当时推出了<strong>JMS 1.1</strong>。从那时起，多年来，该 API 已在全球许多软件组件中使用，证明了其对开发人员的友好性。JMS 的下一个版本（<strong>JMS 2.0</strong>）于 2013 年 4 月问世，距离 1.1 版已有数年之久。</p><p><strong>JMS 2.0 只能与Java SE 7 及更高版本</strong>一起使用。了解 JMS 2.0 中的新功能将会很有趣。</p><h1 id=易于使用的语言功能>易于使用的语言功能</h1><p>从语言角度来看，对 API 所做的最重大的更改是减少了开发人员需要编写的代码量。让我们将 JMS 2.0 与 1.1 进行比较，看看它们有什么区别。</p><h2 id=连接和会话对象纳入单个-jmscontext>连接和会话对象纳入单个 JMSContext</h2><p>不再需要创建连接和会话对象。您可以创建 JMSContext 并直接使用它来创建消息生产者。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>sendMessageJMS11</span>(ConnectionFactory connectionFactory, Queue queueString text) {
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>try</span> {
@@ -29,7 +29,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>   }
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>sendMessageJMS20</span>(ConnectionFactory connectionFactory, Queue queue, 
 </span></span><span style=display:flex><span>String text) {
@@ -39,16 +39,16 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>      <span style=color:#f92672>/</span> handle <span style=color:#a6e22e>exception</span> (details omitted)
 </span></span><span style=display:flex><span>   }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h2 id=无需调用-connectionclose>无需调用 connection.close()</h2><p>但是，无需从代码中显式调用 close。JMSContext 实现了 Java SE 7 <em>java.lang.AutoCloseable</em>接口。这意味着，如果我们在 try-with-resources 块中创建 JMSContext（这也是 Java SE 7 的一项新功能），close 方法将在该块末尾自动调用，而无需将其显式添加到代码中。</p><p>请参考上面的例子。</p><h2 id=创建会话时无需传递两个参数>创建会话时无需传递两个参数</h2><p>在 JMS 1.1 中，需要传递一个附加参数来指定会话是否是事务性的。在 JMS 2.0 中，传递 就足够了<code>Session.SESSION_TRANSACTED</code>。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><h2 id=无需调用-connectionclose>无需调用 connection.close()</h2><p>但是，无需从代码中显式调用 close。JMSContext 实现了 Java SE 7 <em>java.lang.AutoCloseable</em>接口。这意味着，如果我们在 try-with-resources 块中创建 JMSContext（这也是 Java SE 7 的一项新功能），close 方法将在该块末尾自动调用，而无需将其显式添加到代码中。</p><p>请参考上面的例子。</p><h2 id=创建会话时无需传递两个参数>创建会话时无需传递两个参数</h2><p>在 JMS 1.1 中，需要传递一个附加参数来指定会话是否是事务性的。在 JMS 2.0 中，传递 就足够了<code>Session.SESSION_TRANSACTED</code>。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Session session <span style=color:#f92672>=</span> connection.<span style=color:#a6e22e>createSession</span>(<span style=color:#66d9ef>true</span>,Session.<span style=color:#a6e22e>SESSION_TRANSACTED</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Session session <span style=color:#f92672>=</span> connection.<span style=color:#a6e22e>createSession</span>(Session.<span style=color:#a6e22e>SESSION_TRANSACTED</span>);
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span> <span style=color:#f92672>-</span> a session with Session.<span style=color:#a6e22e>AUTO_ACKNOWLEDGE</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0 - a session with Session.AUTO_ACKNOWLEDGE</span>
 </span></span><span style=display:flex><span>Session session <span style=color:#f92672>=</span> connection.<span style=color:#a6e22e>createSession</span>();
-</span></span></code></pre></div><p>如果我们想指定其他会话模式（本地事务、CLIENT_ACKNOWLEDGE 或 DUPS_OK_ACKNOWLEDGE），我们只需传递一个参数，而不是两个。如果您需要会话处于 Session.AUTO_ACKNOWLEDGE 模式，则无需传递任何参数，因为它是默认模式。</p><h2 id=支持方法链>支持方法链</h2><p>这大大减少了需要编写的代码量。请参考以下示例。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><p>如果我们想指定其他会话模式（本地事务、CLIENT_ACKNOWLEDGE 或 DUPS_OK_ACKNOWLEDGE），我们只需传递一个参数，而不是两个。如果您需要会话处于 Session.AUTO_ACKNOWLEDGE 模式，则无需传递任何参数，因为它是默认模式。</p><h2 id=支持方法链>支持方法链</h2><p>这大大减少了需要编写的代码量。请参考以下示例。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>MessageProducer messageProducer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createProducer</span>(demoQueue);
 </span></span><span style=display:flex><span>messageProducer.<span style=color:#a6e22e>setPriority</span>(1);
@@ -57,22 +57,22 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>messageProducer.<span style=color:#a6e22e>send</span>(textMessage);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>TextMessage textMessage <span style=color:#f92672>=</span> context.<span style=color:#a6e22e>createTextMessage</span>(body); context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>setPriority</span>(1).<span style=color:#a6e22e>setProperty</span>(<span style=color:#960050;background-color:#1e0010>“</span>foo<span style=color:#960050;background-color:#1e0010>”</span>, <span style=color:#960050;background-color:#1e0010>“</span>bar<span style=color:#960050;background-color:#1e0010>”</span>).<span style=color:#a6e22e>send</span>(demoQueue, textMessage);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>MessageProducer messageProducer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createProducer</span>(demoQueue);
 </span></span><span style=display:flex><span>messageProducer.<span style=color:#a6e22e>send</span>(message1);
 </span></span><span style=display:flex><span>messageProducer.<span style=color:#a6e22e>send</span>(message2);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(demoQueue,message1);
 </span></span><span style=display:flex><span>context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(demoQueue,message2);
-</span></span></code></pre></div><h2 id=在-java-ee-中注入-jmscontext-意味着您不需要创建或关闭它>在 Java EE 中，注入 JMSContext 意味着您不需要创建或关闭它</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><h2 id=在-java-ee-中注入-jmscontext-意味着您不需要创建或关闭它>在 Java EE 中，注入 JMSContext 意味着您不需要创建或关闭它</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>  Connection connection <span style=color:#f92672>=</span> connectionFactory.<span style=color:#a6e22e>createConnection</span>();
@@ -88,23 +88,23 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  ex.<span style=color:#a6e22e>printStackTrace</span>();
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>try</span> {
 </span></span><span style=display:flex><span>  context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(inboundQueue, body);
 </span></span><span style=display:flex><span>} <span style=color:#66d9ef>catch</span> (JMSRuntimeException ex){
 </span></span><span style=display:flex><span>  ex.<span style=color:#a6e22e>printStackTrace</span>();
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h2 id=发送时不需要实例化message对象>发送时不需要实例化Message对象</h2><p>请注意，即使您想要设置消息属性，也可以执行此操作，因为可以在 JMSProducer 上设置这些属性。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><h2 id=发送时不需要实例化message对象>发送时不需要实例化Message对象</h2><p>请注意，即使您想要设置消息属性，也可以执行此操作，因为可以在 JMSProducer 上设置这些属性。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>MessageProducer messageProducer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createProducer</span>(demoQueue);
 </span></span><span style=display:flex><span>TextMessage textMessage <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createTextMessage</span>(<span style=color:#e6db74>&#34;Hello world&#34;</span>);
 </span></span><span style=display:flex><span>messageProducer.<span style=color:#a6e22e>send</span>(textMessage);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>context.<span style=color:#a6e22e>createProducer</span>().<span style=color:#a6e22e>send</span>(demoQueue,<span style=color:#e6db74>&#34;Hello world&#34;</span>);
-</span></span></code></pre></div><h2 id=直接接收消息有效负载>直接接收消息有效负载</h2><p>同步接收时，您会得到一个 Message 对象，并且需要将其转换为适当的子类型，然后才能提取其主体。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><h2 id=直接接收消息有效负载>直接接收消息有效负载</h2><p>同步接收时，您会得到一个 Message 对象，并且需要将其转换为适当的子类型，然后才能提取其主体。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>MessageConsumer messageConsumer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createConsumer</span>(demoQueue);
 </span></span><span style=display:flex><span>TextMessage textMessage <span style=color:#f92672>=</span> (TextMessage) messageConsumer.<span style=color:#a6e22e>receive</span>(1000);
@@ -114,23 +114,23 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Received &#34;</span><span style=color:#f92672>+</span>textMessage.<span style=color:#a6e22e>getText</span>();
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>JMSConsumer consumer <span style=color:#f92672>=</span> context.<span style=color:#a6e22e>createConsumer</span>(demoQueue);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Received &#34;</span> <span style=color:#f92672>+</span> consumer.<span style=color:#a6e22e>receiveBody</span>(String.<span style=color:#a6e22e>class</span>, 1000);
-</span></span></code></pre></div><h2 id=提取邮件正文前无需进行强制类型转换>提取邮件正文前无需进行强制类型转换</h2><p>异步接收消息时，传递给 onMessage 方法的消息是 javax.jms.Message 您需要将其转换为预期的子类型，然后才能提取正文。如果消息是 ObjectMessage，则会为您提供 Serializable 正文，您必须再次将其转换为预期的正文类型。新方法<code>getBody</code>允许您从中提取正文，而<code>Message</code>无需先将其转换为适当的子类型。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>JMS 1.<span style=color:#a6e22e>1</span>
+</span></span></code></pre></div><h2 id=提取邮件正文前无需进行强制类型转换>提取邮件正文前无需进行强制类型转换</h2><p>异步接收消息时，传递给 onMessage 方法的消息是 javax.jms.Message 您需要将其转换为预期的子类型，然后才能提取正文。如果消息是 ObjectMessage，则会为您提供 Serializable 正文，您必须再次将其转换为预期的正文类型。新方法<code>getBody</code>允许您从中提取正文，而<code>Message</code>无需先将其转换为适当的子类型。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//JMS 1.1</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Message message <span style=color:#f92672>=</span> consumer.<span style=color:#a6e22e>receive</span>(1000); <span style=color:#f92672>/</span> returns a TextMessage
 </span></span><span style=display:flex><span>String body <span style=color:#f92672>=</span> ((TextMessage) message).<span style=color:#a6e22e>getText</span>();
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>JMS 2.<span style=color:#a6e22e>0</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//JMS 2.0</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Message message <span style=color:#f92672>=</span> consumer.<span style=color:#a6e22e>receive</span>(1000); <span style=color:#f92672>/</span> returns a TextMessage
 </span></span><span style=display:flex><span>String body <span style=color:#f92672>=</span> message.<span style=color:#a6e22e>getBody</span>(String.<span style=color:#a6e22e>class</span>);
-</span></span></code></pre></div><h1 id=五大新功能>五大新功能</h1><p>JMS 2.0 还引入了一些新的消息传递功能。</p><h2 id=1-同一主题订阅允许多个消费者>1. 同一主题订阅允许多个消费者</h2><p>JMS 1.1 有一个限制，即对于一个主题，只能创建一个具有特定<strong>订阅 ID 的</strong>订阅者。这限制了我们将负载分布在多个 JVM 和机器之间，因为我们无法创建具有相同 ID 的另一个订阅。</p><p>JMS 2.0 提供了一种解决方案。您可以使用新方法 createSharedConsumer 创建“共享”非持久订阅。此方法在 Session（对于使用经典 API 的应用程序）和 JMSContext（对于使用简化 API 的应用程序）上都可用。由于两个 JVM 需要能够识别它们需要共享的订阅，因此它们需要提供一个名称来标识共享订阅，如下所示。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>/</span>non durable
+</span></span></code></pre></div><h1 id=五大新功能>五大新功能</h1><p>JMS 2.0 还引入了一些新的消息传递功能。</p><h2 id=1-同一主题订阅允许多个消费者>1. 同一主题订阅允许多个消费者</h2><p>JMS 1.1 有一个限制，即对于一个主题，只能创建一个具有特定<strong>订阅 ID 的</strong>订阅者。这限制了我们将负载分布在多个 JVM 和机器之间，因为我们无法创建具有相同 ID 的另一个订阅。</p><p>JMS 2.0 提供了一种解决方案。您可以使用新方法 createSharedConsumer 创建“共享”非持久订阅。此方法在 Session（对于使用经典 API 的应用程序）和 JMSContext（对于使用简化 API 的应用程序）上都可用。由于两个 JVM 需要能够识别它们需要共享的订阅，因此它们需要提供一个名称来标识共享订阅，如下所示。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>//non durable</span>
 </span></span><span style=display:flex><span>MessageConsumer messageConsumer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createSharedConsumer</span>(topic,<span style=color:#e6db74>&#34;mySubscription&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>/</span>durable
+</span></span><span style=display:flex><span><span style=color:#75715e>//durable</span>
 </span></span><span style=display:flex><span>MessageConsumer messageConsumer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createSharedDurableConsumer</span>(topic,<span style=color:#e6db74>&#34;myDurableSub&#34;</span>);
 </span></span></code></pre></div><p>如果您在两个单独的 JVM 中运行上述代码，则发送到主题的每条消息都将传递给两个消费者中的一个。这样他们就可以共享处理来自订阅的消息的工作。</p><h2 id=2-发送延迟>2. 发送延迟</h2><p>您现在可以指定消息的延迟时间。JMS 提供程序将在指定的延迟时间过去后才发送消息。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>MessageProducer messageProducer <span style=color:#f92672>=</span> session.<span style=color:#a6e22e>createProducer</span>(queue);
 </span></span><span style=display:flex><span>      messageProducer.<span style=color:#a6e22e>setDeliveryDelay</span>(20000);

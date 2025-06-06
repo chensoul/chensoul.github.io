@@ -50,18 +50,18 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span> <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span> <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployeeById</span>() {
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Arrange
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// Arrange</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>long</span> employeeId <span style=color:#f92672>=</span> 1L;
 </span></span><span style=display:flex><span>  Employee mockEmployee <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Employee(employeeId, <span style=color:#e6db74>&#34;John Doe&#34;</span>, <span style=color:#e6db74>&#34;john.doe@example.com&#34;</span>);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Mock the behavior of the repository to <span style=color:#66d9ef>return</span> the mock employee
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// Mock the behavior of the repository to return the mock employee</span>
 </span></span><span style=display:flex><span>  Mockito.<span style=color:#a6e22e>when</span>(employeeRepository.<span style=color:#a6e22e>findById</span>(employeeId)).<span style=color:#a6e22e>thenReturn</span>(Optional.<span style=color:#a6e22e>of</span>(mockEmployee));
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Act
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// Act</span>
 </span></span><span style=display:flex><span>  Employee result <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeById</span>(employeeId);
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Assert
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>assertNotNull</span>(result);
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// Assert</span>
+</span></span><span style=display:flex><span>  assertNotNull(result);
 </span></span><span style=display:flex><span>  assertEquals(employeeId, result.<span style=color:#a6e22e>getId</span>());
 </span></span><span style=display:flex><span>  assertEquals(<span style=color:#e6db74>&#34;John Doe&#34;</span>, result.<span style=color:#a6e22e>getName</span>());
 </span></span><span style=display:flex><span>  assertEquals(<span style=color:#e6db74>&#34;john.doe@example.com&#34;</span>, result.<span style=color:#a6e22e>getEmail</span>());
@@ -109,20 +109,20 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testFindUserByUsername</span>() {
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Define a sample user
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// Define a sample user</span>
 </span></span><span style=display:flex><span>   User sampleUser <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> User();
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setId</span>(1L);
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>   sampleUser.<span style=color:#a6e22e>setEmail</span>(<span style=color:#e6db74>&#34;john@example.com&#34;</span>);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Mock the repository behavior
-</span></span><span style=display:flex><span>   <span style=color:#a6e22e>when</span>(userRepository.<span style=color:#a6e22e>findByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>)).<span style=color:#a6e22e>thenReturn</span>(sampleUser);
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// Mock the repository behavior</span>
+</span></span><span style=display:flex><span>   when(userRepository.<span style=color:#a6e22e>findByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>)).<span style=color:#a6e22e>thenReturn</span>(sampleUser);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Perform the test
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// Perform the test</span>
 </span></span><span style=display:flex><span>   User foundUser <span style=color:#f92672>=</span> userService.<span style=color:#a6e22e>findUserByUsername</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>   <span style=color:#f92672>/</span> Assertions
-</span></span><span style=display:flex><span>   <span style=color:#a6e22e>assertThat</span>(foundUser).<span style=color:#a6e22e>isNotNull</span>();
+</span></span><span style=display:flex><span>   <span style=color:#75715e>// Assertions</span>
+</span></span><span style=display:flex><span>   assertThat(foundUser).<span style=color:#a6e22e>isNotNull</span>();
 </span></span><span style=display:flex><span>   assertThat(foundUser.<span style=color:#a6e22e>getUsername</span>()).<span style=color:#a6e22e>isEqualTo</span>(<span style=color:#e6db74>&#34;john_doe&#34;</span>);
 </span></span><span style=display:flex><span>   assertThat(foundUser.<span style=color:#a6e22e>getEmail</span>()).<span style=color:#a6e22e>isEqualTo</span>(<span style=color:#e6db74>&#34;john@example.com&#34;</span>);
 </span></span><span style=display:flex><span>  }
@@ -184,13 +184,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@BeforeEach</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setUp</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Initialize the EmployeeService or set up resources <span style=color:#66d9ef>if</span> needed
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Initialize the EmployeeService or set up resources if needed</span>
 </span></span><span style=display:flex><span>    employeeService <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> EmployeeService();    
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@AfterEach</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>tearDown</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Clean up resources or perform other cleanup tasks
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Clean up resources or perform other cleanup tasks</span>
 </span></span><span style=display:flex><span>    employeeService <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
@@ -273,7 +273,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> String appVersion;
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>  <span style=color:#f92672>/</span> Getters and setters
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// Getters and setters</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-properties data-lang=properties><span style=display:flex><span><span style=color:#75715e>#Add the configuration properties to your application&#39;s property file</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>app.appName</span><span style=color:#f92672>=</span><span style=color:#e6db74>Keka</span>
@@ -411,13 +411,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Sql</span>(scripts <span style=color:#f92672>=</span> { <span style=color:#e6db74>&#34;/init-database.sql&#34;</span>, <span style=color:#e6db74>&#34;/populate-data.sql&#34;</span> }, executionPhase <span style=color:#f92672>=</span> Sql.<span style=color:#a6e22e>ExecutionPhase</span>.<span style=color:#a6e22e>BEFORE_TEST_METHOD</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testWithSqlScripts</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Sql scripts get executed before the execution of <span style=color:#66d9ef>this</span> block
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Sql scripts get executed before the execution of this block</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Sql</span>(scripts <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;/cleanup.sql&#34;</span>, executionPhase <span style=color:#f92672>=</span> Sql.<span style=color:#a6e22e>ExecutionPhase</span>.<span style=color:#a6e22e>AFTER_TEST_METHOD</span>)
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testWithCleanupSql</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Sql scripts get executed after the execution of <span style=color:#66d9ef>this</span> block
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Sql scripts get executed after the execution of this block</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><strong>i. 使用 @Disabled 暂时禁用测试。</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>import</span> org.junit.jupiter.api.Disabled;
@@ -436,14 +436,14 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Disabled</span>(<span style=color:#e6db74>&#34;Temporarily disabled until bug XYZ is fixed&#34;</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployees</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test will be skipped
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test will be skipped</span>
 </span></span><span style=display:flex><span>    Employee employee <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeByName</span>(<span style=color:#e6db74>&#34;Harry&#34;</span>);
 </span></span><span style=display:flex><span>    assertNotNull(employee);
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>  
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>@Test</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>testGetEmployeeCount</span>() {
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test will be executed
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test will be executed</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> empCount <span style=color:#f92672>=</span> employeeService.<span style=color:#a6e22e>getEmployeeCount</span>();
 </span></span><span style=display:flex><span>    assertTrue(empCount<span style=color:#f92672>&gt;</span>0);
 </span></span><span style=display:flex><span>  }
@@ -473,7 +473,7 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> currentRepetition <span style=color:#f92672>=</span> repetitionInfo.<span style=color:#a6e22e>getCurrentRepetition</span>();
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> totalRepetitions <span style=color:#f92672>=</span> repetitionInfo.<span style=color:#a6e22e>getTotalRepetitions</span>();
 </span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>    <span style=color:#f92672>/</span> Test logic, using currentRepetition and totalRepetitions
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Test logic, using currentRepetition and totalRepetitions</span>
 </span></span><span style=display:flex><span>    RestTemplate restTemplate <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> RestTemplate();
 </span></span><span style=display:flex><span>    String url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;http://api.example.com/getLoggedInUsers&#34;</span>;
 </span></span><span style=display:flex><span>    ResponseEntity<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> restTemplate.<span style=color:#a6e22e>getForEntity</span>(url, String.<span style=color:#a6e22e>class</span>);

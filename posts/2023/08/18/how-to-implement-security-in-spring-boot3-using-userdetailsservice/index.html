@@ -302,13 +302,13 @@ menu-item-has-children"><a href=/tutorials/>Tutorials</a><ul class=sub-menu><li 
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@Autowired</span>
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>private</span> IUserService userService;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> Go to Registration Page
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Go to Registration Page</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/register&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>register</span>() {
 </span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;registerUser&#34;</span>;
 </span></span><span style=display:flex><span>	}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>/</span> Read Form data to save into DB
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Read Form data to save into DB</span>
 </span></span><span style=display:flex><span>	<span style=color:#a6e22e>@PostMapping</span>(<span style=color:#e6db74>&#34;/saveUser&#34;</span>)
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>saveUser</span>(
 </span></span><span style=display:flex><span>			<span style=color:#a6e22e>@ModelAttribute</span> User user,
