@@ -23,6 +23,8 @@ jobs:
       - name: Build web
         run: hugo --gc --minify
 
+      - run: sed -i "" "s#../../../static/images#/images#g" public/posts/*/*/*/*/index.html   
+
       - name: Deploy web
         uses: peaceiris/actions-gh-pages@v4
         with:
