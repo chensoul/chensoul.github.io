@@ -65,6 +65,13 @@
     padding: 10px;
     overflow-x: auto;
     font-size: 0.9em;
+    background: #f8f8fa;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
 }
 
 .highlight pre code {
@@ -94,7 +101,6 @@
     background-color: red;
     color: white;
     cursor: pointer;
-    padding: 15px;
     border-radius: 4px;
 }
 
@@ -111,12 +117,50 @@ article table th:nth-of-type(2) {
     width: auto;
 }
 article table {
-    font-size: 14px;
+    font-size: 15px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+article table th, article table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+article table tr:hover {
+    background: #f8f8fa;
 }
 
 article img {
-    display: block; /* 将图片设为块级元素 */
-    margin: 0 auto; /* 水平居中 */
+    display: block;
+    margin: 24px auto;
     width: 70%;
-    height: auto; /* 保持纵横比 */
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    transition: box-shadow 0.2s;
+}
+article img:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+
+/* 紧凑列表样式 */
+article ul,
+article ol {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-left: 1.2em;
+}
+article ul ul,
+article ul ol,
+article ol ul,
+article ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+article li {
+    margin-bottom: 0.2em;
+    line-height: 1.5;
+    padding-left: 0;
 }

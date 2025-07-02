@@ -19,14 +19,14 @@ git clone git@github.com:thingsboard/thingsboard.git
 设置当前 JDK 版本为 17 以上。这里我使用 sdkman 切换 java。
 
 ```bash
-sdk use java 17.0.12-tem
+sdk use java 17.0.15-tem
 ```
 
 终端编译源码：
 
 ```bash
 cd thingsboard
-mvn clean install -Dmaven.test.skip=true
+mvn clean install -Dmaven.test.skip=true -Dlicense.skip=true
 ```
 
 > 排错：
@@ -77,9 +77,25 @@ mvn clean install -Dmaven.test.skip=true
 </mirrors>
 ```
 
+如果出现下面的错误：
+
+```
+ Could not resolve dependencies for project org.thingsboard:application:jar:4.2.0-SNAPSHOT
+[ERROR] dependency: org.thingsboard:dao:jar:tests:4.2.0-SNAPSHOT (test)
+```
+
+运行下面命令，然后再重新运行编译命令。
+
+```bash
+cd dao
+mvn install
+```
+
+
+
 ## Idea 中运行
 
-首先 IDEA 需要安装 lombok 和 Protobuf 相关插件，有个 proto 文件生成的java代码过大(`TransportProtos`)，默认是不会解析的。需要编辑idea 的属性(Help -> Edit Custom Properties)，加入`idea.max.intellisense.filesize=3000`，将上限提高到3M。
+首先 IDEA 需要安装 **lombok** 和 **Protobuf** 相关插件，有个 proto 文件生成的java代码过大(`TransportProtos`)，默认是不会解析的。需要编辑idea 的属性(Help -> Edit Custom Properties)，加入`idea.max.intellisense.filesize=3000`，将上限提高到3M。
 
 准备 postgres 数据库，在 docker 目录下面创建 docker-compose.postgres-1.yml：
 
