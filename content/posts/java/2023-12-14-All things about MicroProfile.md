@@ -1,9 +1,8 @@
 ---
 title: "All things about MicroProfile"
 date: 2023-12-14
-type: post
 slug: all-things-about-microprofile
-categories: ["Java"]
+categories: ["java"]
 tags: [microprofile]
 ---
 

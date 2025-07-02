@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例"
 date: 2023-07-26
-type: post
 slug: spring-boot-authorization-server
 categories: ["spring-boot"]
 tags: [spring-security,oauth2]

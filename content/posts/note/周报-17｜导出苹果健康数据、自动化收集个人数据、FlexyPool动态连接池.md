@@ -1,7 +1,6 @@
 ---
 title: "周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池"
 date: 2023-05-06
-type: post
 slug: weekly_review_17
 categories: [Review]
 tags: [review]

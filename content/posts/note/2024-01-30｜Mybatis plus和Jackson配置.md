@@ -1,9 +1,8 @@
 ---
 title: "2024-01-30｜Mybatis plus和Jackson配置"
 date: 2024-01-30
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [mybatis]
 ---
 
@@ -15,8 +14,6 @@ tags: [mybatis]
    - 参考 DDD 组织包结构
    - Mybatis plus 配置主键生成策略和数据审计功能
    -  Jackson 配置日期序列化
-
-
 
 ## 重构 foodie-cloud 项目
 
@@ -56,15 +53,15 @@ public class CustomMetaObjecthandler implements MetaObjectHandler {
   protected static void fillValIfNullByName(
     final String fieldName,final Object fieldVal,
     final MetaObject metaObject,final boolean isCover) {
-    / 1. 没有 set 方法
+    // 1. 没有 set 方法
     if (!metaObject.hasSetter(fieldName)) {
       return;
     }
-    / 2. 如果用户有手动设置的值
+    // 2. 如果用户有手动设置的值
     if (metaObject.getValue(fieldName) != null && !isCover) {
       return;
     }
-    / 3. field 类型相同时设置
+    // 3. field 类型相同时设置
     final Class<?> getterType = metaObject.getGetterType(fieldName);
     if (ClassUtils.isAssignableValue(getterType, fieldVal)) {
       metaObject.setValue(fieldName, fieldVal);
@@ -124,10 +121,10 @@ public class CustomObjectMapper extends ObjectMapper {
   public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 
   public CustomObjectMapper() {
-    /收到未知属性时不报异常
+    //收到未知属性时不报异常
     this.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-    /反序列化时，属性不存在的兼容处理
+    //反序列化时，属性不存在的兼容处理
     this.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
   final SimpleModule simpleModule = new SimpleModule()
@@ -140,7 +137,7 @@ public class CustomObjectMapper extends ObjectMapper {
     .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))
     .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
 
-    /注册功能模块 例如，可以添加自定义序列化器和反序列化器
+    //注册功能模块 例如，可以添加自定义序列化器和反序列化器
     this.registerModule(simpleModule);
   }
 }

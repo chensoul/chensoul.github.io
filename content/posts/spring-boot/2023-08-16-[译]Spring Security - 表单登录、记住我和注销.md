@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security - 表单登录、记住我和注销"
 date: 2023-08-16
-type: post
 slug: spring-security-form-login-remember-me-and-logout
 categories: ["spring-boot"]
 tags: [spring-security]

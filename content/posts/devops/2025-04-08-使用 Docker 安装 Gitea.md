@@ -1,9 +1,8 @@
 ---
 title: "使用 Docker 安装 Gitea"
 date: 2025-04-08
-type: post
 slug: install-gitea-using-docker
-tags: [gitea]
+tags: ["gitea"]
 categories: ["devops"]
 ---
 

@@ -1,9 +1,8 @@
 ---
 title: "2024-02-05｜Spring Cloud Config快速入门"
 date: 2024-02-05
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [spring-cloud]
 ---
 
@@ -12,14 +11,10 @@ tags: [spring-cloud]
 今天做了什么：
 
 1. 创建项目 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples)，测试 *Spring Cloud* Config 使用本地文件和 git 仓库作为配置中心
-   
 
 ---
-
 *Spring Cloud* Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。
-
 *Spring Cloud* Config 支持以下几种存储方式：
-
 - Git 仓库
 - 本地文件
 - Vault

@@ -1,9 +1,8 @@
 ---
 title: "[译]Java和WebSockets：构建可靠的实时应用程序"
 date: 2024-05-07
-type: post
 slug: websockets-java
-categories: ["Java"]
+categories: ["java"]
 tags: [ websocket]
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security 和 Spring Boot 入门"
 date: 2023-08-16
-type: post
 slug: spring-security
 categories: ["spring-boot"]
 tags: [spring-security]

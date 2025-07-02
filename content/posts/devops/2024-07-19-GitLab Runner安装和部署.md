@@ -1,10 +1,9 @@
 ---
 title: "GitLab Runner安装和部署"
 date: 2024-07-19
-type: post
 slug: gitlab-runner-install
 categories: ["devops"]
-tags: [ gitlab]
+tags: [ "gitlab"]
 ---
 
 ## 介绍

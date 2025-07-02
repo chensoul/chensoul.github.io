@@ -1,6 +1,0 @@
-{{- $id := .Get "id" | default (.Get 0) -}}
-{{- $class := .Get "class" | default (.Get 1) -}}
-{{- $title := .Get "title" | default "Bilibili Video" }}
-<div {{ with $class }}class="{{ . }}"{{ else }}style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;"{{ end }}>
-    <iframe src="https://player.bilibili.com/player.html?isOutside=true&autoplay=0&bvid={{ $id }}" {{ if not $class }}style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"{{ end }} allowfullscreen="true" title="{{ $title }}"></iframe>
-</div>

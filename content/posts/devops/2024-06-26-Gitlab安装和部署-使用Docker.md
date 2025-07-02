@@ -1,10 +1,9 @@
 ---
 title: "Gitlab安装和部署-使用Docker"
 date: 2024-06-26
-type: post
 slug: install-gitlab
 categories: ["devops"]
-tags: [ gitlab,docker ]
+tags: [ "gitlab","docker" ]
 ---
 
 ## 安装 Gitlab

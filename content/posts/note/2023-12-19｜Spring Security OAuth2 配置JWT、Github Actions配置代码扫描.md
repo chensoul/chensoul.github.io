@@ -1,9 +1,8 @@
 ---
 title: "2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描"
 date: 2023-12-19
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [review,"spring-security"]
 ---
 
@@ -20,9 +19,9 @@ Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github 
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
-		/ 设置私钥签名
+		// 设置私钥签名
 		converter.setSigner(new RsaSigner((RSAPrivateKey) new RSA("privateKey", null).getPrivateKey()));
-    / 设置公钥验证器，可省略
+        // 设置公钥验证器，可省略
 		converter.setVerifier(new RsaVerifier((RSAPublicKey) new RSA(null, "publicKey").getPublicKey()));
 
 		return jwtAccessTokenConverter;
@@ -61,12 +60,12 @@ public class RSAUtil {
 @Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		/非对称加密
+		//非对称加密
 		String privateKey = "";
 		String publicKey = "";
 
 		converter.setSigner(new RsaSigner((RSAPrivateKey) RSAUtil.getPrivateKeyFromString(privateKey)));
-		/ 可省略公钥
+		// 可省略公钥
 		converter.setVerifier(new RsaVerifier((RSAPublicKey) RSAUtil.getPublicKeyFromString(publicKey)));
 		return converter;
 	}

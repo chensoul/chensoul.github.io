@@ -1,9 +1,8 @@
 ---
 title: "[译]《Grokking the System Design Interview》系统设计主模板"
 date: 2023-11-16
-type: post
 slug: system-design-master-template
-categories: ["Architecture"]
+categories: ["architecture"]
 tags: ["architecture"]
 ---
 

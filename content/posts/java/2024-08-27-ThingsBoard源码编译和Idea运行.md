@@ -1,9 +1,8 @@
 ---
 title: "ThingsBoard源码编译和Idea运行"
 date: 2024-08-27
-type: post
 slug: thingsboard-code-source-compile
-categories: ["Java"]
+categories: ["java"]
 tags: [ thingsboard]
 ---
 

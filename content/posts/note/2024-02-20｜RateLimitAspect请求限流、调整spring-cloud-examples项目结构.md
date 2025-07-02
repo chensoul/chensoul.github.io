@@ -1,9 +1,8 @@
 ---
 title: "2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构"
 date: 2024-02-20
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [spring-cloud]
 ---
 
@@ -20,14 +19,14 @@ tags: [spring-cloud]
      private final RedisTemplate<String, Object> redisTemplate;
      private final Logger logger = LoggerFactory.getLogger(RateLimitAspect.class);
    
-     private final int maxRequests; / Maximum number of requests
-     private final int timeWindow; / Time window in seconds
+     private final int maxRequests; // Maximum number of requests
+     private final int timeWindow; // Time window in seconds
    
      @Autowired
      public RateLimitAspect(RedisTemplate<String, Object> redisTemplate) {
          this.redisTemplate = redisTemplate;
-         this.maxRequests = 100; / Default maximum number of requests is 100
-         this.timeWindow = 60; / Default time window is 60 seconds
+         this.maxRequests = 100; // Default maximum number of requests is 100
+         this.timeWindow = 60; // Default time window is 60 seconds
      }
    
      @Before("@annotation(getMapping)")
@@ -80,8 +79,6 @@ tags: [spring-cloud]
      }
    }
    ```
-
-   
 
 2. 调整 [spring-cloud-examples](https://github.com/chensoul/spring-cloud-examples) 目录，通过源码分析 [SpringBoot 2.7.18 启动过程](https://github.com/chensoul/spring-cloud-examples/blob/main/lesson-01-bootstrap/SpringBoot%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.md)
 

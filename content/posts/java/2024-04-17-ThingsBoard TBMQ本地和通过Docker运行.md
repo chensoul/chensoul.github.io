@@ -1,9 +1,8 @@
 ---
 title: "ThingsBoard TBMQ本地和通过Docker运行"
 date: 2024-04-17
-type: post
 slug: thingsboard-tbmq-local-docker-run
-categories: ["Java"]
+categories: ["java"]
 tags: [ thingsboard]
 ---
 

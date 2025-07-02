@@ -1,9 +1,8 @@
 ---
 title: "ThingsBoard源码中的Github Actions"
 date: 2024-12-03
-type: post
 slug: github-actions-in-thingsboard
-categories: ["Java"]
+categories: ["java"]
 tags: [thingsboard]
 ---
 

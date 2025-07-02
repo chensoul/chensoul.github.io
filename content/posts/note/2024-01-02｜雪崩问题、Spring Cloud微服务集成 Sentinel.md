@@ -1,29 +1,21 @@
 ---
 title: "2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel"
 date: 2024-01-02
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: ["spring-cloud"]
 ---
 
 今天做了什么：
-
 - 雪崩问题
 - Spring Cloud微服务集成 Sentinel
 - 扩展 Sentinel 集成 OpenFeign，实现自动降级
 
-
-
 ## 雪崩问题
 
 1、什么是雪崩问题？
-
 雪崩问题（Avalanche Effect）是指在分布式系统中，当一个节点或服务出现故障或不可用时，其影响会扩散到其他节点或服务，导致级联故障的现象。这种现象类似于雪崩，一旦开始，会不断放大和蔓延，最终导致整个系统崩溃。
-
 雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。
-
-
 
 2、如何解决雪崩问题？
 
@@ -35,8 +27,6 @@ tags: ["spring-cloud"]
 
 这些方法可以单独或组合使用，具体的选择和实施取决于系统的需求和架构。此外，还需要定期进行系统性能评估和压力测试，以便及时发现和解决潜在的雪崩问题，并不断优化系统的可靠性和稳定性。
 
-
-
 ## Spring Cloud 微服务集成 Sentinel
 
 添加 maven 依赖：
@@ -47,7 +37,6 @@ tags: ["spring-cloud"]
     <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
 </dependency>
 ```
-
 添加配置文件：
 
 ```properties
@@ -93,8 +82,6 @@ public class SentinelFallbackBlockHandler {
 }
 ```
 
-
-
 ## 扩展 Sentinel 集成 OpenFeign，实现自动降级
 
 1、扩展 BlockExceptionHandler，实现 JSON 输出
@@ -103,7 +90,6 @@ public class SentinelFallbackBlockHandler {
 @Slf4j
 @RequiredArgsConstructor
 public class JsonBlockExceptionHandler implements BlockExceptionHandler {
-
     private final ObjectMapper objectMapper;
 
     @Override
@@ -160,12 +146,12 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
 
         Object result;
         InvocationHandlerFactory.MethodHandler methodHandler = this.dispatch.get(method);
-        / only handle by HardCodedTarget
+        // only handle by HardCodedTarget
         if (target instanceof Target.HardCodedTarget) {
             Target.HardCodedTarget<?> hardCodedTarget = (Target.HardCodedTarget) target;
             MethodMetadata methodMetadata = SentinelContractHolder.METADATA_MAP
                 .get(hardCodedTarget.type().getName() + Feign.configKey(hardCodedTarget.type(), method));
-            / resource default is HttpMethod:protocol://url
+            // resource default is HttpMethod:protocol://url
             if (methodMetadata == null) {
                 result = methodHandler.invoke(args);
             } else {
@@ -177,7 +163,7 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                     entry = SphU.entry(resourceName, EntryType.OUT, 1, args);
                     result = methodHandler.invoke(args);
                 } catch (Throwable ex) {
-                    / fallback handle
+                    // fallback handle
                     if (!BlockException.isBlockException(ex)) {
                         Tracer.trace(ex);
                     }
@@ -185,14 +171,14 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                         try {
                             return fallbackMethodMap.get(method).invoke(fallbackFactory.create(ex), args);
                         } catch (IllegalAccessException e) {
-                            / shouldn't happen as method is public due to being an
-                            / interface
+                            // shouldn't happen as method is public due to being an
+                            // interface
                             throw new AssertionError(e);
                         } catch (InvocationTargetException e) {
                             throw new AssertionError(e.getCause());
                         }
                     } else {
-                        / 若是Result类型 并且不包含@FeignRetry 执行自动降级返回
+                        // 若是Result类型 并且不包含@FeignRetry 执行自动降级返回
                         FeignRetry feignRetry = AnnotationUtils.findAnnotation(method, FeignRetry.class);
                         if (Result.class == method.getReturnType() && Objects.isNull(feignRetry)) {
                             log.error("服务调用异常", ex);
@@ -209,7 +195,7 @@ public class AutoFallbackSentinelInvocationHandler implements InvocationHandler 
                 }
             }
         } else {
-            / other target type using default strategy
+            // other target type using default strategy
             result = methodHandler.invoke(args);
         }
 
@@ -280,7 +266,7 @@ public final class AutoFallbackSentinelFeign {
             super.invocationHandlerFactory(new InvocationHandlerFactory() {
                 @Override
                 public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
-                    / 查找 FeignClient 上的 降级策略
+                    // 查找 FeignClient 上的 降级策略
                     FeignClient feignClient = AnnotationUtils.findAnnotation(target.type(), FeignClient.class);
                     Class<?> fallback = feignClient.fallback();
                     Class<?> fallbackFactory = feignClient.fallbackFactory();
@@ -299,7 +285,7 @@ public final class AutoFallbackSentinelFeign {
                     }
 
                     if (void.class != fallbackFactory) {
-                        /针对 hystrix fallbackFactory 特殊处理
+                        //针对 hystrix fallbackFactory 特殊处理
                         try {
                             fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName, "fallbackFactory",
                                 fallbackFactory, FallbackFactory.class);
@@ -337,7 +323,7 @@ public final class AutoFallbackSentinelFeign {
             try {
                 return field.get(instance);
             } catch (IllegalAccessException e) {
-                / ignore
+                // ignore
             }
             return null;
         }

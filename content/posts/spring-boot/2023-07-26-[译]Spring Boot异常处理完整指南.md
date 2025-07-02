@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Boot异常处理完整指南"
 date: 2023-07-26
-type: post
 slug: spring-boot-exception-handling
 categories: ["spring-boot"]
 tags: [spring-boot]

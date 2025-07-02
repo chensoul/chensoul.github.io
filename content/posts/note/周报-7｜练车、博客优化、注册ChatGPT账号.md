@@ -1,7 +1,6 @@
 ---
 title: "周报-7｜练车、博客优化、注册ChatGPT账号"
 date: 2023-02-21
-type: post
 slug: weekly_review_7
 categories: [Review]
 tags: [review]

@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security 和 JWT 入门"
 date: 2024-10-15
-type: post
 slug: spring-security-jwt
 categories: ["spring-boot"]
 tags: [ spring-security, jwt]

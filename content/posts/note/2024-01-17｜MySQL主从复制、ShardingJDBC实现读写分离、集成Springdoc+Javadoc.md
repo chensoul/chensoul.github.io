@@ -1,19 +1,16 @@
 ---
 title: "2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc+Javadoc"
 date: 2024-01-17
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: ['spring-boot',docker]
 ---
 
 
 
 今天做了什么：
-
-1. 观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。
-1.  foodie-cloud 项目实现读写分离并集成 Springdoc
-
+- 观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。
+- foodie-cloud 项目实现读写分离并集成 Springdoc
 
 
 ## Docker 搭建 MySQL 主从复制环境
@@ -92,8 +89,6 @@ GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'test'@'%';
 SHOW MASTER STATUS;
 ```
 
-
-
 从数据库：
 
 ```sql
@@ -124,15 +119,10 @@ Sharding-JDBC定位为轻量级Java框架，在Java的JDBC层提供的额外服�
 使用Sharding-JDBC可以在程序中轻松的实现数据库读写分离。
 
 
-
 Sharding-JDBC具有以下几个特点： 
-
 1). 适用于任何基于JDBC的ORM框架，如：JPA, Hibernate, Mybatis, Spring JDBC Template或直接使用JDBC。
-
 2). 支持任何第三方的数据库连接池，如：DBCP, C3P0, BoneCP, Druid, HikariCP等。
-
 3). 支持任意实现JDBC规范的数据库。目前支持MySQL，Oracle，SQLServer，PostgreSQL以及任何遵循SQL92标准的数据库。
-
 
 
 ### 配置
@@ -146,9 +136,6 @@ Sharding-JDBC具有以下几个特点：
     <version>4.1.1</version>
 </dependency>
 ```
-
-
-
 2). 在application.yml中增加数据源的配置
 
 先注释原来的数据源配置：
@@ -232,7 +219,6 @@ management.health.db.enabled: false
 spring-boot2 使用 springdoc-openapi 1.7.0 版本
 
 ```xml
-
 <dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-ui</artifactId>

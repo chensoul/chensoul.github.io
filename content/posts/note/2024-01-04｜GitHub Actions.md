@@ -1,9 +1,8 @@
 ---
 title: "2024-01-04｜GitHub Actions"
 date: 2024-01-04
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: ["vps",maven]
 ---
 
@@ -14,12 +13,9 @@ tags: ["vps",maven]
 - 利用GitHub Actions自动优雅地为项目构建Releases
 - 利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub
 
-
-
 ## 修改个人联系方式
 
 使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。
-
 
 
 以下是 [github](https://github.com/chensoul) 上我的个人联系方式。
@@ -45,25 +41,18 @@ tags: ["vps",maven]
 - Telegram频道：[https://t.me/chensouls](https://t.me/chensouls)
 
 
-
 ## 注销亚马逊账号
 
 缘由是，之前总是收到亚马逊的付款账单（每个月 0.5 美元，有时候1 美元），故元旦放假的时候登陆了亚马逊账号查找付费原因。找了半天没有找到是哪里产生的费用，就一怒之下把在亚马逊注册的域名（chensoul.com，一年 12 美元，一次性付费了 5 年）删除了。
 
-
-
 这几天发现本博客无法访问，于是提工单询问是否可以恢复域名。得到的回复是必须支付 66 美元，才能恢复一年。对此，我肯定无法接受。于是，决定注销亚马逊，在其他平台重新注册一个域名。
 
-
-
 今天在 CF 上注册了一个新的域名 chensoul.cc，一年 8 美元，一次性付费 5 年。在重新设置 DNS，修改 VPS 上的相关服务的域名为新域名之后，博客恢复正常。
-
 
 
 # 利用GitHub Actions自动优雅地为项目构建Releases
 
 参考 [利用GitHub Actions自动优雅地为项目构建Releases](https://wiki.eryajf.net/pages/f3e878) 为 github 上的项目 [https://github.com/chensoul/chensoul-parent](https://github.com/chensoul/chensoul-parent) 添加一个机器人字段构建 Release。
-
 
 
 使用方法：
@@ -101,8 +90,6 @@ jobs:
 
 - 该 action 只对 main 分支起作用
 - 该 action 只对 opened, reopened, synchronize 类型的 pull_request 起作用
-
-
 
 2、添加 .github/release-drafter.yml 配置生成的 Release 内容
 

@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security - 使用数据库表单登录"
 date: 2023-08-16
-type: post
 slug: spring-security-form-login-with-database
 categories: ["spring-boot"]
 tags: [spring-security]

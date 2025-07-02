@@ -1,9 +1,8 @@
 ---
 title: "2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-food测试"
 date: 2024-02-18
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [review]
 ---
 

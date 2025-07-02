@@ -1,9 +1,8 @@
 ---
 title: "ThingsBoard源码中的Security"
 date: 2024-12-03
-type: post
 slug: security-in-thingsboard
-categories: ["Java"]
+categories: ["java"]
 tags: [thingsboard,spring-security,oauth2]
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "[译]面向 Java 开发人员的 Kubernetes"
 date: 2024-07-08
-type: post
 slug: kubernetes-for-java-developers
 tags: ["kubernetes"]
 categories: ["kubernetes"]

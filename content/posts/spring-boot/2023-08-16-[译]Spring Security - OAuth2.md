@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security - OAuth2"
 date: 2023-08-16
-type: post
 slug: spring-security-with-oauth2
 categories: ["spring-boot"]
 tags: [spring-security,oauth2]

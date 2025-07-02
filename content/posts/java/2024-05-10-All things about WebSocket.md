@@ -1,9 +1,8 @@
 ---
 title: "All things about WebSocket"
 date: 2024-05-10
-type: post
 slug: all-things-about-websocket
-categories: ["Java"]
+categories: ["java"]
 tags: [websocket]
 ---
 

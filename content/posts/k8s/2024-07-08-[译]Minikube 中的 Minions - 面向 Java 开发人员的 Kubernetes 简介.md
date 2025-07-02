@@ -1,7 +1,6 @@
 ---
 title: "[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介"
 date: 2024-07-08
-type: post
 slug: minions-in-minikube-a-kubernetes-intro-for-java-de
 tags: ["kubernetes",minikube]
 categories: ["kubernetes"]

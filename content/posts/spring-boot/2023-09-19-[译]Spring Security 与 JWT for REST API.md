@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security 与 JWT for REST API"
 date: 2023-09-19
-type: post
 slug: spring-security-tutorial
 categories: ["spring-boot"]
 tags: [spring-security,jwt]

@@ -1,7 +1,6 @@
 ---
 title: "[译]如何在Spring中执行@Async"
 date: 2023-08-25
-type: post
 slug: spring-async
 categories: ["spring-boot"]
 tags: [spring-boot]

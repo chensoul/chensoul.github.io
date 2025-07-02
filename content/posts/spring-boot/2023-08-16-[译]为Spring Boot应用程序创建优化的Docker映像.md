@@ -1,7 +1,6 @@
 ---
 title: "[译]为 Spring Boot 应用程序创建优化的 Docker 映像"
 date: 2023-08-16
-type: post
 slug: spring-boot-docker
 categories: ["spring-boot"]
 tags: [spring-boot, docker]

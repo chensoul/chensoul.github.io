@@ -1,9 +1,8 @@
 ---
 title: "2024-01-03｜今天做了什么"
 date: 2024-01-03
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: ["spring-cloud"]
 ---
 
@@ -13,16 +12,12 @@ tags: ["spring-cloud"]
 - github 上创建了一个使用 spring cloud netflix 相关组件的微服务项目
 - 重构了狂野架构师课程中的微服务版本的源码
 
-
-
 # foodie-cloud
 
 重构慕课网 [Java架构师-技术专家](https://class.imooc.com/sale/javaarchitect) 课程中的 [源码](https://github.com/liuhouer/np-architect/)，我做了一些改动：
 - 升级 Spring Boot 和 Spring Cloud 版本
 - 去掉 tk-mybatis 改为使用 mybatis-plus
 - 重构模块和部分代码
-
-
 
 后续计划：
 

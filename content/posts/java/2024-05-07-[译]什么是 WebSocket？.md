@@ -1,9 +1,8 @@
 ---
 title: "[译]什么是WebSocket？"
 date: 2024-05-07
-type: post
 slug: websockets
-categories: ["Java"]
+categories: ["java"]
 tags: [ websocket]
 ---
 

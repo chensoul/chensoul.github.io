@@ -1,7 +1,6 @@
 ---
 title: "[译]DevOps 和测试人员的 Git 面试问题"
 date: 2023-10-12
-type: post
 slug: git-interview-questions
 categories: ["devops"]
 tags: [git]

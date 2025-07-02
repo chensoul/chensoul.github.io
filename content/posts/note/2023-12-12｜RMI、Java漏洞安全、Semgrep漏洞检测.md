@@ -1,9 +1,8 @@
 ---
 title: "2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测"
 date: 2023-12-12
-type: post
 slug: til
-categories: ["Review"]
+categories: ["review"]
 tags: [review]
 ---
 

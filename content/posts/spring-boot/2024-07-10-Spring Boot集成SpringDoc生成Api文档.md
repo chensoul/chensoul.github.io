@@ -1,7 +1,6 @@
 ---
 title: "Spring Boot集成SpringDoc生成Api文档"
 date: 2024-07-10
-type: post
 slug: springdoc-with-spring-boot
 categories: ["spring-boot"]
 tags: [ spring-boot]

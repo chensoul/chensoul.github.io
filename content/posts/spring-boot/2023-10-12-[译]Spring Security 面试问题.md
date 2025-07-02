@@ -1,7 +1,6 @@
 ---
 title: "[译]Spring Security 面试问题"
 date: 2023-10-12
-type: post
 slug: spring-security-interview-questions
 categories: ["spring-boot"]
 tags: [spring-security]

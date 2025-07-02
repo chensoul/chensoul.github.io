@@ -1,7 +1,6 @@
 ---
 title: "[译]深入了解Spring事务管理：@Transactional"
 date: 2023-08-16
-type: post
 slug: spring-transaction-management-transactional-in-depth
 categories: ["spring-boot"]
 tags: [spring-boot]

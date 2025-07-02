@@ -1,7 +1,6 @@
 ---
 title: "[译]OAuth2 with Spring 第2部分：授权服务器入门"
 date: 2024-06-05
-type: post
 slug: oauth2-with-spring-part-2-getting-started-with-authorization-server
 categories: ["spring-boot"]
 tags: [ spring-security,oauth2]
