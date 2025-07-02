@@ -22,6 +22,7 @@ menu:
 
 - WeChat：ichensoul
 - Email：[ichensoul@gmail.com](mailto:ichensoul@gmail.com)
+- RSS: [https://blog.chensoul.cc/index.xml](https://blog.chensoul.cc/index.xml)
 - Github: [https://github.com/chensoul](https://github.com/chensoul)
 - Twitter：[https://twitter.com/ichensoul](https://twitter.com/ichensoul)
 - Telegram Channel：[https://t.me/chensouls](https://t.me/chensouls)
