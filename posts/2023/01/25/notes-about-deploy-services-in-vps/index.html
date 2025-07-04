@@ -1,4 +1,4 @@
-<!doctype html><html class=no-js lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>我的VPS服务部署记录 - ChenSoul Blog</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:title" content="我的VPS服务部署记录"><meta property="og:description" content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-25T00:00:00+00:00"><meta property="article:tag" content="Vps"><meta property="article:tag" content="Memos"><meta property="article:tag" content="Umami"><meta property="article:tag" content="Docker"><meta property="article:tag" content="N8n"><meta property="article:tag" content="Mysql"><meta itemprop=name content="我的VPS服务部署记录"><meta itemprop=description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta itemprop=datePublished content="2023-01-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-25T00:00:00+00:00"><meta itemprop=wordCount content="2081"><meta itemprop=keywords content="Vps,Memos,Umami,Docker,N8n,Mysql"><meta name=twitter:card content="summary"><meta name=twitter:title content="我的VPS服务部署记录"><meta name=twitter:description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class=logo><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
+<!doctype html><html class=no-js lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>我的VPS服务部署记录 - ChenSoul Blog</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:title" content="我的VPS服务部署记录"><meta property="og:description" content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-25T00:00:00+00:00"><meta property="article:modified_time" content="2023-01-25T00:00:00+00:00"><meta property="article:tag" content="Vps"><meta property="article:tag" content="Memos"><meta property="article:tag" content="Umami"><meta property="article:tag" content="Docker"><meta property="article:tag" content="N8n"><meta property="article:tag" content="Mysql"><meta itemprop=name content="我的VPS服务部署记录"><meta itemprop=description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta itemprop=datePublished content="2023-01-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-25T00:00:00+00:00"><meta itemprop=wordCount content="2338"><meta itemprop=keywords content="Vps,Memos,Umami,Docker,N8n,Mysql"><meta name=twitter:card content="summary"><meta name=twitter:title content="我的VPS服务部署记录"><meta name=twitter:description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class=logo><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
 <span class=menu__btn-title tabindex=-1>Menu</span></button><ul class=menu__list><li class=menu__item><a class=menu__link href=/tools/><span class=menu__text>Tools</span></a></li><li class=menu__item><a class=menu__link href=/tutorials/><span class=menu__text>Tutorials</span></a></li><li class=menu__item><a class=menu__link href=/about/><span class=menu__text>About</span></a></li></ul></nav></div></header><div class="wrapper flex"><div class=primary><main class=main role=main><article class=post><header class=post__header><h1 class=post__title>我的VPS服务部署记录</h1><div class="post__meta meta"><div class="meta__item-datetime meta__item"><svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 110 28 1 1 0 010-28m0 3a3 3 0 100 22 3 3 0 000-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class=meta__text datetime=2023-01-25T00:00:00Z>2023-01-25</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class=meta__text><a class=meta__link href=/categories/devops/ rel=category>Devops</a></span></div></div></header><div class="content post__content clearfix"><p>我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。</p><h2 id=服务器设置>服务器设置</h2><p>设置 yum 源：</p><p>/etc/yum.repos.d/centos.repo</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>[base]
 </span></span><span style=display:flex><span>name=CentOS-$releasever - Base
 </span></span><span style=display:flex><span>baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
@@ -102,6 +102,26 @@
 </span></span><span style=display:flex><span>    <span style=color:#f92672>external</span>: <span style=color:#66d9ef>true</span>
 </span></span></code></pre></div><p>2、启动</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f mysql.yaml up -d
 </span></span></code></pre></div><p>3、进入容器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-fallback data-lang=fallback><span style=display:flex><span>docker exec -it mysql bash
+</span></span></code></pre></div><h3 id=postgres>Postgres</h3><p>postgres.yaml</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>postgres</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>image</span>: <span style=color:#ae81ff>postgres:16</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>5435</span>:<span style=color:#ae81ff>5432</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>environment</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>POSTGRES_DB</span>: <span style=color:#ae81ff>postgres</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>POSTGRES_USER</span>: <span style=color:#ae81ff>postgres</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>POSTGRES_PASSWORD</span>: <span style=color:#ae81ff>postgres</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>TZ</span>: <span style=color:#ae81ff>Asia/Shanghai</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>healthcheck</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>test</span>:
+</span></span><span style=display:flex><span>          [<span style=color:#e6db74>&#34;CMD&#34;</span>, <span style=color:#e6db74>&#34;pg_isready&#34;</span>, <span style=color:#e6db74>&#34;-U&#34;</span>, <span style=color:#e6db74>&#34;postgres&#34;</span>, <span style=color:#e6db74>&#34;-d&#34;</span>, <span style=color:#e6db74>&#34;postgres&#34;</span>]
+</span></span><span style=display:flex><span>        <span style=color:#f92672>interval</span>: <span style=color:#ae81ff>5s</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>timeout</span>: <span style=color:#ae81ff>10s</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>retries</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>networks</span>:
+</span></span><span style=display:flex><span>        - <span style=color:#ae81ff>custom</span>
+</span></span></code></pre></div><p>启动：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f postgres.yaml up -d
 </span></span></code></pre></div><h3 id=umami>Umami</h3><p>1、在 mysql 容器创建 umami 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -p
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>CREATE USER <span style=color:#e6db74>&#39;umami&#39;</span>@<span style=color:#e6db74>&#39;%&#39;</span> IDENTIFIED BY <span style=color:#e6db74>&#39;umami@vps!&#39;</span>;
@@ -171,7 +191,7 @@
 </span></span></code></pre></div><p>5、添加网站</p><p>访问 <a href=https://umami.chensoul.cc/ target=_blank>https://umami.chensoul.cc/</a>，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。</p><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f umami.yaml down
 </span></span><span style=display:flex><span>docker pull ghcr.io/umami-software/umami:mysql-latest
 </span></span><span style=display:flex><span>docker-compose -f umami.yaml up -d
-</span></span></code></pre></div><h3 id=memos>Memos</h3><p>1、在 mysql 容器创建 memos 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -p
+</span></span></code></pre></div><h3 id=memos>Memos</h3><p>1、在 mysql 容器创建 memos 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -proot
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>CREATE USER <span style=color:#e6db74>&#39;memos&#39;</span>@<span style=color:#e6db74>&#39;%&#39;</span> IDENTIFIED BY <span style=color:#e6db74>&#39;memos@vps!&#39;</span>;
 </span></span><span style=display:flex><span>CREATE DATABASE memos;
@@ -250,7 +270,7 @@
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>padding-left</span>:<span style=color:#ae81ff>2</span><span style=color:#66d9ef>px</span>;
 </span></span><span style=display:flex><span>   <span style=color:#66d9ef>border-radius</span>: <span style=color:#ae81ff>2</span><span style=color:#66d9ef>px</span>;
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h3 id=n8n>n8n</h3><p>1、在 mysql 容器创建 n8n 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -p
+</span></span></code></pre></div><h3 id=n8n>N8n</h3><p>1、在 mysql 容器创建 n8n 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -u root -proot
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>CREATE USER <span style=color:#e6db74>&#39;n8n&#39;</span>@<span style=color:#e6db74>&#39;%&#39;</span> IDENTIFIED BY <span style=color:#e6db74>&#39;n8n@vps!&#39;</span>;
 </span></span><span style=display:flex><span>CREATE DATABASE n8n;
@@ -263,6 +283,7 @@
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>n8n</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>NODE_ENV=production</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DB_TYPE=mysqldb</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DB_MYSQLDB_HOST=mysql</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DB_MYSQLDB_PORT=3306</span>
@@ -271,8 +292,17 @@
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DB_MYSQLDB_PASSWORD=n8n@vps!</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>TZ=&#34;Asia/Shanghai&#34;</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>GENERIC_TIMEZONE=&#34;Asia/Shanghai&#34;</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_DEFAULT_LOCALE=zh-CN </span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 是否启用诊断和个性化推荐</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_DIAGNOSTICS_ENABLED=false</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_PERSONALIZATION_ENABLED=false</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># 是否在启动时重新安装缺失的包</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_REINSTALL_MISSING_PACKAGES=true</span>
+</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>WEBHOOK_URL=https://n8n.chensoul.cc/</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_HOST=n8n.chensoul.cc</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>N8N_ENCRYPTION_KEY=2cc5b5f9e31b43ff3817c1d04e5fa735</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#39;5678:5678&#39;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>networks</span>:
@@ -307,17 +337,16 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
 </span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:5678</span>;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>chunked_transfer_encoding</span> <span style=color:#66d9ef>off</span>;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_buffering</span> <span style=color:#66d9ef>off</span>;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_cache</span> <span style=color:#66d9ef>off</span>;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>access_log</span> <span style=color:#e6db74>/var/log/nginx/n8n.log</span> <span style=color:#e6db74>combined</span> <span style=color:#e6db74>buffer=128k</span> <span style=color:#e6db74>flush=5s</span>;
-</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Host</span> $host;
 </span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_http_version</span> <span style=color:#ae81ff>1</span><span style=color:#e6db74>.1</span>;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Upgrade</span> $http_upgrade;
-</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Connection</span> <span style=color:#e6db74>&#34;Upgrade&#34;</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Connection</span> <span style=color:#e6db74>&#39;upgrade&#39;</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Upgrade</span> $http_upgrade;     
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Real-IP</span> $remote_addr;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Origin</span> <span style=color:#e6db74>&#39;https://n8n.chensoul.cc&#39;</span>;
+</span></span><span style=display:flex><span>      <span style=color:#f92672>access_log</span> <span style=color:#e6db74>/var/log/nginx/n8n.log</span> <span style=color:#e6db74>combined</span> <span style=color:#e6db74>buffer=128k</span> <span style=color:#e6db74>flush=5s</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>这里面的转发配置不对的话，会导致直接访问 5678 端口正常，但是访问 nginx 的话，workflow 会一直处于执行。</p><p>5、添加 workflow</p><p>参考这篇文章 <a href=http://stiles.cc/archives/237/ target=_blank>http://stiles.cc/archives/237/</a> ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。</p><p>workflows 参考：</p><ul><li><a href=https://reorx.com/blog/sharing-my-footprints-automation/ target=_blank>Reorx</a></li><li><a href=https://www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/ target=_blank>Pseudoyu</a></li><li><a href=https://raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he target=_blank>raye</a></li><li><a href=https://zeabur.com/docs/marketplace/n8n target=_blank>Zeabur</a></li></ul><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f n8n.yaml down
+</span></span></code></pre></div><blockquote><p>如果出现 <code>Origin header does NOT match the expected origin. (Origin: "n8n.chensoul.cc", Expected: "127.0.0.1:5678")</code>，则需要在 nginx 配置里添加 <code>proxy_set_header Origin 'https://n8n.chensoul.cc';</code></p></blockquote><p>5、添加 workflow</p><p>参考这篇文章 <a href=http://stiles.cc/archives/237/ target=_blank>http://stiles.cc/archives/237/</a> ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。</p><p>workflows 参考：</p><ul><li><a href=https://reorx.com/blog/sharing-my-footprints-automation/ target=_blank>Reorx</a></li><li><a href=https://www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/ target=_blank>Pseudoyu</a></li><li><a href=https://raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he target=_blank>raye</a></li><li><a href=https://zeabur.com/docs/marketplace/n8n target=_blank>Zeabur</a></li></ul><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f n8n.yaml down
 </span></span><span style=display:flex><span>docker pull n8nio/n8n
 </span></span><span style=display:flex><span>docker-compose -f n8n.yaml up -d
 </span></span></code></pre></div><p>7、备份</p><p>安装 jq</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>yum install epel-release -y
@@ -470,7 +499,7 @@
 </span></span><span style=display:flex><span><span style=color:#f92672>networks</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>custom</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>external</span>: <span style=color:#66d9ef>true</span>
-</span></span></code></pre></div><ol start=2><li>在 mysql 容器创建 planka 数据库和用户：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql psql -d mysql -U mysql
+</span></span></code></pre></div><ol start=2><li>在 mysql 容器创建 planka 数据库和用户：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it mysql mysql -d mysql -U mysql
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>CREATE USER planka WITH PASSWORD <span style=color:#e6db74>&#39;planka@vps!&#39;</span>;
 </span></span><span style=display:flex><span>CREATE DATABASE planka owner<span style=color:#f92672>=</span>planka;
@@ -653,33 +682,81 @@
 </span></span></code></pre></div><p>将查询结果保存为 all_links.txt</p><p>然后运行导入命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#66d9ef>while</span> IFS<span style=color:#f92672>=</span> read -r url; <span style=color:#66d9ef>do</span>
 </span></span><span style=display:flex><span>    docker run --rm ghcr.io/hoarder-app/hoarder-cli:release --api-key <span style=color:#e6db74>&#34;ak1_066c79d8a9d634d4b826_d99f3a2732cab381f7c9&#34;</span> --server-addr <span style=color:#e6db74>&#34;https://hoarder.chensoul.cc/&#34;</span> bookmarks add --link <span style=color:#e6db74>&#34;</span>$url<span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>done</span> &lt; all_links.txt
-</span></span></code></pre></div><h2 id=服务升级>服务升级</h2><p>/opt/scripts/upgrade.sh</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>docker pull mysql:8
-</span></span><span style=display:flex><span>docker pull ghcr.io/umami-software/umami:mysql-latest
-</span></span><span style=display:flex><span>docker pull neosmemo/memos:latest
-</span></span><span style=display:flex><span>docker pull n8nio/n8n
+</span></span></code></pre></div><h3 id=blinko>Blinko</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>blinko-website</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>blinkospace/blinko:latest</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>blinko-website</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>NODE_ENV</span>: <span style=color:#ae81ff>production</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># NEXTAUTH_URL: http://localhost:1111</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># IMPORTANT: If you want to use sso, you must set NEXTAUTH_URL to your own domain</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># NEXT_PUBLIC_BASE_URL: http://localhost:1111</span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e># IMPORTANT: Replace this with your own secure secret key!</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>NEXTAUTH_SECRET</span>: <span style=color:#ae81ff>my_ultra_secure_nextauth_secret</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>postgresql://postgres:postgres@postgres:5432/postgres</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>logging</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>options</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>max-size</span>: <span style=color:#e6db74>&#34;10m&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>max-file</span>: <span style=color:#e6db74>&#34;3&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>1111</span>:<span style=color:#ae81ff>1111</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>healthcheck</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>test</span>: [<span style=color:#e6db74>&#34;CMD&#34;</span>, <span style=color:#e6db74>&#34;curl&#34;</span>, <span style=color:#e6db74>&#34;-f&#34;</span>, <span style=color:#e6db74>&#34;http://blinko-website:1111/&#34;</span>]
+</span></span><span style=display:flex><span>      <span style=color:#f92672>interval</span>: <span style=color:#ae81ff>30s </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>timeout</span>: <span style=color:#ae81ff>10s   </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>retries</span>: <span style=color:#ae81ff>5</span>     
+</span></span><span style=display:flex><span>      <span style=color:#f92672>start_period</span>: <span style=color:#ae81ff>30s </span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>networks</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>custom</span>
+</span></span><span style=display:flex><span>      
+</span></span><span style=display:flex><span><span style=color:#f92672>networks</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>custom</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>external</span>: <span style=color:#66d9ef>true</span>
+</span></span></code></pre></div><p>命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it postgres psql -d postgres -U postgres
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>-- 创建用户
+</span></span><span style=display:flex><span>CREATE USER blinko WITH PASSWORD <span style=color:#e6db74>&#39;blinko@vps!&#39;</span>;
+</span></span><span style=display:flex><span>-- 创建数据库
+</span></span><span style=display:flex><span>CREATE DATABASE blinko;
+</span></span><span style=display:flex><span>-- 修改数据库所有者
+</span></span><span style=display:flex><span>ALTER DATABASE blinko OWNER TO blinko;
+</span></span><span style=display:flex><span>-- 授予所有权限
+</span></span><span style=display:flex><span>GRANT ALL PRIVILEGES ON DATABASE blinko TO plankablinko
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker-compose -f blinko.yaml up -d
+</span></span></code></pre></div><h2 id=服务升级>服务升级</h2><p>/opt/scripts/upgrade.sh</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>docker pull mysql:8
 </span></span><span style=display:flex><span>docker-compose -f mysql.yaml down
 </span></span><span style=display:flex><span>docker-compose -f mysql.yaml up -d
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker pull neosmemo/memos:latest
 </span></span><span style=display:flex><span>docker-compose -f memos.yaml down
 </span></span><span style=display:flex><span>docker-compose -f memos.yaml up -d
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker pull ghcr.io/umami-software/umami:mysql-latest
 </span></span><span style=display:flex><span>docker-compose -f umami.yaml down
 </span></span><span style=display:flex><span>docker-compose -f umami.yaml up -d
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker pull n8nio/n8n
 </span></span><span style=display:flex><span>docker-compose -f n8n.yaml down
 </span></span><span style=display:flex><span>docker-compose -f n8n.yaml up -d
-</span></span></code></pre></div><h2 id=数据库备份和恢复>数据库备份和恢复</h2><p>/opt/scripts/backup_mysql.sh</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker pull ghcr.io/hoarder-app/hoarder
+</span></span><span style=display:flex><span>docker-compose -f hoarder.yaml down
+</span></span><span style=display:flex><span>docker-compose -f hoarder.yaml up -d
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker pull blinkospace/blinko:latest
+</span></span><span style=display:flex><span>docker-compose -f blinko.yaml down
+</span></span><span style=display:flex><span>docker-compose -f blinko.yaml up -d
+</span></span></code></pre></div><h2 id=数据库备份和恢复>数据库备份和恢复</h2><p>/opt/scripts/backup_database.sh</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span>CONTAINER_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mysql&#34;</span>
-</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>BACKUP_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/data/backup/database&#34;</span>
-</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>BACKUP_PREFIX<span style=color:#f92672>=</span>mysql
-</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>BACKUP_POSTFIX<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>date +%Y%m%d<span style=color:#66d9ef>)</span>
-</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>DATABASES<span style=color:#f92672>=(</span><span style=color:#e6db74>&#34;memos&#34;</span> <span style=color:#e6db74>&#34;n8n&#34;</span> <span style=color:#e6db74>&#34;umami&#34;</span><span style=color:#f92672>)</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>mkdir -p $BACKUP_DIR
@@ -688,6 +765,7 @@
 </span></span><span style=display:flex><span><span style=color:#66d9ef>do</span>
 </span></span><span style=display:flex><span>  BACKUP_FILE<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span>BACKUP_PREFIX<span style=color:#e6db74>}</span><span style=color:#e6db74>_</span><span style=color:#e6db74>${</span>DB_NAME<span style=color:#e6db74>}</span><span style=color:#e6db74>_</span><span style=color:#e6db74>${</span>BACKUP_POSTFIX<span style=color:#e6db74>}</span><span style=color:#e6db74>.sql&#34;</span>
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	echo <span style=color:#e6db74>&#34;docker exec -it </span>$CONTAINER_NAME<span style=color:#e6db74> mysqldump -proot -uroot </span>$DB_NAME<span style=color:#e6db74> &gt; </span>$BACKUP_DIR<span style=color:#e6db74>/</span>$BACKUP_FILE<span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span>  docker exec -it $CONTAINER_NAME mysqldump -proot -uroot $DB_NAME &gt; $BACKUP_DIR/$BACKUP_FILE
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $? -eq <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
@@ -697,8 +775,12 @@
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>fi</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>done</span>
 </span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker exec -it postgres pg_dump -U blinko -d blinko &gt; $BACKUP_DIR/postgres_blinko_<span style=color:#e6db74>${</span>BACKUP_POSTFIX<span style=color:#e6db74>}</span>.sql
+</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 删除超过7天的备份文件</span>
 </span></span><span style=display:flex><span>find $BACKUP_DIR -name <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span>BACKUP_PREFIX<span style=color:#e6db74>}</span><span style=color:#e6db74>_*.sql&#34;</span> -type f -mtime +7 -exec rm -f <span style=color:#f92672>{}</span> <span style=color:#ae81ff>\;</span>
+</span></span><span style=display:flex><span>find $BACKUP_DIR -name <span style=color:#e6db74>&#34;postgres_*.sql&#34;</span> -type f -mtime +7 -exec rm -f <span style=color:#f92672>{}</span> <span style=color:#ae81ff>\;</span>
 </span></span></code></pre></div><p>恢复：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span>docker cp /data/backup/database mysql://
 </span></span><span style=display:flex><span>docker exec -it mysql bash
 </span></span><span style=display:flex><span>
@@ -725,7 +807,7 @@
 </span></span></code></pre></div><h2 id=定时任务>定时任务</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#ae81ff>8</span> <span style=color:#ae81ff>9</span> * * * <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span>/acme.sh --cron --home <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span> &gt; /dev/null
 </span></span><span style=display:flex><span>*/20 * * * * /usr/sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;<span style=color:#ae81ff>1</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span> * * * sh /opt/scripts/backup_mysql.sh
-</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span> * * * sh /opt/scripts/backup_n8n.sh
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>2</span> * * * sh /opt/scripts/backup_n8n.sh
 </span></span></code></pre></div><h2 id=参考文章>参考文章</h2><ul><li><a href=https://www.jinhuaiyao.com/posts/what-is-running-on-my-vps/ target=_blank>我的 VPS 上运行了什么</a></li></ul></div><footer class=post__footer><div class="post__tags tags clearfix"><svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><ul class=tags__list><li class=tags__item><a class="tags__link btn" href=/tags/vps/ rel=tag>vps</a></li><li class=tags__item><a class="tags__link btn" href=/tags/memos/ rel=tag>memos</a></li><li class=tags__item><a class="tags__link btn" href=/tags/umami/ rel=tag>umami</a></li><li class=tags__item><a class="tags__link btn" href=/tags/docker/ rel=tag>docker</a></li><li class=tags__item><a class="tags__link btn" href=/tags/n8n/ rel=tag>n8n</a></li><li class=tags__item><a class="tags__link btn" href=/tags/mysql/ rel=tag>mysql</a></li></ul></div></footer></article></main><div class="authorbox clearfix"><figure class=authorbox__avatar><img alt="ChenSoul avatar" src=/images/favicon.webp class=avatar height=60 width=60></figure><div class=authorbox__header><span class=authorbox__name>About ChenSoul</span></div><div class=authorbox__description>Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials</div></div><nav class="pager flex"><div class="pager__item pager__item--prev"><a class=pager__link href=/posts/2023/01/15/weekly_review_2/ rel=prev><span class=pager__subtitle>«&#8201;Previous</span><p class=pager__title>周报-2｜博客重构</p></a></div><div class="pager__item pager__item--next"><a class=pager__link href=/posts/2023/01/25/weekly_review_3/ rel=next><span class=pager__subtitle>Next&#8201;»</span><p class=pager__title>周报-3｜博客定制、VPS部署服务</p></a></div></nav></div></div><footer class=footer><div class="container footer__container flex"><div class=footer__links><a class=footer__link href=/tools/>Tools</a> | <a class=footer__link href=/tutorials/>Tutorials</a> | <a class=footer__link href=/about/>About</a></div><div class=footer__copyright>&copy; 2025 ChenSoul.
 <span class=footer__copyright-credits>Generated with <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/chensoul/mainroad/ rel="nofollow noopener" target=_blank>Mainroad</a> theme.</span></div></div><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
 </a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script>"use strict";(function(t){var i=t.querySelector(".menu__btn"),o=t.querySelector(".menu__list");function a(){o.classList.toggle("menu__list--active"),o.classList.toggle("menu__list--transition"),this.classList.toggle("menu__btn--active"),this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="true"?"false":"true")}function r(){this.classList.remove("menu__list--transition")}i&&o&&(i.addEventListener("click",a,!1),o.addEventListener("transitionend",r,!1))})(document,window)</script></div><script defer src=https://umami.chensoul.cc/random-string.js data-website-id=1e07d36d-bec3-4ba6-9459-876b1ac3bbe7></script></body></html>

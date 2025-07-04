@@ -745,7 +745,7 @@ button:not(:-moz-focusring):focus > .menu__btn-title {
 	float: left;
 	margin: 0 6px 6px 0;
 	margin: 0 .375rem .375rem 0;
-	text-transform: none;
+	text-transform: lowercase;
 	background: #2a2a2a;
 }
 
@@ -1146,7 +1146,7 @@ textarea {
 	display: inline-block;
 	margin: 0 4px 8px 0;
 	font-size: 12px;
-	text-transform: uppercase;
+	text-transform: lowercase;
 }
 
 /* Languages Widget */
