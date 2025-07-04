@@ -38,7 +38,7 @@ tags: ["vps",maven]
 - 邮箱：[ichensoul@gmail.com](mailto:ichensoul@gmail.com)
 - Github：[https://github.com/chensoul](https://github.com/chensoul)、[https://github.com/ichensoul](https://github.com/ichensoul)
 - Twitter：[https://twitter.com/ichensoul](https://twitter.com/ichensoul)
-- Telegram频道：[https://t.me/chensouls](https://t.me/chensouls)
+- Telegram频道：[https://t.me/ichensoul](https://t.me/ichensoul)
 
 
 ## 注销亚马逊账号

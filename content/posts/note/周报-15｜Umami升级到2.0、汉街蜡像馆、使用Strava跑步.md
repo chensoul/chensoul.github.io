@@ -46,7 +46,7 @@ _题图：楚河汉街蜡像馆_
 
 ![weekly-review-15-04](../../../static/images/weekly-review-15-04.webp)
 
-上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，效果如下。
+上面搞定了之后，就可以使用 Strava 来跑步了。为了增加社交乐趣性，我在 n8n 里面创建了一个 workflow，将 Strava 活动发送到我的『[ChenSoul Share](https://t.me/ichensoul)』Telegram 频道，效果如下。
 
 ![](../../../static/images/weekly-review-15-07.webp)
 
@@ -118,7 +118,7 @@ yarn start
 
 ## 好物分享
 
-虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+虽然大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/ichensoul)』Telegram 频道，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
 
 ### 一些文章
 

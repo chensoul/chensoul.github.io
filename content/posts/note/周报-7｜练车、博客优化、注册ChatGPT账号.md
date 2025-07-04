@@ -113,7 +113,7 @@ body {
 
 新增了 3 个 workflow：
 
-- 定时获取 [BTC 价格](https://www.bitstamp.net/api/v2/ticker/btcusd)，并发送到 [我的电报群组](https://t.me/chensouls)
+- 定时获取 [BTC 价格](https://www.bitstamp.net/api/v2/ticker/btcusd)，并发送到 [我的电报群组](https://t.me/ichensoul)
 
 - 定时获取 spotify 喜欢列表，并发送到电报和 memos
 

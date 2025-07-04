@@ -244,7 +244,7 @@ if reduce(lambda a, b: a or b, (i == 1 for i in (x, y, z))):
 
 ## 本周分享
 
-大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/chensouls)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
+大部分有意思的内容会分享在 『[ChenSoul Share](https://t.me/ichensoul)』Telegram 频道或者我的 [memos](https://memos.chensoul.cc/) 中。我写了一个 python 脚本从 memos 读取最近一周的 memos 记录。
 
 - **2023-05-10** 一些非常有趣的 python 爬虫例子,对新手比较友好,主要爬取淘宝、天猫、微信、微信读书、豆瓣、QQ 等网站。[查看链接](https://github.com/shengqiangzhang/examples-of-web-crawlers) `#memos` `#python` `#tool`
 - **2023-05-08** 这个网站整理了开发者的学习成长路线图，有比较详细的技能树，推荐学习内容等等，偏向开发者。 [查看链接](https://roadmap.sh/python) `#memos` `#tool`
