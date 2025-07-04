@@ -35,12 +35,9 @@ ignoreLogs = ['warning-goldmark-raw-html']
   mainSections = ["posts"] # Specify section pages to show on home page and the "Recent articles" widget
   dateformat = "2006-01-02" # Change the format of dates
   mathjax = true # Enable MathJax
-  mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" # Specify MathJax path
+  mathjaxPath = "https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.9/MathJax.js" # Specify MathJax path
   mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
-  # customCSS = ["css/custom.css"] # Include custom CSS files
-  # customJS = ["js/custom.js"] # Include custom JS files
-  # googleFontsLink = "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" # Load Google Fonts
-  googleFontsLink = false
+  customFooter = '<script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>'
 
 [Params.sidebar]
   home = "right"   # Configure layout for home page
@@ -70,14 +67,6 @@ ignoreLogs = ['warning-goldmark-raw-html']
   gitlab = "username"
   bitbucket = "username"
   email = "example@example.com"
-
-[Params.style.vars]
-  highlightColor = "#e22d30"
-  # Override font-family sets. Take care of different quotes OR escaping symbols in these params if necessary
-  fontFamilyPrimary = "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
-  # Secondary font-family set responsible for pre, code, kbd, and samp tags font
-  fontFamilySecondary = "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
-
 
 [markup]
   [markup.highlight]
