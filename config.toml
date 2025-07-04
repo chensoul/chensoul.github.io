@@ -33,13 +33,13 @@ ignoreLogs = ['warning-goldmark-raw-html']
   authorbox = true # Show authorbox at bottom of pages if true
   toc = false # Enable Table of Contents
   pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
-  post_meta = ["author", "date", "categories"] # Order of post meta information
+  post_meta = [ "date", "categories"] # Order of post meta information
   mainSections = ["posts"] # Specify section pages to show on home page and the "Recent articles" widget
   dateformat = "2006-01-02" # Change the format of dates
   mathjax = true # Enable MathJax
   mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" # Specify MathJax path
   mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
-  customCSS = ["css/custom.css"] # Include custom CSS files
+  # customCSS = ["css/custom.css"] # Include custom CSS files
   # customJS = ["js/custom.js"] # Include custom JS files
   # googleFontsLink = "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" # Load Google Fonts
   googleFontsLink = false
@@ -61,16 +61,17 @@ ignoreLogs = ['warning-goldmark-raw-html']
   visibility = ["list"]
 
 [Params.widgets.social]
+  cached = false # activate cache if true
   # Enable parts of social widget
-  # facebook = "username"
-  #twitter = "username"
-  # instagram = "username"
-  # linkedin = "username"
-  # telegram = "username"
-  #github = "chensoul"
-  # gitlab = "username"
-  # bitbucket = "username"
-  #email = ""
+  facebook = "username"
+  twitter = "username"
+  instagram = "username"
+  linkedin = "username"
+  telegram = "username"
+  github = "username"
+  gitlab = "username"
+  bitbucket = "username"
+  email = "example@example.com"
 
 [Params.style.vars]
   highlightColor = "#e22d30"
