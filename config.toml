@@ -1,7 +1,7 @@
 baseURL = "https://blog.chensoul.cc/"
 title = "ChenSoul Blog"
-languageCode = "zh-cn"
-theme = "mainroad"
+theme = "hugo-rose"
+defaultContentLanguage = 'zh-cn'
 
 summaryLength = 6
 ignoreLogs = ['warning-goldmark-raw-html']
@@ -18,9 +18,37 @@ ignoreLogs = ['warning-goldmark-raw-html']
   tags="/tags/:slug/"
   pages="/:slug/"
 
+[menu]
+  [[menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "分类"
+    url = "/categories/"
+    weight = 2
+  [[menu.main]]
+    name = "标签"
+    url = "/tags/"
+    weight = 3
+  [[menu.main]]
+    name = "关于"
+    url = "/about/"
+    weight = 4
+  [[menu.main]]
+      name = "RSS"
+      url = "/index.xml"
+      weight = 5
+
+  [[menu.blogroll]]
+    name = "Blog"
+    url = "https://blog.chensoul.cc"
+    weight = 1
+
 [Params]
   author = "ChenSoul"
   avatar = "/images/favicon.webp"
+  #logo = "/image/logo.webp" # Logo image
   subtitle = "Java, Spring Boot, Microservice, Cloud, Architecture and DevOps Tutorials" # Logo subtitle
   description = "Java, Spring Boot, JPA, Hibernate, SQL, REST API, Microservice, Architecture, CI/CD, Docker, Kubernetes, Cloud, and DevOps Tutorials" # Description of your site
   copyright = "ChenSoul" # Footer copyright holder, otherwise will use site title
@@ -30,7 +58,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
   readmore = true # Show "Read more" button in list if true
   authorbox = true # Show authorbox at bottom of pages if true
   toc = false # Enable Table of Contents
-  pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
+  pagination = true # Show pager navigation (prev/next links) at the bottom of pages if true
   post_meta = [ "date", "categories"] # Order of post meta information
   mainSections = ["posts"] # Specify section pages to show on home page and the "Recent articles" widget
   dateformat = "2006-01-02" # Change the format of dates
@@ -44,7 +72,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
   list = "right"   # Configure layout for list pages
   single = "right" # Configure layout for single pages
   # Enable widgets in given order
-  widgets = [ "search", "recent", "categories", "taglist"]
+  widgets = [ "search","social", "recent", "categories", "taglist", "blogroll"]
 
 [Params.widgets]
   recent_num = 10 # Set the number of articles in the "Recent articles" widget
@@ -58,15 +86,16 @@ ignoreLogs = ['warning-goldmark-raw-html']
 [Params.widgets.social]
   cached = false # activate cache if true
   # Enable parts of social widget
-  facebook = "username"
-  twitter = "username"
-  instagram = "username"
-  linkedin = "username"
-  telegram = "username"
-  github = "username"
-  gitlab = "username"
-  bitbucket = "username"
-  email = "example@example.com"
+  #facebook = "username"
+  twitter = "ichensoul"
+  #instagram = "username"
+  #linkedin = "username"
+  telegram = "ichensoul"
+  github = "chensoul"
+  #gitlab = "username"
+  #bitbucket = "username"
+  email = "ichensoul@gmail.com"
+  youtube = "@chensoul"
 
 [markup]
   [markup.highlight]

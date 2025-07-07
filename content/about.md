@@ -3,13 +3,8 @@ title: About
 description: "about me"
 lead: "about me"
 slug: /about/
-weight: 10
 authorbox: false
-pager: false
-menu:
-  - main
-  - side
-  - footer
+pagination: false
 ---
 
 ## Hi there 👋

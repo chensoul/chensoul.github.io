@@ -3,13 +3,8 @@ title: Tools
 lead: "本文记录我在使用的工具"
 date: 2024-12-31T08:00:00+08:00
 slug: /tools/
-weight: 1
 authorbox: false
-pager: false
-menu:
-  - main
-  - side
-  - footer
+pagination: false
 ---
 
 MacOS：
