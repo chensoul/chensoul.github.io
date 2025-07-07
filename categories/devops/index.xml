@@ -1,41 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on ChenSoul Blog</title><link>https://blog.chensoul.cc/categories/devops/</link><description>Recent content in Devops on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 08 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 Docker 安装 Gitea</title><link>https://blog.chensoul.cc/posts/2025/04/08/install-gitea-using-docker/</link><pubDate>Tue, 08 Apr 2025 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2025/04/08/install-gitea-using-docker/</guid><description>&lt;h2 id="安装-gitea">安装 Gitea&lt;/h2>
-&lt;p>创建目录：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>rm -rf /data/gitea
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mkdir -p /data/gitea/&lt;span style="color:#f92672">{&lt;/span>data,config&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo chown 1000:1000 /data/gitea/config/ /data/gitea/data/
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>使用 docker 命令安装：&lt;/p></description></item><item><title>Kafka 安装和快速上手</title><link>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</link><pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</guid><description>&lt;h2 id="下载-kafka">下载 Kafka&lt;/h2>
-&lt;p>&lt;a href="https://kafka.apache.org/downloads" target="_blank">下载&lt;/a> 最新的版本&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ wget https://downloads.apache.org/kafka/3.8.0/kafka_2.12-3.8.0.tgz
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ tar -xzf kafka_2.12-3.8.0.tgz
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ cd kafka_2.12-3.8.0
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="启动-kafka">启动 Kafka&lt;/h2>
-&lt;p>Apache Kafka 需要 Java 8+，可以使用 KRaft 或 ZooKeeper 启动。&lt;/p></description></item><item><title>Kafka 基础知识</title><link>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</link><pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</guid><description>&lt;p>Kafka 是一个分布式流式处理平台。&lt;/p>
-&lt;p>流平台具有三个关键功能：&lt;/p>
-&lt;ol>
-&lt;li>&lt;strong>消息队列&lt;/strong>：发布和订阅消息流，这个功能类似于消息队列，这也是 Kafka 也被归类为消息队列的原因。&lt;/li>
-&lt;li>&lt;strong>容错的持久方式存储记录消息流&lt;/strong>： Kafka 会把消息持久化到磁盘，有效避免了消息丢失的风险·。&lt;/li>
-&lt;li>&lt;strong>流式处理平台：&lt;/strong> 在消息发布的时候进行处理，Kafka 提供了一个完整的流式处理类库。&lt;/li>
-&lt;/ol>
-&lt;p>Kafka 主要有两大应用场景：&lt;/p></description></item><item><title>GitLab Runner安装和部署</title><link>https://blog.chensoul.cc/posts/2024/07/19/gitlab-runner-install/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/19/gitlab-runner-install/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
+&lt;p>创建目录：&lt;/p></description></item><item><title>Kafka 安装和快速上手</title><link>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</link><pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</guid><description>&lt;h2 id="下载-kafka">下载 Kafka&lt;/h2>
+&lt;p>&lt;a href="https://kafka.apache.org/downloads" target="_blank">下载&lt;/a> 最新的版本&lt;/p></description></item><item><title>Kafka 基础知识</title><link>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</link><pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</guid><description>&lt;p>Kafka 是一个分布式流式处理平台。&lt;/p>
+&lt;p>流平台具有三个关键功能：&lt;/p></description></item><item><title>GitLab Runner安装和部署</title><link>https://blog.chensoul.cc/posts/2024/07/19/gitlab-runner-install/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/19/gitlab-runner-install/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
 &lt;p>GitLab Runner 是一个用于在 GitLab CI/CD（持续集成/持续交付）流水线中运行作业（Jobs）的开源工具。它充当了 GitLab CI/CD 系统中的代理，负责接收作业请求、执行作业脚本并报告结果。&lt;/p></description></item><item><title>Gitlab安装和部署-使用yum源</title><link>https://blog.chensoul.cc/posts/2024/07/15/install-gitlab-using-yum/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/install-gitlab-using-yum/</guid><description>&lt;h2 id="gitlab-server-部署">Gitlab Server 部署&lt;/h2>
 &lt;h3 id="1环境配置">1、环境配置&lt;/h3>
-&lt;p>关闭防火墙、SELinux&lt;/p>
-&lt;p>开启邮件服务&lt;/p></description></item><item><title>Git介绍</title><link>https://blog.chensoul.cc/posts/2024/07/15/git/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/git/</guid><description>&lt;h2 id="gitgithubgitlab-的区别">Git、Github、Gitlab 的区别&lt;/h2>
-&lt;p>Git是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。&lt;/p>
-&lt;p>是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。&lt;/p></description></item><item><title>Git使用</title><link>https://blog.chensoul.cc/posts/2024/07/15/git/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/git/</guid><description>&lt;h2 id="部署git-服务">部署Git 服务&lt;/h2>
-&lt;p>&lt;strong>创建git仓库&lt;/strong>&lt;/p>
-&lt;p>git-server上的操作：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>[root@localhost ~]# yum install git git-core gitweb -y
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost ~]# useradd git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost ~]# passwd git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost ~]# mkdir /git-root/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost ~]# cd /git-root/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost git-root]# git init --bare shell.git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initialized empty Git repository in /git-root/shell.git/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[root@localhost git-root]# chown -R git:git shell.git
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>注意：
-git init 和 git init &amp;ndash;bare 的区别:&lt;/p></description></item><item><title>Docker安装和配置</title><link>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</link><pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</guid><description>&lt;h1 id="centos7安装docker">Centos7安装Docker&lt;/h1>
+&lt;p>关闭防火墙、SELinux&lt;/p></description></item><item><title>Git介绍</title><link>https://blog.chensoul.cc/posts/2024/07/15/git/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/git/</guid><description>&lt;h2 id="gitgithubgitlab-的区别">Git、Github、Gitlab 的区别&lt;/h2>
+&lt;p>Git是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。&lt;/p></description></item><item><title>Git使用</title><link>https://blog.chensoul.cc/posts/2024/07/15/git/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/git/</guid><description>&lt;h2 id="部署git-服务">部署Git 服务&lt;/h2>
+&lt;p>&lt;strong>创建git仓库&lt;/strong>&lt;/p></description></item><item><title>Docker安装和配置</title><link>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</link><pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</guid><description>&lt;h1 id="centos7安装docker">Centos7安装Docker&lt;/h1>
 &lt;h2 id="配置宿主机网卡转发">配置宿主机网卡转发&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-powershell" data-lang="powershell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">## 配置网卡转发，看值是否为1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sysctl -a |grep -w net.ipv4.ip_forward
@@ -75,8 +46,7 @@ git init 和 git init &amp;ndash;bare 的区别:&lt;/p></description></item><ite
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">## docker daemon&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ps aux |grep docker
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>安装 Compose plugin：&lt;/p></description></item><item><title>使用 Docker 容器化并运行 Spring Boot 应用程序</title><link>https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/</link><pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/</guid><description>&lt;blockquote>
-&lt;p>本文翻译自 Docker 官方网站的《&lt;a href="https://docs.docker.com/guides/java/" target="_blank">Java language-specific guide&lt;/a>》文章，并做了一些改动。&lt;/p>&lt;/blockquote>
-&lt;p>Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用程序。在本模块中，您将学习如何：&lt;/p></description></item><item><title>ActiveMQ安装和使用</title><link>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</link><pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</guid><description>&lt;p>ActiveMQ 是一个实现了 JMS 协议的开源消息中间件，目前它有两种版本：ActiveMQ &amp;ldquo;Classic&amp;rdquo; 和 ActiveMQ Artemis。&lt;/p></description></item><item><title>Gitlab安装和部署-使用Docker</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</guid><description>&lt;h2 id="安装-gitlab">安装 Gitlab&lt;/h2>
+&lt;p>本文翻译自 Docker 官方网站的《&lt;a href="https://docs.docker.com/guides/java/" target="_blank">Java language-specific guide&lt;/a>》文章，并做了一些改动。&lt;/p></description></item><item><title>ActiveMQ安装和使用</title><link>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</link><pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</guid><description>&lt;p>ActiveMQ 是一个实现了 JMS 协议的开源消息中间件，目前它有两种版本：ActiveMQ &amp;ldquo;Classic&amp;rdquo; 和 ActiveMQ Artemis。&lt;/p></description></item><item><title>Gitlab安装和部署-使用Docker</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</guid><description>&lt;h2 id="安装-gitlab">安装 Gitlab&lt;/h2>
 &lt;p>安装 gitlab-ce 版本，当前最新版本为 17.2.0&lt;/p></description></item><item><title>Jenkins安装和部署-使用Docker</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-jenkins/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-jenkins/</guid><description>&lt;h2 id="使用-docker-安装">使用 Docker 安装&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ docker volume create --name jenkins_data
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -90,22 +60,7 @@ git init 和 git init &amp;ndash;bare 的区别:&lt;/p></description></item><ite
 &lt;/ul>
 &lt;h2 id="安装lua">安装Lua&lt;/h2>
 &lt;p>先安装依赖：&lt;/p></description></item><item><title>搭建本地 Maven 仓库 Artifactory 开源版</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</guid><description>&lt;h2 id="安装-artifactory">安装 Artifactory&lt;/h2>
-&lt;p>官方下载安装地址：&lt;a href="https://jfrog.com/community/download-artifactory-oss/" target="_blank">https://jfrog.com/community/download-artifactory-oss/&lt;/a> ，支持三种安装方式：&lt;/p>
-&lt;ul>
-&lt;li>Windows Installer&lt;/li>
-&lt;li>Linux Installers
-&lt;ul>
-&lt;li>tar.gz&lt;/li>
-&lt;li>RPM&lt;/li>
-&lt;li>Debian&lt;/li>
-&lt;li>Docker Compose&lt;/li>
-&lt;li>Docker&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Helm&lt;/li>
-&lt;/ul>
-&lt;h3 id="手动下载并安装">手动下载并安装&lt;/h3>
-&lt;p>安装包文件地址在 &lt;a href="https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/" target="_blank">https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifactory/oss/jfrog-artifactory-oss/&lt;/a> 。以当前最新版本 7.84.15 为例，在 linux 服务器上下载：&lt;/p></description></item><item><title>搭建本地Maven仓库Nexus</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</guid><description>&lt;h2 id="使用-docker-安装">使用 Docker 安装&lt;/h2>
+&lt;p>官方下载安装地址：&lt;a href="https://jfrog.com/community/download-artifactory-oss/" target="_blank">https://jfrog.com/community/download-artifactory-oss/&lt;/a> ，支持三种安装方式：&lt;/p></description></item><item><title>搭建本地Maven仓库Nexus</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</guid><description>&lt;h2 id="使用-docker-安装">使用 Docker 安装&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ docker volume create --name nexus_data
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3
@@ -128,45 +83,7 @@ git init 和 git init &amp;ndash;bare 的区别:&lt;/p></description></item><ite
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="访问并配置-nexus">访问并配置 Nexus&lt;/h2>
 &lt;p>访问 http://127.0.0.1:8081/ 或者是 &lt;code>http://&amp;lt;your IP&amp;gt;:8081&lt;/code>，用户名为 admin ，初始密码在容器里的 /nexus-data/admin.password 文件&lt;/p></description></item><item><title>Redis安装和部署</title><link>https://blog.chensoul.cc/posts/2024/05/14/redis-install/</link><pubDate>Tue, 14 May 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/05/14/redis-install/</guid><description>&lt;h2 id="单机安装">单机安装&lt;/h2>
 &lt;h3 id="通过-yum-安装">通过 yum 安装&lt;/h3>
-&lt;p>在 CentOS 7 上通过 yum 安装 Redis，可以按照以下步骤进行操作：&lt;/p></description></item><item><title>All things about Drone</title><link>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-drone/</link><pubDate>Thu, 09 May 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-drone/</guid><description>&lt;p>Drone by &lt;a href="https://harness.io/" target="_blank">Harness&lt;/a> ™ 是一个现代化的持续集成平台，使忙碌的团队能够使用强大的云原生管道引擎自动化其构建、测试和发布工作流程。&lt;/p>
-&lt;h2 id="drone实践">Drone实践&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://avnpc.com/p/202" target="_blank">Docker 容器环境下的持续集成最佳实践：构建基于 Drone + GitFlow + K8s 的云原生语义化 CI 工作流&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://avnpc.com/p/204" target="_blank">容器环境持续集成优化，Drone CI 提速 500%&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.itfanr.cc/2019/07/11/run-drone-cicd-on-kubernetes/" target="_blank">在Kubernetes上执行Drone CI/CD&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://developer.aliyun.com/article/718091?spm=a2c6h.13262185.0.0.20ad7863aYuwQH" target="_blank">玩转 Drone CI&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://maiyang.me/post/2018-08-11-gitlab-gogs-drone-cicd/" target="_blank">基于 gogs/gitlab 和 drone 搭建的 CI/CD 平台&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://sealyun.com/post/ci-cd/" target="_blank">基于drone构建CI/CD系统,对接k8s&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>使用Drone构建静态博客&lt;/p></description></item><item><title>[译]DevOps 和测试人员的 Git 面试问题</title><link>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</link><pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</guid><description>&lt;p>欢迎来到 Git 面试准备指南，我们将在这里向初学者和经验丰富的专业人士讨论最常见的 Git 面试问题。无论您是准备参加 DevOps 或测试面试，还是希望提高 Git 技能，此资源都可以通过深入研究一些与 Git 基本概念和实践相关的最常见面试问题来帮助您。&lt;/p></description></item><item><title>[译]关于 HTTP 您需要了解的一切</title><link>https://blog.chensoul.cc/posts/2023/10/12/http-in-depth/</link><pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/10/12/http-in-depth/</guid><description>&lt;p>HTTP 是每个 Web 开发人员都应该了解的协议，因为它为整个 Web 提供动力。了解 HTTP 当然可以帮助您开发更好的应用程序。&lt;/p></description></item><item><title>Git Flow分支模型和使用</title><link>https://blog.chensoul.cc/posts/2023/05/11/git-flow-model-and-usage/</link><pubDate>Thu, 11 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/11/git-flow-model-and-usage/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
-&lt;p>&lt;a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank">Git Flow&lt;/a> 是由 Vincent Driessen 在 2010 年提出的一种 Git 工作流。在这之前，Git 没有一个明确的标准工作流，导致团队在使用 Git 时往往会遇到一些问题，如分支管理、版本控制等。为了解决这些问题，Vincent Driessen 提出了 Git Flow 分支模型，成为了 Git 在实际应用中的一种标准工作流。&lt;/p></description></item><item><title>我的VPS服务部署记录</title><link>https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/</link><pubDate>Wed, 25 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/</guid><description>&lt;p>我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。&lt;/p></description></item><item><title>博客中如何使用图床服务</title><link>https://blog.chensoul.cc/posts/2022/08/19/using-images-in-blog/</link><pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2022/08/19/using-images-in-blog/</guid><description>&lt;p>最近编写文档或者写博客，喜欢用 Typora 编辑器通过 Markdown 语法完成编写所有内容。为此，还付费购买了许可证。&lt;/p>
-&lt;p>&lt;img src="../../../static/images/using-images-in-blog-01.webp" alt="my-typora-license">&lt;/p></description></item><item><title>Mac开发环境配置</title><link>https://blog.chensoul.cc/posts/2021/09/09/mac-development-environment-setup/</link><pubDate>Thu, 09 Sep 2021 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2021/09/09/mac-development-environment-setup/</guid><description>&lt;p>这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是 Mac 开发环境，所以，这篇文章主要是基于 Mac 操作系统，记录开发环境搭建过程。&lt;/p>
-&lt;h2 id="重装系统后设置">重装系统后设置&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:2;-o-tab-size:2;tab-size:2;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ git clone https://github.com/chensoul/dotfiles.git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ cd dotfiles
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./install.sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安装插件">安装插件&lt;/h2>
-&lt;h3 id="idea-插件">Idea 插件&lt;/h3>
-&lt;ul>
-&lt;li>.ignore&lt;/li>
-&lt;li>Atom Material Icons&lt;/li>
-&lt;li>InlineProblems&lt;/li>
-&lt;li>Laconic POM for Maven&lt;/li>
-&lt;li>plantar-java-format&lt;/li>
-&lt;li>Maven Helper&lt;/li>
-&lt;li>Rainbow Brackets&lt;/li>
-&lt;/ul>
-&lt;h3 id="chrome-插件">Chrome 插件&lt;/h3>
-&lt;ul>
-&lt;li>JsonVue&lt;/li>
-&lt;li>1Password&lt;/li>
-&lt;li>Inoreader&lt;/li>
-&lt;/ul>
-&lt;h2 id="安装其他软件">安装其他软件&lt;/h2>
-&lt;h3 id="安装-mysql">安装 MySQL&lt;/h3>
-&lt;p>安装 MySQL：&lt;/p></description></item><item><title>从零开始搭建个人博客</title><link>https://blog.chensoul.cc/posts/2021/09/09/build-personal-blog-from-zero/</link><pubDate>Thu, 09 Sep 2021 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2021/09/09/build-personal-blog-from-zero/</guid><description>&lt;p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。&lt;/p>
+&lt;p>在 CentOS 7 上通过 yum 安装 Redis，可以按照以下步骤进行操作：&lt;/p></description></item><item><title>All things about Drone</title><link>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-drone/</link><pubDate>Thu, 09 May 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-drone/</guid><description>&lt;p>Drone by &lt;a href="https://harness.io/" target="_blank">Harness&lt;/a> ™ 是一个现代化的持续集成平台，使忙碌的团队能够使用强大的云原生管道引擎自动化其构建、测试和发布工作流程。&lt;/p></description></item><item><title>[译]DevOps 和测试人员的 Git 面试问题</title><link>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</link><pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</guid><description>&lt;p>欢迎来到 Git 面试准备指南，我们将在这里向初学者和经验丰富的专业人士讨论最常见的 Git 面试问题。无论您是准备参加 DevOps 或测试面试，还是希望提高 Git 技能，此资源都可以通过深入研究一些与 Git 基本概念和实践相关的最常见面试问题来帮助您。&lt;/p></description></item><item><title>[译]关于 HTTP 您需要了解的一切</title><link>https://blog.chensoul.cc/posts/2023/10/12/http-in-depth/</link><pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/10/12/http-in-depth/</guid><description>&lt;p>HTTP 是每个 Web 开发人员都应该了解的协议，因为它为整个 Web 提供动力。了解 HTTP 当然可以帮助您开发更好的应用程序。&lt;/p></description></item><item><title>Git Flow分支模型和使用</title><link>https://blog.chensoul.cc/posts/2023/05/11/git-flow-model-and-usage/</link><pubDate>Thu, 11 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/11/git-flow-model-and-usage/</guid><description>&lt;h2 id="介绍">介绍&lt;/h2>
+&lt;p>&lt;a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank">Git Flow&lt;/a> 是由 Vincent Driessen 在 2010 年提出的一种 Git 工作流。在这之前，Git 没有一个明确的标准工作流，导致团队在使用 Git 时往往会遇到一些问题，如分支管理、版本控制等。为了解决这些问题，Vincent Driessen 提出了 Git Flow 分支模型，成为了 Git 在实际应用中的一种标准工作流。&lt;/p></description></item><item><title>我的VPS服务部署记录</title><link>https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/</link><pubDate>Wed, 25 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/</guid><description>&lt;p>我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。&lt;/p></description></item><item><title>博客中如何使用图床服务</title><link>https://blog.chensoul.cc/posts/2022/08/19/using-images-in-blog/</link><pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2022/08/19/using-images-in-blog/</guid><description>&lt;p>最近编写文档或者写博客，喜欢用 Typora 编辑器通过 Markdown 语法完成编写所有内容。为此，还付费购买了许可证。&lt;/p></description></item><item><title>Mac开发环境配置</title><link>https://blog.chensoul.cc/posts/2021/09/09/mac-development-environment-setup/</link><pubDate>Thu, 09 Sep 2021 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2021/09/09/mac-development-environment-setup/</guid><description>&lt;p>这是我的第一篇文章，作为程序员，首先要做得第一件事情，就是配置好开发环境，因为我使用的是 Mac 开发环境，所以，这篇文章主要是基于 Mac 操作系统，记录开发环境搭建过程。&lt;/p></description></item><item><title>从零开始搭建个人博客</title><link>https://blog.chensoul.cc/posts/2021/09/09/build-personal-blog-from-zero/</link><pubDate>Thu, 09 Sep 2021 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2021/09/09/build-personal-blog-from-zero/</guid><description>&lt;p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。&lt;/p>
 &lt;h2 id="域名">域名&lt;/h2>
-&lt;p>搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;strong>域名&lt;/strong>（英语：&lt;strong>Domain Name&lt;/strong>），又称&lt;strong>网域&lt;/strong>，是由一串用点分隔的名字组成的&lt;a href="https://baike.baidu.com/item/Internet" target="_blank">Internet&lt;/a>上某一台&lt;a href="https://baike.baidu.com/item/%e8%ae%a1%e7%ae%97%e6%9c%ba/140338" target="_blank">计算机&lt;/a>或计算机组的名称，用于在数据传输时对计算机的定位标识（有时也指地理位置）。&lt;/p>
-&lt;p>由于&lt;a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80/150859" target="_blank">IP 地址&lt;/a>具有不方便记忆并且不能显示地址组织的名称和性质等缺点，人们设计出了域名，并通过网域名称系统（&lt;a href="https://baike.baidu.com/item/DNS" target="_blank">DNS&lt;/a>，Domain Name System）来将域名和&lt;a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80" target="_blank">IP 地址&lt;/a>相互&lt;a href="https://baike.baidu.com/item/%e6%98%a0%e5%b0%84/20402621" target="_blank">映射&lt;/a>，使人更方便地访问&lt;a href="https://baike.baidu.com/item/%e4%ba%92%e8%81%94%e7%bd%91/199186" target="_blank">互联网&lt;/a>，而不用去记住能够被机器直接读取的&lt;a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80" target="_blank">IP 地址&lt;/a>数串。&lt;/p></description></item></channel></rss>
+&lt;p>搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：&lt;/p></description></item></channel></rss>
