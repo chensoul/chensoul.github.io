@@ -6,11 +6,10 @@ categories: ["review"]
 tags: [spring-cloud]
 ---
 
-
-
 今天做了什么：
 
 1. ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能
+<!--more-->
 
    ```java
    @Aspect
@@ -34,7 +33,7 @@ tags: [spring-cloud]
          HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
             .getRequestAttributes()).getRequest();
          if (request != null && HttpMethod.GET.matches(request.getMethod())) {
-             String username = request.getUserPrincipal().getName(); / Get the username
+             String username = request.getUserPrincipal().getName(); // Get the username
              if (username != null && !username.isEmpty()) {
                  String rateLimitKey = "rate_limit:" + username;
                  incrementAndCheckRateLimit(rateLimitKey, request);
@@ -53,8 +52,8 @@ tags: [spring-cloud]
              return (Long) ((RedisOperations<?, ?>) nativeConnection).execute(
                      (RedisCallback<Object>) connection1 -> connection1.eval(
                              script.getBytes(),
-                             redisTemplate.getKeySerializer(), / Use custom Key serializer
-                             redisTemplate.getValueSerializer(), / Use custom Value serializer
+                             redisTemplate.getKeySerializer(), // Use custom Key serializer
+                             redisTemplate.getValueSerializer(), // Use custom Value serializer
                              Collections.singletonList(rateLimitKey.getBytes()),
                              Collections.singletonList(String.valueOf(timeWindow).getBytes())
                      )
