@@ -6,9 +6,6 @@ defaultContentLanguage = 'zh-cn'
 summaryLength = 3
 ignoreLogs = ['warning-goldmark-raw-html']
 
-[services.disqus]
-  shortname = "" # Enable Disqus by entering your Disqus shortname
-
 [pagination]
   pagerSize = 10
 
@@ -92,6 +89,12 @@ ignoreLogs = ['warning-goldmark-raw-html']
   #bitbucket = "username"
   email = "ichensoul@gmail.com"
   youtube = "@chensoul"
+
+[Params.remark42]
+  enabled = true
+  host = "https://comment.chensoul.cc"
+  site = "Remark42"
+  locale = "zh"
 
 [markup]
   [markup.highlight]
