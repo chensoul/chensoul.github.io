@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Review on ChenSoul Blog</title><link>https://blog.chensoul.cc/categories/review/</link><description>Recent content in Review on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 31 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/categories/review/rss.xml" rel="self" type="application/rss+xml"/><item><title>2024年我的付费软件</title><link>https://blog.chensoul.cc/posts/2024/12/31/til/</link><pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/12/31/til/</guid><description>&lt;p>2024 年的付费软件：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>TablePlus：&lt;/p></description></item><item><title>2024-12-27｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/12/27/til/</link><pubDate>Fri, 27 Dec 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/12/27/til/</guid><description>&lt;p>今天我做了什么？&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>更新文章 &lt;a href="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/">我的VPS服务部署记录&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>使用 docker 部署 &lt;a href="https://github.com/Finb/Bark" target="_blank">Bark&lt;/a>、&lt;a href="https://github.com/plankanban/planka" target="_blank">Planka&lt;/a>、&lt;a href="https://github.com/hoarder-app/hoarder" target="_blank">Hoarder&lt;/a>&lt;/li>
+&lt;li>将 memos 中的书签导入 hoarder，并将 memos 版本退回到 0.21.0 ，因为 0.21.0 之后的版本去掉了分享功能。同时需要修改 memos api，同步修改 &lt;a href="https://github.com/chensoul/chensoul/blob/main/fetch_memos.py" target="_blank">fetch_memos.py&lt;/a> 文件，将 &lt;a href="https://memos.chensoul.cc/api/v1/memos" target="_blank">https://memos.chensoul.cc/api/v1/memos&lt;/a> 改为 &lt;a href="https://memos.chensoul.cc/api/v2/memos" target="_blank">https://memos.chensoul.cc/api/v2/memos&lt;/a>&lt;/li>
+&lt;li>完善备份脚本，并在 macos 上通过 crontab 下载 vps 上的备份文件到本地的 icloud 目录下&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> * * * scp -r root@vps.chensoul.cc://data/backup /Users/chensoul/Library/Mobile&lt;span style="color:#ae81ff">\ &lt;/span>Documents/com&lt;span style="color:#ae81ff">\~&lt;/span>apple&lt;span style="color:#ae81ff">\~&lt;/span>CloudDocs/vps/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>推荐博客 &lt;a href="https://www.jinhuaiyao.com/" target="_blank">Huaiyao Jin&lt;/a>&lt;/p></description></item><item><title>2024-11-13｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/13/til/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/13/til/</guid><description>&lt;h2 id="spring-周报">Spring 周报&lt;/h2>
+&lt;p>&lt;a href="https://spring.io/blog/2024/11/12/this-week-in-spring-november-12th-2024" target="_blank">This Week in Spring - November 12th, 2024&lt;/a>&lt;/p></description></item><item><title>2024-11-07｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/07/til/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/07/til/</guid><description>&lt;h1 id="构建-docker-镜像---最佳实践">构建 Docker 镜像 - 最佳实践&lt;/h1>
+&lt;p>&lt;a href="https://www.marcobehler.com/guides/building-docker-images" target="_blank">构建 Docker 镜像 - 最佳实践&lt;/a> 笔记：&lt;/p></description></item><item><title>2024-11-06｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/06/til/</link><pubDate>Wed, 06 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/06/til/</guid><description>&lt;p>&lt;a href="https://x.com/david_syer/status/1849839624325157198?s=12" target="_blank">David Syer 博士宣布推出 Spring GRPC 项目&lt;/a>&lt;/p></description></item><item><title>2024-11-05｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/05/til/</link><pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/05/til/</guid><description>&lt;h2 id="图片转换">图片转换&lt;/h2>
+&lt;h3 id="使用-sip-将-jpg-图片转为-png">使用 sip 将 JPG 图片转为 PNG&lt;/h3>
+&lt;p>macos 上先安装 sip：&lt;/p></description></item><item><title>2024-11-04｜SivaLabs博客文章</title><link>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</link><pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</guid><description>&lt;p>以下是 &lt;a href="https://www.sivalabs.in/" target="_blank">SivaLabs 博客&lt;/a> 中的一些文章，记录在此，方便后面阅读。&lt;/p></description></item><item><title>2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构</title><link>https://blog.chensoul.cc/posts/2024/02/20/til/</link><pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/20/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能&lt;/li>
+&lt;/ol></description></item><item><title>2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离</title><link>https://blog.chensoul.cc/posts/2024/02/19/til/</link><pubDate>Mon, 19 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/19/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>重构 foodie-cloud 项目
+&lt;ul>
+&lt;li>基于 docker 实现数据库配置主从复制，集成 Sharding Sphere 实现读写分离&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol></description></item><item><title>2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-food测试</title><link>https://blog.chensoul.cc/posts/2024/02/18/til/</link><pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/18/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;a href="https://newrelic.com/" target="_blank">NewRelice&lt;/a>：应用性能监控&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.cnblogs.com/caoweixiong/p/14798449.html" target="_blank">https://www.cnblogs.com/caoweixiong/p/14798449.html&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=jCd6XfWLZsg" target="_blank">Top 6 Tools to Turn Code into Beautiful Diagrams&lt;/a> ：&lt;/p></description></item><item><title>2024-02-05｜Spring Cloud Config快速入门</title><link>https://blog.chensoul.cc/posts/2024/02/05/til/</link><pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>创建项目 &lt;a href="https://github.com/chensoul/spring-cloud-examples" target="_blank">spring-cloud-examples&lt;/a>，测试 &lt;em>Spring Cloud&lt;/em> Config 使用本地文件和 git 仓库作为配置中心&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;p>&lt;em>Spring Cloud&lt;/em> Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。
+&lt;em>Spring Cloud&lt;/em> Config 支持以下几种存储方式：&lt;/p></description></item><item><title>2024-02-04｜foodie-cloud集成Resilience4j</title><link>https://blog.chensoul.cc/posts/2024/02/04/til/</link><pubDate>Sun, 04 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/04/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>重构 foodie-cloud 项目&lt;/p></description></item><item><title>2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc</title><link>https://blog.chensoul.cc/posts/2024/02/02/til/</link><pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/02/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;p>参考 《&lt;a href="https://download.packt.com/free-ebook/9781805128694" target="_blank">Microservices with Spring Boot 3 and Spring Cloud&lt;/a>》，重构
+foodie-cloud 项目&lt;/p></description></item><item><title>2024-02-01｜使用 Spring Initializr 创建项目</title><link>https://blog.chensoul.cc/posts/2024/02/01/til/</link><pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/01/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>重构 foodie-cloud 项目，部署到 docker 容器&lt;/li>
+&lt;li>使用 Spring Initializr 创建项目&lt;/li>
+&lt;/ol>
+&lt;h2 id="使用-spring-initializr-创建项目">使用 Spring Initializr 创建项目&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>安装 spring cli&lt;/p></description></item><item><title>2024-01-31｜Redis事务</title><link>https://blog.chensoul.cc/posts/2024/01/31/til/</link><pubDate>Wed, 31 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/31/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>下载 《&lt;a href="https://download.packt.com/free-ebook/9781805128694" target="_blank">Microservices with Spring Boot 3 and Spring Cloud&lt;/a>》，源码在 &lt;a href="https://github.com/PacktPublishing/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition" target="_blank">github&lt;/a>&lt;/li>
+&lt;li>Redis 事务&lt;/li>
+&lt;/ol>
+&lt;h1 id="redis事务">Redis事务&lt;/h1>
+&lt;h2 id="原理">原理&lt;/h2>
+&lt;p>Redis 是一个内存数据库，它支持事务操作。Redis 事务是一系列的命令操作，这些命令会被一起执行，要么全部成功，要么全部失败。在事务执行期间，其他客户端提交的命令不会被插入到事务中，确保事务的原子性。&lt;/p></description></item><item><title>2024-01-30｜Mybatis plus和Jackson配置</title><link>https://blog.chensoul.cc/posts/2024/01/30/til/</link><pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/30/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>重构 foodie-cloud 项目
+&lt;ul>
+&lt;li>参考 DDD 组织包结构&lt;/li>
+&lt;li>Mybatis plus 配置主键生成策略和数据审计功能&lt;/li>
+&lt;li>Jackson 配置日期序列化&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="重构-foodie-cloud-项目">重构 foodie-cloud 项目&lt;/h2>
+&lt;h3 id="mybatis-plus-配置主键生成策略">Mybatis plus 配置主键生成策略&lt;/h3>
+&lt;p>实体类中可以不用添加@TableId，减少实体类对 mybatis-plus-annotation的依赖&lt;/p></description></item><item><title>2024-01-29｜C4架构模型</title><link>https://blog.chensoul.cc/posts/2024/01/29/til/</link><pubDate>Mon, 29 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/29/til/</guid><description>&lt;h2 id="c4架构模型">C4架构模型&lt;/h2>
+&lt;p>C4 架构模型是一种简洁且易于理解的软件架构描述方法，由 Simon Brown 提出。C4 表示 Context, Containers, Components, and Code，这四个层级帮助我们组织和描述软件系统的不同抽象层次。&lt;/p></description></item><item><title>2024-01-26｜foodie-cloud集成Feign</title><link>https://blog.chensoul.cc/posts/2024/01/26/til/</link><pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/26/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>重构 foodie-cloud 项目&lt;/p></description></item><item><title>2024-01-25｜Idea和zsh快捷键</title><link>https://blog.chensoul.cc/posts/2024/01/25/til/</link><pubDate>Thu, 25 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/25/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>整理 Idea 快捷键&lt;/li>
+&lt;li>整理 zsh 中定义的常用的快捷键&lt;/li>
+&lt;/ol>
+&lt;h2 id="idea-快捷键">Idea 快捷键&lt;/h2>
+&lt;ul>
+&lt;li>使用快捷键 command +1 打开 Project 窗口&lt;/li>
+&lt;li>输入 control + R 可以运行 Java 代码&lt;/li>
+&lt;/ul>
+&lt;h3 id="上下文">上下文&lt;/h3>
+&lt;ul>
+&lt;li>在 for 方法上，输入 option + enter，可以调出上下文，替换 for 表达式&lt;/li>
+&lt;li>在字符串上面输入 option + enter，可以调出上下文。&lt;/li>
+&lt;li>在字符串上面或者双击选中，然后双击两次 ⇧ ，打开 &lt;code>Search Everywhere&lt;/code> 弹窗，然后输入 case ，选择 &lt;code>Toggle Case&lt;/code> 将 AVERAGE
+变为小写。&lt;/li>
+&lt;li>在没有使用的方法参数 redundant 上，输入 option + enter，可以选择 &lt;code>Safe delete 'redunant'&lt;/code> 删除该参数&lt;/li>
+&lt;li>在三目运算，输入 option + enter，可以选择 &lt;code>Negate '?:'&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="搜索">搜索&lt;/h3>
+&lt;ul>
+&lt;li>查找最近文件：comand + E&lt;/li>
+&lt;li>输入 ⇧ + command + A 可以打开 Find Action 窗口。&lt;/li>
+&lt;li>双击两次 ⇧ 可以打开 Search Everywhere 窗口。输入关键字，可以搜索 java 类。&lt;/li>
+&lt;li>如果想搜索Java类，则可以输入 command + O，并可以选择在 All Places 搜索。&lt;/li>
+&lt;li>如果想搜索方法或者变量名称，则可以使用 option + command + O&lt;/li>
+&lt;/ul>
+&lt;h3 id="自动补全">自动补全&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>command + ↑ + enter 补全方法体、if、while、for 、switch 后面括号&lt;/p></description></item><item><title>2024-01-24｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2024/01/24/til/</link><pubDate>Wed, 24 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/24/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>观看 B 站视频《&lt;a href="https://www.bilibili.com/video/BV1F5411y7Ta/" target="_blank">鸟宝的春天11_security编码实现&lt;/a>》
+&lt;ol>
+&lt;li>
+&lt;p>参考视频中示例使用 SecurityFilterChain DSL 语法实现用户名密码登录功能。&lt;/p></description></item><item><title>2024-01-23｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2024/01/23/til/</link><pubDate>Tue, 23 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/23/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>重构 foodie-cloud 项目，修改模块名称、表名及字段名。&lt;/li>
+&lt;li>修改 &lt;a href="https://github.com/chensoul/spring-security-oauth2-legacy-examples" target="_blank">spring-security-oauth2-legacy-examples&lt;/a> ，测试资源服务器通过 jwt、jwk、远程三种方式获取用户信息；测试 sso 单点登录（进行中）。&lt;/li>
+&lt;/ol></description></item><item><title>2024-01-22｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2024/01/22/til/</link><pubDate>Mon, 22 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/22/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>修改瑞吉外卖项目 &lt;a href="https://github.com/chensoul/reggie" target="_blank">reggie&lt;/a>：
+&lt;ul>
+&lt;li>去掉 .mvn 相关文件，去掉 github action 中用到 .mvn 的 workflow&lt;/li>
+&lt;li>参考 DDD 修改包结构&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol></description></item><item><title>2024-01-18｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2024/01/18/til/</link><pubDate>Thu, 18 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/18/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ol>
+&lt;li>修改瑞吉外卖项目 &lt;a href="https://github.com/chensoul/reggie" target="_blank">reggie&lt;/a>：
+&lt;ul>
+&lt;li>修改数据源配置，使用 HikariCP 数据源&lt;/li>
+&lt;li>修改接口返回字段和前端文件，code=0 表示成功&lt;/li>
+&lt;li>添加 mysql、redis 安装文档&lt;/li>
+&lt;li>添加 openresty lua 脚本实现 redis 缓存&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol></description></item><item><title>2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc+Javadoc</title><link>https://blog.chensoul.cc/posts/2024/01/17/til/</link><pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/17/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。&lt;/li>
+&lt;li>foodie-cloud 项目实现读写分离并集成 Springdoc&lt;/li>
+&lt;/ul>
+&lt;h2 id="docker-搭建-mysql-主从复制环境">Docker 搭建 MySQL 主从复制环境&lt;/h2>
+&lt;p>参考文章 ：&lt;a href="https://learnku.com/articles/30439" target="_blank">基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）&lt;/a>&lt;/p></description></item><item><title>2024-01-16｜Redis安装</title><link>https://blog.chensoul.cc/posts/2024/01/16/til/</link><pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/16/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;p>1、&lt;a href="https://github.com/chensoul/spring-cloud-examples" target="_blank">spring-cloud-examples&lt;/a> 添加分布式锁、rabbitmq、kafka、分库分表等示例代码
+2、foodie-cloud 添加登录部分代码
+3、整理 Redis 安装文档&lt;/p></description></item><item><title>2024-01-15｜Nginx配置结构与指令语法</title><link>https://blog.chensoul.cc/posts/2024/01/15/til/</link><pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/15/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;p>1、看 JHipster 源码发现这两个类库&lt;/p></description></item><item><title>2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别</title><link>https://blog.chensoul.cc/posts/2024/01/11/til/</link><pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/11/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;input checked="" disabled="" type="checkbox"> 1、观看 B 站 《&lt;a href="https://www.bilibili.com/video/BV1ht4y1E7EL?p=1" target="_blank">SSO单点登录&lt;/a>》视频&lt;/p></description></item><item><title>2024-01-10｜ Java审计框架inspektr</title><link>https://blog.chensoul.cc/posts/2024/01/10/til/</link><pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/10/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;p>1、Java Lambda 增强 &lt;a href="https://github.com/jOOQ/jOOL" target="_blank">https://github.com/jOOQ/jOOL&lt;/a> 和 &lt;a href="https://github.com/vavr-io/vavr" target="_blank">https://github.com/vavr-io/vavr&lt;/a> ，jOOL 在 jdk8 下存在编译错误，计划，整合这两个项目，创建一个新的项目，只引入自己需要的一些类。
+2、&lt;a href="https://www.pac4j.org/" target="_blank">https://www.pac4j.org/&lt;/a> 一个安全框架
+3、&lt;a href="https://github.com/apereo/inspektr" target="_blank">https://github.com/apereo/inspektr&lt;/a> 一个轻量级的 Java 审计框架。这个是在看 CAS 源码的过程中，发现的。
+在 CAS 的源码中，有一些比较不错的代码，引入到自己的项目中，另外，打算仿照这个 inspektr 框架，重写公司微服务项目中的日志记录模块。
+4、分享一个安全相关的 wiki 网站：&lt;a href="https://wukong-doc.redhtc.com/security" target="_blank">https://wukong-doc.redhtc.com/security&lt;/a>&lt;/p></description></item><item><title>2024-01-09｜单点登录</title><link>https://blog.chensoul.cc/posts/2024/01/09/til/</link><pubDate>Tue, 09 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/09/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://zexo.dev/posts/2020/03/01/keep-your-repo-dependencies-up-to-date-with-renovate/" target="_blank">使用 renovate 监控第三方依赖更新&lt;/a> ，renovate 貌似需要付费，放弃。&lt;/li>
+&lt;li>spring-security-oauth2-samples 示例工程重命名模块和包名，代码见 &lt;a href="https://github.com/chensoul/spring-security-oauth2-boot" target="_blank">spring-security-oauth2-boot&lt;/a>&lt;/li>
+&lt;li>实现单点登录并测试&lt;/li>
+&lt;/ul>
+&lt;h2 id="实现单点登录并测试">实现单点登录并测试&lt;/h2>
+&lt;p>实现单点登录（Single Sign-On，SSO）可以采用多种思路和技术。下面是几种常见的实现思路：&lt;/p></description></item><item><title>2024-01-08｜VPS 迁移</title><link>https://blog.chensoul.cc/posts/2024/01/08/til/</link><pubDate>Mon, 08 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/08/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>VPS 迁移&lt;/li>
+&lt;li>继续重构 foodie-cloud&lt;/li>
+&lt;li>参考 &lt;a href="https://github.com/mybatis/parent/" target="_blank">https://github.com/mybatis/parent/ &lt;/a>
+重构 &lt;a href="https://github.com/chensoul/chensoul-parent" target="_blank">chensoul-parent&lt;/a>
+&lt;ul>
+&lt;li>修改了 maven 插件&lt;/li>
+&lt;li>添加了 Github Actions&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="vps-迁移">VPS 迁移&lt;/h2>
+&lt;p>迁移步骤：&lt;/p></description></item><item><title>2024-01-05｜Nginx、正向代理和反向代理</title><link>https://blog.chensoul.cc/posts/2024/01/05/til/</link><pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/05/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>Nginx、正向代理和反向代理&lt;/li>
+&lt;/ul>
+&lt;h2 id="nginx-介绍">Nginx 介绍&lt;/h2>
+&lt;p>Nginx（发音为&amp;quot;engine-x&amp;quot;）是一个高性能的开源Web服务器和反向代理服务器。它专注于高并发、低内存消耗和高度模块化的架构，因此被广泛用于构建性能出色的网站、应用程序和服务。&lt;/p></description></item><item><title>2024-01-04｜GitHub Actions</title><link>https://blog.chensoul.cc/posts/2024/01/04/til/</link><pubDate>Thu, 04 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/04/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>修改个人联系方式&lt;/li>
+&lt;li>注销亚马逊账号&lt;/li>
+&lt;li>利用GitHub Actions自动优雅地为项目构建Releases&lt;/li>
+&lt;li>利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub&lt;/li>
+&lt;/ul>
+&lt;h2 id="修改个人联系方式">修改个人联系方式&lt;/h2>
+&lt;p>使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。&lt;/p></description></item><item><title>2024-01-03｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2024/01/03/til/</link><pubDate>Wed, 03 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/03/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/bingoohuang/idworker-client" target="_blank">idworker-client&lt;/a> ，一个开源的 ID 生成器，适合在单机使用&lt;/li>
+&lt;li>github 上创建了一个使用 spring cloud netflix 相关组件的微服务项目&lt;/li>
+&lt;li>重构了狂野架构师课程中的微服务版本的源码&lt;/li>
+&lt;/ul>
+&lt;h1 id="foodie-cloud">foodie-cloud&lt;/h1>
+&lt;p>重构慕课网 &lt;a href="https://class.imooc.com/sale/javaarchitect" target="_blank">Java架构师-技术专家&lt;/a> 课程中的 &lt;a href="https://github.com/liuhouer/np-architect/" target="_blank">源码&lt;/a>，我做了一些改动：&lt;/p></description></item><item><title>2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</title><link>https://blog.chensoul.cc/posts/2024/01/02/til/</link><pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/02/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>雪崩问题&lt;/li>
+&lt;li>Spring Cloud微服务集成 Sentinel&lt;/li>
+&lt;li>扩展 Sentinel 集成 OpenFeign，实现自动降级&lt;/li>
+&lt;/ul>
+&lt;h2 id="雪崩问题">雪崩问题&lt;/h2>
+&lt;p>1、什么是雪崩问题？
+雪崩问题（Avalanche Effect）是指在分布式系统中，当一个节点或服务出现故障或不可用时，其影响会扩散到其他节点或服务，导致级联故障的现象。这种现象类似于雪崩，一旦开始，会不断放大和蔓延，最终导致整个系统崩溃。
+雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。&lt;/p></description></item><item><title>2023-12-28｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2023/12/28/til/</link><pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/28/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>重构微服务项目中使用 spring-security-oauth2 搭建 OAuth2 认证服务和资源服务的代码，减少其他模块对此的耦合度。计划将
+spring-security-oauth2 迁移到 spring-security-oauth2-authorization-server 上，即使用 OAuth2.1 授权和认证。&lt;strong>Spring
+Authorization Server&lt;/strong>
+相关文档，可以参考 &lt;a href="https://blog.51cto.com/u_15268610/category2" target="_blank">https://blog.51cto.com/u_15268610/category2&lt;/a>。&lt;/li>
+&lt;li>看 &lt;a href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud" target="_blank">xuxiaowei-cloud&lt;/a> master 分支源代码，整理 /login
+登陆逻辑，参数：username、password、tenantId、clientId&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>登陆成功&lt;/p></description></item><item><title>2023-12-27｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2023/12/27/til/</link><pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/27/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>微服务项目中认证服务器配置授权码模式，并测试通过
+&lt;ul>
+&lt;li>扩展 RedisAuthorizationCodeServices ，支持设置过期时间。
+&lt;ul>
+&lt;li>注意：OAuth2Authentication 无法从 json 反序列化，故无法使用 JSON 反序列化类，只能使用 JDK 反序列化类。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>扩展 BearerTokenExtractor，支持从 request 请求的 header 中读取 access_token&lt;/li>
+&lt;li>配置 JWK token 使用时
+&lt;ul>
+&lt;li>扩展 JwtAccessTokenConverter ，用于解析 jwks 接口返回的
+json，相关说明参考 &lt;a href="https://www.baeldung.com/spring-security-oauth2-jws-jwk#9-creating-the-jwk-set-endpoint" target="_blank">creating-the-jwk-set-endpoint&lt;/a>&lt;/li>
+&lt;li>JwkDefinitionSource 类中获取 jwkSetUrls 时，不支持 url 中配置服务名称，即不支持负载均衡。故，重写该类以支持通过
+RestTemplate （可以注入一个支持负载均衡的 RestTemplate） 解析 jwkSetUrls 返回的 json 类型的字符串；创建了一个支持负载均衡的
+TokenStore。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>运行 &lt;a href="https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud/tree/archive/OAuth2.0" target="_blank">xuxiaowei-cloud&lt;/a> 项目时
+&lt;ul>
+&lt;li>提示 &lt;code>Rollup failed to resolve import &amp;quot;@vue/shared&amp;quot;&lt;/code>，原因：这个错误是由于无法解析到 &lt;code>@vue/shared&lt;/code>
+这个包导致的。@vue/shared 是 Vue 内部使用的一个共享工具库。解决方案：将 @vue/shared 添加到项目的依赖中。
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm install --save @vue/shared
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>Controller 的方法上添加注解判断是否有权限，例子：
+&lt;code>@PreAuthorize(&amp;quot;hasAuthority('manage_user_authority') or #oauth2.hasScope('manage_user_authority')&amp;quot;)&lt;/code>&lt;/li>
+&lt;li>Principal 中的用户对象，即 UserDetails 对象不添加额外字段，只有 username，如果想获取用户信息，需要通过用户服务去查询。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>关于 OAuth2 的参考资料：&lt;/p></description></item><item><title>2023-12-22｜今天做了什么</title><link>https://blog.chensoul.cc/posts/2023/12/22/til/</link><pubDate>Fri, 22 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/22/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
+&lt;ul>
+&lt;li>我使用的 Idea 插件。&lt;/li>
+&lt;li>springdoc-openapi v1.7.0 示例&lt;/li>
+&lt;li>Spring Security OAuth Boot 2 Autoconfig 转换成 maven 项目，并添加示例&lt;/li>
+&lt;/ul>
+&lt;h2 id="idea">Idea&lt;/h2>
+&lt;p>1、插件&lt;/p></description></item><item><title>2023-12-21｜Spring Security对OAuth2的支持及实现方式</title><link>https://blog.chensoul.cc/posts/2023/12/21/til/</link><pubDate>Thu, 21 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/21/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：Spring Security 对 OAuth2 的支持&lt;/p></description></item><item><title>2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</title><link>https://blog.chensoul.cc/posts/2023/12/20/til/</link><pubDate>Wed, 20 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/20/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台&lt;/p></description></item><item><title>2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描</title><link>https://blog.chensoul.cc/posts/2023/12/19/til/</link><pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/19/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 &lt;a href="https://github.com/chensoul/spring-security-oauth2-legacy" target="_blank">spring-security-oauth2-legacy&lt;/a> 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。&lt;/p></description></item><item><title>2023-12-18｜使用Spring Security实现OAuth2授权和认证</title><link>https://blog.chensoul.cc/posts/2023/12/18/til/</link><pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/18/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和认证。&lt;/p></description></item><item><title>2023-12-15｜JNDI InitialContext源码分析、ClassLoader加载机制</title><link>https://blog.chensoul.cc/posts/2023/12/15/til/</link><pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/15/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：JNDI InitialContext源码分析、ClassLoader加载机制。&lt;/p></description></item><item><title>2023-12-14｜购买新的VPS服务器、最近在做什么</title><link>https://blog.chensoul.cc/posts/2023/12/14/til/</link><pubDate>Thu, 14 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/14/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：购买新的 VPS 服务器、最近在做什么。&lt;/p></description></item><item><title>2023-12-13｜发布到Maven中央仓库的第一个项目</title><link>https://blog.chensoul.cc/posts/2023/12/13/til/</link><pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/13/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：发布到 Maven 中央仓库的第一个项目。&lt;/p></description></item><item><title>2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</title><link>https://blog.chensoul.cc/posts/2023/12/12/til/</link><pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/12/til/</guid><description>&lt;p>Today I Learned. 今天我学了：RMI、Java漏洞安全、Semgrep漏洞检测。&lt;/p></description></item><item><title>周报-28｜技术文档范例</title><link>https://blog.chensoul.cc/posts/2023/07/27/weekly_review_28/</link><pubDate>Thu, 27 Jul 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/07/27/weekly_review_28/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-07-10&lt;/code> 到 &lt;code>2023-07-16&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-26｜上半年的绩效总结</title><link>https://blog.chensoul.cc/posts/2023/07/11/weekly_review_26/</link><pubDate>Tue, 11 Jul 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/07/11/weekly_review_26/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-06-26&lt;/code> 到 &lt;code>2023-07-09&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-25｜端午安康</title><link>https://blog.chensoul.cc/posts/2023/06/28/weekly_review_25/</link><pubDate>Wed, 28 Jun 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/06/28/weekly_review_25/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-06-19&lt;/code> 到 &lt;code>2023-06-25&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-24｜如果没有疼痛</title><link>https://blog.chensoul.cc/posts/2023/06/21/weekly_review_24/</link><pubDate>Wed, 21 Jun 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/06/21/weekly_review_24/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-06-12&lt;/code> 到 &lt;code>2023-06-18&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-23｜读书、健身、定投、帮朋友、陪家人</title><link>https://blog.chensoul.cc/posts/2023/06/14/weekly_review_23/</link><pubDate>Wed, 14 Jun 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/06/14/weekly_review_23/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-06-05&lt;/code> 到 &lt;code>2023-06-11&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-22｜微信读书笔记助手</title><link>https://blog.chensoul.cc/posts/2023/06/09/weekly_review_22/</link><pubDate>Fri, 09 Jun 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/06/09/weekly_review_22/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-05-29&lt;/code> 到 &lt;code>2023-06-04&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-21｜Python之禅、产品经理被优化、端午节送节</title><link>https://blog.chensoul.cc/posts/2023/05/31/weekly_review_21/</link><pubDate>Wed, 31 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/31/weekly_review_21/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-21-00.webp" alt="weekly-review-21-00">&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>本篇是对 &lt;code>2023-05-22&lt;/code> 到 &lt;code>2023-05-28&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-20｜自动生成每日早报、周末团建</title><link>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</link><pubDate>Thu, 25 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-20-00.webp" alt="weekly-review-20-00">&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;!-- raw HTML omitted -->
+&lt;p>本篇是对 &lt;code>2023-05-15&lt;/code> 到 &lt;code>2023-05-21&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-19｜武功山看日出、Python初学建议</title><link>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</link><pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-19-00.webp" alt="weekly-review-19-00">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-05-08&lt;/code> 到 &lt;code>2023-05-14&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-18｜导出豆瓣数据、Effective Java 3第二章总结</title><link>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</link><pubDate>Wed, 10 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-05-01&lt;/code> 到 &lt;code>2023-05-07&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池</title><link>https://blog.chensoul.cc/posts/2023/05/06/weekly_review_17/</link><pubDate>Sat, 06 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/06/weekly_review_17/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-04-24&lt;/code> 到 &lt;code>2023-04-30&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-16｜《灌篮高手》电影、《春山如笑》话剧</title><link>https://blog.chensoul.cc/posts/2023/04/25/weekly_review_16/</link><pubDate>Tue, 25 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/25/weekly_review_16/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-16-01.webp" alt="weekly-review-16-01">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-04-17&lt;/code> 到 &lt;code>2023-04-23&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</title><link>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</link><pubDate>Tue, 18 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-15-01.webp" alt="weekly-review-15-01">&lt;/p>
+&lt;p>&lt;em>题图：楚河汉街蜡像馆&lt;/em>&lt;/p></description></item><item><title>周报-14｜如何学习一门编程语言</title><link>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</link><pubDate>Thu, 13 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekl-review-14-01.webp" alt="weekl-review-14-01">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-04-03&lt;/code> 到 &lt;code>2023-04-09&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</title><link>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-13-01.webp" alt="weekly-review-13-01">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-03-27&lt;/code> 到 &lt;code>2023-04-02&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-12｜车辆被堵、开车总结、Effective Java3笔记</title><link>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</link><pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-12-01.webp" alt="weekly-review-12-01">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-03-20&lt;/code> 到 &lt;code>2023-03-26&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-11｜从语雀迁移到Obsidian</title><link>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</link><pubDate>Mon, 20 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-11-04.webp" alt="weekly-review-11-04">&lt;/p>
+&lt;p>图片：&lt;em>涨渡湖湿地水上森林公园&lt;/em>&lt;/p></description></item><item><title>周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami</title><link>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</link><pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-10-00.webp" alt="weekly-review-10-00">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-03-06&lt;/code> 到 &lt;code>2023-03-12&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-9｜开车总结、博客该写什么、Web3批量空投</title><link>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</link><pubDate>Tue, 07 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>&lt;img src="../../../static/images/weekly-review-09-07.webp" alt="将军山">&lt;/p>
+&lt;p>本篇是对 &lt;code>2023-02-27&lt;/code> 到 &lt;code>2023-03-05&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-8｜内存泄漏、公司裁员、练车</title><link>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</link><pubDate>Mon, 27 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-02-20&lt;/code> 到 &lt;code>2023-02-26&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-7｜练车、博客优化、注册ChatGPT账号</title><link>https://blog.chensoul.cc/posts/2023/02/21/weekly_review_7/</link><pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/21/weekly_review_7/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-02-13&lt;/code> 到 &lt;code>2023-02-19&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-6｜买车和选号、粉色理论</title><link>https://blog.chensoul.cc/posts/2023/02/13/weekly_review_6/</link><pubDate>Mon, 13 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/13/weekly_review_6/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-02-06&lt;/code> 到 &lt;code>2023-02-12&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-5｜项目事故、牙疼、Damus</title><link>https://blog.chensoul.cc/posts/2023/02/07/weekly_review_5/</link><pubDate>Tue, 07 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/07/weekly_review_5/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-01-30&lt;/code> 到 &lt;code>2023-02-05&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-4｜过年、向上管理、工作周总结</title><link>https://blog.chensoul.cc/posts/2023/01/30/weekly_review_4/</link><pubDate>Mon, 30 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/30/weekly_review_4/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-01-23&lt;/code> 到 &lt;code>2023-01-29&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-3｜博客定制、VPS部署服务</title><link>https://blog.chensoul.cc/posts/2023/01/25/weekly_review_3/</link><pubDate>Wed, 25 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/25/weekly_review_3/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-01-16&lt;/code> 到 &lt;code>2023-01-22&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-2｜博客重构</title><link>https://blog.chensoul.cc/posts/2023/01/15/weekly_review_2/</link><pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/15/weekly_review_2/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-01-09&lt;/code> 到 &lt;code>2023-01-15&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item><item><title>周报-1｜开始写周报、冥想</title><link>https://blog.chensoul.cc/posts/2023/01/08/weekly_review_1/</link><pubDate>Sun, 08 Jan 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/01/08/weekly_review_1/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
+&lt;p>本篇是对 &lt;code>2023-01-02&lt;/code> 到 &lt;code>2023-01-08&lt;/code> 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank">博客&lt;/a>，你可以移步了解更多或者给我留言。&lt;/p></description></item></channel></rss>
