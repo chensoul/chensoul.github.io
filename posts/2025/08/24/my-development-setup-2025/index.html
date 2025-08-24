@@ -1,0 +1,473 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>我的 2025 年开发设置 -</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><link rel=preconnect href=//fonts.loli.net crossorigin><link rel=dns-prefetch href=//fonts.loli.net><link rel=stylesheet href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700"><link rel=stylesheet href=/css/style.min.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class=logo><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
+<span class=menu__btn-title tabindex=-1>菜单</span></button><ul class=menu__list><li class=menu__item><a class=menu__link href=/><span class=menu__text>首页</span></a></li><li class=menu__item><a class=menu__link href=/categories/><span class=menu__text>分类</span></a></li><li class=menu__item><a class=menu__link href=/about/><span class=menu__text>关于</span></a></li><li class=menu__item><a class=menu__link href=/rss.xml><span class=menu__text>RSS</span></a></li></ul></nav></div></header><div class="wrapper flex"><div class=primary><main class=main role=main><article class=post><header class=post__header><h1 class=post__title>我的 2025 年开发设置</h1></header><div class="content post__content clearfix"><p>经过多年的调整和优化，我最终确定了一套既能最大程度提升效率又能提升乐趣的开发配置。以下是我在 2025 年会使用的配置，希望能为其他开发者提供一些参考。</p><h2 id=硬件>硬件</h2><h3 id=主机>主机</h3><p><strong>MacBook Pro 13 英寸 (M1, 2020)</strong></p><ul><li>16GB 统一内存</li><li>256GB SSD 存储</li><li>8 核 CPU，8 核 GPU</li><li><strong>选择理由</strong>：M1 芯片的能效比出色，续航时间长，对于日常开发工作完全够用，性价比很高</li></ul><h2 id=软件堆栈>软件堆栈</h2><h3 id=终端与-shell>终端与 Shell</h3><p><strong>终端</strong>：<a href=https://ghostty.org/ target=_blank>Ghostty</a></p><ul><li>基于 GPU 加速的现代终端模拟器</li><li>启动速度极快，内存占用低</li><li>原生 macOS 集成，支持 Metal 渲染</li><li>配置简单，性能优异</li><li><strong>选择理由</strong>：相比 iTerm2 更快更轻量，相比 Alacritty 配置更简单</li></ul><p><strong>Shell</strong>：Zsh + Oh My Zsh</p><ul><li>强大的自动补全功能</li><li>丰富的插件生态系统</li><li>主题定制化程度高</li><li>推荐插件：<code>git</code>, <code>zsh-autosuggestions</code>, <code>zsh-syntax-highlighting</code></li></ul><p>安装 Oh My Zsh 和 插件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sh -c <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+</span></span><span style=display:flex><span>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+</span></span><span style=display:flex><span>source ~/.zshrc
+</span></span></code></pre></div><p><code>.zshrc</code> 配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Oh My Zsh 配置</span>
+</span></span><span style=display:flex><span>export ZSH<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.oh-my-zsh&#34;</span>
+</span></span><span style=display:flex><span>ZSH_THEME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;muse&#34;</span> <span style=color:#75715e>#random</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 插件</span>
+</span></span><span style=display:flex><span>plugins<span style=color:#f92672>=(</span>
+</span></span><span style=display:flex><span>    git
+</span></span><span style=display:flex><span>    mvn
+</span></span><span style=display:flex><span>    zsh-autosuggestions
+</span></span><span style=display:flex><span>    zsh-syntax-highlighting
+</span></span><span style=display:flex><span>    docker
+</span></span><span style=display:flex><span>    kubectl
+</span></span><span style=display:flex><span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>source $ZSH/oh-my-zsh.sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加载 SDKMAN</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>[[</span> -s <span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.sdkman/bin/sdkman-init.sh&#34;</span> <span style=color:#f92672>]]</span> <span style=color:#f92672>&amp;&amp;</span> source <span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 自定义环境变量</span>
+</span></span><span style=display:flex><span>export EDITOR<span style=color:#f92672>=</span>vim
+</span></span><span style=display:flex><span>export LANG<span style=color:#f92672>=</span>en_US.UTF-8
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 开发工具路径</span>
+</span></span><span style=display:flex><span>export JAVA_HOME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.sdkman/candidates/java/current&#34;</span>
+</span></span><span style=display:flex><span>export GOPATH<span style=color:#f92672>=</span>$HOME/go
+</span></span><span style=display:flex><span>export PATH<span style=color:#f92672>=</span>$PATH:$GOPATH/bin
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加载 fnm</span>
+</span></span><span style=display:flex><span>eval <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>fnm env --use-on-cd<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span></code></pre></div><h3 id=代码编辑器>代码编辑器</h3><p><strong>主要编辑器</strong>：IntelliJ IDEA Ultimate</p><p><strong>必备插件</strong>：</p><ul><li><strong>.ignore</strong> - Git 忽略文件管理</li><li><strong>GitToolBox</strong> - Git 集成增强，显示 blame 信息</li><li><strong>Rainbow Brackets</strong> - 彩色括号匹配，提高代码可读性</li><li><strong>String Manipulation</strong> - 字符串处理工具集</li><li><strong>Key Promoter X</strong> - 快捷键学习助手</li><li><strong>Lombok</strong> - Java 代码简化</li><li><strong>SonarLint</strong> - 实时代码质量检查</li></ul><p><strong>常用快捷键</strong>：</p><ul><li>格式化代码：<code>⌥ + ⌘ + L</code></li><li>组织导入：<code>⌃ + ⌥ + O</code></li><li>移动代码：<code>⌃ + ⌘ + ↑/↓</code></li><li>展开/折叠方法：<code>⌘ + +/-</code></li><li>扩展选择：<code>⌥ + ↑</code></li><li>缩小选择：<code>⌥ + ↓</code></li><li>提取到变量：<code>⌘ + ⌥ + V</code></li><li>提取到方法：<code>⌘ + ⌥ + M</code></li><li>文件结构：<code>⌘ + F12</code></li><li>最近文件：<code>⌘ + E</code></li><li>全局搜索：<code>⌘ + ⇧ + F</code></li></ul><p><strong>备用编辑器</strong>：</p><ul><li><strong>Cursor</strong> - AI 驱动的代码编辑器，适合快速原型开发</li><li><strong>Trae</strong></li><li><strong>Augment</strong></li><li><strong>Qoder</strong></li></ul><h3 id=浏览器与扩展>浏览器与扩展</h3><p><strong>主浏览器</strong>：Google Chrome</p><p><strong>必备扩展</strong>：</p><ul><li><strong>1Password</strong> - 密码管理，安全便捷</li><li><strong>uBlock Origin</strong> - 广告拦截，提升浏览体验</li><li><strong>JSON Viewer</strong> - JSON 格式化和高亮</li><li><strong>Wappalyzer</strong> - 技术栈识别</li><li><strong>Postman Interceptor</strong> - API 测试辅助</li></ul><h3 id=版本控制>版本控制</h3><p><strong>Git 配置</strong></p><p>我使用条件配置来区分个人和工作项目：</p><p><code>.gitconfig</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>core</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>editor</span> = <span style=color:#a6e22e>vim</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>pager</span> = <span style=color:#a6e22e>cat</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>autocrlf</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>eol</span> = <span style=color:#a6e22e>lf</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>safecrlf</span> = <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>alias</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>st</span> = <span style=color:#a6e22e>status</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>di</span> = <span style=color:#a6e22e>diff</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>co</span> = <span style=color:#a6e22e>checkout</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ci</span> = <span style=color:#a6e22e>commit</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>cl</span> = <span style=color:#a6e22e>clone</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>cp</span> = <span style=color:#a6e22e>cherry-pick</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>br</span> = <span style=color:#a6e22e>branch</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>last</span> = <span style=color:#a6e22e>log</span> <span style=color:#ae81ff>-1</span> <span style=color:#a6e22e>HEAD</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>unstage</span> = <span style=color:#a6e22e>reset</span> <span style=color:#a6e22e>HEAD</span> <span style=color:#a6e22e>--</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># 美化日志显示</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>lg</span> = <span style=color:#a6e22e>log</span> <span style=color:#a6e22e>--color</span> <span style=color:#a6e22e>--graph</span> <span style=color:#a6e22e>--pretty</span>=<span style=color:#a6e22e>format</span><span style=color:#960050;background-color:#1e0010>:</span><span style=color:#e6db74>&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39;</span> <span style=color:#a6e22e>--abbrev-commit</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>rebase</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>autosquash</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>init</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>defaultBranch</span> = <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>pull</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ff</span> = <span style=color:#a6e22e>only</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>rerere</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>enabled</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>http</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>postBuffer</span> = <span style=color:#ae81ff>5242880000</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>http</span> <span style=color:#e6db74>&#34;https://github.com&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>proxy</span> = <span style=color:#a6e22e>socks5</span><span style=color:#960050;background-color:#1e0010>://</span><span style=color:#ae81ff>127.0</span>.<span style=color:#ae81ff>0.1</span><span style=color:#960050;background-color:#1e0010>:</span><span style=color:#ae81ff>7890</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>https</span> <span style=color:#e6db74>&#34;https://github.com&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>proxy</span> = <span style=color:#a6e22e>socks5</span><span style=color:#960050;background-color:#1e0010>://</span><span style=color:#ae81ff>127.0</span>.<span style=color:#ae81ff>0.1</span><span style=color:#960050;background-color:#1e0010>:</span><span style=color:#ae81ff>7890</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>credential</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>helper</span> = <span style=color:#a6e22e>osxkeychain</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 条件配置：根据目录自动切换用户信息</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>includeIf</span> <span style=color:#e6db74>&#34;gitdir:~/development/personal/&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span> = .<span style=color:#a6e22e>gitconfig-personal</span>
+</span></span><span style=display:flex><span>[<span style=color:#a6e22e>includeIf</span> <span style=color:#e6db74>&#34;gitdir:~/development/work/&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span> = .<span style=color:#a6e22e>gitconfig-work</span>
+</span></span></code></pre></div><p><code>.gitconfig-personal</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>user</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span> = <span style=color:#a6e22e>chensoul</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>email</span> = <span style=color:#a6e22e>ichensoul</span><span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>gmail</span>.<span style=color:#a6e22e>com</span>
+</span></span></code></pre></div><p><code>.gitconfig-work</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-toml data-lang=toml><span style=display:flex><span>[<span style=color:#a6e22e>user</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span> = <span style=color:#a6e22e>chensoul</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>email</span> = <span style=color:#a6e22e>work</span><span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>company</span>.<span style=color:#a6e22e>com</span>
+</span></span></code></pre></div><p><strong>常用 Git 技巧</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 清空提交历史（谨慎使用）</span>
+</span></span><span style=display:flex><span>DEFAULT<span style=color:#f92672>=</span>main
+</span></span><span style=display:flex><span>git checkout --orphan latest_branch
+</span></span><span style=display:flex><span>git add -A
+</span></span><span style=display:flex><span>git commit -am <span style=color:#e6db74>&#34;refactor: init&#34;</span>
+</span></span><span style=display:flex><span>git branch -D $DEFAULT
+</span></span><span style=display:flex><span>git branch -m $DEFAULT
+</span></span><span style=display:flex><span>git push -f origin $DEFAULT
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 批量修改提交历史的用户信息</span>
+</span></span><span style=display:flex><span>brew install git-filter-repo
+</span></span><span style=display:flex><span>git-filter-repo --email-callback <span style=color:#e6db74>&#39;return email.replace(b&#34;old@email.com&#34;, b&#34;new@email.com&#34;)&#39;</span> --force
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 交互式 rebase 最近 3 次提交</span>
+</span></span><span style=display:flex><span>git rebase -i HEAD~3
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 暂存部分文件内容</span>
+</span></span><span style=display:flex><span>git add -p
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 查看文件修改历史</span>
+</span></span><span style=display:flex><span>git log -p filename
+</span></span></code></pre></div><h3 id=云存储与同步>云存储与同步</h3><p><strong>主要云盘</strong>：</p><ul><li><strong>阿里云盘</strong> - 大文件存储，速度快</li><li><strong>百度云盘</strong> - 大文件存储，速度快</li><li><strong>iCloud Drive</strong> - 系统集成度高，文档同步</li><li><strong>GitHub</strong> - 代码和配置文件版本控制</li></ul><h2 id=开发工具>开发工具</h2><h3 id=语言和运行时>语言和运行时</h3><p><strong>Java 开发环境</strong></p><p>使用 SDKMAN 管理 Java 版本和相关工具：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 SDKMAN</span>
+</span></span><span style=display:flex><span>brew install sdkman/tap/sdkman-cli
+</span></span><span style=display:flex><span>source <span style=color:#e6db74>&#34;</span>$HOME<span style=color:#e6db74>/.sdkman/bin/sdkman-init.sh&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装 Java 和构建工具</span>
+</span></span><span style=display:flex><span>sdk install java 21.0.1-tem
+</span></span><span style=display:flex><span>sdk install maven
+</span></span><span style=display:flex><span>sdk install mvnd  <span style=color:#75715e># Maven Daemon，更快的构建</span>
+</span></span><span style=display:flex><span>sdk install gradle
+</span></span><span style=display:flex><span>sdk install springboot
+</span></span></code></pre></div><p><strong>Go 开发环境</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 通过 Homebrew 安装</span>
+</span></span><span style=display:flex><span>brew install go
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 设置 Go 环境变量</span>
+</span></span><span style=display:flex><span>export GOPATH<span style=color:#f92672>=</span>$HOME/go
+</span></span><span style=display:flex><span>export PATH<span style=color:#f92672>=</span>$PATH:$GOPATH/bin
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装常用工具</span>
+</span></span><span style=display:flex><span>go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+</span></span><span style=display:flex><span>go install golang.org/x/tools/cmd/goimports@latest
+</span></span><span style=display:flex><span>go install github.com/air-verse/air@latest  <span style=color:#75715e># 热重载工具</span>
+</span></span></code></pre></div><p><strong>Node.js 开发环境</strong></p><p>使用 fnm (Fast Node Manager) 管理 Node.js 版本：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 fnm</span>
+</span></span><span style=display:flex><span>brew install fnm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装和使用 LTS 版本</span>
+</span></span><span style=display:flex><span>fnm install --lts
+</span></span><span style=display:flex><span>fnm use lts-latest
+</span></span><span style=display:flex><span>fnm default lts-latest
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 全局包</span>
+</span></span><span style=display:flex><span>npm install -g typescript
+</span></span><span style=display:flex><span>npm install -g @vercel/ncc
+</span></span><span style=display:flex><span>npm install -g prettier
+</span></span><span style=display:flex><span>npm install -g eslint
+</span></span><span style=display:flex><span>npm install -g pnpm  <span style=color:#75715e># 更快的包管理器</span>
+</span></span></code></pre></div><p><strong>Python 开发环境</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 通过 Homebrew 安装 Python</span>
+</span></span><span style=display:flex><span>brew install python@3.12
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装 pipx 用于全局工具</span>
+</span></span><span style=display:flex><span>brew install pipx
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装常用工具</span>
+</span></span><span style=display:flex><span>pipx install poetry  <span style=color:#75715e># 依赖管理</span>
+</span></span><span style=display:flex><span>pipx install black   <span style=color:#75715e># 代码格式化</span>
+</span></span><span style=display:flex><span>pipx install ruff    <span style=color:#75715e># 快速 linter</span>
+</span></span></code></pre></div><h3 id=容器与编排>容器与编排</h3><p><strong>OrbStack</strong> - Docker Desktop 的现代替代品</p><ul><li>更快的启动速度和更低的资源占用</li><li>原生 macOS 集成</li><li>支持 Linux 虚拟机</li><li><strong>选择理由</strong>：比 Docker Desktop 更轻量，性能更好</li></ul><p><strong>Kubernetes 工具</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 kubectl 和相关工具</span>
+</span></span><span style=display:flex><span>brew install kubectl
+</span></span><span style=display:flex><span>brew install kubectx  <span style=color:#75715e># 快速切换 context</span>
+</span></span><span style=display:flex><span>brew install k9s     <span style=color:#75715e># 终端 UI 管理工具</span>
+</span></span><span style=display:flex><span>brew install helm    <span style=color:#75715e># 包管理器</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 有用的别名</span>
+</span></span><span style=display:flex><span>alias k<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubectl&#34;</span>
+</span></span><span style=display:flex><span>alias kgp<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubectl get pods&#34;</span>
+</span></span><span style=display:flex><span>alias kgs<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubectl get services&#34;</span>
+</span></span><span style=display:flex><span>alias kgd<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubectl get deployments&#34;</span>
+</span></span><span style=display:flex><span>alias kctx<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubectx&#34;</span>  <span style=color:#75715e># 切换集群</span>
+</span></span><span style=display:flex><span>alias kns<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;kubens&#34;</span>    <span style=color:#75715e># 切换命名空间</span>
+</span></span></code></pre></div><h3 id=数据库工具>数据库工具</h3><p><strong>TablePlus</strong> - 现代数据库客户端</p><ul><li>支持多种数据库：MySQL, PostgreSQL, SQLite, Redis 等</li><li>美观的界面和优秀的用户体验</li><li>强大的查询编辑器和数据可视化</li><li>支持 SSH 隧道和 SSL 连接</li></ul><p><strong>Redis 管理</strong>：</p><ul><li><strong>RedisInsight</strong> - Redis 官方 GUI 工具</li><li><strong>Medis</strong> - 轻量级 Redis 客户端</li></ul><h3 id=api-开发与测试>API 开发与测试</h3><p><strong>Insomnia</strong> - REST/GraphQL 客户端</p><ul><li>简洁的界面设计</li><li>强大的环境变量管理</li><li>支持 GraphQL 查询</li><li>团队协作功能</li></ul><p><strong>HTTPie</strong> - 命令行 HTTP 客户端</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>brew install httpie
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用示例</span>
+</span></span><span style=display:flex><span>http GET https://api.github.com/user Authorization:<span style=color:#e6db74>&#34;token YOUR_TOKEN&#34;</span>
+</span></span><span style=display:flex><span>http POST https://api.example.com/data name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;John&#34;</span> age:<span style=color:#f92672>=</span><span style=color:#ae81ff>30</span>
+</span></span></code></pre></div><h3 id=现代开发工具>现代开发工具</h3><p><strong>Raycast</strong> - 启动器和生产力工具</p><ul><li>替代 Spotlight 的强大启动器</li><li>丰富的插件生态系统</li><li>快速访问常用功能和信息</li><li><strong>推荐插件</strong>：GitHub、Jira、Brew、System Monitor</li></ul><p><strong>Fig</strong> - 终端自动补全</p><ul><li>智能命令行补全</li><li>可视化参数提示</li><li>支持 500+ CLI 工具</li><li><strong>注意</strong>：已被 AWS 收购，功能整合中</li></ul><h3 id=安全与隐私工具>安全与隐私工具</h3><p><strong>1Password</strong> - 密码管理器</p><ul><li>强密码生成和存储</li><li>多设备同步</li><li>浏览器集成</li><li>SSH 密钥管理</li></ul><p><strong>SwitchHosts</strong> - Hosts 文件管理</p><ul><li>快速切换不同的 hosts 配置</li><li>支持远程 hosts 文件</li><li>适合开发环境切换</li></ul><h3 id=监控与调试工具>监控与调试工具</h3><p><strong>Activity Monitor</strong> - 系统监控</p><ul><li>查看 CPU、内存、网络使用情况</li><li>进程管理</li></ul><p><strong>Console</strong> - 系统日志查看</p><ul><li>实时查看系统和应用日志</li><li>调试应用问题</li></ul><p><strong>Network Link Conditioner</strong> - 网络模拟</p><ul><li>模拟不同网络条件</li><li>测试应用在弱网环境下的表现</li></ul><h2 id=生产力工具>生产力工具</h2><h3 id=笔记记录与文档>笔记记录与文档</h3><p><strong>Typora</strong> - Markdown 编辑器</p><ul><li>所见即所得的 Markdown 编辑</li><li>支持数学公式、图表</li><li>主题丰富，导出格式多样</li><li><strong>选择理由</strong>：最优雅的 Markdown 编辑体验</li></ul><p><strong>Apple Notes</strong> - 快速记录</p><ul><li>系统原生，同步快速</li><li>支持手写、绘图</li><li>适合临时想法记录</li></ul><p><strong>GitHub/GitLab</strong> - 代码文档</p><ul><li>README 文档</li><li>Wiki 页面</li><li>Issue 和 PR 讨论</li></ul><h3 id=常用-alias-命令>常用 Alias 命令</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>alias c<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;clear&#39;</span>
+</span></span><span style=display:flex><span>alias h<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;history&#39;</span>
+</span></span><span style=display:flex><span>alias f<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;open -a Finder ./&#39;</span>                 
+</span></span><span style=display:flex><span>alias p<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;cd ~/chensoul/Projects/&#39;</span>
+</span></span><span style=display:flex><span>alias s<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;source&#39;</span>
+</span></span><span style=display:flex><span>alias my<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;sudo chown -R `id -u`&#39;</span>
+</span></span><span style=display:flex><span>alias path<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;echo -e ${PATH//:/\\n}&#39;</span>         
+</span></span><span style=display:flex><span>alias ll<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;ls -la&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias .<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;pwd&#39;</span>
+</span></span><span style=display:flex><span>alias ..<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;cd ../..&#39;</span>
+</span></span><span style=display:flex><span>alias ...<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;cd ../../../&#39;</span>
+</span></span><span style=display:flex><span>alias ....<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;cd ../../../../&#39;</span>
+</span></span><span style=display:flex><span>alias ~<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;cd ~&#34;</span>                             
+</span></span><span style=display:flex><span>alias dl<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;cd ~/Downloads&#34;</span>
+</span></span><span style=display:flex><span>alias dt<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;cd ~/Desktop&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias publicip<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;dig +short myip.opendns.com @resolver1.opendns.com&#34;</span> 
+</span></span><span style=display:flex><span>alias localip<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ipconfig getifaddr en0&#34;</span>
+</span></span><span style=display:flex><span>alias ifactive<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ifconfig | pcregrep -M -o &#39;^[^\t:]+:([^\n]|\n\t)*status: active&#39;&#34;</span> 
+</span></span><span style=display:flex><span>alias delTrash<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;find . \( -name target -o -name .DS_Store -o -name build  -o -name node_modules \) -type d  -ls -delete&#34;</span>
+</span></span><span style=display:flex><span>alias update<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup;&#39;</span>
+</span></span><span style=display:flex><span>alias pullcode<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;for dir in */; do if [[ -d &#34;$dir/.git&#34; ]]; then echo &#34;Entering directory: $dir&#34;; cd &#34;$dir&#34;; git pull; cd ..; fi; done&#39;</span>
+</span></span><span style=display:flex><span>alias tree<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;find . -print | sed -e &#39;s;[^/]*/;|____;g;s;____|; |;g&#39;&#34;</span>
+</span></span><span style=display:flex><span>alias listnm<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;find . -name &#34;</span>node_modules<span style=color:#e6db74>&#34; -type d -prune -print | xargs du -chs&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>### Git</span>
+</span></span><span style=display:flex><span>alias git_current_branch<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;git symbolic-ref -q HEAD | sed -e &#39;s|^refs/heads/||&#39;&#34;</span>
+</span></span><span style=display:flex><span>alias gaa<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git add -A&#39;</span>
+</span></span><span style=display:flex><span>alias gs<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git status&#39;</span>
+</span></span><span style=display:flex><span>alias gst<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git status&#39;</span>
+</span></span><span style=display:flex><span>alias gcm<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git commit -m&#39;</span>
+</span></span><span style=display:flex><span>alias gcl<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git clone&#39;</span>
+</span></span><span style=display:flex><span>alias gp<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git pull&#39;</span>
+</span></span><span style=display:flex><span>alias gg<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;git push origin &#34;$(git_current_branch)&#34;&#39;</span>
+</span></span><span style=display:flex><span>alias gfwork<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;for dir in */; do if [[ -d &#34;$dir/.git&#34; ]]; then cd &#34;$dir&#34; &amp;&amp; git config user.name &#34;$WORK_USER&#34; &amp;&amp; git config user.email &#34;$WORK_EMAIL&#34; &amp;&amp; echo &#34;✅ 配置成功: $dir&#34; || echo &#34;❌ 配置失败: $dir&#34;; cd - &gt;/dev/null; fi; done&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>### DEVELOPMENT</span>
+</span></span><span style=display:flex><span>alias mw<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;./mvnw&#39;</span>
+</span></span><span style=display:flex><span>alias mwcv<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;./mvnw clean verify&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias yi<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;yarn install&#39;</span>
+</span></span><span style=display:flex><span>alias ys<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;yarn start&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias d<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;docker&#34;</span>
+</span></span><span style=display:flex><span>alias dc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;docker compose&#34;</span>
+</span></span><span style=display:flex><span>alias dclean<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;docker ps -aq --no-trunc -f status=exited | xargs docker rm&#34;</span>
+</span></span><span style=display:flex><span>alias dstop<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;docker ps -aq | xargs docker stop&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># delete docker images by created date</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#docker image prune -a --force --filter &#34;until=7h&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#search docker images by name</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#docker images | awk &#39;/^spring/ {print $0}&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#delete docker images by name</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#docker images | awk &#39;/^chensoul/ {print $3}&#39; | xargs docker rmi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias hg<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;hogo server &amp;&amp; open http://localhost:1313/&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#k8s</span>
+</span></span><span style=display:flex><span>alias k<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;kubectl&#39;</span>
+</span></span><span style=display:flex><span>alias kget<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;k get all&#39;</span>
+</span></span><span style=display:flex><span>alias klogs<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;k logs&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>alias mk<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;minikube&#39;</span>
+</span></span><span style=display:flex><span>alias mkdb<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;mk dashboard&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>### function</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> mkd<span style=color:#f92672>()</span> <span style=color:#f92672>{</span> mkdir -p <span style=color:#e6db74>&#34;</span>$@<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>&amp;&amp;</span> cd <span style=color:#e6db74>&#34;</span>$_<span style=color:#e6db74>&#34;</span>; <span style=color:#f92672>}</span>     
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> killport<span style=color:#f92672>()</span> <span style=color:#f92672>{</span> lsof -i tcp:<span style=color:#e6db74>&#34;</span>$*<span style=color:#e6db74>&#34;</span> | awk <span style=color:#e6db74>&#39;NR!=1 {print $2}&#39;</span> | xargs kill -9 ;<span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># https://github.com/thanhdevapp/jetbrains-reset-trial-evaluation-mac/blob/master/runme.sh</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> clean_idea<span style=color:#f92672>(){</span>
+</span></span><span style=display:flex><span>  rm -rf /Applications/IntelliJ<span style=color:#ae81ff>\ </span>IDEA.app
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Application<span style=color:#ae81ff>\ </span>Support/JetBrains/
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Preferences/com.apple.java.util.prefs.plist
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Preferences/com.jetbrains*
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Preferences/jetbrains*
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Caches/JetBrains
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Logs/JetBrains/
+</span></span><span style=display:flex><span>  rm -rf ~/Library/Saved<span style=color:#ae81ff>\ </span>Application<span style=color:#ae81ff>\ </span>State/com.jetbrains.intellij.savedState/
+</span></span><span style=display:flex><span>  rm -rf ~/.cache/JetBrains/
+</span></span><span style=display:flex><span>  rm -rf ~/.config
+</span></span><span style=display:flex><span>  <span style=color:#75715e># Flush preference cache</span>
+</span></span><span style=display:flex><span>  killall cfprefsd
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> maintenance<span style=color:#f92672>(){</span>
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;🧹 开始系统维护...&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;📦 更新 Homebrew...&#34;</span>
+</span></span><span style=display:flex><span>  brew update <span style=color:#f92672>&amp;&amp;</span> brew upgrade <span style=color:#f92672>&amp;&amp;</span> brew cleanup
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;🗑️ 清理系统缓存...&#34;</span>
+</span></span><span style=display:flex><span>  sudo rm -rf /System/Library/Caches/* /Library/Caches/*  ~/Library/Caches/*
+</span></span><span style=display:flex><span>  sudo npm cache clean --force 2&gt;/dev/null <span style=color:#f92672>||</span> true
+</span></span><span style=display:flex><span>  sudo yarn cache clean 2&gt;/dev/null <span style=color:#f92672>||</span> true
+</span></span><span style=display:flex><span>  sudo go clean -cache 2&gt;/dev/null <span style=color:#f92672>||</span> true
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;🔍 重建 Spotlight 索引...&#34;</span>
+</span></span><span style=display:flex><span>  sudo mdutil -E /
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>  echo <span style=color:#e6db74>&#34;✅ 系统维护完成！&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h3 id=软件管理>软件管理</h3><p><strong>Homebrew</strong> - macOS 包管理器</p><p>安装 Homebrew：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 Homebrew</span>
+</span></span><span style=display:flex><span>/bin/bash -c <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 配置环境变量（Apple Silicon Mac）</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#39;eval &#34;$(/opt/homebrew/bin/brew shellenv)&#34;&#39;</span> &gt;&gt; ~/.zprofile
+</span></span><span style=display:flex><span>eval <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>/opt/homebrew/bin/brew shellenv<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span></code></pre></div><p>使用 Brewfile 管理软件包：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span>tap <span style=color:#e6db74>&#34;homebrew/bundle&#34;</span>
+</span></span><span style=display:flex><span>tap <span style=color:#e6db74>&#34;homebrew/services&#34;</span>, <span style=color:#e6db74>&#34;https://mirrors.ustc.edu.cn/homebrew-services.git&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 开发工具</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;git&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;vim&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;curl&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;wget&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;jq&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;gh&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;go-task&#34;</span>  <span style=color:#75715e>#taskfile</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;tree&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;htop&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;fastfetch&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;fnm&#34;</span>  <span style=color:#75715e># node 版本管理</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;uv&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;ollama&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;pandoc&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;pipx&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;pnpm&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;pyenv&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;sdkman/tap/sdkman-cli&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;spring-io/tap/spring-boot&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 语言和运行时</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;go&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;python@3.12&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;rustup&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Java 通过 SDKMAN 管理，不在这里安装</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 容器和云工具</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;kubectl&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;kubectx&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;k9s&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;helm&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;docker&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 网络工具</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;httpie&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;nmap&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 文件处理</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;rename&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;findutils&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;coreutils&#34;</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;moreutils&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># GUI 应用</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;1password&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;google-chrome&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;insomnia&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;intellij-idea&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;orbstack&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;switchhosts&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;typora&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;ghostty&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;tinypng4mac&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;picgo&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 通讯和办公</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;wechat&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;feishu&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 云存储</span>
+</span></span><span style=display:flex><span>brew <span style=color:#e6db74>&#34;aliyunpan&#34;</span>
+</span></span><span style=display:flex><span>cask <span style=color:#e6db74>&#34;baidunetdisk&#34;</span>
+</span></span></code></pre></div><p>批量安装：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装所有软件包</span>
+</span></span><span style=display:flex><span>brew bundle
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 更新所有软件包</span>
+</span></span><span style=display:flex><span>brew update <span style=color:#f92672>&amp;&amp;</span> brew upgrade <span style=color:#f92672>&amp;&amp;</span> brew cleanup
+</span></span></code></pre></div><p><strong>SDKMAN</strong> - Java 生态工具管理</p><ul><li>管理多个 Java 版本</li><li>安装 Maven、Gradle、Spring Boot CLI 等工具</li><li>简单的版本切换</li></ul><p><strong>App Store 应用管理</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 mas (Mac App Store CLI)</span>
+</span></span><span style=display:flex><span>brew install mas
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 列出已安装的应用</span>
+</span></span><span style=display:flex><span>mas list
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 搜索应用</span>
+</span></span><span style=display:flex><span>mas search <span style=color:#e6db74>&#34;Xcode&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装应用</span>
+</span></span><span style=display:flex><span>mas install <span style=color:#ae81ff>497799835</span>  <span style=color:#75715e># Xcode</span>
+</span></span></code></pre></div><h3 id=代码组织>代码组织</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>~/development/
+</span></span><span style=display:flex><span>├── personal/           <span style=color:#75715e># Personal projects</span>
+</span></span><span style=display:flex><span>├── work/              <span style=color:#75715e># Work-related projects</span>
+</span></span><span style=display:flex><span>├── learning/          <span style=color:#75715e># Tutorials and experiments</span>
+</span></span><span style=display:flex><span>├── tools/             <span style=color:#75715e># Custom scripts and utilities</span>
+</span></span><span style=display:flex><span>└── archived/          <span style=color:#75715e># Completed/deprecated projects</span>
+</span></span></code></pre></div><h3 id=环境配置>环境配置</h3><p><strong>SSH 配置</strong></p><p>生成和配置 SSH 密钥：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 生成 SSH 密钥（推荐使用 ed25519）</span>
+</span></span><span style=display:flex><span>ssh-keygen -t ed25519 -C <span style=color:#e6db74>&#34;ichensoul@gmail.com&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 添加到 SSH agent</span>
+</span></span><span style=display:flex><span>eval <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>ssh-agent -s<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>ssh-add ~/.ssh/id_ed25519
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 复制公钥到剪贴板</span>
+</span></span><span style=display:flex><span>pbcopy &lt; ~/.ssh/id_ed25519.pub
+</span></span></code></pre></div><p>SSH 配置文件 <code>~/.ssh/config</code>：</p><pre tabindex=0><code>Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    UseKeychain yes
+    AddKeysToAgent yes
+
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    UseKeychain yes
+    AddKeysToAgent yes
+</code></pre><h3 id=备份策略>备份策略</h3><p><strong>多层备份方案</strong>：</p><ol><li><p><strong>代码和配置</strong>：</p><ul><li>Git 仓库托管在 GitHub/GitLab</li><li>dotfiles 仓库管理配置文件</li><li>定期推送到远程仓库</li></ul></li><li><p><strong>文档和项目文件</strong>：</p><ul><li>iCloud Drive 实时同步</li><li>Time Machine 本地备份</li><li>重要文件额外备份到外部存储</li></ul></li><li><p><strong>系统备份</strong>：</p><ul><li>Time Machine 每小时自动备份</li><li>每月创建系统快照</li><li>重要软件列表（Brewfile）版本控制</li></ul></li><li><p><strong>数据库和配置</strong>：</p><ul><li>数据库定期导出</li><li>应用配置文件备份</li><li>SSH 密钥和证书安全存储</li></ul></li></ol><h2 id=性能优化>性能优化</h2><h3 id=macos-系统优化>macOS 系统优化</h3><p><strong>基础性能调整</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 设置计算机名称</span>
+</span></span><span style=display:flex><span>sudo scutil --set ComputerName <span style=color:#e6db74>&#34;chensoul-mac&#34;</span>
+</span></span><span style=display:flex><span>sudo scutil --set HostName <span style=color:#e6db74>&#34;chensoul-mac&#34;</span>
+</span></span><span style=display:flex><span>sudo scutil --set LocalHostName <span style=color:#e6db74>&#34;chensoul-mac&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 设置时区</span>
+</span></span><span style=display:flex><span>sudo systemsetup -settimezone <span style=color:#e6db74>&#34;Asia/Shanghai&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 取消 4 位数密码限制</span>
+</span></span><span style=display:flex><span>sudo pwpolicy -clearaccountpolicies
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 允许安装任意来源的应用</span>
+</span></span><span style=display:flex><span>sudo spctl --master-disable
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加快键盘重复速度</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain KeyRepeat -int <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain InitialKeyRepeat -int <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 显示滚动条</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain AppleShowScrollBars -string <span style=color:#e6db74>&#34;WhenScrolling&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 禁用不必要的动画</span>
+</span></span><span style=display:flex><span>defaults write com.apple.dock launchanim -bool false
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+</span></span><span style=display:flex><span>defaults write com.apple.dock expose-animation-duration -float 0.1
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加快 Mission Control 动画</span>
+</span></span><span style=display:flex><span>defaults write com.apple.dock expose-animation-duration -float 0.1
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 禁用窗口缩放动画</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加快对话框显示速度</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 重启相关服务</span>
+</span></span><span style=display:flex><span>killall Dock
+</span></span><span style=display:flex><span>killall Finder
+</span></span></code></pre></div><p><strong>Finder 优化</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 显示隐藏文件</span>
+</span></span><span style=display:flex><span>defaults write com.apple.finder AppleShowAllFiles -bool true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 显示文件扩展名</span>
+</span></span><span style=display:flex><span>defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 显示路径栏</span>
+</span></span><span style=display:flex><span>defaults write com.apple.finder ShowPathbar -bool true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 显示状态栏</span>
+</span></span><span style=display:flex><span>defaults write com.apple.finder ShowStatusBar -bool true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 默认搜索当前文件夹</span>
+</span></span><span style=display:flex><span>defaults write com.apple.finder FXDefaultSearchScope -string <span style=color:#e6db74>&#34;SCcf&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 禁用创建 .DS_Store 文件</span>
+</span></span><span style=display:flex><span>defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+</span></span><span style=display:flex><span>defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+</span></span></code></pre></div><h3 id=开发环境优化>开发环境优化</h3><p><strong>Git 性能优化</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 启用文件系统缓存</span>
+</span></span><span style=display:flex><span>git config --global core.fscache true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 启用预加载索引</span>
+</span></span><span style=display:flex><span>git config --global core.preloadindex true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 设置自动垃圾回收</span>
+</span></span><span style=display:flex><span>git config --global gc.auto <span style=color:#ae81ff>256</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 启用并行处理</span>
+</span></span><span style=display:flex><span>git config --global core.parallel <span style=color:#ae81ff>8</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 优化网络传输</span>
+</span></span><span style=display:flex><span>git config --global http.postBuffer <span style=color:#ae81ff>524288000</span>
+</span></span></code></pre></div><p><strong>Node.js 性能优化</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 增加内存限制</span>
+</span></span><span style=display:flex><span>export NODE_OPTIONS<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;--max-old-space-size=8192&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 启用 V8 优化</span>
+</span></span><span style=display:flex><span>export NODE_OPTIONS<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;</span>$NODE_OPTIONS<span style=color:#e6db74> --optimize-for-size&#34;</span>
+</span></span></code></pre></div><p><strong>Java 性能优化</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># JVM 参数优化</span>
+</span></span><span style=display:flex><span>export JAVA_OPTS<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;-Xms1g -Xmx1g -XX:+UseG1GC -XX:+UseStringDeduplication&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Maven 性能优化</span>
+</span></span><span style=display:flex><span>export MAVEN_OPTS<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;-Xms1g -Xmx4g -XX:+TieredCompilation -XX:TieredStopAtLevel=1&#34;</span>
+</span></span></code></pre></div><p><strong>文件监控限制调整</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 增加文件监控限制（适用于大型项目）</span>
+</span></span><span style=display:flex><span>echo kern.maxfiles<span style=color:#f92672>=</span><span style=color:#ae81ff>65536</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style=display:flex><span>echo kern.maxfilesperproc<span style=color:#f92672>=</span><span style=color:#ae81ff>65536</span> | sudo tee -a /etc/sysctl.conf
+</span></span></code></pre></div><h2 id=工作流程>工作流程</h2><h3 id=日常开发流程>日常开发流程</h3><ol><li><p><strong>项目启动</strong>：</p><ul><li>使用 <code>code .</code> 或 <code>idea .</code> 打开项目</li><li>检查 Git 状态和分支</li><li>启动必要的服务（数据库、Redis 等）</li></ul></li><li><p><strong>开发过程</strong>：</p><ul><li>使用 Git Flow 进行分支管理</li><li>频繁提交，清晰的提交信息</li><li>定期推送到远程仓库</li></ul></li><li><p><strong>测试和部署</strong>：</p><ul><li>本地测试通过后创建 PR</li><li>CI/CD 自动化测试和部署</li><li>代码审查和合并</li></ul></li></ol><h3 id=学习和实验>学习和实验</h3><p><strong>学习新技术的流程</strong>：</p><ol><li>在 <code>~/development/learning/</code> 创建实验项目</li><li>使用 Docker 隔离环境</li><li>记录学习笔记</li><li>整理成博客文章发布</li></ol><h2 id=结论>结论</h2><p>这套开发设置是经过多年实践和不断优化的结果，重点关注以下几个方面：</p><h3 id=核心原则>核心原则</h3><ol><li><strong>效率优先</strong>：选择能显著提升开发效率的工具</li><li><strong>稳定可靠</strong>：优先选择成熟稳定的解决方案</li><li><strong>可维护性</strong>：配置文件版本控制，便于迁移和恢复</li><li><strong>自动化</strong>：尽可能自动化重复性任务</li><li><strong>持续改进</strong>：定期评估和更新工具链</li></ol><h3 id=关键收获>关键收获</h3><ul><li><strong>工具选择</strong>：不追求最新，而是选择最适合的</li><li><strong>配置管理</strong>：所有配置文件都应该版本控制</li><li><strong>备份策略</strong>：多层备份，确保数据安全</li><li><strong>性能优化</strong>：系统级和应用级的双重优化</li><li><strong>工作流程</strong>：标准化的开发流程提高团队协作效率</li></ul><h3 id=未来展望>未来展望</h3><p>随着技术的发展，这套配置也会持续演进：</p><ul><li>关注 AI 辅助开发工具的集成</li><li>探索更高效的容器化开发环境</li><li>优化远程开发和协作工具</li><li>持续改进自动化脚本和工作流程</li></ul><p>记住：<strong>最好的开发设置是那些让你忘记工具存在，专注于创造价值的设置</strong>。</p><hr><blockquote><p>📧 <strong>反馈</strong>：如果你有任何建议或问题，欢迎通过 <a href=https://github.com/chensoul/dotfiles/issues target=_blank>GitHub Issues</a> 或邮件 <a href=mailto:ichensoul@gmail.com>ichensoul@gmail.com</a> 联系我。</p></blockquote></div><footer class=post__footer><footer class=post__footer><div class="post__tags tags clearfix"><svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><ul class=tags__list><li class=tags__item><a class="tags__link btn" href=/tags/macos/ rel=tag>macos</a></li><li class=tags__item><a class="tags__link btn" href=/tags/tools/ rel=tag>tools</a></li></ul></div></footer></footer></article></main><nav class="pagination flex"><div class="pagination__item pagination__item--prev"><a class=pagination__link href=/posts/2025/07/24/spring-exception/ rel=prev><p class=pagination__title>«&#8201;上一篇: Spring异常处理思路</p></a></div></nav><footer class=post__footer><div class=post-related><h3>相关文章</h3><ul class=post-related-list><li class=post-related-item><a href=/posts/2021/09/09/mac-development-environment-setup/ target=_blank title=Mac开发环境配置>Mac开发环境配置</a></li></ul></div></footer><p><h3>欢迎留言！</h3></p><div id=remark42></div><script>var remark_config={host:"https://remark42.example.com",site_id:"remark",components:["embed"],url:"https://blog.chensoul.cc/posts/2025/08/24/my-development-setup-2025/",locale:"en"};!function(e,t){for(s=0;s<e.length;s++){var s,n=t.createElement("script"),o=".js",i=t.head||t.body;"noModule"in n?(n.type="module",o=".mjs"):n.async=!0,n.defer=!0,n.src=remark_config.host+"/web/"+e[s]+o,i.appendChild(n)}}(remark_config.components||["embed"],document)</script></div></div><footer class=footer><div class="container footer__container flex"><div class=footer__links><a class=footer__link href=/>首页</a> | <a class=footer__link href=/categories/>分类</a> | <a class=footer__link href=/about/>关于</a> | <a class=footer__link href=/rss.xml>RSS</a></div><div class=footer__copyright>&copy; 2025 ChenSoul.
+<span class=footer__copyright-credits>基于 <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> 引擎和 <a href=https://github.com/chensoul/rose-hugo/ rel="nofollow noopener" target=_blank>Rose Hugo</a> 主题</span></div></div><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script></footer></div><script>"use strict";(function(t){var i=t.querySelector(".menu__btn"),o=t.querySelector(".menu__list");function a(){o.classList.toggle("menu__list--active"),o.classList.toggle("menu__list--transition"),this.classList.toggle("menu__btn--active"),this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="true"?"false":"true")}function r(){this.classList.remove("menu__list--transition")}i&&o&&(i.addEventListener("click",a,!1),o.addEventListener("transitionend",r,!1))})(document,window)</script></body></html>
