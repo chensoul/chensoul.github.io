@@ -41,7 +41,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 [outputFormats]
   [outputFormats.RSS]
     mediaType = "application/rss+xml"
-    baseName = "rss"  # generates rss.xml instead of index.xml
+    baseName = "index"  # generates rss.xml instead of index.xml
 
 [menu]
   [[menu.main]]
@@ -58,6 +58,6 @@ ignoreLogs = ['warning-goldmark-raw-html']
     weight = 4
   [[menu.main]]
       name = "RSS"
-      url = "/rss.xml"
+      url = "/index.xml"
       weight = 5
       target = "_blank"
