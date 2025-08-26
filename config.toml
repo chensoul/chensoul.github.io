@@ -38,11 +38,6 @@ ignoreLogs = ['warning-goldmark-raw-html']
 [outputs]
   home = ["HTML", "RSS"]
 
-[outputFormats]
-  [outputFormats.RSS]
-    mediaType = "application/rss+xml"
-    baseName = "index"  # generates rss.xml instead of index.xml
-
 [menu]
   [[menu.main]]
     name = "首页"
