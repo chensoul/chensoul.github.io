@@ -5,6 +5,9 @@ date: 2024-11-04T21:00:00+08:00
 slug: /kubernetes-tutorials/
 categories: ["Kubernetes"]
 tags: ["Kubernetes"]
+authorbox: false
+pagination: false
+toc: false
 ---
 
 ## Kubernetes

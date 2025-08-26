@@ -1,10 +1,9 @@
 ---
 title: About
-description: "about me"
-lead: "about me"
 slug: /about/
 authorbox: false
 pagination: false
+toc: false
 ---
 
 ## Hi there 👋
