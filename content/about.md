@@ -2,7 +2,6 @@
 title: About
 slug: /about/
 authorbox: false
-pagination: false
 toc: false
 ---
 

@@ -4,7 +4,6 @@ lead: "本文记录我在使用的工具"
 date: 2024-12-31T08:00:00+08:00
 slug: /tools/
 authorbox: false
-pagination: false
 toc: false
 ---
 

@@ -6,7 +6,6 @@ slug: /kubernetes-tutorials/
 categories: ["Kubernetes"]
 tags: ["Kubernetes"]
 authorbox: false
-pagination: false
 toc: false
 ---
 
