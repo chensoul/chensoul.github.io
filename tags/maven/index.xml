@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Maven on ChenSoul Blog</title><link>https://blog.chensoul.cc/tags/maven/</link><description>Recent content in Maven on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/tags/maven/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Action 发布 Jar 到 Maven 中央仓库</title><link>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</guid><description>&lt;p>作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。&lt;/p></description></item><item><title>将 Maven 站点发布到 GitHub Pages</title><link>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</link><pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</guid><description>&lt;p>本文源代码：&lt;a href="https://github.com/chensoul/maven-site-github-example/" target="_blank">https://github.com/chensoul/maven-site-github-example/&lt;/a> 。&lt;/p>
-&lt;h2 id="创建-java-maven-项目">创建 Java Maven 项目&lt;/h2>
-&lt;p>让我们使用 Maven 创建一个简单的 Java 项目&lt;/p></description></item><item><title>搭建本地 Maven 仓库 Artifactory 开源版</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</guid><description>&lt;h2 id="安装-artifactory">安装 Artifactory&lt;/h2>
-&lt;p>官方下载安装地址：&lt;a href="https://jfrog.com/community/download-artifactory-oss/" target="_blank">https://jfrog.com/community/download-artifactory-oss/&lt;/a> ，支持三种安装方式：&lt;/p></description></item><item><title>搭建本地Maven仓库Nexus</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</guid><description>&lt;h2 id="使用-docker-安装">使用 Docker 安装&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ docker volume create --name nexus_data
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
-&lt;li>8081 是 Nexus UI 端口&lt;/li>
-&lt;/ul>
-&lt;h2 id="使用-docker-compose-安装">使用 Docker Compose 安装&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nexus&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">sonatype/nexus3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">platform&lt;/span>: &lt;span style="color:#ae81ff">linux/amd64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;8081:8081&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">nexus_data://nexus-data&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/etc/localtime://etc/localtime:ro&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">nexus_data&lt;/span>:
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="访问并配置-nexus">访问并配置 Nexus&lt;/h2>
-&lt;p>访问 http://127.0.0.1:8081/ 或者是 &lt;code>http://&amp;lt;your IP&amp;gt;:8081&lt;/code>，用户名为 admin ，初始密码在容器里的 /nexus-data/admin.password 文件&lt;/p></description></item><item><title>2024-01-04｜GitHub Actions</title><link>https://blog.chensoul.cc/posts/2024/01/04/til/</link><pubDate>Thu, 04 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/04/til/</guid><description>&lt;p>今天做了什么：&lt;/p>
-&lt;ul>
-&lt;li>修改个人联系方式&lt;/li>
-&lt;li>注销亚马逊账号&lt;/li>
-&lt;li>利用GitHub Actions自动优雅地为项目构建Releases&lt;/li>
-&lt;li>利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub&lt;/li>
-&lt;/ul>
-&lt;h2 id="修改个人联系方式">修改个人联系方式&lt;/h2>
-&lt;p>使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。&lt;/p></description></item><item><title>2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</title><link>https://blog.chensoul.cc/posts/2023/12/20/til/</link><pubDate>Wed, 20 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/20/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台&lt;/p></description></item><item><title>2023-12-13｜发布到Maven中央仓库的第一个项目</title><link>https://blog.chensoul.cc/posts/2023/12/13/til/</link><pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/13/til/</guid><description>&lt;p>Today I Learned. 今天分享内容：发布到 Maven 中央仓库的第一个项目。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Maven on ChenSoul Blog</title><link>https://blog.chensoul.cc/tags/maven/</link><description>Recent content in Maven on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/tags/maven/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Action 发布 Jar 到 Maven 中央仓库</title><link>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</guid><description>&lt;p&gt;作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。&lt;/p&gt;</description></item><item><title>将 Maven 站点发布到 GitHub Pages</title><link>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</link><pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</guid><description>&lt;p&gt;本文源代码：&lt;a href="https://github.com/chensoul/maven-site-github-example/" target="_blank"&gt;https://github.com/chensoul/maven-site-github-example/&lt;/a&gt; 。&lt;/p&gt;
+&lt;h2 id="创建-java-maven-项目"&gt;创建 Java Maven 项目&lt;/h2&gt;
+&lt;p&gt;让我们使用 Maven 创建一个简单的 Java 项目&lt;/p&gt;</description></item><item><title>搭建本地 Maven 仓库 Artifactory 开源版</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</guid><description>&lt;h2 id="安装-artifactory"&gt;安装 Artifactory&lt;/h2&gt;
+&lt;p&gt;官方下载安装地址：&lt;a href="https://jfrog.com/community/download-artifactory-oss/" target="_blank"&gt;https://jfrog.com/community/download-artifactory-oss/&lt;/a&gt; ，支持三种安装方式：&lt;/p&gt;</description></item><item><title>搭建本地Maven仓库Nexus</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</guid><description>&lt;h2 id="使用-docker-安装"&gt;使用 Docker 安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name nexus_data
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;8081 是 Nexus UI 端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="使用-docker-compose-安装"&gt;使用 Docker Compose 安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;services&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;nexus&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;image&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;sonatype/nexus3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;platform&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;linux/amd64&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;ports&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#e6db74"&gt;&amp;#34;8081:8081&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;volumes&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#ae81ff"&gt;nexus_data://nexus-data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#ae81ff"&gt;/etc/localtime://etc/localtime:ro&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;volumes&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;nexus_data&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="访问并配置-nexus"&gt;访问并配置 Nexus&lt;/h2&gt;
+&lt;p&gt;访问 http://127.0.0.1:8081/ 或者是 &lt;code&gt;http://&amp;lt;your IP&amp;gt;:8081&lt;/code&gt;，用户名为 admin ，初始密码在容器里的 /nexus-data/admin.password 文件&lt;/p&gt;</description></item><item><title>2024-01-04｜GitHub Actions</title><link>https://blog.chensoul.cc/posts/2024/01/04/til/</link><pubDate>Thu, 04 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/04/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改个人联系方式&lt;/li&gt;
+&lt;li&gt;注销亚马逊账号&lt;/li&gt;
+&lt;li&gt;利用GitHub Actions自动优雅地为项目构建Releases&lt;/li&gt;
+&lt;li&gt;利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="修改个人联系方式"&gt;修改个人联系方式&lt;/h2&gt;
+&lt;p&gt;使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。&lt;/p&gt;</description></item><item><title>2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</title><link>https://blog.chensoul.cc/posts/2023/12/20/til/</link><pubDate>Wed, 20 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/20/til/</guid><description>&lt;p&gt;Today I Learned. 今天分享内容：Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台&lt;/p&gt;</description></item><item><title>2023-12-13｜发布到Maven中央仓库的第一个项目</title><link>https://blog.chensoul.cc/posts/2023/12/13/til/</link><pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/12/13/til/</guid><description>&lt;p&gt;Today I Learned. 今天分享内容：发布到 Maven 中央仓库的第一个项目。&lt;/p&gt;</description></item></channel></rss>
