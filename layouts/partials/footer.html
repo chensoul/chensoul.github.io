@@ -1,0 +1,14 @@
+<footer class="footer">
+	<div class="container footer__container flex">
+		{{ partial "footer_links.html" . }}
+		<div class="footer__copyright">
+			&copy; {{ now.Format "2006" }} {{ .Site.Params.author | default .Site.Title }}.
+			<span class="footer__copyright-credits">{{ T "footer_credits" | safeHTML }}</span>
+		</div>
+	</div>
+
+	{{ partial "top.html" . }}
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
