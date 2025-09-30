@@ -3,7 +3,7 @@ title: "OpenAI API 接口与 Spring AI 对应关系"
 date: 2025-09-22
 slug: openai-api-with-spring-ai
 categories: ["java"]
-tags: [spring-ai]
+tags: [spring-ai,ai]
 ---
 
 OpenAI API 提供了一套强大的接口，允许开发者将其先进的人工智能模型集成到各种应用中。它支持文本生成、翻译、总结、问答、对话、代码生成、图像生成、音频处理等多种任务。
