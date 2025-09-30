@@ -3,7 +3,7 @@ title: "Spring AI ChatClient API 介绍"
 date: 2025-09-19
 slug: spring-ai-chat-client-api
 categories: ["ai"]
-tags: ['spring-ai', 'java', 'tutorial', 'api']
+tags: ['spring-ai', 'java', 'tutorial']
 ---
 
 `ChatClient` 是 Spring AI 提供的核心 API，它是一个流畅的接口，旨在简化 Java 应用程序与 AI 模型的交互。ChatClient 支持同步和流式编程模型，提供了构建提示（Prompt）和处理 AI 响应的便捷方式。
