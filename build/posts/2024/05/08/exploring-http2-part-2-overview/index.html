@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/05/08/exploring-http2-part-2-overview/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs">
+  <meta itemprop="description" content="原文链接：https://noobj.medium.com/exploring-http2-part-2-with-node-http2-core-and-hapijs-74e3df14249
+来源：https://www.thewebmaster.com/">
+  <meta itemprop="datePublished" content="2024-05-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="324">
+  <meta itemprop="keywords" content="Javascript,Backend,Tutorial,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-08">2024-05-08</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>原文链接：<a href="https://noobj.medium.com/exploring-http2-part-2-with-node-http2-core-and-hapijs-74e3df14249" target="_blank">https://noobj.medium.com/exploring-http2-part-2-with-node-http2-core-and-hapijs-74e3df14249</a></p>
+<p><img src="../../../static/images/exploring-http2-part-2-overview-01.webp" alt="img"></p>
+<p>来源：<a href="https://www.thewebmaster.com/hosting/2015/dec/14/what-is-http2-and-how-does-it-compare-to-http1-1/" target="_blank">https://www.thewebmaster.com/</a></p>
+<p><strong>先决条件</strong>：了解 javascript、客户端-服务器架构。</p>
+<p>完整的代码可以在<a href="https://github.com/noobg1/http1_vs_http2" target="_blank">github</a>上找到。</p>
+<p>第 1 部分：<a href="https://medium.com/@noobj/exploring-http2-part-1-overview-dc3e9b53968f" target="_blank">概述（<em>http2 的原因、内容、时间、方式</em>）</a><strong>第 2 部分：使用 node-http2 核心和 hapijs 进行探索</strong></p>
+<blockquote>
+<p>免责<strong>声明</strong>：本文将使用<strong>node@v9+<strong>附带的</strong>http2模块。</strong><a href="https://github.com/http2/http2-spec/wiki/Implementations" target="_blank">这里</a>列出了其他几个 http2 客户端-服务器库实现。</p></blockquote>
+<p>让我们开始创建一个具有单一路由的简单 http1.1 服务器。</p>
+<pre tabindex="0"><code>mkdir hapijs-http2 &amp;&amp; \ 
+cd hapijs-http2 &amp;&amp; \ 
+npm init -y &amp;&amp; \ 
+npm i hapi@^16.6 -s &amp;&amp; \ 
+touch http1Server.js
+</code></pre><p>将下面的代码复制到此处或从<a href="https://github.com/noobg1/http1_vs_http2" target="_blank">此处</a><code>http1Server.js</code>克隆整个存储库。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Hapi</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;hapi&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Hapi</span>.<span style="color:#a6e22e">Server</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define server config
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">connection</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">port</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;8000&#39;</span>
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define route config
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">route</span>([{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;GET&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/ping&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handler</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">reply</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reply</span>(<span style="color:#e6db74">&#39;pong&#39;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// start server
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">start</span>(<span style="color:#a6e22e">err</span> =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Started </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">connections</span>.<span style="color:#a6e22e">length</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> connections`</span>)
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>现在，让我们进行健全性检查。</p>
+<p>启动服务器，<code>node http1Server.js</code></p>
+<pre tabindex="0"><code>⇒ http://127.0.0.1:8000/ping
+ pong
+</code></pre><p>凉爽的！如果我们得到 pong 的 ping，让我们尝试将<strong>http2</strong>集成到我们的 hapijs 服务器中。</p>
+<p>本质上，http2 需要与 https 一起运行。为了实现这一点，我们需要<a href="https://www.globalsign.com/en/ssl-information-center/what-is-an-ssl-certificate/" target="_blank">ssl 证书</a>。我们将使用<a href="https://www.openssl.org/" target="_blank">OpenSSL</a>创建一个自签名证书，或者您也可以使用<a href="https://github.com/noobg1/http1_vs_http2/tree/master/config/secrets" target="_blank">此处</a>的一个。</p>
+<pre tabindex="0"><code>openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj &#39;/CN=localhost&#39; \ 
+  -keyout localhost-privkey.pem -out localhost-cert.pem
+</code></pre><p>我们将<code>localhost-privkey.pem</code>在<code>localhost-cert.pem</code>我们的<code>http2Server.js</code>.</p>
+<p>让我们进行以下更改，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Hapi</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;hapi&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Http2</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;http2&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Hapi</span>.<span style="color:#a6e22e">Server</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// read certificate and private key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">serverOptions</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#e6db74">&#39;localhost-privkey.pem&#39;</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cert</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#e6db74">&#39;localhost-cert.pem&#39;</span>)
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// create http2 secure server listener
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">listener</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Http2</span>.<span style="color:#a6e22e">createSecureServer</span>(<span style="color:#a6e22e">serverOptions</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// create a connection object with listener and other options
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">connection</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">listener</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">port</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;8000&#39;</span>
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define routes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">route</span>([{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;GET&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/ping&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handler</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">reply</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reply</span>(<span style="color:#e6db74">&#39;pong&#39;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// start server
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">start</span>(<span style="color:#a6e22e">err</span> =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Started </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">connections</span>.<span style="color:#a6e22e">length</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> connections`</span>)
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>发生了什么变化？</p>
+<blockquote>
+<p><strong>第 7-10 行</strong>：我们正在读取之前生成的证书和私钥。</p>
+<p><strong>第 13 行</strong>：创建一个安全的 Http2 服务器，其中证书和私钥作为服务器<a href="https://nodejs.org/dist/latest-v10.x/docs/api/http2.html#http2_http2_createsecureserver_options_onrequesthandler" target="_blank">选项</a>从<code>http2</code>模块传递。</p>
+<p><strong>第 17 行</strong>：我们可以在使用该选项创建连接时提供我们自己的服务器实现<code>listener</code>。 （更多信息<a href="https://github.com/hapijs/hapi/blob/master/API.md#serverconnectionoptions" target="_blank">在这里</a>）。</p>
+<p><strong>仅供参考</strong>：我使用的是 <a href="mailto:node@v10.4.1">node@v10.4.1</a>，任何高于 9 的值都可以。</p></blockquote>
+<p>重新启动服务器，然后使用浏览器<code>https://127.0.0.1:8000/ping</code></p>
+<p>瞧！</p>
+<p><img src="../../../static/images/exploring-http2-part-2-overview-02.webp" alt="img"></p>
+<p>服务器用 pong 回复</p>
+<blockquote>
+<p>需要注意的地方，</p></blockquote>
+<ul>
+<li>协议值为<strong>h2</strong>别名<strong>http2</strong></li>
+<li>尽管我们使用 https 运行，但我们在浏览器地址栏中看到<strong>不安全</strong>；因为我们对ssl 证书<em>进行了自签名</em>，并且浏览器无法将其识别为来自有效的<a href="https://www.globalsign.com/en/ssl-information-center/what-are-certification-authorities-trust-hierarchies/" target="_blank"><em>证书颁发机构</em></a>。</li>
+<li>如果我们尝试使用curl，我们可能会得到This is because http2 may not support with default curly by your OS.您可以按照<a href="https://simonecarletti.com/blog/2016/01/http2-curl-macosx/" target="_blank">此操作</a>升级您的curl (macOS)。
+<code>➜ curl https://127.0.0.1:8000/ping curl: Unsupported protocol</code></li>
+<li>一旦我们完成设置，我们可以尝试我们可以使用带有标志的curl来支持http2协议，我们还需要传递带有标志的证书文件，因为它是自签名的并且不能被curl识别。
+<code>curl --http2 --cacert localhost-cert.pem https://127.0.0.1:8000/ping</code>
+<code>—-http2``—-cacert</code></li>
+</ul>
+<p><img src="../../../static/images/exploring-http2-part-2-overview-03.webp" alt="img"></p>
+<ul>
+<li><code>-I</code>我们可以通过要求curl仅返回带有（head）或带有（verbose）的响应头来验证协议<code>-v</code>。</li>
+</ul>
+<p>到目前为止，一切都很好。但我们所有的客户可能支持也可能不支持 http2。我们通过添加额外的服务器选项来处理这个问题：
+<code>allowHttp1: true</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>// read certificate and private-key
+</span></span><span style="display:flex;"><span>const serverOptions <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  key: fs.readFileSync<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;localhost-privkey.pem&#39;</span><span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>  cert: fs.readFileSync<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;localhost-cert.pem&#39;</span><span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>  allowHTTP1: true
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>;
+</span></span></code></pre></div><p>在 serverOptions 中添加“allowHTTP1: true”
+在 serverOptions 中添加“allowHTTP1： true”</p>
+<p>现在我们开始！当客户端不支持 http2 时，回退到提供 http1.1</p>
+<p><img src="../../../static/images/exploring-http2-part-2-overview-04.webp" alt="img"></p>
+<p>同时为 http1.1 和 http2 客户端提供服务</p>
+<p>仅通过这些更改，我们就可以获得约 135% 的性能<a href="https://medium.com/the-node-js-collection/node-js-can-http-2-push-b491894e1bb1" target="_blank">提升</a>。</p>
+<p>仔细观察差异，</p>
+<p><img src="../../../static/images/exploring-http2-part-2-overview-05.webp" alt="img"></p>
+<blockquote>
+<p>通过<strong>瀑布</strong>部分，可以明显地掌握单个 TCP 连接使用与多个 TCP 连接使用之间的差异。</p></blockquote>
+<p>如果您想获得 http2 可以提供的第一手经验，请按照<a href="https://github.com/noobg1/http1_vs_http2" target="_blank">此处的</a>说明在您的计算机中运行上述演示。</p>
+<p><em>因此，</em><a href="https://github.com/http2/http2-spec/wiki/Implementations" target="_blank"><em>选择</em></a><em>您的客户端或服务器库实现并开始使用 http2！</em></p>
+<p>完整的代码可以在<a href="https://github.com/noobg1/http1_vs_http2" target="_blank">github</a>上找到。</p>
+<blockquote>
+<p>参考：</p></blockquote>
+<ul>
+<li><a href="https://http2.github.io/faq" target="_blank">https://http2.github.io/faq</a></li>
+<li><a href="https://http2.akamai.com/demo" target="_blank">https://http2.akamai.com/demo</a></li>
+<li><a href="https://github.com/http2/http2-spec/wiki/Implementations" target="_blank">https://github.com/http2/http2-spec/wiki/Implementations</a></li>
+<li><a href="https://caniuse.com/#feat=http2" target="_blank">https://caniuse.com/#feat=http2</a></li>
+<li><a href="https://nodejs.org/dist/latest-v10.x/docs/api/http2.html" target="_blank">https://nodejs.org/dist/latest-v10.x/docs/api/http2.html</a></li>
+</ul>
+<p><em>如果你觉得这个故事有用的话，请点个赞支持一下👏</em></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/08/exploring-http2-part-1-overview/" target="_blank" title="[译]探索 http2（第 1 部分）：概述">[译]探索 http2（第 1 部分）：概述</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/08/socketio-vs-http/" target="_blank" title="[译]比较 Socket.IO 和 HTTP：主要区别和用例">[译]比较 Socket.IO 和 HTTP：主要区别和用例</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/thingsboard-domain/" target="_blank" title="ThingsBoard的领域模型">ThingsBoard的领域模型</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websocket-alternatives/" target="_blank" title="[译]2024年最好的WebSocket替代品">[译]2024年最好的WebSocket替代品</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websockets-java/" target="_blank" title="[译]Java和WebSockets：构建可靠的实时应用程序">[译]Java和WebSockets：构建可靠的实时应用程序</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/the-websocket-api-and-protocol-explained/" target="_blank" title="[译]WebSocket API和协议说明">[译]WebSocket API和协议说明</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/05/07/websocket-alternatives/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]2024年最好的WebSocket替代品</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/08/exploring-http2-part-1-overview/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]探索 http2（第 1 部分）：概述</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/05\/08\/exploring-http2-part-2-overview\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

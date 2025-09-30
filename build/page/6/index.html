@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.144.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:title" content="ChenSoul Blog">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://blog.chensoul.cc/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="ChenSoul Blog">
+  <meta itemprop="description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+  <meta itemprop="datePublished" content="2025-09-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-09-30T00:00:00+00:00">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="ChenSoul Blog">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="ChenSoul Blog">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-point-to-point-messaging-in-action/" rel="bookmark">
+			[译]JMS 点对点消息传递的实际应用
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>点对点系统使用队列进行消息传递。客户端将消息发送到特定队列，特定订阅者监听或接收来自该队列的消息。在 JMS 点对点消息传递系统中，队列用于处理单个发送者和单个消费者。确保您已经阅读了有关<a href="https://jstobigdata.com/jms/jms-message-model/" target="_blank">JMS 消息模型</a>以及<a href="https://jstobigdata.com/jms/send-and-receive-message-in-jms/" target="_blank">如何在 JMS 中发送和接收消息的</a>先前教程。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-pub-sub-messaging-model/" rel="bookmark">
+			[译]JMS 发布-订阅消息模型
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>在本文中，您将了解 JMS 发布-订阅 (publish-subscribe) 消息传递模型。正如您在<a href="https://jstobigdata.com/jms/jms-introduction-java-message-service/" target="_blank">JMS 简介文章</a>中所读到的，在发布/订阅模型中，客户端通过称为主题的中介将消息发送给多个接收者。发送者通常称为发布者，接收者称为订阅者。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-transactions-in-action/" rel="bookmark">
+			[译]JMS 事务的实际应用
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>在本文中，您将了解如何选择性地使用 JMS 事务。在 JMS 中，您可以选择控制一个会话的原子操作。每个会话都支持一系列事务。每个事务将一组生成或使用的消息分组为一个原子工作单元。确保您已经理解了<a href="https://jstobigdata.com/jms/guaranteed-delivery-using-jms-message-acknowledgement/" target="_blank">JMS 中的消息确认</a>。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-message-model/" rel="bookmark">
+			[译]JMS 消息模型
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>消息是 JMS 的核心，无论是事件还是业务数据。消息由标头、自定义属性和正文组成。这是您将在 JMS 消息模型（JMS 消息剖析）中学习的内容。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-message-selectors-in-action-to-filter-messages/" rel="bookmark">
+			[译]JMS 消息选择器在过滤消息中的应用
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>发送给接收方的消息通常需要根据某些标准进行过滤。JMS 提供消息选择器，允许 JMS 消费者根据消息头指定其感兴趣的消息。在本文中，您将学习使用 JMS 消息选择器来过滤消息。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-prioritize-messages/" rel="bookmark">
+			[译]JMS 消息优先级
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>我们将通过示例详细讨论 JMS 消息优先级。每条消息的标头字段代表其优先级。我在消息模型教程<code>JMSPriority</code>中讨论过消息优先级。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/jms-introduction-java-message-service/" rel="bookmark">
+			[译]JMS介绍 – Java消息服务
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/kafka/" rel="tag">Kafka</a>, <a class="meta__link" href="/tags/rabbitmq/" rel="tag">Rabbitmq</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。这是一个 JMS 介绍教程，为您提供消息传递和 JMS 的简要概述。您将了解使用 JMS 的优势以及 JMS 中的不同消息传递模型。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/guaranteed-delivery-using-jms-message-acknowledgement/" rel="bookmark">
+			[译]使用 JMS 消息确认保证传送
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>JMS 通过 JMS 消息确认（确认模式）确保消息传递的可靠性。如果会话已进行事务处理，则该<code>commit()</code>方法会自动处理消息确认。否则，该方法将处理恢复<code>rollback()</code>。在本文中，我们将假设会话未进行事务处理。这是一个高级主题，请确保您对 JMS 有基本的了解。如果您是 JMS 新手，可以参考使用 JMS<a href="https://jstobigdata.com/jms/send-and-receive-message-in-jms/" target="_blank">发送和接收消息。</a></p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/a-complete-jms-2-0-tutorial/" rel="bookmark">
+			[译]完整的 JMS 2.0 教程
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/git/" rel="tag">Git</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。消息传递是在各种应用程序或服务之间交换业务数据的过程。这是<strong>一个完整的 JMS 2.0 教程，</strong> 其中包含大量代码示例。完整的代码示例可在 GitHub 上找到，请下载并运行示例。本教程使用 Glassfish 开源服务器作为 JMS 提供程序的示例。</p>
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2024/07/23/install-and-setup-glassfish-for-jms/" rel="bookmark">
+			[译]为 JMS 安装和设置 Glassfish
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/maven/" rel="tag">Maven</a>
+	</span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		<p>在本文中，我们将为 JMS 2.0 设置 Glassfish，创建一个 Java 项目并添加必要的依赖项。</p>
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/page/5/">«</a>
+	<span class="pagination__item pagination__item--current">6/28</span>
+	<a class="pagination__item pagination__item--next btn" href="/page/7/">»</a>
+</div>
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Spring Boot异常处理思路 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Spring Boot异常处理思路">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2025/07/24/spring-exception/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Spring Boot异常处理思路">
+  <meta itemprop="description" content="本文档描述了基于 Spring Boot 的异常处理设计思路，旨在构建一个统一、可扩展、支持国际化的异常处理体系。通过合理的异常分类、统一的响应格式和完善的国际化支持，为前端提供友好的错误信息，同时便于后端进行问题定位和监控。">
+  <meta itemprop="datePublished" content="2025-07-24T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-24T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2372">
+  <meta itemprop="keywords" content="Javascript,Spring-Boot,Backend,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Spring Boot异常处理思路">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Spring Boot异常处理思路</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-07-24">2025-07-24</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/spring-boot/" rel="tag">Spring-Boot</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>本文档描述了基于 Spring Boot 的异常处理设计思路，旨在构建一个统一、可扩展、支持国际化的异常处理体系。通过合理的异常分类、统一的响应格式和完善的国际化支持，为前端提供友好的错误信息，同时便于后端进行问题定位和监控。</p>
+<h2 id="1-核心设计原则">1. 核心设计原则</h2>
+<h3 id="11-异常职责分离">1.1 异常职责分离</h3>
+<ul>
+<li><strong>业务异常</strong>：由业务逻辑层抛出，表示业务规则违反或业务流程异常</li>
+<li><strong>系统异常</strong>：由系统层抛出，表示系统级问题（如数据库连接失败、外部服务调用失败）</li>
+<li><strong>客户端异常</strong>：使用 Spring 现有异常，如参数验证异常、认证授权异常等</li>
+<li><strong>限流异常</strong>：特殊处理的限流相关异常</li>
+</ul>
+<h3 id="12-完全国际化支持">1.2 完全国际化支持</h3>
+<ul>
+<li>所有异常消息支持多语言，根据用户语言偏好自动切换</li>
+<li>前端组件标签支持多语言，提供一致的用户体验</li>
+<li>统一的消息键命名规范，便于维护和扩展</li>
+<li>支持消息参数化，提供更精确的错误信息</li>
+</ul>
+<h3 id="13-错误码分层设计">1.3 错误码分层设计</h3>
+<ul>
+<li><strong>400-599</strong>：HTTP标准错误码（系统级错误）
+<ul>
+<li>400：请求参数错误（Bad Request）</li>
+<li>401：认证失败（Unauthorized）</li>
+<li>403：授权失败（Forbidden）</li>
+<li>404：资源不存在（Not Found）</li>
+<li>429：限流异常（Too Many Requests）</li>
+<li>500：服务器内部错误（Internal Server Error）</li>
+</ul>
+</li>
+<li><strong>1000+</strong>：业务级错误码（自定义业务异常）
+<ul>
+<li>1000～1999：用户模块异常</li>
+<li>2000～2999：订单模块异常</li>
+<li>3000～3999：商品模块异常</li>
+<li>4000～4999：支付模块异常</li>
+<li>5000～5999：系统配置异常</li>
+</ul>
+</li>
+<li><strong>便于前端进行差异化处理</strong>：前端可以根据错误码类型进行不同的UI展示和用户引导</li>
+</ul>
+<h3 id="14-统一响应格式">1.4 统一响应格式</h3>
+<ul>
+<li>所有API响应使用统一的 <code>ApiResponse&lt;T&gt;</code> 格式</li>
+<li>包含错误码、错误消息、响应数据等标准字段</li>
+<li>支持响应头扩展，提供额外的上下文信息</li>
+</ul>
+<h2 id="2-异常体系设计">2. 异常体系设计</h2>
+<h3 id="21-核心异常类型">2.1 核心异常类型</h3>
+<h4 id="211-ratelimitexception限流异常">2.1.1 RateLimitException（限流异常）</h4>
+<ul>
+<li><strong>错误码</strong>：429</li>
+<li><strong>使用场景</strong>：API调用频率超限、并发请求过多、资源访问限制</li>
+<li><strong>特点</strong>：包含重试间隔信息，支持指数退避策略</li>
+<li><strong>示例</strong>：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RateLimitException(<span style="color:#e6db74">&#34;API调用频率超限，请稍后重试&#34;</span>, 60);
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="212-businessexception业务异常">2.1.2 BusinessException（业务异常）</h4>
+<ul>
+<li><strong>错误码</strong>：500（或自定义1000+错误码）</li>
+<li><strong>使用场景</strong>：业务规则违反、业务流程异常、数据状态不一致</li>
+<li><strong>特点</strong>：包含业务上下文信息，便于问题定位</li>
+<li><strong>示例</strong>：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;USER_NOT_FOUND&#34;</span>, userId);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;ORDER_STATUS_INVALID&#34;</span>, orderId, currentStatus);
+</span></span></code></pre></div></li>
+</ul>
+<h4 id="213-validationexception参数验证异常">2.1.3 ValidationException（参数验证异常）</h4>
+<ul>
+<li><strong>错误码</strong>：400</li>
+<li><strong>使用场景</strong>：业务参数验证失败、数据格式错误</li>
+<li><strong>特点</strong>：包含具体的验证错误信息</li>
+<li><strong>示例</strong>：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ValidationException(<span style="color:#e6db74">&#34;EMAIL_FORMAT_INVALID&#34;</span>, email);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ValidationException(<span style="color:#e6db74">&#34;PHONE_NUMBER_INVALID&#34;</span>, phone);
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="22-异常继承体系">2.2 异常继承体系</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 基础异常类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BaseException</span> <span style="color:#66d9ef">extends</span> RuntimeException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String messageKey;        <span style="color:#75715e">// 国际化消息键</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Object<span style="color:#f92672">[]</span> messageArgs;     <span style="color:#75715e">// 消息参数</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 构造函数和getter方法</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 业务异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BusinessException</span> <span style="color:#66d9ef">extends</span> BaseException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">BusinessException</span>(String messageKey, Object... args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(messageKey, args);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 限流异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitException</span> <span style="color:#66d9ef">extends</span> BaseException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> retryAfterSeconds;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">RateLimitException</span>(String messageKey, <span style="color:#66d9ef">int</span> retryAfterSeconds, Object... args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(messageKey, args);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">retryAfterSeconds</span> <span style="color:#f92672">=</span> retryAfterSeconds;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 参数验证异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidationException</span> <span style="color:#66d9ef">extends</span> BaseException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ValidationException</span>(String messageKey, Object... args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(messageKey, args);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="23-spring-现有异常处理">2.3 Spring 现有异常处理</h3>
+<h4 id="231-客户端异常400系列">2.3.1 客户端异常（400系列）</h4>
+<ul>
+<li><code>MethodArgumentNotValidException</code>：参数验证失败</li>
+<li><code>BindException</code>：数据绑定异常</li>
+<li><code>HttpMessageNotReadableException</code>：请求体解析异常</li>
+<li><code>MissingServletRequestParameterException</code>：缺少请求参数</li>
+<li><code>TypeMismatchException</code>：参数类型不匹配</li>
+<li><code>HttpRequestMethodNotSupportedException</code>：不支持的HTTP方法</li>
+</ul>
+<h4 id="232-认证授权异常401403系列">2.3.2 认证授权异常（401/403系列）</h4>
+<ul>
+<li><code>AuthenticationException</code>：认证失败</li>
+<li><code>BadCredentialsException</code>：凭据无效</li>
+<li><code>InsufficientAuthenticationException</code>：认证信息不足</li>
+<li><code>AccessDeniedException</code>：访问被拒绝</li>
+<li><code>JwtException</code>：JWT令牌异常</li>
+</ul>
+<h4 id="233-服务器异常500系列">2.3.3 服务器异常（500系列）</h4>
+<ul>
+<li><code>DataAccessException</code>：数据访问异常</li>
+<li><code>HttpClientErrorException</code>：HTTP客户端异常</li>
+<li><code>HttpServerErrorException</code>：HTTP服务器异常</li>
+<li><code>ConnectTimeoutException</code>：连接超时异常</li>
+<li><code>ReadTimeoutException</code>：读取超时异常</li>
+</ul>
+<h2 id="3-统一响应结构">3. 统一响应结构</h2>
+<h3 id="31-apiresponse-结构设计">3.1 ApiResponse 结构设计</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 统一API响应结构
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * @param &lt;T&gt; 响应数据类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Builder</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@NoArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@AllArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ApiResponse</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 响应状态码 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> code;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 响应消息（已国际化） */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String message;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 响应数据 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> T data;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 成功响应 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ApiResponse<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">success</span>(T data) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ApiResponse.<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>builder()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">code</span>(200)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">message</span>(<span style="color:#e6db74">&#34;操作成功&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">data</span>(data)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 成功响应（无数据） */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ApiResponse<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">success</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> success(<span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/** 错误响应 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ApiResponse<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">error</span>(<span style="color:#66d9ef">int</span> code, String message) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ApiResponse.<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>builder()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">code</span>(code)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">message</span>(message)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ApiResponse<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">error</span>(String message) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> ApiResponse.<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>builder()
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">code</span>(500)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">message</span>(message)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="32-响应头设计">3.2 响应头设计</h3>
+<h4 id="321-通用响应头">3.2.1 通用响应头</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-http" data-lang="http"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Request-Id: uuid                    # 请求追踪ID
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Response-Time: 100ms                # 响应时间
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Server-Time: 1640995200000          # 服务器时间戳
+</span></span></span></code></pre></div><h4 id="322-错误响应头">3.2.2 错误响应头</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-http" data-lang="http"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Error-Type: BUSINESS                # 错误类型（CLIENT/BUSINESS/SYSTEM/RATE_LIMIT）
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Error-Details: 用户不存在: 12345    # 异常cause的message信息
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">X-Retry-Allowed: true                 # 是否允许重试
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">Retry-After: 60                       # 限流异常的重试间隔（秒）
+</span></span></span></code></pre></div><h3 id="33-错误类型枚举">3.3 错误类型枚举</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 错误类型枚举
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> ErrorType {
+</span></span><span style="display:flex;"><span>    CLIENT,     <span style="color:#75715e">// 客户端错误</span>
+</span></span><span style="display:flex;"><span>    BUSINESS,   <span style="color:#75715e">// 业务错误</span>
+</span></span><span style="display:flex;"><span>    SYSTEM,     <span style="color:#75715e">// 系统错误</span>
+</span></span><span style="display:flex;"><span>    RATE_LIMIT  <span style="color:#75715e">// 限流错误</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 错误分类枚举
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> ErrorCategory {
+</span></span><span style="display:flex;"><span>    COMMON,     <span style="color:#75715e">// 通用错误</span>
+</span></span><span style="display:flex;"><span>    AUTH,       <span style="color:#75715e">// 认证授权</span>
+</span></span><span style="display:flex;"><span>    USER,       <span style="color:#75715e">// 用户模块</span>
+</span></span><span style="display:flex;"><span>    ORDER,      <span style="color:#75715e">// 订单模块</span>
+</span></span><span style="display:flex;"><span>    PRODUCT,    <span style="color:#75715e">// 商品模块</span>
+</span></span><span style="display:flex;"><span>    PAYMENT,    <span style="color:#75715e">// 支付模块</span>
+</span></span><span style="display:flex;"><span>    SYSTEM      <span style="color:#75715e">// 系统模块</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="4-国际化资源文件设计">4. 国际化资源文件设计</h2>
+<h3 id="41-命名规范">4.1 命名规范</h3>
+<h4 id="411-消息键格式">4.1.1 消息键格式</h4>
+<pre tabindex="0"><code>{category}.{type}.{key}
+</code></pre><h4 id="412-分类定义category">4.1.2 分类定义（Category）</h4>
+<ul>
+<li><strong>common</strong>：通用消息（系统级）</li>
+<li><strong>auth</strong>：认证授权消息</li>
+<li><strong>user</strong>：用户模块消息</li>
+<li><strong>order</strong>：订单模块消息</li>
+<li><strong>product</strong>：商品模块消息</li>
+<li><strong>payment</strong>：支付模块消息</li>
+<li><strong>system</strong>：系统配置消息</li>
+</ul>
+<h4 id="413-类型定义type">4.1.3 类型定义（Type）</h4>
+<ul>
+<li><strong>error</strong>：错误消息</li>
+<li><strong>success</strong>：成功消息</li>
+<li><strong>info</strong>：信息消息</li>
+<li><strong>warning</strong>：警告消息</li>
+<li><strong>label</strong>：标签文本</li>
+<li><strong>button</strong>：按钮文本</li>
+<li><strong>title</strong>：标题文本</li>
+<li><strong>placeholder</strong>：占位符文本</li>
+<li><strong>help</strong>：帮助文本</li>
+</ul>
+<h4 id="414-键命名规范key">4.1.4 键命名规范（Key）</h4>
+<ul>
+<li>使用小写字母和下划线</li>
+<li>语义清晰、简洁明了</li>
+<li>避免过长的键名</li>
+<li>保持命名一致性</li>
+</ul>
+<h3 id="42-消息键示例">4.2 消息键示例</h3>
+<h4 id="421-通用错误消息">4.2.1 通用错误消息</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># 客户端异常（400系列）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.invalid_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">参数无效：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.missing_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">缺少必需参数：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.request_body_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">请求体格式无效</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.unsupported_method</span><span style="color:#f92672">=</span><span style="color:#e6db74">不支持的HTTP方法：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.type_mismatch</span><span style="color:#f92672">=</span><span style="color:#e6db74">参数类型不匹配：{0}应为{1}类型</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 认证授权异常（401/403系列）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.authentication_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">认证失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.bad_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名或密码错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.insufficient_authentication</span><span style="color:#f92672">=</span><span style="color:#e6db74">认证信息不足</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.access_denied</span><span style="color:#f92672">=</span><span style="color:#e6db74">访问被拒绝，权限不足</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.token_expired</span><span style="color:#f92672">=</span><span style="color:#e6db74">访问令牌已过期</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.token_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">访问令牌无效</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.refresh_token_expired</span><span style="color:#f92672">=</span><span style="color:#e6db74">刷新令牌已过期</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 服务器异常（500系列）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.internal_server</span><span style="color:#f92672">=</span><span style="color:#e6db74">服务器内部错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.service_unavailable</span><span style="color:#f92672">=</span><span style="color:#e6db74">服务暂不可用</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.database_error</span><span style="color:#f92672">=</span><span style="color:#e6db74">数据库操作失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.external_service_error</span><span style="color:#f92672">=</span><span style="color:#e6db74">外部服务调用失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.timeout</span><span style="color:#f92672">=</span><span style="color:#e6db74">请求超时</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 限流异常（429）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.rate_limit_exceeded</span><span style="color:#f92672">=</span><span style="color:#e6db74">请求频率超限，请{0}秒后重试</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.concurrent_limit_exceeded</span><span style="color:#f92672">=</span><span style="color:#e6db74">并发请求过多，请稍后重试</span>
+</span></span></code></pre></div><h4 id="422-业务错误消息">4.2.2 业务错误消息</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># 用户模块（1000-1999）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_already_exists</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户已存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.invalid_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名或密码错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.account_locked</span><span style="color:#f92672">=</span><span style="color:#e6db74">账户已锁定，请联系管理员</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.account_disabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">账户已禁用</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.email_already_exists</span><span style="color:#f92672">=</span><span style="color:#e6db74">邮箱已被使用：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.phone_already_exists</span><span style="color:#f92672">=</span><span style="color:#e6db74">手机号已被使用：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.password_too_weak</span><span style="color:#f92672">=</span><span style="color:#e6db74">密码强度不足</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.verification_code_expired</span><span style="color:#f92672">=</span><span style="color:#e6db74">验证码已过期</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.verification_code_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">验证码无效</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 订单模块（2000-2999）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_status_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单状态无效：当前状态{0}，期望状态{1}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_already_paid</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单已支付：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_cannot_cancel</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单无法取消：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_cannot_modify</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单无法修改：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.insufficient_balance</span><span style="color:#f92672">=</span><span style="color:#e6db74">余额不足，当前余额：{0}，需要：{1}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.payment_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付失败：{0}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 商品模块（3000-3999）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.error.product_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.error.insufficient_stock</span><span style="color:#f92672">=</span><span style="color:#e6db74">库存不足：商品{0}，当前库存{1}，需要{2}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.error.product_disabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品已下架：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.error.category_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品分类不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.error.price_changed</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品价格已变更：{0}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 支付模块（4000-4999）</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">payment.error.payment_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付记录不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">payment.error.payment_already_processed</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付已处理：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">payment.error.payment_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付失败：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">payment.error.refund_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">退款失败：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">payment.error.amount_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付金额无效：{0}</span>
+</span></span></code></pre></div><h4 id="423-成功消息">4.2.3 成功消息</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># 通用成功消息</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.success.operation_completed</span><span style="color:#f92672">=</span><span style="color:#e6db74">操作完成</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.success.data_saved</span><span style="color:#f92672">=</span><span style="color:#e6db74">数据保存成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.success.data_deleted</span><span style="color:#f92672">=</span><span style="color:#e6db74">数据删除成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.success.data_updated</span><span style="color:#f92672">=</span><span style="color:#e6db74">数据更新成功</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用户模块成功消息</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.success.user_created</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户创建成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.success.user_updated</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户信息更新成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.success.password_changed</span><span style="color:#f92672">=</span><span style="color:#e6db74">密码修改成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.success.account_activated</span><span style="color:#f92672">=</span><span style="color:#e6db74">账户激活成功</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 订单模块成功消息</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.success.order_placed</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单提交成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.success.order_cancelled</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单取消成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.success.payment_successful</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.success.refund_processed</span><span style="color:#f92672">=</span><span style="color:#e6db74">退款处理成功</span>
+</span></span></code></pre></div><h4 id="424-前端组件标签">4.2.4 前端组件标签</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># 通用标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.username</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.password</span><span style="color:#f92672">=</span><span style="color:#e6db74">密码</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.email</span><span style="color:#f92672">=</span><span style="color:#e6db74">邮箱</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.phone</span><span style="color:#f92672">=</span><span style="color:#e6db74">手机号</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.confirm_password</span><span style="color:#f92672">=</span><span style="color:#e6db74">确认密码</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.verification_code</span><span style="color:#f92672">=</span><span style="color:#e6db74">验证码</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.remember_me</span><span style="color:#f92672">=</span><span style="color:#e6db74">记住我</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.search</span><span style="color:#f92672">=</span><span style="color:#e6db74">搜索</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.filter</span><span style="color:#f92672">=</span><span style="color:#e6db74">筛选</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.sort</span><span style="color:#f92672">=</span><span style="color:#e6db74">排序</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 按钮文本</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.submit</span><span style="color:#f92672">=</span><span style="color:#e6db74">提交</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.cancel</span><span style="color:#f92672">=</span><span style="color:#e6db74">取消</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.save</span><span style="color:#f92672">=</span><span style="color:#e6db74">保存</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.delete</span><span style="color:#f92672">=</span><span style="color:#e6db74">删除</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.edit</span><span style="color:#f92672">=</span><span style="color:#e6db74">编辑</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.view</span><span style="color:#f92672">=</span><span style="color:#e6db74">查看</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.back</span><span style="color:#f92672">=</span><span style="color:#e6db74">返回</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.next</span><span style="color:#f92672">=</span><span style="color:#e6db74">下一步</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.previous</span><span style="color:#f92672">=</span><span style="color:#e6db74">上一步</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.confirm</span><span style="color:#f92672">=</span><span style="color:#e6db74">确认</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.reset</span><span style="color:#f92672">=</span><span style="color:#e6db74">重置</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 标题文本</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.title.login</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户登录</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.title.register</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户注册</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.title.profile</span><span style="color:#f92672">=</span><span style="color:#e6db74">个人资料</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.title.settings</span><span style="color:#f92672">=</span><span style="color:#e6db74">系统设置</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.title.dashboard</span><span style="color:#f92672">=</span><span style="color:#e6db74">仪表板</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 占位符文本</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.placeholder.enter_username</span><span style="color:#f92672">=</span><span style="color:#e6db74">请输入用户名</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.placeholder.enter_password</span><span style="color:#f92672">=</span><span style="color:#e6db74">请输入密码</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.placeholder.enter_email</span><span style="color:#f92672">=</span><span style="color:#e6db74">请输入邮箱地址</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.placeholder.enter_phone</span><span style="color:#f92672">=</span><span style="color:#e6db74">请输入手机号</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.placeholder.search_keyword</span><span style="color:#f92672">=</span><span style="color:#e6db74">请输入搜索关键词</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 业务模块标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.order_number</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单号</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.order_status</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.order_date</span><span style="color:#f92672">=</span><span style="color:#e6db74">下单时间</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.total_amount</span><span style="color:#f92672">=</span><span style="color:#e6db74">总金额</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.payment_method</span><span style="color:#f92672">=</span><span style="color:#e6db74">支付方式</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.delivery_address</span><span style="color:#f92672">=</span><span style="color:#e6db74">收货地址</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_name</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_price</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品价格</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_stock</span><span style="color:#f92672">=</span><span style="color:#e6db74">库存数量</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_category</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品分类</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_description</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品描述</span>
+</span></span></code></pre></div><h3 id="43-资源文件结构">4.3 资源文件结构</h3>
+<h4 id="431-中文资源文件messages_zh_cnproperties">4.3.1 中文资源文件（messages_zh_CN.properties）</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 通用错误消息</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.invalid_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">参数无效：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.missing_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">缺少必需参数：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.request_body_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">请求体格式无效</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.internal_server</span><span style="color:#f92672">=</span><span style="color:#e6db74">服务器内部错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.service_unavailable</span><span style="color:#f92672">=</span><span style="color:#e6db74">服务暂不可用</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.rate_limit_exceeded</span><span style="color:#f92672">=</span><span style="color:#e6db74">请求频率超限，请{0}秒后重试</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 认证授权错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.authentication_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">认证失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.bad_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名或密码错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.access_denied</span><span style="color:#f92672">=</span><span style="color:#e6db74">访问被拒绝</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.token_expired</span><span style="color:#f92672">=</span><span style="color:#e6db74">访问令牌已过期</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 用户模块错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_already_exists</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户已存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.invalid_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名或密码错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.account_locked</span><span style="color:#f92672">=</span><span style="color:#e6db74">账户已锁定</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 订单模块错误</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单不存在：{0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_status_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单状态无效</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.insufficient_balance</span><span style="color:#f92672">=</span><span style="color:#e6db74">余额不足</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 通用标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.username</span><span style="color:#f92672">=</span><span style="color:#e6db74">用户名</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.password</span><span style="color:#f92672">=</span><span style="color:#e6db74">密码</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.email</span><span style="color:#f92672">=</span><span style="color:#e6db74">邮箱</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.submit</span><span style="color:#f92672">=</span><span style="color:#e6db74">提交</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.cancel</span><span style="color:#f92672">=</span><span style="color:#e6db74">取消</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 业务标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.order_number</span><span style="color:#f92672">=</span><span style="color:#e6db74">订单号</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_name</span><span style="color:#f92672">=</span><span style="color:#e6db74">商品名称</span>
+</span></span></code></pre></div><h4 id="432-英文资源文件messages_en_usproperties">4.3.2 英文资源文件（messages_en_US.properties）</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Common Error Messages</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.invalid_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">Invalid parameter: {0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.missing_parameter</span><span style="color:#f92672">=</span><span style="color:#e6db74">Missing required parameter: {0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.request_body_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">Invalid request body format</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.internal_server</span><span style="color:#f92672">=</span><span style="color:#e6db74">Internal server error</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.service_unavailable</span><span style="color:#f92672">=</span><span style="color:#e6db74">Service temporarily unavailable</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.error.rate_limit_exceeded</span><span style="color:#f92672">=</span><span style="color:#e6db74">Rate limit exceeded, please retry in {0} seconds</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Authentication &amp; Authorization Errors</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.authentication_failed</span><span style="color:#f92672">=</span><span style="color:#e6db74">Authentication failed</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.bad_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">Invalid username or password</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.access_denied</span><span style="color:#f92672">=</span><span style="color:#e6db74">Access denied</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth.error.token_expired</span><span style="color:#f92672">=</span><span style="color:#e6db74">Access token expired</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># User Module Errors</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">User not found: {0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.user_already_exists</span><span style="color:#f92672">=</span><span style="color:#e6db74">User already exists: {0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.invalid_credentials</span><span style="color:#f92672">=</span><span style="color:#e6db74">Invalid username or password</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user.error.account_locked</span><span style="color:#f92672">=</span><span style="color:#e6db74">Account is locked</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Order Module Errors</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_not_found</span><span style="color:#f92672">=</span><span style="color:#e6db74">Order not found: {0}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.order_status_invalid</span><span style="color:#f92672">=</span><span style="color:#e6db74">Invalid order status</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.error.insufficient_balance</span><span style="color:#f92672">=</span><span style="color:#e6db74">Insufficient balance</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Common Labels</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.username</span><span style="color:#f92672">=</span><span style="color:#e6db74">Username</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.password</span><span style="color:#f92672">=</span><span style="color:#e6db74">Password</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.label.email</span><span style="color:#f92672">=</span><span style="color:#e6db74">Email</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.submit</span><span style="color:#f92672">=</span><span style="color:#e6db74">Submit</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">common.button.cancel</span><span style="color:#f92672">=</span><span style="color:#e6db74">Cancel</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Business Labels</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ========================================</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">order.label.order_number</span><span style="color:#f92672">=</span><span style="color:#e6db74">Order Number</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">product.label.product_name</span><span style="color:#f92672">=</span><span style="color:#e6db74">Product Name</span>
+</span></span></code></pre></div><h2 id="5-全局异常处理器">5. 全局异常处理器</h2>
+<h3 id="51-处理器设计">5.1 处理器设计</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 全局异常处理器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 统一处理所有异常，提供国际化的错误响应
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 注意：响应头由 ResponseHeaderFilter 统一处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RestControllerAdvice</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GlobalExceptionHandler</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> MessageSource messageSource;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(BusinessException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleBusinessException</span>(
+</span></span><span style="display:flex;"><span>            BusinessException e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(e.<span style="color:#a6e22e">getMessageKey</span>(), e.<span style="color:#a6e22e">getMessageArgs</span>(), locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;业务异常: {} - {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessageKey</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(500, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(500).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(RateLimitException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleRateLimitException</span>(
+</span></span><span style="display:flex;"><span>            RateLimitException e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(e.<span style="color:#a6e22e">getMessageKey</span>(), e.<span style="color:#a6e22e">getMessageArgs</span>(), locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;限流异常: {} - {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessageKey</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(429, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(429).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(MethodArgumentNotValidException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleValidationException</span>(
+</span></span><span style="display:flex;"><span>            MethodArgumentNotValidException e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> e.<span style="color:#a6e22e">getBindingResult</span>().<span style="color:#a6e22e">getFieldErrors</span>().<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">map</span>(error <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                    String fieldName <span style="color:#f92672">=</span> error.<span style="color:#a6e22e">getField</span>();
+</span></span><span style="display:flex;"><span>                    String defaultMessage <span style="color:#f92672">=</span> error.<span style="color:#a6e22e">getDefaultMessage</span>();
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> messageSource.<span style="color:#a6e22e">getMessage</span>(
+</span></span><span style="display:flex;"><span>                                <span style="color:#e6db74">&#34;validation.&#34;</span> <span style="color:#f92672">+</span> fieldName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> error.<span style="color:#a6e22e">getCode</span>(),
+</span></span><span style="display:flex;"><span>                                error.<span style="color:#a6e22e">getArguments</span>(),
+</span></span><span style="display:flex;"><span>                                defaultMessage,
+</span></span><span style="display:flex;"><span>                                locale
+</span></span><span style="display:flex;"><span>                        );
+</span></span><span style="display:flex;"><span>                    } <span style="color:#66d9ef">catch</span> (NoSuchMessageException ex) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> defaultMessage;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                })
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">joining</span>(<span style="color:#e6db74">&#34;, &#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;参数验证失败: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(400, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">badRequest</span>().<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>({AuthenticationException.<span style="color:#a6e22e">class</span>, BadCredentialsException.<span style="color:#a6e22e">class</span>})
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleAuthenticationException</span>(
+</span></span><span style="display:flex;"><span>            Exception e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(<span style="color:#e6db74">&#34;auth.error.authentication_failed&#34;</span>, <span style="color:#66d9ef">null</span>, locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;认证失败: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(401, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(401).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(AccessDeniedException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleAccessDeniedException</span>(
+</span></span><span style="display:flex;"><span>            AccessDeniedException e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(<span style="color:#e6db74">&#34;auth.error.access_denied&#34;</span>, <span style="color:#66d9ef">null</span>, locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;访问被拒绝: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(403, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(403).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(Exception.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleGeneralException</span>(
+</span></span><span style="display:flex;"><span>            Exception e, HttpServletRequest request, Locale locale) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(<span style="color:#e6db74">&#34;common.error.internal_server&#34;</span>, <span style="color:#66d9ef">null</span>, locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;系统异常: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessage</span>(), e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(500, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(500).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取国际化消息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getLocalizedMessage</span>(String messageKey, Object<span style="color:#f92672">[]</span> args, Locale locale) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> messageSource.<span style="color:#a6e22e">getMessage</span>(messageKey, args, messageKey, locale);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (NoSuchMessageException e) {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;未找到国际化消息: {}&#34;</span>, messageKey);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> messageKey;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="52-异常映射规则">5.2 异常映射规则</h3>
+<table>
+  <thead>
+      <tr>
+          <th>异常类型</th>
+          <th>HTTP状态码</th>
+          <th>错误类型</th>
+          <th>处理方式</th>
+          <th>可重试</th>
+          <th>X-Error-Details 示例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>MethodArgumentNotValidException</code></td>
+          <td>400</td>
+          <td>CLIENT</td>
+          <td>参数验证失败</td>
+          <td>❌</td>
+          <td><code>用户名不能为空, 邮箱格式不正确</code></td>
+      </tr>
+      <tr>
+          <td><code>BindException</code></td>
+          <td>400</td>
+          <td>CLIENT</td>
+          <td>数据绑定异常</td>
+          <td>❌</td>
+          <td><code>字段类型不匹配</code></td>
+      </tr>
+      <tr>
+          <td><code>HttpMessageNotReadableException</code></td>
+          <td>400</td>
+          <td>CLIENT</td>
+          <td>请求体解析异常</td>
+          <td>❌</td>
+          <td><code>JSON格式错误</code></td>
+      </tr>
+      <tr>
+          <td><code>MissingServletRequestParameterException</code></td>
+          <td>400</td>
+          <td>CLIENT</td>
+          <td>缺少请求参数</td>
+          <td>❌</td>
+          <td><code>缺少必需参数: userId</code></td>
+      </tr>
+      <tr>
+          <td><code>AuthenticationException</code></td>
+          <td>401</td>
+          <td>CLIENT</td>
+          <td>认证失败</td>
+          <td>❌</td>
+          <td><code>用户未登录</code></td>
+      </tr>
+      <tr>
+          <td><code>BadCredentialsException</code></td>
+          <td>401</td>
+          <td>CLIENT</td>
+          <td>凭据无效</td>
+          <td>❌</td>
+          <td><code>用户名或密码错误</code></td>
+      </tr>
+      <tr>
+          <td><code>AccessDeniedException</code></td>
+          <td>403</td>
+          <td>CLIENT</td>
+          <td>访问被拒绝</td>
+          <td>❌</td>
+          <td><code>权限不足</code></td>
+      </tr>
+      <tr>
+          <td><code>RateLimitException</code></td>
+          <td>429</td>
+          <td>RATE_LIMIT</td>
+          <td>限流异常</td>
+          <td>✅</td>
+          <td><code>请求频率超限，请60秒后重试</code></td>
+      </tr>
+      <tr>
+          <td><code>BusinessException</code></td>
+          <td>500/1000+</td>
+          <td>BUSINESS</td>
+          <td>业务异常</td>
+          <td>❌</td>
+          <td><code>用户不存在: 12345</code></td>
+      </tr>
+      <tr>
+          <td><code>Exception</code></td>
+          <td>500</td>
+          <td>SYSTEM</td>
+          <td>系统异常</td>
+          <td>✅</td>
+          <td><code>数据库连接失败</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="53-异常重试策略">5.3 异常重试策略</h3>
+<h4 id="531-可重试异常类型">5.3.1 可重试异常类型</h4>
+<p><strong>✅ 可以重试的异常：</strong></p>
+<ol>
+<li>
+<p><strong>限流异常（RateLimitException）</strong></p>
+<ul>
+<li><strong>原因</strong>：请求频率超限，属于临时性限制</li>
+<li><strong>重试策略</strong>：按照 <code>Retry-After</code> 头指定的时间间隔重试</li>
+<li><strong>示例</strong>：API调用频率超限、并发请求过多</li>
+</ul>
+</li>
+<li>
+<p><strong>系统异常（Exception）</strong></p>
+<ul>
+<li><strong>原因</strong>：系统级问题，通常是临时性的</li>
+<li><strong>重试策略</strong>：使用指数退避策略，最大重试3次</li>
+<li><strong>示例</strong>：数据库连接失败、网络超时、外部服务暂时不可用</li>
+</ul>
+</li>
+</ol>
+<p><strong>❌ 不可重试的异常：</strong></p>
+<ol>
+<li>
+<p><strong>客户端异常（400系列）</strong></p>
+<ul>
+<li><strong>原因</strong>：请求参数错误、数据格式错误等</li>
+<li><strong>说明</strong>：重试无法解决问题，需要修正请求</li>
+</ul>
+</li>
+<li>
+<p><strong>认证授权异常（401/403系列）</strong></p>
+<ul>
+<li><strong>原因</strong>：认证失败、权限不足等</li>
+<li><strong>说明</strong>：重试无法解决问题，需要重新认证或获取权限</li>
+</ul>
+</li>
+<li>
+<p><strong>业务异常（BusinessException）</strong></p>
+<ul>
+<li><strong>原因</strong>：业务规则违反、数据状态不一致等</li>
+<li><strong>说明</strong>：重试无法解决问题，需要修正业务逻辑</li>
+</ul>
+</li>
+</ol>
+<h4 id="532-响应头过滤器设计">5.3.2 响应头过滤器设计</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 响应头过滤器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 统一添加请求追踪、响应时间、重试信息等响应头
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Order</span>(Ordered.<span style="color:#a6e22e">HIGHEST_PRECEDENCE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResponseHeaderFilter</span> <span style="color:#66d9ef">implements</span> Filter {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RetryService retryService;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doFilter</span>(ServletRequest request, ServletResponse response, FilterChain chain) 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throws</span> IOException, ServletException {
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        HttpServletRequest httpRequest <span style="color:#f92672">=</span> (HttpServletRequest) request;
+</span></span><span style="display:flex;"><span>        HttpServletResponse httpResponse <span style="color:#f92672">=</span> (HttpServletResponse) response;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 记录请求开始时间</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">long</span> startTime <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>();
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生成请求ID</span>
+</span></span><span style="display:flex;"><span>        String requestId <span style="color:#f92672">=</span> generateRequestId();
+</span></span><span style="display:flex;"><span>        MDC.<span style="color:#a6e22e">put</span>(<span style="color:#e6db74">&#34;requestId&#34;</span>, requestId);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 继续处理请求</span>
+</span></span><span style="display:flex;"><span>            chain.<span style="color:#a6e22e">doFilter</span>(request, response);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 计算响应时间</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">long</span> responseTime <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>() <span style="color:#f92672">-</span> startTime;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 添加通用响应头</span>
+</span></span><span style="display:flex;"><span>            addCommonHeaders(httpResponse, requestId, responseTime);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 如果是错误响应，添加错误相关响应头</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (httpResponse.<span style="color:#a6e22e">getStatus</span>() <span style="color:#f92672">&gt;=</span> 400) {
+</span></span><span style="display:flex;"><span>                addErrorHeaders(httpResponse, httpRequest);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 清理MDC</span>
+</span></span><span style="display:flex;"><span>            MDC.<span style="color:#a6e22e">clear</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 添加通用响应头
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addCommonHeaders</span>(HttpServletResponse response, String requestId, <span style="color:#66d9ef">long</span> responseTime) {
+</span></span><span style="display:flex;"><span>        response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Request-Id&#34;</span>, requestId);
+</span></span><span style="display:flex;"><span>        response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Response-Time&#34;</span>, responseTime <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;ms&#34;</span>);
+</span></span><span style="display:flex;"><span>        response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Server-Time&#34;</span>, String.<span style="color:#a6e22e">valueOf</span>(System.<span style="color:#a6e22e">currentTimeMillis</span>()));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 添加错误响应头
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addErrorHeaders</span>(HttpServletResponse response, HttpServletRequest request) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 从请求属性中获取异常信息（由异常处理器设置）</span>
+</span></span><span style="display:flex;"><span>        Exception exception <span style="color:#f92672">=</span> (Exception) request.<span style="color:#a6e22e">getAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (exception <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 设置错误类型</span>
+</span></span><span style="display:flex;"><span>            String errorType <span style="color:#f92672">=</span> getErrorType(exception);
+</span></span><span style="display:flex;"><span>            response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Error-Type&#34;</span>, errorType);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 设置是否可重试</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">boolean</span> retryable <span style="color:#f92672">=</span> retryService.<span style="color:#a6e22e">isRetryable</span>(exception);
+</span></span><span style="display:flex;"><span>            response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Retry-Allowed&#34;</span>, String.<span style="color:#a6e22e">valueOf</span>(retryable));
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 设置错误详情</span>
+</span></span><span style="display:flex;"><span>            String errorDetails <span style="color:#f92672">=</span> getExceptionCauseMessage(exception);
+</span></span><span style="display:flex;"><span>            response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;X-Error-Details&#34;</span>, errorDetails);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 如果是限流异常，设置重试间隔</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (exception <span style="color:#66d9ef">instanceof</span> RateLimitException) {
+</span></span><span style="display:flex;"><span>                RateLimitException rateLimitException <span style="color:#f92672">=</span> (RateLimitException) exception;
+</span></span><span style="display:flex;"><span>                response.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;Retry-After&#34;</span>, String.<span style="color:#a6e22e">valueOf</span>(rateLimitException.<span style="color:#a6e22e">getRetryAfterSeconds</span>()));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取错误类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getErrorType</span>(Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (e <span style="color:#66d9ef">instanceof</span> RateLimitException) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;RATE_LIMIT&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (e <span style="color:#66d9ef">instanceof</span> BusinessException) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;BUSINESS&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (e <span style="color:#66d9ef">instanceof</span> MethodArgumentNotValidException <span style="color:#f92672">||</span> 
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> BindException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> HttpMessageNotReadableException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> MissingServletRequestParameterException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> AuthenticationException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> BadCredentialsException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>                   e <span style="color:#66d9ef">instanceof</span> AccessDeniedException) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;CLIENT&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;SYSTEM&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取异常cause的message信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getExceptionCauseMessage</span>(Exception e) {
+</span></span><span style="display:flex;"><span>        Throwable cause <span style="color:#f92672">=</span> e.<span style="color:#a6e22e">getCause</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (cause <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> cause.<span style="color:#a6e22e">getMessage</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> e.<span style="color:#a6e22e">getMessage</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 生成请求ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">generateRequestId</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>().<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="533-异常处理器简化">5.3.3 异常处理器简化</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 全局异常处理器（简化版）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RestControllerAdvice</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GlobalExceptionHandler</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> MessageSource messageSource;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(BusinessException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleBusinessException</span>(
+</span></span><span style="display:flex;"><span>            BusinessException e,
+</span></span><span style="display:flex;"><span>            HttpServletRequest request,
+</span></span><span style="display:flex;"><span>            Locale locale) {
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(e.<span style="color:#a6e22e">getMessageKey</span>(), e.<span style="color:#a6e22e">getMessageArgs</span>(), locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;业务异常: {} - {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessageKey</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(500, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(500).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(RateLimitException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleRateLimitException</span>(
+</span></span><span style="display:flex;"><span>            RateLimitException e,
+</span></span><span style="display:flex;"><span>            HttpServletRequest request,
+</span></span><span style="display:flex;"><span>            Locale locale) {
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(e.<span style="color:#a6e22e">getMessageKey</span>(), e.<span style="color:#a6e22e">getMessageArgs</span>(), locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;限流异常: {} - {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessageKey</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(429, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(429).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(MethodArgumentNotValidException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleValidationException</span>(
+</span></span><span style="display:flex;"><span>            MethodArgumentNotValidException e,
+</span></span><span style="display:flex;"><span>            HttpServletRequest request,
+</span></span><span style="display:flex;"><span>            Locale locale) {
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> e.<span style="color:#a6e22e">getBindingResult</span>().<span style="color:#a6e22e">getFieldErrors</span>().<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">map</span>(error <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                    String fieldName <span style="color:#f92672">=</span> error.<span style="color:#a6e22e">getField</span>();
+</span></span><span style="display:flex;"><span>                    String defaultMessage <span style="color:#f92672">=</span> error.<span style="color:#a6e22e">getDefaultMessage</span>();
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> messageSource.<span style="color:#a6e22e">getMessage</span>(
+</span></span><span style="display:flex;"><span>                                <span style="color:#e6db74">&#34;validation.&#34;</span> <span style="color:#f92672">+</span> fieldName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> error.<span style="color:#a6e22e">getCode</span>(),
+</span></span><span style="display:flex;"><span>                                error.<span style="color:#a6e22e">getArguments</span>(),
+</span></span><span style="display:flex;"><span>                                defaultMessage,
+</span></span><span style="display:flex;"><span>                                locale
+</span></span><span style="display:flex;"><span>                        );
+</span></span><span style="display:flex;"><span>                    } <span style="color:#66d9ef">catch</span> (NoSuchMessageException ex) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> defaultMessage;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                })
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">joining</span>(<span style="color:#e6db74">&#34;, &#34;</span>));
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;参数验证失败: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), localizedMessage);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(400, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">badRequest</span>().<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ExceptionHandler</span>(Exception.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">handleGeneralException</span>(
+</span></span><span style="display:flex;"><span>            Exception e,
+</span></span><span style="display:flex;"><span>            HttpServletRequest request,
+</span></span><span style="display:flex;"><span>            Locale locale) {
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        String localizedMessage <span style="color:#f92672">=</span> getLocalizedMessage(<span style="color:#e6db74">&#34;common.error.internal_server&#34;</span>, <span style="color:#66d9ef">null</span>, locale);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;系统异常: {} - {}&#34;</span>, request.<span style="color:#a6e22e">getRequestURI</span>(), e.<span style="color:#a6e22e">getMessage</span>(), e);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将异常存储到请求属性中，供过滤器使用</span>
+</span></span><span style="display:flex;"><span>        request.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#34;exception&#34;</span>, e);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        ApiResponse<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> ApiResponse.<span style="color:#a6e22e">error</span>(500, localizedMessage);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(500).<span style="color:#a6e22e">body</span>(response);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 获取国际化消息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getLocalizedMessage</span>(String messageKey, Object<span style="color:#f92672">[]</span> args, Locale locale) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> messageSource.<span style="color:#a6e22e">getMessage</span>(messageKey, args, messageKey, locale);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (NoSuchMessageException e) {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;未找到国际化消息: {}&#34;</span>, messageKey);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> messageKey;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="533-重试策略实现">5.3.3 重试策略实现</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 重试策略配置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryConfig</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> RetryTemplate <span style="color:#a6e22e">retryTemplate</span>() {
+</span></span><span style="display:flex;"><span>        RetryTemplate retryTemplate <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RetryTemplate();
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 重试策略：指数退避</span>
+</span></span><span style="display:flex;"><span>        ExponentialBackOffPolicy backOffPolicy <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ExponentialBackOffPolicy();
+</span></span><span style="display:flex;"><span>        backOffPolicy.<span style="color:#a6e22e">setInitialInterval</span>(1000); <span style="color:#75715e">// 初始间隔1秒</span>
+</span></span><span style="display:flex;"><span>        backOffPolicy.<span style="color:#a6e22e">setMultiplier</span>(2.<span style="color:#a6e22e">0</span>);       <span style="color:#75715e">// 倍数2</span>
+</span></span><span style="display:flex;"><span>        backOffPolicy.<span style="color:#a6e22e">setMaxInterval</span>(10000);    <span style="color:#75715e">// 最大间隔10秒</span>
+</span></span><span style="display:flex;"><span>        retryTemplate.<span style="color:#a6e22e">setBackOffPolicy</span>(backOffPolicy);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 重试策略：最多重试3次</span>
+</span></span><span style="display:flex;"><span>        SimpleRetryPolicy retryPolicy <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SimpleRetryPolicy();
+</span></span><span style="display:flex;"><span>        retryPolicy.<span style="color:#a6e22e">setMaxAttempts</span>(3);
+</span></span><span style="display:flex;"><span>        retryTemplate.<span style="color:#a6e22e">setRetryPolicy</span>(retryPolicy);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> retryTemplate;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 重试服务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RetryService</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RetryTemplate retryTemplate;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 执行可重试操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> T <span style="color:#a6e22e">executeWithRetry</span>(Supplier<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> operation, String operationName) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> retryTemplate.<span style="color:#a6e22e">execute</span>(context <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                log.<span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#34;执行操作: {}, 重试次数: {}&#34;</span>, operationName, context.<span style="color:#a6e22e">getRetryCount</span>());
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> operation.<span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>            });
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;操作执行失败: {}, 重试次数已用完&#34;</span>, operationName, e);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 判断异常是否可重试
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isRetryable</span>(Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> e <span style="color:#66d9ef">instanceof</span> RateLimitException <span style="color:#f92672">||</span> 
+</span></span><span style="display:flex;"><span>               (e <span style="color:#66d9ef">instanceof</span> Exception <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>isClientError(e));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 判断是否为客户端错误
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isClientError</span>(Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> e <span style="color:#66d9ef">instanceof</span> MethodArgumentNotValidException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> BindException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> HttpMessageNotReadableException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> MissingServletRequestParameterException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> AuthenticationException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> BadCredentialsException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> AccessDeniedException <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>               e <span style="color:#66d9ef">instanceof</span> BusinessException;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="54-异常处理流程">5.4 异常处理流程</h3>
+<ol>
+<li><strong>请求进入</strong>：<code>ResponseHeaderFilter</code> 开始处理，生成请求ID，记录开始时间</li>
+<li><strong>异常捕获</strong>：全局异常处理器捕获所有未处理的异常</li>
+<li><strong>异常分类</strong>：根据异常类型进行分类处理</li>
+<li><strong>消息国际化</strong>：根据用户语言偏好获取对应的错误消息</li>
+<li><strong>异常存储</strong>：将异常存储到请求属性中，供过滤器使用</li>
+<li><strong>响应构建</strong>：构建统一的API响应格式</li>
+<li><strong>响应头设置</strong>：<code>ResponseHeaderFilter</code> 统一设置所有响应头</li>
+<li><strong>日志记录</strong>：记录异常信息用于问题排查</li>
+<li><strong>响应返回</strong>：返回格式化的错误响应</li>
+</ol>
+<h3 id="55-过滤器设计优势">5.5 过滤器设计优势</h3>
+<h4 id="551-职责分离">5.5.1 职责分离</h4>
+<ul>
+<li><strong>异常处理器</strong>：专注于异常分类、消息国际化、响应体构建</li>
+<li><strong>响应头过滤器</strong>：专注于响应头设置、请求追踪、性能监控</li>
+</ul>
+<h4 id="552-代码简化">5.5.2 代码简化</h4>
+<ul>
+<li>异常处理器代码更简洁，只需关注业务逻辑</li>
+<li>响应头设置逻辑集中管理，便于维护</li>
+<li>减少了重复代码</li>
+</ul>
+<h4 id="553-统一处理">5.5.3 统一处理</h4>
+<ul>
+<li>所有响应（成功和异常）都会添加通用响应头</li>
+<li>响应头设置逻辑一致，避免遗漏</li>
+<li>便于监控和调试</li>
+</ul>
+<h4 id="554-扩展性好">5.5.4 扩展性好</h4>
+<ul>
+<li>新增响应头只需修改过滤器</li>
+<li>新增异常类型只需在过滤器中添加判断逻辑</li>
+<li>便于添加新的监控指标</li>
+</ul>
+<h2 id="6-最佳实践">6. 最佳实践</h2>
+<h3 id="61-异常抛出规范">6.1 异常抛出规范</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> UserRepository userRepository;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RetryService retryService;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> UserResponse <span style="color:#a6e22e">getUserById</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 参数验证</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (userId <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ValidationException(<span style="color:#e6db74">&#34;USER_ID_REQUIRED&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 业务逻辑</span>
+</span></span><span style="display:flex;"><span>        User user <span style="color:#f92672">=</span> userRepository.<span style="color:#a6e22e">findById</span>(userId)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">orElseThrow</span>(() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;USER_NOT_FOUND&#34;</span>, userId));
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 状态验证</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>user.<span style="color:#a6e22e">isActive</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;USER_ACCOUNT_DISABLED&#34;</span>, userId);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> userConverter.<span style="color:#a6e22e">toResponse</span>(user);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> UserResponse <span style="color:#a6e22e">createUser</span>(UserCreateRequest request) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 业务规则验证</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (userRepository.<span style="color:#a6e22e">existsByEmail</span>(request.<span style="color:#a6e22e">getEmail</span>())) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;USER_EMAIL_EXISTS&#34;</span>, request.<span style="color:#a6e22e">getEmail</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (userRepository.<span style="color:#a6e22e">existsByPhone</span>(request.<span style="color:#a6e22e">getPhone</span>())) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> BusinessException(<span style="color:#e6db74">&#34;USER_PHONE_EXISTS&#34;</span>, request.<span style="color:#a6e22e">getPhone</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 创建用户</span>
+</span></span><span style="display:flex;"><span>        User user <span style="color:#f92672">=</span> userConverter.<span style="color:#a6e22e">toEntity</span>(request);
+</span></span><span style="display:flex;"><span>        user <span style="color:#f92672">=</span> userRepository.<span style="color:#a6e22e">save</span>(user);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#34;用户创建成功: {}&#34;</span>, user.<span style="color:#a6e22e">getId</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> userConverter.<span style="color:#a6e22e">toResponse</span>(user);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 调用外部服务（支持重试）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> UserProfileResponse <span style="color:#a6e22e">getUserProfile</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> retryService.<span style="color:#a6e22e">executeWithRetry</span>(
+</span></span><span style="display:flex;"><span>            () <span style="color:#f92672">-&gt;</span> externalUserService.<span style="color:#a6e22e">getProfile</span>(userId),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;获取用户档案&#34;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 发送通知（支持重试）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sendNotification</span>(Long userId, String message) {
+</span></span><span style="display:flex;"><span>        retryService.<span style="color:#a6e22e">executeWithRetry</span>(
+</span></span><span style="display:flex;"><span>            () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                notificationService.<span style="color:#a6e22e">send</span>(userId, message);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;发送通知&#34;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="62-重试策略使用示例">6.2 重试策略使用示例</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 外部服务调用示例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExternalServiceClient</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RetryService retryService;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RestTemplate restTemplate;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 调用支付服务（支持重试）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> PaymentResponse <span style="color:#a6e22e">processPayment</span>(PaymentRequest request) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> retryService.<span style="color:#a6e22e">executeWithRetry</span>(
+</span></span><span style="display:flex;"><span>            () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    ResponseEntity<span style="color:#f92672">&lt;</span>PaymentResponse<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">postForEntity</span>(
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;/api/payments&#34;</span>,
+</span></span><span style="display:flex;"><span>                        request,
+</span></span><span style="display:flex;"><span>                        PaymentResponse.<span style="color:#a6e22e">class</span>
+</span></span><span style="display:flex;"><span>                    );
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (response.<span style="color:#a6e22e">getStatusCode</span>().<span style="color:#a6e22e">is2xxSuccessful</span>()) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> response.<span style="color:#a6e22e">getBody</span>();
+</span></span><span style="display:flex;"><span>                    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;支付服务调用失败: &#34;</span> <span style="color:#f92672">+</span> response.<span style="color:#a6e22e">getStatusCode</span>());
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                    log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;支付服务调用异常，准备重试: {}&#34;</span>, e.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;处理支付&#34;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * 调用短信服务（支持重试）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sendSms</span>(String phone, String message) {
+</span></span><span style="display:flex;"><span>        retryService.<span style="color:#a6e22e">executeWithRetry</span>(
+</span></span><span style="display:flex;"><span>            () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    SmsRequest smsRequest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SmsRequest(phone, message);
+</span></span><span style="display:flex;"><span>                    ResponseEntity<span style="color:#f92672">&lt;</span>SmsResponse<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">postForEntity</span>(
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;/api/sms/send&#34;</span>,
+</span></span><span style="display:flex;"><span>                        smsRequest,
+</span></span><span style="display:flex;"><span>                        SmsResponse.<span style="color:#a6e22e">class</span>
+</span></span><span style="display:flex;"><span>                    );
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>response.<span style="color:#a6e22e">getStatusCode</span>().<span style="color:#a6e22e">is2xxSuccessful</span>()) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;短信发送失败: &#34;</span> <span style="color:#f92672">+</span> response.<span style="color:#a6e22e">getStatusCode</span>());
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>                    log.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;短信服务调用异常，准备重试: {}&#34;</span>, e.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;发送短信&#34;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="63-异常监控和告警">6.3 异常监控和告警</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 异常监控切面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Aspect</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExceptionMonitorAspect</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> MetricsService metricsService;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> AlertService alertService;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Around</span>(<span style="color:#e6db74">&#34;@annotation(org.springframework.web.bind.annotation.RequestMapping) || &#34;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;@annotation(org.springframework.web.bind.annotation.GetMapping) || &#34;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;@annotation(org.springframework.web.bind.annotation.PostMapping) || &#34;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;@annotation(org.springframework.web.bind.annotation.PutMapping) || &#34;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;@annotation(org.springframework.web.bind.annotation.DeleteMapping)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">monitorExceptions</span>(ProceedingJoinPoint joinPoint) <span style="color:#66d9ef">throws</span> Throwable {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">long</span> startTime <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>();
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            Object result <span style="color:#f92672">=</span> joinPoint.<span style="color:#a6e22e">proceed</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">long</span> duration <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>() <span style="color:#f92672">-</span> startTime;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 记录成功指标</span>
+</span></span><span style="display:flex;"><span>            metricsService.<span style="color:#a6e22e">recordSuccess</span>(joinPoint.<span style="color:#a6e22e">getSignature</span>().<span style="color:#a6e22e">getName</span>(), duration);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (BusinessException e) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 记录业务异常指标</span>
+</span></span><span style="display:flex;"><span>            metricsService.<span style="color:#a6e22e">recordBusinessException</span>(e.<span style="color:#a6e22e">getErrorCode</span>(), e.<span style="color:#a6e22e">getMessageKey</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (RateLimitException e) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 记录限流异常指标</span>
+</span></span><span style="display:flex;"><span>            metricsService.<span style="color:#a6e22e">recordRateLimitException</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 记录系统异常指标</span>
+</span></span><span style="display:flex;"><span>            metricsService.<span style="color:#a6e22e">recordSystemException</span>(e.<span style="color:#a6e22e">getClass</span>().<span style="color:#a6e22e">getSimpleName</span>());
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 发送告警</span>
+</span></span><span style="display:flex;"><span>            alertService.<span style="color:#a6e22e">sendAlert</span>(<span style="color:#e6db74">&#34;系统异常&#34;</span>, e.<span style="color:#a6e22e">getMessage</span>(), e);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> e;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="64-异常测试">6.4 异常测试</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@SpringBootTest</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@AutoConfigureTestDatabase</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GlobalExceptionHandlerTest</span> {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> TestRestTemplate restTemplate;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@DisplayName</span>(<span style="color:#e6db74">&#34;测试业务异常处理&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testBusinessException</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Given</span>
+</span></span><span style="display:flex;"><span>        String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/users/999999&#34;</span>;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// When</span>
+</span></span><span style="display:flex;"><span>        ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">getForEntity</span>(url, ApiResponse.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Then</span>
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getStatusCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(HttpStatus.<span style="color:#a6e22e">INTERNAL_SERVER_ERROR</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getBody</span>().<span style="color:#a6e22e">getCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(500);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getBody</span>().<span style="color:#a6e22e">getMessage</span>()).<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;用户不存在&#34;</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Type&#34;</span>)).<span style="color:#a6e22e">isEqualTo</span>(<span style="color:#e6db74">&#34;BUSINESS&#34;</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Details&#34;</span>)).<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;用户不存在&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@DisplayName</span>(<span style="color:#e6db74">&#34;测试参数验证异常处理&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testValidationException</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Given</span>
+</span></span><span style="display:flex;"><span>        UserCreateRequest request <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> UserCreateRequest();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 不设置必需字段</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// When</span>
+</span></span><span style="display:flex;"><span>        ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">postForEntity</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;/api/users&#34;</span>, request, ApiResponse.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Then</span>
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getStatusCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(HttpStatus.<span style="color:#a6e22e">BAD_REQUEST</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getBody</span>().<span style="color:#a6e22e">getCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(400);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Type&#34;</span>)).<span style="color:#a6e22e">isEqualTo</span>(<span style="color:#e6db74">&#34;CLIENT&#34;</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Details&#34;</span>)).<span style="color:#a6e22e">isNotNull</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@DisplayName</span>(<span style="color:#e6db74">&#34;测试限流异常处理&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testRateLimitException</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Given</span>
+</span></span><span style="display:flex;"><span>        String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/rate-limited-endpoint&#34;</span>;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// When</span>
+</span></span><span style="display:flex;"><span>        ResponseEntity<span style="color:#f92672">&lt;</span>ApiResponse<span style="color:#f92672">&gt;</span> response <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">getForEntity</span>(url, ApiResponse.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Then</span>
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getStatusCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(HttpStatus.<span style="color:#a6e22e">TOO_MANY_REQUESTS</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getBody</span>().<span style="color:#a6e22e">getCode</span>()).<span style="color:#a6e22e">isEqualTo</span>(429);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;Retry-After&#34;</span>)).<span style="color:#a6e22e">isNotNull</span>();
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Type&#34;</span>)).<span style="color:#a6e22e">isEqualTo</span>(<span style="color:#e6db74">&#34;RATE_LIMIT&#34;</span>);
+</span></span><span style="display:flex;"><span>        assertThat(response.<span style="color:#a6e22e">getHeaders</span>().<span style="color:#a6e22e">getFirst</span>(<span style="color:#e6db74">&#34;X-Error-Details&#34;</span>)).<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;请求频率超限&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="7-总结">7. 总结</h2>
+<p>通过以上设计，我们构建了一个完整的异常处理体系，具有以下特点：</p>
+<ol>
+<li><strong>统一性</strong>：所有异常都通过统一的处理器进行处理</li>
+<li><strong>国际化</strong>：支持多语言错误消息</li>
+<li><strong>可扩展性</strong>：易于添加新的异常类型和错误码</li>
+<li><strong>可维护性</strong>：清晰的异常分类和命名规范</li>
+<li><strong>可监控性</strong>：支持异常监控和告警</li>
+<li><strong>用户友好</strong>：提供清晰的错误信息和用户引导</li>
+</ol>
+<p>这个设计思路可以很好地支持大型项目的异常处理需求，为前端提供友好的错误信息，同时便于后端进行问题定位和系统监控。</p>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websocket-vs-rest/" target="_blank" title="[译]WebSocket与REST">[译]WebSocket与REST</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/07/24/thingsboard-api/" target="_blank" title="ThingsBoard接口设计">ThingsBoard接口设计</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/06/06/oauth2-client-login-in-thingsboard/" target="_blank" title="Thingsboard源码中的OAuth2登录实现">Thingsboard源码中的OAuth2登录实现</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/02/14/retry-for-timeout/" target="_blank" title="区分偶发性超时和频繁超时的重试策略">区分偶发性超时和频繁超时的重试策略</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/github-actions-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Github Actions">ThingsBoard源码中的Github Actions</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/security-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Security">ThingsBoard源码中的Security</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring-boot/" rel="tag">spring-boot</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2025/07/24/thingsboard-api/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: ThingsBoard接口设计</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2025/08/24/my-development-setup-2025/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 我的 2025 年开发设置</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2025\/07\/24\/spring-exception\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-核心设计原则">1. 核心设计原则</a>
+      <ul>
+        <li><a href="#11-异常职责分离">1.1 异常职责分离</a></li>
+        <li><a href="#12-完全国际化支持">1.2 完全国际化支持</a></li>
+        <li><a href="#13-错误码分层设计">1.3 错误码分层设计</a></li>
+        <li><a href="#14-统一响应格式">1.4 统一响应格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-异常体系设计">2. 异常体系设计</a>
+      <ul>
+        <li><a href="#21-核心异常类型">2.1 核心异常类型</a></li>
+        <li><a href="#22-异常继承体系">2.2 异常继承体系</a></li>
+        <li><a href="#23-spring-现有异常处理">2.3 Spring 现有异常处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-统一响应结构">3. 统一响应结构</a>
+      <ul>
+        <li><a href="#31-apiresponse-结构设计">3.1 ApiResponse 结构设计</a></li>
+        <li><a href="#32-响应头设计">3.2 响应头设计</a></li>
+        <li><a href="#33-错误类型枚举">3.3 错误类型枚举</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-国际化资源文件设计">4. 国际化资源文件设计</a>
+      <ul>
+        <li><a href="#41-命名规范">4.1 命名规范</a></li>
+        <li><a href="#42-消息键示例">4.2 消息键示例</a></li>
+        <li><a href="#43-资源文件结构">4.3 资源文件结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-全局异常处理器">5. 全局异常处理器</a>
+      <ul>
+        <li><a href="#51-处理器设计">5.1 处理器设计</a></li>
+        <li><a href="#52-异常映射规则">5.2 异常映射规则</a></li>
+        <li><a href="#53-异常重试策略">5.3 异常重试策略</a></li>
+        <li><a href="#54-异常处理流程">5.4 异常处理流程</a></li>
+        <li><a href="#55-过滤器设计优势">5.5 过滤器设计优势</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-最佳实践">6. 最佳实践</a>
+      <ul>
+        <li><a href="#61-异常抛出规范">6.1 异常抛出规范</a></li>
+        <li><a href="#62-重试策略使用示例">6.2 重试策略使用示例</a></li>
+        <li><a href="#63-异常监控和告警">6.3 异常监控和告警</a></li>
+        <li><a href="#64-异常测试">6.4 异常测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-总结">7. 总结</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

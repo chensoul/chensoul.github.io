@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Python学习4：流程控制 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Python学习4：流程控制">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/06/14/python-flow-control/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Python学习4：流程控制">
+  <meta itemprop="description" content="在 Python 中，流程控制语句包括条件语句（if-elif-else）、循环语句（for 和 while）、跳转语句（break、continue 和 return）和异常处理语句。">
+  <meta itemprop="datePublished" content="2023-06-14T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-06-14T00:00:00+00:00">
+  <meta itemprop="wordCount" content="604">
+  <meta itemprop="keywords" content="Javascript,Tutorial,Html">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Python学习4：流程控制">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Python学习4：流程控制</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-06-14">2023-06-14</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/python/" rel="category">Python</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/html/" rel="tag">Html</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>在 Python 中，流程控制语句包括条件语句（if-elif-else）、循环语句（for 和 while）、跳转语句（break、continue 和 return）和异常处理语句。</p>
+<h2 id="条件语句">条件语句</h2>
+<p>条件语句用于在不同的条件下执行不同的代码块。Python 中的条件语句是 if-elif-else 结构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 条件语句示例</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;x is negative&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">elif</span> x <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;x is zero&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;x is positive&#34;</span>)
+</span></span></code></pre></div><h2 id="循环语句">循环语句</h2>
+<p>循环语句用于重复执行一段代码，直到满足某个条件或达到某个条件次数为止。Python 中的循环语句包括 for 和 while 两种结构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># for 循环示例</span>
+</span></span><span style="display:flex;"><span>my_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> my_list:
+</span></span><span style="display:flex;"><span>    print(item)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># while 循环示例</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    print(x)
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>遍历集合时修改集合的内容，会很容易生成错误的结果。因此不能直接进行循环，而是应遍历该集合的副本或创建新的集合：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Create a sample collection</span>
+</span></span><span style="display:flex;"><span>users <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Hans&#39;</span>: <span style="color:#e6db74">&#39;active&#39;</span>, <span style="color:#e6db74">&#39;Éléonore&#39;</span>: <span style="color:#e6db74">&#39;inactive&#39;</span>, <span style="color:#e6db74">&#39;景太郎&#39;</span>: <span style="color:#e6db74">&#39;active&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Strategy:  Iterate over a copy</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> user, status <span style="color:#f92672">in</span> users<span style="color:#f92672">.</span>copy()<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;inactive&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">del</span> users[user]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Strategy:  Create a new collection</span>
+</span></span><span style="display:flex;"><span>active_users <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> user, status <span style="color:#f92672">in</span> users<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;active&#39;</span>:
+</span></span><span style="display:flex;"><span>        active_users[user] <span style="color:#f92672">=</span> status
+</span></span></code></pre></div><h2 id="跳转语句">跳转语句</h2>
+<p>跳转语句用于在循环或函数中跳过一些代码或终止循环。Python 中的跳转语句包括 break、continue 和 return。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># break 示例</span>
+</span></span><span style="display:flex;"><span>my_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> my_list:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> item <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    print(item)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># continue 示例</span>
+</span></span><span style="display:flex;"><span>my_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> my_list:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> item <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    print(item)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># return 示例</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_function</span>(x):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>在这个示例中，我们使用 break 关键字来终止一个 for 循环，使用 continue 关键字来跳过一个循环迭代，使用 return 关键字来从函数中返回一个值。</p>
+<h2 id="pass-语句"><code>pass</code> 语句</h2>
+<p><a href="https://docs.python.org/zh-cn/3/reference/simple_stmts.html#pass" target="_blank"><code>pass</code></a> 语句不执行任何操作。语法上需要一个语句，但程序不实际执行任何动作时，可以使用该语句。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># pass 语句</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>  <span style="color:#75715e"># Busy-wait for keyboard interrupt (Ctrl+C)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">function</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># to be implemented</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyEmptyClass</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pass</span>
+</span></span></code></pre></div><h2 id="match-语句"><code>match</code> 语句</h2>
+<p>match 语句接受一个表达式，并将其值与一个或多个 case 块中给定的模式进行比较。这在表面上类似于 C、Java 或 JavaScript（以及许多其他语言）中的 switch 语句，但它更类似于 Rust 或 Haskell 等语言中的模式匹配。只有第一个匹配的模式会被执行，并且它还可以从值中提取组件（序列元素或对象属性）到变量中。</p>
+<p>最简单的形式是将一个目标值与一个或多个字面值进行比较：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">http_error</span>(status):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> status:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">400</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Bad request&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">404</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Not found&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">418</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;I&#39;m a teapot&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> _:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Something&#39;s wrong with the internet&#34;</span>
+</span></span></code></pre></div><p>注意最后一个代码块：“变量名” <code>_</code> 被作为 <em>通配符</em> 并必定会匹配成功。 如果没有 case 语句匹配成功，则不会执行任何分支。</p>
+<p>使用 <code>|</code> （“ or ”）在一个模式中可以组合多个字面值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#ae81ff">401</span> <span style="color:#f92672">|</span> <span style="color:#ae81ff">403</span> <span style="color:#f92672">|</span> <span style="color:#ae81ff">404</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Not allowed&#34;</span>
+</span></span></code></pre></div><p>模式的形式类似解包赋值，并可被用于绑定变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># point is an (x, y) tuple</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">match</span> point:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Origin&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> (<span style="color:#ae81ff">0</span>, y):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Y=</span><span style="color:#e6db74">{</span>y<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> (x, <span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;X=</span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> (x, y):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;X=</span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">, Y=</span><span style="color:#e6db74">{</span>y<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> _:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;Not a point&#34;</span>)
+</span></span></code></pre></div><p>请仔细研究此代码！ 第一个模式有两个字面值，可以看作是上面所示字面值模式的扩展。但接下来的两个模式结合了一个字面值和一个变量，而变量 <strong>绑定</strong> 了一个来自目标的值（<code>point</code>）。第四个模式捕获了两个值，这使得它在概念上类似于解包赋值 <code>(x, y) = point</code>。</p>
+<p>如果使用类实现数据结构，可在类名后加一个类似于构造器的参数列表，这样做可以把属性放到变量里：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Point</span>:
+</span></span><span style="display:flex;"><span>    x: int
+</span></span><span style="display:flex;"><span>    y: int
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">where_is</span>(point):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> point:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> Point(x<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;Origin&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> Point(x<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, y<span style="color:#f92672">=</span>y):
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Y=</span><span style="color:#e6db74">{</span>y<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> Point(x<span style="color:#f92672">=</span>x, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;X=</span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> Point():
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;Somewhere else&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> _:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#34;Not a point&#34;</span>)
+</span></span></code></pre></div><p>可在 dataclass 等支持属性排序的内置类中使用位置参数。还可在类中设置 <code>__match_args__</code> 特殊属性为模式的属性定义指定位置。如果它被设为 (&ldquo;x&rdquo;, &ldquo;y&rdquo;)，则以下模式均为等价的，并且都把 <code>y</code> 属性绑定到 <code>var</code> 变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Point(<span style="color:#ae81ff">1</span>, var)
+</span></span><span style="display:flex;"><span>Point(<span style="color:#ae81ff">1</span>, y<span style="color:#f92672">=</span>var)
+</span></span><span style="display:flex;"><span>Point(x<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, y<span style="color:#f92672">=</span>var)
+</span></span><span style="display:flex;"><span>Point(y<span style="color:#f92672">=</span>var, x<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>读取模式的推荐方式是将它们看做是你会在赋值操作左侧放置的内容的扩展形式，以便理解各个变量将会被设置的值。 只有单独的名称（例如上面的 <code>var</code>）会被 match 语句所赋值。 带点号的名称 (例如 <code>foo.bar</code>)、属性名称（例如上面的 <code>x=</code> 和 <code>y=</code>）或类名称（通过其后的 &ldquo;(&hellip;)&rdquo; 来识别，例如上面的 <code>Point</code>）都绝不会被赋值。</p>
+<p>模式可以任意地嵌套。例如，如果有一个由点组成的短列表，则可使用如下方式进行匹配：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">match</span> points:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> []:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;No points&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> [Point(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;The origin&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> [Point(x, y)]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Single point </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> [Point(<span style="color:#ae81ff">0</span>, y1), Point(<span style="color:#ae81ff">0</span>, y2)]:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Two on the Y axis at </span><span style="color:#e6db74">{</span>y1<span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y2<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> _:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Something else&#34;</span>)
+</span></span></code></pre></div><p>为模式添加成为守护项的 <code>if</code> 子句。如果守护项的值为假，则 <code>match</code> 继续匹配下一个 case 语句块。注意，值的捕获发生在守护项被求值之前：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">match</span> point:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Point(x, y) <span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> y:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Y=X at </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Point(x, y):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Not on the diagonal&#34;</span>)
+</span></span></code></pre></div><p>match 语句的其他特性：</p>
+<ul>
+<li>
+<p>与解包赋值类似，元组和列表模式具有完全相同的含义，并且实际上能匹配任意序列。 但它们不能匹配迭代器或字符串。</p>
+</li>
+<li>
+<p>序列模式支持扩展解包操作：<code>[x, y, *rest]</code> 和 <code>(x, y, *rest)</code> 的作用类似于解包赋值。 在 <code>*</code> 之后的名称也可以为 <code>_</code>，因此，<code>(x, y, *_)</code> 可以匹配包含至少两个条目的序列，而不必绑定其余的条目。</p>
+</li>
+<li>
+<p>映射模式：<code>{&quot;bandwidth&quot;: b, &quot;latency&quot;: l}</code> 从字典中捕获 <code>&quot;bandwidth&quot;</code> 和 <code>&quot;latency&quot;</code> 的值。与序列模式不同，额外的键会被忽略。<code>**rest</code> 等解包操作也支持。但 <code>**_</code> 是冗余的，不允许使用。</p>
+</li>
+<li>
+<p>使用 <code>as</code> 关键字可以捕获子模式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> (Point(x1, y1), Point(x2, y2) <span style="color:#66d9ef">as</span> p2): <span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>将把输入的第二个元素捕获为 <code>p2</code> (只要输入是包含两个点的序列)</p>
+</li>
+<li>
+<p>大多数字面值是按相等性比较的，但是单例对象 <code>True</code>, <code>False</code> 和 <code>None</code> 则是按标识号比较的。</p>
+</li>
+<li>
+<p>模式可以使用命名常量。 这些命名常量必须为带点号的名称以防止它们被解读为捕获变量:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> enum <span style="color:#f92672">import</span> Enum
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Color</span>(Enum):
+</span></span><span style="display:flex;"><span>    RED <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;red&#39;</span>
+</span></span><span style="display:flex;"><span>    GREEN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;green&#39;</span>
+</span></span><span style="display:flex;"><span>    BLUE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;blue&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color <span style="color:#f92672">=</span> Color(input(<span style="color:#e6db74">&#34;Enter your choice of &#39;red&#39;, &#39;blue&#39; or &#39;green&#39;: &#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">match</span> color:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Color<span style="color:#f92672">.</span>RED:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;I see red!&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Color<span style="color:#f92672">.</span>GREEN:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Grass is green&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Color<span style="color:#f92672">.</span>BLUE:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;I&#39;m feeling the blues :(&#34;</span>)
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="异常处理语句">异常处理语句</h2>
+<p>异常处理语句：用于处理程序执行过程中可能出现的异常情况，Python 中的异常处理语句包括 try、except、finally 和 raise 语句。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;Please enter a number: &#34;</span>))
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> x
+</span></span><span style="display:flex;"><span>    print(y)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ValueError</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Invalid input&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ZeroDivisionError</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Cannot divide by zero&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;No exception occurred&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">finally</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Execution completed&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># raise 语句</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;x must be non-negative&#34;</span>)
+</span></span></code></pre></div>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/10/python-data-type/" target="_blank" title="Python学习2：数据类型">Python学习2：数据类型</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/01/python-wheels/" target="_blank" title="[译]什么是 Python Wheels，你为什么要关心它？">[译]什么是 Python Wheels，你为什么要关心它？</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/01/what-is-pip/" target="_blank" title="[译]使用 Python 的 pip 管理项目的依赖关系">[译]使用 Python 的 pip 管理项目的依赖关系</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/18/jsr-166/" target="_blank" title="JSR 166规范">JSR 166规范</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/11/git-flow-model-and-usage/" target="_blank" title="Git Flow分支模型和使用">Git Flow分支模型和使用</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/09/python-install-build-publish-run/" target="_blank" title="Python安装、构建、发布、下载和运行">Python安装、构建、发布、下载和运行</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/html/" rel="tag">html</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/06/14/weekly_review_23/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 周报-23｜读书、健身、定投、帮朋友、陪家人</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]为恐龙解释现代JavaScript</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/06\/14\/python-flow-control\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#条件语句">条件语句</a></li>
+    <li><a href="#循环语句">循环语句</a></li>
+    <li><a href="#跳转语句">跳转语句</a></li>
+    <li><a href="#pass-语句"><code>pass</code> 语句</a></li>
+    <li><a href="#match-语句"><code>match</code> 语句</a></li>
+    <li><a href="#异常处理语句">异常处理语句</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

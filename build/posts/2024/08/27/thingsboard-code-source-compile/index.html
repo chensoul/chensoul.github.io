@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ThingsBoard源码编译和Idea运行 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="ThingsBoard源码编译和Idea运行">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/08/27/thingsboard-code-source-compile/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="ThingsBoard源码编译和Idea运行">
+  <meta itemprop="description" content="ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard，从 3.7 版本之后，要求 JDK17。官方提供了源码编译的文档：Building from sources">
+  <meta itemprop="datePublished" content="2024-08-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="227">
+  <meta itemprop="keywords" content="Docker,Backend,Tutorial,Maven">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="ThingsBoard源码编译和Idea运行">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ThingsBoard源码编译和Idea运行</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-08-27">2024-08-27</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/maven/" rel="tag">Maven</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>ThingsBoard 源码地址：<a href="https://github.com/thingsboard/thingsboard" target="_blank">https://github.com/thingsboard/thingsboard</a>，从 <a href="https://github.com/thingsboard/thingsboard/releases/tag/v3.7" target="_blank">3.7</a> 版本之后，要求 JDK17。官方提供了源码编译的文档：<a href="https://thingsboard.io/docs/user-guide/install/building-from-source/" target="_blank">Building from sources</a></p>
+<h2 id="源码编译">源码编译</h2>
+<p>下载代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone git@github.com:thingsboard/thingsboard.git
+</span></span></code></pre></div><p>设置当前 JDK 版本为 17 以上。这里我使用 sdkman 切换 java。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sdk use java 17.0.15-tem
+</span></span></code></pre></div><p>终端编译源码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd thingsboard
+</span></span><span style="display:flex;"><span>mvn clean install -Dmaven.test.skip<span style="color:#f92672">=</span>true -Dlicense.skip<span style="color:#f92672">=</span>true
+</span></span></code></pre></div><blockquote>
+<p>排错：</p>
+<ol>
+<li>如果在编译过程中提示找不到 Gradle：</li>
+</ol>
+<pre tabindex="0"><code>[ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution &#39;https://services.gradle.org/distributions/gradle-7.3.3-bin.zip&#39;. -&gt; [Help 1]
+</code></pre><p>往上查看详细异常日志：</p>
+<pre tabindex="0"><code>* What went wrong:
+Could not compile build file &#39;/Users/chensoul/Codes/github/thingsboard/packaging/java/build.gradle&#39;.
+&gt; startup failed:
+  General error during conversion: Unsupported class file major version 65
+
+  java.lang.IllegalArgumentException: Unsupported class file major version 65
+</code></pre><p>可以看到是 JDK 版本过高的原因。需要确认 JDK 版本使用 17，不能是 21。</p></blockquote>
+<p>如果 maven 下载太慢，则修改 mirrors 节点如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;mirrors&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mirror&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>maven-default-http-blocker<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mirrorOf&gt;</span>external:dont-match-anything-mate:*<span style="color:#f92672">&lt;/mirrorOf&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;name&gt;</span>Pseudo repository to mirror external repositories initially using HTTP.<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>http://0.0.0.0/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mirror&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mirror&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>aliyun-central<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;name&gt;</span>aliyun-central<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://maven.aliyun.com/nexus/content/repositories/central<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mirrorOf&gt;</span>central<span style="color:#f92672">&lt;/mirrorOf&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mirror&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mirror&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>aliyun-jcenter<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;name&gt;</span>aliyun-jcenter<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://maven.aliyun.com/nexus/content/repositories/jcenter<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mirrorOf&gt;</span>jcenter<span style="color:#f92672">&lt;/mirrorOf&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mirror&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/mirrors&gt;</span>
+</span></span></code></pre></div><p>如果出现下面的错误：</p>
+<pre tabindex="0"><code> Could not resolve dependencies for project org.thingsboard:application:jar:4.2.0-SNAPSHOT
+[ERROR] dependency: org.thingsboard:dao:jar:tests:4.2.0-SNAPSHOT (test)
+</code></pre><p>运行下面命令，然后再重新运行编译命令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd dao
+</span></span><span style="display:flex;"><span>mvn install
+</span></span></code></pre></div><h2 id="idea-中运行">Idea 中运行</h2>
+<p>首先 IDEA 需要安装 <strong>lombok</strong> 和 <strong>Protobuf</strong> 相关插件，有个 proto 文件生成的java代码过大(<code>TransportProtos</code>)，默认是不会解析的。需要编辑idea 的属性(Help -&gt; Edit Custom Properties)，加入<code>idea.max.intellisense.filesize=3000</code>，将上限提高到3M。</p>
+<p>准备 postgres 数据库，在 docker 目录下面创建 docker-compose.postgres-1.yml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">postgres</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#34;postgres:16&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;5432:5432&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_DB</span>: <span style="color:#ae81ff">thingsboard</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_PASSWORD</span>: <span style="color:#ae81ff">postgres</span>
+</span></span></code></pre></div><p>使用 docker-compose 启动 postgres ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker compose -f docker-compose.postgres-1.yml up -d
+</span></span></code></pre></div><p>在 idea 中打开项目，然后将 dao/src/main/resources/sql 目录拷贝到 application/src/main/data 目录下。</p>
+<p>运行 application 模块下的 ThingsboardInstallApplication 类，初始化数据库。</p>
+<p>运行 application 模块下的 ThingsboardServerApplication 类，启动 thingsboard。</p>
+<p>启动成功之后，在浏览器访问 <a href="http://localhost:8080/login" target="_blank">http://localhost:8080/login</a>， ThingsBoard 默认账户</p>
+<ul>
+<li>系统管理员： <a href="mailto:sysadmin@thingsboard.org">sysadmin@thingsboard.org</a> / sysadmin</li>
+<li>租户管理员：tenant@thingsboard.org / tenant</li>
+<li>客户用户： <a href="mailto:customer@thingsboard.org">customer@thingsboard.org</a> / customer</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/install-and-setup-glassfish-for-jms/" target="_blank" title="[译]为 JMS 安装和设置 Glassfish">[译]为 JMS 安装和设置 Glassfish</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/18/publishing-a-maven-site-to-github-pages/" target="_blank" title="将 Maven 站点发布到 GitHub Pages">将 Maven 站点发布到 GitHub Pages</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/10/springdoc-with-spring-boot/" target="_blank" title="Spring Boot集成SpringDoc生成Api文档">Spring Boot集成SpringDoc生成Api文档</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/26/install-jenkins/" target="_blank" title="Jenkins安装和部署-使用Docker">Jenkins安装和部署-使用Docker</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/25/install-artifactory-oss/" target="_blank" title="搭建本地 Maven 仓库 Artifactory 开源版">搭建本地 Maven 仓库 Artifactory 开源版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/04/29/all-things-about-thingsboard/" target="_blank" title="All things about ThingsBoard">All things about ThingsBoard</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/maven/" rel="tag">maven</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/08/09/debug-activemq-source-code/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: ActiveMQ源码本地调试运行</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/08/27/activemq-source-code-broker-service/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: ActiveMQ源码-BrokerService和PersistenceAdapter</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/08\/27\/thingsboard-code-source-compile\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#源码编译">源码编译</a></li>
+    <li><a href="#idea-中运行">Idea 中运行</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

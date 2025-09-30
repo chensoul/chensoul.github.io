@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>如何设计一个分布式ID生成器保证ID按时间有序？ - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="如何设计一个分布式ID生成器保证ID按时间有序？">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/12/05/distributed-id-generator/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="如何设计一个分布式ID生成器保证ID按时间有序？">
+  <meta itemprop="description" content="很多业务有生成唯一 ID 并作为数据库主键的需求。数据库会在这个字段上建立聚集索引（参考 MySQL InnoDB），即该字段会影响各条数据再物理存储上的顺序。">
+  <meta itemprop="datePublished" content="2023-12-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-12-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="564">
+  <meta itemprop="keywords" content="Mysql,Redis,Mongodb,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="如何设计一个分布式ID生成器保证ID按时间有序？">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">如何设计一个分布式ID生成器保证ID按时间有序？</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-12-05">2023-12-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/architecture/" rel="category">Architecture</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/mysql/" rel="tag">Mysql</a>, <a class="meta__link" href="/tags/redis/" rel="tag">Redis</a>, <a class="meta__link" href="/tags/mongodb/" rel="tag">Mongodb</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>很多业务有生成唯一 ID 并作为数据库主键的需求。数据库会在这个字段上建立聚集索引（参考 MySQL InnoDB），即该字段会影响各条数据再物理存储上的顺序。</p>
+<p>ID还要尽可能<strong>短</strong>，节省内存，让数据库索引效率更高。基本上64位整数能够满足绝大多数的场景，但是如果能做到比64位更短那就更好了。需要根据具体业务进行分析，预估出ID的最大值，这个最大值通常比64位整数的上限小很多，于是我们可以用更少的bit表示这个ID。</p>
+<p>查询的时候，往往有分页或者<strong>排序</strong>的需求，所以需要给每条数据添加一个时间字段，并在其上建立普通索引(Secondary Index)。但是普通索引的访问效率比聚集索引慢，如果能够让ID<strong>按照时间粗略有序</strong>，则可以省去这个时间字段。为什么不是按照时间精确有序呢？因为按照时间精确有序是做不到的，除非用一个单机算法，在分布式场景下做到精确有序性能一般很差。</p>
+<p>这就引出了 ID 生成的三大核心需求：</p>
+<ul>
+<li>全局唯一</li>
+<li>按照时间粗略有序</li>
+<li>尽可能短</li>
+</ul>
+<p>下面介绍一些常用的生成 ID 的方法。</p>
+<h2 id="uuid">UUID</h2>
+<p><a href="https://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUID </a>是一类算法的统称，具体有不同的实现。UUID 的优点是每台机器可以独立产生 ID，理论上保证不会重复，所以天然是分布式的；缺点是生成的 ID 太长，不仅占用内存，而且索引查询效率低。</p>
+<p>MongoDB 的 <a href="https://docs.mongodb.com/manual/reference/method/ObjectId/" target="_blank">ObjectId</a> 使用的就是 UUID 算法。生成的 ObjectId 占 12 个字节，由以下几个部分组成，</p>
+<ul>
+<li>4 个字节表示的 Unix timestamp</li>
+<li>3 个字节表示的机器的 ID</li>
+<li>2 个字节表示的进程 ID</li>
+<li>3 个字节表示的计数器</li>
+</ul>
+<h2 id="使用数据库">使用数据库</h2>
+<p>可以使用数据库中的自增主键来生成ID。将ID生成的过程交给数据库管理，每个节点向数据库插入记录时，数据库会自动分配一个唯一的ID。通过使用数据库的自动递增功能，可以保证ID的唯一性和粗略有序性。</p>
+<p>在分布式环境下，可以使用多台数据库协同工作生成 ID。假设用 8 台MySQL服务器协同工作，第一台 MySQL 初始值是 1，每次自增 8，第二台 MySQL 初始值是 2，每次自增 8，依次类推。在数据库前面添加一个负载均衡，每来一个请求，由负载均衡随机地将请求发给 8 台 MySQL 中的任意一个，然后返回一个ID。</p>
+<p><a href="http://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/" target="_blank">Flickr就是这么做的</a>，仅仅使用了两台 MySQL 服务器。可见这个方法虽然简单无脑，但是性能足够好。不过要注意，在 MySQL 中，不需要把所有 ID 都存下来，每台机器只需要存一个 MAX_ID 就可以了。这需要用到 MySQL 的一个 <a href="http://dev.mysql.com/doc/refman/5.0/en/replace.html" target="_blank">REPLACE INTO</a> 特性。</p>
+<p>Flickr 的实现方式如下。</p>
+<p>Tickets64 表结构如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Tickets64<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> bigint(<span style="color:#ae81ff">20</span>) unsigned <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> auto_increment,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>  (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span>)
+</span></span><span style="display:flex;"><span>) ENGINE<span style="color:#f92672">=</span>InnoDB
+</span></span></code></pre></div><p><code>SELECT * from Tickets64</code> 返回一行，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------------------+------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> id                <span style="color:#f92672">|</span> stub <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------------------+------+
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">|</span> <span style="color:#ae81ff">72157623227190423</span> <span style="color:#f92672">|</span>    a <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span><span style="color:#75715e">-------------------+------+
+</span></span></span></code></pre></div><p>当我需要一个新的全局唯一 64 位 ID 时，我发出以下 SQL：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">INTO</span> Tickets64 (stub) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;a&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> LAST_INSERT_ID();
+</span></span></code></pre></div><p>对于两台数据库服务器，分别设置表的自增值（<code>auto_increment_increment</code>）和偏移值（<code>auto_increment_offset</code>）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>TicketServer1:
+</span></span><span style="display:flex;"><span>auto_increment_increment <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>auto_increment_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TicketServer2:
+</span></span><span style="display:flex;"><span>auto_increment_increment <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>auto_increment_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>举例：一个数据库服务器设置：自增值为 2，起始值为 1，生成的 ID 为奇数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> auto_increment_increment<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> auto_increment_offset<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> Tickets64;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Tickets64<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> bigint(<span style="color:#ae81ff">20</span>) unsigned <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> auto_increment,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>  (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span>)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> AUTO_INCREMENT <span style="color:#66d9ef">FROM</span> information_schema.tables <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">table_name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Tickets64&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">INTO</span> Tickets64 (stub) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;a&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> LAST_INSERT_ID();
+</span></span></code></pre></div><p>另一个数据库服务器如何设置？：自增值为 2，起始值为 2，生成的 ID 为偶数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> auto_increment_increment<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> auto_increment_offset<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> Tickets64;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Tickets64<span style="color:#f92672">`</span> (
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>id<span style="color:#f92672">`</span> bigint(<span style="color:#ae81ff">20</span>) unsigned <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> auto_increment,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> char(<span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>  (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">KEY</span> <span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span> (<span style="color:#f92672">`</span>stub<span style="color:#f92672">`</span>)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> AUTO_INCREMENT <span style="color:#66d9ef">FROM</span> information_schema.tables <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">table_name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Tickets64&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">REPLACE</span> <span style="color:#66d9ef">INTO</span> Tickets64 (stub) <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;a&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> LAST_INSERT_ID();
+</span></span></code></pre></div><p>这个方法跟单台数据库比，缺点是 <strong>ID 不是严格递增的</strong>，只是粗略递增的。不过这个问题不大，我们的目标是粗略有序，不需要严格递增。</p>
+<h2 id="snowflake算法">Snowflake算法</h2>
+<p>Twitter 开源的 <a href="https://github.com/twitter/snowflake" target="_blank">Snowflake</a> 算法。Snowflake是一种经典的分布式ID生成算法，由Twitter开发。它将64位的ID划分为不同的部分，包括时间戳、数据中心ID、机器ID和序列号。通过在不同的部分分配不同的位数，可以在分布式环境中生成唯一的ID，并且保证了ID的时间粗略有序性。</p>
+<p>Instagram <a href="https://engineering.instagram.com/sharding-ids-at-instagram-1cf5a71e5a5c" target="_blank">用了类似的方案</a>，41 位表示时间戳，13 位表示 shard Id（一个shard Id对应一台PostgreSQL机器），最低10位表示自增 ID。这个方案用一个 PostgreSQL 集群代替了 Twitter Snowflake 集群，优点是利用了现成的 PostgreSQL。</p>
+<h2 id="使用分布式锁">使用分布式锁</h2>
+<p>可以使用分布式锁来保证在生成 ID 时的互斥性，从而保证 ID 的有序性。可以使用一些分布式锁的实现，如 ZooKeeper、Redis 等，来协调各个节点的 ID 生成过程。每个节点在生成 ID 之前，首先获取分布式锁，然后按照一定规则生成 ID，释放锁后，下一个节点再获取锁生成ID。</p>
+<p>下面是一个基本的使用 ZooKeeper 锁生成分布式 ID 的示例：</p>
+<ol>
+<li>创建ZooKeeper客户端连接：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>CuratorFramework client <span style="color:#f92672">=</span> CuratorFrameworkFactory.<span style="color:#a6e22e">newClient</span>(<span style="color:#e6db74">&#34;localhost:2181&#34;</span>, <span style="color:#66d9ef">new</span> ExponentialBackoffRetry(1000, 3));
+</span></span><span style="display:flex;"><span>client.<span style="color:#a6e22e">start</span>();
+</span></span></code></pre></div><ol start="2">
+<li>创建分布式锁：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>InterProcessMutex lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InterProcessMutex(client, <span style="color:#e6db74">&#34;/id_lock&#34;</span>);
+</span></span></code></pre></div><ol start="3">
+<li>获取锁并生成ID：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> timeoutSeconds <span style="color:#f92672">=</span> 10; <span style="color:#f92672">/</span> 设置锁超时时间为10秒
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (lock.<span style="color:#a6e22e">acquire</span>(timeoutSeconds, TimeUnit.<span style="color:#a6e22e">SECONDS</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 成功获取锁</span>
+</span></span><span style="display:flex;"><span>        String distributedID <span style="color:#f92672">=</span> generateID();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 使用生成的ID进行业务操作</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 未能在超时时间内获取到锁，进行相应处理</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理异常</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        lock.<span style="color:#a6e22e">release</span>(); <span style="color:#75715e">// 释放锁</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 处理异常</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这个示例中，使用 Curator 框架创建了一个 ZooKeeper 客户端连接，然后创建了一个 InterProcessMutex 对象，该对象表示一个分布式锁。在获取锁之前，节点会尝试获取并持有该锁。只有一个节点可以成功获取到锁，其他节点会阻塞等待。</p>
+<p>获取到锁后，可以执行生成 ID 的逻辑，生成唯一的分布式 ID。</p>
+<p>在业务操作完成后，通过 <code>release()</code>方法释放锁，使其他节点可以继续获取锁并生成 ID。</p>
+<p>通过使用 ZooKeeper 锁，我们可以确保在分布式环境下生成的 ID 是互斥的，并且按照获取锁的顺序生成。这样可以保证生成的 ID 是有序的，并且避免了并发冲突的问题。</p>
+<p>Redis 本身并没有提供原生的分布式锁功能，但可以借助 Redis 的原子性操作和过期时间来实现一个简单的分布式锁，并在获取锁时生成分布式 ID。下面是一个使用 Redis 锁生成分布式 ID 的示例代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> redis.clients.jedis.Jedis;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DistributedIdGenerator</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String LOCK_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;id_lock&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> LOCK_EXPIRATION <span style="color:#f92672">=</span> 10; <span style="color:#f92672">/</span> 锁的过期时间<span style="color:#960050;background-color:#1e0010">，</span>单位为秒
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String REDIS_HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;localhost&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> REDIS_PORT <span style="color:#f92672">=</span> 6379;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Jedis jedis;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">DistributedIdGenerator</span>() {
+</span></span><span style="display:flex;"><span>        jedis <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Jedis(REDIS_HOST, REDIS_PORT);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">generateDistributedId</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 获取分布式锁</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">boolean</span> lockAcquired <span style="color:#f92672">=</span> acquireLock(LOCK_KEY, LOCK_EXPIRATION);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (lockAcquired) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 生成ID的逻辑</span>
+</span></span><span style="display:flex;"><span>                String distributedId <span style="color:#f92672">=</span> generateId();
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 使用生成的ID进行业务操作</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> distributedId;
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 释放分布式锁</span>
+</span></span><span style="display:flex;"><span>                releaseLock(LOCK_KEY);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 未能获取到分布式锁，进行相应处理</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">acquireLock</span>(String lockKey, <span style="color:#66d9ef">int</span> expiration) {
+</span></span><span style="display:flex;"><span>        String result <span style="color:#f92672">=</span> jedis.<span style="color:#a6e22e">set</span>(lockKey, <span style="color:#e6db74">&#34;locked&#34;</span>, <span style="color:#e6db74">&#34;NX&#34;</span>, <span style="color:#e6db74">&#34;EX&#34;</span>, expiration);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;OK&#34;</span>.<span style="color:#a6e22e">equals</span>(result);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">releaseLock</span>(String lockKey) {
+</span></span><span style="display:flex;"><span>        jedis.<span style="color:#a6e22e">del</span>(lockKey);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">generateId</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生成ID的逻辑</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;your_generated_id&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在上述示例代码中，我们使用 Jedis 客户端连接 Redis，并定义了获取锁和释放锁的方法 <code>acquireLock()</code> 和 <code>releaseLock()</code>。在 <code>generateDistributedId() </code>方法中，我们首先尝试获取分布式锁，如果成功获取到锁，则执行生成 ID 的逻辑和业务操作，并在最后释放锁。如果无法获取到锁，则可以根据实际需求进行相应处理。</p>
+<p>请注意，上述示例代码是一个简单的实现，仅供参考。在实际使用中，还需要考虑异常处理、分布式锁的可重入性、处理锁超时等情况，以及根据具体的需求和系统架构进行适当的调整。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://engineering.instagram.com/sharding-ids-at-instagram-1cf5a71e5a5c" target="_blank">Sharding &amp; IDs at Instagram</a></li>
+<li><a href="http://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/" target="_blank">Ticket Servers: Distributed Unique Primary Keys on the Cheap</a></li>
+<li><a href="https://github.com/twitter/snowflake" target="_blank">Twitter Snowflake</a></li>
+<li><a href="http://chuansong.me/n/2459549" target="_blank">细聊分布式ID生成方法 - 沈剑</a></li>
+<li><a href="http://calvin1978.blogcn.com/articles/uuid.html" target="_blank">服务化框架－分布式Unique ID的生成方法一览 - 江南白衣</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA5Nzc4OTA1Mw==&amp;mid=2659598286&amp;idx=1&amp;sn=3172172ccea316b0ed83429ae718b54d&amp;chksm=8be9eadcbc9e63caa10d708274b4fa34ceffa416ef4527e10e6b7a1a2d2f32cf8592d65bf728" target="_blank">生成全局唯一ID的3个思路，来自一个资深架构师的总结</a></li>
+<li><a href="https://huanxin-chen.github.io/en/page-4/" target="_blank">分布式ID中的SnowFlake</a></li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/10/distributed-systems-04/" target="_blank" title="[译]《分布式系统：为了乐趣和利益》4.复制">[译]《分布式系统：为了乐趣和利益》4.复制</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-pastebin/" target="_blank" title="[译]《Grokking the System Design Interview》设计Pastebin">[译]《Grokking the System Design Interview》设计Pastebin</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/17/designing-a-url-shortening-service/" target="_blank" title="如何设计一个短网址服务">如何设计一个短网址服务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/16/sdi-a-step-by-step-guide/" target="_blank" title="[译]《Grokking the System Design Interview》系统设计访谈：分步指南">[译]《Grokking the System Design Interview》系统设计访谈：分步指南</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/15/tree-structure-in-database/" target="_blank" title="数据库如何设计树形结构">数据库如何设计树形结构</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2021/09/09/mac-development-environment-setup/" target="_blank" title="Mac开发环境配置">Mac开发环境配置</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/mysql/" rel="tag">mysql</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/redis/" rel="tag">redis</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/mongodb/" rel="tag">mongodb</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/11/24/designing-dropbox/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]《Grokking the System Design Interview》设计Dropbox</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/12/12/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/12\/05\/distributed-id-generator\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#uuid">UUID</a></li>
+    <li><a href="#使用数据库">使用数据库</a></li>
+    <li><a href="#snowflake算法">Snowflake算法</a></li>
+    <li><a href="#使用分布式锁">使用分布式锁</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

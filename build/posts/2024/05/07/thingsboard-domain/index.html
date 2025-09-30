@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ThingsBoard的领域模型 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="ThingsBoard的领域模型">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/05/07/thingsboard-domain/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="ThingsBoard的领域模型">
+  <meta itemprop="description" content="ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设备和数据。它提供了一个可扩展的架构，可以连接各种设备，并实时收集、处理和分析设备生成的数据。
+领域模型 在ThingsBoard中，领域模型是一个关键概念，用于描述物联网系统中的物理实体、属性和行为。以下是ThingsBoard中的主要领域模型组件：">
+  <meta itemprop="datePublished" content="2024-05-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="126">
+  <meta itemprop="keywords" content="Javascript,Backend,Tutorial,Jwt">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="ThingsBoard的领域模型">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ThingsBoard的领域模型</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-07">2024-05-07</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/jwt/" rel="tag">Jwt</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设备和数据。它提供了一个可扩展的架构，可以连接各种设备，并实时收集、处理和分析设备生成的数据。</p>
+<h2 id="领域模型">领域模型</h2>
+<p>在ThingsBoard中，领域模型是一个关键概念，用于描述物联网系统中的物理实体、属性和行为。以下是ThingsBoard中的主要领域模型组件：</p>
+<ol>
+<li>
+<p>租户（Tenant）：租户是ThingsBoard中的顶级组织单位。它代表了一个独立的实体，可以是一个用户、组织或公司。租户拥有和管理自己的设备、客户、规则和仪表板等资源。租户之间的数据和配置是相互隔离的，每个租户都有自己的独立环境。租户由系统管理员创建和管理。</p>
+</li>
+<li>
+<p>租户配置（TenantProfile）：用于定义租户级别的配置和属性。</p>
+</li>
+<li>
+<p>客户（Customer）：客户是租户下的子级实体，代表了物联网系统中的用户或组织。一个租户可以包含多个客户，每个客户都有自己的访问权限和角色。客户可以访问和监控租户下的设备和数据。客户可以有自己的设备、规则和仪表板等资源，但这些资源受到租户级别的限制。客户由租户管理员创建和管理。</p>
+</li>
+<li>
+<p>用户（User）：保存用户的基本信息</p>
+<ol>
+<li>用户的角色（Authority）：SYS_ADMIN、TENANT_ADMIN、CUSTOMER_USER、REFRESH_TOKEN、PRE_VERIFICATION_TOKEN</li>
+<li>用户凭证（UserCredentials）：保存用户的密码、激活用户 Token、重置密码 Token、密码使用历史</li>
+<li>用户认证设置（UserAuthSettings）：保存用户 2FA 认证设置</li>
+<li>用户设置（UserSettings）：保存用户的设置，包括：通用设置、通知、访问过的仪表盘等等</li>
+</ol>
+</li>
+<li>
+<p>系统设置（AdminSettings）：是用于配置和管理整个系统的全局设置和参数，包括：通用设置、邮件、JWT、连接设置等等。</p>
+</li>
+<li>
+<p>审计日志（AuditLog）</p>
+</li>
+<li>
+<p>资产（Asset）：指在系统中表示和管理的物理或虚拟实体。资产可以是设备、传感器、设施、车辆、建筑物、人员或其他实体，其状态、属性和行为可以被监测、控制和管理。</p>
+</li>
+<li>
+<p>资产配置（AssetProfile）：配置资产使用的默认规则链、队列、移动端仪表盘</p>
+</li>
+<li>
+<p>设备（Device）：</p>
+<ol>
+<li>遥测数据（TsKV）：</li>
+<li>最新遥测数据：</li>
+<li>属性（AttributeKvEntry）：属性类型分为客户端、服务端、共享</li>
+<li>远程调用（Rpc）</li>
+<li>设备凭证（DeviceCredentials）：</li>
+<li>OTA：</li>
+</ol>
+</li>
+<li>
+<p>设备配置（DeviceProfile）：配置设备使用的默认规则链、队列、移动端仪表盘、边缘网关默认规则链、分配的固件、分配的软件、传输方式、告警规则、设置预配置</p>
+</li>
+<li>
+<p>告警（Alarm）：包括字段：租户、客户、类型、明细、发起者、告警级别（严重、重要、次要、警告、不确定）、是否应答、是否清除、受理人、开始时间、结束时间、应答时间、清除时间、受理时间、是否传播、是否传播给所有者、是否传播给租户</p>
+</li>
+<li>
+<p>告警评论（AlarmComment）：</p>
+</li>
+<li>
+<p>实体告警（EntityAlarm）：</p>
+</li>
+<li>
+<p>事件（Event）：分为异常事件、组件生命周期事件、规则链调试事件、规则节点事件、统计事件</p>
+</li>
+<li>
+<p>通知（Notification）:</p>
+<ol>
+<li>通知请求（NotificationRequest）</li>
+<li>通知模版（NotificationTemplate）：</li>
+<li>通知规则（NotificationRule）</li>
+<li>通知对象（NotificationTarget）</li>
+</ol>
+</li>
+</ol>
+<h2 id="流程">流程</h2>
+<h3 id="上报遥测数据">上报遥测数据</h3>
+<ol>
+<li>
+<p>设备配置启用告警规则。温度大于 20 时，产生告警。温度小于 20 时，清除告警。</p>
+</li>
+<li>
+<p>创建一个设备，设备凭证使用 AccessToken</p>
+</li>
+<li>
+<p>使用 http api 发送遥测数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -v -X POST http://localhost:8080/api/v1/gs76dj5m47yd3lm1wurd/telemetry --header Content-Type:application/json --data <span style="color:#e6db74">&#34;{temperature:25}&#34;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>查看告警</p>
+</li>
+<li>
+<p>再次发送遥测数据，可以清除告警</p>
+</li>
+</ol>
+<p>源码分析：</p>
+<ol>
+<li>
+<p>使用 http api 发送数据，入口类在 common/transport/http 模块下的 DeviceApiController 类。这个类提供了以下几个接口：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GET /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/attributes
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/attributes
+</span></span><span style="display:flex;"><span>GET /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/telemetry
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/telemetry
+</span></span><span style="display:flex;"><span>GET /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/rpc
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/rpc
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/rpc/<span style="color:#f92672">{</span>requestId<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/claim
+</span></span><span style="display:flex;"><span>GET /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/firmware
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/firmware
+</span></span><span style="display:flex;"><span>GET /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/software
+</span></span><span style="display:flex;"><span>POST /api/v1/<span style="color:#f92672">{</span>deviceToken<span style="color:#f92672">}</span>/software
+</span></span><span style="display:flex;"><span>POST /api/v1/provision
+</span></span></code></pre></div><p>POST /api/v1/{deviceToken}/telemetry 处理逻辑：</p>
+<pre tabindex="0"><code>HttpTransportContext
+TransportService
+ DefaultTransportService
+   TbQueueProducer&lt;TbProtoQueueMsg&lt;ToRuleEngineMsg&gt;&gt; ruleEngineMsgProducer
+
+   TbRuleEngineQueueConsumerManager
+    TbRuleEngineConsumerContext
+     ActorSystemContext
+      TbActorRef
+       TbActorMailbox
+        AppActor
+         TenantActor
+          RuleChainActor	
+           RuleChainActorMessageProcessor
+            RuleNodeActor
+             RuleNodeActorMessageProcessor
+              TbDeviceProfileNode
+               DeviceState
+                AlarmState
+                 DefaultTbContext
+                  DefaultTbClusterService
+                   TbRuleEngineProducerProvider
+                    TbQueueProducer&lt;TbProtoQueueMsg&lt;ToRuleEngineMsg&gt;&gt; toRuleEngine
+</code></pre></li>
+</ol>
+<p>这里面用到了 Transport 、Queue、Actor ，调用链非常长。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websockets-java/" target="_blank" title="[译]Java和WebSockets：构建可靠的实时应用程序">[译]Java和WebSockets：构建可靠的实时应用程序</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websocket-alternatives/" target="_blank" title="[译]2024年最好的WebSocket替代品">[译]2024年最好的WebSocket替代品</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/the-websocket-api-and-protocol-explained/" target="_blank" title="[译]WebSocket API和协议说明">[译]WebSocket API和协议说明</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websockets-vs-http/" target="_blank" title="[译]WebSocket与HTTP：2024年为您的项目选择哪一个">[译]WebSocket与HTTP：2024年为您的项目选择哪一个</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/websocket-vs-rest/" target="_blank" title="[译]WebSocket与REST">[译]WebSocket与REST</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/http/" target="_blank" title="[译]什么是 HTTP？">[译]什么是 HTTP？</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/jwt/" rel="tag">jwt</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/04/29/all-things-about-thingsboard/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: All things about ThingsBoard</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/07/long-polling/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]什么是长轮询？</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/05\/07\/thingsboard-domain\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#领域模型">领域模型</a></li>
+    <li><a href="#流程">流程</a>
+      <ul>
+        <li><a href="#上报遥测数据">上报遥测数据</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

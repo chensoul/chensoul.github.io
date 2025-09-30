@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>周报-26｜上半年的绩效总结 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="周报-26｜上半年的绩效总结">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/11/weekly_review_26/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="周报-26｜上半年的绩效总结">
+  <meta itemprop="description" content="前言 本篇是对 2023-06-26 到 2023-07-09 这周生活的记录与思考。首发在我的个人 博客，你可以移步了解更多或者给我留言。">
+  <meta itemprop="datePublished" content="2023-07-11T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-11T00:00:00+00:00">
+  <meta itemprop="wordCount" content="215">
+  <meta itemprop="keywords" content="Weekly-Report,Learning,Personal">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="周报-26｜上半年的绩效总结">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">周报-26｜上半年的绩效总结</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-11">2023-07-11</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/review/" rel="category">Review</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/weekly-report/" rel="tag">Weekly-Report</a>, <a class="meta__link" href="/tags/learning/" rel="tag">Learning</a>, <a class="meta__link" href="/tags/personal/" rel="tag">Personal</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="前言">前言</h2>
+<p>本篇是对 <code>2023-06-26</code> 到 <code>2023-07-09</code> 这周生活的记录与思考。首发在我的个人 <a href="https://blog.chensoul.cc/" target="_blank">博客</a>，你可以移步了解更多或者给我留言。</p>
+<blockquote>
+<p>读书、健身、投资、帮朋友、陪家人。</p></blockquote>
+<p>这两周主要是忙于工作，Wekatime 上统计的上周每天平均编程时间达到了 <strong>6 hrs 52 mins</strong>，基本上每天都是早七晚七的上班节奏。于是，学习的时间都被工作占用了。工作的内容主要是整合多个系统实现 sso 登录，用到的技术有 SpringCloud、Spring Security Oauth2 等等。</p>
+<p><img src="../../../static/images/weekly-review-26-01.webp" alt=""></p>
+<p>另外，本周完成了上半年的绩效总结，回顾了这半年的工作内容。</p>
+<h2 id="绩效总结">绩效总结</h2>
+<p>1、项目方面的成果：</p>
+<p>a、完成了智能安防多个项目的迭代开发和上线，包括用户切换租户、报表发送到飞书、华为车牌识别、夜收模块拆分、巡检场景功能优化等。同时，也完成了通知模块重构、大屏报表支持多租户和门店、Dmallai 导航等需求的开发。这些工作的完成，为系统的稳定性和功能扩展提供了有力的支持。</p>
+<p>b、共发布了 32 次版本，其中 7 次为功能迭代，25 次为 bug 修复。平均每月完成了 1 次项目迭代和 4 次 bug 修复，做到了及时响应和快速解决问题，提升了用户的使用体验和满意度，提高了系统的稳定性，降低系统的故障率和用户的投诉率，没有出现 P3 级别以上故障。</p>
+<p>2、技术方面的成果：</p>
+<p>利用空余时间学习新技术和框架，如 Pyhon、Rust、React，每周写周报和学习总结，总计输出 66 篇文章。</p>
+<p>不断优化和迭代 Rose 框架，并将 Rose 合并到 Cocktail cloud，方便代码管理和维护。同时，Cocktail cloud 还增加了一些新的功能和特性，如国际化、日志打印、华为云接口封装等。</p>
+<p>利用设计模式重构通知模块，提升代码质量，同时系统扩展性和并发也得到很大的提升。</p>
+<p>3、个人发展方面的成果：</p>
+<p>通过不断学习和实践，提高了自己的沟通能力和时间管理的能力。每天早上 7 点到公司学习，提高了个人工作效率和执行力。</p>
+<p>4、团队合作方面的成果：</p>
+<p>加强了和同事之间的沟通和协作，及时讨论项目需求和进度，保障项目按时上线。</p>
+<h2 id="读书">读书</h2>
+<h2 id="健身">健身</h2>
+<blockquote>
+<p>我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多。2 年里我跑过 2 个省份 2 个城市。更多跑步数据在我的 <a href="https://run.chensoul.cc/" target="_blank">跑步</a> 主页。</p></blockquote>
+<h2 id="理财">理财</h2>
+<p>这周总计支出 1483 元，明细如下：</p>
+<ul>
+<li>
+<p>7 月 2 日：1276 元，其中 1000 元加油</p>
+</li>
+<li>
+<p>7 月 1 日：32 元</p>
+</li>
+<li>
+<p>6 月 30 日：35 元</p>
+</li>
+<li>
+<p>6 月 29 日：15 元</p>
+</li>
+<li>
+<p>6 月 28 日：41 元</p>
+</li>
+<li>
+<p>6 月 27 日：41 元</p>
+</li>
+<li>
+<p>6 月 26 日：43 元</p>
+</li>
+</ul>
+<h2 id="陪家人">陪家人</h2>
+<h2 id="工作">工作</h2>
+<p>最近在学习的内容清单：</p>
+<ul>
+<li><a href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/tree/dev" target="_blank">Effective Java（第 3 版）</a></li>
+<li><a href="https://java-design-patterns.com/zh/" target="_blank">Java Design Patterns (中文)</a></li>
+<li><a href="https://realpython.com/" target="_blank">Real Python</a></li>
+</ul>
+<p>本周完成三篇博客：</p>
+<ul>
+<li><a href="/posts/2023/07/06/java-design-patterns-ambassador/">Java 设计模式：Ambassador</a></li>
+<li><a href="/posts/2023/07/06/python-module-package/">Python 学习 6：模块和包</a></li>
+<li><a href="/posts/2023/07/08/python-input-and-output/">Python 学习 7：输入和输出</a></li>
+</ul>
+<h2 id="本周分享">本周分享</h2>
+<p>大部分有意思的内容会分享在 『<a href="https://t.me/ichensoul" target="_blank">ChenSoul Share</a>』Telegram 频道或者我的 <a href="https://memos.chensoul.cc/" target="_blank">Memos</a> 中。我写了一个 Python 脚本从 Memos 读取最近一周带有 <code>#memos</code> 标签的记录，分享到这里。</p>
+<ul>
+<li>
+<p>📌<code>2023-06-27</code> <a href="https://twitter.com/hashtag/%e5%b7%a5%e7%a8%8b%e5%b8%88%e5%b7%a5%e5%85%b7?src=hashtag_click" target="_blank">#工程师工具</a> 有小伙伴开始玩这个牛逼的 AI PS 工具了吗？叫 <strong>DragGAN</strong>，代码开源了，CC-BY-NC 许可，简单来说就是通过拖动以及简单操作的方式对图中对象进行姿势、形状、表情和布局具有灵活而精确的控制，效果太牛逼了，可玩玩看。 <a href="https://t.co/0K5fPzsYdU" target="_blank">https://github.com/XingangPan/DragGAN</a> <code>#memos</code> <a href="https://twitter.com/hitw93/status/1673700825989013504?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A" target="_blank">https://twitter.com/hitw93/status/1673700825989013504?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A</a></p>
+</li>
+<li>
+<p>📌<code>2023-06-27</code> Z-Library 发布桌面客户端，支持 Windows、macOS、Linux，针对中国连接稳定性优化 <a href="https://t.co/SdurrvlMht" target="_blank">https://ift.tt/h8KyIdF</a> <code>#memos</code> <a href="https://twitter.com/appinn/status/1673640410156093441?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A" target="_blank">https://twitter.com/appinn/status/1673640410156093441?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A</a></p>
+</li>
+<li>
+<p>📌<code>2023-06-27</code> 能下载全网（Mac/Win 均可）所有音、视频的效率插件工具，是我自己多年来的收藏，也是我平常吃饭用的家伙，【搭配使用】效果更佳 1、浏览器下载插件图 1 <a href="https://t.co/xouLavoWtp" target="_blank">https://cococut.net</a> 2、网页在线下载图 2 <a href="https://t.co/rgxWNyapcV" target="_blank">https://y2mate.com/en640</a> 3、B 站视频在线下载图 3 <a href="https://t.co/L4Ms9nK5mG" target="_blank">https://xbeibeix.com/api/bilibili/</a> <code>#memos</code> <a href="https://twitter.com/mooenychu/status/1673489537472008192?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A" target="_blank">https://twitter.com/mooenychu/status/1673489537472008192?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A</a></p>
+</li>
+<li>
+<p>📌<code>2023-06-27</code> Mac 其实还有一个万能下载器工具：<a href="https://twitter.com/hashtag/Downie4?src=hashtag_click" target="_blank">Downie4</a>，推特视频，油管视频，B 站视频等等，只要链接复制进去就可以自动下载内容和字幕，很好用，有需要的朋友找来安装使用。非苹果用户如果有这方面的需求，我可以把这几年一直在用能下所有场景下的吃饭家伙分享出来，需要的评论区留言吧，上班去了。<a href="https://twitter.com/hashtag/videodownlaod?src=hashtag_click" target="_blank">videodownlaod</a> <code>#memos</code> <a href="https://twitter.com/mooenychu/status/1673144297389174784?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A" target="_blank">https://twitter.com/mooenychu/status/1673144297389174784?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A</a></p>
+</li>
+<li>
+<p>📌<code>2023-06-27</code> 告诉大家一个免费用 MySQL 云数据库的渠道： 直接用 TiDB Cloud 的 Serverless 实例当作免费云数据库就好了 提供 5GiB 免费存储和五千万请求单元(一种 Serverless 用量统计指标) 像是个人的博客 例如 wordpress 一些中小型企业网站的 CMS 系统 个人小项目用应该是足够了 region 覆盖东亚和北美 直连速度也还不错 <code>#memos</code> <a href="https://twitter.com/changwei1006/status/1673169925710700545?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A" target="_blank">https://twitter.com/changwei1006/status/1673169925710700545?s=12&amp;t=N9Km7vJe9ghZkB_zBEJh4A</a></p>
+</li>
+</ul>
+<p>以上。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/28/weekly_review_25/" target="_blank" title="周报-25｜端午安康">周报-25｜端午安康</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/21/weekly_review_24/" target="_blank" title="周报-24｜如果没有疼痛">周报-24｜如果没有疼痛</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/14/weekly_review_23/" target="_blank" title="周报-23｜读书、健身、定投、帮朋友、陪家人">周报-23｜读书、健身、定投、帮朋友、陪家人</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/09/weekly_review_22/" target="_blank" title="周报-22｜微信读书笔记助手">周报-22｜微信读书笔记助手</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/31/weekly_review_21/" target="_blank" title="周报-21｜Python之禅、产品经理被优化、端午节送节">周报-21｜Python之禅、产品经理被优化、端午节送节</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/25/weekly_review_20/" target="_blank" title="周报-20｜自动生成每日早报、周末团建">周报-20｜自动生成每日早报、周末团建</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/weekly-report/" rel="tag">weekly-report</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/learning/" rel="tag">learning</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/personal/" rel="tag">personal</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/08/python-input-and-output/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Python学习7：输入和输出</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/11\/weekly_review_26\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#绩效总结">绩效总结</a></li>
+    <li><a href="#读书">读书</a></li>
+    <li><a href="#健身">健身</a></li>
+    <li><a href="#理财">理财</a></li>
+    <li><a href="#陪家人">陪家人</a></li>
+    <li><a href="#工作">工作</a></li>
+    <li><a href="#本周分享">本周分享</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

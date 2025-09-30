@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>如何实现榜单 top N 统计 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="如何实现榜单 top N 统计">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2025/02/17/top-n-using-redis/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="如何实现榜单 top N 统计">
+  <meta itemprop="description" content="以下是一个基于本地缓存 &#43; Redis ZSet &#43; 定时任务的榜单方案，适用于高并发场景：">
+  <meta itemprop="datePublished" content="2025-02-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-02-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="708">
+  <meta itemprop="keywords" content="Redis,Backend,Tutorial,Spring">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="如何实现榜单 top N 统计">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">如何实现榜单 top N 统计</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-02-17">2025-02-17</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/redis/" rel="tag">Redis</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/spring/" rel="tag">Spring</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>以下是一个基于本地缓存 + Redis ZSet + 定时任务的榜单方案，适用于高并发场景：</p>
+<h2 id="方案概述">方案概述</h2>
+<ol>
+<li><strong>本地缓存</strong> ：在应用服务器本地缓存榜单数据，减少对 Redis 的访问频率，提高读取速度。</li>
+<li><strong>Redis ZSet</strong> ：使用 Redis 的有序集合存储榜单数据，利用其高效的排序和范围查询功能。</li>
+<li><strong>定时任务</strong> ：定期更新本地缓存和 Redis ZSet 中的榜单数据，确保数据的实时性和准确性。</li>
+</ol>
+<h2 id="数据存储架构">数据存储架构</h2>
+<p><strong>全局前 1000 名榜单存储在 Redis 中</strong></p>
+<ul>
+<li><strong>Redis ZSet</strong>：
+<ul>
+<li>键名：<code>global_ranking_top_1000</code></li>
+<li>ZSet 中的成员是用户 ID，分数是排名依据（如积分、销售额等）。</li>
+<li>定时任务每小时更新一次，覆盖之前的 ZSet 数据。</li>
+</ul>
+</li>
+</ul>
+<p><strong>前 100 名榜单同步到本地缓存</strong></p>
+<ul>
+<li><strong>本地缓存</strong>：
+<ul>
+<li>每个应用服务器使用内存数据结构（如 <code>ConcurrentHashMap</code>）存储前 100 名榜单。</li>
+<li>键名：<code>local_ranking_top_100</code></li>
+<li>数据来源于 Redis 的 <code>global_ranking_top_1000</code>，每分钟同步一次。</li>
+</ul>
+</li>
+</ul>
+<h2 id="实现步骤">实现步骤</h2>
+<ol>
+<li>定时任务计算全局前 1000 名</li>
+</ol>
+<p><strong>任务频率</strong>：每小时执行一次</p>
+<p><strong>任务逻辑</strong>：</p>
+<ol>
+<li>检索数据库中所有用户的实时数据（如积分、销售额）。</li>
+<li>排序并选出前 1000 名用户。</li>
+<li>将前 1000 名用户写入 Redis 的 <code>global_ranking_top_1000</code> ZSet，覆盖原有数据。</li>
+</ol>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">/</span> 使用 Spring 定时任务
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Scheduled</span>(cron <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0 0 * * * ?&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateGlobalRanking</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> 1. 从数据库获取所有用户数据
+</span></span><span style="display:flex;"><span>    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> userRepository.<span style="color:#a6e22e">findAll</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 2. 排序并选出前 1000 名</span>
+</span></span><span style="display:flex;"><span>    List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> top1000 <span style="color:#f92672">=</span> users.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">sorted</span>((u1, u2) <span style="color:#f92672">-&gt;</span> Double.<span style="color:#a6e22e">compare</span>(u2.<span style="color:#a6e22e">getScore</span>(), u1.<span style="color:#a6e22e">getScore</span>()))
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">limit</span>(1000)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 3. 写入 Redis ZSet，覆盖原有数据</span>
+</span></span><span style="display:flex;"><span>    redisTemplate.<span style="color:#a6e22e">delete</span>(<span style="color:#e6db74">&#34;global_ranking_top_1000&#34;</span>); <span style="color:#f92672">/</span> 清空旧数据
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">for</span> (User user : top1000) {
+</span></span><span style="display:flex;"><span>        redisTemplate.<span style="color:#a6e22e">opsForZSet</span>().<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;global_ranking_top_1000&#34;</span>, user.<span style="color:#a6e22e">getId</span>(), user.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>定时同步前 100 名到本地缓存</li>
+</ol>
+<p><strong>任务频率</strong>：每分钟执行一次</p>
+<p><strong>任务逻辑</strong>：</p>
+<ol>
+<li>从 Redis 的 <code>global_ranking_top_1000</code> ZSet 中获取前 100 名用户。</li>
+<li>将前 100 名用户数据写入本地缓存。</li>
+</ol>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// 使用 Spring 定时任务</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Scheduled</span>(cron <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0 * * * * ?&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateLocalRankingCache</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 1. 从 Redis 获取前 100 名</span>
+</span></span><span style="display:flex;"><span>    Set<span style="color:#f92672">&lt;</span>ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> top100 <span style="color:#f92672">=</span> redisTemplate.<span style="color:#a6e22e">opsForZSet</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">reverseRangeWithScores</span>(<span style="color:#e6db74">&#34;global_ranking_top_1000&#34;</span>, 0, 99);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 2. 将数据写入本地缓存</span>
+</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> localCache <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcurrentHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> tuple : top100) {
+</span></span><span style="display:flex;"><span>        String userId <span style="color:#f92672">=</span> tuple.<span style="color:#a6e22e">getValue</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">double</span> score <span style="color:#f92672">=</span> tuple.<span style="color:#a6e22e">getScore</span>();
+</span></span><span style="display:flex;"><span>        localCache.<span style="color:#a6e22e">put</span>(userId, score);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更新本地缓存</span>
+</span></span><span style="display:flex;"><span>    localRankingCache <span style="color:#f92672">=</span> localCache;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
+<li>读取榜单数据</li>
+</ol>
+<p><strong>访问逻辑</strong>：</p>
+<ol>
+<li>优先从本地缓存读取前 100 名榜单。</li>
+<li>如果本地缓存中没有数据（如缓存过期或未初始化），则从 Redis 的 <code>global_ranking_top_1000</code> ZSet 中读取前 100 名。</li>
+</ol>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getTop100Ranking</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 1. 优先从本地缓存读取</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (localRankingCache <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>localRankingCache.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> localRankingCache;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 2. 从 Redis 读取</span>
+</span></span><span style="display:flex;"><span>    Set<span style="color:#f92672">&lt;</span>ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> top100 <span style="color:#f92672">=</span> redisTemplate.<span style="color:#a6e22e">opsForZSet</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">reverseRangeWithScores</span>(<span style="color:#e6db74">&#34;global_ranking_top_1000&#34;</span>, 0, 99);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> tuple : top100) {
+</span></span><span style="display:flex;"><span>        result.<span style="color:#a6e22e">put</span>(tuple.<span style="color:#a6e22e">getValue</span>(), tuple.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>优化后的代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RankingManager</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> RedisTemplate<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> redisTemplate;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> UserService userService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 本地缓存</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span>String, Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;&gt;</span> localCache <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcurrentHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Redis ZSet 键名</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String GLOBAL_RANKING_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;global_ranking_top_1000&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String TEMP_GLOBAL_RANKING_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;temp_global_ranking_top_1000&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//定时任务：每小时计算全局前1000名</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Scheduled</span>(cron <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0 0 * * * ?&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateGlobalRanking</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 1. 从数据库获取所有用户数据</span>
+</span></span><span style="display:flex;"><span>            List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> users <span style="color:#f92672">=</span> userService.<span style="color:#a6e22e">findAll</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 2. 排序并选出前1000名</span>
+</span></span><span style="display:flex;"><span>            List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> top1000 <span style="color:#f92672">=</span> users.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">sorted</span>((u1, u2) <span style="color:#f92672">-&gt;</span> Double.<span style="color:#a6e22e">compare</span>(u2.<span style="color:#a6e22e">getScore</span>(), u1.<span style="color:#a6e22e">getScore</span>()))
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">limit</span>(1000)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 3. 使用临时键存储数据</span>
+</span></span><span style="display:flex;"><span>            redisTemplate.<span style="color:#a6e22e">delete</span>(TEMP_GLOBAL_RANKING_KEY);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (User user : top1000) {
+</span></span><span style="display:flex;"><span>                redisTemplate.<span style="color:#a6e22e">opsForZSet</span>().<span style="color:#a6e22e">add</span>(TEMP_GLOBAL_RANKING_KEY, user.<span style="color:#a6e22e">getId</span>(), user.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 4. 原子性地将临时键重命名为目标键</span>
+</span></span><span style="display:flex;"><span>            redisTemplate.<span style="color:#a6e22e">rename</span>(TEMP_GLOBAL_RANKING_KEY, GLOBAL_RANKING_KEY);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 5. 更新本地缓存</span>
+</span></span><span style="display:flex;"><span>            updateLocalCache(top1000);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Global ranking updated successfully.&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Error updating global ranking: &#34;</span> <span style="color:#f92672">+</span> e.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateLocalCache</span>(List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> top1000) {
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> cache <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcurrentHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (User user : top1000) {
+</span></span><span style="display:flex;"><span>            cache.<span style="color:#a6e22e">put</span>(user.<span style="color:#a6e22e">getId</span>(), user.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        localCache.<span style="color:#a6e22e">put</span>(<span style="color:#e6db74">&#34;global_top_1000&#34;</span>, cache);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 定时任务：每分钟同步前100名到本地缓存</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Scheduled</span>(cron <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0 * * * * ?&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateLocalCacheFromRedis</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 1. 从Redis获取前100名</span>
+</span></span><span style="display:flex;"><span>            Set<span style="color:#f92672">&lt;</span>ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> top100 <span style="color:#f92672">=</span> redisTemplate.<span style="color:#a6e22e">opsForZSet</span>()
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">reverseRangeWithScores</span>(GLOBAL_RANKING_KEY, 0, 99);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 2. 更新本地缓存</span>
+</span></span><span style="display:flex;"><span>            Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> localTop100 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> tuple : top100) {
+</span></span><span style="display:flex;"><span>                localTop100.<span style="color:#a6e22e">put</span>(tuple.<span style="color:#a6e22e">getValue</span>(), tuple.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            localCache.<span style="color:#a6e22e">put</span>(<span style="color:#e6db74">&#34;local_top_100&#34;</span>, localTop100);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Local cache updated successfully.&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Error updating local cache: &#34;</span> <span style="color:#f92672">+</span> e.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取榜单数据</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getTop100Ranking</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 优先从本地缓存读取</span>
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> localTop100 <span style="color:#f92672">=</span> localCache.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;local_top_100&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (localTop100 <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>localTop100.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> LinkedHashMap<span style="color:#f92672">&lt;&gt;</span>(localTop100);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 从Redis读取</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            Set<span style="color:#f92672">&lt;</span>ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> top100 <span style="color:#f92672">=</span> redisTemplate.<span style="color:#a6e22e">opsForZSet</span>()
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">reverseRangeWithScores</span>(GLOBAL_RANKING_KEY, 0, 99);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            Map<span style="color:#f92672">&lt;</span>String, Double<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (ZSetOperations.<span style="color:#a6e22e">TypedTuple</span><span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> tuple : top100) {
+</span></span><span style="display:flex;"><span>                result.<span style="color:#a6e22e">put</span>(tuple.<span style="color:#a6e22e">getValue</span>(), tuple.<span style="color:#a6e22e">getScore</span>());
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Error fetching data from Redis: &#34;</span> <span style="color:#f92672">+</span> e.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Collections.<span style="color:#a6e22e">emptyMap</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>优化效果</p>
+<ol>
+<li><strong>性能</strong>：通过使用临时键和 <code>rename</code> 命令，确保 Redis 数据更新的原子性，减少数据更新时的锁竞争。</li>
+<li><strong>可靠性</strong>：增加异常处理逻辑，确保系统在异常情况下仍能正常运行。</li>
+<li><strong>可维护性</strong>：将功能模块分离，提高代码的可读性和可维护性。</li>
+<li><strong>数据一致性</strong>：确保本地缓存和 Redis ZSet 的数据一致性，避免因网络问题或系统故障导致数据不一致。</li>
+</ol>
+<h2 id="适用场景">适用场景</h2>
+<ol>
+<li>游戏排行榜</li>
+</ol>
+<ul>
+<li><strong>实时战力排行榜</strong>：玩家的战力值实时更新，排行榜需要立即反映变化。通过 Redis ZSet 实时维护战力值，定时任务每小时计算全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保玩家可以快速查询自己的排名。</li>
+<li><strong>每日任务排行榜</strong>：统计玩家每日完成任务的数量或得分，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="2">
+<li>电商平台</li>
+</ol>
+<ul>
+<li><strong>热销产品榜单</strong>：实时统计产品的销量或浏览量，通过 Redis ZSet 维护热销产品榜单。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看热销产品。</li>
+<li><strong>商家销售额排行榜</strong>：统计商家的销售额，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="3">
+<li>社交平台</li>
+</ol>
+<ul>
+<li><strong>用户活跃度排行榜</strong>：统计用户的活跃度（如点赞数、评论数、分享数），通过 Redis ZSet 实时维护活跃度排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看自己的排名。</li>
+<li><strong>话题热度排行榜</strong>：统计话题的热度（如阅读量、参与人数），定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="4">
+<li>内容平台</li>
+</ol>
+<ul>
+<li><strong>文章阅读量排行榜</strong>：统计文章的阅读量，通过 Redis ZSet 实时维护阅读量排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看热门文章。</li>
+<li><strong>视频播放量排行榜</strong>：统计视频的播放量，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="5">
+<li>金融平台</li>
+</ol>
+<ul>
+<li><strong>交易额排行榜</strong>：统计用户的交易额，通过 Redis ZSet 实时维护交易额排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看自己的排名。</li>
+<li><strong>投资收益排行榜</strong>：统计用户的 investment 收益，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="6">
+<li>教育平台</li>
+</ol>
+<ul>
+<li><strong>学习时长排行榜</strong>：统计学生的学习时长，通过 Redis ZSet 实时维护学习时长排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保学生可以快速查看自己的排名。</li>
+<li><strong>课程评分排行榜</strong>：统计课程的评分，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="7">
+<li>物流平台</li>
+</ol>
+<ul>
+<li><strong>配送效率排行榜</strong>：统计配送员的配送效率（如配送单量、配送时长），通过 Redis ZSet 实时维护配送效率排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保配送员可以快速查看自己的排名。</li>
+<li><strong>客户满意度排行榜</strong>：统计客户的满意度评分，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="8">
+<li>医疗平台</li>
+</ol>
+<ul>
+<li><strong>医生好评排行榜</strong>：统计医生的好评数，通过 Redis ZSet 实时维护好评排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看医生的排名。</li>
+<li><strong>医院服务排行榜</strong>：统计医院的服务评分，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="9">
+<li>交通出行平台</li>
+</ol>
+<ul>
+<li><strong>司机服务排行榜</strong>：统计司机的服务评分，通过 Redis ZSet 实时维护服务排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保用户可以快速查看司机的排名。</li>
+<li><strong>车辆使用排行榜</strong>：统计车辆的使用频率，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<ol start="10">
+<li>企业内部系统</li>
+</ol>
+<ul>
+<li><strong>员工绩效排行榜</strong>：统计员工的绩效得分，通过 Redis ZSet 实时维护绩效排行榜。定时任务每小时更新全局前 1000 名，写入 Redis。每分钟同步前 100 名到本地缓存，确保员工可以快速查看自己的排名。</li>
+<li><strong>部门贡献排行榜</strong>：统计部门的贡献值，定时任务每小时更新一次，确保排行榜数据的实时性和准确性。</li>
+</ul>
+<h2 id="系统优化"><strong>系统优化</strong></h2>
+<h3 id="数据一致性">数据一致性</h3>
+<ul>
+<li><strong>本地缓存与 Redis 数据的一致性</strong>：
+<ul>
+<li>定时任务每分钟同步前 100 名数据，确保本地缓存数据不超过 1 分钟的延迟。</li>
+<li>如果本地缓存失效或未同步，系统自动回退到 Redis 数据。</li>
+</ul>
+</li>
+</ul>
+<h3 id="redis-性能优化">Redis 性能优化</h3>
+<ul>
+<li><strong>使用 Redis 集群</strong>：如果数据量巨大，可以使用 Redis Cluster 分散读写压力。</li>
+<li><strong>设置过期时间</strong>：为 Redis 中的榜单数据设置过期时间（如 24 小时），避免数据永久占用内存。</li>
+</ul>
+<h3 id="高并发优化">高并发优化</h3>
+<ul>
+<li><strong>本地缓存优先</strong>：99% 的请求从本地缓存获取数据，减少对 Redis 的访问。</li>
+<li><strong>异步更新</strong>：定时任务异步执行，不影响系统响应速度。</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<ul>
+<li><strong>热点数据</strong>：如果榜单数据是系统热点，需要确保本地缓存的容量足够大，避免频繁访问 Redis。</li>
+<li><strong>数据持久化</strong>：Redis 的数据是内存存储，建议定期将榜单数据持久化到数据库或文件中，防止数据丢失。</li>
+<li><strong>监控</strong>：对定时任务和缓存更新逻辑进行监控，确保任务按时执行，数据及时更新。</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/02/14/rate-limit/" target="_blank" title="什么是限流">什么是限流</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/02/14/retry-for-timeout/" target="_blank" title="区分偶发性超时和频繁超时的重试策略">区分偶发性超时和频繁超时的重试策略</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/github-actions-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Github Actions">ThingsBoard源码中的Github Actions</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/security-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Security">ThingsBoard源码中的Security</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/11/14/quarkus-quick-start/" target="_blank" title="2024-11-14-Quarkus 快速入门">2024-11-14-Quarkus 快速入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/11/07/junit-5-migration/" target="_blank" title="[译]从JUnit4迁移到JUnit5：权威指南">[译]从JUnit4迁移到JUnit5：权威指南</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/redis/" rel="tag">redis</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring/" rel="tag">spring</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2025/02/14/retry-for-timeout/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 区分偶发性超时和频繁超时的重试策略</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2025/03/28/id-generator/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 常见分布式 ID 解决方案</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2025\/02\/17\/top-n-using-redis\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#方案概述">方案概述</a></li>
+    <li><a href="#数据存储架构">数据存储架构</a></li>
+    <li><a href="#实现步骤">实现步骤</a></li>
+    <li><a href="#适用场景">适用场景</a></li>
+    <li><a href="#系统优化"><strong>系统优化</strong></a>
+      <ul>
+        <li><a href="#数据一致性">数据一致性</a></li>
+        <li><a href="#redis-性能优化">Redis 性能优化</a></li>
+        <li><a href="#高并发优化">高并发优化</a></li>
+      </ul>
+    </li>
+    <li><a href="#注意事项">注意事项</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

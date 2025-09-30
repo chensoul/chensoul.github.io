@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Spring Security和OAuth2发展过程 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Spring Security和OAuth2发展过程">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/08/15/spring-security-oauth2-history/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Spring Security和OAuth2发展过程">
+  <meta itemprop="description" content="Spring Security 的发展过程 Spring Security 是一个功能强大且广泛使用的安全框架，为企业级应用程序提供了全面的安全性。Spring Security 最初是 Acegi Security 项目的一部分，于 2004 年发布，现在已经成为 Spring 生态系统的核心组件。 Spring Security 的发展过程可以分为三个阶段：">
+  <meta itemprop="datePublished" content="2023-08-15T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1163">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Spring Security和OAuth2发展过程">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Spring Security和OAuth2发展过程</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-08-15">2023-08-15</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="spring-security-的发展过程">Spring Security 的发展过程</h2>
+<p>Spring Security 是一个功能强大且广泛使用的安全框架，为企业级应用程序提供了全面的安全性。Spring Security 最初是 Acegi Security 项目的一部分，于 2004 年发布，现在已经成为 Spring 生态系统的核心组件。 Spring Security 的发展过程可以分为三个阶段：</p>
+<p>第一阶段：Spring Security 起源于一个名为 Acegi Security 的开源项目，初期重点实现了 Spring 应用的身份认证和授权服务功能。2003 年，Acegi Security 作为一个孵化项目被捐献给 Spring 社区。2004 年，正式作为 Spring 框架的核心组件之一 Absorbed 进 Spring。并更名为 Spring Security。Spring Security 1.0 版本 Spring Security 1.0 版本发布于 2004 年。它提供了最基本的安全功能，包括身份验证和授权。身份验证是验证用户是否是他们所声称的人的过程。授权是确定用户是否有权访问特定资源的过程。 Spring Security 1.0 版本使用了以下技术来实现身份验证和授权：</p>
+<ul>
+<li>表单身份验证：表单身份验证是通过用户提交表单来验证用户身份的过程。</li>
+<li>基于角色的访问控制 (RBAC)：RBAC 是一种授权模型，它将用户分配到角色，然后这些角色被授予对特定资源的访问权限。</li>
+</ul>
+<p>第二阶段：Spring Security 2.0 版本 Spring Security 2.0 版本发布于 2006 年。它提供了更多的安全功能，包括加密和会话管理。加密是将数据转换成无法被他人理解的形式的过程。会话管理是跟踪用户会话的状态的过程。 Spring Security 2.0 版本使用了以下技术来实现加密和会话管理：</p>
+<ul>
+<li>安全套接字层 (SSL)：SSL 是一种加密协议，它可以保护数据在传输过程中不被窃听。</li>
+<li>会话管理：Spring Security 提供了自己的会话管理实现，它可以跟踪用户会话的状态。</li>
+</ul>
+<p>第三阶段：Spring Security 3.0 版本 Spring Security 3.0 版本发布于 2008 年。它是一个重大的版本更新，它提供了许多新的安全功能，包括 OAuth、SAML 和 OpenID。 OAuth 是一种授权框架，它允许第三方应用程序访问用户的资源。SAML 是一种单点登录 (SSO) 协议，它允许用户在一个地方登录，然后访问多个网站。OpenID 是一种开放的身份验证协议，它允许用户使用他们选择的身份提供商来验证他们的身份。 Spring Security 3.0 版本使用了以下技术来实现 OAuth、SAML 和 OpenID：</p>
+<ul>
+<li>
+<p>OAuth：Spring Security 提供了自己的 OAuth 实现，它可以让你轻松地在你的应用程序中使用 OAuth。</p>
+</li>
+<li>
+<p>SAML：Spring Security 提供了自己的 SAML 实现，它可以让你轻松地在你的应用程序中使用 SAML。</p>
+</li>
+<li>
+<p>OpenID：Spring Security 提供了自己的 OpenID 实现，它可以让你轻松地在你的应用程序中使用 OpenID。</p>
+</li>
+</ul>
+<p>以下是 Spring Security 的详细的发展过程和版本变化：</p>
+<ol>
+<li>
+<p>Acegi Security：Acegi Security 是 Spring Security 的前身，最初由 Ben Alex 创建并于 2004 年发布。Acegi Security 提供了一组基于 Spring 的安全性功能，用于保护 Web 应用程序、Web 服务和基于 Spring 的应用程序。</p>
+</li>
+<li>
+<p>Spring Security 2：Spring Security 2 是 Acegi Security 的继任者，于 2006 年发布。Spring Security 2 提供了一些新的功能和改进，例如对 OpenID、LDAP 和 CAS 的支持，以及更好的集成和配置选项。</p>
+</li>
+<li>
+<p>Spring Security 3：Spring Security 3 于 2009 年发布，是 Spring Security 的一个重大更新。Spring Security 3 提供了更多的安全功能和改进，例如对 RESTful Web 服务的支持、基于注解的安全性、更好的 CSRF 防护、更好的密码存储和认证管理等。</p>
+</li>
+<li>
+<p>Spring Security 4：Spring Security 4 于 2015 年发布，带来了一些新的功能和改进，例如对 OAuth2、JWT 和 Spring Boot 的支持、更好的 SSO 和多因素认证等。</p>
+</li>
+<li>
+<p>Spring Security 5：Spring Security 5 于 2017 年发布，是一个重大的更新，带来了一些新的功能和改进，例如对 WebFlux 和 Reactive Spring 的支持、更好的 OAuth2 和 OpenID Connect 的支持、更好的密码编码和认证管理等。</p>
+</li>
+<li>
+<p>Spring Security 5.1：Spring Security 5.1 发布于 2018 年，主要提供了对 Spring Boot 2.1 的支持和一些新的功能，如 Kotlin DSL、OAuth2 支持的私有证书、JWT 生成器等。</p>
+</li>
+<li>
+<p>Spring Security 5.2：Spring Security 5.2 发布于 2019 年，带来了许多改进和新特性，包括对 Spring Cloud Gateway 和 Spring MVC 的 WebFlux 支持、OAuth2 和 OpenID Connect 的改进、更好的密码管理和认证、更好的跨域资源共享（CORS）支持等。</p>
+</li>
+<li>
+<p>Spring Security 5.3：Spring Security 5.3 发布于 2020 年，主要提供了更好的 WebFlux 和 RSocket 支持、更好的 OAuth2 支持、更好的测试和性能、更好的 Kotlin 支持、更好的 JUnit 5 支持等。</p>
+</li>
+<li>
+<p>Spring Security 5.4：Spring Security 5.4 发布于 2021 年，带来了一些新的功能和改进，例如对 Spring Boot 2.4 的支持、更好的 JWT 和 OAuth2 支持、更好的密码编码、更好的 WebFlux 和 RSocket 支持、更好的测试和性能等。</p>
+</li>
+<li>
+<p>Spring Security 5.5：是当前最新的版本，于 2022 年发布。Spring Security 5.5 带来了一些新的功能和改进，包括对 Spring Framework 6 和 Java 17 的支持、更好的密码编码和认证管理、更好的 OAuth2 和 OpenID Connect 支持、更好的 WebFlux 和 RSocket 支持、更好的测试和性能等。</p>
+</li>
+<li>
+<p>Spring Security 5.7：由于<a href="https://javatechonline.com/spring-security-without-websecurityconfigureradapter/" target="_blank">根据 Spring 官网发布的公告</a>，WebSecurityConfigurerAdapter 已从 Spring Security 5.7.0-M2 中弃用。</p>
+</li>
+<li>
+<p>Spring Security 6.0：2022 年 11 月发布，WebSecurityConfigurerAdapter 已从 Spring Security API 中完全删除。它还影响了 2022 年 11 月新发布的 <a href="https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/" target="_blank">Spring Boot 3.0</a>。</p>
+<p>除了不断改进和增强现有功能之外，Spring Security 还增加了对新的安全威胁的防御和支持，例如 CSRF、XSS、CSP 等。此外，Spring Security 还提供了许多有用的扩展和插件，例如 Spring Security OAuth、Spring Security SAML、Spring Security Kerberos 等，以满足不同的安全需求。</p>
+</li>
+</ol>
+<h2 id="spring-security-oauth2-发展">Spring Security OAuth2 发展</h2>
+<p><a href="https://github.com/spring-attic/spring-security-oauth" target="_blank">Spring Security OAuth2</a> 是一个用于构建安全的 OAuth2-based 网络应用的框架，它是 Spring Security 的一部分。下面是 Spring Security OAuth2 的发展过程：</p>
+<h3 id="1-spring-security-oauth2-v1x--v20">1. Spring Security OAuth2 V1.x – V2.0</h3>
+<p>最初的几个版本是为了构建一个安全的 OAuth2-based 网络应用。核心的功能包括：</p>
+<ul>
+<li>支持 OAuth2 协议的四种授权方式：授权码（authorization code）、隐式授权（implicit）、密码授权（resource owner password credentials）和客户端凭据（client credentials）</li>
+<li>提供了一个简单易用的 API 用于构建 OAuth2 服务器和客户端</li>
+<li>支持 JWT（JSON Web Tokens）</li>
+<li>提供了详细的文档和示例代码</li>
+</ul>
+<h3 id="2-spring-security-oauth2-v21">2. Spring Security OAuth2 V2.1</h3>
+<p>在 2.1 版本中，Spring Security OAuth2 进行了一系列的改进和扩展，包括：</p>
+<ul>
+<li>支持 OpenID Connect 1.0</li>
+<li>支持 Token Introspection Endpoint</li>
+<li>更好的支持 JWT，包括 JWS（JSON Web Signatures）和 JWE（JSON Web Encryption）</li>
+</ul>
+<h3 id="3-spring-security-50-oauth2-login-and-oauth2-client">3. Spring Security 5.0 OAuth2 Login and OAuth2 Client</h3>
+<p>在 Spring Security 5.0 中，Spring Security OAuth2 的部分功能被合并到了 Spring Security 5.0 中，提供了 OAuth2 登录和客户端支持。</p>
+<h3 id="4-spring-security-51-oauth2-resource-server">4. Spring Security 5.1 OAuth2 Resource Server</h3>
+<p>在 Spring Security 5.1 中，Spring Security OAuth2 的资源服务器功能被合并到了 Spring Security 中。</p>
+<h3 id="5-spring-security-52-oauth2-authorization-server">5. Spring Security 5.2 OAuth2 Authorization Server</h3>
+<p>在 Spring Security 5.2 中，Spring Security OAuth2 的授权服务器功能被合并到了 Spring Security 中。这是 Spring Security OAuth2 的最后一个独立版本。</p>
+<h3 id="6-spring-authorization-server">6. Spring Authorization Server</h3>
+<p>在 2020 年 4 月，Spring 宣布了一个新的项目——Spring Authorization Server，该项目旨在提供一个用于实现 OAuth 2.1 授权服务器的基础。</p>
+<h3 id="7-spring-security-53-and-beyond">7. Spring Security 5.3 and beyond</h3>
+<p>在 Spring Security 5.3 和之后的版本中，Spring Security OAuth2 的所有功能都被合并到了 Spring Security 中，而 <a href="https://github.com/spring-attic/spring-security-oauth" target="_blank">Spring Security OAuth2</a> 作为一个独立的项目已经停止开发。与之相对应的 <a href="https://github.com/spring-attic/spring-security-oauth2-boot" target="_blank">Spring Security OAuth Boot 2 Autoconfig</a> 也停止了开发。</p>
+<p>总结一下，目前，Spring Security OAuth2 的最新版本为 2.5.2.RELEASE，并且所有类都标注为 @Deprecated，官方也提供了一个迁移文档 <a href="https://github.com/spring-projects/spring-security/wiki/OAuth-2.0-Migration-Guide" target="_blank">OAuth 2.0 Migration Guide</a>。</p>
+<h2 id="spring-boot-和-spring-oauth2-版本关系">Spring Boot 和 Spring OAuth2 版本关系</h2>
+<p>Spring Boot 和 Spring OAuth2 是可以配合使用的，主要注意版本匹配即可。</p>
+<p>Spring Boot 使用了特定版本的 Spring OAuth2 作为依赖。所以使用对应的 Spring Boot 版本，就会自动获取匹配的 Spring OAuth2 版本。</p>
+<p>举几个版本的例子：</p>
+<ul>
+<li>Spring Boot 1.5.x 使用 Spring OAuth2 2.0.x</li>
+<li>Spring Boot 2.0.x 使用 Spring OAuth2 2.0.x</li>
+<li>Spring Boot 2.1.x 使用 Spring OAuth2 2.1.x</li>
+<li>Spring Boot 2.2.x 使用 Spring OAuth2 2.2.x</li>
+<li>Spring Boot 2.3.x 使用 Spring OAuth2 2.3.x</li>
+</ul>
+<p>所以使用 Spring Boot 时，不需要额外指定 Spring OAuth2 的版本，只需要选择匹配的 Spring Boot 版本即可。</p>
+<p>在配置和使用 Spring OAuth2 时，只需要参考 Spring OAuth2 的文档即可，不需要特别关注其版本。Spring Boot 会负责管理版本匹配。</p>
+<p>此外，从 Spring Boot 1.5 开始，Spring Security 已经集成了 OAuth2 的实现，可以直接使用 Spring Security 来实现 OAuth2，无需引入 Spring OAuth 项目。</p>
+<p>总之，Spring Boot 大大简化了 Spring OAuth2 的使用，只需要关注 Spring Boot 版本即可自动获取正确的 Spring OAuth2 版本。</p>
+<h2 id="spring-cloud-和-spring-oauth2-版本关系">Spring Cloud 和 Spring OAuth2 版本关系</h2>
+<p>Spring Cloud 和 Spring OAuth2 版本之间没有固定的对应关系，但通常来说建议符合以下情况：</p>
+<ul>
+<li>Spring Cloud 版本越新，内置的 Spring OAuth 支持也会更稳定和完善。</li>
+<li>Spring Cloud Hoxton/Greenwich 等主流版本，内置的 Spring OAuth 支持正常使用 Spring Security OAuth2 版本 2.x。</li>
+<li>Spring Cloud Edgware 及更早版本，内置的 Spring OAuth 支持建议使用 Spring Security OAuth2 版本 1.x。</li>
+<li>即使 Spring Cloud 版本和 Spring Security OAuth 版本不完全匹配，也无大碍，但功能和兼容性会受一定影响。</li>
+</ul>
+<p>所以一般来说：</p>
+<ul>
+<li>Spring Cloud Finch/ Greenwich 等最新版本，建议使用 Spring Security OAuth2 版本 2.3.x 及以上。</li>
+<li>Spring Cloud Edgware 到 Hoxton，建议使用 Spring Security OAuth2 版本 1.5.x 到 2.3.x 都可以。</li>
+<li>Spring Cloud 版本比较早，如 Dalston 以下，建议使用 Spring Security OAuth2 版本 1.0.x 到 1.5.x。</li>
+</ul>
+<p>但不是说版本一定要完全匹配，主要看自己需要用到的 Spring OAuth 功能是否得到支持。选择版本时优先考虑 Spring Cloud 版本的内置支持程度。此外，也可以根据项目其他依赖选择一个相对稳定的 Spring Security OAuth 版本。</p>
+<h2 id="spring-cloud-security">Spring Cloud Security</h2>
+<p>Spring Cloud Security 提供了一种集成化的方式来实现微服务应用的安全功能。主要有以下几点：</p>
+<ol>
+<li>身份认证(Authentication)</li>
+</ol>
+<p>Spring Cloud Security 支持常见的认证方式，比如基于 OAuth2.0 的认证协议。可以实现集中式的认证管理，登入后获取访问令牌并在各个微服务之间传递。</p>
+<ol>
+<li>授权(Authorization)</li>
+</ol>
+<p>支持基于 RBAC 和 ABAC 等授权模型。可以实现集中式的授权管理，给不同用户或组分配不同的访问权限。</p>
+<ol>
+<li>安全终端(Security Endpoints)</li>
+</ol>
+<p>提供了安全终端的实现，比如/oauth/token 令牌访问端点、/userinfo 用户信息端点等。</p>
+<ol>
+<li>加密通信(Encryption)</li>
+</ol>
+<p>支持在微服务之间进行安全的 HTTP 通信，通过 TLS/SSL 加密数据传输和服务间调用。</p>
+<ol>
+<li>日志审计(Logging &amp; Auditing)</li>
+</ol>
+<p>支持收集和记录安全相关的审计日志，比如授权错误日志、登入/登出日志等，方便管理和监控。</p>
+<ol>
+<li>安全配置(Security Configuration)</li>
+</ol>
+<p>提供了弹性和易用的安全配置能力，如动态配置安全相关 Bean 等。</p>
+<ol>
+<li>集成支持(Integration Support)</li>
+</ol>
+<p>天然支持 Spring Cloud 和 Springboot 项目，无缝集成从认证到授权的全套安全功能。</p>
+<p>所以总体来说，Spring Cloud Security 提供了一种标准化和集成的方式来实现微服务环境下的安全需求。开发人员可以更便捷地利用其丰富的功能。</p>
+<h2 id="示例">示例</h2>
+<h3 id="spring-security-如何实现-json-web-token-的功能">Spring Security 如何实现 JSON Web Token 的功能？</h3>
+<p>Spring Security 可以通过如下方式实现 JSON Web Token(JWT)的功能：</p>
+<ol>
+<li>导入 spring-security-jwt 依赖。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.security<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-security-jwt<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>spring-boot-starter-security 版本信息如下：</p>
+<ul>
+<li>spring-boot-starter-parent 版本号：2.7.5</li>
+<li>依赖的 spring-boot-starter-security 版本号：2.7.5</li>
+</ul>
+<p>spring-boot-starter-security 是 Spring Boot 安全功能的启动器依赖，它会自动引入核心安全依赖：</p>
+<ul>
+<li>
+<p>spring-security-core：Spring Security 的核心模块，提供认证、授权、安全相关的主要接口和组件。</p>
+</li>
+<li>
+<p>spring-security-config：提供了 Spring Security 的基础配置能力，包含过滤器链、密码编码器等。</p>
+</li>
+<li>
+<p>spring-security-web：提供了 web 安全相关的支持，如过滤器、登录表单、注解等。</p>
+</li>
+<li>
+<p>spring-security-crypto：包含密码哈希功能的实现类，用于对密码进行安全的加密存储。</p>
+</li>
+<li>
+<p>spring-security-data：包含了支持 JDBC 和 LDAP 等后端数据源的安全组件。</p>
+</li>
+<li>
+<p>spring-security-oauth2-client：提供了对 OAuth2 客户端功能的支持。主要提供以下 OAuth2 客户端相关功能：</p>
+<ul>
+<li>客户端注册和资源服务器配置：支持为客户端应用配置 clientId、secret 等信息。</li>
+<li>客户端凭证获取：支持 BasicAuth 和密码模式获取 client credentials。</li>
+<li>访问令牌请求：实现客户端向授权服务器请求访问令牌的功能，支持 password、refresh_token 等 grant 类型。</li>
+<li>令牌存储：提供 TokenStore 接口的实现，支持在会话或数据库中存储/获取访问令牌。</li>
+<li>资源服务器访问：通过访问令牌来访问受保护的资源，支持从请求头或参数中提取令牌。</li>
+<li>刷新令牌：实现使用 refresh_token 来刷新过期的访问令牌功能。</li>
+<li>用户授权：提供类似@PreAuthorize 注解来处理用户授权逻辑。</li>
+<li>客户端详情：封装 ClientDetails 实现类，包含客户端注册信息。</li>
+<li>默认令牌服务：DefaultTokenServices 实现类管理令牌生命周期。</li>
+<li>请求工厂：提供 RestTemplate 和 Apache HTTP Components 等请求客户端。</li>
+</ul>
+<p>spring-security-oauth2-client 模块同时也提供部分支持其他授权类型：</p>
+<ul>
+<li>授权码模式(authorization_code)：主流模式，客户端通过 auth code 获取 access token。</li>
+<li>密码模式(password)：客户端直接提供用户名密码获取 token，适合 trusted 客户端。</li>
+<li>隐藏式授权模式(implicit)：客户端直接获取 access token，不支持 refresh。</li>
+<li>客户端模式(client_credentials)：客户端以自身名义请求资源服务，适合机密客户端。</li>
+<li>资主授权模式(owner)：类似密码模式但用户需确认通过用户界面。</li>
+<li>运行时审批模式(approval_prompt)：用户每次访问都需确认授权。</li>
+</ul>
+<p>除了上述常见授权类型外，spring-security-oauth2-client 还提供了对以下模式的选择性支持：</p>
+<ul>
+<li>断路器模式(urn:ietf:params:oauth:grant-type:device_code)</li>
+<li>分阶段授权模式(urn:ietf:params:oauth:grant-type:stage)</li>
+<li>令牌交换模式(urn:ietf:params:oauth:grant-type:token-exchange)</li>
+</ul>
+</li>
+<li>
+<p>spring-security-oauth2-core：OAuth2 协议支持的核心部件。</p>
+</li>
+</ul>
+<p>因此 spring-boot-starter-security 的版本始终保持与 spring-boot-starters 版本一致。</p>
+<p>当前较为主流和稳定的 spring-boot 版本有：</p>
+<ul>
+<li>Spring Boot 2.7.x 最新版</li>
+<li>Spring Boot 2.6.x</li>
+<li>Spring Boot 2.5.x</li>
+</ul>
+<p>对应的 spring-boot-starter-security 版本如下：</p>
+<ul>
+<li>Spring Boot 2.7.x - spring-boot-starter-security 2.7.x</li>
+<li>Spring Boot 2.6.x - spring-boot-starter-security 2.6.x</li>
+<li>Spring Boot 2.5.x - spring-boot-starter-security 2.5.x</li>
+</ul>
+<p>所以在选择 spring boot 版本时，直接依赖 spring-boot-starter-security 而不用单独指定版本，就可以保证安全功能的版本一致性。</p>
+<p>目前大多数场景下可以使用 Spring Boot 2.6.x 或者 2.7.x 作为选择，它们内置的 spring-boot-starter-security 版本都很成熟。</p>
+<ol start="2">
+<li>配置 JwtToken enhancer 来生成 JWT 令牌。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> JwtAccessTokenConverter <span style="color:#a6e22e">jwtTokenEnhancer</span>() {
+</span></span><span style="display:flex;"><span>  JwtAccessTokenConverter converter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JwtAccessTokenConverter();
+</span></span><span style="display:flex;"><span>  converter.<span style="color:#a6e22e">setSigningKey</span>(<span style="color:#e6db74">&#34;123456&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> converter;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
+<li>定义 JwtTokenStore 来保存 JWT 令牌。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> TokenStore <span style="color:#a6e22e">tokenStore</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> JwtTokenStore(jwtTokenEnhancer());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="4">
+<li>在 AuthorizationServerConfigurerAdapter 配置类中设置 tokenStore。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(AuthorizationServerEndpointsConfigurer endpoints) {
+</span></span><span style="display:flex;"><span>  endpoints.<span style="color:#a6e22e">tokenStore</span>(tokenStore());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="5">
+<li>
+<p>客户端使用 JWT 令牌进行认证访问资源服务器。</p>
+</li>
+<li>
+<p>资源服务器使用 JwtTokenStore 和 JwtAccessTokenConverter 校验 JWT 令牌的合法性。</p>
+</li>
+<li>
+<p>解析 JWTpayload 获取用户信息，实现鉴权决策。</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String username <span style="color:#f92672">=</span>  ((Jwt)authentication.<span style="color:#a6e22e">getPrincipal</span>()).<span style="color:#a6e22e">getSubject</span>();
+</span></span></code></pre></div><p>完整代码，配置类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableWebSecurity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityConfig</span> <span style="color:#66d9ef">extends</span> WebSecurityConfigurerAdapter {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> JwtAccessTokenConverter <span style="color:#a6e22e">accessTokenConverter</span>() {
+</span></span><span style="display:flex;"><span>    JwtAccessTokenConverter converter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JwtAccessTokenConverter();
+</span></span><span style="display:flex;"><span>    converter.<span style="color:#a6e22e">setSigningKey</span>(<span style="color:#e6db74">&#34;as123456dfsdf&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> converter;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> TokenStore <span style="color:#a6e22e">tokenStore</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> JwtTokenStore(accessTokenConverter());
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>    http.<span style="color:#a6e22e">csrf</span>().<span style="color:#a6e22e">disable</span>();
+</span></span><span style="display:flex;"><span>    http
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">authorizeRequests</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">antMatchers</span>(<span style="color:#e6db74">&#34;/oauth/**&#34;</span>).<span style="color:#a6e22e">permitAll</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Primary</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> DefaultTokenServices <span style="color:#a6e22e">tokenServices</span>() {
+</span></span><span style="display:flex;"><span>    DefaultTokenServices defaultTokenServices <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DefaultTokenServices();
+</span></span><span style="display:flex;"><span>    defaultTokenServices.<span style="color:#a6e22e">setTokenStore</span>(tokenStore());
+</span></span><span style="display:flex;"><span>    defaultTokenServices.<span style="color:#a6e22e">setSupportRefreshToken</span>(<span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> defaultTokenServices;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>授权服务器配置，使用客户端模式配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthorizationServerConfig</span> <span style="color:#66d9ef">extends</span> AuthorizationServerConfigurerAdapter {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> TokenStore tokenStore;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(ClientDetailsServiceConfigurer clients) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    clients.<span style="color:#a6e22e">inMemory</span>()
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">withClient</span>(<span style="color:#e6db74">&#34;clientapp&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">secret</span>(<span style="color:#e6db74">&#34;$2a$10$6aQQyhlhol4M1KAncczPdu4zX7/TgvjpOU.sWzt7j5Xl6W/z5V4cC&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">authorizedGrantTypes</span>(<span style="color:#e6db74">&#34;password&#34;</span><span style="color:#960050;background-color:#1e0010">，</span> <span style="color:#e6db74">&#34;refresh_token&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">scopes</span>(<span style="color:#e6db74">&#34;read&#34;</span><span style="color:#960050;background-color:#1e0010">，</span> <span style="color:#e6db74">&#34;write&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">accessTokenValiditySeconds</span>(3600);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(AuthorizationServerEndpointsConfigurer endpoints)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>    endpoints.<span style="color:#a6e22e">tokenStore</span>(tokenStore)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">authenticationManager</span>(authenticationManager());
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>主要配置：</p>
+<ol>
+<li>使用 ClientDetailsServiceConfigurer 配置客户端信息，如 clientId、secret 等</li>
+<li>配置 tokenStore</li>
+<li>配置 authenticationManager 来获取用户信息</li>
+</ol>
+<p>这样就实现了基于客户端模式下的授权服务配置，客户端可以使用 clientId/secret 获取访问令牌而无需用户登录。</p>
+<p>客户端访问示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://localhost:8080/oauth/token -d <span style="color:#e6db74">&#34;grant_type=password&amp;username=user&amp;password=password&amp;client_id=clientapp&amp;client_secret=secret&#34;</span>
+</span></span></code></pre></div><p>让客户端在后台获取访问令牌，资源服务再使用令牌验证授权。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-authorization-server/" target="_blank" title="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-info-endpoint/" target="_blank" title="[译]使用Spring Boot Actuator公开有用的信息端点">[译]使用Spring Boot Actuator公开有用的信息端点</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring-scopes/" target="_blank" title="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring/" target="_blank" title="[译]在 Spring 中实现 OAuth2：第 1 部分">[译]在 Spring 中实现 OAuth2：第 1 部分</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-exception-handling/" target="_blank" title="[译]Spring Boot异常处理完整指南">[译]Spring Boot异常处理完整指南</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-cors/" target="_blank" title="[译]使用 Spring Boot 和 Spring Security 配置 CORS">[译]使用 Spring Boot 和 Spring Security 配置 CORS</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/08/15/tree-structure-in-database/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 数据库如何设计树形结构</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/16/spring-boot-docker/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]为 Spring Boot 应用程序创建优化的 Docker 映像</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/08\/15\/spring-security-oauth2-history\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#spring-security-的发展过程">Spring Security 的发展过程</a></li>
+    <li><a href="#spring-security-oauth2-发展">Spring Security OAuth2 发展</a>
+      <ul>
+        <li><a href="#1-spring-security-oauth2-v1x--v20">1. Spring Security OAuth2 V1.x – V2.0</a></li>
+        <li><a href="#2-spring-security-oauth2-v21">2. Spring Security OAuth2 V2.1</a></li>
+        <li><a href="#3-spring-security-50-oauth2-login-and-oauth2-client">3. Spring Security 5.0 OAuth2 Login and OAuth2 Client</a></li>
+        <li><a href="#4-spring-security-51-oauth2-resource-server">4. Spring Security 5.1 OAuth2 Resource Server</a></li>
+        <li><a href="#5-spring-security-52-oauth2-authorization-server">5. Spring Security 5.2 OAuth2 Authorization Server</a></li>
+        <li><a href="#6-spring-authorization-server">6. Spring Authorization Server</a></li>
+        <li><a href="#7-spring-security-53-and-beyond">7. Spring Security 5.3 and beyond</a></li>
+      </ul>
+    </li>
+    <li><a href="#spring-boot-和-spring-oauth2-版本关系">Spring Boot 和 Spring OAuth2 版本关系</a></li>
+    <li><a href="#spring-cloud-和-spring-oauth2-版本关系">Spring Cloud 和 Spring OAuth2 版本关系</a></li>
+    <li><a href="#spring-cloud-security">Spring Cloud Security</a></li>
+    <li><a href="#示例">示例</a>
+      <ul>
+        <li><a href="#spring-security-如何实现-json-web-token-的功能">Spring Security 如何实现 JSON Web Token 的功能？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

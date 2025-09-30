@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/01/17/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc">
+  <meta itemprop="description" content="今天做了什么：
+观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。 foodie-cloud 项目实现读写分离并集成 Springdoc Docker 搭建 MySQL 主从复制环境 参考文章 ：基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）">
+  <meta itemprop="datePublished" content="2024-01-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-01-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="392">
+  <meta itemprop="keywords" content="Mysql,Docker,Java,Spring-Boot">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-17">2024-01-17</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/mysql/" rel="tag">Mysql</a>, <a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/spring-boot/" rel="tag">Spring-Boot</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ul>
+<li>观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。</li>
+<li>foodie-cloud 项目实现读写分离并集成 Springdoc</li>
+</ul>
+<h2 id="docker-搭建-mysql-主从复制环境">Docker 搭建 MySQL 主从复制环境</h2>
+<p>参考文章 ：<a href="https://learnku.com/articles/30439" target="_blank">基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）</a></p>
+<p>先创建两个容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>version: <span style="color:#e6db74">&#39;3.8&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>services: 
+</span></span><span style="display:flex;"><span>  mysql-master:
+</span></span><span style="display:flex;"><span>    image: mysql:8
+</span></span><span style="display:flex;"><span>    restart: always
+</span></span><span style="display:flex;"><span>    env_file:
+</span></span><span style="display:flex;"><span>      - .env
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;3307:3306&#34;</span>
+</span></span><span style="display:flex;"><span>    environment:
+</span></span><span style="display:flex;"><span>      - TZ<span style="color:#f92672">=</span>Asia/Shanghai
+</span></span><span style="display:flex;"><span>      - MYSQL_ROOT_PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_ROOT_PASSWORD<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_DATABASE<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_DATABASE<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_USER<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_USER<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_PASSWORD<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    command: --default-authentication-plugin<span style="color:#f92672">=</span>mysql_native_password --explicit_defaults_for_timestamp<span style="color:#f92672">=</span>true --lower_case_table_names<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> --tls-version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span> --log-bin<span style="color:#f92672">=</span>mysql-bin --server-id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    healthcheck:
+</span></span><span style="display:flex;"><span>      test: <span style="color:#e6db74">&#34;/usr/bin/mysql --user=</span><span style="color:#e6db74">${</span>MYSQL_USER<span style="color:#e6db74">}</span><span style="color:#e6db74"> --password=</span><span style="color:#e6db74">${</span>MYSQL_PASSWORD<span style="color:#e6db74">}</span><span style="color:#e6db74"> -e &#39;SHOW DATABASES;&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>      interval: 5s
+</span></span><span style="display:flex;"><span>      timeout: 2s
+</span></span><span style="display:flex;"><span>      retries: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  mysql-slave:
+</span></span><span style="display:flex;"><span>    image: mysql:8
+</span></span><span style="display:flex;"><span>    restart: always
+</span></span><span style="display:flex;"><span>    env_file:
+</span></span><span style="display:flex;"><span>      - .env
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;3308:3306&#34;</span>
+</span></span><span style="display:flex;"><span>    environment:
+</span></span><span style="display:flex;"><span>      - TZ<span style="color:#f92672">=</span>Asia/Shanghai
+</span></span><span style="display:flex;"><span>      - MYSQL_ROOT_PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_ROOT_PASSWORD<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_DATABASE<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_DATABASE<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_USER<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_USER<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>      - MYSQL_PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>MYSQL_PASSWORD<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    command: --default-authentication-plugin<span style="color:#f92672">=</span>mysql_native_password --explicit_defaults_for_timestamp<span style="color:#f92672">=</span>true --lower_case_table_names<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> --tls-version<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span> --log-bin<span style="color:#f92672">=</span>mysql-bin --server-id<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    healthcheck:
+</span></span><span style="display:flex;"><span>      test: <span style="color:#e6db74">&#34;/usr/bin/mysql --user=</span><span style="color:#e6db74">${</span>MYSQL_USER<span style="color:#e6db74">}</span><span style="color:#e6db74"> --password=</span><span style="color:#e6db74">${</span>MYSQL_PASSWORD<span style="color:#e6db74">}</span><span style="color:#e6db74"> -e &#39;SHOW DATABASES;&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>      interval: 5s
+</span></span><span style="display:flex;"><span>      timeout: 2s
+</span></span><span style="display:flex;"><span>      retries: <span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><p>.env 文件：</p>
+<pre tabindex="0"><code>TZ=Asia/Shanghai
+
+MYSQL_ROOT_PASSWORD=123456
+MYSQL_DATABASE=foodie-cloud
+MYSQL_USER=foodie
+MYSQL_PASSWORD=foodie
+</code></pre><p>主数据库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>docker <span style="color:#66d9ef">exec</span> <span style="color:#f92672">-</span>it mysql<span style="color:#f92672">-</span>master <span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>bash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql <span style="color:#f92672">-</span>uroot <span style="color:#f92672">-</span>p123456
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> <span style="color:#e6db74">&#39;test&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;%&#39;</span> IDENTIFIED <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">GRANT</span> REPLICATION SLAVE, REPLICATION CLIENT <span style="color:#66d9ef">ON</span> <span style="color:#f92672">*</span>.<span style="color:#f92672">*</span> <span style="color:#66d9ef">TO</span> <span style="color:#e6db74">&#39;test&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;%&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SHOW</span> MASTER STATUS;
+</span></span></code></pre></div><p>从数据库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>docker inspect <span style="color:#75715e">--format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; mysql-master
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>docker <span style="color:#66d9ef">exec</span> <span style="color:#f92672">-</span>it mysql<span style="color:#f92672">-</span>slave <span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>bash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql <span style="color:#f92672">-</span>uroot <span style="color:#f92672">-</span>p123456
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> change master <span style="color:#66d9ef">to</span> master_host<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;192.168.215.4&#39;</span>,master_user<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span>,master_password<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;123456&#39;</span>,master_log_file<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mysql-bin.000003&#39;</span>,master_log_pos<span style="color:#f92672">=</span><span style="color:#ae81ff">642</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">SHOW</span> SLAVE STATUS <span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">G</span>;
+</span></span></code></pre></div><p>正常情况下，SlaveIORunning 和 SlaveSQLRunning 都是 No，因为我们还没有开启主从复制过程。使用 start slave 开启主从复制过程，然后再次查询主从同步状态 show slave status \G;。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">start</span> slave;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">SHOW</span> SLAVE STATUS <span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">G</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span><span style="color:#66d9ef">SHOW</span> BINARY LOGS;
+</span></span></code></pre></div><h2 id="shardingjdbc实现读写分离">ShardingJDBC实现读写分离</h2>
+<h3 id="介绍">介绍</h3>
+<p>Sharding-JDBC定位为轻量级Java框架，在Java的JDBC层提供的额外服务。 它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架。</p>
+<p>使用Sharding-JDBC可以在程序中轻松的实现数据库读写分离。</p>
+<p>Sharding-JDBC具有以下几个特点：
+1). 适用于任何基于JDBC的ORM框架，如：JPA, Hibernate, Mybatis, Spring JDBC Template或直接使用JDBC。
+2). 支持任何第三方的数据库连接池，如：DBCP, C3P0, BoneCP, Druid, HikariCP等。
+3). 支持任意实现JDBC规范的数据库。目前支持MySQL，Oracle，SQLServer，PostgreSQL以及任何遵循SQL92标准的数据库。</p>
+<h3 id="配置">配置</h3>
+<p>1). 在pom.xml中增加shardingJdbc的maven坐标</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.shardingsphere<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>sharding-jdbc-spring-boot-starter<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>4.1.1<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>2). 在application.yml中增加数据源的配置</p>
+<p>先注释原来的数据源配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#75715e">#spring.datasource:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  url: jdbc:mysql://${mysql:mysql}:3306/foodie-cloud?connectTimeout=2000&amp;socketTimeout=150000&amp;allowMultiQueries=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  driver-class-name: com.mysql.cj.jdbc.Driver</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  username: foodie</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#  password: foodie</span>
+</span></span></code></pre></div><p>然后，添加 shardingsphere 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring.shardingsphere</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">datasource</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">names</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">master,slave</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">master</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">type</span>: <span style="color:#ae81ff">com.zaxxer.hikari.HikariDataSource</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">driver-class-name</span>: <span style="color:#ae81ff">com.mysql.cj.jdbc.Driver</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">jdbcUrl</span>: <span style="color:#ae81ff">jdbc:mysql://${mysql-master:mysql-master}:3307/foodie-cloud?connectTimeout=2000&amp;socketTimeout=150000&amp;allowMultiQueries=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">username</span>: <span style="color:#ae81ff">foodie</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">password</span>: <span style="color:#ae81ff">foodie</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">slave</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">type</span>: <span style="color:#ae81ff">com.zaxxer.hikari.HikariDataSource</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">driver-class-name</span>: <span style="color:#ae81ff">com.mysql.cj.jdbc.Driver</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">jdbcUrl</span>: <span style="color:#ae81ff">jdbc:mysql://${mysql-slave:mysql-slave}:3308/foodie-cloud?connectTimeout=2000&amp;socketTimeout=150000&amp;allowMultiQueries=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">username</span>: <span style="color:#ae81ff">foodie</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">password</span>: <span style="color:#ae81ff">foodie</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">master-slave</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">load-balance-algorithm-type</span>: <span style="color:#ae81ff">round_robin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 最终的数据源名称</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">dataSource</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 主库数据源名称</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">master-data-source-name</span>: <span style="color:#ae81ff">master</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 从库数据源名称列表，多个逗号分隔</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">slave-data-source-names</span>: <span style="color:#ae81ff">slave</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">props</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">sql</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">show</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>增加下面配置，允许 bean 覆盖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">main</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">allow-bean-definition-overriding</span>: <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>3). 在本地的 hosts 文件添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>127.0.0.1 mysql-master
+</span></span><span style="display:flex;"><span>127.0.0.1 mysql-slave
+</span></span></code></pre></div><p>4). 启动应用</p>
+<p>在启动过程中出现异常：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Caused by: java.sql.SQLFeatureNotSupportedException: isValid
+</span></span></code></pre></div><p>Sharding Sphere 不支持数据库健康检查，关闭数据库健康检查即可。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#75715e"># Sharding Sphere 不支持数据库健康检查</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.health.db.enabled</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><h2 id="集成-springdoc--javadoc">集成 Springdoc + Javadoc</h2>
+<ol>
+<li>添加依赖</li>
+</ol>
+<p>spring-boot2 使用 springdoc-openapi 1.7.0 版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springdoc<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>springdoc-openapi-ui<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;groupId&gt;</span>org.springdoc<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;artifactId&gt;</span>springdoc-openapi-javadoc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ol start="2">
+<li>集成 springdoc 使用 javadoc 注释作为文档</li>
+</ol>
+<p>参考 <a href="https://springdoc.org/#javadoc-support" target="_blank">https://springdoc.org/#javadoc-support</a> ，修改 maven-compiler-plugin 插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>maven-compiler-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>${maven-compiler-plugin.version}<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;parameters&gt;</span>true<span style="color:#f92672">&lt;/parameters&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;annotationProcessorPaths&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- https://springdoc.org/#javadoc-support --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;path&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;groupId&gt;</span>com.github.therapi<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;artifactId&gt;</span>therapi-runtime-javadoc-scribe<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;version&gt;</span>${therapi-runtime-javadoc.version}<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/path&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- 修复 lombok、springdoc 冲突 --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;path&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;groupId&gt;</span>org.projectlombok<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;artifactId&gt;</span>lombok<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;version&gt;</span>${lombok.version}<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/path&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/annotationProcessorPaths&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span></code></pre></div><p>添加依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>com.github.therapi<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>therapi-runtime-javadoc<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>${therapi-runtime-javadoc.version}<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><ol start="3">
+<li>启动应用</li>
+</ol>
+<p>访问：</p>
+<ul>
+<li><a href="http://localhost:8080/swagger-ui.html" target="_blank">http://localhost:8080/swagger-ui.html</a></li>
+<li><a href="http://localhost:8080/v3/api-docs" target="_blank">http://localhost:8080/v3/api-docs</a></li>
+</ul>
+<blockquote>
+<p>说明：</p>
+<ul>
+<li>访问 swagger-ui.html 会显示 petstore 的 api 接口信息。具体原因，可以参考 <a href="https://stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config" target="_blank">https://stackoverflow.com/questions/71721477/springdoc-swagger-ui-not-using-swagger-config</a></li>
+<li>目前，没有找到解决办法。曲线救国的方法是使用其他 Swagger UI，如 Knife4j。</li>
+</ul></blockquote>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/04/til/" target="_blank" title="2024-01-04｜GitHub Actions">2024-01-04｜GitHub Actions</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/21/til/" target="_blank" title="2023-12-21｜Spring Security对OAuth2的支持及实现方式">2023-12-21｜Spring Security对OAuth2的支持及实现方式</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/02/jhipster-intro/" target="_blank" title="JHipster安装和介绍">JHipster安装和介绍</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/16/til/" target="_blank" title="2024-01-16｜Redis安装">2024-01-16｜Redis安装</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/20/til/" target="_blank" title="2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台">2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/18/til/" target="_blank" title="2023-12-18｜使用Spring Security实现OAuth2授权和认证">2023-12-18｜使用Spring Security实现OAuth2授权和认证</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/mysql/" rel="tag">mysql</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring-boot/" rel="tag">spring-boot</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/01/16/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-01-16｜Redis安装</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/01/18/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2024-01-18｜今天做了什么</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/01\/17\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-搭建-mysql-主从复制环境">Docker 搭建 MySQL 主从复制环境</a></li>
+    <li><a href="#shardingjdbc实现读写分离">ShardingJDBC实现读写分离</a>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#配置">配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#集成-springdoc--javadoc">集成 Springdoc + Javadoc</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

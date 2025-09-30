@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ActiveMQ安装和使用 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="ActiveMQ安装和使用">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/07/05/install-activemq/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="ActiveMQ安装和使用">
+  <meta itemprop="description" content="ActiveMQ 是一个实现了 JMS 协议的开源消息中间件，目前它有两种版本：ActiveMQ “Classic” 和 ActiveMQ Artemis。">
+  <meta itemprop="datePublished" content="2024-07-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1825">
+  <meta itemprop="keywords" content="Docker,Java,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="ActiveMQ安装和使用">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ActiveMQ安装和使用</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-05">2024-07-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/devops/" rel="category">Devops</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>ActiveMQ 是一个实现了 JMS 协议的开源消息中间件，目前它有两种版本：ActiveMQ &ldquo;Classic&rdquo; 和 ActiveMQ Artemis。</p>
+<p>Artemis 版本作为Classic版本的替代品而诞生，相较的提升点有：</p>
+<ul>
+<li>
+<p>高性能与低延迟：Artemis通过改进的设计实现了更高的吞吐量和更低的消息处理延迟。</p>
+</li>
+<li>
+<p>存储机制：使用了不同的持久化策略和日志结构，比如Journal文件系统，以获得更好的写性能和恢复速度。</p>
+</li>
+<li>
+<p>内存管理：内存使用效率更高，尤其是在处理大量小消息时表现更好。</p>
+</li>
+<li>
+<p>集群和HA：提供了更先进的高可用性解决方案和更灵活的集群模式。</p>
+</li>
+<li>
+<p>协议支持：除了原有的JMS之外，对AMQP 1.0的支持更加成熟和完善，并且也支持STOMP等多种协议。</p>
+</li>
+<li>
+<p>架构更新：整体架构更为现代化，为云原生环境和大规模分布式部署进行了优化。</p>
+</li>
+</ul>
+<p>ActiveMQ Classic 各个版本的比较，参考：https://activemq.apache.org/components/classic/download/ 。</p>
+<ul>
+<li>6.0.x：需要 JDK17</li>
+<li>5.17.x + ：需要 JDK11</li>
+<li>5.16.x ：需要 JDK8</li>
+</ul>
+<p>本文以 ActiveMQ Classic  5.16.7 进行测试。</p>
+<h2 id="压缩包安装">压缩包安装</h2>
+<p>在 linux 服务器上下载和安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://archive.apache.org/dist/activemq/5.16.7/apache-activemq-5.16.7-bin.tar.gz
+</span></span><span style="display:flex;"><span>tar -zxvf apache-activemq-5.16.7-bin.tar.gz
+</span></span><span style="display:flex;"><span>cd apache-activemq-5.16.7
+</span></span></code></pre></div><p>启动：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ bin/activemq start
+</span></span><span style="display:flex;"><span>INFO: Loading <span style="color:#e6db74">&#39;/data/apache-activemq-5.16.7/bin/env&#39;</span>
+</span></span><span style="display:flex;"><span>INFO: Using java <span style="color:#e6db74">&#39;/usr/bin/java&#39;</span>
+</span></span><span style="display:flex;"><span>INFO: Starting - inspect logfiles specified in logging.properties and log4j.properties to get details
+</span></span><span style="display:flex;"><span>INFO: pidfile created : <span style="color:#e6db74">&#39;/data/apache-activemq-5.16.7/data/activemq.pid&#39;</span> <span style="color:#f92672">(</span>pid <span style="color:#e6db74">&#39;31850&#39;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>查看是否启动成功：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ netstat -antpule|grep <span style="color:#ae81ff">61616</span>
+</span></span><span style="display:flex;"><span>tcp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::61616                :::*                    LISTEN      <span style="color:#ae81ff">0</span>          <span style="color:#ae81ff">382969263</span>  31850/java
+</span></span></code></pre></div><p>查看日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tailf data/activemq.log
+</span></span></code></pre></div><p>打开浏览器，访问 http://127.0.0.1:8161/admin ，默认账号：admin，密码：admin</p>
+<p>修改配置，支持通过 IP 访问，修改 conf 目录下的 jetty.xml 文件，将 127.0.0.1 改为 0.0.0.0 ，然后重启。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;jettyPort&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.apache.activemq.web.WebConsolePort&#34;</span> <span style="color:#a6e22e">init-method=</span><span style="color:#e6db74">&#34;start&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#75715e">&lt;!-- the default port number for the web console --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;host&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;127.0.0.1&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;port&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;8161&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><p>创建 <strong>systemd</strong> 服务，创建 /usr/lib/systemd/system/activemq.service 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">Unit</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Description</span>=<span style="color:#a6e22e">ActiveMQ</span> <span style="color:#a6e22e">service</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">After</span>=<span style="color:#a6e22e">network</span>.<span style="color:#a6e22e">target</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">Service</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Type</span>=<span style="color:#a6e22e">forking</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ExecStart</span>=<span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">opt</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">activemq</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">bin</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">activemq</span> <span style="color:#a6e22e">start</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ExecStop</span>=<span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">opt</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">activemq</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">bin</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">activemq</span> <span style="color:#a6e22e">stop</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">User</span>=<span style="color:#a6e22e">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Group</span>=<span style="color:#a6e22e">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Restart</span>=<span style="color:#a6e22e">always</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">RestartSec</span>=<span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">StandardOutput</span>=<span style="color:#a6e22e">syslog</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">StandardError</span>=<span style="color:#a6e22e">syslog</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SyslogIdentifier</span>=<span style="color:#a6e22e">activemq</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">Install</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">WantedBy</span>=<span style="color:#a6e22e">multi-user</span>.<span style="color:#a6e22e">target</span>
+</span></span></code></pre></div><p>注意 ExecStart 和 ExecStop 中 activemq 的安装路径，我这里是安装在 /opt 目录。</p>
+<p><strong>通过systemctl管理activemq</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#启动activemq服务: </span>
+</span></span><span style="display:flex;"><span>systemctl start activemq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#查看服务状态: </span>
+</span></span><span style="display:flex;"><span>systemctl status activemq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#创建软件链接：</span>
+</span></span><span style="display:flex;"><span>ln -s /usr/lib/systemd/system/activemq.service /etc/systemd/system/multi-user.target.wants/activemq.service
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#开机自启: </span>
+</span></span><span style="display:flex;"><span>systemctl enable activemq
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#检测是否开启成功(enable)： </span>
+</span></span><span style="display:flex;"><span>systemctl list-unit-files |grep activemq
+</span></span></code></pre></div><p>关闭防火墙：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop firewalld.service
+</span></span></code></pre></div><p>或者开放端口，重启防火墙：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>irewall-cmd --zone<span style="color:#f92672">=</span>public --add-port<span style="color:#f92672">=</span>8161/tcp --permanent
+</span></span><span style="display:flex;"><span>firewall-cmd --zone<span style="color:#f92672">=</span>public --add-port<span style="color:#f92672">=</span>61616/tcp --permanent
+</span></span><span style="display:flex;"><span>systemctl restart firewalld.service
+</span></span></code></pre></div><h2 id="使用-docker-安装">使用 Docker 安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker run -d --name activemq -p 61616:61616 -p 8161:8161 apache/activemq-classic:5.16.7
+</span></span></code></pre></div><h2 id="使用-docker-compose-安装">使用 Docker Compose 安装</h2>
+<p>docker-compose.yml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">activemq</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">apache/activemq-classic:5.16.7</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;TZ=Asia/Shanghai&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">activemq_data://opt/apache-activemq/data</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;61616:61616&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8161:8161&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">activemq_data</span>:
+</span></span></code></pre></div><p>安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose -f docker-compose.yml up -d
+</span></span></code></pre></div><p>查看容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS         PORTS    NAMES
+</span></span><span style="display:flex;"><span>49166db84713   apache/activemq-classic   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">10</span> minutes ago   Up <span style="color:#ae81ff">4</span> minutes   1099/tcp, 1883/tcp, 5672/tcp, 0.0.0.0:8161-&gt;8161/tcp, :::8161-&gt;8161/tcp, 61613-61614/tcp, 0.0.0.0:61616-&gt;61616/tcp, :::61616-&gt;61616/tcp   messaging-examples-activemq-1
+</span></span></code></pre></div><p>查看日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker logs -f messaging-examples-activemq-1
+</span></span></code></pre></div><h2 id="发送接收消息">发送、接收消息</h2>
+<p>以下是发送消息的示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ bin/activemq producer --message <span style="color:#e6db74">&#34;hello&#34;</span> --messageCount <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span> INFO | Connecting to URL: failover://tcp://localhost:61616 as user: null
+</span></span><span style="display:flex;"><span> INFO | Producing messages to queue://TEST
+</span></span><span style="display:flex;"><span> INFO | Using persistent messages
+</span></span><span style="display:flex;"><span> INFO | Sleeping between sends <span style="color:#ae81ff">0</span> ms
+</span></span><span style="display:flex;"><span> INFO | Running <span style="color:#ae81ff">1</span> parallel threads
+</span></span><span style="display:flex;"><span> INFO | Successfully connected to tcp://localhost:61616
+</span></span><span style="display:flex;"><span> INFO | producer-1 Started to calculate elapsed time ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> INFO | producer-1 Produced: <span style="color:#ae81ff">10</span> messages
+</span></span><span style="display:flex;"><span> INFO | producer-1 Elapsed time in second : <span style="color:#ae81ff">0</span> s
+</span></span><span style="display:flex;"><span> INFO | producer-1 Elapsed time in milli second : <span style="color:#ae81ff">25</span> milli seconds
+</span></span></code></pre></div><p>在 http://127.0.0.1:8161/admin/queues.jsp 可以看到，TEST 队列有 10 个消息。</p>
+<p>接收消息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ bin/activemq consumer
+</span></span><span style="display:flex;"><span> INFO | Connecting to URL: failover://tcp://localhost:61616 as user: null
+</span></span><span style="display:flex;"><span> INFO | Consuming queue://TEST
+</span></span><span style="display:flex;"><span> INFO | Sleeping between receives <span style="color:#ae81ff">0</span> ms
+</span></span><span style="display:flex;"><span> INFO | Running <span style="color:#ae81ff">1</span> parallel threads
+</span></span><span style="display:flex;"><span> INFO | Successfully connected to tcp://localhost:61616
+</span></span><span style="display:flex;"><span> INFO | consumer-1 wait <span style="color:#66d9ef">until</span> <span style="color:#ae81ff">1000</span> messages are consumed
+</span></span><span style="display:flex;"><span> INFO | consumer-1 Received hello
+</span></span></code></pre></div><p>bin/activemq producer 支持的参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ bin/activemq producer -h
+</span></span><span style="display:flex;"><span>Usage: producer <span style="color:#f92672">[</span>OPTIONS<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description: Demo producer that can be used to send messages to the broker
+</span></span><span style="display:flex;"><span>Options :
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--brokerUrl                                   URL<span style="color:#f92672">]</span> - connection factory url; default ActiveMQConnectionFactory.DEFAULT_BROKER_URL
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--user                                         ..<span style="color:#f92672">]</span> - connection user name
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--password                                     ..<span style="color:#f92672">]</span> - connection password
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--destination               queue://..|topic://..<span style="color:#f92672">]</span> - producer destination; default queue://TEST
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--persistent                           true|false<span style="color:#f92672">]</span> - use persistent or non persistent messages; default true
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--messageCount                                  N<span style="color:#f92672">]</span> - number of messages to send; default <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--sleep                                         N<span style="color:#f92672">]</span> - millisecond sleep period between sends or receives; default <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--transactionBatchSize                          N<span style="color:#f92672">]</span> - use send transaction batches of size N; default 0, no jms transactions
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--parallelThreads                               N<span style="color:#f92672">]</span> - number of threads to run in parallel; default <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--msgTTL                                        N<span style="color:#f92672">]</span> - message TTL in milliseconds
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--messageSize                                   N<span style="color:#f92672">]</span> - size in bytes of a BytesMessage; default 0, a simple TextMessage is used
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--textMessageSize                               N<span style="color:#f92672">]</span> - size in bytes of a TextMessage, a Lorem ipsum demo TextMessage is used
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--message                                      ..<span style="color:#f92672">]</span> - a text string to use as the message body
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--payloadUrl                                  URL<span style="color:#f92672">]</span> - a url pointing to a document to use as the message body
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--msgGroupID                                   ..<span style="color:#f92672">]</span> - JMS message group identifier
+</span></span></code></pre></div><p>bin/activemq consumer 的参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ bin/activemq consumer -h
+</span></span><span style="display:flex;"><span>Usage: consumer <span style="color:#f92672">[</span>OPTIONS<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description: Demo consumer that can be used to receive messages to the broker
+</span></span><span style="display:flex;"><span>Options :
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--brokerUrl                                   URL<span style="color:#f92672">]</span> - connection factory url; default ActiveMQConnectionFactory.DEFAULT_BROKER_URL
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--user                                         ..<span style="color:#f92672">]</span> - connection user name
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--password                                     ..<span style="color:#f92672">]</span> - connection password
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--destination               queue://..|topic://..<span style="color:#f92672">]</span> - consumer destination; default queue://TEST
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--messageCount                                  N<span style="color:#f92672">]</span> - number of messages to send; default <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--sleep                                         N<span style="color:#f92672">]</span> - millisecond sleep period between sends or receives; default <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--ackMode     AUTO_ACKNOWLEDGE|CLIENT_ACKNOWLEDGE<span style="color:#f92672">]</span> - the type of message acknowledgement to use; default auto acknowledge
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--batchSize                                     N<span style="color:#f92672">]</span> - batch size <span style="color:#66d9ef">for</span> transactions and client acknowledgment <span style="color:#f92672">(</span>default 10<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--durable                              true|false<span style="color:#f92672">]</span> - create durable topic
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--clientId                                     ..<span style="color:#f92672">]</span> - connection client id; must be set <span style="color:#66d9ef">for</span> durable topics
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--parallelThreads                               N<span style="color:#f92672">]</span> - number of threads to run in parallel; default <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span>--bytesAsText                          true|false<span style="color:#f92672">]</span> - try to treat a BytesMessage as a text string
+</span></span></code></pre></div><h2 id="配置文件">配置文件</h2>
+<p>activemq.xml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;beans</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Allows us to use system properties as variables in this configuration file --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;locations&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;value&gt;</span>file:${activemq.conf}/credentials.properties<span style="color:#f92672">&lt;/value&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">&lt;!-- Allows accessing the server log --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;logQuery&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;io.fabric8.insight.log.log4j.Log4jLogQuery&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">lazy-init=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">scope=</span><span style="color:#e6db74">&#34;singleton&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">init-method=</span><span style="color:#e6db74">&#34;start&#34;</span> <span style="color:#a6e22e">destroy-method=</span><span style="color:#e6db74">&#34;stop&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        The &lt;broker&gt; element is used to configure the ActiveMQ broker.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;broker</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://activemq.apache.org/schema/core&#34;</span> <span style="color:#a6e22e">brokerName=</span><span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#a6e22e">dataDirectory=</span><span style="color:#e6db74">&#34;${activemq.data}&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;destinationPolicy&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;policyMap&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;policyEntries&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;policyEntry</span> <span style="color:#a6e22e">topic=</span><span style="color:#e6db74">&#34;&gt;&#34;</span> <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">&lt;!-- The constantPendingMessageLimitStrategy is used to prevent
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                         slow topic consumers to block producers and affect other consumers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                         by limiting the number of messages that are retained
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                         For more information, see:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                         http://activemq.apache.org/slow-consumer-handling.html
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                    --&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;pendingMessageLimitStrategy&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;constantPendingMessageLimitStrategy</span> <span style="color:#a6e22e">limit=</span><span style="color:#e6db74">&#34;1000&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;/pendingMessageLimitStrategy&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/policyEntry&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/policyEntries&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/policyMap&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/destinationPolicy&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            The managementContext is used to configure how ActiveMQ is exposed in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            JMX. By default, ActiveMQ uses the MBean server that is started by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            the JVM. For more information, see:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            http://activemq.apache.org/jmx.html
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;managementContext&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;managementContext</span> <span style="color:#a6e22e">createConnector=</span><span style="color:#e6db74">&#34;false&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/managementContext&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            Configure message persistence for the broker. The default persistence
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            mechanism is the KahaDB store (identified by the kahaDB tag).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            For more information, see:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            http://activemq.apache.org/persistence.html
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;persistenceAdapter&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;kahaDB</span> <span style="color:#a6e22e">directory=</span><span style="color:#e6db74">&#34;${activemq.data}/kahadb&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/persistenceAdapter&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            The systemUsage controls the maximum amount of space the broker will
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            use before disabling caching and/or slowing down producers. For more information, see:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            http://activemq.apache.org/producer-flow-control.html
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">          --&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;systemUsage&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;systemUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;memoryUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;memoryUsage</span> <span style="color:#a6e22e">percentOfJvmHeap=</span><span style="color:#e6db74">&#34;70&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/memoryUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;storeUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;storeUsage</span> <span style="color:#a6e22e">limit=</span><span style="color:#e6db74">&#34;100 gb&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/storeUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;tempUsage&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;tempUsage</span> <span style="color:#a6e22e">limit=</span><span style="color:#e6db74">&#34;50 gb&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/tempUsage&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/systemUsage&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/systemUsage&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            The transport connectors expose ActiveMQ over a given protocol to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            clients and other brokers. For more information, see:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            http://activemq.apache.org/configuring-transports.html
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;transportConnectors&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transportConnector</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;openwire&#34;</span> <span style="color:#a6e22e">uri=</span><span style="color:#e6db74">&#34;tcp://0.0.0.0:61616?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transportConnector</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;amqp&#34;</span> <span style="color:#a6e22e">uri=</span><span style="color:#e6db74">&#34;amqp://0.0.0.0:5672?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transportConnector</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;stomp&#34;</span> <span style="color:#a6e22e">uri=</span><span style="color:#e6db74">&#34;stomp://0.0.0.0:61613?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transportConnector</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;mqtt&#34;</span> <span style="color:#a6e22e">uri=</span><span style="color:#e6db74">&#34;mqtt://0.0.0.0:1883?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;transportConnector</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;ws&#34;</span> <span style="color:#a6e22e">uri=</span><span style="color:#e6db74">&#34;ws://0.0.0.0:61614?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/transportConnectors&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- destroy the spring context on shutdown to stop jetty --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;shutdownHooks&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.apache.activemq.hooks.SpringContextHook&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/shutdownHooks&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/broker&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        Enable web consoles, REST and Ajax APIs and demos
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        The web consoles requires by default login, you can disable this in the jetty.xml file
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        Take a look at ${ACTIVEMQ_HOME}/conf/jetty.xml for more details
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;import</span> <span style="color:#a6e22e">resource=</span><span style="color:#e6db74">&#34;jetty.xml&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/beans&gt;</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>broker 节点：brokerName 定义 broker 名称，dataDirectory 定义数据存储目录，schedulerSupport 开启延时发送</p>
+<ul>
+<li>
+<p>destinationPolicy：队列或者主题的策略</p>
+</li>
+<li>
+<p>managementContext：开启 JMX</p>
+</li>
+<li>
+<p>persistenceAdapter： 配置持久化，默认使用 KahaDB 文件存储持久化日志</p>
+</li>
+<li>
+<p>systemUsage：限制系统使用，包括内存、持久化存储、临时存储</p>
+</li>
+<li>
+<p>transportConnectors：扩展的协议 openwire、amqp、stomp、mqtt、ws。</p>
+<ul>
+<li>
+<p>连接ActiveMQ默认情况下，没有任何安全机制，也就是说任何人只要知道brokerURL都能连接，这显然不安全，可以在activemq.xml里，找到<code>&lt;broker&gt;</code> 节点，紧贴它的地方添加下面这段：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;broker</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://activemq.apache.org/schema/core&#34;</span> <span style="color:#a6e22e">brokerName=</span><span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#a6e22e">dataDirectory=</span><span style="color:#e6db74">&#34;${activemq.data}&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;plugins&gt;</span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;simpleAuthenticationPlugin&gt;</span>   
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;users&gt;</span>   
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;authenticationUser</span> <span style="color:#a6e22e">username=</span><span style="color:#e6db74">&#34;${activemq.username}&#34;</span> <span style="color:#a6e22e">password=</span><span style="color:#e6db74">&#34;${activemq.password}&#34;</span> <span style="color:#a6e22e">groups=</span><span style="color:#e6db74">&#34;users,admins&#34;</span><span style="color:#f92672">/&gt;</span>   
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/users&gt;</span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/simpleAuthenticationPlugin&gt;</span>   
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/broker&gt;</span>
+</span></span></code></pre></div><p>conf/credentials.properties 这里保存的就是连接 activemq 的用户名和密码，默认情况用户名为 system 密码为 manager</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Defines credentials that will be used by components (like web console) to access the broker</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>activemq.username<span style="color:#f92672">=</span>system
+</span></span><span style="display:flex;"><span>activemq.password<span style="color:#f92672">=</span>manager
+</span></span><span style="display:flex;"><span>guest.password<span style="color:#f92672">=</span>password
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>shutdownHooks：</p>
+</li>
+<li>
+<p>networkConnectors：</p>
+</li>
+</ul>
+</li>
+<li>
+<p>jetty.xml：配置 web 控制台相关参数</p>
+</li>
+</ul>
+<p>users.properties：定义 web 控制台的用户名和密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>admin<span style="color:#f92672">=</span>admin
+</span></span></code></pre></div><p>jetty.xml：Jetty服务器的配置文件，用于控制Web服务器的行为</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;beans</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;securityLoginService&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.security.HashLoginService&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ActiveMQRealm&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;config&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${activemq.conf}/jetty-realm.properties&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;securityConstraint&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.util.security.Constraint&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;BASIC&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;roles&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;user,admin&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- set authenticate=false to disable login --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;authenticate&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;adminSecurityConstraint&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.util.security.Constraint&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;BASIC&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;roles&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;admin&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#75715e">&lt;!-- set authenticate=false to disable login --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;authenticate&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;securityConstraintMapping&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.security.ConstraintMapping&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;constraint&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;securityConstraint&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;pathSpec&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;/,/api/*,*.jsp,*.html,*.js,*.css,*.png,*.gif,*.ico&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;adminSecurityConstraintMapping&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.security.ConstraintMapping&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;constraint&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;adminSecurityConstraint&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;pathSpec&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;*.action&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;rewriteHandler&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.rewrite.handler.RewriteHandler&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;rules&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;header&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.rewrite.handler.HeaderPatternRule&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;pattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;X-FRAME-OPTIONS&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;value&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;SAMEORIGIN&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;header&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.rewrite.handler.HeaderPatternRule&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;pattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;X-XSS-Protection&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;value&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;1; mode=block&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;header&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.rewrite.handler.HeaderPatternRule&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;pattern&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;X-Content-Type-Options&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;value&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;nosniff&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;secHandlerCollection&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.handler.HandlerCollection&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;handlers&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>   	    <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;rewriteHandler&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.webapp.WebAppContext&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;contextPath&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;/admin&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;resourceBase&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${activemq.home}/webapps/admin&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;logUrlOnStart&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.webapp.WebAppContext&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;contextPath&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;/api&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;resourceBase&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${activemq.home}/webapps/api&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;logUrlOnStart&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.handler.ResourceHandler&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;directoriesListed&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;welcomeFiles&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>							<span style="color:#f92672">&lt;value&gt;</span>index.html<span style="color:#f92672">&lt;/value&gt;</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;resourceBase&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;${activemq.home}/webapps/&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;defaultHandler&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.handler.DefaultHandler&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;serveIcon&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;securityHandler&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.security.ConstraintSecurityHandler&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;loginService&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;securityLoginService&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;authenticator&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.security.authentication.BasicAuthenticator&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;constraintMappings&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;adminSecurityConstraintMapping&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;securityConstraintMapping&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;handler&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;secHandlerCollection&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;contexts&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.handler.ContextHandlerCollection&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;jettyPort&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.apache.activemq.web.WebConsolePort&#34;</span> <span style="color:#a6e22e">init-method=</span><span style="color:#e6db74">&#34;start&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#75715e">&lt;!-- the default port number for the web console --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;host&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;0.0.0.0&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;port&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;8161&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Server&#34;</span> <span style="color:#a6e22e">depends-on=</span><span style="color:#e6db74">&#34;jettyPort&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.Server&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">destroy-method=</span><span style="color:#e6db74">&#34;stop&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;handler&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;handlers&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.handler.HandlerCollection&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;handlers&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;contexts&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;securityHandler&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;invokeConnectors&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.beans.factory.config.MethodInvokingFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetObject&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;Server&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetMethod&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;setConnectors&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;arguments&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>           	<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;Connector&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.eclipse.jetty.server.ServerConnector&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>           		<span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;Server&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">&lt;!-- see the jettyPort bean --&gt;</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;host&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;#{systemProperties[&#39;jetty.host&#39;]}&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;port&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;#{systemProperties[&#39;jetty.port&#39;]}&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">&lt;!--
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                    Enable this connector if you wish to use https with web console
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">&lt;!-- bean id=&#34;SecureConnector&#34; class=&#34;org.eclipse.jetty.server.ServerConnector&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">					&lt;constructor-arg ref=&#34;Server&#34; /&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">					&lt;constructor-arg&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">						&lt;bean id=&#34;handlers&#34; class=&#34;org.eclipse.jetty.util.ssl.SslContextFactory&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">						
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">							&lt;property name=&#34;keyStorePath&#34; value=&#34;${activemq.conf}/broker.ks&#34; /&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">							&lt;property name=&#34;keyStorePassword&#34; value=&#34;password&#34; /&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">						&lt;/bean&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">					&lt;/constructor-arg&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">					&lt;property name=&#34;port&#34; value=&#34;8162&#34; /&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">				&lt;/bean --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;configureJetty&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.beans.factory.config.MethodInvokingFactoryBean&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;staticMethod&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;org.apache.activemq.web.config.JspConfigurer.configureJetty&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;arguments&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&lt;list&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;Server&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">&lt;ref</span> <span style="color:#a6e22e">bean=</span><span style="color:#e6db74">&#34;secHandlerCollection&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&lt;/list&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;invokeStart&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.springframework.beans.factory.config.MethodInvokingFactoryBean&#34;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#a6e22e">depends-on=</span><span style="color:#e6db74">&#34;configureJetty, invokeConnectors&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetObject&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;Server&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;targetMethod&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;start&#34;</span> <span style="color:#f92672">/&gt;</span>  	
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/beans&gt;</span>
+</span></span></code></pre></div><ul>
+<li>主要关注 jettyPort 和 https 的配置。</li>
+</ul>
+<p>jetty-realm.properties：Jetty的身份验证配置文件，用于定义 web 登录用户角色和权限</p>
+<p>jmx.access 和 jmx.password 定义 jmx 的用户名和密码。</p>
+<p>login.config：配置登录认证机制</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>activemq <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    org.apache.activemq.jaas.PropertiesLoginModule required
+</span></span><span style="display:flex;"><span>        org.apache.activemq.jaas.properties.user<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;users.properties&#34;</span>
+</span></span><span style="display:flex;"><span>        org.apache.activemq.jaas.properties.group<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;groups.properties&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>;
+</span></span></code></pre></div><p>users.properties 和 groups.properties：配置用户和组</p>
+<h2 id="配置认证和授权">配置认证和授权</h2>
+<h3 id="使用-activemq-自带-simpleauthenticationplugin">使用 ActiveMQ 自带 SimpleAuthenticationPlugin</h3>
+<p>1.直接将用户名密码写入 activemq.xml 文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">&lt;simpleAuthenticationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;users&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;authenticationUser</span> <span style="color:#a6e22e">username=</span><span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#a6e22e">password=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">groups=</span><span style="color:#e6db74">&#34;users, admins&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/users&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">&lt;/simpleAuthenticationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span></code></pre></div><p>2.使用 credentials.properties 存储明文凭证</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">&lt;simpleAuthenticationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;users&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;authenticationUser</span> <span style="color:#a6e22e">username=</span><span style="color:#e6db74">&#34;${activemq.username}&#34;</span> <span style="color:#a6e22e">password=</span><span style="color:#e6db74">&#34;${activemq.password}&#34;</span> <span style="color:#a6e22e">groups=</span><span style="color:#e6db74">&#34;users, admins&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/users&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">&lt;/simpleAuthenticationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span></code></pre></div><p>activemq.xml 顶部导入了 <code>file:${activemq.conf}/credentials.properties</code>，我们可以使用变量的方式引用该文件内部的属性
+<code>groups=&quot;users, admins&quot;</code> 表示定义用户所属的用户组, activemq按照用户组分配权限，注意不能删除groups属性，可以置空。</p>
+<p>3.使用 credentials-enc.properties 存储加密凭证</p>
+<p>ActiveMQ 允许我们对凭证加密后存储在配置文件中，虽然更加安全但也麻烦一些，这里根据实验结果对官方文档给出的方法进行梳理</p>
+<p>创建加密凭证：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/activemq encrypt --password activemq --input password
+</span></span></code></pre></div><p>解密过程相反，但要输入相同的凭证加密密码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/activemq decrypt  --password activemq --input FJnN6inNmqDigYEs4wDgkwbe3l2B7mQr
+</span></span></code></pre></div><p>将加密凭证写入 credentials-enc.properties：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">activemq.username</span><span style="color:#f92672">=</span><span style="color:#e6db74">admin</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">activemq.password</span><span style="color:#f92672">=</span><span style="color:#e6db74">ENC(FJnN6inNmqDigYEs4wDgkwbe3l2B7mQr)</span>
+</span></span></code></pre></div><p>修改 activemq.xml 顶部的配置导入部分，注释掉原有的 credentials.properties 导入部分，新增三个bean</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#75715e">&lt;!-- Allows us to use system properties as variables in this configuration file --&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">&lt;!-- &lt;bean class=&#34;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      &lt;property name=&#34;locations&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">          &lt;value&gt;file:${activemq.conf}/credentials.properties&lt;/value&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">      &lt;/property&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  &lt;/bean&gt; --&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;environmentVariablesConfiguration&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;algorithm&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;PBEWithMD5AndDES&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;passwordEnvName&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;ACTIVEMQ_ENCRYPTION_PASSWORD&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;configurationEncryptor&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.jasypt.encryption.pbe.StandardPBEStringEncryptor&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;config&#34;</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;environmentVariablesConfiguration&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;propertyConfigurer&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;configurationEncryptor&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;file:${activemq.base}/conf/credentials-enc.properties&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><p>三个 bean 的意思是从环境变量<code>ACTIVEMQ_ENCRYPTION_PASSWORD</code>中加载凭证加密密码，然后对 credentials-enc.properties 中的加密凭证解密，所以启动 mq 之前还需要设置环境变量，也可以直接将加密密码写在配置文件中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- Allows us to use system properties as variables in this configuration file --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- &lt;bean class=&#34;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &lt;property name=&#34;locations&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            &lt;value&gt;file:${activemq.conf}/credentials-enc.properties&lt;/value&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">        &lt;/property&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    &lt;/bean&gt; --&gt;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;configurationEncryptor&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.jasypt.encryption.pbe.StandardPBEStringEncryptor&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;algorithm&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;PBEWithMD5AndDES&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;activemq&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bean</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;propertyConfigurer&#34;</span> <span style="color:#a6e22e">class=</span><span style="color:#e6db74">&#34;org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;constructor-arg</span> <span style="color:#a6e22e">ref=</span><span style="color:#e6db74">&#34;configurationEncryptor&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;property</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#a6e22e">value=</span><span style="color:#e6db74">&#34;file:${activemq.base}/conf/credentials-enc.properties&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/bean&gt;</span>
+</span></span></code></pre></div><p>启动 MQ 实例，如果采用环境变量方式存储凭证加密密码，那么这里要设置一下。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export ACTIVEMQ_ENCRYPTION_PASSWORD<span style="color:#f92672">=</span>activemq
+</span></span><span style="display:flex;"><span>bin/activemq start
+</span></span><span style="display:flex;"><span>unset ACTIVEMQ_ENCRYPTION_PASSWORD
+</span></span></code></pre></div><h3 id="使用jaasauthentication-plugin">使用JAASAuthentication Plugin</h3>
+<p>JAAS 全称为Java Authentication and Authorization Service JAVA认证授权服务。JAASAuthentication Plugin依赖标准的JAAS机制来实现认证，默认使用 login.config 文件作为配置。</p>
+<pre tabindex="0"><code>activemq {
+    org.apache.activemq.jaas.PropertiesLoginModule required
+        org.apache.activemq.jaas.properties.user=&#34;users.properties&#34;
+        org.apache.activemq.jaas.properties.group=&#34;groups.properties&#34;;
+};
+</code></pre><p>login.config 配置中引用 了 users.properties 和 groups.properties 分别进行用户名密码和用户组配置。</p>
+<p>users.properties：</p>
+<pre tabindex="0"><code>admin=admin
+</code></pre><p>groups.properties：</p>
+<pre tabindex="0"><code>admins=admin
+</code></pre><p>在 activemq.xml 添加 JAASAuthentication Plugin 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;jaasAuthenticationPlugin</span> <span style="color:#a6e22e">configuration=</span><span style="color:#e6db74">&#34;activemq&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span></code></pre></div><blockquote>
+<p><code>configuration=&quot;activemq&quot;</code> 指向 login.config 中配置的名称。</p></blockquote>
+<h3 id="使用authorizationplugin进行授权">使用authorizationPlugin进行授权</h3>
+<p>ActiveMQ 可以对 Queue，Topic 的读写创建等进行权限控制，权限按照用户组分配。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;authorizationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;map&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;authorizationMap&gt;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#f92672">&lt;authorizationEntries&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;authorizationEntry</span> <span style="color:#a6e22e">queue=</span><span style="color:#e6db74">&#34;activemq.&gt;&#34;</span> <span style="color:#a6e22e">read=</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#a6e22e">write=</span><span style="color:#e6db74">&#34;users&#34;</span> <span style="color:#a6e22e">admin=</span><span style="color:#e6db74">&#34;users&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;authorizationEntry</span> <span style="color:#a6e22e">topic=</span><span style="color:#e6db74">&#34;USER.&gt;&#34;</span> <span style="color:#a6e22e">read=</span><span style="color:#e6db74">&#34;admins&#34;</span> <span style="color:#a6e22e">write=</span><span style="color:#e6db74">&#34;admins&#34;</span> <span style="color:#a6e22e">admin=</span><span style="color:#e6db74">&#34;admins&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#f92672">&lt;/authorizationEntries&gt;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#f92672">&lt;/authorizationMap&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;/map&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/authorizationPlugin&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span></code></pre></div><blockquote>
+<p><code>&gt;</code> 表示通配符 上述配置表明只有 users 组才能读写创建 <code>activemq.</code> 开头的队列，只有 admins 组才能读写创建 <code>USER.</code> 开头的主题
+值的注意的是，<code>&quot;activemq.&gt;&quot; </code>中通配符前的点符号必须存在否则无法生效，也就是说前缀必须以点号结尾。
+<code>&gt;</code> 也可用 * 替换</p></blockquote>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/06/spring-boot-docker-image/" target="_blank" title="Spring Boot项目创建Docker镜像并运行应用">Spring Boot项目创建Docker镜像并运行应用</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/" target="_blank" title="[译]OAuth2 with Spring 第1部分：了解基本概念">[译]OAuth2 with Spring 第1部分：了解基本概念</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/" target="_blank" title="[译]OAuth2 with Spring 第2部分：授权服务器入门">[译]OAuth2 with Spring 第2部分：授权服务器入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/" target="_blank" title="[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端">[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/" target="_blank" title="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/" target="_blank" title="[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性">[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/26/install-gitlab/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Gitlab安装和部署-使用Docker</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/07/08/kubernetes-for-java-developers/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]面向 Java 开发人员的 Kubernetes</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/07\/05\/install-activemq\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#压缩包安装">压缩包安装</a></li>
+    <li><a href="#使用-docker-安装">使用 Docker 安装</a></li>
+    <li><a href="#使用-docker-compose-安装">使用 Docker Compose 安装</a></li>
+    <li><a href="#发送接收消息">发送、接收消息</a></li>
+    <li><a href="#配置文件">配置文件</a></li>
+    <li><a href="#配置认证和授权">配置认证和授权</a>
+      <ul>
+        <li><a href="#使用-activemq-自带-simpleauthenticationplugin">使用 ActiveMQ 自带 SimpleAuthenticationPlugin</a></li>
+        <li><a href="#使用jaasauthentication-plugin">使用JAASAuthentication Plugin</a></li>
+        <li><a href="#使用authorizationplugin进行授权">使用authorizationPlugin进行授权</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

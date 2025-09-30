@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mongodb on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/mongodb/</link>
+    <description>Recent content in Mongodb on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 28 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>常见分布式 ID 解决方案</title>
+      <link>https://blog.chensoul.cc/posts/2025/03/28/id-generator/</link>
+      <pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/03/28/id-generator/</guid>
+      <description>&lt;p&gt;分布式 ID 的生成是分布式系统中的一个核心问题，需要确保生成的 ID 全局唯一、性能高效，并且能够适应高并发和大规模的场景。以下是一些常见的分布式 ID 生成方案：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]数据库分片速成课程</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-in-database-sharding/</link>
+      <pubDate>Mon, 05 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/05/a-crash-course-in-database-sharding/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://blog.bytebytego.com/p/a-crash-course-in-database-sharding&#34; target=&#34;_blank&#34;&gt;https://blog.bytebytego.com/p/a-crash-course-in-database-sharding&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;随着应用程序越来越受欢迎，它会吸引更多活跃用户并加入更多功能。这种增长导致每日数据生成量增加，从业务角度来看，这是一个积极的指标。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-01｜使用 Spring Initializr 创建项目</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/01/til/</link>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/01/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;重构 foodie-cloud 项目，部署到 docker 容器&lt;/li&gt;&#xA;&lt;li&gt;使用 Spring Initializr 创建项目&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;使用-spring-initializr-创建项目&#34;&gt;使用 Spring Initializr 创建项目&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;安装  spring cli&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何设计一个分布式ID生成器保证ID按时间有序？</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/05/distributed-id-generator/</link>
+      <pubDate>Tue, 05 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/05/distributed-id-generator/</guid>
+      <description>&lt;p&gt;很多业务有生成唯一 ID 并作为数据库主键的需求。数据库会在这个字段上建立聚集索引（参考 MySQL InnoDB），即该字段会影响各条数据再物理存储上的顺序。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何设计一个短网址服务</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/17/designing-a-url-shortening-service/</link>
+      <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/17/designing-a-url-shortening-service/</guid>
+      <description>&lt;p&gt;如何生成一个短网址服务，参考 &lt;a href=&#34;https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/system-design-tinyurl&#34; target=&#34;_blank&#34;&gt;Design a URL Shortening Service / TinyURL&lt;/a&gt; 和 &lt;a href=&#34;https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/638c0b5dac93e7ae59a1af6b&#34; target=&#34;_blank&#34;&gt;Designing a URL Shortening service like TinyURL&lt;/a&gt; 两篇文章，整理如下笔记。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]《分布式系统：为了乐趣和利益》4.复制</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/10/distributed-systems-04/</link>
+      <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/10/distributed-systems-04/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;《分布式系统：为了乐趣和利益》是一本广受欢迎的资源，用于理解和学习分布式系统。该书由作者 Mikito Takada 撰写，介绍了构建分布式系统的基本概念、原则和挑战。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security 与 JWT for REST API</title>
+      <link>https://blog.chensoul.cc/posts/2023/09/19/spring-security-tutorial/</link>
+      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/09/19/spring-security-tutorial/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;免责声明：Spring Security 5+ 已发布 OAuth JWT 支持。建议使用最新版本的 OAuth 来支持 JWT，而不是使用自定义安全性或过滤器。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

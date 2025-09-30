@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>从零开始搭建个人博客 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="从零开始搭建个人博客">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2021/09/09/build-personal-blog-from-zero/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="从零开始搭建个人博客">
+  <meta itemprop="description" content="从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。
+域名 搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：">
+  <meta itemprop="datePublished" content="2021-09-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2021-09-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="710">
+  <meta itemprop="keywords" content="Weekly-Report,Learning,Personal">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="从零开始搭建个人博客">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">从零开始搭建个人博客</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2021-09-09">2021-09-09</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/devops/" rel="category">Devops</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/weekly-report/" rel="tag">Weekly-Report</a>, <a class="meta__link" href="/tags/learning/" rel="tag">Learning</a>, <a class="meta__link" href="/tags/personal/" rel="tag">Personal</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>从零开始搭建博客，包括注册域名、购买服务器、部署程序及网站配置和优化。</p>
+<h2 id="域名">域名</h2>
+<p>搭建一个博客或者网站，需要有一个域名。那什么是域名呢？看看百度百科上的解释：</p>
+<blockquote>
+<p><strong>域名</strong>（英语：<strong>Domain Name</strong>），又称<strong>网域</strong>，是由一串用点分隔的名字组成的<a href="https://baike.baidu.com/item/Internet" target="_blank">Internet</a>上某一台<a href="https://baike.baidu.com/item/%e8%ae%a1%e7%ae%97%e6%9c%ba/140338" target="_blank">计算机</a>或计算机组的名称，用于在数据传输时对计算机的定位标识（有时也指地理位置）。</p>
+<p>由于<a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80/150859" target="_blank">IP 地址</a>具有不方便记忆并且不能显示地址组织的名称和性质等缺点，人们设计出了域名，并通过网域名称系统（<a href="https://baike.baidu.com/item/DNS" target="_blank">DNS</a>，Domain Name System）来将域名和<a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80" target="_blank">IP 地址</a>相互<a href="https://baike.baidu.com/item/%e6%98%a0%e5%b0%84/20402621" target="_blank">映射</a>，使人更方便地访问<a href="https://baike.baidu.com/item/%e4%ba%92%e8%81%94%e7%bd%91/199186" target="_blank">互联网</a>，而不用去记住能够被机器直接读取的<a href="https://baike.baidu.com/item/IP%e5%9c%b0%e5%9d%80" target="_blank">IP 地址</a>数串。</p></blockquote>
+<p>简单来说，IP 地址可以标识一台计算机，但是不容易记忆，所以，设计出了域名。而域名就是标识因特网上的一台计算机，由网域名称系统 DNS 来完成域名和 IP 之间的映射。</p>
+<p>如何注册域名？有很多网站提供域名注册服务，比如国内的：</p>
+<ul>
+<li><a href="https://www.alibabacloud.com/zh/domain" target="_blank">阿里云</a></li>
+<li><a href="https://cloud.tencent.com/act/domainsales" target="_blank">腾讯云</a></li>
+<li><a href="https://www.huaweicloud.com/" target="_blank">华为云</a></li>
+</ul>
+<p>国外的：</p>
+<ul>
+<li><a href="https://sg.godaddy.com/zh/offers/domain" target="_blank">GoDaddy</a></li>
+<li><a href="https://www.namecheap.com/" target="_blank">Namecheap</a></li>
+<li><a href="https://console.aws.amazon.com/route53/home?#DomainRegistration:" target="_blank">Amazon</a></li>
+</ul>
+<p>注册域名的建议：</p>
+<ul>
+<li>1、建议在正规、出名的网站注册域名，防止网站跑路。我曾经在一个小网站注册了一个域名，使用了几年之后，续期的时候，联系不上对方，导致无法使用该域名，甚至该域名被别人抢注册了。</li>
+<li>2、在国内网站注册域名，都需要备案。如果不想备案，请在国外网站注册域名。我的域名 chensoul.cc 就是在亚马逊上注册的。一是不想备案，二是对比了上面几个网站，发现亚马逊上的 com 域名价格相对便宜，所以一次性购买了 5 年。</li>
+<li>3、建议优先注册 com 域名，域名尽可能的简短并且方便记忆。</li>
+</ul>
+<p>我曾经注册过的域名：</p>
+<ul>
+<li>javachen.com、javachen.space、javachen.xyz</li>
+<li>huaiu.com</li>
+</ul>
+<h2 id="服务器">服务器</h2>
+<p>注册了域名之后，需要一台服务器运行程序。服务器可以是一台物理机，比如你可以使用自己的电脑作为服务器；也可以是一台虚拟的云服务器，比如在云服务提供商购买一台独立的服务器；也可以使用第三方提供的服务器空间，比如 Github 上可以部署静态程序。不管哪种方式，服务器都需要有一个公网 IP，这样才能在因特网上访问你服务器上部署的程序。有了服务器之后，就可以给服务器公网 IP 设置域名解析。</p>
+<p>我的服务器是在<a href="https://bandwagonhost.com/aff.php?aff=58710" target="_blank">搬瓦工</a>购买的，一年 49.99 美元。</p>
+<p><img src="../../../static/images/build-personal-blog-from-zero-01.webp" alt="bwg-plan"></p>
+<h2 id="程序">程序</h2>
+<h3 id="安装-hugo">安装 Hugo</h3>
+<p><img src="../../../static/images/build-personal-blog-from-zero-02.svg" alt="使用 Hugo 搭建博客"></p>
+<p>在 Mac 下安装 Hugo：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install hugo
+</span></span></code></pre></div><h3 id="新建站点">新建站点</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site chensoul.github.io -y yaml
+</span></span></code></pre></div><p>上述命令会生成一个名为 <code>chensoul.github.io</code> 的文件夹，下面对文件夹结构做个说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ tree chensoul.github.io
+</span></span><span style="display:flex;"><span>chensoul.github.io
+</span></span><span style="display:flex;"><span>├── archetypes
+</span></span><span style="display:flex;"><span>│   └── default.md
+</span></span><span style="display:flex;"><span>├── config.yaml
+</span></span><span style="display:flex;"><span>├── content
+</span></span><span style="display:flex;"><span>├── data
+</span></span><span style="display:flex;"><span>├── layouts
+</span></span><span style="display:flex;"><span>├── static
+</span></span><span style="display:flex;"><span>└── themes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> directories, <span style="color:#ae81ff">2</span> files
+</span></span></code></pre></div><p>新建的站点，还没有加入 Git 版本管理，进入到这个目录下，执行一下如下命令，完成 Git Repo 的初始化：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd chensoul.github.io
+</span></span><span style="display:flex;"><span>git init .
+</span></span></code></pre></div><p>新建站点后，我们开始添加主题。</p>
+<h3 id="添加主题">添加主题</h3>
+<p>在 Hugo 的官网上 <a href="https://themes.gohugo.io/" target="_blank">Hugo Themes</a> 有非常非常多的主题，可以根据自己的喜好选择一个主题。这里，我使用的是 hugo-theme-den 主题。</p>
+<p>使用 git submodule&ndash;helper 下载主题到 theme 目录下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git submodule--helper add https://github.com/shaform/hugo-theme-den themes/den --depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git submodule--helper update --init --recursive <span style="color:#75715e"># needed when you reclone your repo (submodules may not get cloned automatically)</span>
+</span></span></code></pre></div><p>以后，当主题有更新时，执行下面命令更新：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule update --remote --merge
+</span></span></code></pre></div><p>如果遇到异常，可以参考<a href="https://xuzhijvn.github.io/zh-cn/posts/other/git-submodule-update-init-recursive/" target="_blank">文章</a>解决。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>fatal: remote error: upload-pack: not our ref fc7223ca00124e8f5b5b354457379071e2fd091b
+</span></span></code></pre></div><h3 id="启动">启动</h3>
+<p>启动预览：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server
+</span></span></code></pre></div><p>默认是 <code>1313</code> 端口号，在浏览器中直接访问 http://localhost:1313/ 就可以访问到新建的博客了。</p>
+<h2 id="定制化">定制化</h2>
+<h3 id="站点信息">站点信息</h3>
+<p>配置网站的基本信息，将 config.yaml 修改如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>baseURL: https://blog.chensoul.cc/
+</span></span><span style="display:flex;"><span>title: ChenSoul
+</span></span><span style="display:flex;"><span>theme: den
+</span></span><span style="display:flex;"><span>enableRobotsTXT: true
+</span></span><span style="display:flex;"><span>enableEmoji: true
+</span></span><span style="display:flex;"><span>hasCJKLanguage: true
+</span></span><span style="display:flex;"><span>preserveTaxonomyNames: true
+</span></span><span style="display:flex;"><span>rssLimit: <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>page_view_conter: true
+</span></span><span style="display:flex;"><span>enableRelated: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Copyright, appears in the footer</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># copyright = &#34;&#34;             # default: author.name</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Pagination</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># number of entries per page for archives, tags and categories</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># since we don&#39;t have list view, recommend a large value</span>
+</span></span><span style="display:flex;"><span>paginate: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>paginatePath: <span style="color:#e6db74">&#34;page&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Syntax Hightlight</span>
+</span></span><span style="display:flex;"><span>PygmentsCodeFences: true
+</span></span><span style="display:flex;"><span>PygmentsUseClasses: true    <span style="color:#75715e"># required for shhighlight shortcode</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># service plugins</span>
+</span></span><span style="display:flex;"><span>disqusShortname: <span style="color:#e6db74">&#34;&#34;</span>         <span style="color:#75715e"># disqus_shortname</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># language support # en / zh / other... translations present in i18n/</span>
+</span></span><span style="display:flex;"><span>defaultContentLanguage: <span style="color:#e6db74">&#34;zh&#34;</span>           <span style="color:#75715e"># Default language to use</span>
+</span></span><span style="display:flex;"><span>defaultContentLanguageInSubdir: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>permalinks:
+</span></span><span style="display:flex;"><span>  posts: /posts/:slug/
+</span></span><span style="display:flex;"><span>  categories: /categories/:slug/
+</span></span><span style="display:flex;"><span>  tags: /tags/:slug/
+</span></span><span style="display:flex;"><span>  pages: /:slug/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>author:
+</span></span><span style="display:flex;"><span>  name: chensoul
+</span></span><span style="display:flex;"><span>sitemap:
+</span></span><span style="display:flex;"><span>  changefreq: weekly
+</span></span><span style="display:flex;"><span>  priority: 0.5
+</span></span><span style="display:flex;"><span>  filename: sitemap.xml
+</span></span><span style="display:flex;"><span>params:
+</span></span><span style="display:flex;"><span>  since: <span style="color:#e6db74">&#34;2020&#34;</span>
+</span></span><span style="display:flex;"><span>  rssFullContent: true
+</span></span><span style="display:flex;"><span>  keywords:
+</span></span><span style="display:flex;"><span>    - devops
+</span></span><span style="display:flex;"><span>    - programming
+</span></span><span style="display:flex;"><span>  description: Programming | Devops
+</span></span><span style="display:flex;"><span>  logoTitle: ChenSoul
+</span></span><span style="display:flex;"><span>  siteLogoImage: images/fly.png
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># headerTitle = &#34;chensoul&#34;                   # default: title</span>
+</span></span><span style="display:flex;"><span>  headerImage: images/background.webp
+</span></span><span style="display:flex;"><span>  showAuthorCard: true
+</span></span><span style="display:flex;"><span>  showMenuLanguages: true
+</span></span><span style="display:flex;"><span>  autoLoadComments: false
+</span></span><span style="display:flex;"><span>  paginateOriginalStyle: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/</span>
+</span></span><span style="display:flex;"><span>  dateFormatToUse: 2006-01-02
+</span></span><span style="display:flex;"><span>  google_verification: <span style="color:#e6db74">&#34;D8XBzUhT4irNUQLKut79HFni0v3Xow4FY-oxUcsUlVk&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Link custom CSS and JS assets</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#   (relative to /static/css and /static/js respectively)</span>
+</span></span><span style="display:flex;"><span>  customCSS: <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>  customJS: <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>markup:
+</span></span><span style="display:flex;"><span>  goldmark:
+</span></span><span style="display:flex;"><span>    renderer:
+</span></span><span style="display:flex;"><span>      unsafe: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------- #</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ---- Related Articles --------------- #</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------------------------------------- #</span>
+</span></span><span style="display:flex;"><span>related:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Only include matches with rank &gt;= threshold. This is a normalized rank between 0 and 100.</span>
+</span></span><span style="display:flex;"><span>  threshold: <span style="color:#ae81ff">50</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># To get stable &#34;See also&#34; sections we, by default, exclude newer related pages.</span>
+</span></span><span style="display:flex;"><span>  includeNewer: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Will lower case keywords in both queries and in the indexes.</span>
+</span></span><span style="display:flex;"><span>  toLower: true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  indices:
+</span></span><span style="display:flex;"><span>    - name: categories
+</span></span><span style="display:flex;"><span>      weight: <span style="color:#ae81ff">200</span>
+</span></span><span style="display:flex;"><span>    - name: keywords
+</span></span><span style="display:flex;"><span>      weight: <span style="color:#ae81ff">150</span>
+</span></span><span style="display:flex;"><span>    - name: tags
+</span></span><span style="display:flex;"><span>      weight: <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>languages:
+</span></span><span style="display:flex;"><span>  zh:
+</span></span><span style="display:flex;"><span>    languageCode: zh
+</span></span><span style="display:flex;"><span>    languageName: 中文
+</span></span><span style="display:flex;"><span>    contentDir: content
+</span></span><span style="display:flex;"><span>    weight: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    params:
+</span></span><span style="display:flex;"><span>      description: Devops | Programming
+</span></span><span style="display:flex;"><span>    menu:
+</span></span><span style="display:flex;"><span>      main:
+</span></span><span style="display:flex;"><span>        - name: 思考
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>          identifier: idea
+</span></span><span style="display:flex;"><span>          url: categories/idea/
+</span></span><span style="display:flex;"><span>      social:
+</span></span><span style="display:flex;"><span>        - name: Telegram
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>          identifier: telegram
+</span></span><span style="display:flex;"><span>          url: https://t.me/ichensoul
+</span></span><span style="display:flex;"><span>        - name: Twitter
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>          identifier: twitter
+</span></span><span style="display:flex;"><span>          url: https://twitter.com/ichensoul
+</span></span><span style="display:flex;"><span>        - name: BiliBili
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>          identifier: bilibili
+</span></span><span style="display:flex;"><span>          url: https://space.bilibili.com/699805065/
+</span></span><span style="display:flex;"><span>      links:
+</span></span><span style="display:flex;"><span>        - name: GitHub
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>          identifier: github
+</span></span><span style="display:flex;"><span>          url: https://github.com/chensoul
+</span></span><span style="display:flex;"><span>        - name: Services
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>          identifier: services-status
+</span></span><span style="display:flex;"><span>          url: https://uptime.chensoul.cc/status/services
+</span></span><span style="display:flex;"><span>        - name: Analytics
+</span></span><span style="display:flex;"><span>          weight: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>          identifier: chensoul-analytics
+</span></span><span style="display:flex;"><span>          url: https://data.chensoul.cc/share/8YKX7FUa/pseudoyu-blog
+</span></span></code></pre></div><h2 id="部署">部署</h2>
+<h3 id="github-actions-部署">GitHub Actions 部署</h3>
+<p><strong>1、首先在 github 里创建一个仓库：chensoul.github.io</strong></p>
+<p><strong>2、将本地文件提交到 github</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd chensoul.github.io
+</span></span><span style="display:flex;"><span>git init .
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;# chensoul.github.io&#34;</span> &gt;&gt; README.md
+</span></span><span style="display:flex;"><span>git remote add origin git@github.com:chensoul/chensoul.github.io.git
+</span></span></code></pre></div><p><strong>3、将本地代码推送到仓库</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;first commit&#34;</span>
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></div><p><strong>4、创建 GitHub Actions 的 workflow</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p .github/workflows
+</span></span><span style="display:flex;"><span>touch .github/workflows/gh-page.yml
+</span></span></code></pre></div><p>gh-page.yml 内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">github pages</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">hugo</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-18.04</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">timeout-minutes</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">submodules</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># Fetch Hugo themes (true OR recursive)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">fetch-depth</span>: <span style="color:#ae81ff">0</span> <span style="color:#75715e"># Fetch all history for .GitInfo and .Lastmod</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup hugo</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-hugo@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hugo-version</span>: <span style="color:#ae81ff">latest</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">extended</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build web</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">hugo --minify</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-gh-pages@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">github_token</span>: <span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">publish_branch</span>: <span style="color:#ae81ff">gh-pages</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">publish_dir</span>: <span style="color:#ae81ff">./public</span>
+</span></span></code></pre></div><p>上面的工作流是在 gh-pages 分支上触发，当有代码提交时候，会运行 hugo 命令生成静态文件（public 目录），并且将他们推送到 main 分支。</p>
+<p>所以，我们需要基于当前分支创建一个新分支 gh-pages ，并且推送到远程仓库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git branch gh-pages
+</span></span><span style="display:flex;"><span>git checkout gh-pages
+</span></span><span style="display:flex;"><span>git push origin gh-pages
+</span></span></code></pre></div><p><strong>5、修改代码，推送到仓库，触发工作流</strong></p>
+<p>在本地修改某个文件，提交代码，然后在 github <a href="https://github.com/chensoul/chensoul.github.io/actions" target="_blank">网站</a> 查看工作流</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git push origin gh-pages
+</span></span></code></pre></div><p><strong>7、设置自定义域名</strong></p>
+<p>参考<a href="https://docs.github.com/cn/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain" target="_blank">管理 GitHub Pages 站点的自定义域</a>，添加一个自定义域名：blog.chensoul.cc：</p>
+<p><img src="../../../static/images/build-personal-blog-from-zero-03.webp" alt="github-page-settings"></p>
+<p>或者，在仓库的 static 目录创建一个 CNAME 文件，内容为：blog.chensoul.cc，然后，保存提交，Github Actions 会将该文件推送到 main 分支。</p>
+<p>然后，在亚马逊网站添加 <a href="https://console.aws.amazon.com/route53/v2/hostedzones#" target="_blank">CNAME 记录</a>：</p>
+<p><img src="../../../static/images/build-personal-blog-from-zero-04.webp" alt="amazon-dns-settings"></p>
+<p>8、部署到 CloudFlare Pages</p>
+<p>参考 <a href="https://hee.ink/p/%E4%BB%8E-github-pages-%E8%BF%81%E7%A7%BB%E5%88%B0-cloudflare-pages-%E7%9A%84%E4%BD%93%E9%AA%8C%E4%B8%8E%E8%B8%A9%E5%9D%91%E5%B0%8F%E8%AE%B0/" target="_blank">从 GitHub Pages 迁移到 CloudFlare Pages 的体验与踩坑小记</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/weekly-report/" rel="tag">weekly-report</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/learning/" rel="tag">learning</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/personal/" rel="tag">personal</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2021/09/09/mac-development-environment-setup/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Mac开发环境配置</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2021\/09\/09\/build-personal-blog-from-zero\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#域名">域名</a></li>
+    <li><a href="#服务器">服务器</a></li>
+    <li><a href="#程序">程序</a>
+      <ul>
+        <li><a href="#安装-hugo">安装 Hugo</a></li>
+        <li><a href="#新建站点">新建站点</a></li>
+        <li><a href="#添加主题">添加主题</a></li>
+        <li><a href="#启动">启动</a></li>
+      </ul>
+    </li>
+    <li><a href="#定制化">定制化</a>
+      <ul>
+        <li><a href="#站点信息">站点信息</a></li>
+      </ul>
+    </li>
+    <li><a href="#部署">部署</a>
+      <ul>
+        <li><a href="#github-actions-部署">GitHub Actions 部署</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

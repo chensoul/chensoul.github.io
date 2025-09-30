@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>通过k3sup安装k3s - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="通过k3sup安装k3s">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/05/09/install-k3s-using-k3sup/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="通过k3sup安装k3s">
+  <meta itemprop="description" content="k3sup是一个支持在PC、虚拟机、ARM设备上安装k3s的工具，官方网站：https://k3sup.dev/
+安装k3sup 在线安装：">
+  <meta itemprop="datePublished" content="2024-05-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="401">
+  <meta itemprop="keywords" content="Docker,Kubernetes,Tutorial,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="通过k3sup安装k3s">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">通过k3sup安装k3s</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-09">2024-05-09</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cloud-native/" rel="category">Cloud-Native</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/kubernetes/" rel="tag">Kubernetes</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>k3sup是一个支持在PC、虚拟机、ARM设备上安装k3s的工具，官方网站：<a href="https://k3sup.dev/" target="_blank">https://k3sup.dev/</a></p>
+<h2 id="安装k3sup">安装k3sup</h2>
+<p>在线安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -sLS https://get.k3sup.dev | sh
+</span></span><span style="display:flex;"><span>sudo install k3sup /usr/local/bin/
+</span></span></code></pre></div><p>离线安装，下载地址：<a href="https://github.com/alexellis/k3sup/releases" target="_blank">https://github.com/alexellis/k3sup/releases</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://github.com/alexellis/k3sup/releases/download/0.13.5/k3sup
+</span></span><span style="display:flex;"><span>mv k3sup /usr/local/bin/
+</span></span><span style="display:flex;"><span>chmod +x /usr/local/bin/k3sup
+</span></span></code></pre></div><p>查看版本：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ k3sup version
+</span></span><span style="display:flex;"><span> _    _____
+</span></span><span style="display:flex;"><span>| | _|___ / ___ _   _ _ __
+</span></span><span style="display:flex;"><span>| |/ / |_ <span style="color:#ae81ff">\/</span> __| | | | <span style="color:#960050;background-color:#1e0010">&#39;</span>_ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>|   &lt; ___<span style="color:#f92672">)</span> <span style="color:#ae81ff">\_</span>_ <span style="color:#ae81ff">\ </span>|_| | |_<span style="color:#f92672">)</span> |
+</span></span><span style="display:flex;"><span>|_|<span style="color:#ae81ff">\_\_</span>___/|___/<span style="color:#ae81ff">\_</span>_,_| .__/
+</span></span><span style="display:flex;"><span>                     |_|
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bootstrap K3s over SSH in &lt; 60s 🚀
+</span></span><span style="display:flex;"><span>🚀 Speed up GitHub Actions/GitLab CI + reduce costs: https://actuated.dev
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Version: 0.13.5
+</span></span><span style="display:flex;"><span>Git Commit: d952d6df22b06147806ca1030b8ba3a4bb9e0c0c
+</span></span></code></pre></div><h2 id="创建k3s集群">创建k3s集群</h2>
+<h3 id="创建一个本地集群">创建一个本地集群</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>k3sup install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --local <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --context localk3s <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-channel stable <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span></code></pre></div><p>查看集群状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ k3sup ready --context localk3s --kubeconfig ./kubeconfig
+</span></span><span style="display:flex;"><span>Checking cluster status: 1/25
+</span></span><span style="display:flex;"><span>All node<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span> are ready
+</span></span></code></pre></div><p>查看集群节点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get nodes -o wide
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                       AGE    VERSION        INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION                CONTAINER-RUNTIME
+</span></span><span style="display:flex;"><span>doris-01   Ready    control-plane,etcd,master   127m   v1.29.4+k3s1   192.168.1.107   &lt;none&gt;        CentOS Linux <span style="color:#ae81ff">7</span> <span style="color:#f92672">(</span>Core<span style="color:#f92672">)</span>   3.10.0-1160.71.1.el7.x86_64   docker://25.0.4
+</span></span></code></pre></div><h3 id="创建一个远程服务的集群">创建一个远程服务的集群</h3>
+<p>连接远程节点，需要先配置 ssh</p>
+<blockquote>
+<p>修改sshd配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;/PasswordAuthentication/s/^/#/&#39;</span>  /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/^[ ]*StrictHostKeyChecking.*/StrictHostKeyChecking no/g&#39;</span> /etc/ssh/ssh_config
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#禁用sshd服务的UseDNS、GSSAPIAuthentication两项特性</span>
+</span></span><span style="display:flex;"><span>sed -i -e <span style="color:#e6db74">&#39;s/^#UseDNS.*$/UseDNS no/&#39;</span> /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>sed -i -e <span style="color:#e6db74">&#39;s/^GSSAPIAuthentication.*$/GSSAPIAuthentication no/&#39;</span> /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>systemctl restart sshd
+</span></span></code></pre></div><p>生成ssh私钥：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span> ! -d ~/.ssh <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span> mkdir ~/.ssh <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> ! -f ~/.ssh/id_rsa.pub <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">(</span>yes|ssh-keygen -f ~/.ssh/id_rsa -t rsa -N <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span> chmod <span style="color:#ae81ff">600</span> ~/.ssh/id_rsa.pub <span style="color:#f92672">)</span> <span style="color:#f92672">&amp;&amp;</span> cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+</span></span></code></pre></div><p>配置无密码登陆：192.168.1.107 是当前服务器的 IP</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-copy-id 192.168.1.107 
+</span></span></code></pre></div><p>如果ssh-agent没启动，则启动：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>eval <span style="color:#e6db74">`</span>ssh-agent<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>ssh-add ~/.ssh/id_rsa
+</span></span></code></pre></div></blockquote>
+<p>在 192.168.1.107 节点上创建集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export USER<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>export SERVER_IP<span style="color:#f92672">=</span>192.168.1.107
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>k3sup install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --ip $SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span></code></pre></div><p>查看集群状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ k3sup ready --context default --kubeconfig ./kubeconfig
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl get nodes --kubeconfig ./kubeconfig
+</span></span></code></pre></div><p>或者指定一个 context 并合并到默认的 KUBECONFIG 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>k3sup install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --ip $SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span><span style="display:flex;"><span>  --context pik3s <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --merge <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --local-path $HOME/.kube/config
+</span></span></code></pre></div><p>查看集群状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># $HOME/.kube/config is a default for kubeconfig</span>
+</span></span><span style="display:flex;"><span>k3sup ready --context pik3s
+</span></span></code></pre></div><h3 id="使用嵌入式-etcd-创建一个-ha-集群">使用嵌入式 etcd 创建一个 HA 集群</h3>
+<p>添加 <code>--cluster</code> 创建一个集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export USER<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>export SERVER_IP<span style="color:#f92672">=</span>192.168.1.107
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>k3sup install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --cluster <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --ip $SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span></code></pre></div><p>添加另一个server 节点（192.168.1.109），先配置无密码登录：</p>
+<blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-copy-id 192.168.1.109
+</span></span></code></pre></div></blockquote>
+<p>然后，添加 <code>--server</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export USER<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>export SERVER_IP<span style="color:#f92672">=</span>192.168.1.107
+</span></span><span style="display:flex;"><span>export NEXT_SERVER_IP<span style="color:#f92672">=</span>192.168.1.109
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>k3sup join <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--ip $NEXT_SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--server-ip $SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--server-user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span></code></pre></div><p>再查看节点状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ k3sup ready --context default --kubeconfig ./kubeconfig
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl get nodes --kubeconfig ./kubeconfig
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                       AGE     VERSION
+</span></span><span style="display:flex;"><span>doris-01   Ready    control-plane,etcd,master   166m    v1.29.4+k3s1
+</span></span><span style="display:flex;"><span>doris-03   Ready    &lt;none&gt;                      2m18s   v1.29.4+k3s1
+</span></span></code></pre></div><h3 id="添加一个-agent-节点到集群">添加一个 Agent 节点到集群</h3>
+<p>添加一个节点（192.168.1.109）到集群，先配置无密码登录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-copy-id 192.168.1.109
+</span></span></code></pre></div><p>然后</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export USER<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>export SERVER_IP<span style="color:#f92672">=</span>192.168.1.107
+</span></span><span style="display:flex;"><span>export AGENT_IP<span style="color:#f92672">=</span>192.168.1.109
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>k3sup join <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--ip $AGENT_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--server-ip $SERVER_IP <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	--server-user $USER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --k3s-extra-args <span style="color:#e6db74">&#39;--docker&#39;</span>
+</span></span></code></pre></div><h2 id="卸载">卸载</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/bin/k3s-uninstall.sh
+</span></span></code></pre></div>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/all-things-about-drone/" target="_blank" title="All things about Drone">All things about Drone</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s-using-k3d/" target="_blank" title="通过k3d安装k3s">通过k3d安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s/" target="_blank" title="安装k3s">安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/04/29/all-things-about-thingsboard/" target="_blank" title="All things about ThingsBoard">All things about ThingsBoard</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/12/til/" target="_blank" title="2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测">2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/21/architecture/" target="_blank" title="如何成为一名合格的架构师">如何成为一名合格的架构师</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/kubernetes/" rel="tag">kubernetes</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/05/08/socketio-vs-http/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]比较 Socket.IO 和 HTTP：主要区别和用例</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/09/install-k3s-using-k3d/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 通过k3d安装k3s</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/05\/09\/install-k3s-using-k3sup\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装k3sup">安装k3sup</a></li>
+    <li><a href="#创建k3s集群">创建k3s集群</a>
+      <ul>
+        <li><a href="#创建一个本地集群">创建一个本地集群</a></li>
+        <li><a href="#创建一个远程服务的集群">创建一个远程服务的集群</a></li>
+        <li><a href="#使用嵌入式-etcd-创建一个-ha-集群">使用嵌入式 etcd 创建一个 HA 集群</a></li>
+        <li><a href="#添加一个-agent-节点到集群">添加一个 Agent 节点到集群</a></li>
+      </ul>
+    </li>
+    <li><a href="#卸载">卸载</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

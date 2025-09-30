@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分） - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring-scopes/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">
+  <meta itemprop="description" content="我们在上一篇文章中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。">
+  <meta itemprop="datePublished" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="258">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-26">2023-07-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>我们在<a href="/posts/2023/07/26/using-oauth2-in-spring/">上一篇文章</a>中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。</p>
+<h2 id="oauth-范围">OAuth 范围</h2>
+<p>保护对应用程序的访问通常分两个步骤进行：身份验证和授权。要理解这两个概念，假设您在绝密政府大楼工作。在开始之前，你会得到一张卡片，可以让你进入建筑物。 OAuth 令牌可以看作是允许您访问的卡片。</p>
+<p>一旦你进去，你决定去三楼见你的一位同事，在尝试使用你的卡打开三楼的门后，你听到一声嘟嘟声，告诉你你没有被授权。在 OAuth 中，范围是一种定义令牌可以访问哪些资源以及不能访问哪些资源的方法。范围允许访问控制，并且可以被视为相当于传统身份验证中的用户角色。</p>
+<h2 id="实现">实现</h2>
+<p>为了演示范围，我们将使用第 1 部分中的<a href="https://github.com/zak905/oauth2-example" target="_blank">示例</a>。</p>
+<p>在<a href="https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceController.java" target="_blank">资源服务器</a>的控制器中，我们有以下端点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResourceController</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/hello&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">hello</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;hello&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/foo&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">foo</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;foo&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PostMapping</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">bar</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@DeleteMapping</span>(<span style="color:#e6db74">&#34;/test&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;test&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>第一步是使用所需的范围配置<a href="https://github.com/zak905/oauth2-example/blob/master/authorization-server/src/main/java/com/gwidgets/examples/authorizationserver/AuthorizationSecurityConfig.java#L34" target="_blank">授权服务器</a>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> clients.<span style="color:#a6e22e">inMemory</span>().<span style="color:#a6e22e">withClient</span>(<span style="color:#e6db74">&#34;my-trusted-client&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorizedGrantTypes</span>(<span style="color:#e6db74">&#34;password&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;refresh_token&#34;</span>, <span style="color:#e6db74">&#34;implicit&#34;</span>, <span style="color:#e6db74">&#34;client_credentials&#34;</span>, <span style="color:#e6db74">&#34;authorization_code&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorities</span>(<span style="color:#e6db74">&#34;CLIENT&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">scopes</span>(<span style="color:#e6db74">&#34;read&#34;</span>, <span style="color:#e6db74">&#34;write&#34;</span>, <span style="color:#e6db74">&#34;trust&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">accessTokenValiditySeconds</span>(60)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">redirectUris</span>(<span style="color:#e6db74">&#34;http://localhost:8081/test.html&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">resourceIds</span>(<span style="color:#e6db74">&#34;resource&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">secret</span>(<span style="color:#e6db74">&#34;mysecret&#34;</span>);
+</span></span></code></pre></div><p>要在资源服务器中启用范围检查，我们有两个选项：使用安全配置或使用方法安全性。</p>
+<ul>
+<li>使用安全配置：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>	<span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>		http
+</span></span><span style="display:flex;"><span>			.<span style="color:#a6e22e">authorizeRequests</span>()
+</span></span><span style="display:flex;"><span>			 .<span style="color:#a6e22e">antMatchers</span>(HttpMethod.<span style="color:#a6e22e">GET</span>,<span style="color:#e6db74">&#34;/hello&#34;</span>).<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;read&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>			 .<span style="color:#a6e22e">antMatchers</span>(HttpMethod.<span style="color:#a6e22e">GET</span>,<span style="color:#e6db74">&#34;/foo&#34;</span>).<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;read&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>			 .<span style="color:#a6e22e">antMatchers</span>(HttpMethod.<span style="color:#a6e22e">POST</span>,<span style="color:#e6db74">&#34;/bar&#34;</span>).<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;write&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>			 .<span style="color:#a6e22e">antMatchers</span>(HttpMethod.<span style="color:#a6e22e">DELETE</span>,<span style="color:#e6db74">&#34;/test&#34;</span>).<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;trust&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>			.<span style="color:#a6e22e">anyRequest</span>().<span style="color:#a6e22e">authenticated</span>().
+</span></span><span style="display:flex;"><span>			 and().<span style="color:#a6e22e">csrf</span>().<span style="color:#a6e22e">disable</span>();
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><ul>
+<li>使用方法安全性：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>    <span style="color:#a6e22e">@PreAuthorize</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;read&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/hello&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">hello</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;hello&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PreAuthorize</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;read&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/foo&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">foo</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;foo&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PreAuthorize</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;write&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PostMapping</span>(<span style="color:#e6db74">&#34;/bar&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">bar</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;bar&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PreAuthorize</span>(<span style="color:#e6db74">&#34;#oauth2.hasScope(&#39;trust&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@DeleteMapping</span>(<span style="color:#e6db74">&#34;/test&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;test&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>另外，我们需要将 <code>@EnableGlobalMethodSecurity(prePostEnabled = true)</code> 添加到 Spring 可以获取的任何类（ <code>@Configuration</code> 、 <code>@Service</code> 等）。在我们的示例中，我们已将其添加到 <a href="https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18" target="_blank">ResourceSecurityConfiguration</a> 类中。 <code>prePostEnabled = true</code> 告诉 Spring 启用前注解和后注解，例如 <code>@PreAuthorize</code> 、 <code>@PostFilter</code> 等&hellip;&hellip;</p>
+<p>对于那些想了解 <code>#oauth2.hasScope('trust')</code> 这样的表达式的人来说，它们是使用 <a href="https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html" target="_blank">Spring 表达式语言</a>（SpEL）构建的。</p>
+<h2 id="行动范围">行动范围</h2>
+<p>默认情况下，如果令牌请求中不存在范围，Spring 会假定令牌具有所有配置的范围。让我们首先请求一个具有 <code>read</code> 范围的令牌：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d <span style="color:#e6db74">&#39;grant_type=client_credentials&amp;client_id=my-trusted-client&amp;scope=read&#39;</span> -H <span style="color:#e6db74">&#34;Accept: application/json&#34;</span>
+</span></span></code></pre></div><p>回复：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;access_token&#34;</span>: <span style="color:#e6db74">&#34;acadbb31-f126-411d-ae5b-6a278cee2ed6&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;token_type&#34;</span>: <span style="color:#e6db74">&#34;bearer&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;expires_in&#34;</span>: <span style="color:#ae81ff">60</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: <span style="color:#e6db74">&#34;read&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在，我们可以使用令牌来访问具有 <code>read</code> 范围访问权限的端点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> curl -XGET localhost:8989/hello -H <span style="color:#e6db74">&#34;Authorization: Bearer acadbb31-f126-411d-ae5b-6a278cee2ed6&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> hello
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -XGET localhost:8989/foo -H <span style="color:#e6db74">&#34;Authorization: Bearer acadbb31-f126-411d-ae5b-6a278cee2ed6&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> foo
+</span></span></code></pre></div><p>现在，让我们尝试在仅接受 <code>write</code> 范围的端点上使用此令牌：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -XPOST localhost:8989/bar -H <span style="color:#e6db74">&#34;Authorization: Bearer acadbb31-f126-411d-ae5b-6a278cee2ed6&#34;</span>
+</span></span></code></pre></div><p>回复：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;access_denied&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error_description&#34;</span>: <span style="color:#e6db74">&#34;Access is denied&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于令牌不具有所需的范围，因此访问被拒绝。让我们尝试获取一个具有 <code>write</code> 范围的新令牌，然后重试：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d <span style="color:#e6db74">&#39;grant_type=client_credentials&amp;client_id=my-trusted-client&amp;scope=write&#39;</span> -H <span style="color:#e6db74">&#34;Accept: application/json&#34;</span>
+</span></span></code></pre></div><p>回复：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;access_token&#34;</span>: <span style="color:#e6db74">&#34;bf0fa83a-23bd-4633-ac6c-a06f40d53e5f&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;token_type&#34;</span>: <span style="color:#e6db74">&#34;bearer&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;expires_in&#34;</span>: <span style="color:#ae81ff">3599</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: <span style="color:#e6db74">&#34;write&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -XPOST localhost:8989/bar -H <span style="color:#e6db74">&#34;Authorization: Bearer bf0fa83a-23bd-4633-ac6c-a06f40d53e5f&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bar
+</span></span></code></pre></div><h2 id="总结">总结</h2>
+<p>范围是 OAuth 的一个重要方面，因为令牌不携带有关其用户或请求者的信息。范围允许限制对资源的访问，以实现更好的访问控制和安全性。在下一篇文章中，我们将了解如何将 Google 和 Facebook 等外部 OAuth 提供商集成到流程中。</p>
+<p>原文链接：<a href="http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/" target="_blank">http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-authorization-server/" target="_blank" title="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-info-endpoint/" target="_blank" title="[译]使用Spring Boot Actuator公开有用的信息端点">[译]使用Spring Boot Actuator公开有用的信息端点</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring/" target="_blank" title="[译]在 Spring 中实现 OAuth2：第 1 部分">[译]在 Spring 中实现 OAuth2：第 1 部分</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-exception-handling/" target="_blank" title="[译]Spring Boot异常处理完整指南">[译]Spring Boot异常处理完整指南</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-cors/" target="_blank" title="[译]使用 Spring Boot 和 Spring Security 配置 CORS">[译]使用 Spring Boot 和 Spring Security 配置 CORS</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" target="_blank" title="[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权">[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/07/26/using-oauth2-in-spring/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]在 Spring 中实现 OAuth2：第 1 部分</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/26\/using-oauth2-in-spring-scopes\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#oauth-范围">OAuth 范围</a></li>
+    <li><a href="#实现">实现</a></li>
+    <li><a href="#行动范围">行动范围</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

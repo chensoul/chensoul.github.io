@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Minikube快速入门 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Minikube快速入门">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/07/10/minikube-quick-start/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Minikube快速入门">
+  <meta itemprop="description" content="安装 macos 系统使用 brew 安装">
+  <meta itemprop="datePublished" content="2024-07-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="684">
+  <meta itemprop="keywords" content="Docker,Kubernetes,Tutorial,Nginx">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Minikube快速入门">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Minikube快速入门</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-10">2024-07-10</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cloud-native/" rel="category">Cloud-Native</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/kubernetes/" rel="tag">Kubernetes</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/nginx/" rel="tag">Nginx</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="安装">安装</h2>
+<p>macos 系统使用 brew 安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install minikube
+</span></span></code></pre></div><h2 id="启动集群">启动集群</h2>
+<p>查看当前集群列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ minikube profile list
+</span></span><span style="display:flex;"><span>|----------|-----------|---------|--------------|------|---------|---------|-------|----------------|--------------------|
+</span></span><span style="display:flex;"><span>| Profile  | VM Driver | Runtime |      IP      | Port | Version | Status  | Nodes | Active Profile | Active Kubecontext |
+</span></span><span style="display:flex;"><span>|----------|-----------|---------|--------------|------|---------|---------|-------|----------------|--------------------|
+</span></span><span style="display:flex;"><span>| minikube | docker    | docker  | 192.168.49.2 | <span style="color:#ae81ff">8443</span> | v1.30.0 | Unknown |     <span style="color:#ae81ff">1</span> | *              | *                  |
+</span></span><span style="display:flex;"><span>|----------|-----------|---------|--------------|------|---------|---------|-------|----------------|--------------------|
+</span></span></code></pre></div><p>创建一个集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 启动一个名称为 minikube 集群，命名空间为 default</span>
+</span></span><span style="display:flex;"><span>minikube start
+</span></span></code></pre></div><blockquote>
+<p>默认情况下，<code>minikube start </code>创建一个名为“minikube”的集群。如果您想创建不同的集群或更改其名称，可以使用<code>--profile</code>(或<code>-p</code>) 标志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube start -p test
+</span></span></code></pre></div><p>如果只想使用 docker 而不使用 k8s：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube start --container-runtime<span style="color:#f92672">=</span>docker --no-kubernetes
+</span></span></code></pre></div><p>指定资源：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube start --cpus <span style="color:#ae81ff">4</span> --memory 8G
+</span></span></code></pre></div><p>也可以调整资源：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube config set cpus <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>minikube config set memory 2G
+</span></span></code></pre></div></blockquote>
+<p>k8s 集群创建成功之后，可以通过 kubectl 查看上下文：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl config get-contexts
+</span></span><span style="display:flex;"><span>CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
+</span></span><span style="display:flex;"><span>*         minikube   minikube   minikube   default
+</span></span></code></pre></div><blockquote>
+<p>minikube 内置了 kubectl 工具，可以使用下面命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube kubectl --
+</span></span></code></pre></div><p>也可以在 shell 中为上面命令设置一个别名：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>alias kubectl<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;minikube kubectl --&#34;</span>
+</span></span></code></pre></div></blockquote>
+<p>查询 docker 容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                 PORTS         NAMES
+</span></span><span style="display:flex;"><span>f30717c5cfc7   gcr.io/k8s-minikube/kicbase:v0.0.44   <span style="color:#e6db74">&#34;/usr/local/bin/entr…&#34;</span>   <span style="color:#ae81ff">11</span> minutes ago   Up <span style="color:#ae81ff">11</span> minutes          127.0.0.1:32782-&gt;22/tcp, 127.0.0.1:32781-&gt;2376/tcp, 127.0.0.1:32780-&gt;5000/tcp, 127.0.0.1:32779-&gt;8443/tcp, 127.0.0.1:32778-&gt;32443/tcp   minikube
+</span></span></code></pre></div><p>登录 minikube 容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ minikube ssh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker@minikube:~$
+</span></span></code></pre></div><p>查询 pod</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl get po -A
+</span></span></code></pre></div><p>启动 dashboard</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ minikube dashboard --url
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或者</span>
+</span></span><span style="display:flex;"><span>$ minikube dashboard
+</span></span><span style="display:flex;"><span>🔌  Enabling dashboard ...
+</span></span><span style="display:flex;"><span>    ▪ Using image docker.io/kubernetesui/dashboard:v2.7.0
+</span></span><span style="display:flex;"><span>    ▪ Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+</span></span><span style="display:flex;"><span>💡  Some dashboard features require the metrics-server addon. To enable all features please run:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	minikube addons enable metrics-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>🤔  Verifying dashboard health ...
+</span></span><span style="display:flex;"><span>🚀  Launching proxy ...
+</span></span><span style="display:flex;"><span>🤔  Verifying proxy health ...
+</span></span><span style="display:flex;"><span>🎉  Opening http://127.0.0.1:61663/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard://proxy/ in your default browser...
+</span></span></code></pre></div><p>稍等片刻，会打开浏览器访问 http://127.0.0.1:61663/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard://proxy/#/workloads?namespace=default</p>
+<p>查询 IP：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ minikube ip
+</span></span><span style="display:flex;"><span>192.168.49.2
+</span></span></code></pre></div><p>在 macos 系统是无法 ping 该 IP 的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ping 192.168.49.2
+</span></span><span style="display:flex;"><span>PING 192.168.49.2 <span style="color:#f92672">(</span>192.168.49.2<span style="color:#f92672">)</span>: <span style="color:#ae81ff">56</span> data bytes
+</span></span><span style="display:flex;"><span>Request timeout <span style="color:#66d9ef">for</span> icmp_seq <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Request timeout <span style="color:#66d9ef">for</span> icmp_seq <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>默认使用的是docker driver，但是Mac docker desktop不会创建docker0网桥，所以无法ping通minikube node ip。可以使用vm的方式启动minikube。更多说明，可以参考：</p>
+<ul>
+<li><a href="https://github.com/kubernetes/minikube/issues/11193" target="_blank">https://github.com/kubernetes/minikube/issues/11193</a></li>
+<li><a href="https://stackoverflow.com/questions/63600378/cant-access-minikube-service-using-nodeport-from-host-on-mac" target="_blank">https://stackoverflow.com/questions/63600378/cant-access-minikube-service-using-nodeport-from-host-on-mac</a></li>
+<li><a href="https://docs.docker.com/desktop/mac/networking/#known-limitations-use-cases-and-workarounds" target="_blank">https://docs.docker.com/desktop/mac/networking/#known-limitations-use-cases-and-workarounds</a></li>
+</ul>
+<p>查看集群状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ minikube status
+</span></span><span style="display:flex;"><span>minikube
+</span></span><span style="display:flex;"><span>type: Control Plane
+</span></span><span style="display:flex;"><span>host: Running
+</span></span><span style="display:flex;"><span>kubelet: Running
+</span></span><span style="display:flex;"><span>apiserver: Running
+</span></span><span style="display:flex;"><span>kubeconfig: Configured
+</span></span></code></pre></div><p>升级集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube start --kubernetes-version<span style="color:#f92672">=</span>latest
+</span></span></code></pre></div><p>停止本地集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>minikube stop
+</span></span></code></pre></div><p>暂停集群</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube unpause
+</span></span></code></pre></div><p>删除本地集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>minikube delete
+</span></span></code></pre></div><p>删除所有本地集群和配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>minikube delete --all
+</span></span></code></pre></div><h2 id="部署应用">部署应用</h2>
+<h3 id="创建-deployment">创建 Deployment</h3>
+<p>使用 <code>kubectl create</code> 命令创建管理 Pod 的 Deployment。该 Pod 根据提供的 Docker 镜像运行容器。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create deployment web --image<span style="color:#f92672">=</span>gcr.io/google-samples/hello-app:1.0
+</span></span></code></pre></div><p>查看 Deployment：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get deployment web
+</span></span><span style="display:flex;"><span>NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span style="display:flex;"><span>web    1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           14s
+</span></span></code></pre></div><p>该 Pod 可能需要一些时间才能变得可用。如果你在输出结果中看到 “0/1”，请在几秒钟后重试。</p>
+<p>在 Kubernetes 内运行的 <a href="https://kubernetes.io/docs/concepts/workloads/pods/" target="_blank">Pod</a> 运行在一个私有的、隔离的网络上。 默认这些 Pod 可以从同一 Kubernetes 集群内的其他 Pod 和服务看到，但超出这个网络后则看不到。 当我们使用 <code>kubectl</code> 时，我们通过 API 端点交互与应用进行通信。</p>
+<p><code>kubectl proxy</code> 命令可以创建一个代理，将通信转发到集群范围的私有网络。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl proxy
+</span></span></code></pre></div><p>你可以看到通过代理端点托管的所有 API。 例如，我们可以使用以下 <code>curl</code> 命令直接通过 API 查询版本：</p>
+<pre tabindex="0"><code>curl http://localhost:8001/version
+</code></pre><p>API 服务器将基于也能通过代理访问的 Pod 名称为每个 Pod 自动创建端点。</p>
+<p>获取 Pod 名称：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl get pods -o go-template --template <span style="color:#e6db74">&#39;{{range .items}}{{.metadata.name}}{{&#34;\n&#34;}}{{end}}&#39;</span>
+</span></span></code></pre></div><p>输出结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>web-56bb54ff6d-stk75
+</span></span></code></pre></div><p>你可以运行以下命令通过代理的 API 访问 Pod：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://localhost:8001/api/v1/namespaces/default/pods/web-56bb54ff6d-stk75/
+</span></span></code></pre></div><h3 id="创建-service">创建 Service</h3>
+<p>默认情况下，Pod 只能通过 Kubernetes 集群中的内部 IP 地址访问。 为了不使用代理也能访问新的 Deployment，你必须将 Pod 通过 Kubernetes <a href="https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/" target="_blank"><strong>Service</strong></a> 公开出来。</p>
+<p>使用 <code>kubectl expose</code> 命令将 Pod 暴露给公网：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl expose deployment web --type<span style="color:#f92672">=</span>LoadBalancer --port<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
+</span></span></code></pre></div><p>这里的 <code>--type=LoadBalancer</code> 参数表明你希望将你的 Service 暴露到集群外部。</p>
+<p>测试镜像中的应用程序代码仅监听 TCP 8080 端口。 如果你用 <code>kubectl expose</code> 暴露了其它的端口，客户端将不能访问其它端口。</p>
+<p>查看你创建的 Service：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get service web
+</span></span><span style="display:flex;"><span>NAME   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>          AGE
+</span></span><span style="display:flex;"><span>web    NodePort   10.106.178.70   &lt;none&gt;        8080:30954/TCP   8s
+</span></span></code></pre></div><p>对于支持负载均衡器的云服务平台而言，平台将提供一个外部 IP 来访问该服务。 在 Minikube 上，<code>LoadBalancer</code> 使得服务可以通过命令 <code>minikube service</code> 访问。</p>
+<p>运行下面的命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube service hello-node
+</span></span></code></pre></div><p>这将打开一个浏览器窗口，为你的应用程序提供服务并显示应用的响应。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Hello, world!
+</span></span><span style="display:flex;"><span>Version: 1.0.0
+</span></span><span style="display:flex;"><span>Hostname: web-56bb54ff6d-wtcxn
+</span></span></code></pre></div><h3 id="创建-ingress">创建 Ingress</h3>
+<p>Minikube 有一组内置的<a href="https://kubernetes.io/zh-cn/docs/concepts/cluster-administration/addons/" target="_blank">插件</a>， 可以在本地 Kubernetes 环境中启用、禁用和打开。</p>
+<p>查询插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube addons list
+</span></span></code></pre></div><p>启用入口插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube addons enable ingress
+</span></span></code></pre></div><p>如果要禁用插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>minikube addons disable ingress
+</span></span></code></pre></div><p>对上面的 web 服务创建一个 ingress：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f https://k8s.io/examples/service/networking/example-ingress.yaml
+</span></span></code></pre></div><p><a href="https://k8s.io/examples/service/networking/example-ingress.yaml" target="_blank">https://k8s.io/examples/service/networking/example-ingress.yaml</a> 内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Ingress</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">example-ingress</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ingressClassName</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">hello-world.example</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">http</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">paths</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">pathType</span>: <span style="color:#ae81ff">Prefix</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">backend</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">name</span>: <span style="color:#ae81ff">web</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">port</span>:
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">number</span>: <span style="color:#ae81ff">8080</span>
+</span></span></code></pre></div><p>等待入口地址</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get ingress
+</span></span><span style="display:flex;"><span>NAME              CLASS   HOSTS                 ADDRESS        PORTS   AGE
+</span></span><span style="display:flex;"><span>example-ingress   nginx   hello-world.example             <span style="color:#ae81ff">80</span>      36s
+</span></span></code></pre></div><p>在本地 hosts 文件添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>127.0.0.1 hello-world.example
+</span></span></code></pre></div><p>现在验证入口是否正常工作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ curl hello-world.example
+</span></span><span style="display:flex;"><span>curl: <span style="color:#f92672">(</span>7<span style="color:#f92672">)</span> Failed to connect to hello-world.example port <span style="color:#ae81ff">80</span> after <span style="color:#ae81ff">2</span> ms: Couldn<span style="color:#960050;background-color:#1e0010">&#39;</span>t connect to server
+</span></span></code></pre></div><p>在一个终端运行下面命令，开启代理，对 example-ingress 暴露 80 和 443 端口：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo minikube tunnel
+</span></span><span style="display:flex;"><span>✅  Tunnel successfully started
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>📌  NOTE: Please <span style="color:#66d9ef">do</span> not close this terminal as this process must stay alive <span style="color:#66d9ef">for</span> the tunnel to be accessible ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❗  The service/ingress example-ingress requires privileged ports to be exposed: <span style="color:#f92672">[</span><span style="color:#ae81ff">80</span> 443<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>🔑  sudo permission will be asked <span style="color:#66d9ef">for</span> it.
+</span></span><span style="display:flex;"><span>🏃  Starting tunnel <span style="color:#66d9ef">for</span> service example-ingress.
+</span></span></code></pre></div><p>再次运行，可以看到返回：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl hello-world.example
+</span></span><span style="display:flex;"><span>Hello, world!
+</span></span><span style="display:flex;"><span>Version: 1.0.0
+</span></span><span style="display:flex;"><span>Hostname: web-56bb54ff6d-stk75
+</span></span></code></pre></div><h3 id="清理">清理</h3>
+<p>现在可以清理你在集群中创建的资源：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl delete service web
+</span></span><span style="display:flex;"><span>kubectl delete deployment web
+</span></span><span style="display:flex;"><span>kubectl delete ingress example-ingress
+</span></span></code></pre></div><p>停止 Minikube 集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>minikube stop
+</span></span></code></pre></div>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/10/install-cert-manager/" target="_blank" title="K8s安装Cert Manager">K8s安装Cert Manager</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/10/install-rancher/" target="_blank" title="Rancher安装和部署-使用K8s">Rancher安装和部署-使用K8s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/all-things-about-drone/" target="_blank" title="All things about Drone">All things about Drone</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s/" target="_blank" title="安装k3s">安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s-using-k3d/" target="_blank" title="通过k3d安装k3s">通过k3d安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s-using-k3sup/" target="_blank" title="通过k3sup安装k3s">通过k3sup安装k3s</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/kubernetes/" rel="tag">kubernetes</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nginx/" rel="tag">nginx</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/07/10/springdoc-with-spring-boot/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Spring Boot集成SpringDoc生成Api文档</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/07/15/git/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Git使用</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/07\/10\/minikube-quick-start\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#启动集群">启动集群</a></li>
+    <li><a href="#部署应用">部署应用</a>
+      <ul>
+        <li><a href="#创建-deployment">创建 Deployment</a></li>
+        <li><a href="#创建-service">创建 Service</a></li>
+        <li><a href="#创建-ingress">创建 Ingress</a></li>
+        <li><a href="#清理">清理</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

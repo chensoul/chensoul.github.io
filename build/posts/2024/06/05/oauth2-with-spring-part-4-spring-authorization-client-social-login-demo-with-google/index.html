@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">
+  <meta itemprop="description" content="原文地址：https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5
+在之前的文章中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。">
+  <meta itemprop="datePublished" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="156">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-05">2024-06-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>原文地址：<a href="https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5" target="_blank">https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5</a></p>
+<p>在<a href="/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/">之前的文章</a>中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-01.webp" alt="oauth2-with-spring-part-4-01"></p>
+<p>为了实现这一点，我们需要将我们的授权客户端应用程序注册为 Google 授权服务器中的客户端，并使用客户端应用程序中的客户端凭据以及可用范围。</p>
+<h2 id="google-授权服务器中的客户端注册">Google 授权服务器中的客户端注册</h2>
+<p>我们需要在 Google 开发者控制台中创建一个应用程序并配置必要的内容。</p>
+<p>打开浏览器并转到<a href="https://console.developers.google.com/" target="_blank">https://console.developers.google.com/</a>。您将看到如图 1 所示的屏幕。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-02.webp" alt="oauth2-with-spring-part-4-02"></p>
+<p>从这里，选择下拉菜单以选择一个项目（1.1）。它将显示一个像上面一样的弹出窗口。从弹出窗口中，单击**“新建项目”<em><em>按钮（1.2）。由于我已经创建了我的应用程序并将我的应用程序命名为google-auth-server-demo（1.3），所以我不会再创建新的应用程序了</em>。</em></p>
+<p>创建应用程序后，从上面的屏幕中选择您的应用程序，您将看到仪表板。从左侧导航中，单击<strong>API 和服务</strong>和页面。由于我们目前对列表中的任何 Google 服务都不感兴趣，我们可以单击左侧导航中的<strong>凭据 (2.1) 。但如果您有兴趣从客户端应用程序中使用任何 Google 服务，您可能会发现</strong><a href="https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0" target="_blank">这篇文章</a>很有趣，<a href="https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0" target="_blank">我在其中演示了如何访问 Google Drive 数据</a>。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-03.webp" alt="oauth2-with-spring-part-4-02"></p>
+<p>图 2</p>
+<p>它将带我们进入以下页面。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-04.webp" alt="img"></p>
+<p>图 3</p>
+<p>从这里，我们可以创建新的凭证 (3.1)。由于我们已经创建了凭证 (3.2)，我们可以编辑它 (3.3) 以查看我们如何配置它。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-05.webp" alt="img"></p>
+<p>图 4</p>
+<p>在客户端注册页面，我们配置了客户端名称（4.1）、授权 JS 来源（4.2）以注册以应对 CORS 安全问题，授权重定向 URI（4.3）。当我们第一次点击<strong>保存</strong>按钮（4.4）时，它会为我们生成客户端 ID（4.5）和客户端密钥（4.6）。</p>
+<p>我们需要在客户端应用程序的配置文件即application.yml中使用这些客户端ID、客户端密钥和重定向URI。</p>
+<p><strong>在授权客户端 application.yml 文件中使用上述信息：</strong></p>
+<p><a href="https://medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a" target="_blank">该配置与我们第 3 部分</a>的客户端配置部分非常相似。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">registration</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">google</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#e6db74">&#34;615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#e6db74">&#34;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&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">redirect-uri</span>: <span style="color:#e6db74">&#34;{baseUrl}/login/oauth2/code/{registrationId}&#34;</span>
+</span></span></code></pre></div><p>现在，我们需要在 Google 授权服务器中设置同意屏幕，以允许客户端应用程序请求所需的范围。</p>
+<p>要进入同意屏幕，我们需要单击左侧导航栏中的<strong>Oauth 同意屏幕（5.1）。</strong></p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-06.webp" alt="img"></p>
+<p>图 5</p>
+<p>我已经创建了同意屏幕，所以让我们通过编辑应用程序看看我做了什么（5.2）</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-07.webp" alt="img"></p>
+<p>图 6</p>
+<p>此屏幕已在屏幕右侧详细记录（6.1）。遵循这些准则并保存以继续执行步骤 2：范围（6.2）</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-08.webp" alt="img"></p>
+<p>图 7</p>
+<p>在上面的屏幕上，单击**“添加或删除范围”<strong>按钮 (7.1)，右侧会打开一个弹出窗口。从这个弹出窗口中，我们为我们的演示 (7.2) 选择了几个最低要求的范围，然后单击</strong>“更新”**按钮 (7.3)。更新后，这些范围将显示在图 7 的 (7.4) 部分中。</p>
+<p>当我们从此范围步骤单击**“保存并继续”**按钮时，我们可以从客户端应用程序添加一些测试用户来测试。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-09.webp" alt="img"></p>
+<p>图 8</p>
+<p>为了测试目的，我们只允许 2 个用户（8.1）。</p>
+<p>现在，一旦我们保存了步骤 3 和步骤 4，我们就可以准备在客户端应用程序中使用这些范围了。</p>
+<p>让我们使用这些范围来更新前面提到的 application.yml 文件。</p>
+<p><strong>更新 application.yml</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">registration</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">google</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#e6db74">&#34;615531537634-806j95c1s18uundif9nl4oggcag7lcm6.apps.googleusercontent.com&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#e6db74">&#34;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&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">redirect-uri</span>: <span style="color:#e6db74">&#34;{baseUrl}/login/oauth2/code/{registrationId}&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scope</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">https://www.googleapis.com/auth/userinfo.email</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">https://www.googleapis.com/auth/userinfo.profile</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">openid</span>
+</span></span></code></pre></div><p>我们还需要更新我们的服务代码以适应 Google 授权服务器 (9.1) 的范围。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-10.webp" alt="img"></p>
+<p>图 9</p>
+<p>现在让我们测试一下我们的应用程序。让我们访问http://localhost:8081/private-data，它将带我们进入登录页面 (10.1)。从这里选择 Google 作为授权服务器 (10.2)。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-11.webp" alt="img"></p>
+<p>图 10</p>
+<p>我们将被重定向到 Google 帐户选择页面。由于我们仅允许 2 个帐户用于测试目的，因此我们将选择其中一个帐户 (11.1)。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-12.webp" alt="img"></p>
+<p>图 11</p>
+<p>现在，一旦我们选择了正确的帐户，谷歌就会将我们重定向到我们的授权客户端应用程序的重定向 URI，并且我们将能够看到我们的私人数据（图 12），因为这是对我们服务器的已保存请求。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-4-13.webp" alt="img"></p>
+<p>图 12</p>
+<p>感谢您的耐心阅读。源代码可以<a href="https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-third-party-auth-server/social-login-client" target="_blank">在这里</a>找到。</p>
+<p>在<a href="/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/">下一篇文章</a>中，我们将讨论用于增强安全性的 PKCE。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/" target="_blank" title="[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性">[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/30/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture/" target="_blank" title="[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架构">[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架构</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/30/til/" target="_blank" title="2024-01-30｜Mybatis plus和Jackson配置">2024-01-30｜Mybatis plus和Jackson配置</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/spring-security-interview-questions/" target="_blank" title="[译]Spring Security 面试问题">[译]Spring Security 面试问题</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/09/19/spring-security-jwt/" target="_blank" title="[译]如何使用Spring Security和JWT保护您的REST API">[译]如何使用Spring Security和JWT保护您的REST API</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/exception-handling-for-rest-with-spring/" target="_blank" title="[译]使用Spring进行REST的错误处理">[译]使用Spring进行REST的错误处理</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/05\/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#google-授权服务器中的客户端注册">Google 授权服务器中的客户端注册</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

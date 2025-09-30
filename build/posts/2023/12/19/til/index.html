@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/12/19/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描">
+  <meta itemprop="description" content="Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 spring-security-oauth2-legacy 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。">
+  <meta itemprop="datePublished" content="2023-12-19T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-12-19T00:00:00+00:00">
+  <meta itemprop="wordCount" content="328">
+  <meta itemprop="keywords" content="Diary">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2023-12-19｜Spring Security OAuth2配置JWT、Github Actions配置代码扫描</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-12-19">2023-12-19</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/diary/" rel="tag">Diary</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>Today I Learned. 今天分享内容：Spring Security OAuth2 配置JWT、Github Actions配置代码扫描，另外，修改了 <a href="https://github.com/chensoul/spring-security-oauth2-legacy" target="_blank">spring-security-oauth2-legacy</a> 仓库，支持授权认证中心的多种配置方式（jdbc、内存、redis、jwt）、资源中心的多种配置方式（jwt、jdbc、redis、remote、jwk-set-uri）。</p>
+<h2 id="spring-security-oauth2-配置jwt">Spring Security OAuth2 配置JWT</h2>
+<p>使用 Spring Security 实现OAuth2 配置 JWT 非对称加密时， JwtAccessTokenConverter 设置生成私钥签名和公钥验证器（可省略）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> JwtAccessTokenConverter <span style="color:#a6e22e">jwtAccessTokenConverter</span>() {
+</span></span><span style="display:flex;"><span>		JwtAccessTokenConverter converter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JwtAccessTokenConverter();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 设置私钥签名</span>
+</span></span><span style="display:flex;"><span>		converter.<span style="color:#a6e22e">setSigner</span>(<span style="color:#66d9ef">new</span> RsaSigner((RSAPrivateKey) <span style="color:#66d9ef">new</span> RSA(<span style="color:#e6db74">&#34;privateKey&#34;</span>, <span style="color:#66d9ef">null</span>).<span style="color:#a6e22e">getPrivateKey</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 设置公钥验证器，可省略</span>
+</span></span><span style="display:flex;"><span>		converter.<span style="color:#a6e22e">setVerifier</span>(<span style="color:#66d9ef">new</span> RsaVerifier((RSAPublicKey) <span style="color:#66d9ef">new</span> RSA(<span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#34;publicKey&#34;</span>).<span style="color:#a6e22e">getPublicKey</span>()));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> jwtAccessTokenConverter;
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>注意：这里使用了 Hutool 的 RSA 从字符串生成 PrivateKey 和 PublicKey</p>
+<p>去掉对 Hutool 的依赖，则可以使用自己实现的 RSAUtil 类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RSAUtil</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String ALGORITHM_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;RSA&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">@SneakyThrows</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> PrivateKey <span style="color:#a6e22e">getPrivateKeyFromString</span>(String privateKeyStr) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> privateKeyBytes <span style="color:#f92672">=</span> Base64.<span style="color:#a6e22e">getDecoder</span>().<span style="color:#a6e22e">decode</span>(privateKeyStr.<span style="color:#a6e22e">replaceAll</span>(<span style="color:#e6db74">&#34;\n&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>));
+</span></span><span style="display:flex;"><span>		PKCS8EncodedKeySpec keySpec <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> PKCS8EncodedKeySpec(privateKeyBytes);
+</span></span><span style="display:flex;"><span>		KeyFactory keyFactory <span style="color:#f92672">=</span> KeyFactory.<span style="color:#a6e22e">getInstance</span>(ALGORITHM_KEY);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> keyFactory.<span style="color:#a6e22e">generatePrivate</span>(keySpec);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">@SneakyThrows</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> PublicKey <span style="color:#a6e22e">getPublicKeyFromString</span>(String publicKeyStr) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> publicKeyBytes <span style="color:#f92672">=</span> Base64.<span style="color:#a6e22e">getDecoder</span>().<span style="color:#a6e22e">decode</span>(publicKeyStr.<span style="color:#a6e22e">replaceAll</span>(<span style="color:#e6db74">&#34;\n&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>));
+</span></span><span style="display:flex;"><span>		X509EncodedKeySpec keySpec <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> X509EncodedKeySpec(publicKeyBytes);
+</span></span><span style="display:flex;"><span>		KeyFactory keyFactory <span style="color:#f92672">=</span> KeyFactory.<span style="color:#a6e22e">getInstance</span>(ALGORITHM_KEY);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> keyFactory.<span style="color:#a6e22e">generatePublic</span>(keySpec);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后将上面代码修改为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> JwtAccessTokenConverter <span style="color:#a6e22e">jwtAccessTokenConverter</span>() {
+</span></span><span style="display:flex;"><span>		JwtAccessTokenConverter converter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JwtAccessTokenConverter();
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//非对称加密</span>
+</span></span><span style="display:flex;"><span>		String privateKey <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>		String publicKey <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		converter.<span style="color:#a6e22e">setSigner</span>(<span style="color:#66d9ef">new</span> RsaSigner((RSAPrivateKey) RSAUtil.<span style="color:#a6e22e">getPrivateKeyFromString</span>(privateKey)));
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 可省略公钥</span>
+</span></span><span style="display:flex;"><span>		converter.<span style="color:#a6e22e">setVerifier</span>(<span style="color:#66d9ef">new</span> RsaVerifier((RSAPublicKey) RSAUtil.<span style="color:#a6e22e">getPublicKeyFromString</span>(publicKey)));
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> converter;
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>在排查错误的过程中，查看 <code>converter.setSigningKey() </code>方法，<code>new RsaSigner(String sshKey)</code> 构造方法内调用了  <code>RsaKeyHelper</code> 的 <code>parseKeyPair</code> 方法，该方法需要传入的字符串是 &ldquo;&mdash;&ndash;BEGIN RSA PRIVATE KEY&rdquo; 开头</p>
+<p><img src="../../../static/images/daily-review-20231219-01.webp" alt="daily-review-20231219-01"></p>
+<p>而下面代码使用 keytool 生成 JKS 文件然后导出的私钥&quot;&mdash;&ndash;BEGIN PRIVATE KEY&quot; 开头。</p>
+<blockquote>
+<ul>
+<li>生成 JKS 文件</li>
+</ul>
+<pre tabindex="0"><code>keytool -genkeypair -alias myalias -storetype PKCS12 -keyalg RSA -keypass mypass -keystore mykeystore.jks -storepass mypass -validity 3650
+</code></pre><ul>
+<li>导出公钥</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 保存为 public.cer 文件：</span>
+</span></span><span style="display:flex;"><span>keytool -exportcert -alias myalias -storepass mypass -keystore mykeystore.jks -file public.cer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 保存为 public.key 文件</span>
+</span></span><span style="display:flex;"><span>keytool -list -rfc --keystore mykeystore.jks -storepass mypass | openssl x509 -inform pem -pubkey &gt; public.key
+</span></span></code></pre></div><ul>
+<li>导出私钥，将其保存为 private.key 文件：</li>
+</ul>
+<pre tabindex="0"><code>keytool -importkeystore -srckeystore mykeystore.jks -srcstorepass mypass -destkeystore private.p12 -deststoretype PKCS12 -deststorepass mypass -destkeypass mypass
+openssl pkcs12 -in private.p12 -nodes -nocerts -out private.key
+</code></pre></blockquote>
+<p>于是，找到一个 RSA 的仓库 <a href="https://github.com/xuxiaowei-com-cn/RSA" target="_blank">https://github.com/xuxiaowei-com-cn/RSA</a>，Fork 之后，对代码做了一些修改：</p>
+<ul>
+<li>修改代码包名为我的域名 com.chensoul，以便能够部署到 sonatype 仓库。</li>
+<li>去掉 Apache Common Codec 依赖</li>
+<li>修改 pom.xml 中仓库信息，去掉注释</li>
+</ul>
+<h2 id="github-actions配置代码扫描">Github Actions配置代码扫描</h2>
+<p>提交代码到仓库，发现 Github Actions 中有个 Workflow codeql-analysis.yml 没有执行，于是在仓库中启用 Action，并且修改 codeql-analysis.yml 中 github/codeql-action/autobuild 版本为 v2。于是，该 workflow 可以正常执行。</p>
+<p>参考 <a href="https://janelifelog.medium.com/github-actions-scan-code-41c82ec82140" target="_blank">Github Actions — Scan Code</a>，启用 Code scanning alerts ，发现有一个代码扫描警告：</p>
+<p><img src="../../../static/images/daily-review-20231219-02.webp" alt="daily-review-20231219-02"></p>
+<p>于是，参照上面说明，修改代码，再次提交代码，该警告自动关闭。</p>
+<p>干脆把 Dependabot alerts  也启用了，并中配置页面启用相关配置：</p>
+<p><img src="../../../static/images/daily-review-20231219-03.webp" alt="image-20231219120104154"></p>
+<p>点击  <a href="https://github.com/chensoul/RSA/edit/master/.github/dependabot.yml" target="_blank">.github/dependabot.yml</a> ，修改 package-ecosystem 值为 maven。因为当前仓库是 maven 构建，所以这里设置为 maven。</p>
+<p><img src="../../../static/images/daily-review-20231219-04.webp" alt="daily-review-20231219-04"></p>
+<p>保存并提交修改。机器人扫描出五个版本需要升级，并自动创建了五个 Pull Request。</p>
+<p><img src="../../../static/images/daily-review-20231219-05.webp" alt="image-20231219120339699"></p>
+<p>在仓库的 Security 页面，点击左侧的 Code scanning</p>
+<p><img src="../../../static/images/daily-review-20231219-06.webp" alt="daily-review-20231219-03"></p>
+<p>点击 Add tool，可以添加更多代码扫描工具，总共有 70 个 扫描工具可以选择，如：Semgrep、SonarQube、pmd 等等。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/14/designing-twitter/" target="_blank" title="[译]《Grokking the System Design Interview》设计Twitter">[译]《Grokking the System Design Interview》设计Twitter</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/13/til/" target="_blank" title="2023-12-13｜发布到Maven中央仓库的第一个项目">2023-12-13｜发布到Maven中央仓库的第一个项目</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-dropbox/" target="_blank" title="[译]《Grokking the System Design Interview》设计Dropbox">[译]《Grokking the System Design Interview》设计Dropbox</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-facebook-messenger/" target="_blank" title="[译]《Grokking the System Design Interview》设计Facebook Messenger">[译]《Grokking the System Design Interview》设计Facebook Messenger</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-instagram/" target="_blank" title="[译]《Grokking the System Design Interview》设计Instagram">[译]《Grokking the System Design Interview》设计Instagram</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/16/designing-a-url-shortening-service/" target="_blank" title="[译]《Grokking the System Design Interview》设计类似 TinyURL 的 URL 缩短服务">[译]《Grokking the System Design Interview》设计类似 TinyURL 的 URL 缩短服务</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/diary/" rel="tag">diary</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/12/18/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2023-12-18｜使用Spring Security实现OAuth2授权和认证</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/12/20/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/12\/19\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#spring-security-oauth2-配置jwt">Spring Security OAuth2 配置JWT</a></li>
+    <li><a href="#github-actions配置代码扫描">Github Actions配置代码扫描</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

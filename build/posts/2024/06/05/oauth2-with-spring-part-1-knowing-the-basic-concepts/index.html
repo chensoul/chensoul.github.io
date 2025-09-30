@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]OAuth2 with Spring 第1部分：了解基本概念 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]OAuth2 with Spring 第1部分：了解基本概念">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]OAuth2 with Spring 第1部分：了解基本概念">
+  <meta itemprop="description" content="原文地址：https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a
+在本系列关于 Spring 的 OAuth2的文章中，我将尝试介绍和解释与 OAuth2 相关的每一个问题以及如何在 Spring 框架中实现这些问题。请记住，OAuth2 完全是一个概念性的东西，在不同的框架中，它有自己的实现。此外，许多应用程序开发人员开发自己的 OAuth2 实现，而不使用 Spring 框架提供的 OAuth2 框架支持。因此，我将就这个主题撰写一系列文章。">
+  <meta itemprop="datePublished" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="103">
+  <meta itemprop="keywords" content="Java,Backend,Security,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]OAuth2 with Spring 第1部分：了解基本概念">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]OAuth2 with Spring 第1部分：了解基本概念</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-05">2024-06-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>原文地址：<a href="https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a" target="_blank">https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a</a></p>
+<p>在本系列<strong>关于 Spring 的 OAuth2</strong>的文章中，我将尝试介绍和解释与 OAuth2 相关的每一个问题以及如何在 Spring 框架中实现这些问题。请记住，OAuth2 完全是一个概念性的东西，在不同的框架中，它有自己的实现。此外，许多应用程序开发人员开发自己的 OAuth2 实现，而不使用 Spring 框架提供的 OAuth2 框架支持。因此，我将就这个主题撰写一系列文章。</p>
+<h2 id="什么是-oauth2-以及为什么">什么是 OAuth2 以及为什么？</h2>
+<p>根据<a href="https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth" target="_blank">Octa</a>的说法，OAuth2 是一种用于身份验证和授权的开放标准。它实际上不是一种服务，但它通过 TLS 提供基于令牌的安全性来保护服务。它使用令牌而不是凭据来授权设备、服务器、API 和应用程序。</p>
+<p>OAuth2 的主要目的是让用户能够从单个点或提供商访问多个应用程序，这些应用程序可以使用相同的身份验证和授权信息。这意味着，并不总是需要使用用户 ID 和密码登录。相反，用户将被重定向到拥有用户身份的授权服务器，用户只需单击一下即可允许其他应用程序使用其身份验证信息。一旦获得授权，用户就可以使用来自授权服务器的相同 ID。</p>
+<h2 id="oauth2-参与者和授权类型">OAuth2 参与者和授权类型</h2>
+<p><strong>a) 参与者</strong></p>
+<p>对于 OAuth2 架构，有 4 个参与者 -</p>
+<ul>
+<li><strong>资源所有者——在授权服务器</strong>中拥有自己的授权信息（通常是用户名、密码、角色等）的用户</li>
+<li><strong>客户端</strong>——客户端可以被视为<strong>资源所有者</strong>能够请求<strong>资源服务器中受保护资源的应用程序</strong></li>
+<li><strong>授权服务器——位于客户端</strong>和<strong>资源所有者</strong>中间，检查身份验证和授权的服务器</li>
+<li><strong>资源服务器——包含资源</strong> <strong>所有者</strong>想要访问的资源。</li>
+</ul>
+<p><strong>b) 授权类型</strong></p>
+<p>OAuth2 有几种授权类型来请求访问令牌。授权类型的唯一目的是生成访问令牌。授权类型包括：</p>
+<ul>
+<li><strong>授权码</strong>— 为了接收访问令牌，授权客户端向授权服务器发送请求以及先前从授权服务器收到的授权码。本系列的<a href="https://medium.com/@mainul35/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a" target="_blank">第 3 部分</a>专门介绍此授权码授予。</li>
+<li>**PKCE —**代码交换证明密钥 (PKCE) 是授权代码授予的扩展版本，旨在支持单页应用程序或移动应用程序，以防止 CSRF 或授权代码注入攻击。PKCE
+最初旨在保护移动应用程序中的授权代码流，但其防止授权代码注入的能力使其适用于每种类型的 OAuth 客户端，甚至是使用客户端身份验证的 Web 应用程序。本系列的<a href="https://medium.com/@mainul35/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769" target="_blank">第 5 部分</a>描述了此流程的代码示例。</li>
+<li><strong>客户端凭证</strong>— 在此流程中，客户端应用程序使用 client_id 和 client_secret 进行请求，授权类型为 client_credential。这通常发生在使用服务的第三方应用程序中。本系列的<a href="https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a" target="_blank">第 2 部分</a>专门介绍此客户端凭证。</li>
+<li><strong>刷新令牌授权</strong>— 此授权类型由客户端使用。当访问令牌过期时，存储在客户端内存中的刷新令牌将以授权类型 refresh_token 发送到授权服务器。服务器将返回一个新的 access_token。我们不会专门写一篇文章，因为它主要由应用程序内部处理。</li>
+</ul>
+<h2 id="了解接收访问令牌的工作流程">了解接收访问令牌的工作流程</h2>
+<p><img src="../../../static/images/oauth2-with-spring-part-1-01.webp" alt="img"></p>
+<p>OAuth 工作流</p>
+<ul>
+<li>为了请求资源服务器中的某些资源，资源所有者需要访问令牌</li>
+<li><strong>资源所有者</strong>打开一个应用程序（可能是<strong>授权服务器</strong>的<strong>客户端</strong>，在上图中<strong>为 BusinessClient</strong>）来请求<strong>资源服务器</strong>中的一些安全资源。</li>
+<li>当<strong>资源所有者</strong>请求没有任何令牌的资源时，他/她可以选择<strong>授权服务器</strong>。</li>
+<li>选择后，<strong>客户端</strong>将被重定向到<strong>授权服务器</strong>。<strong>授权服务器</strong>要求输入用户名和密码（以及<strong>grant_type</strong>）。</li>
+<li><strong>资源所有者</strong>提供所需信息并提交。如果信息真实，<strong>授权服务器</strong>将访问令牌（以及其他信息，可选）发送给客户<strong>端</strong>。</li>
+<li>客户端保存<strong>令牌</strong>并在内部创建对资源的请求，这是<strong>资源所有者</strong>在没有令牌时提出的。</li>
+<li>收到令牌后，资源服务器将其发送到<strong>授权服务器</strong>以验证令牌。</li>
+<li>如果<strong>授权服务器向</strong>资源服务器<strong>提供了肯定的响应，资源服务器将响应</strong>资源所有者请求的信息。</li>
+</ul>
+<p>这就是整个过程的工作原理。在我的<a href="/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/">下一篇文章</a>中，我将深入研究代码并演示使用内存客户端的 OAuth2 实现。</p>
+<h2 id="参考">参考：</h2>
+<ol>
+<li>OAuth2 授权类型 — <a href="https://oauth.net/2/grant-types/" target="_blank">https://oauth.net/2/grant-types/</a></li>
+<li>OAuth2 角色 - <a href="http://websystique.com/spring-security/secure-spring-rest-api-using-oauth2/" target="_blank">http://websystique.com/spring-security/secure-spring-rest-api-using-oauth2/</a></li>
+</ol>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/" target="_blank" title="[译]OAuth2 with Spring 第2部分：授权服务器入门">[译]OAuth2 with Spring 第2部分：授权服务器入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/" target="_blank" title="[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端">[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/" target="_blank" title="[译]没有WebSecurityConfigurerAdapter的Spring Security.md">[译]没有WebSecurityConfigurerAdapter的Spring Security.md</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-oauth2/" target="_blank" title="[译]Spring Security - OAuth2">[译]Spring Security - OAuth2</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2/" target="_blank" title="RFC6749 | OAuth2.0授权框架中文版">RFC6749 | OAuth2.0授权框架中文版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/" target="_blank" title="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]OAuth2 with Spring 第2部分：授权服务器入门</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/06/spring-boot-docker-image/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Spring Boot项目创建Docker镜像并运行应用</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/05\/oauth2-with-spring-part-1-knowing-the-basic-concepts\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-oauth2-以及为什么">什么是 OAuth2 以及为什么？</a></li>
+    <li><a href="#oauth2-参与者和授权类型">OAuth2 参与者和授权类型</a></li>
+    <li><a href="#了解接收访问令牌的工作流程">了解接收访问令牌的工作流程</a></li>
+    <li><a href="#参考">参考：</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

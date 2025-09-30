@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rabbitmq on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/rabbitmq/</link>
+    <description>Recent content in Rabbitmq on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 02 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ThingsBoard HTTP Transport 实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</link>
+      <pubDate>Wed, 02 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</guid>
+      <description>&lt;p&gt;本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP&#xA;自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Canal原理、安装和测试</title>
+      <link>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</guid>
+      <description>&lt;p&gt;Canal 是阿里巴巴开源的一款分布式增量数据同步工具，主要用于基于 MySQL 数据库的增量日志 Binlog 解析，提供增量数据的订阅和消费。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS介绍 – Java消息服务</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</guid>
+      <description>&lt;p&gt;JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。这是一个 JMS 介绍教程，为您提供消息传递和 JMS 的简要概述。您将了解使用 JMS 的优势以及 JMS 中的不同消息传递模型。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最好？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;将消息从一个组件获取到另一个组件是微服务架构中最重要的部分之一。每个服务必须能够与任何其他服务异步、可靠且大规模地通信。&lt;/p&gt;&#xA;&lt;p&gt;这就是消息代理的用武之地。消息代理（例如 Apache Kafka、RabbitMQ 和&lt;a href=&#34;https://ably.com/topic/aws-sns-vs-sqs&#34; target=&#34;_blank&#34;&gt;AWS SNS/SQS&lt;/a&gt;）为您提供一个通用接口和一组保证，而不是手动协调可能数千个微服务之间的通信。这简化了集成并更容易推理您的系统。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]HTTP 的演变 – HTTP2 深入探讨</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/http2/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/http2/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/http2&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/http2&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;可以毫不夸张地说，超文本传输协议 (HTTP) 造就了我们所熟知的互联网。 HTTP 最初是由万维网的发明者蒂姆·伯纳斯·李 (Tim Berners-Lee) 于 1989 年提出的应用程序协议。第一个记录版本 HTTP/0.9 被称为单行协议。鉴于它催生了万维网，它现在可以被描述为有史以来最伟大的俏皮话。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-05｜Spring Cloud Config快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/05/til/</link>
+      <pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;创建项目 &lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt;，测试 &lt;em&gt;Spring Cloud&lt;/em&gt; Config 使用本地文件和 git 仓库作为配置中心&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。&#xA;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 支持以下几种存储方式：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-16｜Redis安装</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/16/til/</link>
+      <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/16/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;1、&lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt; 添加分布式锁、rabbitmq、kafka、分库分表等示例代码&#xA;2、foodie-cloud 添加登录部分代码&#xA;3、整理 Redis 安装文档&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]《Grokking the System Design Interview》系统设计主模板</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/16/system-design-master-template/</link>
+      <pubDate>Thu, 16 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/16/system-design-master-template/</guid>
+      <description>&lt;p&gt;这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 &lt;a href=&#34;https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1&#34; target=&#34;_blank&#34;&gt;System Design Master Template&lt;/a&gt; 这篇章节。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Build Robust Continuous Integration With Docker and Friends</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/22/docker-continuous-integration/</link>
+      <pubDate>Mon, 22 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/22/docker-continuous-integration/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp&#34; alt=&#34;Build Robust Continuous Integration With Docker and Friends&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

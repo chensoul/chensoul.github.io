@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Git Flow分支模型和使用 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Git Flow分支模型和使用">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/05/11/git-flow-model-and-usage/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Git Flow分支模型和使用">
+  <meta itemprop="description" content="介绍 Git Flow 是由 Vincent Driessen 在 2010 年提出的一种 Git 工作流。在这之前，Git 没有一个明确的标准工作流，导致团队在使用 Git 时往往会遇到一些问题，如分支管理、版本控制等。为了解决这些问题，Vincent Driessen 提出了 Git Flow 分支模型，成为了 Git 在实际应用中的一种标准工作流。">
+  <meta itemprop="datePublished" content="2023-05-11T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-05-11T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1491">
+  <meta itemprop="keywords" content="Javascript,Tutorial,Maven,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Git Flow分支模型和使用">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Git Flow分支模型和使用</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-05-11">2023-05-11</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/devops/" rel="category">Devops</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/maven/" rel="tag">Maven</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="介绍">介绍</h2>
+<p><a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank">Git Flow</a> 是由 Vincent Driessen 在 2010 年提出的一种 Git 工作流。在这之前，Git 没有一个明确的标准工作流，导致团队在使用 Git 时往往会遇到一些问题，如分支管理、版本控制等。为了解决这些问题，Vincent Driessen 提出了 Git Flow 分支模型，成为了 Git 在实际应用中的一种标准工作流。</p>
+<p>随着时间的推移，Git Flow 也在不断发展和完善。在 2011 年，Atlassian 发布了 SourceTree，这是一款图形化的 Git 客户端，支持 Git Flow 分支模型。在 2013 年，Git Flow 的一些开发者发布了 Git Flow AVH Edition，这是 Git Flow 的一个增强版本，提供了更多的功能和选项。此外，Git Flow 还得到了其他开源工具和平台的支持，如 GitHub、GitLab 等。</p>
+<h2 id="git-flow-分支模型">Git Flow 分支模型</h2>
+<p>Git Flow 分支模型定义了一种标准的 Git 分支模型，它将代码分为两个长期分支（master 和 develop）和三个短期分支（feature、release 和 hotfix），使得团队可以更好地管理代码的版本和发布。</p>
+<p>以下是 Git Flow 分支模型的详细介绍：</p>
+<ol>
+<li>master 分支
+master 分支是代码库的主分支，它包含了所有已发布的代码和版本。所有代码都应该在该分支上进行测试和验证，以确保代码的质量和稳定性。<code>master分支只能通过合并release或hotfix分支来更新</code>。</li>
+<li>develop 分支
+develop 分支是代码库的开发分支，它包含了所有开发中的代码和功能。所有新的代码都应该在该分支上进行开发和测试，以确保代码的可靠性和稳定性。<code>develop分支只能通过合并feature分支来更新</code>。</li>
+<li>feature 分支
+feature 分支是为开发新的功能或修复 bug 而创建的临时分支。<code>每个feature分支都是从develop分支分离出来的，开发完成后会合并回develop分支</code>。feature 分支的命名应该清晰明确，以反映该分支所涉及的功能或问题。</li>
+<li>release 分支
+release 分支是为发布新版本而创建的临时分支。<code>每个release分支都是从develop分支分离出来的，发布完成后会合并回develop分支和master分支</code>。在 release 分支上可以进行一些小的修复和调整，以确保发布的代码的质量和稳定性。</li>
+<li>hotfix 分支
+hotfix 分支是为快速修复生产环境中的问题而创建的临时分支。每个 hotfix 分支都是从 master 分支分离出来的，修复完成后会合并回 develop 分支和 master 分支。<code>hotfix分支的优先级比其他分支更高，因为它们需要尽快修复生产环境中的问题。</code></li>
+</ol>
+<p><img src="../../../static/images/git-flow-model-and-usage-01.webp" alt="img"></p>
+<p>根据上面的理论，我们来实际操作一遍。首先，是 develop 分支创建一个 feature 分支。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git checkout -b feature-test develop
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#e6db74">&#34;feature-test&#34;</span>
+</span></span></code></pre></div><p>将 feature 分支的修改合并到 develop 分支，然后删除 feature 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git checkout develop
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#e6db74">&#39;develop&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff feature-test
+</span></span><span style="display:flex;"><span>Updating ea1b82a..05e9557
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>Summary of changes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git branch -d feature-test
+</span></span><span style="display:flex;"><span>Deleted branch feature-test <span style="color:#f92672">(</span>was 05e9557<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git push origin develop
+</span></span></code></pre></div><p>合并分支时，添加<code>--no-ff</code> 参数和不添加的区别：</p>
+<p><img src="../../../static/images/git-flow-model-and-usage-02.webp" alt="img"></p>
+<p>从 develop 分支创建一个 release 分支，并将版本号改为 1.2 ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git checkout -b release-1.2 develop
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#e6db74">&#34;release-1.2&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ./bump-version.sh 1.2
+</span></span><span style="display:flex;"><span>Files modified successfully, version bumped to 1.2.
+</span></span><span style="display:flex;"><span>$ git commit -a -m <span style="color:#e6db74">&#34;Bumped version number to 1.2&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>release-1.2 74d9424<span style="color:#f92672">]</span> Bumped version number to 1.2
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> files changed, <span style="color:#ae81ff">1</span> insertions<span style="color:#f92672">(</span>+<span style="color:#f92672">)</span>, <span style="color:#ae81ff">1</span> deletions<span style="color:#f92672">(</span>-<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>release 分支完成开发之后，将 release 分支合并到 master 分支，并创建一个标签：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git checkout master
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#e6db74">&#39;master&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff release-1.2
+</span></span><span style="display:flex;"><span>Merge made by recursive.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>Summary of changes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git tag -a 1.2
+</span></span></code></pre></div><p>将 release 分支合并到 develop 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git checkout develop
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#e6db74">&#39;develop&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff release-1.2
+</span></span><span style="display:flex;"><span>Merge made by recursive.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>Summary of changes<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>最后删除 release 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git branch -d release-1.2
+</span></span><span style="display:flex;"><span>Deleted branch release-1.2 <span style="color:#f92672">(</span>was ff452fe<span style="color:#f92672">)</span>.
+</span></span></code></pre></div><p>对于 hoftfix 分支，操作步骤和 release 分支类似，故不在赘述。</p>
+<h2 id="git-flow-工具">git-flow 工具</h2>
+<p>git-flow 工具可以简化上面的操作步骤，关于 git-flow 的介绍可以参考文章：<a href="https://jeffkreeftmeijer.com/git-flow/" target="_blank">Using git-flow to automate your git branching workflow</a>。</p>
+<p>macos 上安装 git-flow：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install git-flow
+</span></span></code></pre></div><p>git-flow 首先需要初始化，如果不存在 develop 分支，则会新建一个 develop 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow init
+</span></span><span style="display:flex;"><span>No branches exist yet. Base branches must be created now.
+</span></span><span style="display:flex;"><span>Branch name <span style="color:#66d9ef">for</span> production releases: <span style="color:#f92672">[</span>master<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Branch name <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;next release&#34;</span> development: <span style="color:#f92672">[</span>develop<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>How to name your supporting branch prefixes?
+</span></span><span style="display:flex;"><span>Feature branches? <span style="color:#f92672">[</span>feature-<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Release branches? <span style="color:#f92672">[</span>release-<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Hotfix branches? <span style="color:#f92672">[</span>hotfix/<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Support branches? <span style="color:#f92672">[</span>support/<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Version tag prefix? <span style="color:#f92672">[]</span>
+</span></span></code></pre></div><h3 id="feature-分支">feature 分支</h3>
+<p>开发一个新功能，创建一个新分支 foo</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">git</span> <span style="color:#a6e22e">flow</span> <span style="color:#a6e22e">feature</span> <span style="color:#a6e22e">start</span> <span style="color:#a6e22e">foo</span>
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#切换到develop分支,确保新的 feature 分支是基于最新的 develop 分支创建的。</span>
+</span></span><span style="display:flex;"><span>$ git checkout -b feature-foo develop
+</span></span></code></pre></div><p>取消正在进行中的功能分支，并且会将分支删除</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow feature delete foo
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git branch -D feature-foo
+</span></span></code></pre></div><p>foo 功能自测通过后，合并到 develop</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow feature finish foo
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/切换到 develop 分支
+</span></span><span style="display:flex;"><span>$ git checkout develop
+</span></span><span style="display:flex;"><span>/将 feature-foo 分支中的更改合并到 develop 分支。 --no-ff 参数将保留 foo 分支的commit记录。
+</span></span><span style="display:flex;"><span>$ git merge --no-ff feature-foo
+</span></span><span style="display:flex;"><span>/删除已完成的分支
+</span></span><span style="display:flex;"><span>$ git branch -d feature-foo
+</span></span></code></pre></div><h3 id="release-分支">release 分支</h3>
+<p>当所有新的功能和必要的修复已经被彻底的测试过了，那就开始生成一个新的 release , 在此之后不能添加新功能，只有错误修复、文档生成和其他面向发布的任务应该在该分支中进行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1.0.0 是版本号</span>
+</span></span><span style="display:flex;"><span>$ git flow release start 1.0.0
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 从 develop 分支 创建release分支</span>
+</span></span><span style="display:flex;"><span>$ git checkout -b release-1.0.0 develop
+</span></span></code></pre></div><p>取消正在进行中的发布分支，并且会将分支删除。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow release delete 1.0.0
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git branch -D release-1.0.0
+</span></span></code></pre></div><p>添加完发布文档之后，完成 release</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow release finish 1.0.0
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#切换到 develop 分支。</span>
+</span></span><span style="display:flex;"><span>$ git checkout develop
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将 release-1.0.0 分支合并到 develop 分支，--no-ff 选项以保留 feature 分支的 commit 记录</span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff release-1.0.0
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#创建一个名为 1.0.0 的标签</span>
+</span></span><span style="display:flex;"><span>$ git tag -a 1.0.0 -m <span style="color:#e6db74">&#34;Release 1.0.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#切换到 master 分支。</span>
+</span></span><span style="display:flex;"><span>$ git checkout master
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将 release-1.0.0 分支合并到 master 分支，--no-ff 选项以保留 feature 分支的 commit 记录</span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff release-1.0.0
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除 release-1.0.0 分支。</span>
+</span></span><span style="display:flex;"><span>$ git branch -d release-1.0.0
+</span></span></code></pre></div><h3 id="hotfixes-分支">Hotfixes 分支</h3>
+<p>线上发生问题的时候，先回滚到之前的稳定版本，稳定局势
+然后创建热修复分支开始改 BUG</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow hotfix start 1.0.1
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#从master分支 创建一个hotfix/1.0.1分支</span>
+</span></span><span style="display:flex;"><span>$ git checkout -b hotfix/1.0.1 foo master
+</span></span></code></pre></div><p>紧急修复完毕</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git flow hotfix finish 1.0.1
+</span></span></code></pre></div><p>等价于</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#切换 master 分支</span>
+</span></span><span style="display:flex;"><span>$ git checkout master
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#合并热修复分支到master,--no-ff 选项以保留 feature 分支的 commit 记录</span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff hotfix/ohno
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#创建一个名为 1.0.1 的标签</span>
+</span></span><span style="display:flex;"><span>$ git tag 1.0.1
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#切换到 develop 分支</span>
+</span></span><span style="display:flex;"><span>$ git checkout develop
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#合并热修复分支到 develop ,--no-ff 选项以保留 feature 分支的 commit 记录</span>
+</span></span><span style="display:flex;"><span>$ git merge --no-ff hotfix/1.0.1
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除热修复分支</span>
+</span></span><span style="display:flex;"><span>$ git branch -d hotfix/1.0.1
+</span></span></code></pre></div><h2 id="git-flow-avh-edition">git-flow (AVH Edition)</h2>
+<p>Git-flow (AVH Edition)是 Git Flow 的一个增强版本，由一些 Git Flow 的开发者开发和维护。Git-flow (AVH Edition)在保留 Git Flow 基本思想的前提下，增加了一些新的功能和选项，使得 Git Flow 更加灵活和适用于不同的团队和项目。</p>
+<p>Git-flow (AVH Edition)的主要增强功能包括：</p>
+<ol>
+<li>支持 git-flow init 命令，可以在一个新的 Git 仓库中快速初始化 Git Flow。</li>
+<li>支持 git flow feature pull 命令，可以拉取其他团队成员的 feature 分支。</li>
+<li>支持 git flow feature publish 命令，可以将 feature 分支发布到远程仓库。</li>
+<li>支持 git flow hotfix finish 命令，可以在修复生产环境问题时自动合并到 develop 分支和 master 分支并发布新版本。</li>
+<li>支持 git flow support 分支，可以为旧版本提供长期支持。</li>
+<li>允许使用 Hooks and Filters 来扩展和自定义 Git Flow 的行为。</li>
+</ol>
+<p>除了以上功能之外，Git-flow (AVH Edition)还提供了更多的选项和配置，使得团队可以根据不同的需求和情况来自定义 Git Flow 的分支模型和工作流程。</p>
+<h3 id="初始化">初始化</h3>
+<p>使用下面命令初始化 git fow，<code>-d</code> 是可选参数，表示使用默认参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow init <span style="color:#f92672">[</span>-d<span style="color:#f92672">]</span>
+</span></span></code></pre></div><h3 id="创建-featurereleasehotfixsupport-分支">创建 feature/release/hotfix/support 分支</h3>
+<p>查看、开始、完成、删除 feature 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow feature
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &lt;base&gt; 参数必须是分支名称，缺失时，默认为 develop 分支</span>
+</span></span><span style="display:flex;"><span>git flow feature start &lt;name&gt; <span style="color:#f92672">[</span>&lt;base&gt;<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git flow feature finish &lt;name&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git flow feature delete &lt;name&gt;
+</span></span></code></pre></div><p>发布或者跟踪 feature 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#如果当前在 feature/name 分支，则可以省略 &lt;name&gt; 参数</span>
+</span></span><span style="display:flex;"><span>git flow feature publish &lt;name&gt;
+</span></span><span style="display:flex;"><span>git flow feature track &lt;name&gt;
+</span></span></code></pre></div><p>当 feature 分支发布之后，其他人可以拉取该分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git pull
+</span></span><span style="display:flex;"><span>git checkout feature/&lt;name&gt;
+</span></span></code></pre></div><p>类似地，查看、开始、完成、删除 release 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow release
+</span></span><span style="display:flex;"><span>git flow release start &lt;name&gt; <span style="color:#f92672">[</span>&lt;base&gt;<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>git flow release finish &lt;name&gt;
+</span></span><span style="display:flex;"><span>git flow release delete &lt;name&gt;
+</span></span></code></pre></div><p>类似地，查看、开始、完成、删除 hotfix 分支：</p>
+<pre tabindex="0"><code>git flow hotfix
+git flow hotfix start &lt;name&gt; [&lt;base&gt;]
+git flow hotfix finish &lt;name&gt;
+git flow hotfix delete &lt;name&gt;
+</code></pre><p>查看、开始 support 分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow support
+</span></span><span style="display:flex;"><span>git flow support start &lt;name&gt; &lt;base&gt;
+</span></span></code></pre></div><h3 id="hooks-和-filters">Hooks 和 Filters</h3>
+<p>Git-flow (AVH Edition)允许使用 Hooks and Filters 来扩展和自定义 Git Flow 的行为。Hooks 和 Filters 是 Git Flow 中的两个关键概念，它们可以在 Git Flow 的不同阶段执行自定义脚本或命令，从而实现 Git Flow 的高度定制化。</p>
+<p>Hooks 是一些脚本或命令，它们会在 Git Flow 的不同阶段被调用。Git Flow (AVH Edition)支持以下 Hooks：</p>
+<ol>
+<li>git-flow-init: 该 Hook 会在 git-flow init 命令执行时被调用。</li>
+<li>git-flow-feature-start: 该 Hook 会在创建新的 feature 分支时被调用。</li>
+<li>git-flow-feature-finish: 该 Hook 会在完成 feature 分支时被调用。</li>
+<li>git-flow-release-start: 该 Hook 会在创建新的 release 分支时被调用。</li>
+<li>git-flow-release-finish: 该 Hook 会在完成 release 分支时被调用。</li>
+<li>git-flow-hotfix-start: 该 Hook 会在创建新的 hotfix 分支时被调用。</li>
+<li>git-flow-hotfix-finish: 该 Hook 会在完成 hotfix 分支时被调用。</li>
+</ol>
+<p>Filters 是一些命令或参数，它们会在 Git Flow 的不同阶段被过滤或修改。Git Flow (AVH Edition)支持以下 Filters：</p>
+<ol>
+<li>git-flow-feature-start-message: 可以用于修改 feature 分支创建时的提交信息。</li>
+<li>git-flow-feature-finish-message: 可以用于修改 feature 分支完成时的提交信息。</li>
+<li>git-flow-release-start-message: 可以用于修改 release 分支创建时的提交信息。</li>
+<li>git-flow-release-finish-message: 可以用于修改 release 分支完成时的提交信息。</li>
+<li>git-flow-hotfix-start-message: 可以用于修改 hotfix 分支创建时的提交信息。</li>
+<li>git-flow-hotfix-finish-message: 可以用于修改 hotfix 分支完成时的提交信息。</li>
+</ol>
+<p>下面是一些使用 Hooks 和 Filters 的例子：</p>
+<ol>
+<li>使用 git-flow-init Hook</li>
+</ol>
+<p>如果需要在执行 git-flow init 命令时执行一些自定义脚本，可以使用 git-flow-init Hook。假设我们想在 git-flow init 命令执行时输出一些信息，可以在<code>.git/hooks/git-flow-init</code>文件中添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Executing git-flow-init Hook&#34;</span>
+</span></span></code></pre></div><ol start="2">
+<li>使用 git-flow-feature-start Hook</li>
+</ol>
+<p>如果需要在创建新的 feature 分支时执行一些自定义脚本，可以使用 git-flow-feature-start Hook。假设我们想在创建新的 feature 分支时自动为该分支设置一些默认值，可以在<code>.git/hooks/git-flow-feature-start</code>文件中添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set default values for feature branch</span>
+</span></span><span style="display:flex;"><span>git config branch.$GIT_BRANCH_NAME.some_config_value <span style="color:#e6db74">&#34;default_value&#34;</span>
+</span></span></code></pre></div><ol start="3">
+<li>使用 git-flow-feature-finish-message Filter</li>
+</ol>
+<p>如果需要修改 feature 分支完成时的提交信息，可以使用 git-flow-feature-finish-message Filter。假设我们想在 feature 分支完成时强制要求填写提交信息，可以在<code>.git/config</code>文件中添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">gitflow</span> <span style="color:#e6db74">&#34;feature&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">finishmessage</span> = <span style="color:#a6e22e">Please</span> <span style="color:#a6e22e">provide</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">meaningful</span> <span style="color:#a6e22e">commit</span> <span style="color:#a6e22e">message</span> <span style="color:#a6e22e">for</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">feature</span> <span style="color:#a6e22e">branch</span>
+</span></span></code></pre></div><ol start="4">
+<li>使用 git-flow-hotfix-start Hook</li>
+</ol>
+<p>如果需要在创建新的 hotfix 分支时执行一些自定义脚本，可以使用 git-flow-hotfix-start Hook。假设我们想在创建新的 hotfix 分支时自动为该分支设置一些默认值，可以在<code>.git/hooks/git-flow-hotfix-start</code>文件中添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set default values for hotfix branch</span>
+</span></span><span style="display:flex;"><span>git config branch.$GIT_BRANCH_NAME.some_config_value <span style="color:#e6db74">&#34;default_value&#34;</span>
+</span></span></code></pre></div><ol start="5">
+<li>使用 git-flow-hotfix-finish Hook</li>
+</ol>
+<p>在<code>.git/hooks/git-flow-hotfix-finish</code>文件中添加以下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update version number in package.json</span>
+</span></span><span style="display:flex;"><span>VERSION<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>cat package.json | jq -r <span style="color:#e6db74">&#39;.version&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>NEW_VERSION<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo $VERSION | awk -F. <span style="color:#e6db74">&#39;{$NF++;print}&#39;</span> | sed <span style="color:#e6db74">&#39;s/ /./g&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#e6db74">&#34;s/\&#34;version\&#34;: \&#34;</span>$VERSION<span style="color:#e6db74">\&#34;/\&#34;version\&#34;: \&#34;</span>$NEW_VERSION<span style="color:#e6db74">\&#34;/g&#34;</span> package.json
+</span></span></code></pre></div><blockquote>
+<p>该脚本用于修改前端项目中的版本号。</p></blockquote>
+<h2 id="github-flow-模型">GitHub Flow 模型</h2>
+<p>GitHub Flow 是一种基于 GitHub 的分支模型和代码开发工作流程，它是一个简单而灵活的模型，在敏捷开发和持续交付方面具有很高的效率。相比于 Git Flow，GitHub Flow 更加适合团队和开发者进行快速迭代和快速上线。</p>
+<p>GitHub Flow 的分支模型非常简单：只有一个主分支（通常是 master 分支）和多个特性分支。主分支始终处于稳定状态并用于生产环境。每个特性分支用于开发新功能或修复 bug，并在开发人员完成相应的开发和测试工作后合并到主分支中。</p>
+<p><img src="../../../static/images/git-flow-model-and-usage-03.webp" alt="github flow"></p>
+<p>GitHub Flow 遵循以下 6 条原则：</p>
+<ol>
+<li><code>master</code> 分支永远是随时可部署发布的</li>
+<li>需求新增基于 <code>master</code> 分支，并创建一个语义化分支</li>
+<li>定期推送本地分支到远端</li>
+<li>合并到 <code>master</code> 需要提 <code>PR</code></li>
+<li><code>PR</code> 一旦经过 <code>code review</code> 无误后即可合并到 <code>master</code></li>
+<li><code>master</code> 一旦接收到合并请求，即可立即部署发布</li>
+</ol>
+<p><img src="../../../static/images/git-flow-model-and-usage-04.webp" alt="github-flow-whole"></p>
+<p>GitHub Flow 的代码开发工作流程如下：</p>
+<ol>
+<li>创建特性分支：从主分支中创建一个新的特性分支，用于开发新功能或修复 bug。</li>
+<li>开发和测试：在特性分支上进行开发和测试，确保代码符合质量标准，并通过自动化测试。</li>
+<li>发起合并请求：将特性分支合并到主分支中，发起一个合并请求（pull request），并邀请其他开发者进行代码审查和讨论。</li>
+<li>代码审查：其他开发者对代码进行审查和讨论，提出意见和建议，并确保代码符合质量标准和最佳实践。</li>
+<li>合并代码：在经过审查和讨论后，将特性分支合并到主分支中，并将代码部署到生产环境。</li>
+<li>部署代码：在合并到主分支后，使用自动化部署工具将代码部署到生产环境。</li>
+</ol>
+<h2 id="gitlab-flow-模型">Gitlab flow 模型</h2>
+<p>GitLab Flow 是一个基于 GitLab 的分支模型和开发工作流程，旨在支持敏捷开发和持续交付。</p>
+<p><code>GitLab</code> 在 2014 年提出 <code>11</code> 条最佳实践，更多请点击<a href="https://about.gitlab.com/topics/version-control/what-are-gitlab-flow-best-practices/" target="_blank">这里</a>，其相对 <code>GitHub</code> 增加了环境分支，且代码必须由<code>上游</code>（<code>master</code>）向<code>下游</code>（<code>staging</code>）发展，并且针对持续发布和版本发布都提出了相应的准则，下面是其大致流程图：</p>
+<p><img src="../../../static/images/git-flow-model-and-usage-05.webp" alt="img"></p>
+<p>GitLab Flow 的主要特点包括：</p>
+<ol>
+<li>简单的分支模型：GitLab Flow 使用一个简单的分支模型，包括一个主分支（通常命名为“master”或“production”）和一个开发分支（通常命名为“develop”或“staging”）。特性分支从开发分支创建，并在特性或错误修复完成并通过测试后合并回开发分支中。</li>
+<li>持续集成和交付：GitLab Flow 强调持续集成和交付（CI/CD），这意味着每次对代码的更改都会自动构建、测试和部署到测试环境或生产环境（如果测试通过）。</li>
+<li>代码审查：GitLab Flow 鼓励进行代码审查，这意味着每次对代码的更改都会由至少一个其他开发人员进行审查，以确保其符合质量标准并不会引入任何安全漏洞。</li>
+<li>合并请求：GitLab Flow 使用合并请求来管理将代码更改合并到主分支的过程。合并请求允许开发人员在将更改合并到主分支之前对其进行审查和讨论。</li>
+<li>环境管理：GitLab Flow 提供高级的环境管理功能，允许团队创建和管理不同的开发、测试、暂存和生产环境。</li>
+</ol>
+<blockquote>
+<p>GitLab Flow 提供了高级的环境管理功能，可以帮助团队更好地管理不同的开发、测试、暂存和生产环境。以下是使用 GitLab Flow 进行环境管理的一些方法：</p>
+<ol>
+<li>创建不同的环境分支：在 GitLab Flow 中，可以为不同的环境创建分支。例如，可以创建一个名为“develop”的开发分支，一个名为“staging”的暂存分支，和一个名为“production”的生产分支。这些分支可以帮助团队更好地管理不同环境的代码，确保每个环境都有自己的代码版本。</li>
+<li>配置环境变量：在 GitLab 中，可以为每个环境设置不同的环境变量。这些环境变量可以用于配置不同环境中的应用程序和服务，例如数据库连接字符串、API 密钥等。通过设置正确的环境变量，可以确保应用程序在不同环境中正确运行。</li>
+<li>自动化部署和测试：GitLab Flow 支持自动化部署和测试，可以帮助团队更快地部署代码到不同环境中。可以使用 GitLab 的 CI/CD 管道来自动化测试和部署过程，并将代码推送到正确的环境分支中。</li>
+<li>环境监控和报告：GitLab Flow 还支持环境监控和报告功能，可以帮助团队更好地了解不同环境的运行状况和性能。可以使用 GitLab 的监控和报告工具来监视不同环境的性能指标、错误率等，并及时发现和解决问题。</li>
+</ol></blockquote>
+<p>GitLab Flow 的分支模型如下：</p>
+<ol>
+<li>主分支：主分支始终处于稳定状态，并用于生产环境。在 GitLab Flow 中，主分支通常是 master 分支或 production 分支。</li>
+<li>特性分支：特性分支用于开发新功能或修复 bug，并从主分支中创建。在 GitLab Flow 中，特性分支通常以 feature/或 fix/为前缀。</li>
+<li>集成分支：集成分支用于将特性分支集成到主分支中，并进行测试和部署。在 GitLab Flow 中，集成分支通常是 develop 分支或 staging 分支。</li>
+<li>发布分支：发布分支用于将特性分支和集成分支的代码发布到生产环境中。在 GitLab Flow 中，发布分支通常是 release/为前缀的分支。</li>
+</ol>
+<p>GitLab Flow 的开发工作流程如下：</p>
+<ol>
+<li>创建特性分支：从主分支中创建一个新的特性分支，用于开发新功能或修复 bug。</li>
+<li>开发和测试：在特性分支上进行开发和测试，确保代码符合质量标准，并通过自动化测试。</li>
+<li>合并到集成分支：将特性分支合并到集成分支中，并进行集成测试和自动化部署。</li>
+<li>发布到生产环境：将集成分支的代码发布到生产环境中，并进行最终测试和部署。</li>
+<li>合并到主分支：在发布到生产环境后，将集成分支合并到主分支中，并将代码部署到生产环境。</li>
+</ol>
+<p>GitLab Flow 强调 CI/CD 集成和测试自动化，以确保代码质量和快速迭代。它还支持自动化部署和环境管理，以帮助开发人员更轻松地管理不同环境和部署代码。GitLab Flow 是一个灵活和强大的开发工作流程，适用于各种类型的项目和团队。</p>
+<h2 id="gitlab-flowgit-flow-和-github-flow">GitLab Flow、Git Flow 和 GitHub Flow</h2>
+<p>GitLab Flow、Git Flow 和 GitHub Flow 都是三种常见的基于 Git 的工作流程。下面是 GitLab Flow 与其他工作流程的主要区别：</p>
+<ol>
+<li>GitLab Flow 与 Git Flow 的比较：</li>
+</ol>
+<ul>
+<li>
+<p>GitLab Flow 比 Git Flow 更简单和更灵活。Git Flow 有一个更复杂的分支模型，包含多个长期存在的分支，而 GitLab Flow 只使用几个主要分支和特性分支。</p>
+</li>
+<li>
+<p>GitLab Flow 强调持续集成和持续部署（CI/CD），鼓励频繁合并到主要分支。Git Flow 更注重版本控制和发布管理。</p>
+</li>
+<li>
+<p>GitLab Flow 与 GitLab 内置的 CI/CD 管道更紧密地集成在一起，更容易自动化开发工作流程。</p>
+</li>
+</ul>
+<ol start="2">
+<li>GitLab Flow 与 GitHub Flow 的比较：</li>
+</ol>
+<ul>
+<li>GitLab Flow 和 GitHub Flow 有许多相似之处，例如它们都以 GitHub 或 GitLab 作为中央仓库，使用特性分支进行开发。</li>
+<li>GitLab Flow 强调 CI/CD 集成和测试自动化，而 GitHub Flow 更注重代码审查和协作。</li>
+<li>GitLab Flow 还提供更高级的环境管理、部署和监控功能，更适合于大型、复杂的项目。</li>
+</ul>
+<p>总体而言，GitLab Flow 比 Git Flow 更简单和更灵活，强调 CI/CD 集成和自动化。与 GitHub Flow 相比，GitLab Flow 提供更高级的环境管理和部署功能，更适合于大型、复杂的项目。选择哪种工作流程最终取决于项目和开发团队的具体需求和要求。</p>
+<h2 id="其他-flow">其他 flow</h2>
+<ul>
+<li>TrunkBased</li>
+<li>OneFlow</li>
+<li>AoneFlow</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>目前公司代码部署在自建的 gitlab 上面，对于公司的项目，个人倾向于使用 git-flow 分支模型，并且使用 git-flow (AVH Edition) 来简化操作。</p>
+<p>目前，我参与的大多数项目都是 java 项目并且使用 maven 进行构建。</p>
+<p>在 Maven 项目中，可以使用 Maven 版本控制器来区分 release 版本和 snapshot 版本。</p>
+<ul>
+<li>
+<p><strong>Release 版本</strong></p>
+<p>对于 Git Flow 中的 release 分支，通常用于为生产环境准备代码。</p>
+<p>在 Maven 项目中，可以使用 Maven Release 插件来自动化创建和发布 release 版本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn release:prepare
+</span></span><span style="display:flex;"><span>mvn release:perform
+</span></span></code></pre></div><p>使用这些命令，Maven Release 插件会自动更新项目版本号、创建 tag、构建 release 版本，并发布到 Maven 仓库中。发布的版本号不包含 <code>-SNAPSHOT</code> 后缀。</p>
+<p>或者，使用 <code>mvn versions</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn versions:set -DnewVersion<span style="color:#f92672">=</span>1.0.0-SNAPSHOT
+</span></span><span style="display:flex;"><span>mvn versions:commit
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Snapshot 版本</strong></p>
+<p>对于 Git Flow 中的 feature 和 develop 分支，通常用于开发和测试新功能或 bug 修复，这些分支使用 snapshot 版本。在 Maven 中，snapshot 版本的版本号包含 <code>-SNAPSHOT</code> 后缀，表示当前版本是正在开发的版本。</p>
+</li>
+</ul>
+<p>对于这些项目，git-flow 操作步骤如下：</p>
+<p>1、初始化</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow init -d
+</span></span></code></pre></div><p>2、开始 feature 分支</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow feature start test
+</span></span></code></pre></div><p>设置 maven 项目中版本为 snapshot 版本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn versions:set -DnewVersion<span style="color:#f92672">=</span>1.0.0-SNAPSHOT
+</span></span><span style="display:flex;"><span>mvn versions:commit
+</span></span></code></pre></div><p>对于 maven 多模块项目，如果使用 revision 来统一定义版本号，则使用下面命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn versions:set-property -Dproperty<span style="color:#f92672">=</span>revision -DnewVersion<span style="color:#f92672">=</span>1.0.0-SNAPSHOT
+</span></span><span style="display:flex;"><span>mvn versions:commit
+</span></span></code></pre></div><p>3、本地在 feature 分支上完成一些开发之后，完成 feature 分支</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow feature finish test
+</span></span></code></pre></div><p>4、开始 release 分支</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow release start 1.0.0
+</span></span></code></pre></div><p>5、本地在 release 分支上完成一些开发之后，完成 feature 分支</p>
+<p>设置 maven 项目中版本为 release 版本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn versions:set -DnewVersion<span style="color:#f92672">=</span>1.0.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mvn versions:commit
+</span></span></code></pre></div><p>对于 maven 多模块项目，如果使用 revision 来统一定义版本号，则使用下面命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn versions:set-property -Dproperty<span style="color:#f92672">=</span>revision -DnewVersion<span style="color:#f92672">=</span>1.0.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mvn versions:commit
+</span></span></code></pre></div><p>另外，对于多模块项目，需要在每个模块执行下面命令将 jar 推送到 maven 中央仓库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn deploy -DskipTests
+</span></span></code></pre></div><p>然后完成分支：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git flow release finish 1.0.0
+</span></span></code></pre></div><p>6、推送主分支和开发分支</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git push origin develop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git checkout main
+</span></span><span style="display:flex;"><span>git push origin main
+</span></span></code></pre></div><p>以上。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2022/08/19/using-images-in-blog/" target="_blank" title="博客中如何使用图床服务">博客中如何使用图床服务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/09/python-package-and-env-management/" target="_blank" title="Python包和环境管理">Python包和环境管理</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/09/python-install-build-publish-run/" target="_blank" title="Python安装、构建、发布、下载和运行">Python安装、构建、发布、下载和运行</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2021/09/09/mac-development-environment-setup/" target="_blank" title="Mac开发环境配置">Mac开发环境配置</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/maven/" rel="tag">maven</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/05/10/weekly_review_18/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 周报-18｜导出豆瓣数据、Effective Java 3第二章总结</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/05/18/weekly_review_19/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 周报-19｜武功山看日出、Python初学建议</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/05\/11\/git-flow-model-and-usage\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#git-flow-分支模型">Git Flow 分支模型</a></li>
+    <li><a href="#git-flow-工具">git-flow 工具</a>
+      <ul>
+        <li><a href="#feature-分支">feature 分支</a></li>
+        <li><a href="#release-分支">release 分支</a></li>
+        <li><a href="#hotfixes-分支">Hotfixes 分支</a></li>
+      </ul>
+    </li>
+    <li><a href="#git-flow-avh-edition">git-flow (AVH Edition)</a>
+      <ul>
+        <li><a href="#初始化">初始化</a></li>
+        <li><a href="#创建-featurereleasehotfixsupport-分支">创建 feature/release/hotfix/support 分支</a></li>
+        <li><a href="#hooks-和-filters">Hooks 和 Filters</a></li>
+      </ul>
+    </li>
+    <li><a href="#github-flow-模型">GitHub Flow 模型</a></li>
+    <li><a href="#gitlab-flow-模型">Gitlab flow 模型</a></li>
+    <li><a href="#gitlab-flowgit-flow-和-github-flow">GitLab Flow、Git Flow 和 GitHub Flow</a></li>
+    <li><a href="#其他-flow">其他 flow</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

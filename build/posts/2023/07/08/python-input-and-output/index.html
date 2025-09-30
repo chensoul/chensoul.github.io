@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Python学习7：输入和输出 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Python学习7：输入和输出">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/08/python-input-and-output/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Python学习7：输入和输出">
+  <meta itemprop="description" content="在 Python 中，可以使用 input() 函数从标准输入读取用户输入的数据，并使用 print() 函数将数据输出到标准输出。下面是一些常用的输入输出方法：">
+  <meta itemprop="datePublished" content="2023-07-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="942">
+  <meta itemprop="keywords" content="Javascript,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Python学习7：输入和输出">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Python学习7：输入和输出</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-08">2023-07-08</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/python/" rel="category">Python</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>在 Python 中，可以使用 input() 函数从标准输入读取用户输入的数据，并使用 print() 函数将数据输出到标准输出。下面是一些常用的输入输出方法：</p>
+<p>1、使用 input() 函数读取用户输入</p>
+<p>input() 函数会从标准输入读取用户输入的数据，并返回一个字符串类型的值。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>name <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;What&#39;s your name? &#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Hello, &#34;</span> <span style="color:#f92672">+</span> name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;!&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 input() 函数读取用户输入的姓名，并使用 print() 函数输出问候语。</p>
+<p>2、使用 print() 函数输出字符串</p>
+<p>print() 函数可以将字符串输出到标准输出。可以使用加号（+）将多个字符串连接起来，并使用逗号（,）将多个参数输出到同一行。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Hello, World!&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;The answer is&#34;</span>, <span style="color:#ae81ff">42</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 print() 函数输出了两个字符串，第二个字符串包含了一个数字。</p>
+<p>3、使用格式化字符串输出数据</p>
+<p>可以使用格式化字符串将变量的值插入到字符串中。可以使用花括号（{}）表示变量的位置，并使用 format() 方法将变量的值插入到花括号中。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Alice&#34;</span>
+</span></span><span style="display:flex;"><span>age <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;My name is </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> and I&#39;m </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> years old.&#34;</span><span style="color:#f92672">.</span>format(name, age))
+</span></span></code></pre></div><p>在上面的例子中，使用 format() 方法将变量 name 和 age 的值插入到字符串中。</p>
+<p>4、使用 f-字符串输出数据</p>
+<p>在 Python 3.6 及以后的版本中，可以使用 f-字符串来格式化字符串。f-字符串是一种特殊的字符串，以字母 f 或 F 开头，并以花括号表示变量的位置。在花括号中可以直接使用变量名，也可以使用表达式计算变量的值。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Bob&#34;</span>
+</span></span><span style="display:flex;"><span>age <span style="color:#f92672">=</span> <span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;My name is </span><span style="color:#e6db74">{</span>name<span style="color:#f92672">.</span>upper()<span style="color:#e6db74">}</span><span style="color:#e6db74"> and I&#39;m </span><span style="color:#e6db74">{</span>age <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> years old.&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 f-字符串将变量 name 的值转换为大写字母，并将变量 age 的值乘以 2。</p>
+<p>5、使用文件读写数据</p>
+<p>Python 提供了多种方式读写文件，可以使用 open() 函数打开文件，并使用 read()、write() 和 close() 方法读写文件。例如：</p>
+<p>livecodeserver</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 读取文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;input.txt&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>    print(data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 写入文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;output.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;Hello, World!&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 with 语句打开文件并读取或写入数据。使用 &ldquo;r&rdquo; 参数表示读取文件，使用 &ldquo;w&rdquo; 参数表示写入文件。使用 read() 方法读取文件内容，使用 write() 方法写入文件内容。</p>
+<p>6、使用标准错误输出错误信息</p>
+<p>除了使用 print() 函数输出字符串到标准输出外，还可以使用标准错误将错误信息输出到控制台。可以使用 sys 模块中的 stderr 属性来输出错误信息。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;Enter a number: &#34;</span>))
+</span></span><span style="display:flex;"><span>    print(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> x)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ValueError</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Invalid input.&#34;</span>, file<span style="color:#f92672">=</span>sys<span style="color:#f92672">.</span>stderr)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ZeroDivisionError</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Cannot divide by zero.&#34;</span>, file<span style="color:#f92672">=</span>sys<span style="color:#f92672">.</span>stderr)
+</span></span></code></pre></div><p>在上面的例子中，使用 try-except 语句处理输入错误和除以零错误，并使用 print() 函数将错误信息输出到标准错误。</p>
+<p>7、使用格式化字符串的高级特性</p>
+<p>除了简单的格式化字符串外，还可以使用格式化字符串的高级特性来格式化输出。例如，可以使用 {name:width} 格式来指定字符串的宽度，使用 {name:.2f} 格式来指定浮点数的小数位数。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Alice&#34;</span>
+</span></span><span style="display:flex;"><span>age <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>
+</span></span><span style="display:flex;"><span>score <span style="color:#f92672">=</span> <span style="color:#ae81ff">85.1234</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;Name:&#39;</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&lt;10</span><span style="color:#e6db74">}{</span>name<span style="color:#e6db74">:</span><span style="color:#e6db74">&gt;10</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;Age:&#39;</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&lt;10</span><span style="color:#e6db74">}{</span>age<span style="color:#e6db74">:</span><span style="color:#e6db74">&gt;10</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;Score:&#39;</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&lt;10</span><span style="color:#e6db74">}{</span>score<span style="color:#e6db74">:</span><span style="color:#e6db74">&gt;10.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 f-字符串和 {} 格式指定字符串的宽度和对齐方式，并使用 {:.2f} 格式指定浮点数的小数位数。</p>
+<p>8、使用 pprint 模块美化输出</p>
+<p>pprint 模块可以美化 Python 数据结构的输出，以便更好地查看和调试数据。可以使用 pprint 模块中的 pprint() 函数将数据结构输出为美化的格式。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;age&#34;</span>: <span style="color:#ae81ff">25</span>, <span style="color:#e6db74">&#34;scores&#34;</span>: [<span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">85</span>, <span style="color:#ae81ff">90</span>]}
+</span></span><span style="display:flex;"><span>pprint<span style="color:#f92672">.</span>pprint(data)
+</span></span></code></pre></div><p>在上面的例子中，使用 pprint.pprint() 函数将数据结构 data 输出为美化的格式。</p>
+<p>9、使用 logging 模块输出日志信息</p>
+<p>logging 模块可以用于输出日志信息，以便更好地理解程序的运行状态和错误信息。可以使用 logging 模块中的 getLogger() 方法创建 Logger 对象，并使用该对象的不同方法输出不同级别的日志信息。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> logging
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>logging<span style="color:#f92672">.</span>basicConfig(level<span style="color:#f92672">=</span>logging<span style="color:#f92672">.</span>DEBUG, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%(levelname)s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>logger <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(__name__)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">divide</span>(x, y):
+</span></span><span style="display:flex;"><span>    logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Dividing </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74"> by </span><span style="color:#e6db74">{</span>y<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> x <span style="color:#f92672">/</span> y
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">ZeroDivisionError</span>:
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;Division by zero!&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Result is </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>在上面的例子中，使用 logging.basicConfig() 方法配置日志级别和格式，使用 getLogger() 方法创建 Logger 对象，并使用 info()、error() 等方法输出不同级别的日志信息。</p>
+<p>10、使用 traceback 模块输出异常信息</p>
+<p>traceback 模块可以用于输出异常信息，以便更好地定位和解决程序错误。可以使用 traceback 模块中的 print_exc() 函数输出异常信息。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> traceback
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;Enter a number: &#34;</span>))
+</span></span><span style="display:flex;"><span>    print(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> x)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    traceback<span style="color:#f92672">.</span>print_exc()
+</span></span></code></pre></div><p>在上面的例子中，使用 try-except 语句捕获所有异常，并使用 traceback.print_exc() 函数输出异常信息。</p>
+<p>11、使用 cProfile 模块分析程序性能</p>
+<p>cProfile 模块可以用于分析程序的性能，以便更好地优化程序运行效率。可以使用 cProfile 模块中的 run() 方法分析程序性能。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cProfile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义程序</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">func</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10000</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10000</span>):
+</span></span><span style="display:flex;"><span>            k <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> j
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 分析程序性能</span>
+</span></span><span style="display:flex;"><span>cProfile<span style="color:#f92672">.</span>run(<span style="color:#e6db74">&#39;func()&#39;</span>)
+</span></span></code></pre></div><p>在上面的例子中，定义一个程序 func() 进行计算，使用 cProfile.run() 方法分析程序性能。</p>
+<p>12、使用 argparse 模块解析命令行参数</p>
+<p>argparse 模块可以用于解析命令行参数，以便更好地控制程序的行为和输入输出。可以使用 argparse 模块中的 ArgumentParser 类创建解析器对象，并使用该对象的 add_argument() 方法添加命令行参数。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> argparse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(description<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Process some integers.&#39;</span>)
+</span></span><span style="display:flex;"><span>parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;integers&#39;</span>, metavar<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;N&#39;</span>, type<span style="color:#f92672">=</span>int, nargs<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;+&#39;</span>,
+</span></span><span style="display:flex;"><span>                    help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;an integer for the accumulator&#39;</span>)
+</span></span><span style="display:flex;"><span>parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#39;--sum&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;accumulate&#39;</span>, action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store_const&#39;</span>,
+</span></span><span style="display:flex;"><span>                    const<span style="color:#f92672">=</span>sum, default<span style="color:#f92672">=</span>max,
+</span></span><span style="display:flex;"><span>                    help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum the integers (default: find the max)&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>print(args<span style="color:#f92672">.</span>accumulate(args<span style="color:#f92672">.</span>integers))
+</span></span></code></pre></div><p>在上面的例子中，使用 ArgumentParser 类创建解析器对象，使用 add_argument() 方法添加命令行参数，使用 parse_args() 方法解析命令行参数，并使用 argparse.Namespace 对象访问解析结果。</p>
+<p>13、使用 pprint 模块输出对象信息</p>
+<p>pprint 模块可以用于输出 Python 对象的信息，以便更好地查看和调试对象。可以使用 pprint 模块中的 pprint() 函数将对象输出为美化的格式。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, name, age):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>age <span style="color:#f92672">=</span> age
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __repr__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Person(name=&#39;</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;, age=</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>age<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>person <span style="color:#f92672">=</span> Person(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#ae81ff">25</span>)
+</span></span><span style="display:flex;"><span>pprint<span style="color:#f92672">.</span>pprint(person)
+</span></span></code></pre></div><p>在上面的例子中，使用 pprint.pprint() 函数将对象 person 输出为美化的格式，使用 <strong>repr</strong>() 方法定义对象的表示形式。</p>
+<p>14、使用 csv 模块读写 CSV 文件</p>
+<p>csv 模块可以用于读写 CSV 文件，以便更好地处理表格数据。可以使用 csv 模块中的 reader() 和 writer() 函数读写 CSV 文件。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 读取 CSV 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;data.csv&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    reader <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>reader(f)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> reader:
+</span></span><span style="display:flex;"><span>        print(row)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 写入 CSV 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;data.csv&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>, newline<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    writer <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>writer(f)
+</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span>writerow([<span style="color:#e6db74">&#34;Name&#34;</span>, <span style="color:#e6db74">&#34;Age&#34;</span>, <span style="color:#e6db74">&#34;Score&#34;</span>])
+</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span>writerow([<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">85</span>])
+</span></span><span style="display:flex;"><span>    writer<span style="color:#f92672">.</span>writerow([<span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">90</span>])
+</span></span></code></pre></div><p>在上面的例子中，使用 csv.reader() 函数读取 CSV 文件，使用 csv.writer() 函数写入 CSV 文件，并使用 newline=&quot;&quot; 参数指定行结束符。</p>
+<p>15、使用 json 模块读写 JSON 数据</p>
+<p>json 模块可以用于读写 JSON 数据，以便更好地处理数据交换和存储。可以使用 json 模块中的 loads() 和 dumps() 函数读写 JSON 数据。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 读取 JSON 数据</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;Alice&#34;, &#34;age&#34;: 25, &#34;scores&#34;: [80, 85, 90]}&#39;</span>
+</span></span><span style="display:flex;"><span>json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(data)
+</span></span><span style="display:flex;"><span>print(json_data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 写入 JSON 数据</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;age&#34;</span>: <span style="color:#ae81ff">32</span>, <span style="color:#e6db74">&#34;scores&#34;</span>: [<span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">95</span>, <span style="color:#ae81ff">100</span>]}
+</span></span><span style="display:flex;"><span>json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(data)
+</span></span><span style="display:flex;"><span>print(json_data)
+</span></span></code></pre></div><p>在上面的例子中，使用 json.loads() 函数读取 JSON 数据，使用 json.dumps() 函数写入 JSON 数据。</p>
+<p>16、使用 xml.etree.ElementTree 模块读写 XML 数据</p>
+<p>xml.etree.ElementTree 模块可以用于读写 XML 数据，以便更好地处理数据交换和存储。可以使用 xml.etree.ElementTree 模块中的 ElementTree 类和 Element 类读写 XML 数据。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> xml.etree.ElementTree <span style="color:#66d9ef">as</span> ET
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 读取 XML 数据</span>
+</span></span><span style="display:flex;"><span>tree <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>parse(<span style="color:#e6db74">&#34;data.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>root <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>getroot()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> child <span style="color:#f92672">in</span> root:
+</span></span><span style="display:flex;"><span>    print(child<span style="color:#f92672">.</span>tag, child<span style="color:#f92672">.</span>attrib)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 写入 XML 数据</span>
+</span></span><span style="display:flex;"><span>root <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>Element(<span style="color:#e6db74">&#34;data&#34;</span>)
+</span></span><span style="display:flex;"><span>child1 <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>SubElement(root, <span style="color:#e6db74">&#34;name&#34;</span>)
+</span></span><span style="display:flex;"><span>child1<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Alice&#34;</span>
+</span></span><span style="display:flex;"><span>child2 <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>SubElement(root, <span style="color:#e6db74">&#34;age&#34;</span>)
+</span></span><span style="display:flex;"><span>child2<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;25&#34;</span>
+</span></span><span style="display:flex;"><span>tree <span style="color:#f92672">=</span> ET<span style="color:#f92672">.</span>ElementTree(root)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;data.xml&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 ET.parse() 方法读取 XML 文件，使用 Element 对象和 SubElement() 方法创建 XML 元素，使用 ElementTree 对象和 write() 方法写入 XML 文件。</p>
+<p>17、使用 sqlite3 模块读写 SQLite 数据库</p>
+<p>sqlite3 模块可以用于读写 SQLite 数据库，以便更好地持久化数据。可以使用 sqlite3 模块中的 connect() 和 cursor() 方法连接数据库和执行 SQL 语句。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sqlite3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 连接数据库</span>
+</span></span><span style="display:flex;"><span>conn <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#34;data.db&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建表格</span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>cursor()
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;&#39;&#39;CREATE TABLE IF NOT EXISTS students
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">             (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, score REAL)&#39;&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 插入数据</span>
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;INSERT INTO students (name, age, score) VALUES (?, ?, ?)&#34;</span>, (<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">85</span>))
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;INSERT INTO students (name, age, score) VALUES (?, ?, ?)&#34;</span>, (<span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">90</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查询数据</span>
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM students&#34;</span>)
+</span></span><span style="display:flex;"><span>rows <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>fetchall()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> rows:
+</span></span><span style="display:flex;"><span>    print(row)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 关闭数据库</span>
+</span></span><span style="display:flex;"><span>conn<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>conn<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><p>在上面的例子中，使用 sqlite3.connect() 方法连接数据库，使用 cursor() 方法执行 SQL 语句，使用 fetchall() 方法获取查询结果，使用 commit() 方法提交事务并关闭数据库。</p>
+<p>18、使用 Pillow 模块读写图片文件</p>
+<p>Pillow 模块可以用于读写图片文件，以便更好地处理图像数据。可以使用 Pillow 模块中的 Image 类读写图片文件。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 读取图片文件</span>
+</span></span><span style="display:flex;"><span>im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;image.jpg&#34;</span>)
+</span></span><span style="display:flex;"><span>print(im<span style="color:#f92672">.</span>format, im<span style="color:#f92672">.</span>size, im<span style="color:#f92672">.</span>mode)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 显示图片</span>
+</span></span><span style="display:flex;"><span>im<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 保存图片文件</span>
+</span></span><span style="display:flex;"><span>im<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;image.png&#34;</span>)
+</span></span></code></pre></div><p>在上面的例子中，使用 Image.open() 方法读取图片文件，使用 format、size 和 mode 属性获取图片信息，使用 show() 方法显示图片，使用 save() 方法保存图片文件。</p>
+<p>19、使用 matplotlib 模块绘制图表</p>
+<p>matplotlib 模块可以用于绘制各种类型的图表，以便更好地展示数据分布和趋势。可以使用 matplotlib 模块中的 pyplot 模块绘制图表。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 绘制折线图</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">25</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;X Label&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Y Label&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Line Chart&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 绘制柱状图</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;Apple&#34;</span>, <span style="color:#e6db74">&#34;Banana&#34;</span>, <span style="color:#e6db74">&#34;Orange&#34;</span>]
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> [<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">70</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>bar(x, y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Fruit&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Quantity&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;Bar Chart&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p>在上面的例子中，使用 plt.plot() 方法绘制折线图，使用 plt.bar() 方法绘制柱状图，使用 xlabel、ylabel 和 title 方法设置图表标签，使用 show() 方法显示图表。</p>
+<p>20、使用 Pygame 模块绘制游戏界面</p>
+<p>Pygame 模块可以用于绘制游戏界面，以便更好地实现游戏功能。可以使用 Pygame 模块中的各种类和方法绘制游戏界面和处理游戏事件。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pygame
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 初始化 Pygame</span>
+</span></span><span style="display:flex;"><span>pygame<span style="color:#f92672">.</span>init()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建游戏窗口</span>
+</span></span><span style="display:flex;"><span>screen <span style="color:#f92672">=</span> pygame<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>set_mode((<span style="color:#ae81ff">400</span>, <span style="color:#ae81ff">300</span>))
+</span></span><span style="display:flex;"><span>pygame<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>set_caption(<span style="color:#e6db74">&#34;My Game&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建游戏循环</span>
+</span></span><span style="display:flex;"><span>running <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> running:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 处理游戏事件</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> event <span style="color:#f92672">in</span> pygame<span style="color:#f92672">.</span>event<span style="color:#f92672">.</span>get():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> event<span style="color:#f92672">.</span>type <span style="color:#f92672">==</span> pygame<span style="color:#f92672">.</span>QUIT:
+</span></span><span style="display:flex;"><span>            running <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 绘制游戏界面</span>
+</span></span><span style="display:flex;"><span>    screen<span style="color:#f92672">.</span>fill((<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>))
+</span></span><span style="display:flex;"><span>    pygame<span style="color:#f92672">.</span>draw<span style="color:#f92672">.</span>circle(screen, (<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), (<span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">150</span>), <span style="color:#ae81ff">50</span>)
+</span></span><span style="display:flex;"><span>    pygame<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>update()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 退出 Pygame</span>
+</span></span><span style="display:flex;"><span>pygame<span style="color:#f92672">.</span>quit()
+</span></span></code></pre></div><p>在上面的例子中，使用 pygame.init() 初始化 Pygame，使用 pygame.display.set_mode() 创建游戏窗口，使用 pygame.event.get() 处理游戏事件，使用 pygame.draw.circle() 绘制游戏界面，使用 pygame.display.update() 更新游戏界面，使用 pygame.quit() 退出 Pygame。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/06/python-module-package/" target="_blank" title="Python学习6：模块和包">Python学习6：模块和包</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/25/developing-with-bottle/" target="_blank" title="[译]用 Bottle 开发">[译]用 Bottle 开发</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/21/modern-css-explained-for-dinosaurs/" target="_blank" title="[译]为恐龙解释现代CSS">[译]为恐龙解释现代CSS</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/20/modern-html-explained-for-dinosaurs/" target="_blank" title="[译]为恐龙解释现代HTML">[译]为恐龙解释现代HTML</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/" target="_blank" title="[译]为恐龙解释现代JavaScript">[译]为恐龙解释现代JavaScript</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/14/python-flow-control/" target="_blank" title="Python学习4：流程控制">Python学习4：流程控制</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/06/python-module-package/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Python学习6：模块和包</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/07/11/weekly_review_26/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 周报-26｜上半年的绩效总结</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/08\/python-input-and-output\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

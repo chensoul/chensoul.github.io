@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]Spring Events - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]Spring Events">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/08/25/spring-events/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]Spring Events">
+  <meta itemprop="description" content="1. 概述 在本教程中，我们将讨论如何在 Spring 中使用事件。">
+  <meta itemprop="datePublished" content="2023-08-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="431">
+  <meta itemprop="keywords" content="Java,Backend,Tutorial,Translation">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]Spring Events">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]Spring Events</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-08-25">2023-08-25</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="1-概述">1. 概述</h2>
+<p>在本教程中，我们将讨论如何在 Spring 中使用事件。</p>
+<p>事件是框架中最容易被忽视的功能之一，但也是最有用的功能之一。与 Spring 中的许多其他功能一样，事件发布是 <code>ApplicationContext</code> 提供的功能之一。</p>
+<p>有一些简单的准则需要遵循：</p>
+<ul>
+<li>如果我们使用 Spring Framework 4.2 之前的版本，事件类应该扩展 <code>ApplicationEvent</code>。从 4.2 版本开始，事件类不再需要扩展 ApplicationEvent 类。</li>
+<li>发布者应该注入一个 <code>ApplicationEventPublisher</code> 对象。</li>
+<li>监听器应该实现 <code>ApplicationListener</code> 接口。</li>
+</ul>
+<h2 id="2-自定义事件">2. 自定义事件</h2>
+<p>Spring 允许我们创建和发布默认情况下同步的自定义事件。这有一些优点，例如侦听器能够参与发布者的事务上下文。</p>
+<h3 id="21一个简单的应用程序事件">2.1.一个简单的应用程序事件</h3>
+<p>让我们创建一个简单的事件类——只是一个存储事件数据的占位符。</p>
+<p>在本例中，事件类保存一条字符串消息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomSpringEvent</span> <span style="color:#66d9ef">extends</span> ApplicationEvent {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String message;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">CustomSpringEvent</span>(Object source, String message) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(source);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">message</span> <span style="color:#f92672">=</span> message;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getMessage</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> message;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="22发布者">2.2.发布者</h3>
+<p>现在让我们创建该事件的发布者。发布者构造事件对象并将其发布给正在侦听的任何人。</p>
+<p>要发布事件，发布者只需注入 <code>ApplicationEventPublisher</code> 并使用 <code>publishEvent() </code>API：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomSpringEventPublisher</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> ApplicationEventPublisher applicationEventPublisher;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">publishCustomEvent</span>(<span style="color:#66d9ef">final</span> String message) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Publishing custom event. &#34;</span>);
+</span></span><span style="display:flex;"><span>        CustomSpringEvent customSpringEvent <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CustomSpringEvent(<span style="color:#66d9ef">this</span>, message);
+</span></span><span style="display:flex;"><span>        applicationEventPublisher.<span style="color:#a6e22e">publishEvent</span>(customSpringEvent);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>或者，发布者类可以实现 <code>ApplicationEventPublisherAware</code> 接口，这也将在应用程序启动时注入事件发布者。通常，使用 <code>@Autowire</code> 注入发布者会更简单。</p>
+<p>从 Spring Framework 4.2 开始，<code>ApplicationEventPublisher</code> 接口为<code>publishEvent(Object event) </code>方法提供了新的重载，该方法接受任何对象作为事件。因此，Spring 事件不再需要扩展<code>ApplicationEvent</code> 类。</p>
+<h3 id="23监听者">2.3.监听者</h3>
+<p>最后，让我们创建监听器。</p>
+<p>监听器的唯一要求是是一个 bean 并实现 <code>ApplicationListener</code> 接口：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomSpringEventListener</span> <span style="color:#66d9ef">implements</span> ApplicationListener<span style="color:#f92672">&lt;</span>CustomSpringEvent<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onApplicationEvent</span>(CustomSpringEvent event) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Received spring custom event - &#34;</span> <span style="color:#f92672">+</span> event.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>请注意我们的自定义侦听器如何使用自定义事件的通用类型进行参数化，这使得 <code>onApplicationEvent() </code>方法类型安全。这也避免了必须检查对象是否是特定事件类的实例并转换它。</p>
+<p>而且，正如已经讨论过的（默认情况下 Spring 事件是同步的）， <code>doStuffAndPublishAnEvent()</code> 方法会阻塞，直到所有侦听器完成对事件的处理。</p>
+<h2 id="3-创建异步事件">3. 创建异步事件</h2>
+<p>在某些情况下，同步发布事件并不是我们真正想要的——我们可能需要异步处理事件。</p>
+<p>我们可以通过创建带有执行器的 <code>ApplicationEventMulticaster</code> bean 在配置中打开它。</p>
+<p>出于我们的目的，<code>SimpleAsyncTaskExecutor</code> 效果很好：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsynchronousSpringEventsConfig</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;applicationEventMulticaster&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ApplicationEventMulticaster <span style="color:#a6e22e">simpleApplicationEventMulticaster</span>() {
+</span></span><span style="display:flex;"><span>        SimpleApplicationEventMulticaster eventMulticaster <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">new</span> SimpleApplicationEventMulticaster();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        eventMulticaster.<span style="color:#a6e22e">setTaskExecutor</span>(<span style="color:#66d9ef">new</span> SimpleAsyncTaskExecutor());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> eventMulticaster;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>事件、发布者和侦听器实现与以前相同，但现在侦听器将在单独的线程中异步处理事件。</p>
+<h2 id="4现有框架事件">4.现有框架事件</h2>
+<p>Spring 本身发布了各种开箱即用的事件。例如，<code>ApplicationContext</code> 将触发各种框架事件：<code>ContextRefreshedEvent</code>、<code>ContextStartedEvent</code>、<code>RequestHandledEvent</code> 等。</p>
+<p>这些事件为应用程序开发人员提供了一个选项，可以挂钩应用程序和上下文的生命周期，并在需要时添加自己的自定义逻辑。</p>
+<p>下面是侦听器侦听上下文刷新的简单示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ContextRefreshedListener</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">implements</span> ApplicationListener<span style="color:#f92672">&lt;</span>ContextRefreshedEvent<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onApplicationEvent</span>(ContextRefreshedEvent cse) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Handling context re-freshed event. &#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="5-注解驱动的事件监听器">5. 注解驱动的事件监听器</h2>
+<p>从 Spring 4.2 开始，事件侦听器不需要是实现 <code>ApplicationListener</code> 接口的 bean — 它可以通过 <code>@EventListener</code> 注释在托管 bean 的任何公共方法上注册：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnnotationDrivenEventListener</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@EventListener</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleContextStart</span>(ContextStartedEvent cse) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Handling context started event.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>和以前一样，方法签名声明它消耗的事件类型。</p>
+<p>默认情况下，监听器是同步调用的。但是，我们可以通过添加 @Async 注解轻松使其异步。我们只需要记住在应用程序中启用异步支持即可。</p>
+<h2 id="6-泛型支持">6. 泛型支持</h2>
+<p>还可以使用事件类型中的泛型信息来调度事件。</p>
+<h3 id="61通用应用程序事件">6.1.通用应用程序事件</h3>
+<p>让我们创建一个通用事件类型。</p>
+<p>在我们的示例中，事件类包含任何内容和成功状态指示器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GenericSpringEvent</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> T what;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">boolean</span> success;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">GenericSpringEvent</span>(T what, <span style="color:#66d9ef">boolean</span> success) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">what</span> <span style="color:#f92672">=</span> what;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">success</span> <span style="color:#f92672">=</span> success;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> ... standard getters
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>请注意 <code>GenericSpringEvent</code> 和 <code>CustomSpringEvent</code> 之间的区别。我们现在可以灵活地发布任何任意事件，并且不再需要从 <code>ApplicationEvent</code> 进行扩展。</p>
+<h3 id="62监听者">6.2.监听者</h3>
+<p>现在让我们创建该事件的侦听器。</p>
+<p>我们可以像以前一样通过实现 <code>ApplicationListener</code> 接口来定义监听器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GenericSpringEventListener</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">implements</span> ApplicationListener<span style="color:#f92672">&lt;</span>GenericSpringEvent<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onApplicationEvent</span>(<span style="color:#a6e22e">@NonNull</span> GenericSpringEvent<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> event) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Received spring generic event - &#34;</span> <span style="color:#f92672">+</span> event.<span style="color:#a6e22e">getWhat</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>但不幸的是这个定义要求我们从 <code>ApplicationEvent</code> 类继承 <code>GenericSpringEvent</code>。因此，在本教程中，我们将使用前面讨论的注释驱动事件侦听器。</p>
+<p>还可以通过在 <code>@EventListener</code> 注释上定义布尔 SpEL 表达式来使事件侦听器成为有条件的。</p>
+<p>在这种情况下，只有成功的 String <code>GenericSpringEvent</code> 才会调用事件处理程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AnnotationDrivenEventListener</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@EventListener</span>(condition <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#event.success&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleSuccessful</span>(GenericSpringEvent<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> event) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Handling generic event (conditional).&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Spring 表达式语言 (SpEL) 是一种功能强大的表达式语言，在另一个教程中详细介绍了它。</p>
+<h3 id="63发布者">6.3.发布者</h3>
+<p>事件发布者与上面描述的类似。但由于类型擦除，我们需要发布一个事件来解析我们要过滤的泛型参数，例如，<code>class GenericStringSpringEvent extends GenericSpringEvent</code>。</p>
+<p>此外，还有另一种发布事件的方式。如果我们从使用 <code>@EventListener</code> 注释的方法返回一个非空值作为结果，Spring Framework 会将该结果作为新事件发送给我们。此外，我们可以通过将多个新事件作为事件处理的结果返回到集合中来发布它们。</p>
+<h2 id="7-交易绑定事件">7. 交易绑定事件</h2>
+<p>本节介绍如何使用 <code>@TransactionalEventListener</code> 注释。要了解有关事务管理的更多信息，请查看 <a href="https://www.baeldung.com/transaction-configuration-with-jpa-and-spring" target="_blank">Transactions With Spring and JPA</a>。</p>
+<p>从 Spring 4.2 开始，框架提供了一个新的 <code>@TransactionalEventListener</code> 注解，它是<code>@EventListener</code> 的扩展，允许将事件的监听器绑定到事务的某个阶段。</p>
+<p>可以对以下交易阶段进行绑定：</p>
+<ul>
+<li><em><code>AFTER_COMMIT</code></em>（默认）用于在事务成功完成时触发该事件。</li>
+<li><em><code>AFTER_ROLLBACK</code></em> – 如果事务已回滚</li>
+<li><em><code>AFTER_COMPLETION</code></em> – 如果事务已完成（<code>AFTER_COMMIT</code> 和 <code>AFTER_ROLLBACK</code> 的别名）</li>
+<li><em><code>BEFORE_COMMIT</code></em> – 用于在事务提交之前触发该事件。</li>
+</ul>
+<p>这是事务事件侦听器的一个简单示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@TransactionalEventListener</span>(phase <span style="color:#f92672">=</span> TransactionPhase.<span style="color:#a6e22e">BEFORE_COMMIT</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleCustom</span>(CustomSpringEvent event) {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Handling event inside a transaction BEFORE COMMIT.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>仅当事件生成器正在运行且即将提交的事务中时，才会调用此侦听器。</p>
+<p>如果没有事务正在运行，则根本不会发送事件，除非我们通过将 <code>FallbackExecution</code> 属性设置为 true 来覆盖它。</p>
+<h2 id="8-结论">8. 结论</h2>
+<p>在这篇简短的文章中，我们回顾了在 Spring 中处理事件的基础知识，包括创建一个简单的自定义事件、发布它，然后在侦听器中处理它。</p>
+<p>我们还简要了解了如何在配置中启用事件的异步处理。</p>
+<p>然后我们了解了 Spring 4.2 中引入的改进，例如注释驱动的侦听器、更好的泛型支持以及绑定到事务阶段的事件。</p>
+<p>与往常一样，本文中提供的代码可以在 <a href="https://github.com/eugenp/tutorials/tree/master/spring-core-2" target="_blank">GitHub</a> 上获取。这是一个基于 Maven 的项目，因此应该很容易导入并按原样运行。</p>
+<p>原文链接：<a href="https://www.baeldung.com/spring-events" target="_blank">https://www.baeldung.com/spring-events</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/spring-async/" target="_blank" title="[译]如何在Spring中执行@Async">[译]如何在Spring中执行@Async</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/spring-security-async-principal-propagation/" target="_blank" title="[译]使用@Async进行Spring Security上下文传播">[译]使用@Async进行Spring Security上下文传播</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/" target="_blank" title="[译]没有WebSecurityConfigurerAdapter的Spring Security.md">[译]没有WebSecurityConfigurerAdapter的Spring Security.md</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-oauth2/" target="_blank" title="[译]Spring Security - OAuth2">[译]Spring Security - OAuth2</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-boot-docker/" target="_blank" title="[译]为 Spring Boot 应用程序创建优化的 Docker 映像">[译]为 Spring Boot 应用程序创建优化的 Docker 映像</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-exception-handling/" target="_blank" title="[译]Spring Boot异常处理完整指南">[译]Spring Boot异常处理完整指南</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/translation/" rel="tag">translation</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/08/25/spring-async/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]如何在Spring中执行@Async</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]REST API 的自定义错误消息处理</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/08\/25\/spring-events\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-概述">1. 概述</a></li>
+    <li><a href="#2-自定义事件">2. 自定义事件</a>
+      <ul>
+        <li><a href="#21一个简单的应用程序事件">2.1.一个简单的应用程序事件</a></li>
+        <li><a href="#22发布者">2.2.发布者</a></li>
+        <li><a href="#23监听者">2.3.监听者</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-创建异步事件">3. 创建异步事件</a></li>
+    <li><a href="#4现有框架事件">4.现有框架事件</a></li>
+    <li><a href="#5-注解驱动的事件监听器">5. 注解驱动的事件监听器</a></li>
+    <li><a href="#6-泛型支持">6. 泛型支持</a>
+      <ul>
+        <li><a href="#61通用应用程序事件">6.1.通用应用程序事件</a></li>
+        <li><a href="#62监听者">6.2.监听者</a></li>
+        <li><a href="#63发布者">6.3.发布者</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-交易绑定事件">7. 交易绑定事件</a></li>
+    <li><a href="#8-结论">8. 结论</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

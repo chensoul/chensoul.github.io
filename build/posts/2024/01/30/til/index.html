@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-01-30｜Mybatis plus和Jackson配置 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-01-30｜Mybatis plus和Jackson配置">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/01/30/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-01-30｜Mybatis plus和Jackson配置">
+  <meta itemprop="description" content="今天做了什么：
+重构 foodie-cloud 项目 参考 DDD 组织包结构 Mybatis plus 配置主键生成策略和数据审计功能 Jackson 配置日期序列化 重构 foodie-cloud 项目 Mybatis plus 配置主键生成策略 实体类中可以不用添加@TableId，减少实体类对 mybatis-plus-annotation的依赖">
+  <meta itemprop="datePublished" content="2024-01-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-01-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="298">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-01-30｜Mybatis plus和Jackson配置">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-01-30｜Mybatis plus和Jackson配置</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-30">2024-01-30</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ol>
+<li>重构 foodie-cloud 项目
+<ul>
+<li>参考 DDD 组织包结构</li>
+<li>Mybatis plus 配置主键生成策略和数据审计功能</li>
+<li>Jackson 配置日期序列化</li>
+</ul>
+</li>
+</ol>
+<h2 id="重构-foodie-cloud-项目">重构 foodie-cloud 项目</h2>
+<h3 id="mybatis-plus-配置主键生成策略">Mybatis plus 配置主键生成策略</h3>
+<p>实体类中可以不用添加@TableId，减少实体类对 mybatis-plus-annotation的依赖</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BaseEntity</span> <span style="color:#66d9ef">implements</span> Serializable {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">private</span> Long id;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">private</span> LocalDateTime createTime;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">private</span> LocalDateTime updateTime;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>改为使用配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">mybatis-plus</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">global-config</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">db-config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">id-type</span>: <span style="color:#ae81ff">ASSIGN_ID</span>
+</span></span></code></pre></div><h3 id="mybatis-plus-配置数据审计功能">Mybatis plus 配置数据审计功能</h3>
+<p>添加下面的类</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomMetaObjecthandler</span> <span style="color:#66d9ef">implements</span> MetaObjectHandler {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fillValIfNullByName</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> String fieldName,<span style="color:#66d9ef">final</span> Object fieldVal,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> MetaObject metaObject,<span style="color:#66d9ef">final</span> <span style="color:#66d9ef">boolean</span> isCover) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 1. 没有 set 方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>metaObject.<span style="color:#a6e22e">hasSetter</span>(fieldName)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 2. 如果用户有手动设置的值</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (metaObject.<span style="color:#a6e22e">getValue</span>(fieldName) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>isCover) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 3. field 类型相同时设置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> Class<span style="color:#f92672">&lt;?&gt;</span> getterType <span style="color:#f92672">=</span> metaObject.<span style="color:#a6e22e">getGetterType</span>(fieldName);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ClassUtils.<span style="color:#a6e22e">isAssignableValue</span>(getterType, fieldVal)) {
+</span></span><span style="display:flex;"><span>      metaObject.<span style="color:#a6e22e">setValue</span>(fieldName, fieldVal);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insertFill</span>(<span style="color:#66d9ef">final</span> MetaObject metaObject) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> LocalDateTime now <span style="color:#f92672">=</span> LocalDateTime.<span style="color:#a6e22e">now</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> String username <span style="color:#f92672">=</span> SecurityContextHolder.<span style="color:#a6e22e">getContext</span>().<span style="color:#a6e22e">getAuthentication</span>().<span style="color:#a6e22e">getName</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    log.<span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#34;公共字段自动填充[insert]: {},{}&#34;</span>, now, username);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fillValIfNullByName(<span style="color:#e6db74">&#34;createTime&#34;</span>, now, metaObject, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>    fillValIfNullByName(<span style="color:#e6db74">&#34;createUser&#34;</span>, username, metaObject, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">updateFill</span>(<span style="color:#66d9ef">final</span> MetaObject metaObject) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> LocalDateTime now <span style="color:#f92672">=</span> LocalDateTime.<span style="color:#a6e22e">now</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> String username <span style="color:#f92672">=</span> SecurityContextHolder.<span style="color:#a6e22e">getContext</span>().<span style="color:#a6e22e">getAuthentication</span>().<span style="color:#a6e22e">getName</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    log.<span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#34;公共字段自动填充[update]: {},{}&#34;</span>, now, username);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fillValIfNullByName(<span style="color:#e6db74">&#34;updateTime&#34;</span>, now, metaObject, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>    fillValIfNullByName(<span style="color:#e6db74">&#34;updateUser&#34;</span>, username, metaObject, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>并在实体类上的对应属性添加注解：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Getter</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Setter</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BaseEntity</span> <span style="color:#66d9ef">implements</span> Serializable {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> 6595513467381653081L;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> Long id;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@TableField</span>(fill <span style="color:#f92672">=</span> FieldFill.<span style="color:#a6e22e">INSERT</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> LocalDateTime createTime;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@TableField</span>(fill <span style="color:#f92672">=</span> FieldFill.<span style="color:#a6e22e">INSERT_UPDATE</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> LocalDateTime updateTime;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="jackson-配置日期序列化">Jackson 配置日期序列化</h3>
+<p>自定义一个 ObjectMapper：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomObjectMapper</span> <span style="color:#66d9ef">extends</span> ObjectMapper {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String DEFAULT_DATE_FORMAT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yyyy-MM-dd&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String DEFAULT_DATE_TIME_FORMAT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yyyy-MM-dd HH:mm:ss&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String DEFAULT_TIME_FORMAT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;HH:mm:ss&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">CustomObjectMapper</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//收到未知属性时不报异常</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">configure</span>(FAIL_ON_UNKNOWN_PROPERTIES, <span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//反序列化时，属性不存在的兼容处理</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">getDeserializationConfig</span>().<span style="color:#a6e22e">withoutFeatures</span>(DeserializationFeature.<span style="color:#a6e22e">FAIL_ON_UNKNOWN_PROPERTIES</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">final</span> SimpleModule simpleModule <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SimpleModule()
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addSerializer</span>(BigInteger.<span style="color:#a6e22e">class</span>, ToStringSerializer.<span style="color:#a6e22e">instance</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addSerializer</span>(Long.<span style="color:#a6e22e">class</span>, ToStringSerializer.<span style="color:#a6e22e">instance</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addDeserializer</span>(LocalDateTime.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalDateTimeDeserializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_DATE_TIME_FORMAT)))
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addDeserializer</span>(LocalDate.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalDateDeserializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_DATE_FORMAT)))
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addDeserializer</span>(LocalTime.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalTimeDeserializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_TIME_FORMAT)))
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addSerializer</span>(LocalDateTime.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalDateTimeSerializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_DATE_TIME_FORMAT)))
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addSerializer</span>(LocalDate.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalDateSerializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_DATE_FORMAT)))
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">addSerializer</span>(LocalTime.<span style="color:#a6e22e">class</span>, <span style="color:#66d9ef">new</span> LocalTimeSerializer(DateTimeFormatter.<span style="color:#a6e22e">ofPattern</span>(DEFAULT_TIME_FORMAT)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//注册功能模块 例如，可以添加自定义序列化器和反序列化器</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">registerModule</span>(simpleModule);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后，注入的 spring 容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JacksonConfig</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Primary</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ObjectMapper <span style="color:#a6e22e">objectMapper</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CustomObjectMapper();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这样，就可以不用在 LocalDateTime 类型的属性上添加 @JsonFormat 注解。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/spring-security-interview-questions/" target="_blank" title="[译]Spring Security 面试问题">[译]Spring Security 面试问题</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/09/19/spring-security-jwt/" target="_blank" title="[译]如何使用Spring Security和JWT保护您的REST API">[译]如何使用Spring Security和JWT保护您的REST API</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/exception-handling-for-rest-with-spring/" target="_blank" title="[译]使用Spring进行REST的错误处理">[译]使用Spring进行REST的错误处理</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-jwt/" target="_blank" title="[译]Spring Security - JWT">[译]Spring Security - JWT</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/" target="_blank" title="[译]Spring Security - 表单登录、记住我和注销">[译]Spring Security - 表单登录、记住我和注销</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security/" target="_blank" title="[译]Spring Security 和 Spring Boot 入门">[译]Spring Security 和 Spring Boot 入门</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/01/29/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-01-29｜C4架构模型</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/01/31/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2024-01-31｜Redis事务</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/01\/30\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#重构-foodie-cloud-项目">重构 foodie-cloud 项目</a>
+      <ul>
+        <li><a href="#mybatis-plus-配置主键生成策略">Mybatis plus 配置主键生成策略</a></li>
+        <li><a href="#mybatis-plus-配置数据审计功能">Mybatis plus 配置数据审计功能</a></li>
+        <li><a href="#jackson-配置日期序列化">Jackson 配置日期序列化</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

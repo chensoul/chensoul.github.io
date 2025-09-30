@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Thingsboard源码中的代码片段 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Thingsboard源码中的代码片段">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2025/04/30/codes-in-thingsboard/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Thingsboard源码中的代码片段">
+  <meta itemprop="description" content="Uuids
+UUID uuid = Uuids.timeBased(); Uuids.unixTimestamp(uuid) UUID NULL_UUID = Uuids.startOf(0); UUIDConverter">
+  <meta itemprop="datePublished" content="2025-04-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-04-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1145">
+  <meta itemprop="keywords" content="Backend,Tutorial,Source-Code,Oauth2">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Thingsboard源码中的代码片段">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Thingsboard源码中的代码片段</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-04-30">2025-04-30</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/source-code/" rel="tag">Source-Code</a>, <a class="meta__link" href="/tags/oauth2/" rel="tag">Oauth2</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>Uuids</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>UUID uuid <span style="color:#f92672">=</span> Uuids.timeBased<span style="color:#f92672">()</span>;
+</span></span><span style="display:flex;"><span>Uuids.unixTimestamp<span style="color:#f92672">(</span>uuid<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>UUID NULL_UUID <span style="color:#f92672">=</span> Uuids.startOf<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>;
+</span></span></code></pre></div><p>UUIDConverter</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UUIDConverter</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> UUID <span style="color:#a6e22e">fromString</span>(String src) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> UUID.<span style="color:#a6e22e">fromString</span>(src.<span style="color:#a6e22e">substring</span>(7, 15) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">+</span> src.<span style="color:#a6e22e">substring</span>(3, 7) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-1&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">+</span> src.<span style="color:#a6e22e">substring</span>(0, 3) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">+</span> src.<span style="color:#a6e22e">substring</span>(15, 19) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">+</span> src.<span style="color:#a6e22e">substring</span>(19));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">fromTimeUUID</span>(UUID src) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (src.<span style="color:#a6e22e">version</span>() <span style="color:#f92672">!=</span> 1) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException(<span style="color:#e6db74">&#34;Only Time-Based UUID (Version 1) is supported!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        String str <span style="color:#f92672">=</span> src.<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">/</span> 58e0a7d7<span style="color:#f92672">-</span>eebc<span style="color:#f92672">-</span>11d8<span style="color:#f92672">-</span>9669<span style="color:#f92672">-</span>0800200c9a66 <span style="color:#f92672">=&gt;</span> 1d8eebc58e0a7d796690800200c9a66. Note that <span style="color:#f92672">[</span>11d8<span style="color:#f92672">]</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">[</span>1d8<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> str.<span style="color:#a6e22e">substring</span>(15, 18) <span style="color:#f92672">+</span> str.<span style="color:#a6e22e">substring</span>(9, 13) <span style="color:#f92672">+</span> str.<span style="color:#a6e22e">substring</span>(0, 8) <span style="color:#f92672">+</span> str.<span style="color:#a6e22e">substring</span>(19, 23) <span style="color:#f92672">+</span> str.<span style="color:#a6e22e">substring</span>(24);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">fromTimeUUIDs</span>(List<span style="color:#f92672">&lt;</span>UUID<span style="color:#f92672">&gt;</span> uuids) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (uuids <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> uuids.<span style="color:#a6e22e">stream</span>().<span style="color:#a6e22e">map</span>(UUIDConverter::fromTimeUUID).<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>TaskScheduler</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableScheduling</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SchedulingConfiguration</span> <span style="color:#66d9ef">implements</span> SchedulingConfigurer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configureTasks</span>(ScheduledTaskRegistrar taskRegistrar) {
+</span></span><span style="display:flex;"><span>        taskRegistrar.<span style="color:#a6e22e">setScheduler</span>(taskScheduler());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>(destroyMethod<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;shutdown&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> TaskScheduler <span style="color:#a6e22e">taskScheduler</span>() {
+</span></span><span style="display:flex;"><span>        ThreadPoolTaskScheduler threadPoolScheduler <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ThreadPoolTaskScheduler();
+</span></span><span style="display:flex;"><span>        threadPoolScheduler.<span style="color:#a6e22e">setThreadNamePrefix</span>(<span style="color:#e6db74">&#34;TB-Scheduling-&#34;</span>);
+</span></span><span style="display:flex;"><span>        threadPoolScheduler.<span style="color:#a6e22e">setPoolSize</span>(Runtime.<span style="color:#a6e22e">getRuntime</span>().<span style="color:#a6e22e">availableProcessors</span>());
+</span></span><span style="display:flex;"><span>        threadPoolScheduler.<span style="color:#a6e22e">setRemoveOnCancelPolicy</span>(<span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> threadPoolScheduler;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>MessageConfiguration</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ThingsboardMessageConfiguration</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Primary</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> MessageSource <span style="color:#a6e22e">messageSource</span>() {
+</span></span><span style="display:flex;"><span>        ResourceBundleMessageSource messageSource <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ResourceBundleMessageSource();
+</span></span><span style="display:flex;"><span>        messageSource.<span style="color:#a6e22e">setBasename</span>(<span style="color:#e6db74">&#34;i18n/messages&#34;</span>);
+</span></span><span style="display:flex;"><span>        messageSource.<span style="color:#a6e22e">setDefaultEncoding</span>(<span style="color:#e6db74">&#34;UTF-8&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> messageSource;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>redirect</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Controller</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@RequestMapping</span>(value <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;/assets&#34;</span>, <span style="color:#e6db74">&#34;/assets/&#34;</span>, <span style="color:#e6db74">&#34;/{path:^(?!api$)(?!assets$)(?!static$)(?!webjars$)(?!swagger-ui$)[^\\.]*}/**&#34;</span>})
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">redirect</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;forward://index.html&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/swagger-ui.html&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">redirectSwagger</span>(HttpServletRequest request, HttpServletResponse response) <span style="color:#66d9ef">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        String baseUrl <span style="color:#f92672">=</span> MiscUtils.<span style="color:#a6e22e">constructBaseUrl</span>(request);
+</span></span><span style="display:flex;"><span>        response.<span style="color:#a6e22e">sendRedirect</span>(baseUrl <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/swagger-ui/&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/swagger-ui/&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">redirectSwaggerIndex</span>() <span style="color:#66d9ef">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;forward://swagger-ui/index.html&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>WebSocketConfiguration</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@TbCoreComponent</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableWebSocket</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Slf4j</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebSocketConfiguration</span> <span style="color:#66d9ef">implements</span> WebSocketConfigurer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String WS_API_ENDPOINT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/ws&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String WS_PLUGINS_ENDPOINT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/ws/plugins/&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String WS_API_MAPPING <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/ws/**&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> WebSocketHandler wsHandler;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ServletServerContainerFactoryBean <span style="color:#a6e22e">createWebSocketContainer</span>() {
+</span></span><span style="display:flex;"><span>        ServletServerContainerFactoryBean container <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ServletServerContainerFactoryBean();
+</span></span><span style="display:flex;"><span>        container.<span style="color:#a6e22e">setMaxTextMessageBufferSize</span>(32768);
+</span></span><span style="display:flex;"><span>        container.<span style="color:#a6e22e">setMaxBinaryMessageBufferSize</span>(32768);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> container;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">registerWebSocketHandlers</span>(WebSocketHandlerRegistry registry) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(wsHandler <span style="color:#66d9ef">instanceof</span> TbWebSocketHandler)) {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;TbWebSocketHandler expected but [{}] provided&#34;</span>, wsHandler);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;TbWebSocketHandler expected but &#34;</span> <span style="color:#f92672">+</span> wsHandler <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; provided&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        registry.<span style="color:#a6e22e">addHandler</span>(wsHandler, WS_API_MAPPING).<span style="color:#a6e22e">setAllowedOriginPatterns</span>(<span style="color:#e6db74">&#34;*&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>CsvUtils</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@NoArgsConstructor</span>(access <span style="color:#f92672">=</span> AccessLevel.<span style="color:#a6e22e">PRIVATE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CsvUtils</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> List<span style="color:#f92672">&lt;</span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">parseCsv</span>(String content, Character delimiter) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        CSVFormat csvFormat <span style="color:#f92672">=</span> delimiter.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#39;,&#39;</span>) <span style="color:#f92672">?</span> CSVFormat.<span style="color:#a6e22e">DEFAULT</span> : CSVFormat.<span style="color:#a6e22e">DEFAULT</span>.<span style="color:#a6e22e">withDelimiter</span>(delimiter);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>CSVRecord<span style="color:#f92672">&gt;</span> records;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> (CharSequenceReader reader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CharSequenceReader(content)) {
+</span></span><span style="display:flex;"><span>            records <span style="color:#f92672">=</span> csvFormat.<span style="color:#a6e22e">parse</span>(reader).<span style="color:#a6e22e">getRecords</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> records.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">map</span>(record <span style="color:#f92672">-&gt;</span> Stream.<span style="color:#a6e22e">iterate</span>(0, i <span style="color:#f92672">-&gt;</span> i <span style="color:#f92672">&lt;</span> record.<span style="color:#a6e22e">size</span>(), i <span style="color:#f92672">-&gt;</span> i <span style="color:#f92672">+</span> 1)
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">map</span>(record::get)
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>()))
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>MiscUtils</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MiscUtils</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Charset UTF8 <span style="color:#f92672">=</span> Charset.<span style="color:#a6e22e">forName</span>(<span style="color:#e6db74">&#34;UTF-8&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">constructBaseUrl</span>(HttpServletRequest request) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> String.<span style="color:#a6e22e">format</span>(<span style="color:#e6db74">&#34;%s://%s:%d&#34;</span>,
+</span></span><span style="display:flex;"><span>                getScheme(request),
+</span></span><span style="display:flex;"><span>                getDomainName(request),
+</span></span><span style="display:flex;"><span>                getPort(request));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">getScheme</span>(HttpServletRequest request){
+</span></span><span style="display:flex;"><span>        String scheme <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getScheme</span>();
+</span></span><span style="display:flex;"><span>        String forwardedProto <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getHeader</span>(<span style="color:#e6db74">&#34;x-forwarded-proto&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (forwardedProto <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            scheme <span style="color:#f92672">=</span> forwardedProto;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> scheme;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">getDomainName</span>(HttpServletRequest request){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> request.<span style="color:#a6e22e">getServerName</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">getDomainNameAndPort</span>(HttpServletRequest request){
+</span></span><span style="display:flex;"><span>        String domainName <span style="color:#f92672">=</span> getDomainName(request);
+</span></span><span style="display:flex;"><span>        String scheme <span style="color:#f92672">=</span> getScheme(request);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> port <span style="color:#f92672">=</span> MiscUtils.<span style="color:#a6e22e">getPort</span>(request);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (needsPort(scheme, port)) {
+</span></span><span style="display:flex;"><span>            domainName <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">+</span> port;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> domainName;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">needsPort</span>(String scheme, <span style="color:#66d9ef">int</span> port) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">boolean</span> isHttpDefault <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http&#34;</span>.<span style="color:#a6e22e">equals</span>(scheme.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">&amp;&amp;</span> port <span style="color:#f92672">==</span> 80;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">boolean</span> isHttpsDefault <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https&#34;</span>.<span style="color:#a6e22e">equals</span>(scheme.<span style="color:#a6e22e">toLowerCase</span>()) <span style="color:#f92672">&amp;&amp;</span> port <span style="color:#f92672">==</span> 443;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">!</span>isHttpDefault <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>isHttpsDefault;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getPort</span>(HttpServletRequest request){
+</span></span><span style="display:flex;"><span>        String forwardedProto <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getHeader</span>(<span style="color:#e6db74">&#34;x-forwarded-proto&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> serverPort <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getServerPort</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (request.<span style="color:#a6e22e">getHeader</span>(<span style="color:#e6db74">&#34;x-forwarded-port&#34;</span>) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                serverPort <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getIntHeader</span>(<span style="color:#e6db74">&#34;x-forwarded-port&#34;</span>);
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (NumberFormatException e) {
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (forwardedProto <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">switch</span> (forwardedProto) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;http&#34;</span>:
+</span></span><span style="display:flex;"><span>                    serverPort <span style="color:#f92672">=</span> 80;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;https&#34;</span>:
+</span></span><span style="display:flex;"><span>                    serverPort <span style="color:#f92672">=</span> 443;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> serverPort;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ThingsboardServerApplication：打印启动时间</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ThingsboardServerApplication</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> startTs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        startTs <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>();
+</span></span><span style="display:flex;"><span>        SpringApplication.<span style="color:#a6e22e">run</span>(ThingsboardServerApplication.<span style="color:#a6e22e">class</span>, updateArguments(args));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@AfterStartUp</span>(order <span style="color:#f92672">=</span> Ordered.<span style="color:#a6e22e">LOWEST_PRECEDENCE</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">afterStartUp</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">long</span> startupTimeMs <span style="color:#f92672">=</span> System.<span style="color:#a6e22e">currentTimeMillis</span>() <span style="color:#f92672">-</span> startTs;
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">info</span>(<span style="color:#e6db74">&#34;Started ThingsBoard in {} seconds&#34;</span>, TimeUnit.<span style="color:#a6e22e">MILLISECONDS</span>.<span style="color:#a6e22e">toSeconds</span>(startupTimeMs));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>TemplateUtils</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TemplateUtils</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Pattern TEMPLATE_PARAM_PATTERN <span style="color:#f92672">=</span> Pattern.<span style="color:#a6e22e">compile</span>(<span style="color:#e6db74">&#34;\\$\\{(.+?)(:[a-zA-Z]+)?}&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span>String, UnaryOperator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;&gt;</span> FUNCTIONS <span style="color:#f92672">=</span> Map.<span style="color:#a6e22e">of</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;upperCase&#34;</span>, String::toUpperCase,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;lowerCase&#34;</span>, String::toLowerCase,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;capitalize&#34;</span>, StringUtils::capitalize
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">TemplateUtils</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">processTemplate</span>(String template, Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> context) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> TEMPLATE_PARAM_PATTERN.<span style="color:#a6e22e">matcher</span>(template).<span style="color:#a6e22e">replaceAll</span>(matchResult <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            String key <span style="color:#f92672">=</span> matchResult.<span style="color:#a6e22e">group</span>(1);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>context.<span style="color:#a6e22e">containsKey</span>(key)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;\\&#34;</span> <span style="color:#f92672">+</span> matchResult.<span style="color:#a6e22e">group</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            String value <span style="color:#f92672">=</span> nullToEmpty(context.<span style="color:#a6e22e">get</span>(key));
+</span></span><span style="display:flex;"><span>            String function <span style="color:#f92672">=</span> removeStart(matchResult.<span style="color:#a6e22e">group</span>(2), <span style="color:#e6db74">&#34;:&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (function <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (FUNCTIONS.<span style="color:#a6e22e">containsKey</span>(function)) {
+</span></span><span style="display:flex;"><span>                    value <span style="color:#f92672">=</span> FUNCTIONS.<span style="color:#a6e22e">get</span>(function).<span style="color:#a6e22e">apply</span>(value);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Matcher.<span style="color:#a6e22e">quoteReplacement</span>(value);
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ThrowingBiFunction</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@FunctionalInterface</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ThrowingBiFunction</span><span style="color:#f92672">&lt;</span>T, U, R<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    R <span style="color:#a6e22e">apply</span>(T t, U u) <span style="color:#66d9ef">throws</span> Exception;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ThrowingRunnable</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span>() <span style="color:#66d9ef">throws</span> ThingsboardException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> ThrowingRunnable <span style="color:#a6e22e">andThen</span>(ThrowingRunnable after) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">run</span>();
+</span></span><span style="display:flex;"><span>            after.<span style="color:#a6e22e">run</span>();
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@FunctionalInterface</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ThrowingSupplier</span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    T <span style="color:#a6e22e">get</span>() <span style="color:#66d9ef">throws</span> ThingsboardException;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>GeoUtil</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>GeoUtil.<span style="color:#a6e22e">distance</span>(entityCoordinates, perimeterCoordinates, rangeUnit)
+</span></span></code></pre></div><p>ListeningExecutor</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ListeningExecutor</span> <span style="color:#66d9ef">extends</span> Executor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">executeAsync</span>(Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> ListenableFuture<span style="color:#f92672">&lt;?&gt;</span> executeAsync(Runnable task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> executeAsync(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            task.<span style="color:#a6e22e">run</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">submit</span>(Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> executeAsync(task);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> ListenableFuture<span style="color:#f92672">&lt;?&gt;</span> submit(Runnable task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> executeAsync(task);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AbstractListeningExecutor</span> <span style="color:#66d9ef">implements</span> ListeningExecutor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> ListeningExecutorService service;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PostConstruct</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">service</span> <span style="color:#f92672">=</span> MoreExecutors.<span style="color:#a6e22e">listeningDecorator</span>(ThingsBoardExecutors.<span style="color:#a6e22e">newWorkStealingPool</span>(getThreadPollSize(), getClass()));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@PreDestroy</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">destroy</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">service</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">service</span>.<span style="color:#a6e22e">shutdown</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">executeAsync</span>(Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> service.<span style="color:#a6e22e">submit</span>(task);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ListenableFuture<span style="color:#f92672">&lt;?&gt;</span> executeAsync(Runnable task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> service.<span style="color:#a6e22e">submit</span>(task);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span>(Runnable command) {
+</span></span><span style="display:flex;"><span>        service.<span style="color:#a6e22e">execute</span>(command);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ListeningExecutorService <span style="color:#a6e22e">executor</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> service;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getThreadPollSize</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>DonAsynchron</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DonAsynchron</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">withCallback</span>(ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> future, Consumer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onSuccess,
+</span></span><span style="display:flex;"><span>                                        Consumer<span style="color:#f92672">&lt;</span>Throwable<span style="color:#f92672">&gt;</span> onFailure) {
+</span></span><span style="display:flex;"><span>        withCallback(future, onSuccess, onFailure, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">withCallback</span>(ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> future, Consumer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onSuccess,
+</span></span><span style="display:flex;"><span>                                        Consumer<span style="color:#f92672">&lt;</span>Throwable<span style="color:#f92672">&gt;</span> onFailure, Executor executor) {
+</span></span><span style="display:flex;"><span>        FutureCallback<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> callback <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FutureCallback<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onSuccess</span>(T result) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (onSuccess <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    onSuccess.<span style="color:#a6e22e">accept</span>(result);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (Throwable th) {
+</span></span><span style="display:flex;"><span>                    onFailure(th);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onFailure</span>(Throwable t) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (onFailure <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                onFailure.<span style="color:#a6e22e">accept</span>(t);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (executor <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            Futures.<span style="color:#a6e22e">addCallback</span>(future, callback, executor);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            Futures.<span style="color:#a6e22e">addCallback</span>(future, callback, MoreExecutors.<span style="color:#a6e22e">directExecutor</span>());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">submit</span>(Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task, Consumer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onSuccess, Consumer<span style="color:#f92672">&lt;</span>Throwable<span style="color:#f92672">&gt;</span> onFailure, Executor executor) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> submit(task, onSuccess, onFailure, executor, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">submit</span>(Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task, Consumer<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> onSuccess, Consumer<span style="color:#f92672">&lt;</span>Throwable<span style="color:#f92672">&gt;</span> onFailure, Executor executor, Executor callbackExecutor) {
+</span></span><span style="display:flex;"><span>        ListenableFuture<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> Futures.<span style="color:#a6e22e">submit</span>(task, executor);
+</span></span><span style="display:flex;"><span>        withCallback(future, onSuccess, onFailure, callbackExecutor);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> future;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ExpressionFunctionsUtil</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>userDefinedFunctions.<span style="color:#a6e22e">add</span>(Functions.<span style="color:#a6e22e">getBuiltinFunction</span>(<span style="color:#e6db74">&#34;sin&#34;</span>));
+</span></span></code></pre></div><p>JacksonUtil</p>
+<p>LinkedHashMapRemoveEldest</p>
+<p>SslUtil</p>
+<p>SystemUtil</p>
+<p>RegexUtils</p>
+<pre tabindex="0"><code>@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class RegexUtils {
+
+    public static final Pattern UUID_PATTERN = Pattern.compile(&#34;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&#34;);
+
+    private static final ConcurrentMap&lt;String, Pattern&gt; patternsCache = new ConcurrentReferenceHashMap&lt;&gt;(16, SOFT);
+
+    public static String replace(String s, Pattern pattern, UnaryOperator&lt;String&gt; replacer) {
+        return pattern.matcher(s).replaceAll(matchResult -&gt; {
+            return replacer.apply(matchResult.group());
+        });
+    }
+
+    public static String replace(String input, @Language(&#34;regexp&#34;) String pattern, Function&lt;MatchResult, String&gt; replacer) {
+        return patternsCache.computeIfAbsent(pattern, Pattern::compile).matcher(input).replaceAll(replacer);
+    }
+
+    public static boolean matches(String input, Pattern pattern) {
+        return pattern.matcher(input).matches();
+    }
+
+    public static String getMatch(String input, Pattern pattern, int group) {
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            try {
+                return matcher.group(group);
+            } catch (Exception ignored) {}
+        }
+        return null;
+    }
+
+}
+</code></pre><p>TbBytePool</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TbBytePool</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Getter</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> ConcurrentMap<span style="color:#f92672">&lt;</span>String, <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]&gt;</span> pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ConcurrentReferenceHashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">intern</span>(<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (data <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> checksum <span style="color:#f92672">=</span> Hashing.<span style="color:#a6e22e">sha512</span>().<span style="color:#a6e22e">hashBytes</span>(data).<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> pool.<span style="color:#a6e22e">computeIfAbsent</span>(checksum, c <span style="color:#f92672">-&gt;</span> data);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ThingsBoardExecutors</p>
+<p>ThingsBoardForkJoinWorkerThreadFactory</p>
+<p>ThingsBoardScheduledThreadPoolExecutor</p>
+<p>ThingsBoardThreadFactory</p>
+<p>四层架构：controller  -&gt; service  -&gt; dao/validator  -&gt; repository</p>
+<p>领域模型：</p>
+<ul>
+<li>HasEmail</li>
+<li>HasName</li>
+<li>HasTenantId</li>
+<li>HasAdditionalInfo</li>
+<li>HasVersion</li>
+<li>BaseData</li>
+<li>BaseDataWithAdditionalInfo</li>
+<li>ContactBased</li>
+<li>UUIDBased</li>
+</ul>
+<p>TODO：</p>
+<ul>
+<li>actor</li>
+<li>queue</li>
+<li>oauth2</li>
+<li>mqtt</li>
+<li>notice</li>
+<li>sms</li>
+<li>email</li>
+<li>proto</li>
+<li>websocket</li>
+<li>cache</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/06/all-things-about-oauth/" target="_blank" title="All things about OAuth">All things about OAuth</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/11/14/quarkus-quick-start/" target="_blank" title="2024-11-14-Quarkus 快速入门">2024-11-14-Quarkus 快速入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/08/09/debug-activemq-source-code/" target="_blank" title="ActiveMQ源码本地调试运行">ActiveMQ源码本地调试运行</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/06/oauth2-oidc/" target="_blank" title="OAuth2和OIDC区别">OAuth2和OIDC区别</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/02/17/top-n-using-redis/" target="_blank" title="如何实现榜单 top N 统计">如何实现榜单 top N 统计</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/02/14/rate-limit/" target="_blank" title="什么是限流">什么是限流</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source-code/" rel="tag">source-code</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/oauth2/" rel="tag">oauth2</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2025/04/08/install-gitea-using-docker/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 使用 Docker 安装 Gitea</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2025/06/06/oauth2-client-login-in-thingsboard/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Thingsboard源码中的OAuth2登录实现</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2025\/04\/30\/codes-in-thingsboard\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

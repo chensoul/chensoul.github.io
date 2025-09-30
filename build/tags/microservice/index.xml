@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Microservice on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/microservice/</link>
+    <description>Recent content in Microservice on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 17 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/microservice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring 国际化实现</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/17/spring-i18n/</link>
+      <pubDate>Thu, 17 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/17/spring-i18n/</guid>
+      <description>&lt;h2 id=&#34;-一设计背景&#34;&gt;📜 一、设计背景&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11-国际化需求的产生&#34;&gt;1.1 国际化需求的产生&lt;/h3&gt;&#xA;&lt;p&gt;随着软件应用的全球化发展，企业级应用需要支持多种语言和地区设置。Spring Framework 作为 Java 企业级开发的核心框架，必须提供完善的国际化（i18n）支持来满足以下需求：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/20/til/</link>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/20/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-26｜foodie-cloud集成Feign</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/26/til/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/26/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;重构 foodie-cloud 项目&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/02/til/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/02/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;雪崩问题&lt;/li&gt;&#xA;&lt;li&gt;Spring Cloud微服务集成 Sentinel&lt;/li&gt;&#xA;&lt;li&gt;扩展 Sentinel 集成 OpenFeign，实现自动降级&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;雪崩问题&#34;&gt;雪崩问题&lt;/h2&gt;&#xA;&lt;p&gt;1、什么是雪崩问题？&#xA;雪崩问题（Avalanche Effect）是指在分布式系统中，当一个节点或服务出现故障或不可用时，其影响会扩散到其他节点或服务，导致级联故障的现象。这种现象类似于雪崩，一旦开始，会不断放大和蔓延，最终导致整个系统崩溃。&#xA;雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

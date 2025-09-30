@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring-Boot on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/spring-boot/</link>
+    <description>Recent content in Spring-Boot on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 30 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/spring-boot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/30/spring-ai-text2sql-showcase/</link>
+      <pubDate>Tue, 30 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/30/spring-ai-text2sql-showcase/</guid>
+      <description>&lt;p&gt;&amp;ldquo;能不能让数据库直接听懂中文问题，然后自动生成 SQL？&amp;rdquo; 这个想法在我脑海中盘旋了很久。最近终于用 &lt;strong&gt;Spring AI&lt;/strong&gt; 实现了这个功能，从最初的简单实现到后来的 &lt;strong&gt;MCP 工具集成&lt;/strong&gt;，再到&lt;strong&gt;分步骤查询模式&lt;/strong&gt;，整个过程充满了惊喜和踩坑。今天就来分享一下我的 &lt;strong&gt;Text2SQL&lt;/strong&gt; 实践心得。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GitHub中配置Renovate自动依赖更新和自动合并PR</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/28/config-renovate-in-github/</link>
+      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/28/config-renovate-in-github/</guid>
+      <description>&lt;p&gt;本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/26/spring-ai-restaurant-showcase-rag/</link>
+      <pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/26/spring-ai-restaurant-showcase-rag/</guid>
+      <description>&lt;p&gt;最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring Boot异常处理思路</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/24/spring-exception/</link>
+      <pubDate>Thu, 24 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/24/spring-exception/</guid>
+      <description>&lt;p&gt;本文档描述了基于 Spring Boot 的异常处理设计思路，旨在构建一个统一、可扩展、支持国际化的异常处理体系。通过合理的异常分类、统一的响应格式和完善的国际化支持，为前端提供友好的错误信息，同时便于后端进行问题定位和监控。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RuoYi AI 源码分析</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</link>
+      <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;RuoYi AI&lt;/strong&gt; 是一个基于Spring Boot 3.4的企业级AI助手平台，深度集成FastGPT、扣子(Coze)、DIFY等主流AI平台，提供先进的RAG技术和多模型支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard HTTP Transport 实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</link>
+      <pubDate>Wed, 02 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</guid>
+      <description>&lt;p&gt;本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP&#xA;自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thingsboard源码中的OAuth2登录实现</title>
+      <link>https://blog.chensoul.cc/posts/2025/06/06/oauth2-client-login-in-thingsboard/</link>
+      <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/06/06/oauth2-client-login-in-thingsboard/</guid>
+      <description>&lt;h2 id=&#34;thingsboard-启用-oauth2-功能&#34;&gt;Thingsboard 启用 OAuth2 功能&lt;/h2&gt;&#xA;&lt;p&gt;使用 &lt;a href=&#34;mailto:sysadmin@thingsboard.org&#34;&gt;sysadmin@thingsboard.org&lt;/a&gt; / sysadmin 账号登录 Thingsboard 系统之后，在安全 -&amp;gt; OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>区分偶发性超时和频繁超时的重试策略</title>
+      <link>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</link>
+      <pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</guid>
+      <description>&lt;p&gt;在实际项目中，区分偶发性超时和频繁超时的重试策略非常重要。偶发性超时可能是由于网络抖动或临时负载过高引起的，适合立即重试；而频繁超时则可能是系统过载或下游服务不可用，此时应避免重试，以免加剧问题。&lt;/p&gt;&#xA;&lt;p&gt;在实际面试的过程中，经常会遇到类似的面试题目，这时候可以这样回答：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;在处理大量请求时，我们经常会遇到超时的情况。为了合理控制重试行为，避免所谓的“重试风暴”，我设计了一个基于时间窗口的算法。在这个算法中，我们维护了一个滑动窗口，窗口内记录了每个请求的时间戳以及该请求是否超时。每当一个请求超时后，我们会统计窗口内超时的请求数量。如果超时请求的数量超过了设定的阈值，我们就认为当前系统压力较大，不适合进行重试；否则，我们认为可以安全地进行重试。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-11-04｜SivaLabs博客文章</title>
+      <link>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</guid>
+      <description>&lt;p&gt;以下是 &lt;a href=&#34;https://www.sivalabs.in/&#34; target=&#34;_blank&#34;&gt;SivaLabs 博客&lt;/a&gt; 中的一些文章，记录在此，方便后面阅读。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/</link>
+      <pubDate>Mon, 08 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/</guid>
+      <description>&lt;p&gt;我们希望我们的微服务是可复制、可替换的工作程序，我们可以轻松升级或降级，无需停机，管理也只需最少。我们可能会说我们希望他们是我们的奴才。在本文中，我们将通过一个简单的示例来了解 Kubernetes 通过创建和编排奴才大军可以为我们做些什么。您可以按照本文进行编码，也可以从&lt;a href=&#34;https://github.com/ryandawsonuk/minions/blob/master/minion-army.yml&#34; target=&#34;_blank&#34;&gt;此处&lt;/a&gt;克隆项目。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]面向 Java 开发人员的 Kubernetes</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/08/kubernetes-for-java-developers/</link>
+      <pubDate>Mon, 08 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/08/kubernetes-for-java-developers/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;有一类新工具可用于将应用程序 docker 化并部署到 Kubernetes，这些工具专门面向开发人员。该类别中的最新工具是 RedHat 的 JKube。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about WebSocket</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/10/all-things-about-websocket/</link>
+      <pubDate>Fri, 10 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/10/all-things-about-websocket/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/WebSocket&#34; target=&#34;_blank&#34;&gt;Wikipedia：WebSocket&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/WebSocket&#34; target=&#34;_blank&#34;&gt;WebSocket - Web APIs | MDN&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about Spring Modulith</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-spring-modulith/</link>
+      <pubDate>Thu, 09 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-spring-modulith/</guid>
+      <description>&lt;p&gt;VMware 推出了一个实验性的项目&lt;a href=&#34;https://spring.io/projects/spring-modulith&#34; target=&#34;_blank&#34;&gt;Spring Modulith&lt;/a&gt;，以便于通过模块和事件更好地组织 Spring Boot 3 应用。该项目引入了新的类和注解，但并不会生成代码。它的模块没有使用 Java Platform Module System（JPMS），而是映射到了普通的 Java 包。模块有 API，但是 Spring Modulith 鼓励使用 Spring 应用事件作为“主要的交互方式”。这些事件可以自动持久化到事件日志中。Spring Modulith 还简化了模块和事件的测试。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]WebSocket与REST</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websocket-vs-rest/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websocket-vs-rest/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websocket-vs-rest&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websocket-vs-rest&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;无论您是将客户端连接到服务器、将微服务相互连接，还是将应用程序的一部分连接到外部服务，在通信方法方面，您几乎都会有多种选择。不过，有两个比较突出：WebSocket 和 REST。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-05｜Spring Cloud Config快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/05/til/</link>
+      <pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;创建项目 &lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt;，测试 &lt;em&gt;Spring Cloud&lt;/em&gt; Config 使用本地文件和 git 仓库作为配置中心&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。&#xA;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 支持以下几种存储方式：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/02/til/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/02/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;参考 《&lt;a href=&#34;https://download.packt.com/free-ebook/9781805128694&#34; target=&#34;_blank&#34;&gt;Microservices with Spring Boot 3 and Spring Cloud&lt;/a&gt;》，重构&#xA;foodie-cloud 项目&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-01｜使用 Spring Initializr 创建项目</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/01/til/</link>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/01/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;重构 foodie-cloud 项目，部署到 docker 容器&lt;/li&gt;&#xA;&lt;li&gt;使用 Spring Initializr 创建项目&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;使用-spring-initializr-创建项目&#34;&gt;使用 Spring Initializr 创建项目&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;安装  spring cli&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-31｜Redis事务</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/31/til/</link>
+      <pubDate>Wed, 31 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/31/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;下载 《&lt;a href=&#34;https://download.packt.com/free-ebook/9781805128694&#34; target=&#34;_blank&#34;&gt;Microservices with Spring Boot 3 and Spring Cloud&lt;/a&gt;》，源码在 &lt;a href=&#34;https://github.com/PacktPublishing/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Redis 事务&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;redis事务&#34;&gt;Redis事务&lt;/h1&gt;&#xA;&lt;h2 id=&#34;原理&#34;&gt;原理&lt;/h2&gt;&#xA;&lt;p&gt;Redis 是一个内存数据库，它支持事务操作。Redis 事务是一系列的命令操作，这些命令会被一起执行，要么全部成功，要么全部失败。在事务执行期间，其他客户端提交的命令不会被插入到事务中，确保事务的原子性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/17/til/</link>
+      <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/17/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。&lt;/li&gt;&#xA;&lt;li&gt;foodie-cloud 项目实现读写分离并集成 Springdoc&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;docker-搭建-mysql-主从复制环境&#34;&gt;Docker 搭建 MySQL 主从复制环境&lt;/h2&gt;&#xA;&lt;p&gt;参考文章 ：&lt;a href=&#34;https://learnku.com/articles/30439&#34; target=&#34;_blank&#34;&gt;基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-04｜GitHub Actions</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/04/til/</link>
+      <pubDate>Thu, 04 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/04/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;修改个人联系方式&lt;/li&gt;&#xA;&lt;li&gt;注销亚马逊账号&lt;/li&gt;&#xA;&lt;li&gt;利用GitHub Actions自动优雅地为项目构建Releases&lt;/li&gt;&#xA;&lt;li&gt;利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;修改个人联系方式&#34;&gt;修改个人联系方式&lt;/h2&gt;&#xA;&lt;p&gt;使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-21｜Spring Security对OAuth2的支持及实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/21/til/</link>
+      <pubDate>Thu, 21 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/21/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：Spring Security 对 OAuth2 的支持&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-18｜使用Spring Security实现OAuth2授权和认证</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/18/til/</link>
+      <pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/18/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和认证。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about MicroProfile</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/14/all-things-about-microprofile/</link>
+      <pubDate>Thu, 14 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/14/all-things-about-microprofile/</guid>
+      <description>&lt;p&gt;最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>JHipster安装和介绍</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/02/jhipster-intro/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/02/jhipster-intro/</guid>
+      <description>&lt;p&gt;JHipster 是一个开发平台，可以快速生成，开发和部署现代 Web 应用程序+微服务架构。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]DevOps 和测试人员的 Git 面试问题</title>
+      <link>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</guid>
+      <description>&lt;p&gt;欢迎来到 Git 面试准备指南，我们将在这里向初学者和经验丰富的专业人士讨论最常见的 Git 面试问题。无论您是准备参加 DevOps 或测试面试，还是希望提高 Git 技能，此资源都可以通过深入研究一些与 Git 基本概念和实践相关的最常见面试问题来帮助您。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

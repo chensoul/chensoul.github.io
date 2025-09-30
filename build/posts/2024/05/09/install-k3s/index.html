@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>安装k3s - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="安装k3s">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/05/09/install-k3s/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="安装k3s">
+  <meta itemprop="description" content="K3s 是轻量级的 Kubernetes。K3s 易于安装，仅需要 Kubernetes 内存的一半，所有组件都在一个小于 100 MB 的二进制文件中。">
+  <meta itemprop="datePublished" content="2024-05-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="670">
+  <meta itemprop="keywords" content="Docker,Mysql,Kubernetes,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="安装k3s">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">安装k3s</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-09">2024-05-09</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cloud-native/" rel="category">Cloud-Native</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/mysql/" rel="tag">Mysql</a>, <a class="meta__link" href="/tags/kubernetes/" rel="tag">Kubernetes</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>K3s 是轻量级的 Kubernetes。K3s 易于安装，仅需要 Kubernetes 内存的一半，所有组件都在一个小于 100 MB 的二进制文件中。</p>
+<p>k3s 文档：<a href="https://docs.rancher.cn/docs/k3s/_index" target="_blank">https://docs.rancher.cn/docs/k3s/_index</a></p>
+<h2 id="k3s介绍">K3s介绍</h2>
+<h3 id="什么是-k3s">什么是 K3s？</h3>
+<p>K3s 是一个完全兼容的 Kubernetes 发行版，具有以下增强功能：</p>
+<ul>
+<li>打包为单个二进制文件。</li>
+<li>使用基于 sqlite3 作为默认存储机制的轻量级存储后端。同时支持使用 etcd3、MySQL 和 Postgres。</li>
+<li>封装在简单的启动程序中，可以处理很多复杂的 TLS 和选项。</li>
+<li>默认情况下是安全的，对轻量级环境有合理的默认值。</li>
+<li>添加了简单但强大的 batteries-included 功能，例如：
+<ul>
+<li>本地存储提供程序</li>
+<li>service load balancer</li>
+<li>Helm controller</li>
+<li>Traefik ingress controller</li>
+</ul>
+</li>
+<li>所有 Kubernetes control plane 组件的操作都封装在单个二进制文件和进程中。因此，K3s 支持自动化和管理复杂的集群操作（例如证书分发等）。</li>
+<li>最大程度减轻了外部依赖性，K3s 仅需要现代内核和 cgroup 挂载。K3s 打包了所需的依赖，包括：
+<ul>
+<li>containerd</li>
+<li>Flannel (CNI)</li>
+<li>CoreDNS</li>
+<li>Traefik (Ingress)</li>
+<li>Klipper-lb (Service LB)</li>
+<li>嵌入式网络策略控制器</li>
+<li>嵌入式 local-path-provisioner</li>
+<li>主机实用程序（iptables、socat 等）</li>
+</ul>
+</li>
+</ul>
+<h3 id="为什么叫-k3s">为什么叫 K3s?</h3>
+<p>我们希望安装的 Kubernetes 只占用一半的内存。Kubernetes 是一个 10 个字母的单词，简写为 K8s。Kubernetes 的一半就是一个 5 个字母的单词，因此简写为 K3s。K3s 没有全称，也没有官方的发音。</p>
+<h3 id="适用场景">适用场景</h3>
+<p>K3s 适用于以下场景：</p>
+<ul>
+<li>边缘计算-Edge</li>
+<li>物联网-IoT</li>
+<li>CI</li>
+<li>Development</li>
+<li>ARM</li>
+<li>嵌入 K8s</li>
+</ul>
+<p>由于运行 K3s 所需的资源相对较少，所以 K3s 也适用于开发和测试场景。在这些场景中，如果开发或测试人员需要对某些功能进行验证，或对某些问题进行重现，那么使用 K3s 不仅能够缩短启动集群的时间，还能够减少集群需要消耗的资源。与此同时，Rancher 中国团队推出了一款针对 K3s 的效率提升工具：<strong>AutoK3s</strong>。只需要输入一行命令，即可快速创建 K3s 集群并添加指定数量的 master 节点和 worker 节点。如需详细了解 AutoK3s，请参考<a href="https://docs.rancher.cn/docs/k3s/autok3s/_index" target="_blank">AutoK3s 功能介绍</a>。</p>
+<h2 id="安装docker">安装Docker</h2>
+<p>使用 docker 官方安装脚本：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ usermod -aG docker <span style="color:#e6db74">`</span>whoami<span style="color:#e6db74">`</span>
+</span></span></code></pre></div><p>另一种方式是使用 Rancher 的 Docker 安装脚本，该脚本可用于较新的 Docker 版本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl https://releases.rancher.com/install-docker/&lt;version-number&gt;.sh | sh
+</span></span></code></pre></div><p>version-number 可以在查看：https://github.com/rancher/install-docker/blob/master/dist/ ，比如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl https://releases.rancher.com/install-docker/25.0.sh | sh
+</span></span></code></pre></div><p>请注意，必须应用以下 /etc/sysctl.conf 设置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>net.bridge.bridge-nf-call-iptables<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>启动 docker</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ systemctl enable docker <span style="color:#f92672">&amp;&amp;</span> systemctl start docker
+</span></span></code></pre></div><h2 id="在线安装">在线安装</h2>
+<p>K3s 提供了一个安装脚本，可以方便地将其作为服务安装在基于 systemd 或 openrc 的系统上。该脚本可在 <a href="https://get.k3s.io/" target="_blank">https://get.k3s.io</a> 获得。要使用这种方法安装 K3s，只需运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -sfL https://get.k3s.io | sh - --docker
+</span></span></code></pre></div><blockquote>
+<p>备注：</p>
+<p>中国用户，可以使用以下方法加速安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR<span style="color:#f92672">=</span>cn sh -
+</span></span></code></pre></div></blockquote>
+<p>运行此安装后：</p>
+<ul>
+<li>K3s 服务将被配置为在节点重启后或进程崩溃或被杀死时自动重启。</li>
+<li>将安装其他实用程序，包括 <code>kubectl</code>、<code>crictl</code>、<code>ctr</code>、<code>k3s-killall.sh</code> 和 <code>k3s-uninstall.sh</code>。</li>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/" target="_blank">kubeconfig</a> 文件将写入到 <code>/etc/rancher/k3s/k3s.yaml</code>，由 K3s 安装的 kubectl 将自动使用该文件。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR<span style="color:#f92672">=</span>cn INSTALL_K3S_VERSION<span style="color:#f92672">=</span>v1.28.7+k3s1 sh -s - --docker
+</span></span></code></pre></div><ul>
+<li><code>--docker</code>：K3s 包含并默认为 <a href="https://containerd.io/" target="_blank">containerd</a> ，使用 docker 代替  <a href="https://containerd.io/" target="_blank">containerd</a></li>
+<li><code>INSTALL_K3S_VERSION=v1.28.7+k3s1</code>：指定版本，rancher 需要 k3s 版本小于 1.29.0。</li>
+</ul>
+<p>稍等片刻，查看 docker 容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo docker ps
+</span></span></code></pre></div><p>查看安装k3s可以配置的参数：</p>
+<pre><code>$ k3s server -h
+</code></pre>
+<p>当k3s安装成功之后，我们也可以修改 <code>/etc/systemd/system/k3s.service</code> 中的启动参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description<span style="color:#f92672">=</span>Lightweight Kubernetes
+</span></span><span style="display:flex;"><span>Documentation<span style="color:#f92672">=</span>https://k3s.io
+</span></span><span style="display:flex;"><span>Wants<span style="color:#f92672">=</span>network-online.target
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>WantedBy<span style="color:#f92672">=</span>multi-user.target
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Type<span style="color:#f92672">=</span>notify
+</span></span><span style="display:flex;"><span>EnvironmentFile<span style="color:#f92672">=</span>/etc/systemd/system/k3s.service.env
+</span></span><span style="display:flex;"><span>KillMode<span style="color:#f92672">=</span>process
+</span></span><span style="display:flex;"><span>Delegate<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>LimitNOFILE<span style="color:#f92672">=</span>infinity
+</span></span><span style="display:flex;"><span>LimitNPROC<span style="color:#f92672">=</span>infinity
+</span></span><span style="display:flex;"><span>LimitCORE<span style="color:#f92672">=</span>infinity
+</span></span><span style="display:flex;"><span>TasksMax<span style="color:#f92672">=</span>infinity
+</span></span><span style="display:flex;"><span>TimeoutStartSec<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Restart<span style="color:#f92672">=</span>always
+</span></span><span style="display:flex;"><span>RestartSec<span style="color:#f92672">=</span>5s
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>-/sbin/modprobe br_netfilter
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>-/sbin/modprobe overlay
+</span></span><span style="display:flex;"><span>ExecStart<span style="color:#f92672">=</span>/usr/local/bin/k3s <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	<span style="color:#e6db74">&#39;--docker&#39;</span> <span style="color:#ae81ff">\
+</span></span></span></code></pre></div><p>根据需要，可以调整下 K3s 的服务配置文件，以将 K3s 的默认容器引擎从 Containerd 切换到 Docker，或者不部署 traefik</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ExecStart<span style="color:#f92672">=</span>/usr/local/bin/k3s server --docker --no-deploy traefik
+</span></span></code></pre></div><p>之后保存退出，执行命令重新加载新的服务配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl restart k3s 
+</span></span></code></pre></div><h2 id="集群访问">集群访问</h2>
+<p><code>/etc/rancher/k3s/k3s.yaml</code> 中存储的 kubeconfig 文件用于配置对 Kubernetes 集群的访问。如果你已经安装了上游的 Kubernetes 命令行工具（如 kubectl 或 helm)，你需要用正确的 kubeconfig 路径配置它们。这可以通过导出 <code>KUBECONFIG</code> 环境变量或调用 <code>--kubeconfig</code> 命令行标志来完成。有关详细信息，请参阅以下示例。</p>
+<p>使用 KUBECONFIG 环境变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export KUBECONFIG<span style="color:#f92672">=</span>/etc/rancher/k3s/k3s.yaml
+</span></span><span style="display:flex;"><span>kubectl get pods --all-namespaces
+</span></span><span style="display:flex;"><span>helm ls --all-namespaces
+</span></span></code></pre></div><p>或者在命令中指定 kubeconfig 文件的位置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --kubeconfig /etc/rancher/k3s/k3s.yaml get pods --all-namespaces
+</span></span><span style="display:flex;"><span>helm --kubeconfig /etc/rancher/k3s/k3s.yaml ls --all-namespaces
+</span></span></code></pre></div><h3 id="使用-kubectl-从外部访问集群">使用 kubectl 从外部访问集群</h3>
+<p>将 <code>/etc/rancher/k3s/k3s.yaml</code> 复制到位于集群外部的主机上的 <code>~/.kube/config</code>。然后，将 <code>server</code> 字段的值替换为你 K3s Server 的 IP 或名称。现在，你可以使用 <code>kubectl</code> 来管理 K3s 集群。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+</span></span></code></pre></div><h2 id="检查状态">检查状态</h2>
+<p>查看kubectl是否安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ which kubectl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl version
+</span></span><span style="display:flex;"><span>Client Version: v1.29.3
+</span></span><span style="display:flex;"><span>Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+</span></span><span style="display:flex;"><span>Server Version: v1.29.4+k3s1
+</span></span></code></pre></div><p>查看k3s版本和服务运行状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ k3s --version
+</span></span><span style="display:flex;"><span>k3s version v1.29.4+k3s1 <span style="color:#f92672">(</span>94e29e2e<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>go version go1.21.9
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ systemctl status k3s
+</span></span></code></pre></div><p>查看节点状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get nodes
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                  AGE   VERSION
+</span></span><span style="display:flex;"><span>doris-01   Ready    control-plane,master   91m   v1.29.4+k3s1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl get node -o wide
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                  AGE   VERSION        INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION                CONTAINER-RUNTIME
+</span></span><span style="display:flex;"><span>doris-01   Ready    control-plane,master   92m   v1.29.4+k3s1   192.168.1.107   &lt;none&gt;        CentOS Linux <span style="color:#ae81ff">7</span> <span style="color:#f92672">(</span>Core<span style="color:#f92672">)</span>   3.10.0-1160.71.1.el7.x86_64   containerd://1.7.15-k3s1
+</span></span></code></pre></div><p>查看命名空间：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get ns
+</span></span><span style="display:flex;"><span>NAME              STATUS   AGE
+</span></span><span style="display:flex;"><span>kube-system       Active   92m
+</span></span><span style="display:flex;"><span>kube-public       Active   92m
+</span></span><span style="display:flex;"><span>kube-node-lease   Active   92m
+</span></span><span style="display:flex;"><span>default           Active   92m
+</span></span></code></pre></div><p>查看运行状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get all -n kube-system
+</span></span><span style="display:flex;"><span>NAME                                          READY   STATUS      RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/coredns-6799fbcd5-gjl6m                   1/1     Running     <span style="color:#ae81ff">0</span>          92m
+</span></span><span style="display:flex;"><span>pod/local-path-provisioner-6c86858495-l29k2   1/1     Running     <span style="color:#ae81ff">0</span>          92m
+</span></span><span style="display:flex;"><span>pod/helm-install-traefik-crd-4gsfn            0/1     Completed   <span style="color:#ae81ff">0</span>          92m
+</span></span><span style="display:flex;"><span>pod/helm-install-traefik-6j2ch                0/1     Completed   <span style="color:#ae81ff">1</span>          92m
+</span></span><span style="display:flex;"><span>pod/metrics-server-54fd9b65b-98rld            1/1     Running     <span style="color:#ae81ff">0</span>          92m
+</span></span><span style="display:flex;"><span>pod/svclb-traefik-231ab742-j2qfs              2/2     Running     <span style="color:#ae81ff">0</span>          91m
+</span></span><span style="display:flex;"><span>pod/traefik-7d5f6474df-s6srn                  1/1     Running     <span style="color:#ae81ff">0</span>          91m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>                      AGE
+</span></span><span style="display:flex;"><span>service/kube-dns         ClusterIP      10.43.0.10     &lt;none&gt;          53/UDP,53/TCP,9153/TCP       92m
+</span></span><span style="display:flex;"><span>service/metrics-server   ClusterIP      10.43.120.4    &lt;none&gt;          443/TCP                      92m
+</span></span><span style="display:flex;"><span>service/traefik          LoadBalancer   10.43.104.97   192.168.1.107   80:30484/TCP,443:32566/TCP   91m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                    DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+</span></span><span style="display:flex;"><span>daemonset.apps/svclb-traefik-231ab742   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           &lt;none&gt;          91m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span style="display:flex;"><span>deployment.apps/coredns                  1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           92m
+</span></span><span style="display:flex;"><span>deployment.apps/local-path-provisioner   1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           92m
+</span></span><span style="display:flex;"><span>deployment.apps/metrics-server           1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           92m
+</span></span><span style="display:flex;"><span>deployment.apps/traefik                  1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           91m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                                DESIRED   CURRENT   READY   AGE
+</span></span><span style="display:flex;"><span>replicaset.apps/coredns-6799fbcd5                   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       92m
+</span></span><span style="display:flex;"><span>replicaset.apps/local-path-provisioner-6c86858495   <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       92m
+</span></span><span style="display:flex;"><span>replicaset.apps/metrics-server-54fd9b65b            <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       92m
+</span></span><span style="display:flex;"><span>replicaset.apps/traefik-7d5f6474df                  <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>         <span style="color:#ae81ff">1</span>       91m
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                                 COMPLETIONS   DURATION   AGE
+</span></span><span style="display:flex;"><span>job.batch/helm-install-traefik-crd   1/1           32s        92m
+</span></span><span style="display:flex;"><span>job.batch/helm-install-traefik       1/1           34s        92m
+</span></span></code></pre></div><ul>
+<li>可以看到 service/traefik 类型为 LoadBalancer，EXTERNAL-IP 为 192.168.1.107 。</li>
+</ul>
+<h2 id="配置集群">配置集群</h2>
+<h3 id="添加-worker-节点">添加 worker 节点</h3>
+<p>在master节点查看_K3S_TOKEN_：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat /var/lib/rancher/k3s/server/node-token
+</span></span><span style="display:flex;"><span>K1069e97c40ac7433f5e4ca318e3945d2684fcc58813588305743a9bc17582f160e::server:ca28a1e542ce5030bcf6031d0c4c8ef4
+</span></span></code></pre></div><p>在worker节点安装，这里使用 192.168.1.109 节点安装：</p>
+<blockquote>
+<p>注意：192.168.1.109 节点 需要先安装好 docker。</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>k3s_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://192.168.1.107:6443&#34;</span>
+</span></span><span style="display:flex;"><span>k3s_token<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;K1069e97c40ac7433f5e4ca318e3945d2684fcc58813588305743a9bc17582f160e::server:ca28a1e542ce5030bcf6031d0c4c8ef4&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR<span style="color:#f92672">=</span>cn K3S_URL<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>k3s_url<span style="color:#e6db74">}</span> K3S_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>k3s_token<span style="color:#e6db74">}</span> sh -s - --docker 
+</span></span></code></pre></div><p>在  master 节点（192.168.1.107）查看节点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get nodes
+</span></span><span style="display:flex;"><span>NAME       STATUS   ROLES                  AGE   VERSION
+</span></span><span style="display:flex;"><span>doris-01   Ready    control-plane,master   50m   v1.29.4+k3s1
+</span></span><span style="display:flex;"><span>doris-03   Ready    &lt;none&gt;                 67s   v1.29.4+k3s1
+</span></span></code></pre></div><h2 id="卸载">卸载</h2>
+<p>卸载 k3s：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/bin/k3s-uninstall.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/usr/local/bin/k3s-agent-uninstall.sh
+</span></span></code></pre></div><p>清理 docker 容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker rm -f <span style="color:#66d9ef">$(</span>docker ps -aq<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/all-things-about-drone/" target="_blank" title="All things about Drone">All things about Drone</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s-using-k3d/" target="_blank" title="通过k3d安装k3s">通过k3d安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/09/install-k3s-using-k3sup/" target="_blank" title="通过k3sup安装k3s">通过k3sup安装k3s</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/21/architecture/" target="_blank" title="如何成为一名合格的架构师">如何成为一名合格的架构师</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/04/29/all-things-about-thingsboard/" target="_blank" title="All things about ThingsBoard">All things about ThingsBoard</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/02/19/til/" target="_blank" title="2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离">2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/mysql/" rel="tag">mysql</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/kubernetes/" rel="tag">kubernetes</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/05/09/install-k3s-using-k3d/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 通过k3d安装k3s</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/09/all-things-about-spring-modulith/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: All things about Spring Modulith</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/05\/09\/install-k3s\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#k3s介绍">K3s介绍</a>
+      <ul>
+        <li><a href="#什么是-k3s">什么是 K3s？</a></li>
+        <li><a href="#为什么叫-k3s">为什么叫 K3s?</a></li>
+        <li><a href="#适用场景">适用场景</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装docker">安装Docker</a></li>
+    <li><a href="#在线安装">在线安装</a></li>
+    <li><a href="#集群访问">集群访问</a>
+      <ul>
+        <li><a href="#使用-kubectl-从外部访问集群">使用 kubectl 从外部访问集群</a></li>
+      </ul>
+    </li>
+    <li><a href="#检查状态">检查状态</a></li>
+    <li><a href="#配置集群">配置集群</a>
+      <ul>
+        <li><a href="#添加-worker-节点">添加 worker 节点</a></li>
+      </ul>
+    </li>
+    <li><a href="#卸载">卸载</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

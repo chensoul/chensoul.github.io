@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>搭建本地Maven仓库Nexus - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="搭建本地Maven仓库Nexus">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/25/install-nexus/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="搭建本地Maven仓库Nexus">
+  <meta itemprop="description" content="使用 Docker 安装 $ docker volume create --name nexus_data $ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3 8081 是 Nexus UI 端口 使用 Docker Compose 安装 services: nexus: image: sonatype/nexus3 platform: linux/amd64 ports: - &#34;8081:8081&#34; volumes: - nexus_data://nexus-data - /etc/localtime://etc/localtime:ro volumes: nexus_data: 访问并配置 Nexus 访问 http://127.0.0.1:8081/ 或者是 http://&lt;your IP&gt;:8081，用户名为 admin ，初始密码在容器里的 /nexus-data/admin.password 文件">
+  <meta itemprop="datePublished" content="2024-06-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="587">
+  <meta itemprop="keywords" content="Docker,Javascript,Security,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="搭建本地Maven仓库Nexus">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">搭建本地Maven仓库Nexus</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-25">2024-06-25</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/devops/" rel="category">Devops</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="使用-docker-安装">使用 Docker 安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker volume create --name nexus_data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3
+</span></span></code></pre></div><ul>
+<li>8081 是 Nexus UI 端口</li>
+</ul>
+<h2 id="使用-docker-compose-安装">使用 Docker Compose 安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nexus</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">sonatype/nexus3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">platform</span>: <span style="color:#ae81ff">linux/amd64</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;8081:8081&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">nexus_data://nexus-data</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">/etc/localtime://etc/localtime:ro</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nexus_data</span>:
+</span></span></code></pre></div><h2 id="访问并配置-nexus">访问并配置 Nexus</h2>
+<p>访问 http://127.0.0.1:8081/  或者是 <code>http://&lt;your IP&gt;:8081</code>，用户名为 admin ，初始密码在容器里的 /nexus-data/admin.password 文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># docker-nexus-1 为容器名称</span>
+</span></span><span style="display:flex;"><span>docker exec -it docker-nexus-1 cat /nexus-data/admin.password
+</span></span></code></pre></div><p>登录之后，将密码修改为自己的密码，比如：admin。</p>
+<h3 id="开启匿名访问权限">开启匿名访问权限</h3>
+<p>依次点击【Security】&ndash;【Realms】,将【Docker Bearer Token Tealm】添加到右侧，然后保存。</p>
+<h3 id="创建-maven-仓库">创建 Maven 仓库</h3>
+<p>Nexus 提供三种类型的仓库：</p>
+<ul>
+<li>
+<p><strong>hosted : 本地存储</strong></p>
+</li>
+<li>
+<p><strong>proxy : 提供代理其他仓库的类型，如阿里云镜像加速器</strong></p>
+</li>
+<li>
+<p><strong>groudp : 组类型，实质作用是组合多个仓库为一个地址</strong></p>
+</li>
+</ul>
+<p>创建一个 maven(proxy) 仓库，名称：aliyun，Version Policy 选择 Mixed，URL 地址：https://maven.aliyun.com/nexus/content/groups/public/，并修改 maven-public 仓库，将 aliyun 加入 maven-public 的 Group 中。</p>
+<blockquote>
+<p>注意：保持 hosted 仓库在 proxy 仓库之前，这样方便下载依赖时先从本地查找。</p></blockquote>
+<h3 id="创建-docker-仓库">创建 Docker 仓库</h3>
+<p>先创建一个 blob store 用于存储 docker 文件。</p>
+<p>然后，创建三个仓库：</p>
+<ul>
+<li>创建一个 <strong>docker(hosted)</strong>  仓库，名称为：docker-local，Blob store 选择上面创建的 docker，选择 Allow anonymous docker pull 。</li>
+<li>创建一个 <strong>docker(proxy)</strong> 仓库，名称为：docker-remote，地址填 <a href="https://docker.1panel.live/" target="_blank">https://docker.1panel.live/</a> 或其他代理地址也行，Docker Index 选择：User Docker Hub，Blob store 选择上面创建的 docker，选择 Allow anonymous docker pull。</li>
+<li>创建一个  <strong>docker(group)</strong> 仓库，名称为：docker</li>
+</ul>
+<p>修改 docker 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim /etc/docker/daemon.json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;registry-mirrors&#34;</span> : <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https://docker-registry.chensoul.cc&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>重启 docker。</p>
+<h3 id="配置反向代理">配置反向代理</h3>
+<ol>
+<li>
+<p>准备好 SSL 文件，放置 /etc/nginx/ssl 目录</p>
+</li>
+<li>
+<p>使用源码编译安装 nignx，安装目录  /usr/local/nginx</p>
+</li>
+<li>
+<p>修改 /usr/local/nginx/conf/nginx.conf 文件，添加 <code>include /etc/nginx/conf.d/*.conf</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e">#user  nobody;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">worker_processes</span>  <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">events</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">worker_connections</span>  <span style="color:#ae81ff">1024</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">http</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include</span>       <span style="color:#e6db74">mime.types</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">default_type</span>  <span style="color:#e6db74">application/octet-stream</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">sendfile</span>        <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">keepalive_timeout</span>  <span style="color:#ae81ff">65</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include</span> <span style="color:#e6db74">/etc/nginx/conf.d/*.conf</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p>为 nexus 配置反向代理</p>
+<p>/etc/nginx/conf.d/ 目录下添加 nexus.conf 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">nexus.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^</span> <span style="color:#e6db74">https://</span>$http_host$request_uri? <span style="color:#e6db74">permanent</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">server_name</span> <span style="color:#e6db74">nexus.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/etc/nginx/ssl/all.crt</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/etc/nginx/ssl/all.key</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_session_timeout</span> <span style="color:#ae81ff">5m</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_protocols</span> <span style="color:#e6db74">TLSv1</span> <span style="color:#e6db74">TLSv1.1</span> <span style="color:#e6db74">TLSv1.2</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_ciphers</span> <span style="color:#e6db74">ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_prefer_server_ciphers</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">client_max_body_size</span> <span style="color:#e6db74">1g</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">access_log</span> <span style="color:#e6db74">/var/log/nginx/nexus.log</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span>     <span style="color:#e6db74">http://192.168.1.107:8081</span>;
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">proxy_read_timeout</span>  <span style="color:#ae81ff">90</span>;
+</span></span><span style="display:flex;"><span>    		<span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>    		<span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> $scheme;
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>192.168.1.107 为 nexus 所在服务器的 IP 地址</li>
+</ul>
+</li>
+<li>
+<p>为 docker 注册中心配置反向代理</p>
+<p>参考 <a href="https://gist.github.com/abdennour/74c5de79e57a47f3351217d674238da8" target="_blank">https://gist.github.com/abdennour/74c5de79e57a47f3351217d674238da8</a> ，在 /etc/nginx/conf.d/ 目录下添加 docker-registry.conf 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">docker-registry.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^</span> <span style="color:#e6db74">https://</span>$http_host$request_uri? <span style="color:#e6db74">permanent</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">server_name</span> <span style="color:#e6db74">docker-registry.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/etc/nginx/ssl/all.crt</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/etc/nginx/ssl/all.key</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_session_timeout</span> <span style="color:#ae81ff">5m</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_protocols</span> <span style="color:#e6db74">TLSv1</span> <span style="color:#e6db74">TLSv1.1</span> <span style="color:#e6db74">TLSv1.2</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_ciphers</span> <span style="color:#e6db74">ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">ssl_prefer_server_ciphers</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">access_log</span> <span style="color:#e6db74">/var/log/nginx/docker-registry.log</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># disable any limits to avoid HTTP 413 for large image uploads
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#f92672">client_max_body_size</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># required to avoid HTTP 411: see Issue #1486 (https://github.com/docker/docker/issues/1486)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#f92672">chunked_transfer_encoding</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">location</span> ~ <span style="color:#e6db74">^/(v1|v2)/[^/]+/?[^/]+/blobs/</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">if</span> <span style="color:#e6db74">(</span>$request_method ~<span style="color:#e6db74">*</span> <span style="color:#e6db74">(POST|PUT|DELETE|PATCH|HEAD)</span> <span style="color:#e6db74">)</span> {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^/(.*)</span>$ <span style="color:#e6db74">/repository/docker-local/</span>$1 <span style="color:#e6db74">last</span>;
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^/(.*)</span>$ <span style="color:#e6db74">/repository/docker/</span>$1 <span style="color:#e6db74">last</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">location</span> ~ <span style="color:#e6db74">^/(v1|v2)/</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">if</span> <span style="color:#e6db74">(</span>$request_method ~<span style="color:#e6db74">*</span> <span style="color:#e6db74">(POST|PUT|DELETE|PATCH)</span> <span style="color:#e6db74">)</span> {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^/(.*)</span>$ <span style="color:#e6db74">/repository/docker-local/</span>$1 <span style="color:#e6db74">last</span>;
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^/(.*)</span>$ <span style="color:#e6db74">/repository/docker/</span>$1 <span style="color:#e6db74">last</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://192.168.1.107:8081/</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_read_timeout</span>  <span style="color:#ae81ff">90</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> <span style="color:#e6db74">&#34;http&#34;</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ol>
+<p>如果使用 docker 中的 nginx 配置反向代理，则 docker-compose 文件如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">nginx</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.27-alpine</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">./nginx.conf://etc/nginx/nginx.conf</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;80:80&#34;</span>
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">nexus</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">sonatype/nexus3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">platform</span>: <span style="color:#ae81ff">linux/amd64</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;8081:8081&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">nexus_data://nexus-data</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">/etc/localtime://etc/localtime:ro</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nexus_data</span>:
+</span></span></code></pre></div><p>./nginx.conf 文件见上面。</p>
+<h2 id="测试">测试</h2>
+<h3 id="maven-测试">Maven 测试</h3>
+<p>配置maven的配置文件settings.xml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;settings</span> <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd&#34;</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;servers&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;server&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;username&gt;</span>nexus-release<span style="color:#f92672">&lt;/username&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;password&gt;</span>admin<span style="color:#f92672">&lt;/password&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;id&gt;</span>central<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;server&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;username&gt;</span>nexus-snapshot<span style="color:#f92672">&lt;/username&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;password&gt;</span>admin<span style="color:#f92672">&lt;/password&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;id&gt;</span>snapshots<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/servers&gt;</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;mirrors&gt;</span>     
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mirror&gt;</span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>nexus<span style="color:#f92672">&lt;/id&gt;</span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;name&gt;</span>nexus repository<span style="color:#f92672">&lt;/name&gt;</span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://nexus.chensoul.cc/repository/maven-public/<span style="color:#f92672">&lt;/url&gt;</span>  
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mirrorOf&gt;</span>central<span style="color:#f92672">&lt;/mirrorOf&gt;</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mirror&gt;</span>     
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/mirrors&gt;</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;profiles&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;profile&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;repositories&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>false<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;id&gt;</span>central<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;name&gt;</span>nexus-release<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;url&gt;</span>https://nexus.chensoul.cc/repository/maven-release<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;snapshots</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;id&gt;</span>snapshots<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;name&gt;</span>nexus-snapshot<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;url&gt;</span>https://nexus.chensoul.cc/repository/maven-snapshot<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/repositories&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;pluginRepositories&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;pluginRepository&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>false<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;id&gt;</span>central<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;name&gt;</span>nexus-release<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;url&gt;</span>https://nexus.chensoul.cc/repository/maven-release<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/pluginRepository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;pluginRepository&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;snapshots</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;id&gt;</span>snapshots<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;name&gt;</span>nexus-snapshot<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;url&gt;</span>https://nexus.chensoul.cc/repository/maven-snapshot<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/pluginRepository&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/pluginRepositories&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;id&gt;</span>nexus<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/profile&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/profiles&gt;</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;activeProfiles&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;activeProfile&gt;</span>nexus<span style="color:#f92672">&lt;/activeProfile&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/activeProfiles&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/settings&gt;</span>
+</span></span></code></pre></div><h3 id="docker-测试">docker 测试</h3>
+<p>登录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker login docker-registry.chensoul.cc
+</span></span></code></pre></div><p>拉取镜像：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker pull alpine:3.14
+</span></span><span style="display:flex;"><span>3.16: Pulling from library/alpine
+</span></span><span style="display:flex;"><span>550f8bf8502c: Pull complete
+</span></span><span style="display:flex;"><span>Digest: sha256:452e7292acee0ee16c332324d7de05fa2c99f9994ecc9f0779c602916a672ae4
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#66d9ef">for</span> alpine:3.16
+</span></span><span style="display:flex;"><span>docker.io/library/alpine:3.16
+</span></span></code></pre></div><p>从日志可以看到是从 docker.io 下载镜像。</p>
+<p>接下来，试试从 docker-registry.chensoul.cc 下载镜像</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker pull docker-registry.chensoul.cc/alpine:3.16
+</span></span><span style="display:flex;"><span>3.16: Pulling from alpine
+</span></span><span style="display:flex;"><span>Digest: sha256:452e7292acee0ee16c332324d7de05fa2c99f9994ecc9f0779c602916a672ae4
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#66d9ef">for</span> docker-registry.chensoul.cc/alpine:3.16
+</span></span><span style="display:flex;"><span>docker-registry.chensoul.cc/alpine:3.16
+</span></span></code></pre></div><p>从日志可以看到是从 docker-registry.chensoul.cc 下载镜像，并且在 <a href="https://nexus.chensoul.cc/#browse/browse:docker" target="_blank">https://nexus.chensoul.cc/#browse/browse:docker</a> 可以看到下载的镜像。</p>
+<p>推送镜像：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker tag alpine:3.16 docker-registry.chensoul.cc/alpine:3.16-custom
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ docker push docker-registry.chensoul.cc/alpine:3.16-custom
+</span></span><span style="display:flex;"><span>The push refers to repository <span style="color:#f92672">[</span>docker-registry.chensoul.cc/alpine<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>edbfd2db8ef2: Pushed
+</span></span><span style="display:flex;"><span>3.16-custom: digest: sha256:4bdb4ac63839546daabfe0a267a363b3effa17ce02ac5f42d222174484c5686c size: <span style="color:#ae81ff">528</span>
+</span></span></code></pre></div><h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://blog.csdn.net/Wqr_18390921824/article/details/123160498" target="_blank">nexus搭建docker私服</a></li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2/" target="_blank" title="RFC6749 | OAuth2.0授权框架中文版">RFC6749 | OAuth2.0授权框架中文版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-server/" target="_blank" title="[译]OAuth2.0服务器">[译]OAuth2.0服务器</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth-2-simplified/" target="_blank" title="[译]OAuth2简化版">[译]OAuth2简化版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/http/" target="_blank" title="[译]什么是 HTTP？">[译]什么是 HTTP？</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/07/oauth/" target="_blank" title="[译]什么是 OAuth？">[译]什么是 OAuth？</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/11/til/" target="_blank" title="2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别">2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/06/all-things-about-oauth/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: All things about OAuth</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/25/install-artifactory-oss/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 搭建本地 Maven 仓库 Artifactory 开源版</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/25\/install-nexus\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用-docker-安装">使用 Docker 安装</a></li>
+    <li><a href="#使用-docker-compose-安装">使用 Docker Compose 安装</a></li>
+    <li><a href="#访问并配置-nexus">访问并配置 Nexus</a>
+      <ul>
+        <li><a href="#开启匿名访问权限">开启匿名访问权限</a></li>
+        <li><a href="#创建-maven-仓库">创建 Maven 仓库</a></li>
+        <li><a href="#创建-docker-仓库">创建 Docker 仓库</a></li>
+        <li><a href="#配置反向代理">配置反向代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#测试">测试</a>
+      <ul>
+        <li><a href="#maven-测试">Maven 测试</a></li>
+        <li><a href="#docker-测试">docker 测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

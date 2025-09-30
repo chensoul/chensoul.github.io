@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>All things about OAuth - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="All things about OAuth">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/06/all-things-about-oauth/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="All things about OAuth">
+  <meta itemprop="description" content="OAuth 是一种开放协议，允许通过网络、移动和桌面应用程序以简单、标准的方式进行安全授权。
+OAuth 2 入门 以下是一些 OAuth 2.0 指南，涵盖了理解和实现客户端和服务器所需的许多主题。">
+  <meta itemprop="datePublished" content="2024-06-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-06T00:00:00+00:00">
+  <meta itemprop="wordCount" content="85">
+  <meta itemprop="keywords" content="Backend,Tutorial,Source-Code,Oauth2">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="All things about OAuth">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">All things about OAuth</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-06">2024-06-06</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/source-code/" rel="tag">Source-Code</a>, <a class="meta__link" href="/tags/oauth2/" rel="tag">Oauth2</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>OAuth 是一种<strong>开放协议</strong>，允许通过网络、移动和桌面应用程序以<strong>简单</strong>、<strong>标准的方式进行</strong>安全授权。</p>
+<h2 id="oauth-2-入门">OAuth 2 入门</h2>
+<p>以下是一些 OAuth 2.0 指南，涵盖了理解和实现客户端和服务器所需的许多主题。</p>
+<h3 id="oauth-20-简化版"><a href="https://aaronparecki.com/oauth-2-simplified/" target="_blank">OAuth 2.0 简化版</a></h3>
+<p>由 <a href="https://aaronparecki.com/" target="_blank">Aaron Parecki</a> 编写的*《OAuth 2.0 Simplified*》是一份专注于编写客户端的 OAuth 2.0 指南，它在入门级别上清晰地概述了规范。</p>
+<ul>
+<li>
+<p><a href="https://aaronparecki.com/oauth-2-simplified/#roles" target="_blank">角色</a>：应用程序、API 和用户</p>
+</li>
+<li>
+<p><a href="https://aaronparecki.com/oauth-2-simplified/#creating-an-app" target="_blank">创建应用程序</a></p>
+</li>
+<li>
+<p>授权</p>
+<p>：获取访问令牌</p>
+<ul>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#web-server-apps" target="_blank">Web 服务器应用程序</a></li>
+<li><a href="https://aaronparecki.com/2012/07/29/2/oauth2-simplified#single-page-apps" target="_blank">单页应用程序</a></li>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#mobile-apps" target="_blank">移动应用程序</a></li>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#others" target="_blank">其他的</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://aaronparecki.com/oauth-2-simplified/#making-authenticated-requests" target="_blank">发出经过身份验证的请求</a></p>
+</li>
+<li>
+<p>与 OAuth 1.0 的区别</p>
+<ul>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#authentication-and-signatures" target="_blank">身份验证和签名</a></li>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#user-experience-and-alternative-authorization-flows" target="_blank">用户体验和替代授权流程</a></li>
+<li><a href="https://aaronparecki.com/oauth-2-simplified/#performance-at-scale" target="_blank">规模性能</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://aaronparecki.com/oauth-2-simplified/#resources" target="_blank">资源</a></p>
+</li>
+</ul>
+<h3 id="oauth-20-服务器"><a href="https://oauth.com/" target="_blank">OAuth 2.0 服务器</a></h3>
+<p><em>OAuth 2.0 服务器，由</em><a href="https://aaronparecki.com/" target="_blank">Aaron Parecki</a>编写并由<a href="https://developer.okta.com/" target="_blank">Okta</a>发布，是构建 OAuth 2.0 服务器的指南，其中包括许多不属于规范的细节。</p>
+<h3 id="代码和库">代码和库</h3>
+<p>有多种语言的<a href="https://oauth.net/code/" target="_blank">客户端和服务器库</a>可以帮助您快速入门。</p>
+<h3 id="图书">图书</h3>
+<p>您可以找到一些有关 OAuth 2.0 的优秀<a href="https://oauth.net/books/" target="_blank">书籍</a>。</p>
+<h3 id="咨询">咨询</h3>
+<p>寻找一位<a href="https://oauth.net/consulting/" target="_blank">OAuth 顾问</a>来帮助您的组织。</p>
+<h2 id="spring-authorization-server">Spring Authorization Server</h2>
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-authorization-server/reference/overview.html" target="_blank">Spring Authorization Server官方文档</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/semicolon_hello/article/details/136186226" target="_blank">Spring Authorization Server 配置模型</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/semicolon_hello/article/details/136214544" target="_blank">Spring Authorization Server （如何使用具有 PKCE 的单页应用程序进行身份验证-1）</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/semicolon_hello/article/details/136214824" target="_blank">Spring Authorization Server （如何使用具有 PKCE 的单页应用程序进行身份验证-2）</a></p>
+</li>
+<li>
+<p><a href="https://blog.51cto.com/u_15268610/category2" target="_blank">Spring Authorization Server相关文章</a></p>
+</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/06/oauth2-oidc/" target="_blank" title="OAuth2和OIDC区别">OAuth2和OIDC区别</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/06/jwt/" target="_blank" title="JWT">JWT</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2/" target="_blank" title="RFC6749 | OAuth2.0授权框架中文版">RFC6749 | OAuth2.0授权框架中文版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/" target="_blank" title="[译]OAuth2 with Spring 第1部分：了解基本概念">[译]OAuth2 with Spring 第1部分：了解基本概念</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/" target="_blank" title="[译]OAuth2 with Spring 第2部分：授权服务器入门">[译]OAuth2 with Spring 第2部分：授权服务器入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/" target="_blank" title="[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端">[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source-code/" rel="tag">source-code</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/oauth2/" rel="tag">oauth2</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/06/jwt/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: JWT</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/25/install-nexus/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 搭建本地Maven仓库Nexus</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/06\/all-things-about-oauth\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#oauth-2-入门">OAuth 2 入门</a>
+      <ul>
+        <li><a href="#oauth-20-简化版"><a href="https://aaronparecki.com/oauth-2-simplified/">OAuth 2.0 简化版</a></a></li>
+        <li><a href="#oauth-20-服务器"><a href="https://oauth.com/">OAuth 2.0 服务器</a></a></li>
+        <li><a href="#代码和库">代码和库</a></li>
+        <li><a href="#图书">图书</a></li>
+        <li><a href="#咨询">咨询</a></li>
+      </ul>
+    </li>
+    <li><a href="#spring-authorization-server">Spring Authorization Server</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

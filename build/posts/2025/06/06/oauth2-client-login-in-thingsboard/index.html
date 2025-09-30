@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Thingsboard源码中的OAuth2登录实现 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Thingsboard源码中的OAuth2登录实现">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2025/06/06/oauth2-client-login-in-thingsboard/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Thingsboard源码中的OAuth2登录实现">
+  <meta itemprop="description" content="Thingsboard 启用 OAuth2 功能 使用 sysadmin@thingsboard.org / sysadmin 账号登录 Thingsboard 系统之后，在安全 -&gt; OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。">
+  <meta itemprop="datePublished" content="2025-06-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-06-06T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1382">
+  <meta itemprop="keywords" content="Javascript,Spring-Boot,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Thingsboard源码中的OAuth2登录实现">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Thingsboard源码中的OAuth2登录实现</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-06-06">2025-06-06</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/spring-boot/" rel="tag">Spring-Boot</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="thingsboard-启用-oauth2-功能">Thingsboard 启用 OAuth2 功能</h2>
+<p>使用 <a href="mailto:sysadmin@thingsboard.org">sysadmin@thingsboard.org</a> / sysadmin 账号登录 Thingsboard 系统之后，在安全 -&gt; OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。</p>
+<p><img src="../../../static/images/create-oauth2-client-in-thingsboard.webp" alt="create-oauth2-client-in-thingsboard"></p>
+<p>然后，创建一个域：</p>
+<p><img src="../../../static/images/create-domain-in-thingsboard.webp" alt="create-domain-in-thingsboard"></p>
+<p>域名的名称可以是 ip 加端口，也可以是域名，如果是名称，需要做好 DNS 解析。</p>
+<blockquote>
+<p>注意：</p>
+<p>这里的重定向 URL 模版是 <code>localhost:8080/login/oauth2/code/</code>，而不是 <code>localhost:8080/login/oauth2/code/{registrationId}</code>。</p></blockquote>
+<p>注销登录之后，在登录页面可以看到 使用 Github 登录的按钮。</p>
+<p><img src="../../../static/images/login-github-page-in-thingsboard.webp" alt="login-github-page-in-thingsboard"></p>
+<h2 id="源码实现">源码实现</h2>
+<p>Thingsboard OAuth2 的相关配置在 ThingsboardSecurityConfiguration 类的 filterChain(HttpSecurity http) 方法中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> (oauth2Configuration <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            http.<span style="color:#a6e22e">oauth2Login</span>(login <span style="color:#f92672">-&gt;</span> login
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">authorizationEndpoint</span>(config <span style="color:#f92672">-&gt;</span> config
+</span></span><span style="display:flex;"><span>                            .<span style="color:#a6e22e">authorizationRequestRepository</span>(httpCookieOAuth2AuthorizationRequestRepository)
+</span></span><span style="display:flex;"><span>                            .<span style="color:#a6e22e">authorizationRequestResolver</span>(oAuth2AuthorizationRequestResolver))
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">loginPage</span>(<span style="color:#e6db74">&#34;/oauth2Login&#34;</span>)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">loginProcessingUrl</span>(oauth2Configuration.<span style="color:#a6e22e">getLoginProcessingUrl</span>())
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">successHandler</span>(oauth2AuthenticationSuccessHandler)
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">failureHandler</span>(oauth2AuthenticationFailureHandler));
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></div><p>以上代码对 OAuth2 Login 配置了 5 ：</p>
+<ul>
+<li>
+<p>loginProcessingUrl：处理登录请求的地址，默认值为 &ldquo;/login/oauth2/code/*&quot;，该地址由 OAuth2LoginAuthenticationFilter 过滤器使用正则表达式进行批判和处理。</p>
+</li>
+<li>
+<p>loginPage：登录页面地址。</p>
+</li>
+<li>
+<p>httpCookieOAuth2AuthorizationRequestRepository：持久化 OAuth2AuthorizationRequest，默认是使用 Seesion 持久化，对应实现类是 HttpSessionOAuth2AuthorizationRequestRepository。Thingsboard 提供了 HttpCookieOAuth2AuthorizationRequestRepository 使用 Cookie  来持久化 。</p>
+</li>
+<li>
+<p>oAuth2AuthorizationRequestResolver：从 Request 中解析 OAuth2AuthorizationRequest，默认实现是 DefaultOAuth2AuthorizationRequestResolver。Thingsboard 使用 CustomOAuth2AuthorizationRequestResolver 重写了该类。</p>
+</li>
+<li>
+<p>oauth2AuthenticationSuccessHandler：登录成功处理器</p>
+</li>
+<li>
+<p>oauth2AuthenticationFailureHandler：登录失败处理器</p>
+</li>
+</ul>
+<p>OAuth2Configuration 类上也 @Configuration 注解，在应用启动过程中会由 SpringBoot 自动装配。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@ConfigurationProperties</span>(prefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;security.oauth2&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuth2Configuration</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String loginProcessingUrl;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> githubMapper;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其默认值在 thingsboard.yml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Security parameters</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Redirect URL where access code from external user management system will be processed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">loginProcessingUrl</span>: <span style="color:#e6db74">&#34;${SECURITY_OAUTH2_LOGIN_PROCESSING_URL://login/oauth2/code/}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">githubMapper</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># The email addresses that will be mapped from the URL</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emailUrl</span>: <span style="color:#e6db74">&#34;${SECURITY_OAUTH2_GITHUB_MAPPER_EMAIL_URL_KEY:https://api.github.com/user/emails}&#34;</span>
+</span></span></code></pre></div><p>CustomOAuth2AuthorizationRequestResolver 相对于默认实现 DefaultOAuth2AuthorizationRequestResolver 的主要修改之处在于代expandRedirectUri 方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>		<span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">expandRedirectUri</span>(HttpServletRequest request, ClientRegistration clientRegistration, String action) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//.....</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String redirectUri <span style="color:#f92672">=</span> getRedirectUri(request);
+</span></span><span style="display:flex;"><span>        log.<span style="color:#a6e22e">trace</span>(<span style="color:#e6db74">&#34;Redirect URI - {}.&#34;</span>, redirectUri);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> UriComponentsBuilder.<span style="color:#a6e22e">fromUriString</span>(redirectUri)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">buildAndExpand</span>(uriVariables)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">toUriString</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>DefaultOAuth2AuthorizationRequestResolver 中获取的重定向地址为 ClientRegistration 中的 redirectUri 值（<code>localhost:8080/login/oauth2/code/{registrationId}</code>），而 CustomOAuth2AuthorizationRequestResolver 将其修改为了</p>
+<p><code>localhost:8080/login/oauth2/code/</code>。</p>
+<p>通过调试代码，可以发现 OAuth2LoginAuthenticationFilter、CustomOAuth2AuthorizationRequestResolver、HttpCookieOAuth2AuthorizationRequestRepository 调用顺序如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>OAuth2AuthorizationRequestRedirectFilter 
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">-&gt;</span> CustomOAuth2AuthorizationRequestResolver 
+</span></span><span style="display:flex;"><span>  	 <span style="color:#f92672">-&gt;</span> OAuth2LoginAuthenticationFilter  
+</span></span><span style="display:flex;"><span>  			<span style="color:#f92672">-&gt;</span> HttpCookieOAuth2AuthorizationRequestRepository
+</span></span></code></pre></div><p>这里涉及到 OAuth2 的过滤器调用顺序，在 ThingsboardSecurityConfiguration 类的 @EnableWebSecurity 注解上添加 <code>(debug = true)</code>打开调试模式，重新启动应用，或者观察日志输出。</p>
+<pre tabindex="0"><code>Securing GET /oauth2/authorization/c9494410-420f-11f0-951d-e335fb26d32c
+Invoking DisableEncodeUrlFilter (1/20)
+Invoking WebAsyncManagerIntegrationFilter (2/20)
+Invoking SecurityContextHolderFilter (3/20)
+Invoking CorsFilter (4/20)
+Invoking LogoutFilter (5/20)
+Invoking OAuth2AuthorizationRequestRedirectFilter (6/20)
+Securing GET /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&amp;state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D
+Invoking DisableEncodeUrlFilter (1/20)
+Invoking WebAsyncManagerIntegrationFilter (2/20)
+Invoking SecurityContextHolderFilter (3/20)
+Invoking CorsFilter (4/20)
+Invoking LogoutFilter (5/20)
+Invoking OAuth2AuthorizationRequestRedirectFilter (6/20)
+Invoking OAuth2LoginAuthenticationFilter (7/20)
+Invoking AuthExceptionHandler (8/20)
+Invoking RestLoginProcessingFilter (9/20)
+Invoking RestPublicLoginProcessingFilter (10/20)
+Invoking JwtTokenAuthenticationProcessingFilter (11/20)
+Invoking RefreshTokenProcessingFilter (12/20)
+Invoking PayloadSizeFilter (13/20)
+Invoking RateLimitProcessingFilter (14/20)
+Invoking RequestCacheAwareFilter (15/20)
+Invoking SecurityContextHolderAwareRequestFilter (16/20)
+Invoking AnonymousAuthenticationFilter (17/20)
+Invoking SessionManagementFilter (18/20)
+Invoking ExceptionTranslationFilter (19/20)
+Invoking AuthorizationFilter (20/20)
+</code></pre><p>在登录页面，点击 github 登录按钮，访问的是 /oauth2/authorization/c9494410-420f-11f0-951d-e335fb26d32c 请求，该请求经过一系列的过滤器，其中 OAuth2AuthorizationRequestRedirectFilter 过滤器会对用 authorizationRequestResolver 生成 OAuth2AuthorizationRequest 对象，让后进行重定向。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doFilterInternal</span>(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">throws</span> ServletException, IOException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>       OAuth2AuthorizationRequest authorizationRequest <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">authorizationRequestResolver</span>.<span style="color:#a6e22e">resolve</span>(request);
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">if</span> (authorizationRequest <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">sendRedirectForAuthorization</span>(request, response, authorizationRequest);
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>       }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (Exception ex) {
+</span></span><span style="display:flex;"><span>       AuthenticationException wrappedException <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OAuth2AuthorizationRequestException(ex);
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">authenticationFailureHandler</span>.<span style="color:#a6e22e">onAuthenticationFailure</span>(request, response, wrappedException);
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>}  
+</span></span></code></pre></div><p>CustomOAuth2AuthorizationRequestResolver 解析出来的重定向的地址为 /login/oauth2/code?code=dbf3e2bb44683ffd2d2f&amp;state=azMRmzAZY_qd5owaQmxekq_YNcvM80yqsQZrCweAaN4%3D，然后该请求又经过一系列的过滤器，直到遇到 OAuth2LoginAuthenticationFilter ，OAuth2LoginAuthenticationFilter 拿到拼装后的 github 授权地址 <a href="https://github.com/login/oauth/authorize?response_type=code&amp;client_id=Ov23likOi21AwqpT9WUP&amp;scope=read:user%20user:email&amp;state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&amp;redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c" target="_blank">https://github.com/login/oauth/authorize?response_type=code&client_id=Ov23likOi21AwqpT9WUP&scope=read:user%20user:email&state=5wYRD23XSe4xSqV-Qfp3phlhxfMrA4cnF_sTh8IkjTs%3D&redirect_uri=http://localhost:8080/login/oauth2/code/c9494410-420f-11f0-951d-e335fb26d32c</a> ，调用 authenticationManager 进行认证。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>	<span style="color:#f92672">/</span> OAuth2LoginAuthenticationFilter 的 attemptAuthentication 方法代码片段
+</span></span><span style="display:flex;"><span>	String redirectUri <span style="color:#f92672">=</span> UriComponentsBuilder.<span style="color:#a6e22e">fromHttpUrl</span>(UrlUtils.<span style="color:#a6e22e">buildFullRequestUrl</span>(request))
+</span></span><span style="display:flex;"><span>				.<span style="color:#a6e22e">replaceQuery</span>(<span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>				.<span style="color:#a6e22e">build</span>()
+</span></span><span style="display:flex;"><span>				.<span style="color:#a6e22e">toUriString</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">/</span> <span style="color:#a6e22e">@formatter</span>:on
+</span></span><span style="display:flex;"><span>		OAuth2AuthorizationResponse authorizationResponse <span style="color:#f92672">=</span> OAuth2AuthorizationResponseUtils.<span style="color:#a6e22e">convert</span>(params,
+</span></span><span style="display:flex;"><span>				redirectUri);
+</span></span><span style="display:flex;"><span>		Object authenticationDetails <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">authenticationDetailsSource</span>.<span style="color:#a6e22e">buildDetails</span>(request);
+</span></span><span style="display:flex;"><span>		OAuth2LoginAuthenticationToken authenticationRequest <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OAuth2LoginAuthenticationToken(clientRegistration,
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">new</span> OAuth2AuthorizationExchange(authorizationRequest, authorizationResponse));
+</span></span><span style="display:flex;"><span>		authenticationRequest.<span style="color:#a6e22e">setDetails</span>(authenticationDetails);
+</span></span><span style="display:flex;"><span>		OAuth2LoginAuthenticationToken authenticationResult <span style="color:#f92672">=</span> (OAuth2LoginAuthenticationToken) <span style="color:#66d9ef">this</span>
+</span></span><span style="display:flex;"><span>			.<span style="color:#a6e22e">getAuthenticationManager</span>()
+</span></span><span style="display:flex;"><span>			.<span style="color:#a6e22e">authenticate</span>(authenticationRequest);
+</span></span></code></pre></div><p>OAuth2AuthorizationRequestRedirectFilter 和 OAuth2LoginAuthenticationFilter 之间的联系就在于 loginProcessingUrl 。不管 loginProcessingUrl 长成什么样，OAuth2LoginAuthenticationFilter 都能通过 requiresAuthenticationRequestMatcher 匹配到地址并进行处理。</p>
+<p>因此，将 thingsboard.yml 中的 loginProcessingUrl 修改为 /login/oauth2/code/{registrationId}，应用也能正常启动。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Security parameters</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Redirect URL where access code from external user management system will be processed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">loginProcessingUrl</span>: <span style="color:#e6db74">&#34;${SECURITY_OAUTH2_LOGIN_PROCESSING_URL://login/oauth2/code/{registrationId}}&#34;</span>
+</span></span></code></pre></div><p>OAuth2LoginAuthenticationFilter 通过 AuthorizationRequestRepository 可以取到 OAuth2AuthorizationRequest 对象，通过 authorizationRequest 的参数可以获取到 registrationId，然后，通过 clientRegistrationRepository 可以查询到 ClientRegistration 对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> Authentication <span style="color:#a6e22e">attemptAuthentication</span>(HttpServletRequest request, HttpServletResponse response)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">throws</span> AuthenticationException {
+</span></span><span style="display:flex;"><span>		MultiValueMap<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> params <span style="color:#f92672">=</span> OAuth2AuthorizationResponseUtils.<span style="color:#a6e22e">toMultiMap</span>(request.<span style="color:#a6e22e">getParameterMap</span>());
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>OAuth2AuthorizationResponseUtils.<span style="color:#a6e22e">isAuthorizationResponse</span>(params)) {
+</span></span><span style="display:flex;"><span>			OAuth2Error oauth2Error <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OAuth2Error(OAuth2ErrorCodes.<span style="color:#a6e22e">INVALID_REQUEST</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> OAuth2AuthenticationException(oauth2Error, oauth2Error.<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		OAuth2AuthorizationRequest authorizationRequest <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">authorizationRequestRepository</span>
+</span></span><span style="display:flex;"><span>			.<span style="color:#a6e22e">removeAuthorizationRequest</span>(request, response);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (authorizationRequest <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>			OAuth2Error oauth2Error <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> OAuth2Error(AUTHORIZATION_REQUEST_NOT_FOUND_ERROR_CODE);
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> OAuth2AuthenticationException(oauth2Error, oauth2Error.<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		String registrationId <span style="color:#f92672">=</span> authorizationRequest.<span style="color:#a6e22e">getAttribute</span>(OAuth2ParameterNames.<span style="color:#a6e22e">REGISTRATION_ID</span>);
+</span></span><span style="display:flex;"><span>		ClientRegistration clientRegistration <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">clientRegistrationRepository</span>.<span style="color:#a6e22e">findByRegistrationId</span>(registrationId);
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span>....
+</span></span><span style="display:flex;"><span>}    
+</span></span></code></pre></div><p>在 thingsboard 中 clientRegistrationRepository 的实现者是 HybridClientRegistrationRepository，当然，默认实现是 InMemoryClientRegistrationRepository。InMemoryClientRegistrationRepository 是从 spring boot 配置文件中读取，例如：下面的配置定义了三个 ClientRegistration 对象，他们的 registrationId 分别是 google、github、okta，而不是 thingsboard 中自定义的 UUID 字符串。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">registration</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">google</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#ae81ff">your-app-client-id</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#ae81ff">your-app-client-secret</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scope</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">email</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">profile</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">github</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#ae81ff">${GITHUB_CLIENT_ID:Ov23likOi21AwqpT9WUP}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#ae81ff">${GITHUB_CLIENT_SECRET:2cd0d78fe7a1c34add13c3452fd94c75db70995f}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scope</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">user:email</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">read:user</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">okta</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#ae81ff">your-app-client-id</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#ae81ff">your-app-client-secret</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">provider</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">google</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">user-name-attribute</span>: <span style="color:#ae81ff">email</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">github</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">user-name-attribute</span>: <span style="color:#ae81ff">login</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">okta</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">authorization-uri</span>: <span style="color:#ae81ff">https://your-subdomain.oktapreview.com/oauth2/v1/authorize</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">token-uri</span>: <span style="color:#ae81ff">https://your-subdomain.oktapreview.com/oauth2/v1/token</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">user-info-uri</span>: <span style="color:#ae81ff">https://your-subdomain.oktapreview.com/oauth2/v1/userinfo</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">jwk-set-uri</span>: <span style="color:#ae81ff">https://your-subdomain.oktapreview.com/oauth2/v1/keys</span>
+</span></span></code></pre></div><p>假如修改下 thingsboard 源码，将 registrationId 改为使用认证提供商的名称（小写形式），则和配置文件中一样了。</p>
+<p>再来看 HybridClientRegistrationRepository 的实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HybridClientRegistrationRepository</span> <span style="color:#66d9ef">implements</span> ClientRegistrationRepository {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String defaultRedirectUriTemplate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;{baseUrl}/login/oauth2/code/{registrationId}&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> OAuth2ClientService oAuth2ClientService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ClientRegistration <span style="color:#a6e22e">findByRegistrationId</span>(String registrationId) {
+</span></span><span style="display:flex;"><span>        OAuth2Client oAuth2Client <span style="color:#f92672">=</span> oAuth2ClientService.<span style="color:#a6e22e">findOAuth2ClientById</span>(TenantId.<span style="color:#a6e22e">SYS_TENANT_ID</span>, <span style="color:#66d9ef">new</span> OAuth2ClientId(UUID.<span style="color:#a6e22e">fromString</span>(registrationId)));
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> oAuth2Client <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">null</span> : toSpringClientRegistration(oAuth2Client);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> ClientRegistration <span style="color:#a6e22e">toSpringClientRegistration</span>(OAuth2Client oAuth2Client){
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e">//...</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>HybridClientRegistrationRepository 内部使用 OAuth2ClientService 来获取 OAuth2Client 再转换为 ClientRegistration。因此，可以使用编程的方式来动态维护 ClientRegistration 了。</p>
+<p>在 thingsboard 中，OAuth2Client 主要字段如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuth2Client</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> UUID tenantId;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String title;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String clientId;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String clientSecret;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> OAuth2MapperConfig mapperConfig;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String authorizationUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String tokenUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String scope;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String platforms;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String userInfoUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String userNameAttributeName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String jwkSetUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String clientAuthenticationMethod;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String loginButtonLabel;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String loginButtonIcon;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Boolean activateUser;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> MapperType type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String emailAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String firstNameAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String lastNameAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> TenantNameStrategyType tenantNameStrategy;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String tenantNamePattern;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String customerNamePattern;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String url;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String username;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String password;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Boolean sendToken;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> JsonNode additionalInfo;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>OAuth2MapperConfig 是映射配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuth2MapperConfig</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> allowUserCreation;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> activateUser;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> MapperType type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> OAuth2BasicMapperConfig basic;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> OAuth2CustomMapperConfig custom;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> MapperType {
+</span></span><span style="display:flex;"><span>    BASIC, CUSTOM, GITHUB, APPLE;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>映射类型有四种： BASIC, CUSTOM, GITHUB, APPLE，在创建 OAuth2Client 对象时，thingsboard 针对这四种类型做了一个模版 OAuth2ClientRegistrationTemplate，用于简化和统一创建流程。</p>
+<p>OAuth2ClientRegistrationTemplate 类主要字段：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OAuth2ClientRegistrationTemplate</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String providerId;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String authorizationUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String tokenUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String scope;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String userInfoUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String userNameAttributeName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String jwkSetUri;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String clientAuthenticationMethod;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> MapperType type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String emailAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String firstNameAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String lastNameAttributeKey;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> TenantNameStrategyType tenantNameStrategy;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String tenantNamePattern;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String customerNamePattern;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String comment;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String loginButtonIcon;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String loginButtonLabel;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String helpLink;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> JsonNode additionalInfo;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>另外，thingsboar 在安装部署时进行了初始化，提前创建了一些模版。模版在 application/src/main/data/json/system/ oauth2_config_templates 目录下面，主要有 apple、facebook、google、github。</p>
+<p>apple_config.json</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;providerId&#34;</span>: <span style="color:#e6db74">&#34;Apple&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;additionalInfo&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;accessTokenUri&#34;</span>: <span style="color:#e6db74">&#34;https://appleid.apple.com/auth/token&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;authorizationUri&#34;</span>: <span style="color:#e6db74">&#34;https://appleid.apple.com/auth/authorize?response_mode=form_post&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: [<span style="color:#e6db74">&#34;email&#34;</span>,<span style="color:#e6db74">&#34;openid&#34;</span>,<span style="color:#e6db74">&#34;name&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;jwkSetUri&#34;</span>: <span style="color:#e6db74">&#34;https://appleid.apple.com/auth/keys&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userInfoUri&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientAuthenticationMethod&#34;</span>: <span style="color:#e6db74">&#34;POST&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userNameAttributeName&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;mapperConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;APPLE&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;basic&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;emailAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;firstNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;firstName&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;lastNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;lastName&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tenantNameStrategy&#34;</span>: <span style="color:#e6db74">&#34;DOMAIN&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;comment&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonIcon&#34;</span>: <span style="color:#e6db74">&#34;apple-logo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonLabel&#34;</span>: <span style="color:#e6db74">&#34;Apple&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;helpLink&#34;</span>: <span style="color:#e6db74">&#34;https://developer.apple.com/sign-in-with-apple/get-started/&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>facebook_config.json：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;providerId&#34;</span>: <span style="color:#e6db74">&#34;Facebook&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;accessTokenUri&#34;</span>: <span style="color:#e6db74">&#34;https://graph.facebook.com/v2.8/oauth/access_token&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;authorizationUri&#34;</span>: <span style="color:#e6db74">&#34;https://www.facebook.com/v2.8/dialog/oauth&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: [<span style="color:#e6db74">&#34;email&#34;</span>,<span style="color:#e6db74">&#34;public_profile&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;jwkSetUri&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userInfoUri&#34;</span>: <span style="color:#e6db74">&#34;https://graph.facebook.com/me?fields=id,name,first_name,last_name,email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientAuthenticationMethod&#34;</span>: <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userNameAttributeName&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;mapperConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;basic&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;emailAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;firstNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;first_name&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;lastNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;last_name&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tenantNameStrategy&#34;</span>: <span style="color:#e6db74">&#34;DOMAIN&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;comment&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonIcon&#34;</span>: <span style="color:#e6db74">&#34;facebook-logo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonLabel&#34;</span>: <span style="color:#e6db74">&#34;Facebook&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;helpLink&#34;</span>: <span style="color:#e6db74">&#34;https://developers.facebook.com/docs/facebook-login/web#logindialog&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>github_config.json：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;providerId&#34;</span>: <span style="color:#e6db74">&#34;Github&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;accessTokenUri&#34;</span>: <span style="color:#e6db74">&#34;https://github.com/login/oauth/access_token&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;authorizationUri&#34;</span>: <span style="color:#e6db74">&#34;https://github.com/login/oauth/authorize&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: [<span style="color:#e6db74">&#34;read:user&#34;</span>,<span style="color:#e6db74">&#34;user:email&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;jwkSetUri&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userInfoUri&#34;</span>: <span style="color:#e6db74">&#34;https://api.github.com/user&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientAuthenticationMethod&#34;</span>: <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userNameAttributeName&#34;</span>: <span style="color:#e6db74">&#34;login&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;mapperConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;GITHUB&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;basic&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;firstNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;name&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tenantNameStrategy&#34;</span>: <span style="color:#e6db74">&#34;DOMAIN&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;comment&#34;</span>: <span style="color:#e6db74">&#34;In order to log into ThingsBoard you need to have user&#39;s email. You may configure and use Custom OAuth2 Mapper to get email information. Please refer to &lt;a href=\&#34;https://docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user\&#34;&gt;Github Documentation&lt;/a&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonIcon&#34;</span>: <span style="color:#e6db74">&#34;github-logo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonLabel&#34;</span>: <span style="color:#e6db74">&#34;Github&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;helpLink&#34;</span>: <span style="color:#e6db74">&#34;https://docs.github.com/en/developers/apps/creating-an-oauth-app&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>google_config.json：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;providerId&#34;</span>: <span style="color:#e6db74">&#34;Google&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;additionalInfo&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;accessTokenUri&#34;</span>: <span style="color:#e6db74">&#34;https://oauth2.googleapis.com/token&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;authorizationUri&#34;</span>: <span style="color:#e6db74">&#34;https://accounts.google.com/o/oauth2/v2/auth&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;scope&#34;</span>: [<span style="color:#e6db74">&#34;email&#34;</span>,<span style="color:#e6db74">&#34;openid&#34;</span>,<span style="color:#e6db74">&#34;profile&#34;</span>],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;jwkSetUri&#34;</span>: <span style="color:#e6db74">&#34;https://www.googleapis.com/oauth2/v3/certs&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userInfoUri&#34;</span>: <span style="color:#e6db74">&#34;https://openidconnect.googleapis.com/v1/userinfo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientAuthenticationMethod&#34;</span>: <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;userNameAttributeName&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;mapperConfig&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;basic&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;emailAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;email&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;firstNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;given_name&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;lastNameAttributeKey&#34;</span>: <span style="color:#e6db74">&#34;family_name&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tenantNameStrategy&#34;</span>: <span style="color:#e6db74">&#34;DOMAIN&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;comment&#34;</span>: <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonIcon&#34;</span>: <span style="color:#e6db74">&#34;google-logo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loginButtonLabel&#34;</span>: <span style="color:#e6db74">&#34;Google&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;helpLink&#34;</span>: <span style="color:#e6db74">&#34;https://developers.google.com/adwords/api/docs/guides/authentication&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>登录成功之后，由 oauth2AuthenticationSuccessHandler 进行处理，对应的实现类是 Oauth2AuthenticationSuccessHandler，该类的逻辑：</p>
+<ul>
+<li>通过 httpCookieOAuth2AuthorizationRequestRepository 获取 OAuth2AuthorizationRequest</li>
+<li>通过 OAuth2ClientService 获取 OAuth2Client</li>
+<li>通过 oAuth2AuthorizedClientService 加载 OAuth2AuthorizedClient</li>
+<li>通过 oauth2ClientMapperProvider 获取 OAuth2ClientMapper ，每个 MapperType 都有一个 OAuth2ClientMapper</li>
+<li>通过 tokenFactory 创建 JwtPair</li>
+<li>重定向到登录成功地址</li>
+</ul>
+<p>OAuth2ClientMapper 定义如下，作用是将 OAuth2 返回的用户信息转换为 SecurityUser 对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">OAuth2ClientMapper</span> {
+</span></span><span style="display:flex;"><span>    SecurityUser <span style="color:#a6e22e">getOrCreateUserByClientPrincipal</span>(HttpServletRequest request, OAuth2AuthenticationToken token, String providerAccessToken, OAuth2Client oAuth2Client);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>SecurityUser 集成 User 对象：</p>
+<p>OAuth2ClientMapperProvider 类主要方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>		<span style="color:#66d9ef">public</span> OAuth2ClientMapper <span style="color:#a6e22e">getOAuth2ClientMapperByType</span>(MapperType oauth2MapperType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> (oauth2MapperType) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> CUSTOM:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> customOAuth2ClientMapper;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> BASIC:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> basicOAuth2ClientMapper;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GITHUB:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> githubOAuth2ClientMapper;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> APPLE:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> appleOAuth2ClientMapper;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;OAuth2ClientRegistrationMapper with type &#34;</span> <span style="color:#f92672">+</span> oauth2MapperType <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; is not supported!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>User 对象主要定义了 email、firstName、lastName、phone，其他用户信息在 additionalInfo 对象中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String email;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span>    <span style="color:#66d9ef">private</span> String authority;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String firstName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String lastName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String phone;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">transient</span> JsonNode additionalInfo;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>对应 github ，OAuth2Configuration 单独定义了 email 的获取地址：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GithubOAuth2ClientMapper</span> <span style="color:#66d9ef">extends</span> AbstractOAuth2ClientMapper <span style="color:#66d9ef">implements</span> OAuth2ClientMapper {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String EMAIL_URL_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;emailUrl&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String AUTHORIZATION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Authorization&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> RestTemplateBuilder restTemplateBuilder <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> RestTemplateBuilder();
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> OAuth2Configuration oAuth2Configuration;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SecurityUser <span style="color:#a6e22e">getOrCreateUserByClientPrincipal</span>(HttpServletRequest request, OAuth2AuthenticationToken token, String providerAccessToken, OAuth2Client oAuth2Client) {
+</span></span><span style="display:flex;"><span>        OAuth2MapperConfig config <span style="color:#f92672">=</span> oAuth2Client.<span style="color:#a6e22e">getMapperConfig</span>();
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> githubMapperConfig <span style="color:#f92672">=</span> oAuth2Configuration.<span style="color:#a6e22e">getGithubMapper</span>();
+</span></span><span style="display:flex;"><span>        String email <span style="color:#f92672">=</span> getEmail(githubMapperConfig.<span style="color:#a6e22e">get</span>(EMAIL_URL_KEY), providerAccessToken);
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> attributes <span style="color:#f92672">=</span> token.<span style="color:#a6e22e">getPrincipal</span>().<span style="color:#a6e22e">getAttributes</span>();
+</span></span><span style="display:flex;"><span>        OAuth2User oAuth2User <span style="color:#f92672">=</span> BasicMapperUtils.<span style="color:#a6e22e">getOAuth2User</span>(email, attributes, config);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> getOrCreateSecurityUserFromOAuth2User(oAuth2User, oAuth2Client);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">synchronized</span> String <span style="color:#a6e22e">getEmail</span>(String emailUrl, String oauth2Token) {
+</span></span><span style="display:flex;"><span>        restTemplateBuilder <span style="color:#f92672">=</span> restTemplateBuilder.<span style="color:#a6e22e">defaultHeader</span>(AUTHORIZATION, <span style="color:#e6db74">&#34;token &#34;</span> <span style="color:#f92672">+</span> oauth2Token);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        RestTemplate restTemplate <span style="color:#f92672">=</span> restTemplateBuilder.<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>        GithubEmailsResponse githubEmailsResponse;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            githubEmailsResponse <span style="color:#f92672">=</span> restTemplate.<span style="color:#a6e22e">getForEntity</span>(emailUrl, GithubEmailsResponse.<span style="color:#a6e22e">class</span>).<span style="color:#a6e22e">getBody</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (githubEmailsResponse <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>){
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;Empty Github response!&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;There was an error during connection to Github API&#34;</span>, e);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;Unable to login. Please contact your Administrator!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        Optional<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> emailOpt <span style="color:#f92672">=</span> githubEmailsResponse.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">filter</span>(GithubEmailResponse::isPrimary)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">map</span>(GithubEmailResponse::getEmail)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">findAny</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (emailOpt.<span style="color:#a6e22e">isPresent</span>()){
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> emailOpt.<span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;Could not find primary email from {}.&#34;</span>, githubEmailsResponse);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;Unable to login. Please contact your Administrator!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GithubEmailsResponse</span> <span style="color:#66d9ef">extends</span> ArrayList<span style="color:#f92672">&lt;</span>GithubEmailResponse<span style="color:#f92672">&gt;</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Data</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@ToString</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GithubEmailResponse</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> String email;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> verified;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> primary;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> String visibility;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>另外，对应登录失败，Oauth2AuthenticationFailureHandler 也有相应的处理。Oauth2AuthenticationFailureHandler 依赖 HttpCookieOAuth2AuthorizationRequestRepository，会删除 OAuth2AuthorizationRequest ，然后进行重定向到登录页面。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/10/all-things-about-websocket/" target="_blank" title="All things about WebSocket">All things about WebSocket</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/security-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Security">ThingsBoard源码中的Security</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/10/15/spring-security-jwt/" target="_blank" title="[译]Spring Security 和 JWT 入门">[译]Spring Security 和 JWT 入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/08/27/activemq-source-code-broker-service/" target="_blank" title="ActiveMQ源码-BrokerService和PersistenceAdapter">ActiveMQ源码-BrokerService和PersistenceAdapter</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2/" target="_blank" title="RFC6749 | OAuth2.0授权框架中文版">RFC6749 | OAuth2.0授权框架中文版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/" target="_blank" title="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring-boot/" rel="tag">spring-boot</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2025/04/30/codes-in-thingsboard/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Thingsboard源码中的代码片段</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2025/07/02/thingsboard-http-transport/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: ThingsBoard HTTP Transport 实现方式</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2025\/06\/06\/oauth2-client-login-in-thingsboard\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#thingsboard-启用-oauth2-功能">Thingsboard 启用 OAuth2 功能</a></li>
+    <li><a href="#源码实现">源码实现</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

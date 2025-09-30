@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]Spring Security - OAuth2 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]Spring Security - OAuth2">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/08/16/spring-security-with-oauth2/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]Spring Security - OAuth2">
+  <meta itemprop="description" content="OAuth 2.0 基础知识">
+  <meta itemprop="datePublished" content="2023-08-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="720">
+  <meta itemprop="keywords" content="Java,Backend,Security,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]Spring Security - OAuth2">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]Spring Security - OAuth2</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-08-16">2023-08-16</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="oauth-20-基础知识">OAuth 2.0 基础知识</h2>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/oauth_2_fundamentals.webp" alt="OAuth 2.0 Fundamentals"></p>
+<p>OAuth 2.0 由 IETF OAuth 工作组开发并于 2012 年 10 月发布。它作为一种开放授权协议，使第三方应用程序能够代表资源所有者对 HTTP 服务进行有限访问。它可以在不泄露用户身份或长期凭证的情况下做到这一点。第三方应用程序本身也可以代表其使用它。</p>
+<p>OAuth 的工作原理包括将用户身份验证委托给托管用户帐户的服务，并授权第三方应用程序访问用户的帐户。</p>
+<p>让我们考虑一个例子。假设我们要登录网站“clientsite.com”。我们可以通过 Facebook、Github、Google 或 Microsoft 登录。我们选择上面给出的选项中的任何选项，然后我们将被重定向到相应的网站进行登录。如果登录成功，系统会询问我们是否要授予 clientsite.com 访问其请求的特定数据的权限。</p>
+<p>我们选择所需的选项，然后使用授权代码或错误代码重定向到 clientsite.com，登录是否成功取决于我们在第三方资源中的操作。这就是 OAuth 2 的基本工作原理。</p>
+<p>OAuth 系统涉及五个关键角色。让我们把它们列出来 -</p>
+<ul>
+<li><strong>User / Resource Owner</strong> − 用户/资源所有者- 最终用户，负责身份验证并同意与客户端共享资源。</li>
+<li><strong>User-Agent</strong> − 用户代理- 用户使用的浏览器。</li>
+<li><strong>Client</strong> − 客户端 - 请求访问令牌的应用程序。</li>
+<li><strong>Authorization Server</strong> − 授权服务器- 用于验证用户/客户端的服务器。它颁发访问令牌并在其整个生命周期内对其进行跟踪。</li>
+<li><strong>Resource Server</strong> − 资源服务器- 提供对所请求资源的访问的 API。它验证访问令牌并提供授权。</li>
+</ul>
+<h3 id="入门">入门</h3>
+<p>我们将使用 Spring Security 和 OAuth 2.0 开发一个 Spring Boot 应用程序来说明上述内容。我们现在将开发一个带有内存数据库的基本应用程序来存储用户凭据。该应用程序将使我们轻松了解 OAuth 2.0 与 Spring Security 的工作原理。</p>
+<p>让我们使用 Spring 初始化程序在 Java 8 中创建一个 Maven 项目。让我们从 start.spring.io 开始。我们生成一个具有以下依赖项的应用程序 -</p>
+<ul>
+<li>Spring Web</li>
+<li>Spring Security</li>
+<li>Cloud OAuth2</li>
+<li>Spring Boot Devtools</li>
+</ul>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/start_spring.jpg" alt="Start Spring"><img src="https://www.tutorialspoint.com/spring_security/images/project_metadata.jpg" alt="Project Metadata"></p>
+<p>通过上面的配置，我们点击 Generate 按钮生成一个项目。该项目将以 zip 文件形式下载。我们将 zip 解压到一个文件夹中。然后我们可以在我们选择的 IDE 中打开该项目。我在这里使用 Spring Tools Suite，因为它针对 Spring 应用程序进行了优化。我们也可以根据需要使用 Eclipse 或 IntelliJ Idea。</p>
+<p>因此，我们在 STS 中打开项目，让依赖项被下载。然后我们可以在包资源管理器窗口中看到项目结构。它应该类似于下面的屏幕截图。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/project_in_sts.jpg" alt="Project in STS"></p>
+<p>如果我们打开 pom.xml 文件，我们可以查看与项目相关的依赖项和其他详细信息。它应该看起来像这样。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">   https://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;parent&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;version&gt;</span>2.3.1.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;relativePath/&gt;</span> <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/parent&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;groupId&gt;</span>com.tutorial<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;artifactId&gt;</span>spring.security.oauth2<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;name&gt;</span>spring.security.oauth2<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;properties&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;spring-cloud.version&gt;</span>Hoxton.SR6<span style="color:#f92672">&lt;/spring-cloud.version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/properties&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-oauth2<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-devtools<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>runtime<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;optional&gt;</span>true<span style="color:#f92672">&lt;/optional&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span> <span style="color:#f92672">&lt;exclusions&gt;</span>    <span style="color:#f92672">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;groupId&gt;</span>org.junit.vintage<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;artifactId&gt;</span>junit-vintage-engine<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;/exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.security<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-security-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependencyManagement&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-dependencies<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;version&gt;</span>${spring-cloud.version}<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;type&gt;</span>pom<span style="color:#f92672">&lt;/type&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>import<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/dependencyManagement&gt;&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/build&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>现在，在我们应用程序的基础包（即 com.tutorial.spring.security.oauth2）中，添加一个名为 config 的新包，我们将在其中添加配置类。</p>
+<p>让我们创建第一个配置类 UserConfig，它扩展了 Spring Security 的 WebSecurityConfigurerAdapter 类来管理客户端应用程序的用户。我们给这个类加上@Configuration 注解，告诉 Spring 它是一个配置类。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.oauth2.config;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Bean;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.AuthenticationManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.User;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetails;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetailsService;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.NoOpPasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.PasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.provisioning.InMemoryUserDetailsManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.provisioning.UserDetailsManager;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserConfig</span> <span style="color:#66d9ef">extends</span> WebSecurityConfigurerAdapter {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> UserDetailsService <span style="color:#a6e22e">userDetailsService</span>() {
+</span></span><span style="display:flex;"><span>      UserDetailsManager userDetailsManager <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InMemoryUserDetailsManager();
+</span></span><span style="display:flex;"><span>      UserDetails user <span style="color:#f92672">=</span> User.<span style="color:#a6e22e">withUsername</span>(<span style="color:#e6db74">&#34;john&#34;</span>)
+</span></span><span style="display:flex;"><span>         .<span style="color:#a6e22e">password</span>(<span style="color:#e6db74">&#34;12345&#34;</span>) .<span style="color:#a6e22e">authorities</span>(<span style="color:#e6db74">&#34;read&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">build</span>(); userDetailsManager.<span style="color:#a6e22e">createUser</span>(user); <span style="color:#66d9ef">return</span> userDetailsManager;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> PasswordEncoder <span style="color:#a6e22e">passwordEncoder</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> NoOpPasswordEncoder.<span style="color:#a6e22e">getInstance</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> AuthenticationManager <span style="color:#a6e22e">authenticationManagerBean</span>() <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">super</span>.<span style="color:#a6e22e">authenticationManagerBean</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后，我们添加 UserDetailsS​​ervice 的 bean 来检索用户详细信息以进行身份 ​​ 验证和授权。为了将其放入 Spring 上下文中，我们用 @Bean 对其进行注释。为了使本教程简单易懂，我们使用 InMemoryUserDetailsManager 实例。对于实际应用程序，我们可以使用其他实现，例如 JdbcUserDetailsManager 来连接到数据库等。为了能够在此示例中轻松创建用户，我们使用 UserDetailsManager 接口，该接口扩展了 UserDetailsS​​ervice 并具有 createUser()、updateUser() 等方法。然后，我们使用构建器类创建一个用户。我们现在给他一个用户名、密码和“读取”权限。然后，使用 createUser() 方法添加新创建的用户并返回 UserDetailsManager 实例，从而将其放入 Spring 上下文中。</p>
+<p>为了能够使用我们定义的 UserDetailsS​​ervice，有必要在 Spring 上下文中提供一个 PasswordEncoder bean。再次强调，为了简单起见，我们现在使用 NoOpPasswordEncoder。 NoOpPasswordEncoder 不应该用于实际生产应用程序，因为它不安全。 NoOpPasswordEncoder 不会对密码进行编码，仅适用于开发或测试场景或概念证明。</p>
+<p>我们应该始终使用 Spring Security 提供的其他高度安全的选项，其中最流行的是 BCryptPasswordEncoder，我们将在后面的系列教程中使用它。为了将其放入 Spring 上下文中，我们使用 @Bean 注释该方法。</p>
+<p>然后，我们重写 WebSecurityConfigurerAdapter 的 AuthenticationManager bean 方法，该方法返回 authenticationManagerBean 以将身份验证管理器放入 Spring 上下文中。</p>
+<p>现在，为了添加客户端配置，我们添加一个名为 AuthorizationServerConfig 的新配置类，它扩展了 Spring Security 的 AuthorizationServerConfigurerAdapter 类。 AuthorizationServerConfigurerAdapter 类用于使用 spring security oauth2 模块配置授权服务器。我们也用@Configuration 注释这个类。要将授权服务器功能添加到此类中，我们需要添加 @EnableAuthorizationServer 注释，以便应用程序可以充当授权服务器。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.oauth2.config;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.AuthenticationManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span> <span style="color:#a6e22e">@EnableAuthorizationServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthorizationServerConfig</span> <span style="color:#66d9ef">extends</span> AuthorizationServerConfigurerAdapter {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> AuthenticationManager authenticationManager;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(ClientDetailsServiceConfigurer clients) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      clients.<span style="color:#a6e22e">inMemory</span>() .<span style="color:#a6e22e">withClient</span>(<span style="color:#e6db74">&#34;oauthclient1&#34;</span>) .<span style="color:#a6e22e">secret</span>(<span style="color:#e6db74">&#34;oauthsecret1&#34;</span>) .<span style="color:#a6e22e">scopes</span>(<span style="color:#e6db74">&#34;read&#34;</span>) .<span style="color:#a6e22e">authorizedGrantTypes</span>(<span style="color:#e6db74">&#34;password&#34;</span>) }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(AuthorizationServerEndpointsConfigurer endpoints) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      endpoints.<span style="color:#a6e22e">authenticationManager</span>(authenticationManager);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>为了检查 oauth 令牌，Spring Security oauth 公开两个端点 - /oauth/check_token 和 /oauth/token_key。默认情况下，这些端点在 denyAll() 后面受到保护。 tokenKeyAccess() 和 checkTokenAccess() 方法打开这些端点以供使用。</p>
+<p>我们将在 UserConfig 类中配置的 AuthenticationManager bean 自动装配为此处的依赖项，稍后我们将使用它。</p>
+<p>然后，我们重写 AuthorizationServerConfigurerAdapter 的两个 configure() 方法，以提供客户端详细信息服务的内存中实现。第一种方法使用 ClientDetailsS​​erviceConfigurer 作为参数，顾名思义，允许我们为授权服务器配置客户端。这些客户端代表能够使用该授权服务器功能的应用程序。由于这是学习 OAuth2 实现的基本应用程序，因此我们现在将保持简单并使用具有以下属性的内存中实现 -</p>
+<ul>
+<li><strong>clientId</strong> − 客户端的 ID。必需的。</li>
+<li><strong>secret</strong> − 客户端密码，受信任的客户端所需</li>
+<li><strong>scope</strong> − 范围 - 客户端的限制范围，换句话说，客户端权限。如果留空或未定义，则客户端不受任何范围的限制。</li>
+<li><strong>authorizedGrantTypes</strong> − 客户端被授权使用的授权类型。 grant type 表示客户端从授权服务器获取 token 的方式。我们将使用“密码”授予类型，因为它是最简单的。稍后，我们将针对另一个用例使用另一种授权类型。</li>
+</ul>
+<p>在“密码”授权授予类型中，用户需要向我们的客户端应用程序提供他/她的用户名、密码和范围，然后客户端应用程序使用这些凭据以及我们想要从中获取令牌的授权服务器的凭据。</p>
+<p>我们重写的另一个 configure()方法使用 AuthorizationServerEndpointsConfigurer 作为参数，用于将 AuthenticationManager 附加到授权服务器配置。</p>
+<p>通过这些基本配置，我们的授权服务器就可以使用了。让我们继续启动并使用它。我们将使用 Postman (h ttps://www.postman.com/downloads/) 来提出我们的请求。</p>
+<p>使用 STS 时，我们可以启动应用程序并开始在控制台中查看日志。当应用程序启动时，我们可以在控制台中找到应用程序公开的 oauth2 端点。在这些端点中，我们现在将使用以下令牌 -</p>
+<p><strong>/oauth/token – 用于获取令牌。</strong></p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/obtaining_the_token.jpg" alt="Obtaining the Token"></p>
+<p>如果我们检查这里的邮递员快照，我们可以注意到一些事情。让我们在下面列出它们。</p>
+<ul>
+<li>URL - 我们的 Spring Boot 应用程序在本地计算机的端口 8080 上运行，因此请求指向 http://localhost:8080。接下来的部分是 /oauth/token，我们知道它是 OAuth 公开的用于生成令牌的端点。</li>
+<li>查询参数 - 由于这是“密码”授权授予类型，因此用户需要向我们的客户端应用程序提供他/她的用户名、密码和范围，然后客户端应用程序使用这些凭据及其凭据发送给我们想要令牌的授权服务器从。</li>
+<li>客户端授权- Oauth 系统要求客户端获得授权才能提供令牌。因此，在授权标头下，我们提供客户端身份验证信息，即我们在应用程序中配置的用户名和密码。</li>
+</ul>
+<p>让我们仔细看看查询参数和授权标头 -</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/authorization_header.jpg" alt="Authorization Header"></p>
+<p>查询参数</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/client_credentials.jpg" alt="Client Credentials"></p>
+<p>客户凭证</p>
+<p>如果一切正确，我们将能够在响应中看到生成的令牌以及 200 ok 状态。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/response.jpg" alt="Response"></p>
+<p>响应</p>
+<p>我们可以通过输入错误的凭据或不输入凭据来测试我们的服务器，我们将收到一个错误，表明请求未经授权或凭据错误。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server.jpg" alt="OAuth Authorization Server"></p>
+<p>这是我们的基本 oauth 授权服务器，它使用密码授予类型来生成并提供密码。</p>
+<p>接下来，让我们实现一个更安全、更常见的 oauth2 身份验证应用，即使用授权码授予类型。为此，我们将更新当前的应用程序。</p>
+<p>授权授予类型与密码授予类型不同，因为用户不必与客户端应用程序共享其凭据。他仅与授权服务器共享它们，作为回报，授权代码被发送到客户端，用于对客户端进行身份验证。它比密码授予类型更安全，因为用户凭据不与客户端应用程序共享，因此用户的信息保持安全。</p>
+<p>除非得到用户的批准，客户端应用程序无法访问任何重要的用户信息。</p>
+<p>通过几个简单的步骤，我们可以在应用程序中设置一个具有授权授予类型的基本 oauth 服务器。让我们看看如何。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.oauth2.config;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.AuthenticationManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableAuthorizationServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthorizationServerConfig</span> <span style="color:#66d9ef">extends</span> AuthorizationServerConfigurerAdapter {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> AuthenticationManager authenticationManager;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(ClientDetailsServiceConfigurer clients) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      clients.<span style="color:#a6e22e">inMemory</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">withClient</span>(<span style="color:#e6db74">&#34;oauthclient1&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">secret</span>(<span style="color:#e6db74">&#34;oauthsecret1&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">scopes</span>(<span style="color:#e6db74">&#34;read&#34;</span>) .<span style="color:#a6e22e">authorizedGrantTypes</span>(<span style="color:#e6db74">&#34;password&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">and</span>() .<span style="color:#a6e22e">withClient</span>(<span style="color:#e6db74">&#34;oauthclient2&#34;</span>) .<span style="color:#a6e22e">secret</span>(<span style="color:#e6db74">&#34;oauthsecret2&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">scopes</span>(<span style="color:#e6db74">&#34;read&#34;</span>) .<span style="color:#a6e22e">authorizedGrantTypes</span>(<span style="color:#e6db74">&#34;authorization_code&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">redirectUris</span>(<span style="color:#e6db74">&#34;http://locahost:9090&#34;</span>);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(AuthorizationServerEndpointsConfigurer endpoints) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      endpoints.<span style="color:#a6e22e">authenticationManager</span>(authenticationManager);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>让我们为此操作添加第二个客户端 oauthclient2，并使用新的密钥和读取范围。在这里，我们已将此客户端的授权类型更改为授权代码。我们还添加了重定向 URI，以便授权服务器可以回调客户端。因此，基本上重定向 URI 就是客户端的 URI。</p>
+<p>现在，我们必须在用户和授权服务器之间建立连接。我们必须为授权服务器设置一个接口，用户可以在其中提供凭据。我们使用 Spring Security 的 formLogin() 实现来实现该功能，同时保持简单。我们还确保所有请求都经过身份验证。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.oauth2.config;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Bean;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.AuthenticationManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.User;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetails;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetailsService;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.NoOpPasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.PasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.provisioning.InMemoryUserDetailsManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.provisioning.UserDetailsManager;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SuppressWarnings</span>(<span style="color:#e6db74">&#34;deprecation&#34;</span>) <span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserConfig</span> <span style="color:#66d9ef">extends</span> WebSecurityConfigurerAdapter {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> UserDetailsService <span style="color:#a6e22e">userDetailsService</span>() {
+</span></span><span style="display:flex;"><span>      UserDetailsManager userDetailsManager <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InMemoryUserDetailsManager();
+</span></span><span style="display:flex;"><span>         UserDetails user <span style="color:#f92672">=</span> User.<span style="color:#a6e22e">withUsername</span>(<span style="color:#e6db74">&#34;john&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">password</span>(<span style="color:#e6db74">&#34;12345&#34;</span>) .<span style="color:#a6e22e">authorities</span>(<span style="color:#e6db74">&#34;read&#34;</span>) .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>      userDetailsManager.<span style="color:#a6e22e">createUser</span>(user); <span style="color:#66d9ef">return</span> userDetailsManager;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span> <span style="color:#66d9ef">public</span> PasswordEncoder <span style="color:#a6e22e">passwordEncoder</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> NoOpPasswordEncoder.<span style="color:#a6e22e">getInstance</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> AuthenticationManager <span style="color:#a6e22e">authenticationManagerBean</span>() <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">super</span>.<span style="color:#a6e22e">authenticationManagerBean</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      http.<span style="color:#a6e22e">formLogin</span>(); http.<span style="color:#a6e22e">authorizeRequests</span>().<span style="color:#a6e22e">anyRequest</span>().<span style="color:#a6e22e">authenticated</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 http://localhost:8080/oauth/authorize?response_type=code&amp;client_id=oauthclient2&amp;scope=read 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server_signin.jpg" alt="OAuth Authorization Server Signin"></p>
+<p>这里，响应类型代码意味着授权服务器将返回一个访问代码，客户端将使用该访问代码进行登录。当我们使用用户凭据时，我们将被询问是否要授予客户端请求的权限，在类似的屏幕如下所示。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/oauth_approval.jpg" alt="OAuth Approval"></p>
+<p>如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 http://locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为 Postman 中的客户端来登录授权服务器。</p>
+<p><img src="https://www.tutorialspoint.com/spring_security/images/postman_authorization.jpg" alt="Postman Authorization"></p>
+<p>正如我们在这里所看到的，我们在 URL 中使用了从授权服务器收到的代码，并且 grant_type 作为授权代码，范围作为读取。我们充当客户端并提供应用程序中配置的客户端凭据。当我们发出这个请求时，我们会得到我们可以进一步使用的 access_token。</p>
+<p>我们已经了解了如何使用 OAuth 2.0 配置 Spring Security。该应用程序非常简单且易于理解，可以帮助我们相当轻松地理解该过程。我们使用了两种授权授予类型，并了解了如何使用它们来获取客户端应用程序的访问令牌。</p>
+<p>原文链接：<a href="https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm" target="_blank">https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-jwt/" target="_blank" title="[译]Spring Security - JWT">[译]Spring Security - JWT</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/" target="_blank" title="[译]Spring Security - 表单登录、记住我和注销">[译]Spring Security - 表单登录、记住我和注销</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security/" target="_blank" title="[译]Spring Security 和 Spring Boot 入门">[译]Spring Security 和 Spring Boot 入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-authentication-and-authorization/" target="_blank" title="[译]Spring Security：深入了解身份验证和授权">[译]Spring Security：深入了解身份验证和授权</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-boot-docker/" target="_blank" title="[译]为 Spring Boot 应用程序创建优化的 Docker 映像">[译]为 Spring Boot 应用程序创建优化的 Docker 映像</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/15/spring-security-oauth2-history/" target="_blank" title="Spring Security和OAuth2发展过程">Spring Security和OAuth2发展过程</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]Spring Security - 表单登录、记住我和注销</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/16/spring-security-with-jwt/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]Spring Security - JWT</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/08\/16\/spring-security-with-oauth2\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#oauth-20-基础知识">OAuth 2.0 基础知识</a>
+      <ul>
+        <li><a href="#入门">入门</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

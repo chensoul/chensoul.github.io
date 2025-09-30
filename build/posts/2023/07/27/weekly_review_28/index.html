@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>周报-28｜技术文档范例 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="周报-28｜技术文档范例">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/27/weekly_review_28/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="周报-28｜技术文档范例">
+  <meta itemprop="description" content="前言 本篇是对 2023-07-10 到 2023-07-16 这周生活的记录与思考。首发在我的个人 博客，你可以移步了解更多或者给我留言。">
+  <meta itemprop="datePublished" content="2023-07-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="278">
+  <meta itemprop="keywords" content="Weekly-Report,Learning,Personal">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="周报-28｜技术文档范例">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">周报-28｜技术文档范例</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-27">2023-07-27</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/review/" rel="category">Review</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/weekly-report/" rel="tag">Weekly-Report</a>, <a class="meta__link" href="/tags/learning/" rel="tag">Learning</a>, <a class="meta__link" href="/tags/personal/" rel="tag">Personal</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="前言">前言</h2>
+<p>本篇是对 <code>2023-07-10</code> 到 <code>2023-07-16</code> 这周生活的记录与思考。首发在我的个人 <a href="https://blog.chensoul.cc/" target="_blank">博客</a>，你可以移步了解更多或者给我留言。</p>
+<blockquote>
+<p>读书、健身、投资、帮朋友、陪家人。</p></blockquote>
+<p>这是我的第 27 篇周报，由于工作的原因，前两周的周报是一起发布的，所以第 27 篇周报被跳过去了。</p>
+<h2 id="技术文档范例">技术文档范例</h2>
+<p>以下是一个使用中文标题的技术文档范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>一、介绍
+</span></span><span style="display:flex;"><span>    1.1 目的
+</span></span><span style="display:flex;"><span>    1.2 范围
+</span></span><span style="display:flex;"><span>    1.3 受众
+</span></span><span style="display:flex;"><span>    1.4 定义、缩略语和术语
+</span></span><span style="display:flex;"><span>二、概述
+</span></span><span style="display:flex;"><span>    2.1 系统架构
+</span></span><span style="display:flex;"><span>    2.2 主要功能
+</span></span><span style="display:flex;"><span>    2.3 系统要求
+</span></span><span style="display:flex;"><span>三、入门指南
+</span></span><span style="display:flex;"><span>    3.1 安装
+</span></span><span style="display:flex;"><span>    3.2 配置
+</span></span><span style="display:flex;"><span>    3.3 第一步操作
+</span></span><span style="display:flex;"><span>四、用户指南
+</span></span><span style="display:flex;"><span>    4.1 用户界面
+</span></span><span style="display:flex;"><span>    4.2 导航
+</span></span><span style="display:flex;"><span>    4.3 功能
+</span></span><span style="display:flex;"><span>五、管理指南
+</span></span><span style="display:flex;"><span>    5.1 系统配置
+</span></span><span style="display:flex;"><span>    5.2 用户管理
+</span></span><span style="display:flex;"><span>    5.3 安全性
+</span></span><span style="display:flex;"><span>六、故障排除
+</span></span><span style="display:flex;"><span>    6.1 常见问题
+</span></span><span style="display:flex;"><span>    6.2 错误消息
+</span></span><span style="display:flex;"><span>七、附录
+</span></span><span style="display:flex;"><span>    7.1 发行说明
+</span></span><span style="display:flex;"><span>    7.2 术语表
+</span></span><span style="display:flex;"><span>    7.3 参考文献
+</span></span></code></pre></div><p>以下是一个使用数字标题的 Spring Cloud Gateway 教程示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>1. 介绍
+</span></span><span style="display:flex;"><span>    1.1 目的
+</span></span><span style="display:flex;"><span>    1.2 范围
+</span></span><span style="display:flex;"><span>    1.3 受众
+</span></span><span style="display:flex;"><span>    1.4 术语和定义
+</span></span><span style="display:flex;"><span>2. 概述
+</span></span><span style="display:flex;"><span>    2.1 什么是 Spring Cloud Gateway
+</span></span><span style="display:flex;"><span>    2.2 Spring Cloud Gateway 的优势
+</span></span><span style="display:flex;"><span>3. 快速入门
+</span></span><span style="display:flex;"><span>    3.1 环境配置
+</span></span><span style="display:flex;"><span>    3.2 创建Spring Cloud Gateway项目
+</span></span><span style="display:flex;"><span>    3.3 配置路由规则
+</span></span><span style="display:flex;"><span>    3.4 运行和测试
+</span></span><span style="display:flex;"><span>4. 路由配置
+</span></span><span style="display:flex;"><span>    4.1 URI路由
+</span></span><span style="display:flex;"><span>    4.2 断言路由
+</span></span><span style="display:flex;"><span>    4.3 过滤器
+</span></span><span style="display:flex;"><span>5. 高级特性
+</span></span><span style="display:flex;"><span>    5.1 熔断器
+</span></span><span style="display:flex;"><span>    5.2 限流
+</span></span><span style="display:flex;"><span>    5.3 日志和监控
+</span></span><span style="display:flex;"><span>6. 部署和管理
+</span></span><span style="display:flex;"><span>    6.1 部署选项
+</span></span><span style="display:flex;"><span>    6.2 容器化部署
+</span></span><span style="display:flex;"><span>    6.3 管理和监控
+</span></span><span style="display:flex;"><span>7. 故障排除
+</span></span><span style="display:flex;"><span>    7.1 常见问题
+</span></span><span style="display:flex;"><span>    7.2 日志分析
+</span></span><span style="display:flex;"><span>8. 总结和参考资料
+</span></span><span style="display:flex;"><span>    8.1 总结
+</span></span><span style="display:flex;"><span>    8.2 参考资料
+</span></span></code></pre></div><h2 id="读书">读书</h2>
+<h2 id="健身">健身</h2>
+<blockquote>
+<p>我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多。2 年里我跑过 2 个省份 2 个城市。更多跑步数据在我的 <a href="https://run.chensoul.cc/" target="_blank">跑步</a> 主页。</p></blockquote>
+<h2 id="理财">理财</h2>
+<p>这周总计支出 5006 元，明细如下：</p>
+<ul>
+<li>
+<p>7 月 16 日：4057 元，父亲出院支付 3475 元</p>
+</li>
+<li>
+<p>7 月 15 日：108 元</p>
+</li>
+<li>
+<p>7 月 14 日：86 元</p>
+</li>
+<li>
+<p>7 月 13 日：367 元</p>
+</li>
+<li>
+<p>7 月 12 日：179 元</p>
+</li>
+<li>
+<p>7 月 11 日：117 元</p>
+</li>
+<li>
+<p>7 月 10 日：92 元</p>
+</li>
+</ul>
+<h2 id="陪家人">陪家人</h2>
+<h2 id="工作">工作</h2>
+<p>最近在学习的内容清单：</p>
+<ul>
+<li><a href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/tree/dev" target="_blank">Effective Java（第 3 版）</a></li>
+<li><a href="https://java-design-patterns.com/zh/" target="_blank">Java Design Patterns (中文)</a></li>
+<li><a href="https://realpython.com/" target="_blank">Real Python</a></li>
+</ul>
+<p>本周完成一篇博客：</p>
+<ul>
+<li><a href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/">[译]使用 Spring Boot2 和 Spring Security 5 以及 JDBC 令牌存储进行 Oauth2 集中授权</a></li>
+</ul>
+<h2 id="本周分享">本周分享</h2>
+<p>大部分有意思的内容会分享在 『<a href="https://t.me/ichensoul" target="_blank">ChenSoul Share</a>』Telegram 频道或者我的 <a href="https://memos.chensoul.cc/" target="_blank">Memos</a> 中。我写了一个 Python 脚本从 Memos 读取最近一周带有 <code>#memos</code> 标签的记录，分享到这里。</p>
+<ul>
+<li>
+<p>📌<code>2023-07-15</code> Mysql update 语句使用子查询 | CHEGVA <code>#memos</code> <a href="https://chegva.com/5744.html" target="_blank">https://chegva.com/5744.html</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-15</code> 一篇《OAuth2 概述》（英文），在很短的篇幅里面，清楚地介绍了 OAuth。<code>#memos</code> <a href="https://metacpan.org/dist/LWP-Authen-OAuth2/view/lib/LWP/Authen/OAuth2/Overview.pod" target="_blank">https://metacpan.org/dist/LWP-Authen-OAuth2/view/lib/LWP/Authen/OAuth2/Overview.pod</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-15</code> 拥抱 TypeScript 的历程 | Usubeni Fantasy<code>#memos</code> <a href="https://ssshooter.com/typescript-tittle-tattle/" target="_blank">https://ssshooter.com/typescript-tittle-tattle/</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-15</code> 一个独立创造者的五年<code>#memos</code> <a href="http://hawstein.com/2023/07/12/five-years-of-an-indie-hacker/" target="_blank">http://hawstein.com/2023/07/12/five-years-of-an-indie-hacker/</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-15</code> 一个短链接浏览器扩展插件，月收入 2.6K 美金 <code>#memos</code> <a href="https://www.ezindie.com/weekly/issue-95" target="_blank">https://www.ezindie.com/weekly/issue-95</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-15</code> 配置轻量级 Linux 远程开发环境（Fedora 38）<code>#memos</code> <a href="https://rook1e.com/p/lightweight-remote-linux-devenv-fedora38/" target="_blank">https://rook1e.com/p/lightweight-remote-linux-devenv-fedora38/</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-11</code> React Design Patterns <code>#memos</code> <a href="https://anuradha.hashnode.dev/react-design-patterns" target="_blank">https://anuradha.hashnode.dev/react-design-patterns</a></p>
+</li>
+<li>
+<p>📌<code>2023-07-11</code> 推荐：非常详细的 vite 开发笔记（7k 字）<code>#memos</code> <a href="https://juejin.cn/post/7251873578157113401" target="_blank">https://juejin.cn/post/7251873578157113401</a></p>
+</li>
+</ul>
+<p>以上。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/11/weekly_review_26/" target="_blank" title="周报-26｜上半年的绩效总结">周报-26｜上半年的绩效总结</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/28/weekly_review_25/" target="_blank" title="周报-25｜端午安康">周报-25｜端午安康</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/21/weekly_review_24/" target="_blank" title="周报-24｜如果没有疼痛">周报-24｜如果没有疼痛</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/14/weekly_review_23/" target="_blank" title="周报-23｜读书、健身、定投、帮朋友、陪家人">周报-23｜读书、健身、定投、帮朋友、陪家人</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/09/weekly_review_22/" target="_blank" title="周报-22｜微信读书笔记助手">周报-22｜微信读书笔记助手</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/31/weekly_review_21/" target="_blank" title="周报-21｜Python之禅、产品经理被优化、端午节送节">周报-21｜Python之禅、产品经理被优化、端午节送节</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/weekly-report/" rel="tag">weekly-report</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/learning/" rel="tag">learning</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/personal/" rel="tag">personal</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/26/spring-boot-authorization-server/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/15/tree-structure-in-database/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 数据库如何设计树形结构</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/27\/weekly_review_28\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#技术文档范例">技术文档范例</a></li>
+    <li><a href="#读书">读书</a></li>
+    <li><a href="#健身">健身</a></li>
+    <li><a href="#理财">理财</a></li>
+    <li><a href="#陪家人">陪家人</a></li>
+    <li><a href="#工作">工作</a></li>
+    <li><a href="#本周分享">本周分享</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

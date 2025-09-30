@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-02-05｜Spring Cloud Config快速入门 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-02-05｜Spring Cloud Config快速入门">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/02/05/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-02-05｜Spring Cloud Config快速入门">
+  <meta itemprop="description" content="今天做了什么：
+创建项目 spring-cloud-examples，测试 Spring Cloud Config 使用本地文件和 git 仓库作为配置中心 Spring Cloud Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。 Spring Cloud Config 支持以下几种存储方式：">
+  <meta itemprop="datePublished" content="2024-02-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-02-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1432">
+  <meta itemprop="keywords" content="Java,Javascript,Spring-Boot,Rabbitmq">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-02-05｜Spring Cloud Config快速入门">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-02-05｜Spring Cloud Config快速入门</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-02-05">2024-02-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/spring-boot/" rel="tag">Spring-Boot</a>, <a class="meta__link" href="/tags/rabbitmq/" rel="tag">Rabbitmq</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ol>
+<li>创建项目 <a href="https://github.com/chensoul/spring-cloud-examples" target="_blank">spring-cloud-examples</a>，测试 <em>Spring Cloud</em> Config 使用本地文件和 git 仓库作为配置中心</li>
+</ol>
+<hr>
+<p><em>Spring Cloud</em> Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。
+<em>Spring Cloud</em> Config 支持以下几种存储方式：</p>
+<ul>
+<li>Git 仓库</li>
+<li>本地文件</li>
+<li>Vault</li>
+<li>JDBC 数据库</li>
+</ul>
+<p>本文主要分享 Spring Cloud Config 使用本地文件和Git 仓库存储配置文件、配置文件加解密、集成 Spring Cloud Bus 等内容，源码在 github：<a href="https://github.com/chensoul/spring-cloud-examples" target="_blank">spring-cloud-examples</a>。</p>
+<h2 id="本地文件">本地文件</h2>
+<h3 id="服务端应用">服务端应用</h3>
+<h4 id="1-创建项目">1. 创建项目</h4>
+<p>首先，创建一个目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir spring-cloud-examples
+</span></span><span style="display:flex;"><span>cd spring-cloud-examples
+</span></span></code></pre></div><p>然后，创建 config 目录，并使用 spring cli 创建一个 maven 项目，项目名称 config-server-file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir config
+</span></span><span style="display:flex;"><span>cd config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spring init <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--boot-version<span style="color:#f92672">=</span>3.2.2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--type<span style="color:#f92672">=</span>maven-project <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--java-version<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name<span style="color:#f92672">=</span>config-server-file <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--package-name<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--groupId<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--dependencies<span style="color:#f92672">=</span>cloud-config-server,actuator <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>config-server-file
+</span></span></code></pre></div><p>​	项目创建成功之后，将 spring-boot-starter-parent 版本改为 2.7.18，对应的将 spring-cloud.version 改为 2021.0.9。</p>
+<h4 id="2-添加-enableconfigserver-注解">2. 添加 @EnableConfigServer 注解</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@EnableConfigServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SpringBootApplication</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigServerFileApplication</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">final</span> String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>		SpringApplication.<span style="color:#a6e22e">run</span>(ConfigServerFileApplication.<span style="color:#a6e22e">class</span>, args);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="3-修改配置文件">3. 修改配置文件</h4>
+<p>将 application.properties 重命名为 application.yml，并添加如下配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">server</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8888</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.application.name</span>: <span style="color:#ae81ff">config-server-file</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.profiles.active</span>: <span style="color:#ae81ff">native</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoint.health.show-details</span>: <span style="color:#ae81ff">ALWAYS</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoints.web.exposure.include</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># default value: classpath://, classpath://config, file:./, file:./config</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.cloud.config.server.native.search-locations</span>: <span style="color:#ae81ff">file:${PWD}/config-repo</span>
+</span></span></code></pre></div><blockquote>
+<p>说明：</p>
+<ul>
+<li>使用本地配置文件，要求 <code>spring.profiles.active</code> 必须为 native</li>
+<li><code>${PWD}</code> 指向的是当前项目的路径</li>
+</ul></blockquote>
+<p>创建 config-repo 目录，用于保存配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir config-repo
+</span></span></code></pre></div><p>在 config-repo 目录创建一个测试文件 foo.yml：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>foo: hello world
+</span></span></code></pre></div><h4 id="4-启动应用">4. 启动应用</h4>
+<p>启动应用之后，可以访问 /actuator 。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8888/actuator/ -s | jq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;_links&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;self&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;http://localhost:8888/actuator&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;templated&#34;</span>: false
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;refresh&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;http://localhost:8888/actuator/refresh&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;templated&#34;</span>: false
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;features&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;http://localhost:8888/actuator/features&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;templated&#34;</span>: false
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>此外，配置服务器还暴露以下几个端点：</p>
+<ul>
+<li><code>/encrypt</code> 和 <code>/decrypt</code></li>
+<li><code>/{application}/{profile}[/{label}]</code></li>
+<li><code>/{application}-{profile}.yml</code></li>
+<li><code>/{label}/{application}-{profile}.yml</code></li>
+<li><code>/{application}-{profile}.properties</code></li>
+<li><code>/{label}/{application}-{profile}.properties</code></li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><code>application</code>：应用名称</li>
+<li><code>profile</code>：spring 的 profile</li>
+<li><code>label</code>：git 仓库的分支名称</li>
+</ul>
+<p>针对当前项目的 foo.yml 配置文件，可以访问的路径有：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http://localhost:8888/foo/native
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo-native.yml
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo-native.yaml
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo-native.properties
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo-native.json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo/native/master
+</span></span><span style="display:flex;"><span>http://localhost:8888/foo/native,default/master
+</span></span><span style="display:flex;"><span>http://localhost:8888/master/foo-native.properties
+</span></span><span style="display:flex;"><span>http://localhost:8888/master/foo-native.yml
+</span></span><span style="display:flex;"><span>http://localhost:8888/master/foo-native.yaml
+</span></span><span style="display:flex;"><span>http://localhost:8888/master/foo-native.json
+</span></span></code></pre></div><p>例如，访问 localhost:8888/foo/native :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -s localhost:8888/foo/native | jq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;foo&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;profiles&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;native&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;label&#34;</span>: null,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;version&#34;</span>: null,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;state&#34;</span>: null,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;propertySources&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;file://Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo/foo.yml&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;source&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;hello world&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>访问 http://localhost:8888/actuator/env 可以查看所有 propertySources 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -s localhost:8080/actuator/env | jq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;activeProfiles&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;native&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;propertySources&#34;</span>: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;server.ports&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;local.server.port&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#ae81ff">8888</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;servletContextInitParams&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;systemProperties&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;systemEnvironment&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;configServerClient&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;spring.cloud.config.enabled&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;springCloudClientHostInfo&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;spring.cloud.client.hostname&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;192.168.3.214&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;spring.cloud.client.ip-address&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;192.168.3.214&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Config resource &#39;class path resource [application.yml]&#39; via location &#39;optional:classpath://&#39;&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;properties&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;server.port&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: 8888,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;class path resource [application.yml] - 2:9&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;spring.profiles.active&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;native&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;class path resource [application.yml] - 6:13&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;spring.cloud.config.server.native.search-locations&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;file://Users/chensoul/workspace/IdeaProjects/spring-cloud-examples/config-repo&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;class path resource [application.yml] - 9:53&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;management.endpoints.web.exposure.include&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;class path resource [application.yml] - 15:18&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;management.endpoint.env.post.enabled&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;value&#34;</span>: true,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;origin&#34;</span>: <span style="color:#e6db74">&#34;class path resource [application.yml] - 19:18&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>propertySources 包括：</p>
+<ul>
+<li><code>server.ports</code></li>
+<li><code>servletContextInitParams</code></li>
+<li><code>systemProperties</code></li>
+<li><code>systemEnvironment</code></li>
+<li><code>configServerClient</code></li>
+<li><code>springCloudClientHostInfo</code></li>
+<li><code>optional:classpath://</code> 中的 <code>application.yml</code></li>
+</ul>
+<p>查看 foo.yml 配置文件内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8888/foo-native.yml
+</span></span><span style="display:flex;"><span>foo: hello world
+</span></span></code></pre></div><h4 id="5-开启-security">5. 开启 Security</h4>
+<p>添加 security 依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>修改配置文件，设置用户名和密码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring.security.user.name</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_NAME:root}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.security.user.password</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_PASSWORD:123456}</span>
+</span></span></code></pre></div><p>或者通过环境变量 <code>SPRING_SECURITY_USER_NAME</code>、<code>SPRING_SECURITY_USER_PASSWORD</code> 进行设置。</p>
+<p>重启应用，再次访问配置服务器时需要指定用户名和密码，例如，查看 foo.yml 配置文件内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/foo/native -s | jq 
+</span></span><span style="display:flex;"><span>test: hello world
+</span></span></code></pre></div><h4 id="6-加解密信息">6. 加解密信息</h4>
+<p>支持两种配置方式：</p>
+<ul>
+<li>
+<p>第一种，对称加密。配置加密 key 和 salt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">encrypt.key</span>: <span style="color:#ae81ff">${ENCRYPT_KEY:123456}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">encrypt.salt</span>: <span style="color:#ae81ff">deadbeef</span> <span style="color:#75715e"># 可选，默认值为 deadbeef</span>
+</span></span></code></pre></div><p>或者通过环境变量 <code>ENCRYPT_KEY</code> 进行设置。</p>
+</li>
+<li>
+<p>第二种，分对称加密。</p>
+<p>首先，需要生成 keystore 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd config-server-file/src/main/resources
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>keytool -genkeypair -alias mytestkey -storetype PKCS12 -keyalg RSA <span style="color:#ae81ff">\ </span>
+</span></span><span style="display:flex;"><span>  -dname <span style="color:#e6db74">&#34;CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -keypass changeme -keystore server.jks -storepass changeme
+</span></span></code></pre></div><p>然后，在配置文件中添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">encrypt</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">key-store</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span>: <span style="color:#ae81ff">classpath:server.jks</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">password</span>: <span style="color:#ae81ff">changeme</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">alias</span>: <span style="color:#ae81ff">mytestkey</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">secret</span>: <span style="color:#ae81ff">changeme</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>接下来，使用第一种配置方式进行测试。</p>
+<p>重启应用，加密 &ldquo;hello world&rdquo;：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -s http://root:123456@localhost:8888/encrypt --data-urlencode <span style="color:#e6db74">&#34;hello world&#34;</span> 
+</span></span><span style="display:flex;"><span>1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e                    
+</span></span></code></pre></div><p>解密：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -s http://root:123456@localhost:8888/decrypt -d 1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><p>在配置文件使用加密字符串。修改 foo.yml 中 test 的值为上面生成的加密字符串：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">foo</span>: <span style="color:#e6db74">&#39;{cipher}1245fd945d0a14e529a0cafe0b6367206d69cad381d4d733ba21d348a303865e&#39;</span>
+</span></span></code></pre></div><p>重启应用，查看 foo.yml 文件内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/foo/native -s | jq 
+</span></span><span style="display:flex;"><span>foo: hello world
+</span></span></code></pre></div><h4 id="7-集成-eureka-注册中心">7. 集成 Eureka 注册中心</h4>
+<p>添加 eureka 客户端依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>添加 eureka 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">eureka</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">instance</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">prefer-ip-address</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">instance-id</span>: <span style="color:#ae81ff">${spring.cloud.client.ip-address}:${server.port}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 客户端向注册中心发送心跳的时间间隔，默认30秒</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">leaseRenewalIntervalInSeconds</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#注册中心在收到客户端心跳之后，等待下一次心跳的超时时间，如果在这个时间内没有收到下次心跳，则移除该客户端。默认90秒</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">leaseExpirationDurationInSeconds</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">service-url</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">defaultZone</span>: <span style="color:#ae81ff">http://localhost:8761/eureka/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">initialInstanceInfoReplicationIntervalSeconds</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">registryFetchIntervalSeconds</span>: <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><h4 id="8-配置高可用">8. 配置高可用</h4>
+<p>有两种方式：</p>
+<ul>
+<li>部署多实例，然后使用负载均衡进行代理</li>
+<li>注册到注册中心，部署多实例</li>
+</ul>
+<h3 id="客户端应用">客户端应用</h3>
+<h4 id="1-创建项目-1">1. 创建项目</h4>
+<p>使用 spring cli 创建一个 maven 项目 config-client</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>spring init <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--boot-version<span style="color:#f92672">=</span>3.2.2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--type<span style="color:#f92672">=</span>maven-project <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--java-version<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name<span style="color:#f92672">=</span>config-server-file-client <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--package-name<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--groupId<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--dependencies<span style="color:#f92672">=</span>cloud-config-client,web,actuator <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>config-client
+</span></span></code></pre></div><p>将 spring-boot-starter-parent 版本改为 2.7.18，对应的将 spring-cloud.version 改为 2021.0.9</p>
+<h4 id="2-修改配置文件">2. 修改配置文件</h4>
+<p>将 application.properties 重命名为 application.yml，并添加如下配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring.application.name</span>: <span style="color:#ae81ff">config-client</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoint.health.show-details</span>: <span style="color:#ae81ff">ALWAYS</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoints.web.exposure.include</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. 默认从 http://localhost:8888 获取配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 如果没有配置 optional: 则 Config Client 连接不到 Config Server 时就会失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. import 配置优先于 uri 配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. 配置了后就不需要 bootstrap 引导文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.config.import</span>: <span style="color:#e6db74">&#34;optional:configserver:&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>  	<span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span></code></pre></div><p>在 config-repo 目录添加客户端配置文件 config-client.yml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">test</span>: <span style="color:#ae81ff">hello world</span>
+</span></span></code></pre></div><h4 id="3-创建一个-controller">3. 创建一个 controller</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RefreshScope</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SpringBootApplication</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigClientApplication</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Value</span>(<span style="color:#e6db74">&#34;${test}&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String test;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/test&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">test</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">test</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">final</span> String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        SpringApplication.<span style="color:#a6e22e">run</span>(ConfigFileClientApplication.<span style="color:#a6e22e">class</span>, args);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="4-启动应用-1">4. 启动应用</h4>
+<p>查看 test 的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>test: hello world
+</span></span></code></pre></div><p>查看 config-client 应用的配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/config-client.yml
+</span></span><span style="display:flex;"><span>test: hello world
+</span></span></code></pre></div><h4 id="5-配置重试">5. 配置重试</h4>
+<p>添加 spring-retry 依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.retry<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-retry<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-aop<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>修改配置添加重试参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 客户端配置快速失败</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 配置重试，需要引入 spring-retry</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">retry</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">initialInterval</span>: <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">multiplier</span>: <span style="color:#ae81ff">1.1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxInterval</span>: <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxAttempts</span>: <span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><p>注意：重试参数也可以添加到 url 后面：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring.config.import</span>: <span style="color:#ae81ff">configserver:http://configserver.example.com?fail-fast=true&amp;max-attempts=10&amp;max-interval=1500&amp;multiplier=1.2&amp;initial-interval=1100&#34;</span>
+</span></span></code></pre></div><h4 id="6-配置其他参数">6. 配置其他参数</h4>
+<p>配置客户端快速失败和连接超时：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>  	<span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>  		<span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 客户端配置快速失败</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 配置重试，需要引入 spring-retry</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">retry</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">initialInterval</span>: <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">multiplier</span>: <span style="color:#ae81ff">1.1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxInterval</span>: <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxAttempts</span>: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">request-connect-timeout</span>: <span style="color:#ae81ff">3000</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">request-read-timeout</span>: <span style="color:#ae81ff">3000</span>
+</span></span></code></pre></div><h4 id="7-开启-security">7. 开启 Security</h4>
+<p>服务端开启了 security 之后，客户端启动时会报错：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>org.springframework.cloud.config.client.ConfigClientFailFastException: Could not locate PropertySource and the fail fast property is set, failing
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Caused by: org.springframework.web.client.UnknownContentTypeException: Could not extract response: no suitable HttpMessageConverter found <span style="color:#66d9ef">for</span> response type <span style="color:#f92672">[</span>class org.springframework.cloud.config.environment.Environment<span style="color:#f92672">]</span> and content type <span style="color:#f92672">[</span>text/html;charset<span style="color:#f92672">=</span>UTF-8<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>这时候，客户端需要设置用户名和密码。修改配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">username</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_NAME:root}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">password</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_PASSWORD:123456}</span>
+</span></span></code></pre></div><p>重启之后，再次查看 test 的值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><h4 id="8-集成-eureka-注册中心">8. 集成 Eureka 注册中心</h4>
+<p>添加 eureka 客户端依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-netflix-eureka-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>修改配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># uri: http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">discovery</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">service-id</span>: <span style="color:#ae81ff">config-server-file</span>
+</span></span></code></pre></div><h2 id="git-仓库">Git 仓库</h2>
+<h3 id="服务端应用-1">服务端应用</h3>
+<h4 id="1-创建项目-2">1. 创建项目</h4>
+<p>使用 spring cli 创建一个 maven 项目 config-server-git</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spring init <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--boot-version<span style="color:#f92672">=</span>3.2.2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--type<span style="color:#f92672">=</span>maven-project <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--java-version<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name<span style="color:#f92672">=</span>config-server-git <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--package-name<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--groupId<span style="color:#f92672">=</span>com.chensoul.springcloud <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--dependencies<span style="color:#f92672">=</span>cloud-config-server,actuator <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>config-server-git
+</span></span></code></pre></div><p>将 spring-boot-starter-parent 版本改为 2.7.18，对应的将 spring-cloud.version 改为 2021.0.9</p>
+<h4 id="2-添加-enableconfigserver-注解-1">2. 添加 @EnableConfigServer 注解</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@EnableConfigServer</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@SpringBootApplication</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConfigServerGitApplication</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">final</span> String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>		SpringApplication.<span style="color:#a6e22e">run</span>(ConfigServerGitApplication.<span style="color:#a6e22e">class</span>, args);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="3-修改配置文件-1">3. 修改配置文件</h4>
+<p>将 application.properties 重命名为 application.yml，并添加如下配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">server</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">8888</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.application.name</span>: <span style="color:#ae81ff">config-server-git</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoint.health.show-details</span>: <span style="color:#ae81ff">ALWAYS</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoints.web.exposure.include</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.cloud.config.server.git.uri</span>: <span style="color:#ae81ff">https://github.com/chensoul/spring-cloud-examples</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.cloud.config.server.git.search-paths</span>: <span style="color:#ae81ff">config-repo </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.cloud.config.server.git.default-label</span>: <span style="color:#ae81ff">config</span> <span style="color:#75715e"># 使用 config 分支</span>
+</span></span></code></pre></div><blockquote>
+<p>说明：</p>
+<ul>
+<li>search-paths：搜索路径，可以是多个，使用逗号连接，支持 * 匹配</li>
+<li>default-label：指定默认分支</li>
+</ul></blockquote>
+<h4 id="4-配置参数">4. 配置参数</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">git</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">file:${PWD}/config-repo</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">username</span>: <span style="color:#ae81ff">username</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">password</span>: <span style="color:#ae81ff">password</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">skipSslValidation</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">timeout</span>: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">force-pull</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">deleteUntrackedBranches</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">refreshRate</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">defaultLabel</span>: <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">tryMasterBranch</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>如果是私有仓库，则需要配置认证，或者使用 ssh 私钥，配置方式，请参考 <a href="https://docs.spring.io/spring-cloud-config/docs/3.1.9/reference/html/#_git_ssh_configuration_using_properties" target="_blank">Git SSH configuration using properties</a>。</p>
+<h4 id="5-启动应用">5. 启动应用</h4>
+<p>查看 test 的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><h4 id="6-开启-security">6. 开启 Security</h4>
+<p>添加 security 依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>修改配置文件，设置用户名和密码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring.security.user.name</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_NAME:root}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.security.user.password</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_PASSWORD:123456}</span>
+</span></span></code></pre></div><p>或者通过环境变量 <code>SPRING_SECURITY_USER_NAME</code>、<code>SPRING_SECURITY_USER_PASSWORD</code> 进行设置。</p>
+<p>重启应用，再次访问配置服务器时需要指定用户名和密码，例如，查看 foo.yml 配置文件内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/foo-native.yml
+</span></span><span style="display:flex;"><span>foo: hello world
+</span></span></code></pre></div><p>查看 config-client 应用的配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/config-client.yml
+</span></span><span style="display:flex;"><span>test: hello world
+</span></span></code></pre></div><h3 id="客户端应用-1">客户端应用</h3>
+<h4 id="1-创建应用">1. 创建应用</h4>
+<p>在 config-client 项目基础上，修改配置文件</p>
+<p>因为服务端配置文件是在 config 分支（<code>spring.cloud.config.server.git.default-label: config</code>），故客户端也应该设置分支 <code>spring.cloud.config.label: config</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.application.name</span>: <span style="color:#ae81ff">config-client</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoint.health.show-details</span>: <span style="color:#ae81ff">ALWAYS</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">management.endpoints.web.exposure.include</span>: <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. 默认从 http://localhost:8888 获取配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 如果没有配置 optional: 则 Config Client 连接不到 Config Server 时就会失败</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. import 配置优先于 uri 配置</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. 配置了后就不需要 bootstrap 引导文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring.config.import</span>: <span style="color:#e6db74">&#34;optional:configserver:&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>    	<span style="color:#f92672">label</span>: <span style="color:#ae81ff">config</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 客户端配置快速失败</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 配置重试，需要引入 spring-retry</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">retry</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">initialInterval</span>: <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">multiplier</span>: <span style="color:#ae81ff">1.1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxInterval</span>: <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">maxAttempts</span>: <span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><h4 id="2-启动应用">2. 启动应用</h4>
+<p>重启应用，查看 test 的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><h4 id="3-开启-security">3. 开启 security</h4>
+<p>服务端开启 security 之后，客户端需要设置用户名和密码。修改配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">cloud</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">config</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">http://localhost:8888</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">label</span>: <span style="color:#ae81ff">config</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">username</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_NAME:root}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">password</span>: <span style="color:#ae81ff">${SPRING_SECURITY_USER_PASSWORD:123456}</span>
+</span></span></code></pre></div><p>重启之后，再次查看 test 的值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><h4></h4>
+<h4 id="4-测试手动更新配置">4. 测试手动更新配置</h4>
+<p>修改 config-client.yml 文件中 test 的值为 &ldquo;hello world 1111&rdquo;，并提交到 git 仓库。</p>
+<p>通过配置服务，查看 config-client 应用的配置，发现 test 的值已经更新。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/config-client.yml
+</span></span><span style="display:flex;"><span>test: hello world
+</span></span></code></pre></div><p>然后，再次查看客户端的 test 的值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world
+</span></span></code></pre></div><p>发现 test 值并没有更新，这时候需要调用客户端的 /actuator/refresh 手动更新。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -X POST http://localhost:8080/actuator/refresh
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span><span style="color:#e6db74">&#34;config.client.version&#34;</span>,<span style="color:#e6db74">&#34;test&#34;</span><span style="color:#f92672">]</span>%  
+</span></span></code></pre></div><p>返回内容，说明 config.client.version 和 test 的值有更新。如果没有返回，说明执行异常。</p>
+<p>再次查看客户端的 test 的值，发现 test 值已修改为 &ldquo;hello world 1111&rdquo;：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world <span style="color:#ae81ff">1111</span>
+</span></span></code></pre></div><p>说明：</p>
+<ul>
+<li>/actuator/refresh 只能更新单个客户端的配置，如果有多个客户端需要一个个执行刷新接口。</li>
+</ul>
+<h2 id="集成-spring-cloud-bus">集成 Spring Cloud Bus</h2>
+<h3 id="服务端应用-2">服务端应用</h3>
+<h4 id="1-创建应用-1">1. 创建应用</h4>
+<p>在 config-server-git 项目基础上，添加依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-bus-amqp<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h4 id="2-修改配置文件-1">2. 修改配置文件</h4>
+<p>添加 rabbitmq 配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring.rabbitmq</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">5672</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">username</span>: <span style="color:#ae81ff">guest</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">password</span>: <span style="color:#ae81ff">123456</span>
+</span></span></code></pre></div><h4 id="3-重启应用">3. 重启应用</h4>
+<h3 id="客户端应用-2">客户端应用</h3>
+<h4 id="1-创建应用-2">1. 创建应用</h4>
+<p>在 config-client 项目基础上，添加依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-bus-amqp<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><h4 id="2-修改配置文件-2">2. 修改配置文件</h4>
+<p>添加 rabbitmq 配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring.rabbitmq</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">host</span>: <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">5672</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">username</span>: <span style="color:#ae81ff">guest</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">password</span>: <span style="color:#ae81ff">123456</span>
+</span></span></code></pre></div><h4 id="3-重启应用-1">3. 重启应用</h4>
+<p>查看 test 的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/config-client-default.yml
+</span></span><span style="display:flex;"><span>test: hello world <span style="color:#ae81ff">1111</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world <span style="color:#ae81ff">1111</span>
+</span></span></code></pre></div><h4 id="4-自动刷新配置">4. 自动刷新配置</h4>
+<p>spring cloud bus 提供了两个端点：</p>
+<ul>
+<li>/actuator/busrefresh：通过该接口刷新配置，spring cloud bus 会广播给所有客户端从而刷新配置</li>
+<li>/actuator/busenv</li>
+</ul>
+<p>使用 POST 请求访问 /actuator/busenv，修改 config-client.yml 文件中 test 的值为 &ldquo;hello world 2222&rdquo;：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST -H <span style="color:#e6db74">&#39;Content-Type: application/json&#39;</span> -d <span style="color:#e6db74">&#39;{&#34;name&#34;:&#34;test&#34;,&#34;value&#34;:&#34;hello world 2222&#34;}&#39;</span> http://localhost:8080/actuator/busenv
+</span></span></code></pre></div><p>查看客户端日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2024-02-06 11:33:06.003  INFO <span style="color:#ae81ff">11387</span> --- <span style="color:#f92672">[</span>nio-8080-exec-7<span style="color:#f92672">]</span> o.s.c.b.event.EnvironmentChangeListener  : Received remote environment change request. Keys/values to update <span style="color:#f92672">{</span>test<span style="color:#f92672">=</span>hello world 2222<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>这时候查看，返回内容为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://root:123456@localhost:8888/config-client-default.yml
+</span></span><span style="display:flex;"><span>test: hello world <span style="color:#ae81ff">1111</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world <span style="color:#ae81ff">1111</span>
+</span></span></code></pre></div><p>可以看到 test 属性的值还没有刷新。通过 /actuator/busrefresh 刷新配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://localhost:8080/actuator/busrefresh
+</span></span></code></pre></div><p>再次查看，可以看到 test 属性的值已经刷新。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world <span style="color:#ae81ff">2222</span>
+</span></span></code></pre></div><h4 id="5-通过-git-刷新配置">5. 通过 git 刷新配置</h4>
+<p>在 git 仓库中修改 test 的值为 &ldquo;hello world 3333&rdquo;，然后执行刷新操作：</p>
+<pre tabindex="0"><code>curl -X POST http://localhost:8080/actuator/busrefresh
+</code></pre><p>查看客户端日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Received remote refresh request.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Fetching config from server at : http://localhost:8888
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Located environment: name<span style="color:#f92672">=</span>config-client, profiles<span style="color:#f92672">=[</span>default<span style="color:#f92672">]</span>, label<span style="color:#f92672">=</span>config, version<span style="color:#f92672">=</span>cfcb38e6d396ce6b85e0aa0e8839f38538b7f221, state<span style="color:#f92672">=</span>null
+</span></span><span style="display:flex;"><span>Keys refreshed <span style="color:#f92672">[</span>config.client.version, test<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>再次查看，可以看到 test 属性的值已经刷新。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl http://localhost:8080/test
+</span></span><span style="display:flex;"><span>hello world 3333% 
+</span></span></code></pre></div><p>另外，如果想实现 git 上修改之后立即推送，则需要配置 git 的 webhook 功能。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/31/til/" target="_blank" title="2024-01-31｜Redis事务">2024-01-31｜Redis事务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/git-interview-questions/" target="_blank" title="[译]DevOps 和测试人员的 Git 面试问题">[译]DevOps 和测试人员的 Git 面试问题</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/02/02/til/" target="_blank" title="2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc">2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/02/01/til/" target="_blank" title="2024-02-01｜使用 Spring Initializr 创建项目">2024-02-01｜使用 Spring Initializr 创建项目</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/30/til/" target="_blank" title="2024-01-30｜Mybatis plus和Jackson配置">2024-01-30｜Mybatis plus和Jackson配置</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/17/til/" target="_blank" title="2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc">2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring-boot/" rel="tag">spring-boot</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/rabbitmq/" rel="tag">rabbitmq</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/02/04/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-02-04｜foodie-cloud集成Resilience4j</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/02/18/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-food测试</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/02\/05\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#本地文件">本地文件</a>
+      <ul>
+        <li><a href="#服务端应用">服务端应用</a></li>
+        <li><a href="#客户端应用">客户端应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#git-仓库">Git 仓库</a>
+      <ul>
+        <li><a href="#服务端应用-1">服务端应用</a></li>
+        <li><a href="#客户端应用-1">客户端应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#集成-spring-cloud-bus">集成 Spring Cloud Bus</a>
+      <ul>
+        <li><a href="#服务端应用-2">服务端应用</a></li>
+        <li><a href="#客户端应用-2">客户端应用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

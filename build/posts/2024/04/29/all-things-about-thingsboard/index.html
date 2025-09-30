@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>All things about ThingsBoard - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="All things about ThingsBoard">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/04/29/all-things-about-thingsboard/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="All things about ThingsBoard">
+  <meta itemprop="description" content="thingsboard 是一款乌克兰团队基于java语言研发的开源物联网框架，开源的是ce版，企业版需要购买授权且无源码。
+官方网站：">
+  <meta itemprop="datePublished" content="2024-04-29T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-04-29T00:00:00+00:00">
+  <meta itemprop="wordCount" content="80">
+  <meta itemprop="keywords" content="Docker,Backend,Tutorial,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="All things about ThingsBoard">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">All things about ThingsBoard</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-04-29">2024-04-29</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>thingsboard 是一款乌克兰团队基于java语言研发的开源物联网框架，开源的是ce版，企业版需要购买授权且无源码。</p>
+<p>官方网站：</p>
+<ul>
+<li>
+<p>Thingsboard 官网：<a href="https://thingsboard.io/" target="_blank">https://thingsboard.io/</a></p>
+</li>
+<li>
+<p>Thingsboard社区免费版本：<a href="https://demo.thingsboard.io/" target="_blank">https://demo.thingsboard.io/</a></p>
+</li>
+<li>
+<p>Thingsboard 企业付费版本：<a href="https://thingsboard.cloud/" target="_blank">https://thingsboard.cloud/</a></p>
+</li>
+<li>
+<p>Thingsboard 源码：<a href="https://github.com/thingsboard/thingsboard" target="_blank">https://github.com/thingsboard/thingsboard</a></p>
+</li>
+<li>
+<p>TBMQ 源码：<a href="https://github.com/thingsboard/tbmq" target="_blank">https://github.com/thingsboard/tbmq</a></p>
+</li>
+</ul>
+<p>中文网：<a href="http://www.ithingsboard.com/" target="_blank">http://www.ithingsboard.com/</a></p>
+<p>ThingsBoard 中文社区：<a href="https://www.thingsboard.club/" target="_blank">https://www.thingsboard.club/</a></p>
+<p>博客：</p>
+<ul>
+<li>
+<p><a href="https://www.dusuniot.com/blog/a-brief-guide-and-description-of-thingsboard/" target="_blank">What is ThingsBoard? An Overview of ThingsBoard in 2024</a></p>
+</li>
+<li>
+<p><a href="https://www.emqx.com/en/blog/how-to-use-thingsboard-to-access-mqtt-data" target="_blank">How to access MQTT data with ThingsBoard | EMQ</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/734.html" target="_blank">分享｜五分钟学会使用 ThingsBoard 规则链</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/713.html" target="_blank">分享｜五分钟了解 ThingsBoard 物联网平台多种部署场景</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/694.html" target="_blank">分享｜五分钟快速学会 ThingsBoard 打包镜像和 Docker 部署</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/662.html" target="_blank">分享｜五分钟快速学会 ThingsBoard 对接物联网网关</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/633.html" target="_blank">分享｜五分钟快速学会 ThingsBoard DashBoard 基本操作</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/624.html" target="_blank">分享｜五分钟学会 ThingsBoard 本地编译运行和 Linux 部署</a></p>
+</li>
+<li>
+<p><a href="https://www.yiqisoft.cn/blogs/thingsboard/612.html" target="_blank">分享｜五分钟熟悉 ThingsBoard 前端二次开发。</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/east196/tag/ThingsBoard/" target="_blank">https://www.cnblogs.com/east196/tag/ThingsBoard/</a></p>
+</li>
+<li>
+<p><a href="https://github.com/IoT-Technology/IoT-Technical-Guide" target="_blank">物联网技术学习指南</a> <a href="https://iot.mushuwei.cn/" target="_blank">https://iot.mushuwei.cn/</a></p>
+</li>
+<li>
+<p><a href="https://blog.51cto.com/u_15096463/5265065" target="_blank">物联网开源框架Thingsboard使用总结</a></p>
+</li>
+<li>
+<p><a href="https://www.weishadian.com/index.php/tag/thingsboard/page/5/" target="_blank">https://www.weishadian.com/index.php/tag/thingsboard/page/5/</a></p>
+</li>
+<li>
+<p><a href="https://www.thingskit.com/tag/thingsboard" target="_blank">thingskit博客</a></p>
+</li>
+<li>
+<p><a href="https://www.jianshu.com/p/0f6a5d249100" target="_blank">ThingsBoard二次开发之源码分析1- 基础知识</a></p>
+</li>
+</ul>
+<p>源码分析：</p>
+<ul>
+<li><a href="https://github.com/lastsunday/thingsboard-note" target="_blank">ThingsBoard 源码分析</a></li>
+<li><a href="https://yiuterran.github.io/2021/06/23/thingsboard%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">thingsboard源码解析</a></li>
+<li><a href="https://github.com/javaso/thingsboard-1" target="_blank">精尽thingsboard源码解析</a></li>
+<li><a href="https://github.com/blackstar-baba/how-2-use-thingsboard" target="_blank">https://github.com/blackstar-baba/how-2-use-thingsboard</a></li>
+<li><a href="https://chenzhifu.xyz/categories/thingsboard" target="_blank">https://chenzhifu.xyz/categories/thingsboard</a></li>
+</ul>
+<p>IOT 平台：</p>
+<ul>
+<li><a href="http://iot.bctools.cn/" target="_blank">http://iot.bctools.cn/</a></li>
+<li><a href="https://yunteng.yuque.com/avshoi/v1xdocs/vk0qimye1hwtm5bx" target="_blank">ThingsKit</a></li>
+<li><a href="https://github.com/JaryZhen/rulegin" target="_blank">分布式规则引擎系统，重构于开源IOT项目thingboard</a></li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/12/til/" target="_blank" title="2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测">2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-boot-docker/" target="_blank" title="[译]为 Spring Boot 应用程序创建优化的 Docker 映像">[译]为 Spring Boot 应用程序创建优化的 Docker 映像</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/04/28/thingsboard-tbmq-test/" target="_blank" title="TBMQ测试和源码分析">TBMQ测试和源码分析</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/04/17/thingsboard-tbmq-local-docker-run/" target="_blank" title="ThingsBoard TBMQ本地和通过Docker运行">ThingsBoard TBMQ本地和通过Docker运行</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/02/19/til/" target="_blank" title="2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离">2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/15/til/" target="_blank" title="2024-01-15｜Nginx配置结构与指令语法">2024-01-15｜Nginx配置结构与指令语法</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/04/28/thingsboard-tbmq-test/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: TBMQ测试和源码分析</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/07/thingsboard-domain/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: ThingsBoard的领域模型</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/04\/29\/all-things-about-thingsboard\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

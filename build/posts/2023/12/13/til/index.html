@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2023-12-13｜发布到Maven中央仓库的第一个项目 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2023-12-13｜发布到Maven中央仓库的第一个项目">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/12/13/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2023-12-13｜发布到Maven中央仓库的第一个项目">
+  <meta itemprop="description" content="Today I Learned. 今天分享内容：发布到 Maven 中央仓库的第一个项目。">
+  <meta itemprop="datePublished" content="2023-12-13T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-12-13T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1057">
+  <meta itemprop="keywords" content="Diary">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2023-12-13｜发布到Maven中央仓库的第一个项目">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2023-12-13｜发布到Maven中央仓库的第一个项目</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-12-13">2023-12-13</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/diary/" rel="tag">Diary</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>Today I Learned. 今天分享内容：发布到 Maven 中央仓库的第一个项目。</p>
+<p>最近在 Github 上创建了一个 Pom 类型的 Maven 项目 <a href="https://github.com/chensoul/chensoul-parent/" target="_blank">chensoul-parent</a>，该项目主页 <a href="https://chensoul.github.io/chensoul-parent/" target="_blank">https://chensoul.github.io/chensoul-parent/</a> ，这是我的第一个发布对 Maven 中央仓库的项目。</p>
+<p><img src="../../../static/images/daily-review-20231213-00.webp" alt="daily-review-20231213-00"></p>
+<p>其主要用途是管理常用的 Maven Plugin 插件。在编写该项目的过程中，参考了一些开源项目，他们分别是：</p>
+<ul>
+<li><a href="https://github.com/eclipse/microprofile" target="_blank">https://github.com/eclipse/microprofile</a> Eclipse 的一套开源微服务框架实现</li>
+<li><a href="https://github.com/microbean/microbean-function" target="_blank">https://github.com/microbean/microbean-function</a> microBean™ 的 Java 扩展</li>
+<li><a href="https://github.com/naturalett/maven-hello-world" target="_blank">https://github.com/naturalett/maven-hello-world</a> 一个 Maven 发布 Jar 的 hello world 的示例项目</li>
+<li><a href="https://github.com/eclipse-store/store" target="_blank">https://github.com/eclipse-store/store</a> Eclipse 开源的一个高性能 Java 原生持久存储。微秒响应时间。超高吞吐量。最小延迟。创建超快速内存数据库应用程序和微服务。</li>
+</ul>
+<p>该项目打包之后是一个 pom 文件，任何 Maven 项目都可以继承这个项目，这样可以免去自己管理 Mave Plugin 插件的麻烦。这里面的 Mave Plugin 插件包括：</p>
+<ul>
+<li>编译</li>
+<li>打包</li>
+<li>发布</li>
+<li>测试，并生成测试报告</li>
+<li>质量检测，包括代码风格检查、漏洞检测</li>
+<li>生成网站并发布到 github pages</li>
+</ul>
+<p>发布先是使用的 Maven Release Plugin 和 Nexus Staging Maven Plugin 插件，后来觉得 Maven Release Plugin 插件做的事情太多了，不如手动执行命令，于是去掉了 Maven Release Plugin 插件。</p>
+<p>关于 Nexus Staging Maven Plugin 插件的使用了，起初我使用了这个仓库发布 Maven 构建的<a href="https://github.com/microbean/microbean-function/blob/main/.github/workflows/mvn-release-prepare-perform.yaml" target="_blank">脚本</a> 。这个脚本比较复杂，于是找到了 <a href="https://github.com/naturalett/maven-hello-world" target="_blank">https://github.com/naturalett/maven-hello-world</a> 这个仓库，其对应的博客 《<a href="https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4" target="_blank">Publishing Artifacts to Maven Central using GitHub Actions: A Step-by-Step Guide</a>》，对于如何部署构建到 Maven 中央仓库、如何使用 Github Action 说的比较清楚。如果你对于如何使用这个插件，可以阅读该文章，本文不作赘述。</p>
+<p>我对 Github Action 的 Workflow 做过一些优化。优化后的 Workflow 文件内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;Maven Release&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">inputs</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">releaseVersion</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;Define the RELEASE version&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">required</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">default</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">developmentVersion</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;Define the SNAPSHOT version&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">required</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">default</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">autoReleaseAfterClose</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">description</span>: <span style="color:#e6db74">&#34;Auto release after close&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">required</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">default</span>: <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v2</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Set up Maven Central Repository</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-java@v4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">java-version</span>: <span style="color:#ae81ff">11</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">distribution</span>: <span style="color:#e6db74">&#34;temurin&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">java-package</span>: <span style="color:#e6db74">&#34;jdk&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">cache</span>: <span style="color:#e6db74">&#34;maven&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-id</span>: <span style="color:#ae81ff">ossrh</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-username</span>: <span style="color:#ae81ff">OSSRH_USERNAME</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-password</span>: <span style="color:#ae81ff">OSSRH_TOKEN</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">gpg-passphrase</span>: <span style="color:#ae81ff">MAVEN_GPG_PASSPHRASE</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">gpg-private-key</span>: <span style="color:#ae81ff">${{ secrets.MAVEN_GPG_PRIVATE_KEY }}</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Configure Git User</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          git config --global user.email &#34;github-actions[bot]@users.noreply.github.com&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          git config --global user.name &#34;github-actions[bot]&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;sha_short=$(git rev-parse --short HEAD)&#34; &gt;&gt; $GITHUB_ENV</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Verify Whether a Release is Ready</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">bash</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          if [ &#34;${{ github.event.inputs.autoReleaseAfterClose }}&#34; == &#34;true&#34; ] ; then
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            echo &#34;auto_release=true&#34; &gt;&gt; $GITHUB_ENV
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          else
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            echo &#34;auto_release=false&#34; &gt;&gt; $GITHUB_ENV
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          fi</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Fetch Artifact Information</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">bash</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          # remove &#39;-SNAPSHOT&#39; from version
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;artifact_version=$(grep -m1 &#39;&lt;version&gt;&#39; pom.xml | sed &#39;s/.*&lt;version&gt;\([^&lt;]*\)&lt;\/version&gt;.*/\1/&#39; | sed &#39;s/-SNAPSHOT$/&#39;)&#34; &gt;&gt; &#34;$GITHUB_ENV&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;artifact_name=$(grep -m1 &#39;&lt;artifactId&gt;&#39; pom.xml | sed &#39;s/.*&lt;artifactId&gt;\([^&lt;]*\)&lt;\/artifactId&gt;.*/\1/&#39;)&#34; &gt;&gt; &#34;$GITHUB_ENV&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;artifact_packaging=$(grep -m1 &#39;&lt;packaging&gt;&#39; pom.xml | sed &#39;s/.*&lt;packaging&gt;\([^&lt;]*\)&lt;\/packaging&gt;.*/\1/&#39;)&#34; &gt;&gt; &#34;$GITHUB_ENV&#34;</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Release With Maven</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;${{ env.artifact_name }} ${{ env.artifact_version }} ${{ env.artifact_packaging }}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          mvn --ntp -B -U \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            release:prepare \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            release:perform \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            deploy \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            -Prelease \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ls -al ./target/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">OSSRH_USERNAME</span>: <span style="color:#ae81ff">${{ secrets.OSSRH_USERNAME }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">OSSRH_TOKEN</span>: <span style="color:#ae81ff">${{ secrets.OSSRH_TOKEN }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">MAVEN_GPG_PASSPHRASE</span>: <span style="color:#ae81ff">${{ secrets.MAVEN_GPG_PASSPHRASE }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">AUTO_RELEASE_AFTER_CLOSE</span>: <span style="color:#ae81ff">${{ env.auto_release }}</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Upload Artifact</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/upload-artifact@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">name</span>: <span style="color:#ae81ff">${{ env.artifact_name }}-${{ env.artifact_version }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">./target/${{ env.artifact_name }}-${{ env.artifact_version }}.${{ env.artifact_packaging }}</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Workflow Release Notes</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peter-evans/repository-dispatch@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">event-type</span>: <span style="color:#ae81ff">github-release</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">client-payload</span>: <span style="color:#e6db74">&#39;{&#34;auto_release&#34;: &#34;${{ env.auto_release }}&#34;, &#34;artifact&#34;: &#34;${{ env.artifact_name }}-${{ env.artifact_version }}&#34;}&#39;</span>
+</span></span></code></pre></div><p>在 Github Action 手动执行该 Workflow 文件时，可以指定正式版本、开发版本以及是否将 Maven 构建发布到中央仓库。如果是，则会触发 github-release.yml 这个 Workflow 在该 github 仓库创建一个 Release，效果如下：</p>
+<p><img src="../../../static/images/daily-review-20231213-01.webp" alt="daily-review-20231214-01"></p>
+<p><a href="https://github.com/naturalett/maven-hello-world" target="_blank">https://github.com/naturalett/maven-hello-world</a> 这个仓库使用了 settings.xml 文件用于在 Github Action 中设置用户名和密码，这不是一个很好的解决方案。</p>
+<p>随后，在 <a href="https://github.com/eclipse-store/store" target="_blank">https://github.com/eclipse-store/store</a> 仓库中找到了使用 Github Action 发布 Maven 构建 的一个比较<a href="https://github.com/eclipse-store/store/blob/main/.github/workflows/maven_release.yml" target="_blank">简洁的实现</a>。从该文件的注释可以看到 Github Action 官方文档有关于<a href="https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path" target="_blank">使用 Maven 的介绍</a> 。</p>
+<p>于是，在去掉 Maven Release Plugin 之后，又把 settings.xml 文件删除了。个人觉得是否创建 Github Release 应该手动控制更好一些，于是将 github-release.yml 这个 Workflow 也从我的仓库中删除了。</p>
+<p>在 <a href="https://github.com/eclipse/microprofile-config" target="_blank">microprofile-config</a> 仓库里发现了一个 <a href="https://github.com/eclipse/microprofile-config/blob/main/.github/dependabot.yml" target="_blank">dependabot.yml</a> ，于是把这个文件加入了我的项目中。添加该文件之后，会有一个机器人每天检查项目中使用的 maven 插件版本是否是最新版本，如果不是，则会创建一个 pull request。</p>
+<p><img src="../../../static/images/daily-review-20231213-02.webp" alt="daily-review-20231214-01"></p>
+<p>更多技术内容和如此使用，请查看<a href="https://github.com/chensoul/chensoul-parent/blob/main/pom.xml" target="_blank">源码</a>。</p>
+<h2 id="maven-项目到中央仓库流程">Maven 项目到中央仓库流程</h2>
+<p>发布 Maven 项目到中央仓库流程：</p>
+<h3 id="1-pomxml-配置如下信息">1. pom.xml 配置如下信息</h3>
+<ul>
+<li>License 信息</li>
+<li>开发人员信息</li>
+<li>SCM 信息</li>
+<li>Javadoc 和 Sources 插件</li>
+<li>Distribution 管理</li>
+<li>设置一个 profile （可选）</li>
+</ul>
+<p>以 <a href="https://github.com/chensoul/chensoul-parent/" target="_blank">chensoul-parent</a> 项目为例，License 信息如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>		<span style="color:#f92672">&lt;licenses&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;license&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;name&gt;</span>Apache License 2.0<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;url&gt;</span>https://www.apache.org/licenses/LICENSE-2.0.txt<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;comments&gt;</span>The Apache License, Version 2.0<span style="color:#f92672">&lt;/comments&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;distribution&gt;</span>repo<span style="color:#f92672">&lt;/distribution&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/license&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/licenses&gt;</span>
+</span></span></code></pre></div><p>开发人员信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>		<span style="color:#f92672">&lt;organization&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;name&gt;</span>ChenSoul™<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://blog.chensoul.cc/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/organization&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;developers&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;developer&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>chensoul<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;name&gt;</span>chensoul<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;email&gt;</span>chensoul.eth@gmail.com<span style="color:#f92672">&lt;/email&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;url&gt;</span>https://blog.chensoul.cc<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;roles&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;role&gt;</span>architect<span style="color:#f92672">&lt;/role&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;role&gt;</span>developer<span style="color:#f92672">&lt;/role&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/roles&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;timezone&gt;</span>+8<span style="color:#f92672">&lt;/timezone&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/developer&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/developers&gt;</span>
+</span></span></code></pre></div><p>SCM 信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>		<span style="color:#f92672">&lt;scm&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;connection&gt;</span>scm:git:https://github.com/chensoul/chensoul-parent.git<span style="color:#f92672">&lt;/connection&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;developerConnection&gt;</span>scm:git:https://github.com/chensoul/chensoul-parent.git<span style="color:#f92672">&lt;/developerConnection&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://github.com/chensoul/chensoul-parent.git<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;tag&gt;</span>HEAD<span style="color:#f92672">&lt;/tag&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/scm&gt;</span>
+</span></span></code></pre></div><p>Javadoc 和 Sources 插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;pluginManagement&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;artifactId&gt;</span>maven-source-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;version&gt;</span>3.3.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;id&gt;</span>attach-sources<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f92672">&lt;goal&gt;</span>jar-no-fork<span style="color:#f92672">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;artifactId&gt;</span>maven-javadoc-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;version&gt;</span>3.6.3<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;additionalJOptions</span> <span style="color:#a6e22e">combine.children=</span><span style="color:#e6db74">&#34;append&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;additionalJOption&gt;</span>-J-Dhttp.agent=maven-javadoc-plugin<span style="color:#f92672">&lt;/additionalJOption&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/additionalJOptions&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;attach&gt;</span>true<span style="color:#f92672">&lt;/attach&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;doclint&gt;</span>none<span style="color:#f92672">&lt;/doclint&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;doctitle&gt;</span>&amp;lt;a href=&#34;${project.url}&#34; target=&#34;_top&#34;&amp;gt;${project.artifactId}&amp;lt;/a&amp;gt;
+</span></span><span style="display:flex;"><span>                  ${project.version}
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/doctitle&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;docfilessubdirs&gt;</span>true<span style="color:#f92672">&lt;/docfilessubdirs&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;windowtitle&gt;</span>${project.name}<span style="color:#f92672">&lt;/windowtitle&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;header&gt;</span><span style="color:#75715e">&lt;![CDATA[&lt;br&gt;${project.name} v${project.version}]]&gt;</span><span style="color:#f92672">&lt;/header&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;bottom&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#75715e">&lt;![CDATA[Copyright &amp;copy; ${project.inceptionYear}&amp;ndash;{currentYear}, &lt;a href=&#34;${project.organization.url}&#34; target=&#34;_parent&#34;&gt;${project.organization.name}&lt;/a&gt;. All rights reserved.]]&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/bottom&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;id&gt;</span>attach-javadocs<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f92672">&lt;goal&gt;</span>jar<span style="color:#f92672">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/pluginManagement&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/build&gt;</span>
+</span></span></code></pre></div><p>Distribution 管理信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;distributionManagement&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>ossrh<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;snapshotRepository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>ossrh<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://s01.oss.sonatype.org/content/repositories/snapshots<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;uniqueVersion&gt;</span>true<span style="color:#f92672">&lt;/uniqueVersion&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/snapshotRepository&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/distributionManagement&gt;</span>
+</span></span></code></pre></div><p>设置一个 profile：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;profile&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;id&gt;</span>release<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-javadoc-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-release-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-enforcer-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>maven-gpg-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>pl.project13.maven<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>git-commit-id-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;groupId&gt;</span>org.sonatype.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;artifactId&gt;</span>nexus-staging-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/build&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/profile&gt;</span>
+</span></span></code></pre></div><h3 id="2-gpg-设置">2. GPG 设置</h3>
+<ul>
+<li>安装 GPG</li>
+<li>生成 key</li>
+<li>上传 key</li>
+</ul>
+<p>MacOs 上操作如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install gpg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate a key</span>
+</span></span><span style="display:flex;"><span>gpg --gen-key
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List your key</span>
+</span></span><span style="display:flex;"><span>gpg --list-keys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Define a key expiration</span>
+</span></span><span style="display:flex;"><span>: <span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  Press 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  Type expire
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  Type the expiration Months\Years
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  Type save
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>gpg --edit-key &lt;Your Key - You Can Get From The Command Above --list-keys&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Distribute your public key to a key server</span>
+</span></span><span style="display:flex;"><span>gpg --keyserver keyserver.ubuntu.com --send-keys &lt;Your Key - You Can Get From The Command Above --list-keys&gt;
+</span></span></code></pre></div><h3 id="3-创建-sonatype-账号">3. 创建 Sonatype 账号</h3>
+<ul>
+<li>
+<p>在 <a href="https://issues.sonatype.org/" target="_blank">Sonatype Jira</a> 上创建用户，并提交 Issure</p>
+</li>
+<li>
+<p>在 settings.xml 中配置 Sonatype 用户名和密码以及 gpg 密钥</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;servers&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;server&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>gpg.passphrase<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;passphrase&gt;</span>xxxx<span style="color:#f92672">&lt;/passphrase&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;server&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>ossrh<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;username&gt;</span>xxxx<span style="color:#f92672">&lt;/username&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;password&gt;</span>xxxxx<span style="color:#f92672">&lt;/password&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/servers&gt;</span>
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="4-部署-maven">4. 部署 Maven</h3>
+<p>deploy 命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn clean source:jar javadoc:jar deploy -DskipTests -P release
+</span></span></code></pre></div><p>执行成功之后，可以在下面三个仓库查看：</p>
+<ul>
+<li><a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/" target="_blank">SNAPSHOT artifacts</a></li>
+<li><a href="https://central.sonatype.com/artifact/com.chensoul/chensoul-parent" target="_blank">Sontype Release artifacts</a></li>
+<li><a href="https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/" target="_blank">Maven Release artifacts</a></li>
+<li><a href="https://central.sonatype.com/artifact/com.chensoul/chensoul-parent" target="_blank">Maven central release</a></li>
+</ul>
+<p>例如，如果当前项目为快照版本：1.0.35-SNAPSHOT，执行上面 deploy 命令之后，在 <a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/chensoul/chensoul-parent/1.0.35-SNAPSHOT/" target="_blank">SNAPSHOT artifacts</a> 可以看到上传的内容：</p>
+<p><img src="../../../static/images/daily-review-20231213-03.webp" alt="daily-review-20231213-03"></p>
+<p>如果当前项目为正式版本：1.0.35，执行上面 deploy 命令之后，可以看到输出日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Uploaded to ossrh: https://s01.oss.sonatype.org:443/service/local/staging/deployByRepositoryId/comchensoul-1107/com/chensoul/chensoul-parent/1.0.35/chensoul-parent-1.0.35.pom.asc <span style="color:#f92672">(</span><span style="color:#ae81ff">228</span> B at <span style="color:#ae81ff">425</span> B/s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  * Upload of locally staged artifacts finished.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span>  * Closing staging repository with ID <span style="color:#e6db74">&#34;comchensoul-1107&#34;</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Waiting <span style="color:#66d9ef">for</span> operation to complete...
+</span></span><span style="display:flex;"><span>.................
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Remote staged <span style="color:#ae81ff">1</span> repositories, finished with success.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> ------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> BUILD SUCCESS
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> ------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Total time:  01:15 min
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> Finished at: 2023-12-20T09:21:20+08:00
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>INFO<span style="color:#f92672">]</span> ------------------------------------------------------------------------
+</span></span></code></pre></div><p>登陆 <a href="https://s01.oss.sonatype.org/" target="_blank">https://s01.oss.sonatype.org/</a> 之后，在 <a href="https://s01.oss.sonatype.org/#stagingRepositories" target="_blank">https://s01.oss.sonatype.org/#stagingRepositories</a> 可以查看到 comchensoul-1107 这个 staging 仓库。</p>
+<p><img src="../../../static/images/daily-review-20231213-04.webp" alt="daily-review-20231213-04"></p>
+<p>staging 意思是该仓库还不是正式仓库，在 <a href="https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/" target="_blank">Maven Release artifacts</a> 还查询不到。如果想将该 staging 仓库发布到 Release 仓库，则需要点击上图中的 Release 按钮。然后等几分钟就可以中 Release 仓库看到：</p>
+<p><img src="../../../static/images/daily-review-20231213-05.webp" alt="daily-review-20231213-05"></p>
+<p><a href="https://repo.maven.apache.org/maven2/com/chensoul/chensoul-parent/" target="_blank">https://repo.maven.apache.org</a> 、<a href="https://mvnrepository.com/artifact/com.chensoul/chensoul-parent" target="_blank">https://mvnrepository.com/</a> 同步有延时，还没有查询到。</p>
+<p>如果想在 staging 仓库关闭之后自动 Release 到正式仓库，可以使用 nexus-staging-maven-plugin 插件。在 release profile 中添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- https://itnext.io/publishing-artifacts-to-maven-central-using-github-actions-a-step-by-step-guide-fd65ef075fd4 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.sonatype.plugins<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>nexus-staging-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;version&gt;</span>1.7.0<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;extensions&gt;</span>true<span style="color:#f92672">&lt;/extensions&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;serverId&gt;</span>ossrh<span style="color:#f92672">&lt;/serverId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;nexusUrl&gt;</span>https://s01.oss.sonatype.org/<span style="color:#f92672">&lt;/nexusUrl&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;autoReleaseAfterClose&gt;</span>true<span style="color:#f92672">&lt;/autoReleaseAfterClose&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span></code></pre></div><p>然后在 deploy 命令后添加参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn --ntp -B -U clean source:jar javadoc:jar deploy -P release -DskipTests
+</span></span></code></pre></div><h3 id="5-在-github-actions-配置-cicd">5. 在 GitHub Actions 配置 CICD</h3>
+<p>配置一个 release.yml 文件，文件内容参考如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Release Version</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>: [ <span style="color:#e6db74">&#34;main&#34;</span> ]
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">tags</span>: [<span style="color:#e6db74">&#39;diary&#39;</span>, <span style="color:#e6db74">&#39;learning&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">if</span>: <span style="color:#e6db74">&#34;!contains(github.event.head_commit.message, &#39;[CI Skip]&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">strategy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">matrix</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">java</span>: [ <span style="color:#e6db74">&#39;8&#39;</span> ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Set up Java ${{ matrix.Java }}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-java@v4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">distribution</span>: <span style="color:#e6db74">&#39;temurin&#39;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">java-version</span>: <span style="color:#ae81ff">${{ matrix.java }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">cache</span>: <span style="color:#ae81ff">maven</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-id</span>: <span style="color:#ae81ff">ossrh</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-username</span>: <span style="color:#ae81ff">OSSRH_USERNAME</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">server-password</span>: <span style="color:#ae81ff">OSSRH_TOKEN</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">gpg-passphrase</span>: <span style="color:#ae81ff">MAVEN_GPG_PASSPHRASE</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">gpg-private-key</span>: <span style="color:#ae81ff">${{ secrets.MAVEN_GPG_PRIVATE_KEY }}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Maven Release</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">mvn --ntp -B -U clean source:jar javadoc:jar deploy -P release -DskipTests</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">OSSRH_USERNAME</span>: <span style="color:#ae81ff">${{ secrets.OSSRH_USERNAME }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">OSSRH_TOKEN</span>: <span style="color:#ae81ff">${{ secrets.OSSRH_TOKEN }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># https://maven.apache.org/plugins/maven-gpg-plugin/usage.html#sign-artifacts-with-gnupg</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">MAVEN_GPG_PASSPHRASE</span>: <span style="color:#ae81ff">${{ secrets.MAVEN_GPG_PASSPHRASE }}</span>
+</span></span></code></pre></div><p>需要自 GitHub Actions 的 Actions 页面配置以下 Secrets：</p>
+<ul>
+<li>OSSRH_USERNAME</li>
+<li>OSSRH_TOKEN</li>
+<li>MAVEN_GPG_PASSPHRASE</li>
+<li>MAVEN_GPG_PRIVATE_KEY</li>
+</ul>
+<p>其 Maven 执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn -ntp -B -U clean deploy -P release
+</span></span></code></pre></div><h3 id="6-在项目里面配置-sonatype-仓库">6. 在项目里面配置 sonatype 仓库</h3>
+<p>在 pom.xml 中添加：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;repositories&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>oss-snapshots<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://oss.sonatype.org/content/repositories/snapshots/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;releases&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>false<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/releases&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>true<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>oss-snapshots-s01<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://s01.oss.sonatype.org/content/repositories/snapshots/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;releases&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>false<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/releases&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;enabled&gt;</span>true<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/repositories&gt;</span>
+</span></span></code></pre></div><p>&ndash; EOF</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-dropbox/" target="_blank" title="[译]《Grokking the System Design Interview》设计Dropbox">[译]《Grokking the System Design Interview》设计Dropbox</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-facebook-messenger/" target="_blank" title="[译]《Grokking the System Design Interview》设计Facebook Messenger">[译]《Grokking the System Design Interview》设计Facebook Messenger</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/24/designing-instagram/" target="_blank" title="[译]《Grokking the System Design Interview》设计Instagram">[译]《Grokking the System Design Interview》设计Instagram</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/16/designing-a-url-shortening-service/" target="_blank" title="[译]《Grokking the System Design Interview》设计类似 TinyURL 的 URL 缩短服务">[译]《Grokking the System Design Interview》设计类似 TinyURL 的 URL 缩短服务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/21/the-software-development-process/" target="_blank" title="软件开发流程和常用开发方法">软件开发流程和常用开发方法</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/diary/" rel="tag">diary</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/12/12/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/12/14/all-things-about-microprofile/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: All things about MicroProfile</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/12\/13\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#maven-项目到中央仓库流程">Maven 项目到中央仓库流程</a>
+      <ul>
+        <li><a href="#1-pomxml-配置如下信息">1. pom.xml 配置如下信息</a></li>
+        <li><a href="#2-gpg-设置">2. GPG 设置</a></li>
+        <li><a href="#3-创建-sonatype-账号">3. 创建 Sonatype 账号</a></li>
+        <li><a href="#4-部署-maven">4. 部署 Maven</a></li>
+        <li><a href="#5-在-github-actions-配置-cicd">5. 在 GitHub Actions 配置 CICD</a></li>
+        <li><a href="#6-在项目里面配置-sonatype-仓库">6. 在项目里面配置 sonatype 仓库</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

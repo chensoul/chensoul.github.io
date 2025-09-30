@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/nginx/</link>
+    <description>Recent content in Nginx on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 08 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 Docker 安装 Gitea</title>
+      <link>https://blog.chensoul.cc/posts/2025/04/08/install-gitea-using-docker/</link>
+      <pubDate>Tue, 08 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/04/08/install-gitea-using-docker/</guid>
+      <description>&lt;h2 id=&#34;安装-gitea&#34;&gt;安装 Gitea&lt;/h2&gt;&#xA;&lt;p&gt;创建目录：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Minikube快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/10/minikube-quick-start/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/10/minikube-quick-start/</guid>
+      <description>&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;&#xA;&lt;p&gt;macos 系统使用 brew 安装&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Tengine动态裁剪图片</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</link>
+      <pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</guid>
+      <description>&lt;h2 id=&#34;软件列表&#34;&gt;软件列表&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Tengine：&lt;a href=&#34;https://github.com/alibaba/tengine&#34; target=&#34;_blank&#34;&gt;https://github.com/alibaba/tengine&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Lua：&lt;a href=&#34;http://www.lua.org/ftp/&#34; target=&#34;_blank&#34;&gt;http://www.lua.org/ftp/&lt;/a&gt; ，这里使用 lua-5.3.1.tar.gz&lt;/li&gt;&#xA;&lt;li&gt;LuaJIT：&lt;a href=&#34;&#34;&gt;http://luajit.org/download.html&lt;/a&gt; ，这里使用 LuaJIT-2.0.4.tar.gz&lt;/li&gt;&#xA;&lt;li&gt;GraphicdMagick：&lt;a href=&#34;https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/&#34; target=&#34;_blank&#34;&gt;https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/&lt;/a&gt; ，这里使用 GraphicsMagick-1.3.18.tar.gz&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;安装lua&#34;&gt;安装Lua&lt;/h2&gt;&#xA;&lt;p&gt;先安装依赖：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>K8s安装Cert Manager</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/10/install-cert-manager/</link>
+      <pubDate>Fri, 10 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/10/install-cert-manager/</guid>
+      <description>&lt;p&gt;cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-15｜Nginx配置结构与指令语法</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/15/til/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/15/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;1、看 JHipster 源码发现这两个类库&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-08｜VPS 迁移</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/08/til/</link>
+      <pubDate>Mon, 08 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/08/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;VPS 迁移&lt;/li&gt;&#xA;&lt;li&gt;继续重构 foodie-cloud&lt;/li&gt;&#xA;&lt;li&gt;参考 &lt;a href=&#34;https://github.com/mybatis/parent/&#34; target=&#34;_blank&#34;&gt;https://github.com/mybatis/parent/  &lt;/a&gt;&#xA;重构 &lt;a href=&#34;https://github.com/chensoul/chensoul-parent&#34; target=&#34;_blank&#34;&gt;chensoul-parent&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;修改了 maven 插件&lt;/li&gt;&#xA;&lt;li&gt;添加了 Github Actions&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;vps-迁移&#34;&gt;VPS 迁移&lt;/h2&gt;&#xA;&lt;p&gt;迁移步骤：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-05｜Nginx、正向代理和反向代理</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/05/til/</link>
+      <pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/05/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Nginx、正向代理和反向代理&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;nginx-介绍&#34;&gt;Nginx 介绍&lt;/h2&gt;&#xA;&lt;p&gt;Nginx（发音为&amp;quot;engine-x&amp;quot;）是一个高性能的开源Web服务器和反向代理服务器。它专注于高并发、低内存消耗和高度模块化的架构，因此被广泛用于构建性能出色的网站、应用程序和服务。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

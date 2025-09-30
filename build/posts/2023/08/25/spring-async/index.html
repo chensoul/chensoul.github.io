@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]如何在Spring中执行@Async - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]如何在Spring中执行@Async">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/08/25/spring-async/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]如何在Spring中执行@Async">
+  <meta itemprop="description" content="1. 概述 在本教程中，我们将探讨 Spring 中的异步执行支持和 @Async 注解。">
+  <meta itemprop="datePublished" content="2023-08-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="338">
+  <meta itemprop="keywords" content="Java,Backend,Tutorial,Translation">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]如何在Spring中执行@Async">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]如何在Spring中执行@Async</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-08-25">2023-08-25</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="1-概述">1. 概述</h2>
+<p>在本教程中，我们将探讨 Spring 中的异步执行支持和 <code>@Async</code> 注解。</p>
+<p>简单地说，用 <code>@Async</code> 注解 bean 的方法将使其在单独的线程中执行。换句话说，调用者不会等待被调用方法的完成。</p>
+<p>Spring 的一个有趣的方面是，框架中的事件支持还 <a href="https://www.baeldung.com/spring-events" target="_blank">支持异步处理</a>（如果需要）。</p>
+<h2 id="2启用异步支持">2.启用异步支持</h2>
+<p>让我们首先通过 Java 注解启用异步处理。</p>
+<p>我们将通过将 <code>@EnableAsync</code> 添加到配置类来完成此操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableAsync</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpringAsyncConfig</span> { ... }
+</span></span></code></pre></div><p>启用注解就足够了。但也有一些简单的配置选项：</p>
+<ul>
+<li><strong>annotation</strong> 默认情况下，<code>@EnableAsync</code> 检测 Spring 的 <code>@Async</code> 注解和 EJB 3.1 <code>javax.ejb.Asynchronous</code>。我们也可以使用此选项来检测其他用户定义的注解类型。</li>
+<li><strong>mode</strong> 指示应使用的建议类型 - 基于 <code>JDK</code> 代理或 <code>AspectJ</code> 编织。</li>
+<li><strong><em>proxyTargetClass</em></strong> 指示应使用的代理类型 — <code>CGLIB</code> 或 <code>JDK</code>。仅当模式设置为 <code>AdviceMode.PROXY</code> 时，此属性才有效。</li>
+<li><strong><em>order</em></strong> 设置应用 <code>AsyncAnnotationBeanPostProcessor</code> 的顺序。默认情况下，它最后运行，以便它可以考虑所有现有代理。</li>
+</ul>
+<p>我们还可以使用任务命名空间通过 XML 配置启用异步处理：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;task:executor</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;myexecutor&#34;</span> <span style="color:#a6e22e">pool-size=</span><span style="color:#e6db74">&#34;5&#34;</span>  <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;task:annotation-driven</span> <span style="color:#a6e22e">executor=</span><span style="color:#e6db74">&#34;myexecutor&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span></code></pre></div><h2 id="3async-注解">3.@Async 注解</h2>
+<p>首先，让我们回顾一下规则。 <code>@Async</code> 有两个限制：</p>
+<ul>
+<li>它必须仅应用于公共方法。</li>
+<li>自调用（从同一个类中调用异步方法）将不起作用。</li>
+</ul>
+<p>原因很简单：该方法需要公开，以便可以被代理。并且自调用不起作用，因为它绕过代理并直接调用底层方法。</p>
+<h3 id="31返回类型为-void-的方法">3.1.返回类型为 void 的方法</h3>
+<p>这是配置具有 void 返回类型的方法以异步运行的简单方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Async</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">asyncMethodWithVoidReturnType</span>() {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Execute method asynchronously. &#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="32具有返回类型的方法">3.2.具有返回类型的方法</h3>
+<p>我们还可以通过将实际返回包装在 <code>Future</code> 中来将 <code>@Async</code> 应用于具有返回类型的方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Async</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Future<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">asyncMethodWithReturnType</span>() {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Execute method asynchronously - &#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">sleep</span>(5000);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> AsyncResult<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span>(<span style="color:#e6db74">&#34;hello world !!!!&#34;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Spring 还提供了一个实现<code>Future</code>的<code>AsyncResult</code>类。我们可以用它来跟踪异步方法执行的结果。</p>
+<p>现在让我们调用上述方法并使用 <code>Future</code> 对象检索异步过程的结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testAsyncAnnotationForMethodsWithReturnType</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throws</span> InterruptedException, ExecutionException {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Invoking an asynchronous method. &#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>    Future<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> asyncAnnotationExample.<span style="color:#a6e22e">asyncMethodWithReturnType</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">true</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (future.<span style="color:#a6e22e">isDone</span>()) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Result from asynchronous process - &#34;</span> <span style="color:#f92672">+</span> future.<span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Continue doing something else. &#34;</span>);
+</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="4-executor">4. Executor</h2>
+<p>默认情况下，Spring 使用 <code>SimpleAsyncTaskExecutor</code> 来实际异步运行这些方法。但我们可以在两个级别覆盖默认值：应用程序级别或单个方法级别。</p>
+<h3 id="41在方法级别重写-executor">4.1.在方法级别重写 Executor</h3>
+<p>我们需要在配置类中声明所需的执行器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableAsync</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpringAsyncConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;threadPoolTaskExecutor&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Executor <span style="color:#a6e22e">threadPoolTaskExecutor</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ThreadPoolTaskExecutor();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后我们应该在 <code>@Async</code> 中提供执行程序名称作为属性：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Async</span>(<span style="color:#e6db74">&#34;threadPoolTaskExecutor&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">asyncMethodWithConfiguredExecutor</span>() {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Execute method with configured executor - &#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="42在应用程序级别覆盖-executor">4.2.在应用程序级别覆盖 Executor</h3>
+<p>配置类应实现 <code>AsyncConfigurer</code> 接口。因此，它必须实现 <code>getAsyncExecutor()</code> 方法。在这里，我们将返回整个应用程序的执行器。现在，它成为运行用 <code>@Async</code> 注解的方法的默认执行器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@EnableAsync</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpringAsyncConfig</span> <span style="color:#66d9ef">implements</span> AsyncConfigurer {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Executor <span style="color:#a6e22e">getAsyncExecutor</span>() {
+</span></span><span style="display:flex;"><span>        ThreadPoolTaskExecutor threadPoolTaskExecutor <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ThreadPoolTaskExecutor();
+</span></span><span style="display:flex;"><span>        threadPoolTaskExecutor.<span style="color:#a6e22e">initialize</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> threadPoolTaskExecutor;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="5-异常处理">5. 异常处理</h2>
+<p>当方法返回类型是 <code>Future</code> 时，异常处理很容易。 <code>Future.get()</code> 方法将抛出异常。</p>
+<p>但如果返回类型为 void，异常将不会传播到调用线程。因此，我们需要添加额外的配置来处理异常。</p>
+<p>我们将通过实现 <code>AsyncUncaughtExceptionHandler</code> 接口来创建自定义异步异常处理程序。当存在任何未捕获的异步异常时，将调用 <code>handleUncaughtException()</code> 方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomAsyncExceptionHandler</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">implements</span> AsyncUncaughtExceptionHandler {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handleUncaughtException</span>(
+</span></span><span style="display:flex;"><span>      Throwable throwable, Method method, Object... obj) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Exception message - &#34;</span> <span style="color:#f92672">+</span> throwable.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Method name - &#34;</span> <span style="color:#f92672">+</span> method.<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (Object param : obj) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Parameter value - &#34;</span> <span style="color:#f92672">+</span> param);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在上一节中，我们了解了配置类实现的 <code>AsyncConfigurer</code> 接口。作为其中的一部分，我们还需要重写 <code>getAsyncUncaughtExceptionHandler() </code> 方法以返回我们的自定义异步异常处理程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> AsyncUncaughtExceptionHandler <span style="color:#a6e22e">getAsyncUncaughtExceptionHandler</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> CustomAsyncExceptionHandler();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="6-结论">6. 结论</h2>
+<p>在本文中，我们研究了使用 Spring 运行异步代码。</p>
+<p>我们从非常基本的配置和注解开始，以使其正常工作。但我们也研究了更高级的配置，例如提供我们自己的执行器或异常处理策略。</p>
+<p>与往常一样，本文中提供的完整代码可以在 <a href="https://github.com/eugenp/tutorials/tree/master/spring-scheduling" target="_blank">GitHub</a> 上找到。</p>
+<p>原文链接：<a href="https://www.baeldung.com/spring-async" target="_blank">https://www.baeldung.com/spring-async</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/spring-events/" target="_blank" title="[译]Spring Events">[译]Spring Events</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/spring-security-async-principal-propagation/" target="_blank" title="[译]使用@Async进行Spring Security上下文传播">[译]使用@Async进行Spring Security上下文传播</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/" target="_blank" title="[译]没有WebSecurityConfigurerAdapter的Spring Security.md">[译]没有WebSecurityConfigurerAdapter的Spring Security.md</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-oauth2/" target="_blank" title="[译]Spring Security - OAuth2">[译]Spring Security - OAuth2</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-boot-docker/" target="_blank" title="[译]为 Spring Boot 应用程序创建优化的 Docker 映像">[译]为 Spring Boot 应用程序创建优化的 Docker 映像</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-exception-handling/" target="_blank" title="[译]Spring Boot异常处理完整指南">[译]Spring Boot异常处理完整指南</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/translation/" rel="tag">translation</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/08/25/spring-security-async-principal-propagation/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]使用@Async进行Spring Security上下文传播</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/25/spring-events/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]Spring Events</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/08\/25\/spring-async\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-概述">1. 概述</a></li>
+    <li><a href="#2启用异步支持">2.启用异步支持</a></li>
+    <li><a href="#3async-注解">3.@Async 注解</a>
+      <ul>
+        <li><a href="#31返回类型为-void-的方法">3.1.返回类型为 void 的方法</a></li>
+        <li><a href="#32具有返回类型的方法">3.2.具有返回类型的方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-executor">4. Executor</a>
+      <ul>
+        <li><a href="#41在方法级别重写-executor">4.1.在方法级别重写 Executor</a></li>
+        <li><a href="#42在应用程序级别覆盖-executor">4.2.在应用程序级别覆盖 Executor</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-异常处理">5. 异常处理</a></li>
+    <li><a href="#6-结论">6. 结论</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Source-Code on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/source-code/</link>
+    <description>Recent content in Source-Code on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 15 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/source-code/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RuoYi AI 源码分析</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</link>
+      <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;RuoYi AI&lt;/strong&gt; 是一个基于Spring Boot 3.4的企业级AI助手平台，深度集成FastGPT、扣子(Coze)、DIFY等主流AI平台，提供先进的RAG技术和多模型支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thingsboard源码中的代码片段</title>
+      <link>https://blog.chensoul.cc/posts/2025/04/30/codes-in-thingsboard/</link>
+      <pubDate>Wed, 30 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/04/30/codes-in-thingsboard/</guid>
+      <description>&lt;p&gt;Uuids&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UUID uuid &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Uuids.timeBased&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Uuids.unixTimestamp&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;uuid&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UUID NULL_UUID &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Uuids.startOf&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;UUIDConverter&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-11-14-Quarkus 快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/11/14/quarkus-quick-start/</link>
+      <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/11/14/quarkus-quick-start/</guid>
+      <description>&lt;h2 id=&#34;使用--quarkus-cli-创建项目&#34;&gt;使用  Quarkus CLI 创建项目&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;使用 sdk 安装&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sdk install quarkus&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;创建应用&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;quarkus create &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd code-with-quarkus&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;出现异常：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ActiveMQ源码本地调试运行</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/09/debug-activemq-source-code/</link>
+      <pubDate>Fri, 09 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/09/debug-activemq-source-code/</guid>
+      <description>&lt;h2 id=&#34;源码构建&#34;&gt;源码构建&lt;/h2&gt;&#xA;&lt;p&gt;1、从 &lt;a href=&#34;https://github.com/apache/activemq&#34; target=&#34;_blank&#34;&gt;https://github.com/apache/activemq&lt;/a&gt; 下载源码&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Tengine动态裁剪图片</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</link>
+      <pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</guid>
+      <description>&lt;h2 id=&#34;软件列表&#34;&gt;软件列表&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Tengine：&lt;a href=&#34;https://github.com/alibaba/tengine&#34; target=&#34;_blank&#34;&gt;https://github.com/alibaba/tengine&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Lua：&lt;a href=&#34;http://www.lua.org/ftp/&#34; target=&#34;_blank&#34;&gt;http://www.lua.org/ftp/&lt;/a&gt; ，这里使用 lua-5.3.1.tar.gz&lt;/li&gt;&#xA;&lt;li&gt;LuaJIT：&lt;a href=&#34;&#34;&gt;http://luajit.org/download.html&lt;/a&gt; ，这里使用 LuaJIT-2.0.4.tar.gz&lt;/li&gt;&#xA;&lt;li&gt;GraphicdMagick：&lt;a href=&#34;https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/&#34; target=&#34;_blank&#34;&gt;https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick/&lt;/a&gt; ，这里使用 GraphicsMagick-1.3.18.tar.gz&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;安装lua&#34;&gt;安装Lua&lt;/h2&gt;&#xA;&lt;p&gt;先安装依赖：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about OAuth</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/06/all-things-about-oauth/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/06/all-things-about-oauth/</guid>
+      <description>&lt;p&gt;OAuth 是一种&lt;strong&gt;开放协议&lt;/strong&gt;，允许通过网络、移动和桌面应用程序以&lt;strong&gt;简单&lt;/strong&gt;、&lt;strong&gt;标准的方式进行&lt;/strong&gt;安全授权。&lt;/p&gt;&#xA;&lt;h2 id=&#34;oauth-2-入门&#34;&gt;OAuth 2 入门&lt;/h2&gt;&#xA;&lt;p&gt;以下是一些 OAuth 2.0 指南，涵盖了理解和实现客户端和服务器所需的许多主题。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-15｜JNDI InitialContext源码分析、ClassLoader加载机制</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/15/til/</link>
+      <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/15/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：JNDI InitialContext源码分析、ClassLoader加载机制。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何成为一名合格的架构师</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/21/architecture/</link>
+      <pubDate>Mon, 21 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/21/architecture/</guid>
+      <description>&lt;h2 id=&#34;如何成为一名合格的架构师&#34;&gt;如何成为一名合格的架构师&lt;/h2&gt;&#xA;&lt;p&gt;成为一名合格的架构师需要不断学习和积累经验。以下是一些步骤和建议，可以帮助你成为一名合格的架构师：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;学习基础知识：建立坚实的计算机科学和软件工程基础，包括数据结构、算法、操作系统、数据库等。深入学习编程语言和开发技术，了解不同技术栈的优缺点。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python学习6：模块和包</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/06/python-module-package/</link>
+      <pubDate>Thu, 06 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/06/python-module-package/</guid>
+      <description>&lt;p&gt;在 Python 中，模块（module）是指一个包含 Python 代码的文件，而包（package）则是指一个包含多个模块的文件夹。模块和包可以用来组织和管理 Python 代码，使得代码更加易于维护和扩展。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python安装、构建、发布、下载和运行</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/09/python-install-build-publish-run/</link>
+      <pubDate>Tue, 09 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/09/python-install-build-publish-run/</guid>
+      <description>&lt;p&gt;最近开始学习 python，这篇文章记录如何安装 python、搭建 python 开发环境，以及如何构建、发布 python 包。我使用的是 macos 系统，所以本篇文章中的一些命令是基于 macos ，特此说明。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python包和环境管理</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/09/python-package-and-env-management/</link>
+      <pubDate>Tue, 09 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/09/python-package-and-env-management/</guid>
+      <description>&lt;h2 id=&#34;发展历史&#34;&gt;发展历史&lt;/h2&gt;&#xA;&lt;p&gt;Python 包管理工具是 Python 生态系统中的一个重要组成部分，它们为 Python 开发者提供了方便、快捷的包管理方式。以下是 Python 包管理工具的发展历史概述：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

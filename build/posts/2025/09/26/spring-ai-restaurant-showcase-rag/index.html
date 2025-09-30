@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2025/09/26/spring-ai-restaurant-showcase-rag/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战">
+  <meta itemprop="description" content="最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。">
+  <meta itemprop="datePublished" content="2025-09-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-09-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="808">
+  <meta itemprop="keywords" content="Spring-Boot,Java,Backend,Tutorial,Docker,Javascript,Git,Maven">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2025-09-26">2025-09-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/ai/" rel="category">Ai</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/spring-boot/" rel="tag">Spring-Boot</a>, <a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/git/" rel="tag">Git</a>, <a class="meta__link" href="/tags/maven/" rel="tag">Maven</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。</p>
+<h2 id="源代码">源代码</h2>
+<p>如果您想亲自尝试，可以随时查看我的源代码。为此，您必须克隆我的示例 <a href="https://github.com/chensoul/spring-ai-restaurant-showcase" target="_blank">GitHub 仓库</a>。然后，您只需按照我的说明进行操作即可。</p>
+<h2 id="-快速预览">🎯 快速预览</h2>
+<p>在深入技术细节之前，先看看这个系统能做什么：</p>
+<p><strong>用户问题</strong>：<code>&quot;我想在北京找一家川菜馆&quot;</code></p>
+<p><strong>AI 回答</strong>：</p>
+<blockquote>
+<p>根据我的知识库，为您推荐几家北京的优质川菜餐厅：</p>
+<p><strong>峨嵋酒家</strong>（西城区车公庄大街1号）</p>
+<ul>
+<li>北京老字号川菜，招牌菜宫保鸡丁</li>
+<li>人均：100-120元</li>
+<li>推荐菜：宫保鸡丁、水煮鱼、夫妻肺片</li>
+<li>环境：传统中式装修，适合家庭聚餐</li>
+<li>电话：010-6831-2345</li>
+</ul>
+<p><strong>锦府盐帮</strong>（朝阳区三里屯北路45号）</p>
+<ul>
+<li>融合川南盐商菜与经典川菜</li>
+<li>人均：120-150元</li>
+<li>推荐菜：退秋鱼、盐帮仔蛙、招牌毛血旺</li>
+<li>环境：古风庭院，适合商务宴请</li>
+<li>电话：010-6415-6789</li>
+</ul></blockquote>
+<p><strong>核心特点</strong>：</p>
+<ul>
+<li>🤖 <strong>智能推荐</strong>：基于真实餐厅数据，不是编造的</li>
+<li>🎯 <strong>精准匹配</strong>：根据城市、价格、场景等条件筛选</li>
+<li>💬 <strong>自然对话</strong>：像真人一样回答餐厅相关问题</li>
+<li>🔒 <strong>完全本地</strong>：使用 Ollama，数据不离开你的电脑</li>
+</ul>
+<h2 id="-5分钟快速体验">⚡ 5分钟快速体验</h2>
+<p>如果你想立即体验，可以按照以下步骤：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1. 下载项目代码</span>
+</span></span><span style="display:flex;"><span>git clone https://github.com/chensoul/spring-ai-restaurant-showcase.git
+</span></span><span style="display:flex;"><span>cd spring-ai-restaurant-showcase
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 启动数据库</span>
+</span></span><span style="display:flex;"><span>docker-compose up -d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 启动 Ollama</span>
+</span></span><span style="display:flex;"><span>ollama serve
+</span></span><span style="display:flex;"><span>ollama pull llama3.2
+</span></span><span style="display:flex;"><span>ollama pull mxbai-embed-large
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. 启动应用</span>
+</span></span><span style="display:flex;"><span>mvn spring-boot:run -Pollama-ai
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 5. 加载数据</span>
+</span></span><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/load&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;filePath&#34;: &#34;classpath:restaurant-knowledge.txt&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 6. 开始聊天</span>
+</span></span><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/chat&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;&#34;我想在北京找一家川菜馆&#34;&#39;</span>
+</span></span></code></pre></div><p><strong>预期结果</strong>：你会看到类似上面的智能推荐回答！</p>
+<blockquote>
+<p><strong>注意</strong>：确保你的系统已安装 Docker、Maven 和 Ollama。如果没有安装，可以参考下面的详细安装说明。</p></blockquote>
+<h2 id="为什么选择-rag">为什么选择 RAG？</h2>
+<p>AI 模型虽然很聪明，但它只能基于训练时的数据回答问题。如果我想让它推荐我所在城市的餐厅，它可能只能给出一些通用的建议，而不是基于真实、最新的餐厅信息。</p>
+<p><strong>RAG（Retrieval Augmented Generation）</strong> 解决了这个问题：</p>
+<ul>
+<li>📚 <strong>访问外部知识库</strong>：不再局限于训练数据</li>
+<li>🎯 <strong>提供准确信息</strong>：基于真实、结构化的数据回答</li>
+<li>🔄 <strong>实时更新</strong>：知识库可以随时更新，AI 回答也会更及时</li>
+<li>🚫 <strong>减少幻觉</strong>：避免 AI 编造不存在的信息</li>
+</ul>
+<p><strong>简单来说</strong>：当用户问&quot;北京有什么好吃的川菜馆？&ldquo;时，AI 从我们精心准备的餐厅数据库中检索相关信息，然后给出具体的推荐。</p>
+<h2 id="使用-pgvector-进行矢量存储">使用 PgVector 进行矢量存储</h2>
+<h3 id="为什么选择-pgvector">为什么选择 PgVector？</h3>
+<p>经过一番调研，我选择了 <strong>PgVector</strong> 作为向量存储方案：</p>
+<ul>
+<li><strong>成本低</strong>：基于 PostgreSQL，不需要额外的云服务</li>
+<li><strong>易部署</strong>：Docker 一键启动，开发环境友好</li>
+<li><strong>功能完整</strong>：支持向量相似性搜索，性能也不错</li>
+<li><strong>Spring AI 支持好</strong>：官方支持，集成简单</li>
+</ul>
+<h3 id="安装-pgvector">安装 PgVector</h3>
+<h4 id="使用-docker-compose-安装">使用 Docker Compose 安装</h4>
+<p>PgVector 提供了官方的 Docker 镜像，安装非常简单：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># docker-compose.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">postgres</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">pgvector/pgvector:pg16</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">restaurant-postgres</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_DB</span>: <span style="color:#ae81ff">postgres</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_USER</span>: <span style="color:#ae81ff">postgres</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_PASSWORD</span>: <span style="color:#ae81ff">postgres</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;5432:5432&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span></code></pre></div><p>启动 PgVector 数据库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose up -d
+</span></span></code></pre></div><h2 id="使用-spring-ai-实现-rag">使用 Spring AI 实现 RAG</h2>
+<h3 id="为什么选择-spring-ai">为什么选择 Spring AI？</h3>
+<p>在尝试了多种方案后，我最终选择了 Spring AI，原因很简单：</p>
+<ul>
+<li><strong>🎯 开箱即用</strong>：<code>QuestionAnswerAdvisor</code> 让 RAG 实现变得极其简单</li>
+<li><strong>🔧 高度集成</strong>：与 Spring 生态完美融合，配置简单</li>
+<li><strong>📚 文档完善</strong>：官方文档详细，社区活跃</li>
+<li><strong>🚀 性能优秀</strong>：内置优化，支持多种向量存储</li>
+</ul>
+<h3 id="核心依赖">核心依赖</h3>
+<p>只需要添加几个依赖就能开始：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- RAG 核心依赖 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.ai<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-ai-starter-vector-store-pgvector<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- 文档处理和 Ollama 支持 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.ai<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-ai-markdown-document-reader<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.ai<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-ai-advisors-vector-store<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.ai<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-ai-starter-model-ollama<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>详细依赖列表</strong>：如果你需要完整的 <code>pom.xml</code> 配置，可以查看<a href="https://github.com/chensoul/spring-ai-restaurant-showcase" target="_blank">项目源码</a>。</p></blockquote>
+<h3 id="配置-pgvector">配置 PgVector</h3>
+<p>PgVector 的配置很简单，关键是要设置正确的维度：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">vectorstore</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">pgvector</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">index-type</span>: <span style="color:#ae81ff">ivfflat</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">distance-type</span>: <span style="color:#ae81ff">cosine_distance</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">dimensions</span>: <span style="color:#ae81ff">1024</span>  <span style="color:#75715e"># 必须与嵌入模型输出维度一致</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">initialize-schema</span>: <span style="color:#66d9ef">true</span>  <span style="color:#75715e"># 自动创建表结构</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">table-name</span>: <span style="color:#ae81ff">vector_store</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>关键点</strong>：<code>mxbai-embed-large</code> 输出 1024 维向量，所以 PgVector 的 <code>dimensions</code> 必须设置为 1024。</p></blockquote>
+<h3 id="配置-ai-模型">配置 AI 模型</h3>
+<h4 id="为什么选择-ollama">为什么选择 Ollama？</h4>
+<p>在构建 RAG 系统时，我们需要两个关键组件：<strong>聊天模型</strong>（生成回答）和<strong>嵌入模型</strong>（文档向量化）。</p>
+<p>大多数云服务只提供聊天模型，嵌入模型需要单独的服务。而 <strong>Ollama 是少数几个同时支持聊天模型和嵌入模型的本地部署方案</strong>，这让 RAG 系统可以完全在本地运行！</p>
+<p><strong>我的选择理由</strong>：</p>
+<ul>
+<li><strong>🆓 完全免费</strong>：无需 API 密钥，本地运行</li>
+<li><strong>🔒 隐私安全</strong>：数据不离开本地，无网络传输</li>
+<li><strong>⚡ 性能优秀</strong>：llama3.2 + mxbai-embed-large 组合</li>
+<li><strong>🎯 配置简单</strong>：统一部署，一个 base-url 搞定</li>
+</ul>
+<h4 id="应用配置">应用配置</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ai</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ollama</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">base-url</span>: <span style="color:#ae81ff">http://localhost:11434</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">chat</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">options</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">model</span>: <span style="color:#ae81ff">llama3.2</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">embedding</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">options</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">model</span>: <span style="color:#ae81ff">mxbai-embed-large</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>关键点</strong>：<code>mxbai-embed-large</code> 输出 1024 维向量，所以 PgVector 的 <code>dimensions</code> 必须设置为 1024。</p></blockquote>
+<h3 id="核心实现">核心实现</h3>
+<p>Spring AI 让 RAG 实现变得极其简单，核心代码只有几行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RagChatService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ChatClient chatClient;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">chatWithRag</span>(String userMessage) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> chatClient.<span style="color:#a6e22e">prompt</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">user</span>(userMessage)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">call</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">content</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>为什么这么简单？</strong> Spring AI 的 <code>QuestionAnswerAdvisor</code> 自动处理了向量检索、上下文构建和提示词增强。</p>
+<blockquote>
+<p><strong>详细实现</strong>：完整的代码实现请查看<a href="https://github.com/chensoul/spring-ai-restaurant-showcase" target="_blank">项目源码</a>。</p></blockquote>
+<h3 id="餐厅知识库构建">餐厅知识库构建</h3>
+<p>我准备了一个包含北京、武汉、上海、广州四个城市川菜餐厅的 Markdown 文档。数据格式很简单：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># 北京川菜餐厅推荐
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### 峨嵋酒家
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">-</span> 地址：北京市西城区车公庄大街1号
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 特色：北京老字号川菜，招牌菜宫保鸡丁
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 人均：100-120元
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 推荐菜：宫保鸡丁、水煮鱼、夫妻肺片
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 环境：传统中式装修，适合家庭聚餐
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> 电话：010-6831-2345
+</span></span></code></pre></div><p><strong>数据特点</strong>：</p>
+<ul>
+<li>📍 <strong>多城市覆盖</strong>：北京、武汉、上海、广州</li>
+<li>💰 <strong>价格区间</strong>：从人均50元到200元不等</li>
+<li>🍽️ <strong>详细信息</strong>：地址、特色、推荐菜、环境、电话</li>
+</ul>
+<p><strong>为什么选择这种格式？</strong> Markdown 结构清晰，Spring AI 的 <code>MarkdownDocumentReader</code> 可以自动解析，非常方便。</p>
+<h2 id="运行应用程序">运行应用程序</h2>
+<p>按照&quot;5分钟快速体验&quot;启动系统后，可以开始测试各种功能。详细的测试命令和高级功能请参考<a href="#%e9%99%84%e5%bd%95">附录</a>。</p>
+<h3 id="启动系统">启动系统</h3>
+<p>按照&quot;5分钟快速体验&quot;章节完成环境准备后，启动应用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 启动应用</span>
+</span></span><span style="display:flex;"><span>mvn spring-boot:run -Pollama-ai
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 加载餐厅数据</span>
+</span></span><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/load&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;filePath&#34;: &#34;classpath:restaurant-knowledge.txt&#34;}&#39;</span>
+</span></span></code></pre></div><h3 id="基础测试">基础测试</h3>
+<p><strong>测试 RAG 功能</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/chat&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;&#34;我想在北京找一家川菜馆&#34;&#39;</span>
+</span></span></code></pre></div><p><strong>测试文档搜索</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/search&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;query&#34;: &#34;水煮鱼&#34;, &#34;topK&#34;: 3}&#39;</span>
+</span></span></code></pre></div><h3 id="监控和调试">监控和调试</h3>
+<ul>
+<li><strong>健康检查</strong>：<code>http://localhost:8080/actuator/health</code></li>
+<li><strong>性能指标</strong>：<code>http://localhost:8080/actuator/prometheus</code></li>
+<li><strong>应用日志</strong>：查看控制台输出的详细日志</li>
+</ul>
+<h3 id="常见问题">常见问题</h3>
+<p><strong>Q: 应用启动失败？</strong>
+A: 检查数据库是否启动，Ollama 是否运行，端口是否被占用。</p>
+<p><strong>Q: 数据加载失败？</strong>
+A: 确保 <code>restaurant-knowledge.txt</code> 文件存在，检查文件路径是否正确。</p>
+<p><strong>Q: AI 回答不准确？</strong>
+A: 检查数据是否正确加载，尝试调整检索参数。</p>
+<h2 id="附录">附录</h2>
+<h3 id="测试命令和高级功能">测试命令和高级功能</h3>
+<h4 id="基础测试命令">基础测试命令</h4>
+<p><strong>按城市推荐</strong>：<code>&quot;我想在北京找一家川菜馆&quot;</code>
+<strong>按价格推荐</strong>：<code>&quot;推荐一些人均100元左右的川菜馆&quot;</code>
+<strong>按场景推荐</strong>：<code>&quot;适合商务宴请的川菜餐厅有哪些？&quot;</code>
+<strong>菜品推荐</strong>：<code>&quot;哪家餐厅的水煮鱼最好吃？&quot;</code></p>
+<blockquote>
+<p><em>完整的 curl 命令请参考&quot;运行应用程序&quot;章节。</em></p></blockquote>
+<h4 id="高级功能">高级功能</h4>
+<p><strong>个性化推荐</strong>：基于用户偏好的智能推荐</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/chat-personalized&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;message&#34;: &#34;推荐川菜馆&#34;, &#34;userPreferences&#34;: {&#34;city&#34;: &#34;北京&#34;, &#34;priceRange&#34;: &#34;100-150&#34;}}&#39;</span>
+</span></span></code></pre></div><p><strong>向量相似性搜索</strong>：基于语义相似度检索相关文档</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://localhost:8080/api/rag/search&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;query&#34;: &#34;水煮鱼&#34;, &#34;topK&#34;: 3}&#39;</span>
+</span></span></code></pre></div><p><strong>性能监控</strong>：访问 <code>http://localhost:8080/actuator/prometheus</code> 查看详细指标。</p>
+<h3 id="ollama-安装和配置">Ollama 安装和配置</h3>
+<h4 id="安装-ollama">安装 Ollama</h4>
+<p><strong>macOS</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install ollama
+</span></span></code></pre></div><p><strong>Linux</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -fsSL https://ollama.ai/install.sh | sh
+</span></span></code></pre></div><p><strong>Windows</strong>：
+下载安装包：<a href="https://ollama.ai/download" target="_blank">https://ollama.ai/download</a></p>
+<h4 id="下载-ai-模型">下载 AI 模型</h4>
+<p><strong>聊天模型</strong>：<code>ollama pull llama3.2</code>（约 4.7GB）
+<strong>嵌入模型</strong>：<code>ollama pull mxbai-embed-large</code>（约 1.2GB）</p>
+<blockquote>
+<p><em>完整的安装步骤请参考&quot;5分钟快速体验&quot;章节。</em></p></blockquote>
+<h4 id="模型选择理由">模型选择理由</h4>
+<ul>
+<li><strong>llama3.2</strong>：Meta 开源的最新模型，性能优秀，支持中文</li>
+<li><strong>mxbai-embed-large</strong>：专门优化的嵌入模型，1024 维度，适合向量检索</li>
+</ul>
+<p><strong>关键优势</strong>：Ollama 是少数几个同时支持聊天模型和嵌入模型的本地部署方案，这让 RAG 系统可以完全在本地运行！</p>
+<h3 id="pgvector-手动安装">PgVector 手动安装</h3>
+<p>如果你更喜欢手动安装，可以：</p>
+<ol>
+<li>
+<p><strong>安装 PostgreSQL 16+</strong></p>
+</li>
+<li>
+<p><strong>安装 PgVector 扩展</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 使用 pgxn 安装</span>
+</span></span><span style="display:flex;"><span>pgxn install vector
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或者从源码编译</span>
+</span></span><span style="display:flex;"><span>git clone --branch v0.5.1 https://github.com/pgvector/pgvector.git
+</span></span><span style="display:flex;"><span>cd pgvector
+</span></span><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>make install
+</span></span></code></pre></div></li>
+<li>
+<p><strong>在数据库中启用扩展</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> EXTENSION vector;
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="配置详解">配置详解</h3>
+<h4 id="为什么是-1024-维">为什么是 1024 维？</h4>
+<ol>
+<li><strong>模型匹配</strong>：<code>mxbai-embed-large</code> 模型输出 1024 维向量</li>
+<li><strong>性能平衡</strong>：1024 维在精度和性能间取得良好平衡</li>
+<li><strong>存储效率</strong>：相比 1536 维（OpenAI），存储空间更小</li>
+<li><strong>检索质量</strong>：足够表达语义信息，检索效果优秀</li>
+</ol>
+<h4 id="索引类型说明">索引类型说明</h4>
+<ul>
+<li><strong>ivfflat</strong>：适合中等规模数据集（&lt; 1M 向量）</li>
+<li><strong>hnsw</strong>：适合大规模数据集，查询速度更快</li>
+<li><strong>无索引</strong>：适合小规模数据集，简单查询</li>
+</ul>
+<p>对于餐厅推荐系统，<code>ivfflat</code> 索引已经足够使用。</p>
+<h3 id="pgvector-数据库验证与初始化">PgVector 数据库验证与初始化</h3>
+<p>如果你需要手动验证数据库安装或重新初始化，可以参考以下步骤：</p>
+<h4 id="验证-pgvector-安装">验证 PgVector 安装</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 连接到数据库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>docker <span style="color:#66d9ef">exec</span> <span style="color:#f92672">-</span>it restaurant<span style="color:#f92672">-</span>postgres psql <span style="color:#f92672">-</span>U postgres
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 检查 PgVector 扩展是否已安装
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">\</span>dx
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 如果未安装，则安装扩展
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> EXTENSION <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">EXISTS</span> vector;
+</span></span></code></pre></div><h4 id="检查向量表">检查向量表</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 检查 vector_store 表是否存在
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">\</span>dt vector_store
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 查看表结构
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">\</span>d vector_store
+</span></span></code></pre></div><h4 id="重新创建向量表">重新创建向量表</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 删除现有表（谨慎操作！）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#66d9ef">IF</span> <span style="color:#66d9ef">EXISTS</span> vector_store <span style="color:#66d9ef">CASCADE</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 创建新的向量表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> vector_store (
+</span></span><span style="display:flex;"><span>    id VARCHAR(<span style="color:#ae81ff">255</span>) <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>,
+</span></span><span style="display:flex;"><span>    content TEXT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+</span></span><span style="display:flex;"><span>    metadata JSONB,
+</span></span><span style="display:flex;"><span>    embedding VECTOR(<span style="color:#ae81ff">1024</span>)  <span style="color:#75715e">-- 1024 维向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 创建向量索引
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> <span style="color:#66d9ef">ON</span> vector_store <span style="color:#66d9ef">USING</span> ivfflat (embedding vector_cosine_ops) 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WITH</span> (lists <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 创建元数据索引（可选，用于过滤查询）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> <span style="color:#66d9ef">ON</span> vector_store <span style="color:#66d9ef">USING</span> GIN (metadata);
+</span></span></code></pre></div><h4 id="验证表创建">验证表创建</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">-- 检查表是否创建成功
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">\</span>dt vector_store
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 查看索引信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">\</span>di
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 测试插入一条记录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> vector_store (id, content, metadata, embedding) 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">VALUES</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;test-1&#39;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;测试内容&#39;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;{&#34;source&#34;: &#34;test&#34;}&#39;</span>::jsonb,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;[0.1,0.2,0.3]&#39;</span>::vector
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 查询测试记录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> vector_store <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test-1&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 清理测试数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">DELETE</span> <span style="color:#66d9ef">FROM</span> vector_store <span style="color:#66d9ef">WHERE</span> id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;test-1&#39;</span>;
+</span></span></code></pre></div><h2 id="总结与思考">总结与思考</h2>
+<p>通过这个项目，我深刻体会到了 Spring AI 的强大之处：</p>
+<h3 id="-核心优势">🎯 核心优势</h3>
+<ol>
+<li><strong>开箱即用</strong>：<code>QuestionAnswerAdvisor</code> 让 RAG 实现变得极其简单</li>
+<li><strong>高度集成</strong>：与 Spring 生态完美融合，配置简单</li>
+<li><strong>Ollama 本地部署</strong>：完全免费，隐私安全，性能优秀</li>
+<li><strong>性能监控</strong>：内置 Prometheus 支持，便于生产环境监控</li>
+</ol>
+<h3 id="-关键收获">💡 关键收获</h3>
+<ul>
+<li><strong>RAG 不是魔法</strong>：需要高质量的结构化数据作为基础</li>
+<li><strong>Spring AI 很强大</strong>：大大降低了 AI 应用开发的门槛</li>
+<li><strong>Ollama 是神器</strong>：本地部署，完全免费，性能优秀，<strong>支持嵌入式模型</strong></li>
+<li><strong>双模型支持很重要</strong>：Ollama 同时支持聊天和嵌入模型，这是选择它的核心原因</li>
+<li><strong>PgVector 够用</strong>：对于中小型应用，完全满足需求</li>
+<li><strong>维度匹配很重要</strong>：嵌入模型维度必须与向量存储一致</li>
+</ul>
+<h3 id="-下一步计划">🚀 下一步计划</h3>
+<ol>
+<li><strong>数据优化</strong>：收集更多真实的餐厅数据</li>
+<li><strong>功能扩展</strong>：支持图片、菜单等多媒体内容</li>
+<li><strong>性能优化</strong>：实现缓存、异步处理等</li>
+<li><strong>用户体验</strong>：开发前端界面，让普通用户也能使用</li>
+</ol>
+<h3 id="-学习资源">📚 学习资源</h3>
+<p>如果你也想尝试 Spring AI，推荐这些资源：</p>
+<ul>
+<li><a href="https://docs.spring.io/spring-ai/reference/" target="_blank">Spring AI 官方文档</a> - 最权威的参考资料</li>
+<li><a href="https://arxiv.org/abs/2005.11401" target="_blank">RAG 技术原理</a> - 深入理解 RAG 原理</li>
+<li><a href="https://github.com/pgvector/pgvector" target="_blank">PgVector 文档</a> - 向量数据库使用指南</li>
+</ul>
+<hr>
+<p><strong>项目地址</strong>：<a href="https://github.com/chensoul/spring-ai-restaurant-showcase" target="_blank">GitHub - spring-ai-restaurant-showcase</a></p>
+<p><em>本文基于 Spring AI 1.1.0-M2 版本编写，代码已在实际项目中验证。</em></p>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/07/24/spring-exception/" target="_blank" title="Spring Boot异常处理思路">Spring Boot异常处理思路</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2025/07/24/thingsboard-api/" target="_blank" title="ThingsBoard接口设计">ThingsBoard接口设计</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/12/03/github-actions-in-thingsboard/" target="_blank" title="ThingsBoard源码中的Github Actions">ThingsBoard源码中的Github Actions</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/08/27/thingsboard-code-source-compile/" target="_blank" title="ThingsBoard源码编译和Idea运行">ThingsBoard源码编译和Idea运行</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/install-and-setup-glassfish-for-jms/" target="_blank" title="[译]为 JMS 安装和设置 Glassfish">[译]为 JMS 安装和设置 Glassfish</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/a-complete-jms-2-0-tutorial/" target="_blank" title="[译]完整的 JMS 2.0 教程">[译]完整的 JMS 2.0 教程</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/spring-boot/" rel="tag">spring-boot</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/git/" rel="tag">git</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/maven/" rel="tag">maven</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2025/09/25/spring-ai-restaurant-showcase/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 基于 Spring AI 构建智能餐厅推荐系统：多模型集成的实践指南</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2025/09/28/config-renovate-in-github/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: GitHub中配置Renovate自动依赖更新和自动合并PR</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2025\/09\/26\/spring-ai-restaurant-showcase-rag\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#源代码">源代码</a></li>
+    <li><a href="#-快速预览">🎯 快速预览</a></li>
+    <li><a href="#-5分钟快速体验">⚡ 5分钟快速体验</a></li>
+    <li><a href="#为什么选择-rag">为什么选择 RAG？</a></li>
+    <li><a href="#使用-pgvector-进行矢量存储">使用 PgVector 进行矢量存储</a>
+      <ul>
+        <li><a href="#为什么选择-pgvector">为什么选择 PgVector？</a></li>
+        <li><a href="#安装-pgvector">安装 PgVector</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用-spring-ai-实现-rag">使用 Spring AI 实现 RAG</a>
+      <ul>
+        <li><a href="#为什么选择-spring-ai">为什么选择 Spring AI？</a></li>
+        <li><a href="#核心依赖">核心依赖</a></li>
+        <li><a href="#配置-pgvector">配置 PgVector</a></li>
+        <li><a href="#配置-ai-模型">配置 AI 模型</a></li>
+        <li><a href="#核心实现">核心实现</a></li>
+        <li><a href="#餐厅知识库构建">餐厅知识库构建</a></li>
+      </ul>
+    </li>
+    <li><a href="#运行应用程序">运行应用程序</a>
+      <ul>
+        <li><a href="#启动系统">启动系统</a></li>
+        <li><a href="#基础测试">基础测试</a></li>
+        <li><a href="#监控和调试">监控和调试</a></li>
+        <li><a href="#常见问题">常见问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#附录">附录</a>
+      <ul>
+        <li><a href="#测试命令和高级功能">测试命令和高级功能</a></li>
+        <li><a href="#ollama-安装和配置">Ollama 安装和配置</a></li>
+        <li><a href="#pgvector-手动安装">PgVector 手动安装</a></li>
+        <li><a href="#配置详解">配置详解</a></li>
+        <li><a href="#pgvector-数据库验证与初始化">PgVector 数据库验证与初始化</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结与思考">总结与思考</a>
+      <ul>
+        <li><a href="#-核心优势">🎯 核心优势</a></li>
+        <li><a href="#-关键收获">💡 关键收获</a></li>
+        <li><a href="#-下一步计划">🚀 下一步计划</a></li>
+        <li><a href="#-学习资源">📚 学习资源</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

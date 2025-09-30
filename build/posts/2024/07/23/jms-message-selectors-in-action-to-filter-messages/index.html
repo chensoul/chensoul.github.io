@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]JMS 消息选择器在过滤消息中的应用 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]JMS 消息选择器在过滤消息中的应用">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/07/23/jms-message-selectors-in-action-to-filter-messages/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]JMS 消息选择器在过滤消息中的应用">
+  <meta itemprop="description" content="发送给接收方的消息通常需要根据某些标准进行过滤。JMS 提供消息选择器，允许 JMS 消费者根据消息头指定其感兴趣的消息。在本文中，您将学习使用 JMS 消息选择器来过滤消息。">
+  <meta itemprop="datePublished" content="2024-07-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-23T00:00:00+00:00">
+  <meta itemprop="wordCount" content="737">
+  <meta itemprop="keywords" content="Javascript,Backend,Tutorial,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]JMS 消息选择器在过滤消息中的应用">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]JMS 消息选择器在过滤消息中的应用</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-07-23">2024-07-23</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">Java</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>发送给接收方的消息通常需要根据某些标准进行过滤。JMS 提供消息选择器，允许 JMS 消费者根据消息头指定其感兴趣的消息。在本文中，您将学习使用 JMS 消息选择器来过滤消息。</p>
+<p>这是一篇高级教程，在继续阅读本文之前，请确保您对 JMS 有基本的了解。如果您是 JMS 新手，请查看<a href="https://jstobigdata.com/jms/jms-point-to-point-messaging-in-action/" target="_blank">JMS 点对点消息传递模型文章。</a></p>
+<h2 id="为什么要使用消息选择器">为什么要使用消息选择器？</h2>
+<p>当一条消息被广播给许多接收者时，将标准放入订阅中以注册特定的兴趣是很有用的。这样只有感兴趣的消息才会被传递给订阅者。</p>
+<ul>
+<li>消息选择器是一种<code>String</code>基于<strong>SQL92</strong>条件表达式的语法。</li>
+<li>仅传递标题和属性与选择器匹配的消息。</li>
+<li>消息选择器不能引用消息正文值。</li>
+<li>消息选择器从左到右进行评估。</li>
+<li>选择器文字和运算符通常以大写字母书写，但它们不区分大小写。</li>
+</ul>
+<h2 id="1-按属性过滤消息">1. 按属性过滤消息</h2>
+<p>就像我之前提到的，你只能根据属性或标头过滤消息，而不能根据实际消息内容过滤消息。下面的示例显示，只有级别日志被传递给消费者。链接至<a href="https://github.com/jstobigdata/jms-parent-app/tree/master/jms-glassfish5/src/main/java/lab04/message/filtering" target="_blank"><strong>GitHub 代码库</strong></a>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#f92672">package</span> lab04.message.filtering;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> labxx.common.settings.CommonSettings;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.junit.jupiter.api.Test;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.jms.*;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.UUID;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MessageSelectorExample</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ConnectionFactory connectionFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Queue defaultQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> {
+</span></span><span style="display:flex;"><span>    connectionFactory <span style="color:#f92672">=</span> CommonSettings.<span style="color:#a6e22e">getConnectionFactory</span>();
+</span></span><span style="display:flex;"><span>    defaultQueue <span style="color:#f92672">=</span> CommonSettings.<span style="color:#a6e22e">getDefaultQueue</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">messageFilterOnProperties</span>() <span style="color:#66d9ef">throws</span> JMSException, InterruptedException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> (JMSContext jmsContext <span style="color:#f92672">=</span> connectionFactory.<span style="color:#a6e22e">createContext</span>()) {
+</span></span><span style="display:flex;"><span>      LogEvent event1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample ERROR Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">ERROR</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample DEBUG Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">DEBUG</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample INFO Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">INFO</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample WARN Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">WARN</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//NOTE - If you keep &#34;logLevel = DEBUG&#34;, it will not work!</span>
+</span></span><span style="display:flex;"><span>      JMSConsumer consumer <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createConsumer</span>(defaultQueue, <span style="color:#e6db74">&#34;logLevel = &#39;DEBUG&#39;&#34;</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>      consumer.<span style="color:#a6e22e">setMessageListener</span>(msg <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(msg);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>          LogEvent event <span style="color:#f92672">=</span> (LogEvent) ((ObjectMessage) msg).<span style="color:#a6e22e">getObject</span>();
+</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(event);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (JMSException e) {
+</span></span><span style="display:flex;"><span>          e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      JMSProducer producer <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createProducer</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//send event1</span>
+</span></span><span style="display:flex;"><span>      ObjectMessage objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event1);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event1.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event2</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event2);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event2.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event3</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event3);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event3.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event4</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event4);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event4.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>      Thread.<span style="color:#a6e22e">sleep</span>(2000);
+</span></span><span style="display:flex;"><span>      consumer.<span style="color:#a6e22e">close</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#f92672">package</span> lab04.message.filtering;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.io.Serializable;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.time.LocalDateTime;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.StringJoiner;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LogEvent</span> <span style="color:#66d9ef">implements</span> Serializable {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//Timestamp is the primary Key</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> LocalDateTime id;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//Log Body</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> String body;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//Unique Server Id</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> String machineId;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> LogLevel logLevel;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">LogEvent</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">LogEvent</span>(String body, String machineId, LogLevel logLevel) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> LocalDateTime.<span style="color:#a6e22e">now</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> body;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">machineId</span> <span style="color:#f92672">=</span> machineId;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logLevel</span> <span style="color:#f92672">=</span> logLevel;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> LocalDateTime <span style="color:#a6e22e">getId</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> id;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setId</span>(LocalDateTime id) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getBody</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> body;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setBody</span>(String body) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> body;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getMachineId</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> machineId;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setMachineId</span>(String machineId) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">machineId</span> <span style="color:#f92672">=</span> machineId;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> LogLevel <span style="color:#a6e22e">getLogLevel</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> logLevel;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLogLevel</span>(LogLevel logLevel) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">logLevel</span> <span style="color:#f92672">=</span> logLevel;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> StringJoiner(<span style="color:#e6db74">&#34;, &#34;</span>, LogEvent.<span style="color:#a6e22e">class</span>.<span style="color:#a6e22e">getSimpleName</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;[&#34;</span>, <span style="color:#e6db74">&#34;]&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;id=&#34;</span> <span style="color:#f92672">+</span> id)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;body=&#39;&#34;</span> <span style="color:#f92672">+</span> body <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;machineId=&#39;&#34;</span> <span style="color:#f92672">+</span> machineId <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;logLevel=&#34;</span> <span style="color:#f92672">+</span> logLevel)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Java" data-lang="Java"><span style="display:flex;"><span><span style="color:#f92672">package</span> lab04.message.filtering;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> LogLevel {
+</span></span><span style="display:flex;"><span>  TRACE, DEBUG, INFO, WARN, ERROR
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>输出</strong></p>
+<pre tabindex="0"><code>Class:			com.sun.messaging.jmq.jmsclient.ObjectMessageImpl
+getJMSMessageID():	ID:13-192.168.0.197(98:ca:f3:fc:e3:8f)-51690-1577423107544
+getJMSTimestamp():	1577423107544
+getJMSCorrelationID():	null
+JMSReplyTo:		null
+JMSDestination:		PTPQueue
+getJMSDeliveryMode():	PERSISTENT
+getJMSRedelivered():	false
+getJMSType():		null
+getJMSExpiration():	0
+getJMSDeliveryTime():	0
+getJMSPriority():	4
+Properties:		{JMSXDeliveryCount=1, logLevel=DEBUG}
+LogEvent[id=2019-12-27T13:05:07.512, body=&#39;Sample DEBUG Log&#39;,
+machineId=&#39;08b7c29b-0934-4f3d-8ddf-c406ea795dee&#39;, logLevel=DEBUG]
+</code></pre><h2 id="2-按标题过滤邮件">2. 按标题过滤邮件</h2>
+<p>您已经了解了基于 JMS 属性的消息过滤。现在，请看下面的示例以了解基于 Header 的消息过滤。<code>ERROR</code>级别日志或优先级在 5 到 9 之间的消息将传递给消费者。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> lab04.message.filtering;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> labxx.common.settings.CommonSettings;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.junit.jupiter.api.Test;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.jms.*;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.UUID;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MessageSelectorExample</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ConnectionFactory connectionFactory <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Queue defaultQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> {
+</span></span><span style="display:flex;"><span>    connectionFactory <span style="color:#f92672">=</span> CommonSettings.<span style="color:#a6e22e">getConnectionFactory</span>();
+</span></span><span style="display:flex;"><span>    defaultQueue <span style="color:#f92672">=</span> CommonSettings.<span style="color:#a6e22e">getDefaultQueue</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Test</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">messageFilterOnHeader</span>() <span style="color:#66d9ef">throws</span> JMSException, InterruptedException {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> (JMSContext jmsContext <span style="color:#f92672">=</span> connectionFactory.<span style="color:#a6e22e">createContext</span>()) {
+</span></span><span style="display:flex;"><span>      LogEvent event1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample ERROR Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">ERROR</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample DEBUG Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">DEBUG</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample INFO Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">INFO</span>);
+</span></span><span style="display:flex;"><span>      LogEvent event4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LogEvent(<span style="color:#e6db74">&#34;Sample WARN Log&#34;</span>, UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>(), LogLevel.<span style="color:#a6e22e">WARN</span>);
+</span></span><span style="display:flex;"><span>      JMSConsumer consumer <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createConsumer</span>(defaultQueue, <span style="color:#e6db74">&#34;logLevel = &#39;ERROR&#39; OR JMSPriority BETWEEN 5 AND 9&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>      consumer.<span style="color:#a6e22e">setMessageListener</span>(msg <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(msg);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>          LogEvent event <span style="color:#f92672">=</span> (LogEvent) ((ObjectMessage) msg).<span style="color:#a6e22e">getObject</span>();
+</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(event);
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (JMSException e) {
+</span></span><span style="display:flex;"><span>          e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>      JMSProducer producer <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createProducer</span>();
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//send event1</span>
+</span></span><span style="display:flex;"><span>      ObjectMessage objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event1);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event1.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event2</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event2);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event2.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event3</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event3);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event3.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">setPriority</span>(5);
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Send event4</span>
+</span></span><span style="display:flex;"><span>      objectMessage <span style="color:#f92672">=</span> jmsContext.<span style="color:#a6e22e">createObjectMessage</span>();
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setObject</span>(event4);
+</span></span><span style="display:flex;"><span>      objectMessage.<span style="color:#a6e22e">setStringProperty</span>(<span style="color:#e6db74">&#34;logLevel&#34;</span>, event4.<span style="color:#a6e22e">getLogLevel</span>().<span style="color:#a6e22e">name</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Reset to normal priority</span>
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">setPriority</span>(4);
+</span></span><span style="display:flex;"><span>      producer.<span style="color:#a6e22e">send</span>(defaultQueue, objectMessage);
+</span></span><span style="display:flex;"><span>      Thread.<span style="color:#a6e22e">sleep</span>(2000);
+</span></span><span style="display:flex;"><span>      consumer.<span style="color:#a6e22e">close</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>输出</strong></p>
+<pre tabindex="0"><code>Class:			com.sun.messaging.jmq.jmsclient.ObjectMessageImpl
+getJMSMessageID():	ID:12-192.168.0.197(b8:3d:5e:24:df:26)-53719-1577428536655
+getJMSTimestamp():	1577428536655
+getJMSCorrelationID():	null
+JMSReplyTo:		null
+JMSDestination:		PTPQueue
+getJMSDeliveryMode():	PERSISTENT
+getJMSRedelivered():	false
+getJMSType():		null
+getJMSExpiration():	0
+getJMSDeliveryTime():	0
+getJMSPriority():	4
+Properties:		{JMSXDeliveryCount=1, logLevel=ERROR}
+LogEvent[id=2019-12-27T14:35:36.623, body=&#39;Sample ERROR Log&#39;, 
+machineId=&#39;7d743936-aae8-44a2-a527-cd88236b6ea6&#39;, logLevel=ERROR]
+
+Class:			com.sun.messaging.jmq.jmsclient.ObjectMessageImpl
+getJMSMessageID():	ID:14-192.168.0.197(b8:3d:5e:24:df:26)-53719-1577428536661
+getJMSTimestamp():	1577428536661
+getJMSCorrelationID():	null
+JMSReplyTo:		null
+JMSDestination:		PTPQueue
+getJMSDeliveryMode():	PERSISTENT
+getJMSRedelivered():	false
+getJMSType():		null
+getJMSExpiration():	0
+getJMSDeliveryTime():	0
+getJMSPriority():	5
+Properties:		{JMSXDeliveryCount=1, logLevel=INFO}
+LogEvent[id=2019-12-27T14:35:36.623, body=&#39;Sample INFO Log&#39;, 
+machineId=&#39;01ce3812-1869-4d23-96d8-cfc2ea6267c2&#39;, logLevel=INFO]
+</code></pre><h2 id="选择器规则">选择器规则</h2>
+<p>与任何查询语言一样，选择器由文字、标识符、表达式和运算符组成。我将在下面讨论每个规则以供参考。</p>
+<h3 id="1-文字规则">1. 文字规则</h3>
+<ul>
+<li>文字<code>String</code>用单引号引起来，单引号用两个单引号表示。例如，<code>logLevel = 'ERROR'</code>，<code>name='Ram''s'</code>。</li>
+<li>数值按原样显示，带有可选的<code>+</code>或<code>-</code>符号。例如，<code>range BETWEEN -200 AND +30</code>。您也可以直接提及 ，<code>30</code>而不是<code>+30 </code>。</li>
+<li>数字也可以用科学计数法表示，例如等<code>-7E3</code>。<code>6.2</code></li>
+<li>Java<code>Long</code>和<code>Double</code>也受支持。</li>
+<li>布尔值可以表示为<code>TRUE</code>和<code>FALSE</code>。</li>
+</ul>
+<h3 id="2-标识符规则">2. 标识符规则</h3>
+<ul>
+<li>适用于 Java 标识符的规则也适用于 JMS 选择器标识符。这意味着<code>_</code>和<code>$</code>可用于标识符。</li>
+<li>标识符不能包含 Java 关键字。</li>
+<li>标识符不能具有诸如<code>NULL</code>, <code>TRUE</code>, <code>FALSE</code>, <code>NOT</code>, <code>AND</code>, <code>OR</code>, <code>BETWEEN</code>, <code>LIKE</code>, <code>IN</code>, <code>IS</code>, 或者 <code>ESCAPE</code></li>
+<li>标识符区分大小写。</li>
+<li>任何以 开头的名称<code>JMSX</code>都是 JMS 定义的属性。</li>
+<li>任何以 开头的名称<code>JMS_</code>都是提供商特定的属性。</li>
+<li>任何不包含 的名称（标识符）<code>JMS</code>都是应用程序定义的属性。</li>
+</ul>
+<h3 id="3-运营商规则">3. 运营商规则</h3>
+<ul>
+<li><code>()</code>此处适用包围的标准规则。</li>
+<li>逻辑运算符的优先顺序为：<code>NOT</code>，<code>AND</code>，<code>OR</code>。</li>
+<li>按优先顺序排列的比较运算符：<code>=</code>， <code>&gt;</code>， <code>&gt;=</code>， <code>&lt;</code>， <code>&lt;=</code>，<code>&lt;&gt;</code>（不等于运算符）。</li>
+<li>算术运算符的优先顺序如下：
+<ul>
+<li>一元运算符 – <code>+</code>, <code>-</code>。</li>
+<li>乘法和除法 – <code>*</code>，<code>/</code>。</li>
+<li>加减 - <code>+</code>，<code>-</code></li>
+</ul>
+</li>
+</ul>
+<p>您了解了 JMS 消息选择器及其用于过滤传递给客户端的消息的方式。它在实际应用中非常有用，特别是从性能角度来看。您的应用程序可以将大量处理负载委托给 JMS 提供程序，并确保只向其传递必要的消息。</p>
+<p>原文链接： <a href="https://jstobigdata.com/jms/jms-message-selectors-in-action-to-filter-messages/" target="_blank">JMS Message Selectors in Action to Filter Messages</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/08/exploring-http2-part-1-overview/" target="_blank" title="[译]探索 http2（第 1 部分）：概述">[译]探索 http2（第 1 部分）：概述</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/08/exploring-http2-part-2-overview/" target="_blank" title="[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs">[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/08/socketio-vs-http/" target="_blank" title="[译]比较 Socket.IO 和 HTTP：主要区别和用例">[译]比较 Socket.IO 和 HTTP：主要区别和用例</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/jms-transactions-in-action/" target="_blank" title="[译]JMS 事务的实际应用">[译]JMS 事务的实际应用</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/jms-pub-sub-messaging-model/" target="_blank" title="[译]JMS 发布-订阅消息模型">[译]JMS 发布-订阅消息模型</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/07/23/jms-prioritize-messages/" target="_blank" title="[译]JMS 消息优先级">[译]JMS 消息优先级</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/07/23/jms-prioritize-messages/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]JMS 消息优先级</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/07/23/jms-message-model/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]JMS 消息模型</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/07\/23\/jms-message-selectors-in-action-to-filter-messages\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么要使用消息选择器">为什么要使用消息选择器？</a></li>
+    <li><a href="#1-按属性过滤消息">1. 按属性过滤消息</a></li>
+    <li><a href="#2-按标题过滤邮件">2. 按标题过滤邮件</a></li>
+    <li><a href="#选择器规则">选择器规则</a>
+      <ul>
+        <li><a href="#1-文字规则">1. 文字规则</a></li>
+        <li><a href="#2-标识符规则">2. 标识符规则</a></li>
+        <li><a href="#3-运营商规则">3. 运营商规则</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

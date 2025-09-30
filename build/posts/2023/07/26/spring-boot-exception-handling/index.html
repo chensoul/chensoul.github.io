@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]Spring Boot异常处理完整指南 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]Spring Boot异常处理完整指南">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/26/spring-boot-exception-handling/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]Spring Boot异常处理完整指南">
+  <meta itemprop="description" content="处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。">
+  <meta itemprop="datePublished" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="967">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]Spring Boot异常处理完整指南">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]Spring Boot异常处理完整指南</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-26">2023-07-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。</p>
+<p>本文将探讨这些方法，并提供一些关于何时某种给定方法可能优于另一种方法的指导。</p>
+<h2 id="示例代码">示例代码</h2>
+<p>本文附有 GitHub 上的工作<a href="https://github.com/thombergs/code-examples/tree/master/spring-boot/exception-handling" target="_blank">代码示例</a>。</p>
+<h2 id="介绍">介绍</h2>
+<p>Spring Boot 为我们提供了处理异常的工具，而不仅仅是简单的“try-catch”块。为了使用这些工具，我们应用了一些注释，使我们能够将异常处理视为横切关注点：</p>
+<ul>
+<li><a href="https://reflectoring.io/spring-boot-exception-handling/#responsestatus" target="_blank"><code>@ResponseStatus</code></a></li>
+<li><a href="https://reflectoring.io/spring-boot-exception-handling/#exceptionhandler" target="_blank"><code>@ExceptionHandler</code></a></li>
+<li><a href="https://reflectoring.io/spring-boot-exception-handling/#controlleradvice" target="_blank"><code>@ControllerAdvice</code></a></li>
+</ul>
+<p>在深入了解这些注释之前，我们将首先了解 Spring 如何处理 Web 控制器抛出的异常——这是捕获异常的最后一道防线。</p>
+<p>我们还将查看 Spring Boot 提供的一些配置来修改默认行为。</p>
+<p>我们将确定这样做时面临的挑战，然后我们将尝试使用这些注释来克服这些挑战。</p>
+<h2 id="spring-boot-默认的异常处理机制">Spring Boot 默认的异常处理机制</h2>
+<p>假设我们有一个名为 <code>ProductController</code> 的控制器，当未找到具有给定 id 的 <code>Product</code> 时，其 <code>getProduct(...)</code> 方法会抛出 <code>NoSuchElementFoundException</code> 运行时异常：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/product&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProductController</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ProductService productService;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//constructor omitted for brevity...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/{id}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> Response <span style="color:#a6e22e">getProduct</span>(<span style="color:#a6e22e">@PathVariable</span> String id){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// this method throws a &#34;NoSuchElementFoundException&#34; exception</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> productService.<span style="color:#a6e22e">getProduct</span>(id);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们使用无效的 <code>id</code> 调用 <code>/product</code> API，服务将抛出 <code>NoSuchElementFoundException</code> 运行时异常，我们将得到以下响应：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;2020-11-28T13:24:02.239+00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;Internal Server Error&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/product/1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们可以看到，除了格式良好的错误响应之外，有效负载没有为我们提供任何有用的信息。甚至 <code>message</code> 字段也是空的，我们可能希望包含“未找到 id 1 的项目”之类的内容。</p>
+<p>让我们从修复错误消息问题开始。</p>
+<p>Spring Boot 提供了一些属性，我们可以使用它们添加异常消息、异常类，甚至堆栈跟踪作为响应负载的一部分：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">server</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">error</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include-message</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include-binding-errors</span>: <span style="color:#ae81ff">always</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include-stacktrace</span>: <span style="color:#ae81ff">on_trace_param</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">include-exception</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>在 <code>application.yml</code> 中使用这些 <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#server-properties" target="_blank">Spring Boot 服务器属性</a>，我们可以在某种程度上改变错误响应。</p>
+<p>现在，如果我们使用无效的 <code>id</code> 再次调用 <code>/product</code> API，我们将得到以下响应：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;2020-11-29T09:42:12.287+00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;Internal Server Error&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Item with id 1 not found&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/product/1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>请注意，我们已将属性 <code>include-stacktrace</code> 设置为 <code>on_trace_param</code> ，这意味着仅当我们在 URL ( <code>?trace=true</code> ) 中包含 <code>trace</code> 参数时，我们才会在响应负载中获得堆栈跟踪：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;2020-11-29T09:42:12.287+00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#ae81ff">500</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;Internal Server Error&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Item with id 1 not found&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;trace&#34;</span>: <span style="color:#e6db74">&#34;io.reflectoring.exception.exception.NoSuchElementFoundException: Item with id 1 not found...&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/product/1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们可能希望将 <code>include-stacktrace</code> 标志的值保留为 <code>never</code> ，至少在生产中，因为它可能会揭示我们应用程序的内部工作原理。</p>
+<p>继续！状态和错误消息 - <code>500</code> - 表明我们的服务器代码有问题，但实际上这是客户端错误，因为客户端提供了无效的 ID。</p>
+<p>我们当前的状态代码没有正确反映这一点。不幸的是，这就是我们可以使用 <code>server.error</code> 配置属性的范围，因此我们必须查看 Spring Boot 提供的注释。</p>
+<h2 id="responsestatus"><code>@ResponseStatus</code></h2>
+<p>顾名思义， <code>@ResponseStatus</code> 允许我们修改响应的 HTTP 状态。它可以应用在以下地方：</p>
+<ul>
+<li>关于异常类本身</li>
+<li>以及方法上的 <code>@ExceptionHandler</code> 注释</li>
+<li>以及类上的 <code>@ControllerAdvice</code> 注释</li>
+</ul>
+<p>在本节中，我们将仅讨论第一种情况。</p>
+<p>让我们回到当前的问题，即我们的错误响应总是给我们 HTTP 状态 500，而不是更具描述性的状态代码。</p>
+<p>为了解决这个问题，我们可以用 <code>@ResponseStatus</code> 注释我们的 Exception 类，并在其 <code>value</code> 属性中传入所需的 HTTP 响应状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@ResponseStatus</span>(value <span style="color:#f92672">=</span> HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoSuchElementFoundException</span> <span style="color:#66d9ef">extends</span> RuntimeException {
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们使用无效 ID 调用控制器，此更改将带来更好的响应：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;timestamp&#34;</span>: <span style="color:#e6db74">&#34;2020-11-29T09:42:12.287+00:00&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#ae81ff">404</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;Not Found&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Item with id 1 not found&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/product/1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>实现相同目的的另一种方法是扩展 <code>ResponseStatusException</code> 类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NoSuchElementFoundException</span> <span style="color:#66d9ef">extends</span> ResponseStatusException {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">NoSuchElementFoundException</span>(String message){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span>(HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>, message);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> HttpHeaders <span style="color:#a6e22e">getResponseHeaders</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// return response headers</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当我们想要操作响应头时，这种方法会派上用场，因为我们可以重写 <code>getResponseHeaders()</code> 方法。</p>
+<p><code>@ResponseStatus</code> 与 <code>server.error</code> 配置属性相结合，使我们能够操作 Spring 定义的错误响应负载中的几乎所有字段。</p>
+<p>但是如果还想操纵响应负载的结构怎么办？</p>
+<p>让我们在下一节中看看如何实现这一目标。</p>
+<h2 id="exceptionhandler"><code>@ExceptionHandler</code></h2>
+<p><code>@ExceptionHandler</code> 注释在处理异常方面为我们提供了很大的灵活性。对于初学者来说，要使用它，我们只需在控制器本身或 <code>@ControllerAdvice</code> 类中创建一个方法，并用 <code>@ExceptionHandler</code> 注释它：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/product&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProductController</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ProductService productService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//constructor omitted for brevity...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/{id}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> Response <span style="color:#a6e22e">getProduct</span>(<span style="color:#a6e22e">@PathVariable</span> String id) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> productService.<span style="color:#a6e22e">getProduct</span>(id);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(NoSuchElementFoundException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleNoSuchElementFoundException</span>(
+</span></span><span style="display:flex;"><span>      NoSuchElementFoundException exception
+</span></span><span style="display:flex;"><span>  ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ResponseEntity
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">status</span>(HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">body</span>(exception.<span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>异常处理程序方法接受一个异常或异常列表作为我们要在定义的方法中处理的参数。我们用 <code>@ExceptionHandler</code> 和 <code>@ResponseStatus</code> 注释该方法来定义我们想要处理的异常和我们想要返回的状态代码。</p>
+<p>如果我们不想使用这些注释，那么只需将异常定义为方法的参数也可以：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@ExceptionHandler</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleNoSuchElementFoundException</span>(
+</span></span><span style="display:flex;"><span>    NoSuchElementFoundException exception)
+</span></span></code></pre></div><p>尽管我们已经在方法签名中提到了它，但在注释中提及异常类是个好主意。它提供了更好的可读性。</p>
+<p>此外，处理程序方法上的注释 <code>@ResponseStatus(HttpStatus.NOT_FOUND)</code> 不是必需的，因为传递到 <code>ResponseEnity</code> 的 HTTP 状态将优先，但出于相同的可读性原因，我们仍然保留它。</p>
+<p>除了异常参数之外，我们还可以使用 <code>HttpServletRequest</code> 、 <code>WebRequest</code> 或 <code>HttpSession</code> 类型作为参数。</p>
+<p>同样，处理程序方法支持各种返回类型，例如 <code>ResponseEntity</code> 、 <code>String</code> 甚至 <code>void</code> 。</p>
+<p>在 <code>@ExceptionHandler</code> <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">java 文档</a>中查找更多输入和返回类型。</p>
+<p>在异常处理函数中，我们可以通过输入参数和返回类型的形式使用许多不同的选项，因此我们可以完全控制错误响应。</p>
+<p>现在，让我们最终确定 API 的错误响应负载。如果出现任何错误，客户通常会期望两件事：</p>
+<ul>
+<li>
+<p>错误代码告诉客户端它是什么类型的错误。客户端可以在其代码中使用错误代码来驱动基于它的某些业务逻辑。通常，错误代码是标准的 HTTP 状态代码，但我也看到 API 返回自定义错误代码，例如 <code>E001</code> 。</p>
+</li>
+<li>
+<p>一条附加的人类可读消息，提供有关错误的更多信息，甚至提供有关如何修复错误的一些提示或 API 文档的链接。</p>
+</li>
+</ul>
+<p>我们还将添加一个可选的 <code>stackTrace</code> 字段，这将帮助我们在开发环境中进行调试。</p>
+<p>最后，我们还想处理响应中的验证错误。您可以在这篇有关使用 Spring Boot 处理验证的文章中找到有关 bean 验证的更多信息。</p>
+<p>记住这些点，我们将为错误响应使用以下有效负载：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Getter</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Setter</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@JsonInclude</span>(JsonInclude.<span style="color:#a6e22e">Include</span>.<span style="color:#a6e22e">NON_NULL</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ErrorResponse</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> status;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String message;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> String stackTrace;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>ValidationError<span style="color:#f92672">&gt;</span> errors;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Getter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Setter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValidationError</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String field;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String message;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addValidationError</span>(String field, String message){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(Objects.<span style="color:#a6e22e">isNull</span>(errors)){
+</span></span><span style="display:flex;"><span>      errors <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    errors.<span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">new</span> ValidationError(field, message));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在，让我们将所有这些应用到 <code>NoSuchElementFoundException</code> 处理程序方法中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/product&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@AllArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ProductController</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String TRACE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;trace&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Value</span>(<span style="color:#e6db74">&#34;${reflectoring.trace:false}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> printStackTrace;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ProductService productService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/{id}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> Product <span style="color:#a6e22e">getProduct</span>(<span style="color:#a6e22e">@PathVariable</span> String id){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> productService.<span style="color:#a6e22e">getProduct</span>(id);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@PostMapping</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> Product <span style="color:#a6e22e">addProduct</span>(<span style="color:#a6e22e">@RequestBody</span> <span style="color:#a6e22e">@Valid</span> ProductInput input){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> productService.<span style="color:#a6e22e">addProduct</span>(input);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(NoSuchElementFoundException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ErrorResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleItemNotFoundException</span>(
+</span></span><span style="display:flex;"><span>      NoSuchElementFoundException exception,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ){
+</span></span><span style="display:flex;"><span>    log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;Failed to find the requested element&#34;</span>, exception);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buildErrorResponse(exception, HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>, request);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(MethodArgumentNotValidException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">UNPROCESSABLE_ENTITY</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ErrorResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleMethodArgumentNotValid</span>(
+</span></span><span style="display:flex;"><span>      MethodArgumentNotValidException ex,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ) {
+</span></span><span style="display:flex;"><span>    ErrorResponse errorResponse <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ErrorResponse(
+</span></span><span style="display:flex;"><span>        HttpStatus.<span style="color:#a6e22e">UNPROCESSABLE_ENTITY</span>.<span style="color:#a6e22e">value</span>(),
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Validation error. Check &#39;errors&#39; field for details.&#34;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (FieldError fieldError : ex.<span style="color:#a6e22e">getBindingResult</span>().<span style="color:#a6e22e">getFieldErrors</span>()) {
+</span></span><span style="display:flex;"><span>      errorResponse.<span style="color:#a6e22e">addValidationError</span>(fieldError.<span style="color:#a6e22e">getField</span>(),
+</span></span><span style="display:flex;"><span>          fieldError.<span style="color:#a6e22e">getDefaultMessage</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">unprocessableEntity</span>().<span style="color:#a6e22e">body</span>(errorResponse);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(Exception.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">INTERNAL_SERVER_ERROR</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>ErrorResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleAllUncaughtException</span>(
+</span></span><span style="display:flex;"><span>      Exception exception,
+</span></span><span style="display:flex;"><span>      WebRequest request){
+</span></span><span style="display:flex;"><span>    log.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;Unknown error occurred&#34;</span>, exception);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buildErrorResponse(
+</span></span><span style="display:flex;"><span>        exception,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Unknown error occurred&#34;</span>,
+</span></span><span style="display:flex;"><span>        HttpStatus.<span style="color:#a6e22e">INTERNAL_SERVER_ERROR</span>,
+</span></span><span style="display:flex;"><span>        request
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> ResponseEntity<span style="color:#f92672">&lt;</span>ErrorResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">buildErrorResponse</span>(
+</span></span><span style="display:flex;"><span>      Exception exception,
+</span></span><span style="display:flex;"><span>      HttpStatus httpStatus,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buildErrorResponse(
+</span></span><span style="display:flex;"><span>        exception,
+</span></span><span style="display:flex;"><span>        exception.<span style="color:#a6e22e">getMessage</span>(),
+</span></span><span style="display:flex;"><span>        httpStatus,
+</span></span><span style="display:flex;"><span>        request);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> ResponseEntity<span style="color:#f92672">&lt;</span>ErrorResponse<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">buildErrorResponse</span>(
+</span></span><span style="display:flex;"><span>      Exception exception,
+</span></span><span style="display:flex;"><span>      String message,
+</span></span><span style="display:flex;"><span>      HttpStatus httpStatus,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ) {
+</span></span><span style="display:flex;"><span>    ErrorResponse errorResponse <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ErrorResponse(
+</span></span><span style="display:flex;"><span>        httpStatus.<span style="color:#a6e22e">value</span>(),
+</span></span><span style="display:flex;"><span>        exception.<span style="color:#a6e22e">getMessage</span>()
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(printStackTrace <span style="color:#f92672">&amp;&amp;</span> isTraceOn(request)){
+</span></span><span style="display:flex;"><span>      errorResponse.<span style="color:#a6e22e">setStackTrace</span>(ExceptionUtils.<span style="color:#a6e22e">getStackTrace</span>(exception));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">status</span>(httpStatus).<span style="color:#a6e22e">body</span>(errorResponse);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isTraceOn</span>(WebRequest request) {
+</span></span><span style="display:flex;"><span>    String <span style="color:#f92672">[]</span> value <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getParameterValues</span>(TRACE);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Objects.<span style="color:#a6e22e">nonNull</span>(value)
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;&amp;</span> value.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> 0
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;&amp;</span> value<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>.<span style="color:#a6e22e">contentEquals</span>(<span style="color:#e6db74">&#34;true&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里需要注意几点：</p>
+<h3 id="提供堆栈跟踪">提供堆栈跟踪</h3>
+<p>在错误响应中提供堆栈跟踪可以使我们的开发人员和 QA 工程师免去爬行日志文件的麻烦。</p>
+<p>正如我们在 <a href="https://reflectoring.io/spring-boot-exception-handling/#spring-boots-default-exception-handling-mechanism" target="_blank">Spring Boot 的默认异常处理机制</a>中看到的，Spring 已经为我们提供了这个功能。但现在，由于我们自己处理错误响应，因此这也需要我们自己处理。</p>
+<p>为了实现这一点，我们首先引入了一个名为 <code>reflectoring.trace</code> 的服务器端配置属性，如果将其设置为 <code>true</code> ，为了实现此目的，我们首先引入了一个名为 <code>reflectoring.trace</code> 的服务器端配置属性，如果将其设置为 <code>true</code> ，将启用响应中的 <code>stackTrace</code> 字段。要实际在 API 响应中获取 <code>stackTrace</code> ，我们的客户端还必须传递带有值 <code>true</code> 的 <code>trace</code> 参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl --location --request GET <span style="color:#e6db74">&#39;http://localhost:8080/product/1?trace=true&#39;</span>
+</span></span></code></pre></div><p>现在，由于 <code>stackTrace</code> 的行为由属性文件中的功能标志控制，因此当我们在生产环境中部署时，我们可以将其删除或将其设置为 <code>false</code> 。</p>
+<h3 id="捕获所有异常处理程序">捕获所有异常处理程序</h3>
+<p><em>需要把他们全都抓到：</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>{
+</span></span><span style="display:flex;"><span>  performSomeOperation();
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">catch</span>(OperationSpecificException ex){
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//...</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">catch</span>(Exception catchAllExcetion){
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>作为一项谨慎措施，我们经常用一个包罗万象的 try-catch 异常处理程序块包围顶级方法的主体，以避免任何不需要的副作用或行为。我们控制器中的 <code>handleAllUncaughtException()</code> 方法的行为类似。它将捕获我们没有特定处理程序的所有异常。</p>
+<p>我想在这里指出的一件事是，即使我们没有这个包罗万象的异常处理程序，Spring 也会处理它。但我们希望响应采用我们的格式而不是 Spring 的格式，因此我们必须自己处理异常。</p>
+<p>包罗万象的处理程序方法也是记录异常的好地方，因为它们可以深入了解可能的错误。我们可以跳过记录字段验证异常，例如 <code>MethodArgumentNotValidException</code> ，因为它们是由于语法上无效的输入而引发的，但我们应该始终在捕获所有处理程序中记录未知异常。</p>
+<h3 id="异常处理程序的顺序">异常处理程序的顺序</h3>
+<p>提及处理程序方法的顺序并不重要。 Spring 将首先寻找最具体的异常处理方法。</p>
+<p>如果找不到它，那么它将查找父异常的处理程序，在我们的例子中是 <code>RuntimeException</code> ，如果没有找到，则 <code>handleAllUncaughtException()</code> 方法将最终处理该异常。</p>
+<p>这应该可以帮助我们处理这个特定控制器中的异常，但是如果其他控制器也抛出这些相同的异常怎么办？我们如何处理这些？我们是否在所有控制器中创建相同的处理程序，或者创建具有公共处理程序的基类并在所有控制器中扩展它？</p>
+<p>幸运的是，我们不必这样做。 Spring 以“控制器建议”的形式为这个问题提供了一个非常优雅的解决方案。</p>
+<p>让我们研究一下它们。</p>
+<h2 id="controlleradvice"><code>@ControllerAdvice</code></h2>
+<blockquote>
+<p><strong>为什么称为“控制器建议”？</strong></p>
+<p>“建议”一词来自面向方面编程 (AOP)，它允许我们围绕现有方法注入横切代码（称为“建议”）。控制器建议允许我们拦截和修改控制器方法的返回值，在我们的例子中是为了处理异常。</p></blockquote>
+<p>控制器建议类允许我们将异常处理程序应用于应用程序中的多个或所有控制器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@ControllerAdvice</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GlobalExceptionHandler</span> <span style="color:#66d9ef">extends</span> ResponseEntityExceptionHandler {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> String TRACE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;trace&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Value</span>(<span style="color:#e6db74">&#34;${reflectoring.trace:false}&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> printStackTrace;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">UNPROCESSABLE_ENTITY</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">protected</span> ResponseEntity<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleMethodArgumentNotValid</span>(
+</span></span><span style="display:flex;"><span>      MethodArgumentNotValidException ex,
+</span></span><span style="display:flex;"><span>      HttpHeaders headers,
+</span></span><span style="display:flex;"><span>      HttpStatus status,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// in ProductController example...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//.....</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(ItemNotFoundException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">NOT_FOUND</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleItemNotFoundException</span>(
+</span></span><span style="display:flex;"><span>      ItemNotFoundException itemNotFoundException,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ){
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// in ProductController example...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//.....</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ExceptionHandler</span>(RuntimeException.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@ResponseStatus</span>(HttpStatus.<span style="color:#a6e22e">INTERNAL_SERVER_ERROR</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleAllUncaughtException</span>(
+</span></span><span style="display:flex;"><span>      RuntimeException exception,
+</span></span><span style="display:flex;"><span>      WebRequest request
+</span></span><span style="display:flex;"><span>  ){
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//Body omitted as it&#39;s similar to the method of same name</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// in ProductController example...</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//.....</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//..</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">handleExceptionInternal</span>(
+</span></span><span style="display:flex;"><span>      Exception ex,
+</span></span><span style="display:flex;"><span>      Object body,
+</span></span><span style="display:flex;"><span>      HttpHeaders headers,
+</span></span><span style="display:flex;"><span>      HttpStatus status,
+</span></span><span style="display:flex;"><span>      WebRequest request) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buildErrorResponse(ex,status,request);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>处理函数的主体和其他支持代码被省略，因为它们与我们在 @ExceptionHandler 部分看到的代码几乎相同。请在 Github Repo 的 <a href="https://github.com/thombergs/code-examples/blob/master/spring-boot/exception-handling/src/main/java/io/reflectoring/exception/exception/GlobalExceptionHandler.java" target="_blank">GlobalExceptionHandler</a> 类中找到完整的代码。</p>
+<p>有几件事是新的，我们稍后会讨论。这里的一个主要区别是这些处理程序将处理应用程序中所有控制器抛出的异常，而不仅仅是 <code>ProductController</code> 。</p>
+<p>如果我们想有选择地将控制器建议的范围应用或限制到特定控制器或包，我们可以使用注释提供的属性：</p>
+<ul>
+<li><code>@ControllerAdvice(&quot;com.reflectoring.controller&quot;)</code> ：我们可以在注释的 <code>value</code> 或 <code>basePackages</code> 参数中传递包名称或包名称列表。这样，控制器建议将仅处理该包控制器的异常。</li>
+<li><code>@ControllerAdvice(annotations = Advised.class)</code> ：只有标有 <code>@Advised</code> 注释的控制器才会由控制器建议处理。</li>
+</ul>
+<p>在 <code>@ControllerAdvice</code> <a href="https://www.javadoc.io/doc/org.springframework/spring-web/4.3.8.RELEASE/org/springframework/web/bind/annotation/ControllerAdvice.html" target="_blank">注释文档</a>中查找其他参数。</p>
+<h3 id="responseentityexceptionhandler"><code>ResponseEntityExceptionHandler</code></h3>
+<p><code>ResponseEntityExceptionHandler</code> 是控制器建议类的便捷基类。它为内部 Spring 异常提供异常处理程序。如果我们不扩展它，那么所有异常将被重定向到 <code>DefaultHandlerExceptionResolver</code> ，它返回一个 <code>ModelAndView</code> 对象。因为我们的使命是塑造我们自己的错误响应，所以我们不希望这样。</p>
+<p>正如您所看到的，我们重写了两个 <code>ResponseEntityExceptionHandler</code> 方法：</p>
+<ul>
+<li><code>handleMethodArgumentNotValid()</code> ：在 @ExceptionHandler 部分，我们自己实现了一个处理程序。在这里我们只是覆盖了它的行为。</li>
+<li><code>handleExceptionInternal()</code> ： <code>ResponseEntityExceptionHandler</code> 中的所有处理程序都使用此函数来构建类似于 <code>buildErrorResponse()</code> 的 <code>ResponseEntity</code> 。如果我们不重写此方法，那么客户端将仅收到响应标头中的 HTTP 状态，但由于我们也希望在响应正文中包含 HTTP 状态，因此我们重写了该方法。</li>
+</ul>
+<blockquote>
+<h4 id="处理-nohandlerfoundexception-需要一些额外的步骤">处理 <code>NoHandlerFoundException</code> 需要一些额外的步骤</h4>
+<p>当您尝试调用系统中不存在的 API 时，会出现此异常。尽管我们通过 <code>ResponseEntityExceptionHandler</code> 类实现其处理程序，但异常仍被重定向到 <code>DefaultHandlerExceptionResolver</code> 。</p>
+<p>要将异常重定向到我们的建议，我们需要在属性文件中设置几个属性： <code>spring.mvc.throw-exception-if-no-handler-found=true</code> 和 <code>spring.web.resources.add-mappings=false</code></p></blockquote>
+<h3 id="使用-controlleradvice-时要记住的一些要点">使用 <code>@ControllerAdvice</code> 时要记住的一些要点</h3>
+<ul>
+<li>
+<p>为了简单起见，项目中始终只有一个控制器建议类。最好有一个应用程序中所有异常的单一存储库。如果您创建多个控制器建议，请尝试使用 <code>basePackages</code> 或 <code>annotations</code> 属性来明确它将建议哪些控制器。</p>
+</li>
+<li>
+<p>Spring 可以按任何顺序处理控制器建议类，除非我们使用 <code>@Order</code> 注释对其进行注释。因此，如果您有多个控制器建议，那么在编写一个包罗万象的处理程序时要小心。特别是当您没有在注释中指定 <code>basePackages</code> 或 <code>annotations</code> 时。</p>
+</li>
+</ul>
+<h2 id="spring-如何处理异常">Spring 如何处理异常？</h2>
+<p>现在我们已经介绍了 Spring 中处理异常的可用机制，让我们简要了解 Spring 如何处理它以及何时一种机制优先于另一种机制。</p>
+<p>如果我们还没有构建自己的异常处理程序，请看下面的流程图，它跟踪了 Spring 异常处理的过程：</p>
+<p><img src="../../../static/images/spring-boot-exception-handling-01.webp" alt="Spring Exception Handling Flow"></p>
+<h2 id="结论">结论</h2>
+<p>当异常跨越控制器的边界时，它注定会以 JSON 响应或 HTML 网页的形式到达客户端。</p>
+<p>在本文中，我们了解了 Spring Boot 如何将这些异常转换为客户友好的输出，以及配置和注释，使我们能够将它们进一步塑造成我们想要的形状。</p>
+<p>感谢您的阅读！您可以在 GitHub 上找到工作代码。</p>
+<p>原文链接：<a href="https://reflectoring.io/spring-boot-exception-handling/" target="_blank">https://reflectoring.io/spring-boot-exception-handling/</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-authorization-server/" target="_blank" title="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-null-safety-annotations/" target="_blank" title="[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响">[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-info-endpoint/" target="_blank" title="[译]使用Spring Boot Actuator公开有用的信息端点">[译]使用Spring Boot Actuator公开有用的信息端点</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring-scopes/" target="_blank" title="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring/" target="_blank" title="[译]在 Spring 中实现 OAuth2：第 1 部分">[译]在 Spring 中实现 OAuth2：第 1 部分</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" target="_blank" title="[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权">[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/26/spring-cors/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]使用 Spring Boot 和 Spring Security 配置 CORS</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/07/26/spring-boot-authorization-server/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/26\/spring-boot-exception-handling\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#示例代码">示例代码</a></li>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#spring-boot-默认的异常处理机制">Spring Boot 默认的异常处理机制</a></li>
+    <li><a href="#responsestatus"><code>@ResponseStatus</code></a></li>
+    <li><a href="#exceptionhandler"><code>@ExceptionHandler</code></a>
+      <ul>
+        <li><a href="#提供堆栈跟踪">提供堆栈跟踪</a></li>
+        <li><a href="#捕获所有异常处理程序">捕获所有异常处理程序</a></li>
+        <li><a href="#异常处理程序的顺序">异常处理程序的顺序</a></li>
+      </ul>
+    </li>
+    <li><a href="#controlleradvice"><code>@ControllerAdvice</code></a>
+      <ul>
+        <li><a href="#responseentityexceptionhandler"><code>ResponseEntityExceptionHandler</code></a></li>
+        <li><a href="#使用-controlleradvice-时要记住的一些要点">使用 <code>@ControllerAdvice</code> 时要记住的一些要点</a></li>
+      </ul>
+    </li>
+    <li><a href="#spring-如何处理异常">Spring 如何处理异常？</a></li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

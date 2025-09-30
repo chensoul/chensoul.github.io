@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/02/20/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构">
+  <meta itemprop="description" content="今天做了什么：
+ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能">
+  <meta itemprop="datePublished" content="2024-02-20T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-02-20T00:00:00+00:00">
+  <meta itemprop="wordCount" content="252">
+  <meta itemprop="keywords" content="Java,Redis,Microservice,Tutorial">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-02-20">2024-02-20</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/redis/" rel="tag">Redis</a>, <a class="meta__link" href="/tags/microservice/" rel="tag">Microservice</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ol>
+<li>ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>   <span style="color:#a6e22e">@Aspect</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Component</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RateLimitAspect</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> RedisTemplate<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> redisTemplate;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Logger logger <span style="color:#f92672">=</span> LoggerFactory.<span style="color:#a6e22e">getLogger</span>(RateLimitAspect.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> maxRequests; <span style="color:#75715e">// Maximum number of requests</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> timeWindow; <span style="color:#75715e">// Time window in seconds</span>
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">RateLimitAspect</span>(RedisTemplate<span style="color:#f92672">&lt;</span>String, Object<span style="color:#f92672">&gt;</span> redisTemplate) {
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">redisTemplate</span> <span style="color:#f92672">=</span> redisTemplate;
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">maxRequests</span> <span style="color:#f92672">=</span> 100; <span style="color:#75715e">// Default maximum number of requests is 100</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">timeWindow</span> <span style="color:#f92672">=</span> 60; <span style="color:#75715e">// Default time window is 60 seconds</span>
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">@Before</span>(<span style="color:#e6db74">&#34;@annotation(getMapping)&#34;</span>)
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">applyRateLimit</span>(JoinPoint joinPoint, GetMapping getMapping) {
+</span></span><span style="display:flex;"><span>         HttpServletRequest request <span style="color:#f92672">=</span> ((ServletRequestAttributes) RequestContextHolder
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">getRequestAttributes</span>()).<span style="color:#a6e22e">getRequest</span>();
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> (request <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> HttpMethod.<span style="color:#a6e22e">GET</span>.<span style="color:#a6e22e">matches</span>(request.<span style="color:#a6e22e">getMethod</span>())) {
+</span></span><span style="display:flex;"><span>             String username <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getUserPrincipal</span>().<span style="color:#a6e22e">getName</span>(); <span style="color:#75715e">// Get the username</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#66d9ef">if</span> (username <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>username.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>                 String rateLimitKey <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rate_limit:&#34;</span> <span style="color:#f92672">+</span> username;
+</span></span><span style="display:flex;"><span>                 incrementAndCheckRateLimit(rateLimitKey, request);
+</span></span><span style="display:flex;"><span>             }
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">incrementAndCheckRateLimit</span>(String rateLimitKey, HttpServletRequest request) {
+</span></span><span style="display:flex;"><span>         Long currentRequests <span style="color:#f92672">=</span> redisTemplate.<span style="color:#a6e22e">execute</span>((RedisCallback<span style="color:#f92672">&lt;</span>Long<span style="color:#f92672">&gt;</span>) connection <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>             Object nativeConnection <span style="color:#f92672">=</span> connection.<span style="color:#a6e22e">getNativeConnection</span>();
+</span></span><span style="display:flex;"><span>             String script <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;local current = redis.call(&#39;INCR&#39;, KEYS[1])\n&#34;</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;if tonumber(current) == 1 then\n&#34;</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;    redis.call(&#39;EXPIRE&#39;, KEYS[1], ARGV[1])\n&#34;</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;end\n&#34;</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;return current&#34;</span>;
+</span></span><span style="display:flex;"><span>             <span style="color:#66d9ef">return</span> (Long) ((RedisOperations<span style="color:#f92672">&lt;?</span>, <span style="color:#f92672">?&gt;</span>) nativeConnection).<span style="color:#a6e22e">execute</span>(
+</span></span><span style="display:flex;"><span>                     (RedisCallback<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span>) connection1 <span style="color:#f92672">-&gt;</span> connection1.<span style="color:#a6e22e">eval</span>(
+</span></span><span style="display:flex;"><span>                             script.<span style="color:#a6e22e">getBytes</span>(),
+</span></span><span style="display:flex;"><span>                             redisTemplate.<span style="color:#a6e22e">getKeySerializer</span>(), <span style="color:#75715e">// Use custom Key serializer</span>
+</span></span><span style="display:flex;"><span>                             redisTemplate.<span style="color:#a6e22e">getValueSerializer</span>(), <span style="color:#75715e">// Use custom Value serializer</span>
+</span></span><span style="display:flex;"><span>                             Collections.<span style="color:#a6e22e">singletonList</span>(rateLimitKey.<span style="color:#a6e22e">getBytes</span>()),
+</span></span><span style="display:flex;"><span>                             Collections.<span style="color:#a6e22e">singletonList</span>(String.<span style="color:#a6e22e">valueOf</span>(timeWindow).<span style="color:#a6e22e">getBytes</span>())
+</span></span><span style="display:flex;"><span>                     )
+</span></span><span style="display:flex;"><span>             );
+</span></span><span style="display:flex;"><span>         });
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> (currentRequests <span style="color:#f92672">&gt;</span> maxRequests) {
+</span></span><span style="display:flex;"><span>             String urlWithParams <span style="color:#f92672">=</span> getRequestUrlWithParams(request);
+</span></span><span style="display:flex;"><span>             logger.<span style="color:#a6e22e">warn</span>(<span style="color:#e6db74">&#34;Rate limit exceeded for key: {}. Request URL with Params: {}&#34;</span>, 
+</span></span><span style="display:flex;"><span>                rateLimitKey, urlWithParams);
+</span></span><span style="display:flex;"><span>             <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RateLimitException();
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getRequestUrlWithParams</span>(HttpServletRequest request) {
+</span></span><span style="display:flex;"><span>         String url <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getRequestURL</span>().<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>         String queryString <span style="color:#f92672">=</span> request.<span style="color:#a6e22e">getQueryString</span>();
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> (queryString <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>queryString.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>             url <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;?&#34;</span> <span style="color:#f92672">+</span> queryString;
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> url;
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>   }
+</span></span></code></pre></div><ol start="2">
+<li>调整 <a href="https://github.com/chensoul/spring-cloud-examples" target="_blank">spring-cloud-examples</a> 目录，通过源码分析 <a href="https://github.com/chensoul/spring-cloud-examples/blob/main/lesson-01-bootstrap/SpringBoot%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.md" target="_blank">SpringBoot 2.7.18 启动过程</a></li>
+</ol>
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/26/til/" target="_blank" title="2024-01-26｜foodie-cloud集成Feign">2024-01-26｜foodie-cloud集成Feign</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/02/til/" target="_blank" title="2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel">2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/31/til/" target="_blank" title="2024-01-31｜Redis事务">2024-01-31｜Redis事务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/11/til/" target="_blank" title="2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别">2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/10/til/" target="_blank" title="2024-01-10｜ Java审计框架inspektr">2024-01-10｜ Java审计框架inspektr</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/09/til/" target="_blank" title="2024-01-09｜单点登录">2024-01-09｜单点登录</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/redis/" rel="tag">redis</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/microservice/" rel="tag">microservice</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/02/19/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-02-19｜foodie-cloud集成Sharding Sphere实现读写分离</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/04/17/thingsboard-tbmq-local-docker-run/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: ThingsBoard TBMQ本地和通过Docker运行</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/02\/20\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

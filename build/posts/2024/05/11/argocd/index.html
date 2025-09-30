@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Argo CD安装和部署 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Argo CD安装和部署">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/05/11/argocd/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Argo CD安装和部署">
+  <meta itemprop="description" content="安装 ArgoCD 安装：">
+  <meta itemprop="datePublished" content="2024-05-11T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-05-11T00:00:00+00:00">
+  <meta itemprop="wordCount" content="357">
+  <meta itemprop="keywords" content="Kubernetes,Javascript,Redis,Cloud-Native">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Argo CD安装和部署">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Argo CD安装和部署</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-05-11">2024-05-11</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/kubernetes/" rel="category">Kubernetes</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/kubernetes/" rel="tag">Kubernetes</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/redis/" rel="tag">Redis</a>, <a class="meta__link" href="/tags/cloud-native/" rel="tag">Cloud-Native</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="安装-argocd">安装 ArgoCD</h2>
+<p>安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl create namespace argocd
+</span></span><span style="display:flex;"><span>$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+</span></span></code></pre></div><p>查看安装是否成功，当argocd命名空间下Pod状态都为Running时表示安装成功。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl get pod -A
+</span></span></code></pre></div><p>执行如下命令，将名为argocd-server的Service类型修改为NodePort。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl patch svc argocd-server -n argocd -p <span style="color:#e6db74">&#39;{&#34;spec&#34;: {&#34;type&#34;: &#34;NodePort&#34;}}&#39;</span>
+</span></span><span style="display:flex;"><span>service/argocd-server patched
+</span></span></code></pre></div><p>查看修改结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl -n argocd get svc
+</span></span><span style="display:flex;"><span>NAME                                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>                      AGE
+</span></span><span style="display:flex;"><span>argocd-applicationset-controller          ClusterIP   10.43.184.106   &lt;none&gt;        7000/TCP,8080/TCP            24h
+</span></span><span style="display:flex;"><span>argocd-dex-server                         ClusterIP   10.43.99.202    &lt;none&gt;        5556/TCP,5557/TCP,5558/TCP   24h
+</span></span><span style="display:flex;"><span>argocd-metrics                            ClusterIP   10.43.47.99     &lt;none&gt;        8082/TCP                     24h
+</span></span><span style="display:flex;"><span>argocd-notifications-controller-metrics   ClusterIP   10.43.58.49     &lt;none&gt;        9001/TCP                     24h
+</span></span><span style="display:flex;"><span>argocd-redis                              ClusterIP   10.43.70.36     &lt;none&gt;        6379/TCP                     24h
+</span></span><span style="display:flex;"><span>argocd-repo-server                        ClusterIP   10.43.40.224    &lt;none&gt;        8081/TCP,8084/TCP            24h
+</span></span><span style="display:flex;"><span>argocd-server                             NodePort    10.43.180.135   &lt;none&gt;        80:31912/TCP,443:32728/TCP   24h
+</span></span><span style="display:flex;"><span>argocd-server-metrics                     ClusterIP   10.43.5.195     &lt;none&gt;        8083/TCP                     24h
+</span></span></code></pre></div><p>通过 argocd-server Service访问Argo CD，直接使用<strong>节点IP:端口号</strong>访问即可。例如本示例中，端口号为<strong>32728</strong>。</p>
+<p>登录用户名为admin，密码可使用如下命令获取。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.data.password}&#34;</span> | base64 -d;echo
+</span></span></code></pre></div><p>也可以通过下面命令修改密码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ argocd account update-password --account admin --current-password xxxx --new-password xxxx
+</span></span></code></pre></div><h2 id="安装-argo-cli">安装 Argo CLI</h2>
+<p>安装Argo CD客户端</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ wget https://github.com/argoproj/argo-cd/releases/download/v2.11.0/argocd-linux-amd64
+</span></span><span style="display:flex;"><span>$ cp argocd-linux-amd64 /usr/local/bin/argocd
+</span></span><span style="display:flex;"><span>$ chmod +x /usr/local/bin/argocd
+</span></span><span style="display:flex;"><span>$ argocd version
+</span></span></code></pre></div><h2 id="使用">使用</h2>
+<h3 id="使用-argo-cli">使用 Argo CLI</h3>
+<p>登录Argo服务端，用户名为 admin。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>argocd login 192.168.1.107:32728 --username admin --password J22WcGIGcDnbmOtB
+</span></span></code></pre></div><p>先查看集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl config get-contexts
+</span></span><span style="display:flex;"><span>CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+</span></span><span style="display:flex;"><span>*         default   default   default
+</span></span></code></pre></div><p>添加集群：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>argocd cluster add default --kubeconfig $HOME/.kube/config --name k3s
+</span></span></code></pre></div><p>上面命令中，default 是集群上下文名称，<em><strong>$HOME/.kube/config</strong></em> 是kubectl配置文件所在路径，<strong>k3s</strong> 是集群在Argo CD中定义的名称。</p>
+<p>添加 git 仓库，以公开的 <a href="https://github.com/yangchuansheng/argocd-lab" target="_blank">https://github.com/yangchuansheng/argocd-lab</a> 仓库为例，用户名和密码可以为空</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># argocd repo add https://github.com/yangchuansheng/argocd-lab.git --username &lt;username&gt; --password &lt;password&gt;</span>
+</span></span><span style="display:flex;"><span>argocd repo add https://github.com/yangchuansheng/argocd-lab.git
+</span></span></code></pre></div><p>在服务器里访问 github 会超时，可以将该仓库导入自己搭建的 git 服务器，比如 gitness。例如：导入后的地址为 http://192.168.3.180:3000/git/test/argocd-lab.git，修改添加仓库命令为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>argocd repo add http://192.168.3.180:3000/git/test/argocd-lab.git
+</span></span></code></pre></div><p>在Argo CD中添加应用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>argocd app create nginx --repo http://192.168.3.180:3000/git/test/argocd-lab.git --path dev --dest-server https://192.168.1.107:6443 --dest-namespace test
+</span></span></code></pre></div><p>同步应用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>argocd app sync nginx
+</span></span></code></pre></div><p>在 https://192.168.1.107:32728/applications 查看应用状态。</p>
+<p>集群中可以查看到部署了一个 nginx 工作负载和一个s ervice。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get all -n test
+</span></span><span style="display:flex;"><span>NAME                        READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/test-64b8fff975-c9dp5   1/1     Running   <span style="color:#ae81ff">0</span>          6m37s
+</span></span><span style="display:flex;"><span>pod/test-64b8fff975-jztwd   1/1     Running   <span style="color:#ae81ff">0</span>          6m37s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                   TYPE        CLUSTER-IP    EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>   AGE
+</span></span><span style="display:flex;"><span>service/test-service   ClusterIP   10.43.54.34   &lt;none&gt;        80/TCP    6m37s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span style="display:flex;"><span>deployment.apps/test   2/2     <span style="color:#ae81ff">2</span>            <span style="color:#ae81ff">2</span>           6m37s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NAME                              DESIRED   CURRENT   READY   AGE
+</span></span><span style="display:flex;"><span>replicaset.apps/test-64b8fff975   <span style="color:#ae81ff">2</span>         <span style="color:#ae81ff">2</span>         <span style="color:#ae81ff">2</span>       6m37s
+</span></span></code></pre></div><h3 id="使用-argo-service">使用 Argo Service</h3>
+<h4 id="创建-application">创建 Application</h4>
+<p>以 <a href="https://github.com/yangchuansheng/argocd-lab" target="_blank">https://github.com/yangchuansheng/argocd-lab</a> 项目作为示例，通过 kubectl 创建应用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl apply -f https://raw.githubusercontent.com/yangchuansheng/argocd-lab/main/application.yaml
+</span></span><span style="display:flex;"><span>application.argoproj.io/myapp-argo-application created
+</span></span></code></pre></div><p>稍等片刻，在 Argo CD 可视化界面中可以看到应用已经创建成功了。</p>
+<h3 id="使用argo-rollouts实现灰度发布">使用Argo Rollouts实现灰度发布</h3>
+<p>参考： <a href="https://support.huaweicloud.com/bestpractice-cce/cce_bestpractice_10007.html" target="_blank">https://support.huaweicloud.com/bestpractice-cce/cce_bestpractice_10007.html</a></p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li>
+<p><a href="https://icloudnative.io/posts/getting-started-with-argocd/" target="_blank">Argo CD 入门教程</a></p>
+</li>
+<li>
+<p><a href="https://support.huaweicloud.com/bestpractice-cce/cce_bestpractice_10007.html" target="_blank">使用Argo CD实现持续交付</a></p>
+</li>
+<li>
+<p><a href="https://www.jobcher.com/argocd/" target="_blank">Argo cd 安装和部署</a></p>
+</li>
+<li>
+<p><a href="https://mafeifan.com/DevOps/K8s/k8s-%E5%9F%BA%E7%A1%80-%E4%BD%BF%E7%94%A8argocd.html" target="_blank">Argo CD 简介</a></p>
+</li>
+<li>
+<p><a href="https://www.51cto.com/article/768181.html" target="_blank">使用 Argo CD 进行 GitOps 流水线改造</a></p>
+</li>
+<li>
+<p><a href="https://www.aneasystone.com/archives/2023/05/gitops-with-argocd.html" target="_blank">基于 Argo CD 的 GitOps 实践笔记</a></p>
+</li>
+<li>
+<p><a href="https://emrah-t.medium.com/extending-your-ci-cd-pipeline-with-gitops-an-end-to-end-automation-with-argocd-and-jenkins-on-f6c39b3dcb21" target="_blank">在 Kubernetes 上使用 ArgoCD 和 Jenkins 实现端到端 GitOps 自动化 — 第一部分 — 为什么要使用 ArgoCD？</a></p>
+</li>
+<li>
+<p><a href="https://cloud.tencent.com/developer/article/2226811" target="_blank">Argo Workflows 中文快速指南</a></p>
+</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/31/til/" target="_blank" title="2024-01-31｜Redis事务">2024-01-31｜Redis事务</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/14/all-things-about-microprofile/" target="_blank" title="All things about MicroProfile">All things about MicroProfile</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/16/system-design-master-template/" target="_blank" title="[译]《Grokking the System Design Interview》系统设计主模板">[译]《Grokking the System Design Interview》系统设计主模板</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2021/09/09/mac-development-environment-setup/" target="_blank" title="Mac开发环境配置">Mac开发环境配置</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/10/all-things-about-websocket/" target="_blank" title="All things about WebSocket">All things about WebSocket</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/10/install-cert-manager/" target="_blank" title="K8s安装Cert Manager">K8s安装Cert Manager</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/kubernetes/" rel="tag">kubernetes</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/redis/" rel="tag">redis</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/cloud-native/" rel="tag">cloud-native</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/05/10/all-things-about-websocket/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: All things about WebSocket</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/05/14/redis-install/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Redis安装和部署</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/05\/11\/argocd\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装-argocd">安装 ArgoCD</a></li>
+    <li><a href="#安装-argo-cli">安装 Argo CLI</a></li>
+    <li><a href="#使用">使用</a>
+      <ul>
+        <li><a href="#使用-argo-cli">使用 Argo CLI</a></li>
+        <li><a href="#使用-argo-service">使用 Argo Service</a></li>
+        <li><a href="#使用argo-rollouts实现灰度发布">使用Argo Rollouts实现灰度发布</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

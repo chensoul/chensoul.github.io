@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]微服务设计模式 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]微服务设计模式">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/06/26/microservice-design-patterns/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]微服务设计模式">
+  <meta itemprop="description" content="基于微服务的应用程序的主要特征在 微服务、单体和 NoOps 中定义。它们是功能分解或领域驱动设计、定义良好的接口、明确发布的接口、单一责任原则和潜在的多语言。每项服务都是完全自主和全栈的。">
+  <meta itemprop="datePublished" content="2023-06-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-06-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="170">
+  <meta itemprop="keywords" content="Architecture,Tutorial,Translation,Html">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]微服务设计模式">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]微服务设计模式</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-06-26">2023-06-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/microservice/" rel="category">Microservice</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/architecture/" rel="tag">Architecture</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/translation/" rel="tag">Translation</a>, <a class="meta__link" href="/tags/html/" rel="tag">Html</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>基于微服务的应用程序的主要特征在 <a href="http://web.archive.org/web/20190705163602/http://blog.arungupta.me/microservices-monoliths-noops/" target="_blank">微服务、单体和 NoOps</a> 中定义。它们是功能分解或领域驱动设计、定义良好的接口、明确发布的接口、单一责任原则和潜在的多语言。每项服务都是完全自主和全栈的。</p>
+<p>因此，更改服务实现不会影响其他服务，因为它们使用定义良好的接口进行通信。这种应用程序有几个优点，但它不是 <a href="http://web.archive.org/web/20190705163602/http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html" target="_blank">免费的午餐</a>，需要在 NoOps 方面付出大量努力。</p>
+<p>但是假设您了解构建此类应用程序所需的工作或至少其中的一部分，并且愿意跳槽。你做什么工作？您构建此类应用程序的方法是什么？</p>
+<p>是否有任何关于这些微服务如何相互协作的设计模式？</p>
+<p>应用程序和团队的功能分解是构建成功的微服务架构的关键。</p>
+<p>这允许您实现松耦合（REST 接口）和高内聚（多个服务可以相互组合以定义更高级别的服务或应用程序）。</p>
+<p>应用程序的动词（例如 Checkout）或名词（Product）是实现现有应用程序分解的有效方法之一。</p>
+<p>例如，产品、目录和结帐可以是三个独立的微服务，然后相互协作以提供完整的购物车体验。</p>
+<p>功能分解提供了敏捷性、灵活性、可扩展性和其他能力，但业务目标仍然是创建应用程序。因此，一旦识别出不同的微服务，您如何组合它们以提供应用程序的功能？</p>
+<p>本博客将讨论一些关于如何将微服务组合在一起的推荐模式。</p>
+<h2 id="聚合微服务设计模式">聚合微服务设计模式</h2>
+<p>第一个，也可能是最常见的，是聚合器微服务设计模式。</p>
+<p>在其最简单的形式中，聚合器将是一个简单的网页，它调用多个服务来实现应用程序所需的功能。由于每个服务（服务 A、服务 B 和服务 C）都使用轻量级 REST 机制公开，因此网页可以检索数据并相应地处理/显示数据。如果需要某种处理，比如将业务逻辑应用于从各个服务接收的数据，那么您可能有一个 CDI bean 可以转换数据，以便网页可以显示它。</p>
+<p><img src="../../../static/images/microservices-aggregator.webp" alt="microservices-aggregator"></p>
+<p>聚合器的另一个选择是不需要显示，它只是一个更高级别的复合微服务，可以被其他服务使用。</p>
+<p>在这种情况下，聚合器只需从每个单独的微服务收集数据，对其应用业务逻辑，然后将其进一步发布为 REST 端点。然后可以由需要它的其他服务使用。</p>
+<p>这种设计模式遵循 DRY 原则。</p>
+<p>如果有多个服务需要访问服务 A、B 和 C，那么建议将该逻辑抽象为一个复合微服务，并将该逻辑聚合到一个服务中。在此级别进行抽象的一个优点是各个服务，即服务 A、B 和 C，并且可以独立发展，业务需求仍然由组合微服务提供。</p>
+<p>请注意，每个单独的微服务都有自己的（可选）缓存和数据库。如果聚合器是一个复合微服务，那么它也可能有自己的缓存和数据库层。</p>
+<p>聚合器也可以在 X 轴和 Z 轴上独立缩放。因此，如果它是一个网页，那么您可以启动额外的 Web 服务器，或者如果它是一个使用 Java EE 的复合微服务，那么您可以启动额外的 WildFly 实例来满足不断增长的需求。</p>
+<h2 id="代理微服务设计模式">代理微服务设计模式</h2>
+<p>代理微服务设计模式是聚合器的一种变体。在这种情况下，客户端不需要进行聚合，但可以根据业务需要调用不同的微服务。</p>
+<p><img src="../../../static/images/microservices-proxy.webp" alt="microservices-proxy"></p>
+<p>就像 Aggregator 一样，Proxy 也可以在 X 轴和 Z 轴上独立扩展。您可能喜欢这样做，因为每个单独的服务都不需要向消费者公开，而是应该通过一个界面。</p>
+<p>代理可能是一个哑代理，在这种情况下，它只是将请求委托给其中一项服务。或者，它可能是一个智能代理，在将响应提供给客户端之前应用一些数据转换。一个很好的例子就是可以将不同设备的表示层封装在智能代理中。</p>
+<h2 id="链式微服务设计模式">链式微服务设计模式</h2>
+<p>链式微服务设计模式对请求产生单一的综合响应。在这种情况下，来自客户端的请求由服务 A 接收，然后服务 A 与服务 B 通信，而服务 B 又可能与服务 C 通信。</p>
+<p>所有服务都可能使用同步 HTTP 请求/响应消息传递。</p>
+<p><img src="../../../static/images/microservices-chain.webp" alt="microservices-chain"></p>
+<p>要记住的关键部分是客户端被阻塞，直到完成请求/响应链，即服务&lt;-&gt;服务 B 和服务 B&lt;-&gt;服务 C，完成。从服务 B 到服务 C 的请求可能看起来与从服务 A 到服务 B 的请求完全不同。</p>
+<p>同样，服务 B 对服务 A 的响应可能看起来与服务 C 对服务 B 的响应完全不同。无论如何，这就是不同服务增加其业务价值的全部要点。</p>
+<p>这里要理解的另一个重要方面是不要让链条太长。这一点很重要，因为链的同步特性在客户端看起来像是一个漫长的等待，特别是如果它是一个等待显示响应的网页。</p>
+<p>这个阻塞请求/响应有变通方法，并在后续设计模式中讨论。</p>
+<p>具有单个微服务的链称为单例链。这可能允许链在以后扩展。</p>
+<h2 id="分支微服务设计模式">分支微服务设计模式</h2>
+<p>分支微服务设计模式扩展了聚合器设计模式，并允许同时处理来自两个可能互斥的微服务链的响应。此模式还可用于根据业务需求调用不同的链或单个链。</p>
+<p><img src="../../../static/images/microservices-branch.webp" alt="microservices-branch"></p>
+<p>服务 A（网页或复合微服务）可以同时调用两个不同的链，在这种情况下，这类似于聚合器设计模式。或者，服务 A 可以根据从客户端收到的请求仅调用一个链。</p>
+<p>这可以使用 JAX-RS 或 Camel 端点的路由进行配置，并且需要动态配置。</p>
+<h2 id="共享数据微服务设计模式">共享数据微服务设计模式</h2>
+<p>微服务的设计原则之一是自治。这意味着该服务是全栈式的，并且可以控制所有组件——UI、中间件、持久性、事务。这允许服务是多语言的，并使用正确的工具来完成正确的工作。</p>
+<p>例如，如果可以使用 NoSQL 数据存储而不是将数据塞入 SQL 数据库中更合适的话。</p>
+<p>然而，一个典型的问题，尤其是在从现有的单体应用程序重构时，是数据库规范化，这样每个微服务都有正确数量的数据——仅此而已。</p>
+<p>即使在单体应用程序中仅使用 SQL 数据库，对数据库进行非规范化也会导致数据重复，并可能导致不一致。在过渡阶段，一些应用程序可能会受益于共享数据微服务设计模式。</p>
+<p>在这种设计模式中，一些微服务（可能在一个链中）可以共享缓存和数据库存储。</p>
+<p>这只有在两种服务之间存在强耦合时才有意义。有些人可能认为这是一种反模式，但在某些情况下业务需求可能需要遵循这一点。对于基于微服务设计的全新应用程序，这肯定是一种反模式。</p>
+<p><img src="../../../static/images/microservices-branch-shared-data.webp" alt="microservices-branch-shared-data"></p>
+<p>这也可以看作是一个过渡阶段，直到微服务过渡到完全自主。</p>
+<h2 id="异步消息微服务设计模式">异步消息微服务设计模式</h2>
+<p>虽然 REST 设计模式非常普遍且易于理解，但它具有同步和阻塞的局限性。</p>
+<p>可以实现异步，但这是以特定于应用程序的方式完成的。因此，一些微服务架构可能会选择使用消息队列而不是 REST 请求/响应。</p>
+<p><img src="../../../static/images/microservices-async-messaging.webp" alt="microservices-async-messaging"></p>
+<p>在这种设计模式中，服务 A 可以同步调用服务 C，然后服务 C 使用共享消息队列与服务 B 和 D 异步通信。</p>
+<p>服务 A -&gt; 服务 C 通信可能是异步的，可能使用 WebSockets，以实现所需的可伸缩性。</p>
+<p>可以使用 REST 请求/响应和发布/订阅消息传递的组合来完成业务需求。</p>
+<p><a href="http://web.archive.org/web/20190705163602/https://www.voxxed.com/blog/2015/04/coupling-versus-autonomy-in-microservices/" target="_blank">Coupling vs Autonomy in Microservices</a> 是一本关于为您的微服务选择哪种消息传递模式的好读物。</p>
+<p>希望您发现这些设计模式很有用。</p>
+<p>您使用什么微服务设计模式？</p>
+<p>善于交际，分享！</p>
+<p>原文链接：<a href="http://web.archive.org/web/20190705163602/http://blog.arungupta.me/microservice-design-patterns/" target="_blank">http://web.archive.org/web/20190705163602/http://blog.arungupta.me/microservice-design-patterns/</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/25/python-modules-packages/" target="_blank" title="[译]Python模块和包-简介">[译]Python模块和包-简介</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/25/python-function/" target="_blank" title="Python学习5：函数">Python学习5：函数</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/14/python-flow-control/" target="_blank" title="Python学习4：流程控制">Python学习4：流程控制</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/01/what-is-pip/" target="_blank" title="[译]使用 Python 的 pip 管理项目的依赖关系">[译]使用 Python 的 pip 管理项目的依赖关系</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/09/python-install-build-publish-run/" target="_blank" title="Python安装、构建、发布、下载和运行">Python安装、构建、发布、下载和运行</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/25/developing-with-bottle/" target="_blank" title="[译]用 Bottle 开发">[译]用 Bottle 开发</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/architecture/" rel="tag">architecture</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/translation/" rel="tag">translation</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/html/" rel="tag">html</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/06/25/python-modules-packages/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]Python模块和包-简介</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/06/28/weekly_review_25/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 周报-25｜端午安康</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/06\/26\/microservice-design-patterns\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#聚合微服务设计模式">聚合微服务设计模式</a></li>
+    <li><a href="#代理微服务设计模式">代理微服务设计模式</a></li>
+    <li><a href="#链式微服务设计模式">链式微服务设计模式</a></li>
+    <li><a href="#分支微服务设计模式">分支微服务设计模式</a></li>
+    <li><a href="#共享数据微服务设计模式">共享数据微服务设计模式</a></li>
+    <li><a href="#异步消息微服务设计模式">异步消息微服务设计模式</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

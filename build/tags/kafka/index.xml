@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kafka on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/kafka/</link>
+    <description>Recent content in Kafka on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 02 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ThingsBoard HTTP Transport 实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</link>
+      <pubDate>Wed, 02 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</guid>
+      <description>&lt;p&gt;本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP&#xA;自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Canal原理、安装和测试</title>
+      <link>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</guid>
+      <description>&lt;p&gt;Canal 是阿里巴巴开源的一款分布式增量数据同步工具，主要用于基于 MySQL 数据库的增量日志 Binlog 解析，提供增量数据的订阅和消费。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>什么是限流</title>
+      <link>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</link>
+      <pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</guid>
+      <description>&lt;p&gt;在互联网领域，限流是指对进入系统的请求数量或频率进行控制的一种机制，以防止系统因流量暴增而过载，从而保障系统的稳定性和可用性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kafka 安装和快速上手</title>
+      <link>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-install-and-quickstart/</guid>
+      <description>&lt;h2 id=&#34;下载-kafka&#34;&gt;下载 Kafka&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://kafka.apache.org/downloads&#34; target=&#34;_blank&#34;&gt;下载&lt;/a&gt; 最新的版本&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kafka 基础知识</title>
+      <link>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/10/17/kafka-fundamental/</guid>
+      <description>&lt;p&gt;Kafka 是一个分布式流式处理平台。&lt;/p&gt;&#xA;&lt;p&gt;流平台具有三个关键功能：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS介绍 – Java消息服务</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</guid>
+      <description>&lt;p&gt;JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。这是一个 JMS 介绍教程，为您提供消息传递和 JMS 的简要概述。您将了解使用 JMS 的优势以及 JMS 中的不同消息传递模型。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最好？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;将消息从一个组件获取到另一个组件是微服务架构中最重要的部分之一。每个服务必须能够与任何其他服务异步、可靠且大规模地通信。&lt;/p&gt;&#xA;&lt;p&gt;这就是消息代理的用武之地。消息代理（例如 Apache Kafka、RabbitMQ 和&lt;a href=&#34;https://ably.com/topic/aws-sns-vs-sqs&#34; target=&#34;_blank&#34;&gt;AWS SNS/SQS&lt;/a&gt;）为您提供一个通用接口和一组保证，而不是手动协调可能数千个微服务之间的通信。这简化了集成并更容易推理您的系统。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何通过 WebSocket 将 Kafka 消息流式传输到面向互联网的客户端</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websockets-kafka/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websockets-kafka/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websockets-kafka&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websockets-kafka&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Apache Kafka 是目前最强大的异步消息传递技术之一。 Kafka 由 Jay Kreps、Jun Rao 和 Neha Narkhede 等团队于 2010 年在 LinkedIn 设计，并于 2011 年初开源。如今，该工具被众多公司（包括科技巨头，例如 Slack、Airbnb 或 Netflix 使用）为其实时数据流管道提供支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard TBMQ本地和通过Docker运行</title>
+      <link>https://blog.chensoul.cc/posts/2024/04/17/thingsboard-tbmq-local-docker-run/</link>
+      <pubDate>Wed, 17 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/04/17/thingsboard-tbmq-local-docker-run/</guid>
+      <description>&lt;h2 id=&#34;docker-compose-运行&#34;&gt;docker-compose 运行&lt;/h2&gt;&#xA;&lt;p&gt;参考：&lt;a href=&#34;https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/&#34; target=&#34;_blank&#34;&gt;https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-16｜Redis安装</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/16/til/</link>
+      <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/16/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;1、&lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt; 添加分布式锁、rabbitmq、kafka、分库分表等示例代码&#xA;2、foodie-cloud 添加登录部分代码&#xA;3、整理 Redis 安装文档&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]《Grokking the System Design Interview》系统设计主模板</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/16/system-design-master-template/</link>
+      <pubDate>Thu, 16 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/16/system-design-master-template/</guid>
+      <description>&lt;p&gt;这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 &lt;a href=&#34;https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1&#34; target=&#34;_blank&#34;&gt;System Design Master Template&lt;/a&gt; 这篇章节。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]《分布式系统：为了乐趣和利益》4.复制</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/10/distributed-systems-04/</link>
+      <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/10/distributed-systems-04/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;《分布式系统：为了乐趣和利益》是一本广受欢迎的资源，用于理解和学习分布式系统。该书由作者 Mikito Takada 撰写，介绍了构建分布式系统的基本概念、原则和挑战。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot3和Spring6中的新特性</title>
+      <link>https://blog.chensoul.cc/posts/2023/10/13/new-features-in-spring-boot-3-and-spring-6/</link>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/10/13/new-features-in-spring-boot-3-and-spring-6/</guid>
+      <description>&lt;p&gt;Spring Boot 3.0 于 2022 年 11 月正式发布，包含一些新功能和改进。这是继大约 4.5 年前发布 Spring Boot 2.0 后 Spring Boot 的第一个主要版本。它也是第一个支持 Spring Framework 6.0 的 Spring Boot GA 版本。作为开发人员，我们需要了解这些更新，才能顺利使用 Spring Boot。毫无疑问，新版本中最大的转变之一是放弃了对旧版本 Java 的支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Build Robust Continuous Integration With Docker and Friends</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/22/docker-continuous-integration/</link>
+      <pubDate>Mon, 22 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/22/docker-continuous-integration/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp&#34; alt=&#34;Build Robust Continuous Integration With Docker and Friends&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>JSR 166规范</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/18/jsr-166/</link>
+      <pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/18/jsr-166/</guid>
+      <description>&lt;h2 id=&#34;jsr-介绍&#34;&gt;JSR 介绍&lt;/h2&gt;&#xA;&lt;p&gt;JSR，全称 Java Specification Requests， 即 Java 规范提案， 主要是用于向 JCP(Java Community Process) 提出新增标准化技术规范的正式请求。每次 JAVA 版本更新都会有对应的 JSR 更新，比如在 Java 8 版本中，其新特性 Lambda 表达式对应的是 &lt;a href=&#34;http://jcp.org/en/jsr/detail?id=335&#34; target=&#34;_blank&#34;&gt;JSR 335&lt;/a&gt;，新的日期和时间 API 对应的是 &lt;a href=&#34;http://jcp.org/en/jsr/detail?id=310&#34; target=&#34;_blank&#34;&gt;JSR 310&lt;/a&gt;。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>周报-24｜如果没有疼痛 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="周报-24｜如果没有疼痛">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/06/21/weekly_review_24/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="周报-24｜如果没有疼痛">
+  <meta itemprop="description" content="前言 本篇是对 2023-06-12 到 2023-06-18 这周生活的记录与思考。首发在我的个人 博客，你可以移步了解更多或者给我留言。">
+  <meta itemprop="datePublished" content="2023-06-21T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-06-21T00:00:00+00:00">
+  <meta itemprop="wordCount" content="134">
+  <meta itemprop="keywords" content="Weekly-Report,Learning,Personal">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="周报-24｜如果没有疼痛">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">周报-24｜如果没有疼痛</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-06-21">2023-06-21</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/review/" rel="category">Review</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/weekly-report/" rel="tag">Weekly-Report</a>, <a class="meta__link" href="/tags/learning/" rel="tag">Learning</a>, <a class="meta__link" href="/tags/personal/" rel="tag">Personal</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="前言">前言</h2>
+<p>本篇是对 <code>2023-06-12</code> 到 <code>2023-06-18</code> 这周生活的记录与思考。首发在我的个人 <a href="https://blog.chensoul.cc/" target="_blank">博客</a>，你可以移步了解更多或者给我留言。</p>
+<blockquote>
+<p>读书、健身、投资、帮朋友、陪家人。</p></blockquote>
+<h2 id="读书">读书</h2>
+<p>本周尚未读书。</p>
+<h2 id="健身">健身</h2>
+<blockquote>
+<p>我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多。2 年里我跑过 2 个省份 2 个城市。更多跑步数据在我的 <a href="https://run.chensoul.cc/" target="_blank">跑步</a> 主页。</p></blockquote>
+<p>本周尚未跑步。</p>
+<h2 id="理财">理财</h2>
+<p>这周总计支出 1264 元，明细如下：</p>
+<ul>
+<li>
+<p>6 月 18 日：338 元</p>
+</li>
+<li>
+<p>6 月 17 日：508 元</p>
+</li>
+<li>
+<p>6 月 16 日：262 元</p>
+</li>
+<li>
+<p>6 月 15 日：27 元</p>
+</li>
+<li>
+<p>6 月 14 日：41 元</p>
+</li>
+<li>
+<p>6 月 13 日：40 元</p>
+</li>
+<li>
+<p>6 月 12 日：48 元</p>
+</li>
+</ul>
+<h2 id="陪家人">陪家人</h2>
+<p>本周因为老爸出院后需要人照料，所以我每天早晚往返于家（阳逻）和公司（光谷）之间。每天早上五点多就醒了，然后煮粥、招呼老爸吃饭喝药，六点半出门开车走三环去上班。这周请婶娘白天帮忙照顾老爸，主要是中午和晚上老爸要吃饭和喝药。我早上出门晚、晚上下班回来再照顾老爸。老爸胃溃疡，需要修养一个多月，另外最近痛风发作，身体多处关节疼痛。因为吃西药和打针都会伤胃，所以只能吃中药。中药见效慢，需要时间。而婶娘身上也有病，不能长期照顾，如果老爸这周痛风不能恢复，那下周只能老婆放下手上工作回来照顾老爸。老婆工作也是非常忙碌，也不能照顾太久，估计也就一个星期。如果过了一个星期，老爸还是不能恢复、不能生活自理，真不知道该怎么办了！很久之前就想到老爸可能会成为我的负担，影响我的工作，没有想到会来的这么快。有时候想抱怨，但抱怨有什么用？面对眼前的这一切，只能迎难面对。造成眼前这样的现状，我自己有一部分责任。都只怪我平时没有关心老爸，没有叮嘱老爸不要喝酒，在老爸身边陪伴的时间太少了。</p>
+<p>周六去给岳父岳母送端午节，周日回去看望癌症转移到全身的六舅。六舅是乳腺癌，在经历了去年新冠疫情之后，癌细胞转移到肺部。年后没有引起足够的重视，直到痛的不行的时候才去医院做手术，错过了最佳治疗时机。上一次见到六舅还是四月份的时候，我开车带老婆一起回去看望老爸。那时候六舅还在菜园里面朝黄土背朝天，六舅给了我一些莴笋、包菜，老婆给六舅 3 百块钱，六舅硬是不要，拉扯了半天。走之前，六舅还叫何舅塞了 20 多个鸡蛋给我们。这次，再见六舅，六舅躺在床上全身疼痛，只能吃些流食，意识模糊，知道谁来看望她，却不能说话。每次开车上下班的时候，想起六舅这样子，心里就很难受，眼泪直打转。面对生老病死，成年人的崩溃只在一瞬间。昨日还在你面前混蹦乱跳的人，明天可能就不在了。为了不留遗憾，要善待身边的每一位亲人，常回家看看。感谢老婆总是提醒我要回家看望老爸，正是因为这个，每次回家看望老爸的时候，我都会去看下六舅。</p>
+<p>如果没有疼痛，老爸和六舅就不会痛苦了，身边的人也就不会心痛。</p>
+<h2 id="工作">工作</h2>
+<p>最近在学习的内容清单：</p>
+<ul>
+<li><a href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/tree/dev" target="_blank">Effective Java（第 3 版）</a></li>
+<li><a href="https://java-design-patterns.com/zh/" target="_blank">Java Design Patterns (中文)</a></li>
+<li><a href="https://realpython.com/" target="_blank">Real Python</a></li>
+</ul>
+<p>本周完成四篇博客：</p>
+<ul>
+<li>
+<p><a href="/posts/2023/06/21/modern-css-explained-for-dinosaurs/">[译]为恐龙解释现代 CSS</a></p>
+</li>
+<li>
+<p><a href="/posts/2023/06/20/modern-html-explained-for-dinosaurs/">[译]为恐龙解释现代 HTML</a></p>
+</li>
+<li>
+<p><a href="/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/">[译]为恐龙解释现代 JavaScript</a></p>
+</li>
+<li>
+<p><a href="/posts/2023/06/15/minimize-the-accessibility-of-classes-and-members/">《Effective Java 3》笔记 15：尽量减少类和成员的可访问性</a></p>
+</li>
+</ul>
+<h2 id="本周分享">本周分享</h2>
+<p>大部分有意思的内容会分享在 『<a href="https://t.me/ichensoul" target="_blank">ChenSoul Share</a>』Telegram 频道或者我的 <a href="https://memos.chensoul.cc/" target="_blank">Memos</a> 中。我写了一个 Python 脚本从 Memos 读取最近一周带有 <code>#memos</code> 标签的记录，分享到这里。</p>
+<ul>
+<li>📌<code>2023-06-14</code> 现代 JavaScript 教程，以最新的 JavaScript 标准为基准。通过简单但足够详细的内容，为你讲解从基础到高阶的 JavaScript 相关知识。 <a href="https://zh.javascript.info/" target="_blank">https://zh.javascript.info/</a> <code>#memos</code> <code>#javascript</code></li>
+<li>📌<code>2023-06-14</code> 推荐几个远程办公招聘网站，国外的 <a href="https://nomadlist.com/" target="_blank">https://nomadlist.com/</a> <a href="https://remotive.com/" target="_blank">https://remotive.com/</a> <a href="https://remoteok.com/" target="_blank">https://remoteok.com/</a> <a href="https://www.huntsbot.com/" target="_blank">https://www.huntsbot.com/</a> <a href="https://www.freelancer.cn/jobs" target="_blank">https://www.freelancer.cn/jobs</a> <code>#memos</code></li>
+<li>📌<code>2023-06-14</code> 拒绝 996，谈谈远程办公一年多的感受 <a href="https://www.v2ex.com/t/947355" target="_blank">https://www.v2ex.com/t/947355</a> <code>#memos</code></li>
+<li>📌<code>2023-06-14</code> 新手入门 Python 该如何学，学什么，学多久？看完这些你就明白了<code>#memos</code> <code>#python</code> <a href="https://blog.csdn.net/libaiup/article/details/131083707" target="_blank">https://blog.csdn.net/libaiup/article/details/131083707</a></li>
+</ul>
+<p>以上。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/14/weekly_review_23/" target="_blank" title="周报-23｜读书、健身、定投、帮朋友、陪家人">周报-23｜读书、健身、定投、帮朋友、陪家人</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/09/weekly_review_22/" target="_blank" title="周报-22｜微信读书笔记助手">周报-22｜微信读书笔记助手</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/31/weekly_review_21/" target="_blank" title="周报-21｜Python之禅、产品经理被优化、端午节送节">周报-21｜Python之禅、产品经理被优化、端午节送节</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/25/weekly_review_20/" target="_blank" title="周报-20｜自动生成每日早报、周末团建">周报-20｜自动生成每日早报、周末团建</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/18/weekly_review_19/" target="_blank" title="周报-19｜武功山看日出、Python初学建议">周报-19｜武功山看日出、Python初学建议</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/05/10/weekly_review_18/" target="_blank" title="周报-18｜导出豆瓣数据、Effective Java 3第二章总结">周报-18｜导出豆瓣数据、Effective Java 3第二章总结</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/weekly-report/" rel="tag">weekly-report</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/learning/" rel="tag">learning</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/personal/" rel="tag">personal</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/06/20/modern-html-explained-for-dinosaurs/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]为恐龙解释现代HTML</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/06/21/modern-css-explained-for-dinosaurs/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]为恐龙解释现代CSS</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/06\/21\/weekly_review_24\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#读书">读书</a></li>
+    <li><a href="#健身">健身</a></li>
+    <li><a href="#理财">理财</a></li>
+    <li><a href="#陪家人">陪家人</a></li>
+    <li><a href="#工作">工作</a></li>
+    <li><a href="#本周分享">本周分享</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

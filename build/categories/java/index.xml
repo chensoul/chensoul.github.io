@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/categories/java/</link>
+    <description>Recent content in Java on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 28 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitHub中配置Renovate自动依赖更新和自动合并PR</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/28/config-renovate-in-github/</link>
+      <pubDate>Sun, 28 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/28/config-renovate-in-github/</guid>
+      <description>&lt;p&gt;本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring Boot异常处理思路</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/24/spring-exception/</link>
+      <pubDate>Thu, 24 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/24/spring-exception/</guid>
+      <description>&lt;p&gt;本文档描述了基于 Spring Boot 的异常处理设计思路，旨在构建一个统一、可扩展、支持国际化的异常处理体系。通过合理的异常分类、统一的响应格式和完善的国际化支持，为前端提供友好的错误信息，同时便于后端进行问题定位和监控。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard接口设计</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/24/thingsboard-api/</link>
+      <pubDate>Thu, 24 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/24/thingsboard-api/</guid>
+      <description>&lt;p&gt;本文档整理了ThingsBoard平台的各种协议接口设计，作为IoT平台开发的参考。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring 国际化实现</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/17/spring-i18n/</link>
+      <pubDate>Thu, 17 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/17/spring-i18n/</guid>
+      <description>&lt;h2 id=&#34;-一设计背景&#34;&gt;📜 一、设计背景&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11-国际化需求的产生&#34;&gt;1.1 国际化需求的产生&lt;/h3&gt;&#xA;&lt;p&gt;随着软件应用的全球化发展，企业级应用需要支持多种语言和地区设置。Spring Framework 作为 Java 企业级开发的核心框架，必须提供完善的国际化（i18n）支持来满足以下需求：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard HTTP Transport 实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</link>
+      <pubDate>Wed, 02 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/02/thingsboard-http-transport/</guid>
+      <description>&lt;p&gt;本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP&#xA;自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thingsboard源码中的OAuth2登录实现</title>
+      <link>https://blog.chensoul.cc/posts/2025/06/06/oauth2-client-login-in-thingsboard/</link>
+      <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/06/06/oauth2-client-login-in-thingsboard/</guid>
+      <description>&lt;h2 id=&#34;thingsboard-启用-oauth2-功能&#34;&gt;Thingsboard 启用 OAuth2 功能&lt;/h2&gt;&#xA;&lt;p&gt;使用 &lt;a href=&#34;mailto:sysadmin@thingsboard.org&#34;&gt;sysadmin@thingsboard.org&lt;/a&gt; / sysadmin 账号登录 Thingsboard 系统之后，在安全 -&amp;gt; OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thingsboard源码中的代码片段</title>
+      <link>https://blog.chensoul.cc/posts/2025/04/30/codes-in-thingsboard/</link>
+      <pubDate>Wed, 30 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/04/30/codes-in-thingsboard/</guid>
+      <description>&lt;p&gt;Uuids&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UUID uuid &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Uuids.timeBased&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Uuids.unixTimestamp&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;uuid&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UUID NULL_UUID &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Uuids.startOf&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;UUIDConverter&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Canal原理、安装和测试</title>
+      <link>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/03/31/canal-install-test/</guid>
+      <description>&lt;p&gt;Canal 是阿里巴巴开源的一款分布式增量数据同步工具，主要用于基于 MySQL 数据库的增量日志 Binlog 解析，提供增量数据的订阅和消费。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>常见分布式 ID 解决方案</title>
+      <link>https://blog.chensoul.cc/posts/2025/03/28/id-generator/</link>
+      <pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/03/28/id-generator/</guid>
+      <description>&lt;p&gt;分布式 ID 的生成是分布式系统中的一个核心问题，需要确保生成的 ID 全局唯一、性能高效，并且能够适应高并发和大规模的场景。以下是一些常见的分布式 ID 生成方案：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何实现榜单 top N 统计</title>
+      <link>https://blog.chensoul.cc/posts/2025/02/17/top-n-using-redis/</link>
+      <pubDate>Mon, 17 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/02/17/top-n-using-redis/</guid>
+      <description>&lt;p&gt;以下是一个基于本地缓存 + Redis ZSet + 定时任务的榜单方案，适用于高并发场景：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>区分偶发性超时和频繁超时的重试策略</title>
+      <link>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</link>
+      <pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/02/14/retry-for-timeout/</guid>
+      <description>&lt;p&gt;在实际项目中，区分偶发性超时和频繁超时的重试策略非常重要。偶发性超时可能是由于网络抖动或临时负载过高引起的，适合立即重试；而频繁超时则可能是系统过载或下游服务不可用，此时应避免重试，以免加剧问题。&lt;/p&gt;&#xA;&lt;p&gt;在实际面试的过程中，经常会遇到类似的面试题目，这时候可以这样回答：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;在处理大量请求时，我们经常会遇到超时的情况。为了合理控制重试行为，避免所谓的“重试风暴”，我设计了一个基于时间窗口的算法。在这个算法中，我们维护了一个滑动窗口，窗口内记录了每个请求的时间戳以及该请求是否超时。每当一个请求超时后，我们会统计窗口内超时的请求数量。如果超时请求的数量超过了设定的阈值，我们就认为当前系统压力较大，不适合进行重试；否则，我们认为可以安全地进行重试。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>什么是限流</title>
+      <link>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</link>
+      <pubDate>Fri, 14 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/02/14/rate-limit/</guid>
+      <description>&lt;p&gt;在互联网领域，限流是指对进入系统的请求数量或频率进行控制的一种机制，以防止系统因流量暴增而过载，从而保障系统的稳定性和可用性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard源码中的Github Actions</title>
+      <link>https://blog.chensoul.cc/posts/2024/12/03/github-actions-in-thingsboard/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/12/03/github-actions-in-thingsboard/</guid>
+      <description>&lt;p&gt;ThingsBoard 源码地址：&lt;a href=&#34;https://github.com/thingsboard/thingsboard&#34; target=&#34;_blank&#34;&gt;https://github.com/thingsboard/thingsboard&lt;/a&gt;，其 .github/workflows 目录下面有两个文件：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard源码中的Security</title>
+      <link>https://blog.chensoul.cc/posts/2024/12/03/security-in-thingsboard/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/12/03/security-in-thingsboard/</guid>
+      <description>&lt;p&gt;ThingsBoard 源码地址：&lt;a href=&#34;https://github.com/thingsboard/thingsboard&#34; target=&#34;_blank&#34;&gt;https://github.com/thingsboard/thingsboard&lt;/a&gt;，启动成功之后，使用系统管理员： &lt;a href=&#34;mailto:sysadmin@thingsboard.org&#34;&gt;sysadmin@thingsboard.org&lt;/a&gt; / sysadmin 进行登陆。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-11-14-Quarkus 快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/11/14/quarkus-quick-start/</link>
+      <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/11/14/quarkus-quick-start/</guid>
+      <description>&lt;h2 id=&#34;使用--quarkus-cli-创建项目&#34;&gt;使用  Quarkus CLI 创建项目&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;使用 sdk 安装&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sdk install quarkus&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;创建应用&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;quarkus create &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cd code-with-quarkus&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;出现异常：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]从JUnit4迁移到JUnit5：权威指南</title>
+      <link>https://blog.chensoul.cc/posts/2024/11/07/junit-5-migration/</link>
+      <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/11/07/junit-5-migration/</guid>
+      <description>&lt;p&gt;在本文中，我们将了解从 JUnit 4 迁移到 JUnit 5 所需的步骤。我们将了解如何运行新版本的现有测试，以及迁移代码需要进行哪些更改。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ActiveMQ源码-BrokerService和PersistenceAdapter</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/27/activemq-source-code-broker-service/</link>
+      <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/27/activemq-source-code-broker-service/</guid>
+      <description>&lt;p&gt;activemq-broker 模块 test/java 目录下有个 IDERunner 类：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard源码编译和Idea运行</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/27/thingsboard-code-source-compile/</link>
+      <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/27/thingsboard-code-source-compile/</guid>
+      <description>&lt;p&gt;ThingsBoard 源码地址：&lt;a href=&#34;https://github.com/thingsboard/thingsboard&#34; target=&#34;_blank&#34;&gt;https://github.com/thingsboard/thingsboard&lt;/a&gt;，从 &lt;a href=&#34;https://github.com/thingsboard/thingsboard/releases/tag/v3.7&#34; target=&#34;_blank&#34;&gt;3.7&lt;/a&gt; 版本之后，要求 JDK17。官方提供了源码编译的文档：&lt;a href=&#34;https://thingsboard.io/docs/user-guide/install/building-from-source/&#34; target=&#34;_blank&#34;&gt;Building from sources&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ActiveMQ源码本地调试运行</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/09/debug-activemq-source-code/</link>
+      <pubDate>Fri, 09 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/09/debug-activemq-source-code/</guid>
+      <description>&lt;h2 id=&#34;源码构建&#34;&gt;源码构建&lt;/h2&gt;&#xA;&lt;p&gt;1、从 &lt;a href=&#34;https://github.com/apache/activemq&#34; target=&#34;_blank&#34;&gt;https://github.com/apache/activemq&lt;/a&gt; 下载源码&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Github Action 发布 Jar 到 Maven 中央仓库</title>
+      <link>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</link>
+      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/08/01/publishing-a-jar-to-maven-repository-with-github-action/</guid>
+      <description>&lt;p&gt;作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 2.0 的十个好处意味着可以减少代码编写量</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/24/jms20-means-less-code/</link>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/24/jms20-means-less-code/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://javaee.github.io/jms-spec/pages/JMS20MeansLessCode&#34; target=&#34;_blank&#34;&gt;Ten ways in which JMS 2.0 means writing less code&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 2.0 中的新增功能</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/24/what-is-new-in-jms-2-0/</link>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/24/what-is-new-in-jms-2-0/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://hasithah.medium.com/what-is-new-in-jms-2-0-821266fc1bf0&#34; target=&#34;_blank&#34;&gt;What is new in JMS 2.0&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 2.0 中的新增功能（第二部分）- 新的消息传送功能</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/24/jms20/</link>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/24/jms20/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.oracle.com/technical-resources/articles/java/jms2messaging.html&#34; target=&#34;_blank&#34;&gt;https://www.oracle.com/technical-resources/articles/java/jms2messaging.html&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;作者：Nigel Deakin&lt;/em&gt;&#xA;出版日期：2013 年 5 月&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 2.0 中的新增功能（第一部分）- 易于使用</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/24/jms20/</link>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/24/jms20/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.oracle.com/technical-resources/articles/java/jms20.html&#34; target=&#34;_blank&#34;&gt;https://www.oracle.com/technical-resources/articles/java/jms20.html&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;作者：Nigel Deakin&lt;/em&gt;&#xA;出版日期：2013 年 5 月&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 点对点消息传递的实际应用</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-point-to-point-messaging-in-action/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-point-to-point-messaging-in-action/</guid>
+      <description>&lt;p&gt;点对点系统使用队列进行消息传递。客户端将消息发送到特定队列，特定订阅者监听或接收来自该队列的消息。在 JMS 点对点消息传递系统中，队列用于处理单个发送者和单个消费者。确保您已经阅读了有关&lt;a href=&#34;https://jstobigdata.com/jms/jms-message-model/&#34; target=&#34;_blank&#34;&gt;JMS 消息模型&lt;/a&gt;以及&lt;a href=&#34;https://jstobigdata.com/jms/send-and-receive-message-in-jms/&#34; target=&#34;_blank&#34;&gt;如何在 JMS 中发送和接收消息的&lt;/a&gt;先前教程。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 发布-订阅消息模型</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-pub-sub-messaging-model/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-pub-sub-messaging-model/</guid>
+      <description>&lt;p&gt;在本文中，您将了解 JMS 发布-订阅 (publish-subscribe) 消息传递模型。正如您在&lt;a href=&#34;https://jstobigdata.com/jms/jms-introduction-java-message-service/&#34; target=&#34;_blank&#34;&gt;JMS 简介文章&lt;/a&gt;中所读到的，在发布/订阅模型中，客户端通过称为主题的中介将消息发送给多个接收者。发送者通常称为发布者，接收者称为订阅者。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 事务的实际应用</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-transactions-in-action/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-transactions-in-action/</guid>
+      <description>&lt;p&gt;在本文中，您将了解如何选择性地使用 JMS 事务。在 JMS 中，您可以选择控制一个会话的原子操作。每个会话都支持一系列事务。每个事务将一组生成或使用的消息分组为一个原子工作单元。确保您已经理解了&lt;a href=&#34;https://jstobigdata.com/jms/guaranteed-delivery-using-jms-message-acknowledgement/&#34; target=&#34;_blank&#34;&gt;JMS 中的消息确认&lt;/a&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 消息模型</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-message-model/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-message-model/</guid>
+      <description>&lt;p&gt;消息是 JMS 的核心，无论是事件还是业务数据。消息由标头、自定义属性和正文组成。这是您将在 JMS 消息模型（JMS 消息剖析）中学习的内容。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 消息选择器在过滤消息中的应用</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-message-selectors-in-action-to-filter-messages/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-message-selectors-in-action-to-filter-messages/</guid>
+      <description>&lt;p&gt;发送给接收方的消息通常需要根据某些标准进行过滤。JMS 提供消息选择器，允许 JMS 消费者根据消息头指定其感兴趣的消息。在本文中，您将学习使用 JMS 消息选择器来过滤消息。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS 消息优先级</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-prioritize-messages/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-prioritize-messages/</guid>
+      <description>&lt;p&gt;我们将通过示例详细讨论 JMS 消息优先级。每条消息的标头字段代表其优先级。我在消息模型教程&lt;code&gt;JMSPriority&lt;/code&gt;中讨论过消息优先级。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]JMS介绍 – Java消息服务</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/jms-introduction-java-message-service/</guid>
+      <description>&lt;p&gt;JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。这是一个 JMS 介绍教程，为您提供消息传递和 JMS 的简要概述。您将了解使用 JMS 的优势以及 JMS 中的不同消息传递模型。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用 JMS 消息确认保证传送</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/guaranteed-delivery-using-jms-message-acknowledgement/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/guaranteed-delivery-using-jms-message-acknowledgement/</guid>
+      <description>&lt;p&gt;JMS 通过 JMS 消息确认（确认模式）确保消息传递的可靠性。如果会话已进行事务处理，则该&lt;code&gt;commit()&lt;/code&gt;方法会自动处理消息确认。否则，该方法将处理恢复&lt;code&gt;rollback()&lt;/code&gt;。在本文中，我们将假设会话未进行事务处理。这是一个高级主题，请确保您对 JMS 有基本的了解。如果您是 JMS 新手，可以参考使用 JMS&lt;a href=&#34;https://jstobigdata.com/jms/send-and-receive-message-in-jms/&#34; target=&#34;_blank&#34;&gt;发送和接收消息。&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]完整的 JMS 2.0 教程</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/a-complete-jms-2-0-tutorial/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/a-complete-jms-2-0-tutorial/</guid>
+      <description>&lt;p&gt;JMS 代表 Java 消息服务，它是 Java 中访问消息中间件服务器的标准。消息传递是在各种应用程序或服务之间交换业务数据的过程。这是&lt;strong&gt;一个完整的 JMS 2.0 教程，&lt;/strong&gt; 其中包含大量代码示例。完整的代码示例可在 GitHub 上找到，请下载并运行示例。本教程使用 Glassfish 开源服务器作为 JMS 提供程序的示例。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]为 JMS 安装和设置 Glassfish</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/install-and-setup-glassfish-for-jms/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/install-and-setup-glassfish-for-jms/</guid>
+      <description>&lt;p&gt;在本文中，我们将为 JMS 2.0 设置 Glassfish，创建一个 Java 项目并添加必要的依赖项。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]在 JMS 中发送和接收消息</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/23/send-and-receive-message-in-jms/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/23/send-and-receive-message-in-jms/</guid>
+      <description>&lt;p&gt;您将了解 JMS 架构，学习如何在 JMS 中发送和接收消息。我将介绍管理对象、JMS 1.1 API 和 JMS 2.0 API。我们还将看到与 JMS 1.1 API 相比，JMS 2.0 API 的使用有多么简单。在继续学习本课程之前，请确保您已完成 JMS 设置。如果您是初学者，请确保您已了解&lt;a href=&#34;https://jstobigdata.com/jms/jms-introduction-java-message-service/&#34; target=&#34;_blank&#34;&gt;JMS 的基础知识&lt;/a&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>将 Maven 站点发布到 GitHub Pages</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/18/publishing-a-maven-site-to-github-pages/</guid>
+      <description>&lt;p&gt;本文源代码：&lt;a href=&#34;https://github.com/chensoul/maven-site-github-example/&#34; target=&#34;_blank&#34;&gt;https://github.com/chensoul/maven-site-github-example/&lt;/a&gt; 。&lt;/p&gt;&#xA;&lt;h2 id=&#34;创建-java-maven-项目&#34;&gt;创建 Java Maven 项目&lt;/h2&gt;&#xA;&lt;p&gt;让我们使用 Maven 创建一个简单的 Java 项目&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about OAuth</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/06/all-things-about-oauth/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/06/all-things-about-oauth/</guid>
+      <description>&lt;p&gt;OAuth 是一种&lt;strong&gt;开放协议&lt;/strong&gt;，允许通过网络、移动和桌面应用程序以&lt;strong&gt;简单&lt;/strong&gt;、&lt;strong&gt;标准的方式进行&lt;/strong&gt;安全授权。&lt;/p&gt;&#xA;&lt;h2 id=&#34;oauth-2-入门&#34;&gt;OAuth 2 入门&lt;/h2&gt;&#xA;&lt;p&gt;以下是一些 OAuth 2.0 指南，涵盖了理解和实现客户端和服务器所需的许多主题。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>JWT</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/06/jwt/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/06/jwt/</guid>
+      <description>&lt;h2 id=&#34;什么是-jwt&#34;&gt;什么是 JWT？&lt;/h2&gt;&#xA;&lt;p&gt;JWT（JSON Web Token）是一种开放标准(RFC 7519)，用于在网络应用程序之间安全地传输信息。它被设计用于在两方之间传输声明，这些声明可以是身份验证和授权信息，也可以是任何其他类型的信息。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>OAuth2和OIDC区别</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/06/oauth2-oidc/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/06/oauth2-oidc/</guid>
+      <description>&lt;h2 id=&#34;认证和授权&#34;&gt;认证和授权&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;认证 (Authentication)&lt;/strong&gt;：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2.0服务器</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-server/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-server/</guid>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;&#xA;&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;作者：&lt;a href=&#34;https://aaronparecki.com/&#34; target=&#34;_blank&#34;&gt;Aaron Parecki&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2简化版</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth-2-simplified/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth-2-simplified/</guid>
+      <description>&lt;p&gt;这篇文章以简化的格式描述了 OAuth 2.0，以帮助开发人员和服务提供商实现该协议。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RFC6749 | OAuth2.0授权框架中文版</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;h3 id=&#34;摘要&#34;&gt;摘要&lt;/h3&gt;&#xA;&lt;p&gt;OAuth2.0 授权框架允许第三方应用获取对 HTTP 服务的有限的访问权限，既可以以资源所有者名义在资源所有者和 HTTP 服务之间进行允许的交互，也可以允许第三方应用以自己的名义进行访问。本规范取代并淘汰 RFC 5849 中描述的 OAuth 1.0 协议。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about WebSocket</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/10/all-things-about-websocket/</link>
+      <pubDate>Fri, 10 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/10/all-things-about-websocket/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/WebSocket&#34; target=&#34;_blank&#34;&gt;Wikipedia：WebSocket&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/WebSocket&#34; target=&#34;_blank&#34;&gt;WebSocket - Web APIs | MDN&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about Spring Modulith</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-spring-modulith/</link>
+      <pubDate>Thu, 09 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/09/all-things-about-spring-modulith/</guid>
+      <description>&lt;p&gt;VMware 推出了一个实验性的项目&lt;a href=&#34;https://spring.io/projects/spring-modulith&#34; target=&#34;_blank&#34;&gt;Spring Modulith&lt;/a&gt;，以便于通过模块和事件更好地组织 Spring Boot 3 应用。该项目引入了新的类和注解，但并不会生成代码。它的模块没有使用 Java Platform Module System（JPMS），而是映射到了普通的 Java 包。模块有 API，但是 Spring Modulith 鼓励使用 Spring 应用事件作为“主要的交互方式”。这些事件可以自动持久化到事件日志中。Spring Modulith 还简化了模块和事件的测试。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]比较 Socket.IO 和 HTTP：主要区别和用例</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/08/socketio-vs-http/</link>
+      <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/08/socketio-vs-http/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/socketio-vs-http&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/socketio-vs-http&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在规划实时应用程序时，您应该仔细考虑要使用哪些技术。本文对&lt;a href=&#34;https://ably.com/topic/socketio&#34; target=&#34;_blank&#34;&gt;Socket.IO&lt;/a&gt;实时库和&lt;a href=&#34;https://ably.com/topic/websockets-vs-http#http&#34; target=&#34;_blank&#34;&gt;HTTP&lt;/a&gt;协议进行了比较。下面您将了解每种解决方案的功能、每种解决方案的优缺点以及何时使用它们。&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是socketio&#34;&gt;什么是Socket.IO？&lt;/h2&gt;&#xA;&lt;p&gt;Socket.IO 是一个创建于 2010 年的库，提供客户端和服务器之间的实时双向通信。它允许管理连接、发送和接收消息等等。这使得 Socket.IO 成为构建消息/聊天应用程序的理想选择。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]探索 http2（第 1 部分）：概述</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/08/exploring-http2-part-1-overview/</link>
+      <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/08/exploring-http2-part-1-overview/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://noobj.medium.com/exploring-http2-part-1-overview-dc3e9b53968f&#34; target=&#34;_blank&#34;&gt;https://noobj.medium.com/exploring-http2-part-1-overview-dc3e9b53968f&lt;/a&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;em&gt;让我们来谈谈&lt;/em&gt; &lt;strong&gt;http2 的内容、原因、时间和方式&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/08/exploring-http2-part-2-overview/</link>
+      <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/08/exploring-http2-part-2-overview/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://noobj.medium.com/exploring-http2-part-2-with-node-http2-core-and-hapijs-74e3df14249&#34; target=&#34;_blank&#34;&gt;https://noobj.medium.com/exploring-http2-part-2-with-node-http2-core-and-hapijs-74e3df14249&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;../../../static/images/exploring-http2-part-2-overview-01.webp&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;来源：&lt;a href=&#34;https://www.thewebmaster.com/hosting/2015/dec/14/what-is-http2-and-how-does-it-compare-to-http1-1/&#34; target=&#34;_blank&#34;&gt;https://www.thewebmaster.com/&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]2024年最好的WebSocket替代品</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websocket-alternatives/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websocket-alternatives/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websocket-alternatives&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websocket-alternatives&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是-websocket&#34;&gt;什么是 WebSocket？&lt;/h2&gt;&#xA;&lt;p&gt;简而言之，WebSocket 是一种实时 Web 技术，可通过持久连接在客户端和服务器之间实现双向、全双工通信。 WebSocket 连接会根据需要保持活动状态（理论上，它可以永远持续），从而允许服务器和客户端以最小的开销随意发送数据。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最好？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;将消息从一个组件获取到另一个组件是微服务架构中最重要的部分之一。每个服务必须能够与任何其他服务异步、可靠且大规模地通信。&lt;/p&gt;&#xA;&lt;p&gt;这就是消息代理的用武之地。消息代理（例如 Apache Kafka、RabbitMQ 和&lt;a href=&#34;https://ably.com/topic/aws-sns-vs-sqs&#34; target=&#34;_blank&#34;&gt;AWS SNS/SQS&lt;/a&gt;）为您提供一个通用接口和一组保证，而不是手动协调可能数千个微服务之间的通信。这简化了集成并更容易推理您的系统。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]HTTP 的演变 – HTTP2 深入探讨</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/http2/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/http2/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/http2&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/http2&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;可以毫不夸张地说，超文本传输协议 (HTTP) 造就了我们所熟知的互联网。 HTTP 最初是由万维网的发明者蒂姆·伯纳斯·李 (Tim Berners-Lee) 于 1989 年提出的应用程序协议。第一个记录版本 HTTP/0.9 被称为单行协议。鉴于它催生了万维网，它现在可以被描述为有史以来最伟大的俏皮话。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Java和WebSockets：构建可靠的实时应用程序</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websockets-java/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websockets-java/</guid>
+      <description>&lt;p&gt;原文：&lt;a href=&#34;https://ably.com/topic/websockets-java&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websockets-java&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在全球范围内，人们对实时传输数据的需求不断增长，&lt;a href=&#34;https://ably.com/topic/websockets&#34; target=&#34;_blank&#34;&gt;WebSocket&lt;/a&gt;可能是此类用例中最流行的传输协议。在 WebSocket 出现之前，“实时”网络已经存在，但它很难实现，通常速度较慢，并且是通过破解现有的网络技术来实现的，而这些技术并不是为实时应用程序设计的。 WebSocket 协议为真正的实时网络铺平了道路。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]WebSocket API和协议说明</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/the-websocket-api-and-protocol-explained/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/the-websocket-api-and-protocol-explained/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://ably.com/topic/websockets&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websockets&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;WebSocket 标志着 Web 开发的转折点。 WebSocket 技术旨在以事件为驱动，并针对低延迟进行了优化，已成为许多寻求构建交互式实时数字体验以提供令人愉悦的用户体验的组织和开发人员的首选。本文探讨了与 WebSocket 相关的关键主题：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]WebSocket与HTTP：2024年为您的项目选择哪一个</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websockets-vs-http/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websockets-vs-http/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websockets-vs-http&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websockets-vs-http&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;当谈到 WebSocket 与 HTTP 时，决定使用哪一种并不总是那么明确。哪一个更好？您的应用程序应该使用哪一款？&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]WebSocket与REST</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websocket-vs-rest/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websocket-vs-rest/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websocket-vs-rest&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websocket-vs-rest&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;无论您是将客户端连接到服务器、将微服务相互连接，还是将应用程序的一部分连接到外部服务，在通信方法方面，您几乎都会有多种选择。不过，有两个比较突出：WebSocket 和 REST。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何通过 WebSocket 将 Kafka 消息流式传输到面向互联网的客户端</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websockets-kafka/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websockets-kafka/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://ably.com/topic/websockets-kafka&#34; target=&#34;_blank&#34;&gt;https://ably.com/topic/websockets-kafka&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Apache Kafka 是目前最强大的异步消息传递技术之一。 Kafka 由 Jay Kreps、Jun Rao 和 Neha Narkhede 等团队于 2010 年在 LinkedIn 设计，并于 2011 年初开源。如今，该工具被众多公司（包括科技巨头，例如 Slack、Airbnb 或 Netflix 使用）为其实时数据流管道提供支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是 HTTP？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/http/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/http/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/http/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/http/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;http-概述&#34;&gt;HTTP 概述&lt;/h2&gt;&#xA;&lt;p&gt;HTTP，即超文本传输协议，是互联网通信的基础。它在客户端-服务器模型上运行，其中前端客户端（例如网络浏览器）通过向服务器发送HTTP请求消息来发起请求，例如请求网页（例如搜索引擎）。然后，服务器使用包含所请求资源的 HTTP 响应消息进行响应，如果资源不可用，则使用错误消息进行响应。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是 OAuth？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/oauth/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/oauth/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/oauth/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/oauth/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是-oauth&#34;&gt;什么是 OAuth？&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://oauth.net/&#34; target=&#34;_blank&#34;&gt;OAuth（开放授权）&lt;/a&gt;是一种开放标准授权框架，允许第三方应用程序访问用户数据，而无需用户共享其登录凭据。它为用户提供了一种安全且标准化的方式，将其在一个网站上的资源的访问权限授予另一个网站或应用程序，而无需暴露其密码。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是HTTP/3？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/http3/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/http3/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/http-3/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/http-3/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是-http3&#34;&gt;什么是 HTTP/3？&lt;/h2&gt;&#xA;&lt;p&gt;HTTP/3（或 HTTP-over-QUIC）是超文本传输协议 ( &lt;a href=&#34;https://www.pubnub.com/guides/http/&#34; target=&#34;_blank&#34;&gt;HTTP&lt;/a&gt; ) 的第三个主要版本。它是用于 Web 浏览器和服务器之间通信的应用层协议。 HTTP/3 旨在提高 Web 通信的性能和安全性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是HTTP流式传输？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/http-streaming/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/http-streaming/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/http-streaming/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/http-streaming/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是-http-流式传输&#34;&gt;什么是 HTTP 流式传输？&lt;/h2&gt;&#xA;&lt;p&gt;HTTP 流，也称为基于 HTTP 的流或 HTTP 实时流，是一种用于通过 Internet 传送实时多媒体内容（例如音频或视频）的技术。该协议允许从服务器到客户端设备的连续数据传输，使用户能够消费媒体内容而无需完整的文件下载。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是Socket.IO？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/socket-io/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/socket-io/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/socket-io/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/socket-io/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;什么是socketio&#34;&gt;什么是Socket.IO？&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://socket.io/&#34; target=&#34;_blank&#34;&gt;Socket.IO&lt;/a&gt;是一个开源的跨平台库，它提供客户端和服务器之间基于事件的&lt;a href=&#34;https://www.geeksforgeeks.org/transmission-modes-computer-networks/&#34; target=&#34;_blank&#34;&gt;全双工双向通信&lt;/a&gt;。它基于 WebSocket 协议构建，提供附加功能，例如自动重新连接以及在无法使用 &lt;a href=&#34;https://www.pubnub.com/guides/what-are-websockets-and-when-should-you-use-them/&#34; target=&#34;_blank&#34;&gt;WebSocket时回退到&lt;/a&gt;&lt;a href=&#34;https://www.pubnub.com/blog/http-long-polling/&#34; target=&#34;_blank&#34;&gt;HTTP 长轮询。&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是WebSocket？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/websockets/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/websockets/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/websockets/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/websockets/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是-websocket&#34;&gt;什么是 WebSocket？&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://www.pubnub.com/guides/tcp-ip/&#34; target=&#34;_blank&#34;&gt;WebSocket 是一种通过单个TCP&lt;/a&gt;连接提供全双工通信通道的通信协议。它支持客户端和服务器之间的实时、事件驱动的连接。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]什么是长轮询？</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/long-polling/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/long-polling/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.pubnub.com/guides/long-polling/&#34; target=&#34;_blank&#34;&gt;https://www.pubnub.com/guides/long-polling/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;什么是长轮询&#34;&gt;什么是长轮询？&lt;/h2&gt;&#xA;&lt;p&gt;长轮询用于实时 Web 应用程序，以实现客户端和 Web 服务器之间近乎即时的通信。它在实时更新至关重要的聊天和消息应用程序中特别有用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard的领域模型</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/07/thingsboard-domain/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/07/thingsboard-domain/</guid>
+      <description>&lt;p&gt;ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设备和数据。它提供了一个可扩展的架构，可以连接各种设备，并实时收集、处理和分析设备生成的数据。&lt;/p&gt;&#xA;&lt;h2 id=&#34;领域模型&#34;&gt;领域模型&lt;/h2&gt;&#xA;&lt;p&gt;在ThingsBoard中，领域模型是一个关键概念，用于描述物联网系统中的物理实体、属性和行为。以下是ThingsBoard中的主要领域模型组件：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about ThingsBoard</title>
+      <link>https://blog.chensoul.cc/posts/2024/04/29/all-things-about-thingsboard/</link>
+      <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/04/29/all-things-about-thingsboard/</guid>
+      <description>&lt;p&gt;thingsboard 是一款乌克兰团队基于java语言研发的开源物联网框架，开源的是ce版，企业版需要购买授权且无源码。&lt;/p&gt;&#xA;&lt;p&gt;官方网站：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>TBMQ测试和源码分析</title>
+      <link>https://blog.chensoul.cc/posts/2024/04/28/thingsboard-tbmq-test/</link>
+      <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/04/28/thingsboard-tbmq-test/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;启动 TBMQ 程序，浏览器访问 http://localhost:8083，创建一个 Application，Credentials Type 为   BASIC，客户端 ID、用户名和密码均设置为 tbmq_app&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ThingsBoard TBMQ本地和通过Docker运行</title>
+      <link>https://blog.chensoul.cc/posts/2024/04/17/thingsboard-tbmq-local-docker-run/</link>
+      <pubDate>Wed, 17 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/04/17/thingsboard-tbmq-local-docker-run/</guid>
+      <description>&lt;h2 id=&#34;docker-compose-运行&#34;&gt;docker-compose 运行&lt;/h2&gt;&#xA;&lt;p&gt;参考：&lt;a href=&#34;https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/&#34; target=&#34;_blank&#34;&gt;https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>All things about MicroProfile</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/14/all-things-about-microprofile/</link>
+      <pubDate>Thu, 14 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/14/all-things-about-microprofile/</guid>
+      <description>&lt;p&gt;最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>JHipster安装和介绍</title>
+      <link>https://blog.chensoul.cc/posts/2023/11/02/jhipster-intro/</link>
+      <pubDate>Thu, 02 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/11/02/jhipster-intro/</guid>
+      <description>&lt;p&gt;JHipster 是一个开发平台，可以快速生成，开发和部署现代 Web 应用程序+微服务架构。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>JSR 166规范</title>
+      <link>https://blog.chensoul.cc/posts/2023/05/18/jsr-166/</link>
+      <pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/05/18/jsr-166/</guid>
+      <description>&lt;h2 id=&#34;jsr-介绍&#34;&gt;JSR 介绍&lt;/h2&gt;&#xA;&lt;p&gt;JSR，全称 Java Specification Requests， 即 Java 规范提案， 主要是用于向 JCP(Java Community Process) 提出新增标准化技术规范的正式请求。每次 JAVA 版本更新都会有对应的 JSR 更新，比如在 Java 8 版本中，其新特性 Lambda 表达式对应的是 &lt;a href=&#34;http://jcp.org/en/jsr/detail?id=335&#34; target=&#34;_blank&#34;&gt;JSR 335&lt;/a&gt;，新的日期和时间 API 对应的是 &lt;a href=&#34;http://jcp.org/en/jsr/detail?id=310&#34; target=&#34;_blank&#34;&gt;JSR 310&lt;/a&gt;。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

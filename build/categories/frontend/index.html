@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Frontend - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Frontend">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/categories/frontend/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Frontend">
+  <meta itemprop="description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+  <meta itemprop="datePublished" content="2023-10-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-10-12T00:00:00+00:00">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Frontend">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="alternate" type="application/rss+xml" href="/categories/frontend/index.xml" title="ChenSoul Blog">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Frontend</h1>
+	</header>
+
+	<div class="taxonomy-container">
+		<div class="taxonomy-grid">
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/ai/">Ai</a>
+						</h2>
+						<span class="taxonomy-count category-count">8 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/30/spring-ai-text2sql-showcase/" class="post-link">Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南</a>
+							<span class="post-date">2025-09-30</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/29/spec-kit-with-cursor/" class="post-link">Spec-Kit 在 Cursor 中的安装和使用指南</a>
+							<span class="post-date">2025-09-29</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/26/spring-ai-restaurant-showcase-rag/" class="post-link">基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战</a>
+							<span class="post-date">2025-09-26</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/25/spring-ai-restaurant-showcase/" class="post-link">基于 Spring AI 构建智能餐厅推荐系统：多模型集成的实践指南</a>
+							<span class="post-date">2025-09-25</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/22/openai-api-with-spring-ai/" class="post-link">OpenAI API 接口与 Spring AI 对应关系</a>
+							<span class="post-date">2025-09-22</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/ai/" class="more-link">查看全部 8 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/architecture/">Architecture</a>
+						</h2>
+						<span class="taxonomy-count category-count">28 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/08/05/a-crash-course-on-distributed-systems/" class="post-link">[译]分布式系统速成课程</a>
+							<span class="post-date">2024-08-05</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/08/05/a-crash-course-on-relational-database/" class="post-link">[译]关系数据库设计速成课程</a>
+							<span class="post-date">2024-08-05</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/08/05/a-crash-course-on-domain-driven-design/" class="post-link">[译]领域驱动设计速成课程</a>
+							<span class="post-date">2024-08-05</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/08/05/a-crash-course-in-database-sharding/" class="post-link">[译]数据库分片速成课程</a>
+							<span class="post-date">2024-08-05</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/08/05/a-crash-course-in-database-scaling/" class="post-link">[译]数据库扩展策略速成课程</a>
+							<span class="post-date">2024-08-05</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/architecture/" class="more-link">查看全部 28 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/cloud-native/">Cloud-Native</a>
+						</h2>
+						<span class="taxonomy-count category-count">8 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/07/10/minikube-quick-start/" class="post-link">Minikube快速入门</a>
+							<span class="post-date">2024-07-10</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/" class="post-link">[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介</a>
+							<span class="post-date">2024-07-08</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/07/08/kubernetes-for-java-developers/" class="post-link">[译]面向 Java 开发人员的 Kubernetes</a>
+							<span class="post-date">2024-07-08</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/05/10/install-cert-manager/" class="post-link">K8s安装Cert Manager</a>
+							<span class="post-date">2024-05-10</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/05/10/install-rancher/" class="post-link">Rancher安装和部署-使用K8s</a>
+							<span class="post-date">2024-05-10</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/cloud-native/" class="more-link">查看全部 8 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/devops/">Devops</a>
+						</h2>
+						<span class="taxonomy-count category-count">25 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/08/24/my-development-setup-2025/" class="post-link">我的 2025 年开发设置</a>
+							<span class="post-date">2025-08-24</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/04/08/install-gitea-using-docker/" class="post-link">使用 Docker 安装 Gitea</a>
+							<span class="post-date">2025-04-08</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/10/17/kafka-install-and-quickstart/" class="post-link">Kafka 安装和快速上手</a>
+							<span class="post-date">2024-10-17</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/10/17/kafka-fundamental/" class="post-link">Kafka 基础知识</a>
+							<span class="post-date">2024-10-17</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/07/19/gitlab-runner-install/" class="post-link">GitLab Runner安装和部署</a>
+							<span class="post-date">2024-07-19</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/devops/" class="more-link">查看全部 25 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/frontend/">Frontend</a>
+						</h2>
+						<span class="taxonomy-count category-count">5 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/10/12/frontend-roadmap/" class="post-link">前端学习路线图</a>
+							<span class="post-date">2023-10-12</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/09/22/react-create-project/" class="post-link">React入门：初始化应用的两种方法</a>
+							<span class="post-date">2023-09-22</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/21/modern-css-explained-for-dinosaurs/" class="post-link">[译]为恐龙解释现代CSS</a>
+							<span class="post-date">2023-06-21</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/20/modern-html-explained-for-dinosaurs/" class="post-link">[译]为恐龙解释现代HTML</a>
+							<span class="post-date">2023-06-20</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/19/modern-javascript-explained-for-dinosaurs/" class="post-link">[译]为恐龙解释现代JavaScript</a>
+							<span class="post-date">2023-06-19</span>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/java/">Java</a>
+						</h2>
+						<span class="taxonomy-count category-count">69 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/09/28/config-renovate-in-github/" class="post-link">GitHub中配置Renovate自动依赖更新和自动合并PR</a>
+							<span class="post-date">2025-09-28</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/07/24/spring-exception/" class="post-link">Spring Boot异常处理思路</a>
+							<span class="post-date">2025-07-24</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/07/24/thingsboard-api/" class="post-link">ThingsBoard接口设计</a>
+							<span class="post-date">2025-07-24</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/07/17/spring-i18n/" class="post-link">Spring 国际化实现</a>
+							<span class="post-date">2025-07-17</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2025/07/02/thingsboard-http-transport/" class="post-link">ThingsBoard HTTP Transport 实现方式</a>
+							<span class="post-date">2025-07-02</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/java/" class="more-link">查看全部 69 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/kubernetes/">Kubernetes</a>
+						</h2>
+						<span class="taxonomy-count category-count">2 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/kubernetes-tutorials/" class="post-link">Kubernetes Tutorials</a>
+							<span class="post-date">2024-11-04</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/05/11/argocd/" class="post-link">Argo CD安装和部署</a>
+							<span class="post-date">2024-05-11</span>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/learning/">Learning</a>
+						</h2>
+						<span class="taxonomy-count category-count">35 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/12/31/til/" class="post-link">2024年我的付费软件</a>
+							<span class="post-date">2024-12-31</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/12/27/til/" class="post-link">2024-12-27｜今天我做了什么</a>
+							<span class="post-date">2024-12-27</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/11/13/til/" class="post-link">2024-11-13｜今天我做了什么</a>
+							<span class="post-date">2024-11-13</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/11/07/til/" class="post-link">2024-11-07｜今天我做了什么</a>
+							<span class="post-date">2024-11-07</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/11/06/til/" class="post-link">2024-11-06｜今天我做了什么</a>
+							<span class="post-date">2024-11-06</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/learning/" class="more-link">查看全部 35 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/microservice/">Microservice</a>
+						</h2>
+						<span class="taxonomy-count category-count">1 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/26/microservice-design-patterns/" class="post-link">[译]微服务设计模式</a>
+							<span class="post-date">2023-06-26</span>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/python/">Python</a>
+						</h2>
+						<span class="taxonomy-count category-count">14 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/07/08/python-input-and-output/" class="post-link">Python学习7：输入和输出</a>
+							<span class="post-date">2023-07-08</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/07/06/python-module-package/" class="post-link">Python学习6：模块和包</a>
+							<span class="post-date">2023-07-06</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/25/python-modules-packages/" class="post-link">[译]Python模块和包-简介</a>
+							<span class="post-date">2023-06-25</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/25/developing-with-bottle/" class="post-link">[译]用 Bottle 开发</a>
+							<span class="post-date">2023-06-25</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2023/06/25/python-function/" class="post-link">Python学习5：函数</a>
+							<span class="post-date">2023-06-25</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/python/" class="more-link">查看全部 14 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/review/">Review</a>
+						</h2>
+						<span class="taxonomy-count category-count">37 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/02/02/til/" class="post-link">2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc</a>
+							<span class="post-date">2024-02-02</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/01/25/til/" class="post-link">2024-01-25｜Idea和zsh快捷键</a>
+							<span class="post-date">2024-01-25</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/01/22/til/" class="post-link">2024-01-22｜今天做了什么</a>
+							<span class="post-date">2024-01-22</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/01/16/til/" class="post-link">2024-01-16｜Redis安装</a>
+							<span class="post-date">2024-01-16</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/01/08/til/" class="post-link">2024-01-08｜VPS 迁移</a>
+							<span class="post-date">2024-01-08</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/review/" class="more-link">查看全部 37 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+				<div class="taxonomy-card">
+					<div class="taxonomy-header">
+						<h2 class="taxonomy-title">
+							<a href="/categories/spring-boot/">Spring-Boot</a>
+						</h2>
+						<span class="taxonomy-count category-count">42 篇文章</span>
+					</div>
+					<div class="taxonomy-posts">
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/10/15/spring-security-jwt/" class="post-link">[译]Spring Security 和 JWT 入门</a>
+							<span class="post-date">2024-10-15</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/10/14/testing-spring-boot-applications-best-practices-and-frameworks/" class="post-link">[译]测试 Spring Boot 应用程序：最佳实践和框架</a>
+							<span class="post-date">2024-10-14</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/07/10/springdoc-with-spring-boot/" class="post-link">Spring Boot集成SpringDoc生成Api文档</a>
+							<span class="post-date">2024-07-10</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/06/06/spring-boot-docker-image/" class="post-link">Spring Boot项目创建Docker镜像并运行应用</a>
+							<span class="post-date">2024-06-06</span>
+						</div>
+						<div class="taxonomy-post-item">
+							<a href="/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/" class="post-link">[译]OAuth2 with Spring 第1部分：了解基本概念</a>
+							<span class="post-date">2024-06-05</span>
+						</div>
+						<div class="taxonomy-more">
+							<a href="/categories/spring-boot/" class="more-link">查看全部 42 篇文章 →</a>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</main>
+
+
+			</div>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

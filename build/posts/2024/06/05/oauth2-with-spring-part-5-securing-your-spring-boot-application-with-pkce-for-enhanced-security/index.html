@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性">
+  <meta itemprop="description" content="原文地址：https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769
+免责声明：本文技术性很强，需要清楚了解本系列前几篇文章，特别是第 1 部分和第 3 部分。">
+  <meta itemprop="datePublished" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="900">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-05">2024-06-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>原文地址：<a href="https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769" target="_blank">https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769</a></p>
+<blockquote>
+<p>免责声明：本文技术性很强，需要清楚了解本系列前几篇文章，特别是第 1 部分和第 3 部分。</p></blockquote>
+<p>带有代码交换证明密钥 (PKCE) 的授权代码流用于无法存储客户端机密的应用程序。此类应用程序包括：</p>
+<ul>
+<li>原生应用程序——可以反编译并检索客户端凭证的移动应用程序。</li>
+<li>单页应用 — 整个源代码可在浏览器中使用。因此，无法安全地存储客户端机密。</li>
+</ul>
+<h2 id="怎么运行的">怎么运行的</h2>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-01.webp" alt="img"></p>
+<p>Spring Boot OAuth2 与 PKCE</p>
+<p>希望这张图已经足够清晰易懂了。因此，我将直接进入演示。</p>
+<p>对于此演示，我们有 3 台服务器。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-02.webp" alt="img"></p>
+<ol>
+<li>授权服务器：在端口 9001 上运行。</li>
+<li>资源服务器：在端口8090上运行。</li>
+<li>社交登录客户端（BFF）：在端口 8080 上运行。</li>
+</ol>
+<p>让我们看一下代码。</p>
+<h2 id="授权服务器">授权服务器</h2>
+<p><strong>一、pom.xml</strong></p>
+<p>授权服务器的 pom.xml 中没有太多需要解释的变化</p>
+<p><strong>application.yml.yml</strong></p>
+<p><em>application.yml</em>文件有很多更改，特别是删除了客户端注册。当前版本的<em>application.yml</em>非常简短，如下所示。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">server</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">9001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">logging</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">level</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">org</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">springframework</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">security</span>: <span style="color:#ae81ff">trace</span>
+</span></span></code></pre></div><p>三. <strong>SecurityConfig 类</strong></p>
+<p>所有的安全配置以及客户端和用户详细信息注册、JWT token 解码都放在此类中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> This first SecurityFilterChain Bean is only specific to authorization server specific configurations
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> More on <span style="color:#66d9ef">this</span> can be found in <span style="color:#66d9ef">this</span> stackoverflow question answers:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> https:<span style="color:#75715e">//stackoverflow.com/questions/69126874/why-two-formlogin-configured-in-spring-authorization-server-sample-code</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Order</span>(1)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SecurityFilterChain <span style="color:#a6e22e">authorizationServerSecurityFilterChain</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        OAuth2AuthorizationServerConfiguration.<span style="color:#a6e22e">applyDefaultSecurity</span>(http);
+</span></span><span style="display:flex;"><span>        http.<span style="color:#a6e22e">getConfigurer</span>(OAuth2AuthorizationServerConfigurer.<span style="color:#a6e22e">class</span>).<span style="color:#a6e22e">oidc</span>(withDefaults());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> http
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">exceptionHandling</span>(e <span style="color:#f92672">-&gt;</span> e
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">authenticationEntryPoint</span>(<span style="color:#66d9ef">new</span> LoginUrlAuthenticationEntryPoint(<span style="color:#e6db74">&#34;/login&#34;</span>)))
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">oauth2ResourceServer</span>(httpSecurityOAuth2ResourceServerConfigurer <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>                                              httpSecurityOAuth2ResourceServerConfigurer.<span style="color:#a6e22e">jwt</span>(withDefaults())
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> This second SecurityFilterChain bean is responsible <span style="color:#66d9ef">for</span> any other security configurations
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Order</span>(2)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SecurityFilterChain <span style="color:#a6e22e">clientAppSecurityFilterChain</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> http
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">formLogin</span>(withDefaults())
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorizeHttpRequests</span>(authorize <span style="color:#f92672">-&gt;</span>authorize.<span style="color:#a6e22e">anyRequest</span>().<span style="color:#a6e22e">authenticated</span>())
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> In<span style="color:#f92672">-</span>memory user registration
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> UserDetailsService <span style="color:#a6e22e">userDetailsService</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> user1 <span style="color:#f92672">=</span> User.<span style="color:#a6e22e">withUsername</span>(<span style="color:#e6db74">&#34;user&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">password</span>(<span style="color:#e6db74">&#34;{noop}secret&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorities</span>(<span style="color:#e6db74">&#34;read&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> InMemoryUserDetailsManager(user1);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">/</span> In<span style="color:#f92672">-</span>memory authorization server client registration
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> RegisteredClientRepository <span style="color:#a6e22e">registeredClientRepository</span>() {
+</span></span><span style="display:flex;"><span>        RegisteredClient registeredClient <span style="color:#f92672">=</span> RegisteredClient.<span style="color:#a6e22e">withId</span>(<span style="color:#e6db74">&#34;oidc-client&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">clientId</span>(<span style="color:#e6db74">&#34;oidc-client&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">clientSecret</span>(<span style="color:#e6db74">&#34;{noop}secret&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">scope</span>(<span style="color:#e6db74">&#34;read&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">scope</span>(OidcScopes.<span style="color:#a6e22e">OPENID</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">scope</span>(OidcScopes.<span style="color:#a6e22e">PROFILE</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">scope</span>(<span style="color:#e6db74">&#34;write&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">redirectUri</span>(<span style="color:#e6db74">&#34;http://127.0.0.1:8080/login/oauth2/code/oidc-client&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">clientAuthenticationMethod</span>(ClientAuthenticationMethod.<span style="color:#a6e22e">CLIENT_SECRET_BASIC</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorizationGrantType</span>(AuthorizationGrantType.<span style="color:#a6e22e">AUTHORIZATION_CODE</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">authorizationGrantType</span>(AuthorizationGrantType.<span style="color:#a6e22e">REFRESH_TOKEN</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">clientSettings</span>(clientSettings())
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> InMemoryRegisteredClientRepository(registeredClient);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Creating this bean initialized the following endpoints:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/authorize
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/device_authorization
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/token
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/jwks
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/revoke
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /oauth2/introspect
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /connect/register
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /userinfo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * /connect/logout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * For java based client registration configuration, it is very important to initialize this bean
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> AuthorizationServerSettings <span style="color:#a6e22e">authorizationServerSettings</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> AuthorizationServerSettings.<span style="color:#a6e22e">builder</span>().<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    ClientSettings <span style="color:#a6e22e">clientSettings</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ClientSettings.<span style="color:#a6e22e">builder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">requireAuthorizationConsent</span>(<span style="color:#66d9ef">true</span>)  <span style="color:#f92672">/</span> Display post<span style="color:#f92672">-</span>login authorization consent screen
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">requireProofKey</span>(<span style="color:#66d9ef">true</span>)              <span style="color:#f92672">/</span> flag to enable Proof Key <span style="color:#66d9ef">for</span> Code <span style="color:#a6e22e">Exchange</span> (PKCE)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JwtDecoder <span style="color:#a6e22e">jwtDecoder</span>(JWKSource<span style="color:#f92672">&lt;</span>SecurityContext<span style="color:#f92672">&gt;</span> jwkSource) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> OAuth2AuthorizationServerConfiguration.<span style="color:#a6e22e">jwtDecoder</span>(jwkSource);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> JWKSource<span style="color:#f92672">&lt;</span>SecurityContext<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">jwkSource</span>() {
+</span></span><span style="display:flex;"><span>        RSAKey rsaKey <span style="color:#f92672">=</span> generateRsa();
+</span></span><span style="display:flex;"><span>        JWKSet jwkSet <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JWKSet(rsaKey);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (jwkSelector, securityContext) <span style="color:#f92672">-&gt;</span> jwkSelector.<span style="color:#a6e22e">select</span>(jwkSet);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> RSAKey <span style="color:#a6e22e">generateRsa</span>() {
+</span></span><span style="display:flex;"><span>        KeyPair keyPair <span style="color:#f92672">=</span> generateRsaKey();
+</span></span><span style="display:flex;"><span>        RSAPublicKey publicKey <span style="color:#f92672">=</span> (RSAPublicKey) keyPair.<span style="color:#a6e22e">getPublic</span>();
+</span></span><span style="display:flex;"><span>        RSAPrivateKey privateKey <span style="color:#f92672">=</span> (RSAPrivateKey) keyPair.<span style="color:#a6e22e">getPrivate</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> RSAKey.<span style="color:#a6e22e">Builder</span>(publicKey).<span style="color:#a6e22e">privateKey</span>(privateKey).<span style="color:#a6e22e">keyID</span>(UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>()).<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> KeyPair <span style="color:#a6e22e">generateRsaKey</span>() {
+</span></span><span style="display:flex;"><span>        KeyPair keyPair;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            KeyPairGenerator keyPairGenerator <span style="color:#f92672">=</span> KeyPairGenerator.<span style="color:#a6e22e">getInstance</span>(<span style="color:#e6db74">&#34;RSA&#34;</span>);
+</span></span><span style="display:flex;"><span>            keyPairGenerator.<span style="color:#a6e22e">initialize</span>(2048);
+</span></span><span style="display:flex;"><span>            keyPair <span style="color:#f92672">=</span> keyPairGenerator.<span style="color:#a6e22e">generateKeyPair</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception ex) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException(ex);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> keyPair;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在启动授权服务器。</p>
+<h2 id="资源服务器">资源服务器</h2>
+<p>一、<strong>pom.xml</strong></p>
+<p>pom.xml 必须包含<em>spring-boot-starter-oauth2-resource-server</em>依赖项以及其他依赖项。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-oauth2-resource-server<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p>从配置角度来看，资源服务器仅包含application.yml</p>
+<p><strong>application.yml</strong></p>
+<p>我们需要在<em>application.yml</em>文件中提及令牌发行者 uri。</p>
+<pre tabindex="0"><code>server:
+  port: 8090
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9001
+</code></pre><p>三.<strong><strong>SecurityConfig</strong></strong></p>
+<p>SecurityConfig 类的目的是验证来自授权服务器的访问令牌，并根据需要为资源服务器本身定义的端点添加额外的安全配置。</p>
+<h2 id="social-login-client">social-login-client</h2>
+<p>一、<strong>pom.xml</strong></p>
+<p>pom.xml 必须包含<em>spring-boot-starter-oauth2-client</em>依赖项以及其他依赖项。此外，由于我们使用了 webClient，因此我们添加了<em>spring-boot-starter-webflux</em>依赖项。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-oauth2-client<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-webflux<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span></code></pre></div><p><strong>application.yml</strong></p>
+<p>application.yml<em>文件</em>包含客户端本身的配置以及授权过程中要通信的 URL。下面给出了我的<em>oidc-client</em>注册的完整代码。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">registration</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># Client registration starts here</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">oidc-client</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Our oidc-client needs a provider. The provider information has been registered</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># at the bottom of this configuration</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">provider</span>: <span style="color:#ae81ff">spring</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># The following client-id and client-secret will be sent to the authorization server</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># We don&#39;t need to mention the client_credentials in the grant type here.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Note that, here the client-secret must not contain {noop} or any other encoding type mentioned.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#ae81ff">oidc-client</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#ae81ff">secret</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Our authorization grant type is authorization_code</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">authorization-grant-type</span>: <span style="color:#ae81ff">authorization_code</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># The following redirect URL is the redirect URL definition of our client Server application.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># It is generally the current application host address. The authorization server&#39;s redirect URL</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># definition means that this URL will be triggered when auth server redirects data to here.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">redirect-uri</span>: <span style="color:#ae81ff">http://127.0.0.1:8080/login/oauth2/code/oidc-client</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Scopes that will be displayed for requesting in the consent page.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Authorization server must have equal or more scopes than these in number</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scope</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">openid</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">profile</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">read</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># This client name will display in the login screen as social login type</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-name</span>: <span style="color:#ae81ff">oidc-client</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># As mentioned above about provider, here we register the provider details</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># for any unknown provider with their issuer URI</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">provider</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">issuer-uri</span>: <span style="color:#ae81ff">http://localhost:9001</span>
+</span></span></code></pre></div><p>三.<strong>SecurityConfig</strong></p>
+<p>我们需要编写 SecurityConfig 类以使 PKCE 能够生成代码解析器和代码质询，放置 OAuth2Login 端点的逻辑并保护客户端应用程序中定义的端点。</p>
+<p>完整的代码如下所示。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    SecurityFilterChain <span style="color:#a6e22e">securityFilterChain</span>(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String base_uri <span style="color:#f92672">=</span> OAuth2AuthorizationRequestRedirectFilter.<span style="color:#a6e22e">DEFAULT_AUTHORIZATION_REQUEST_BASE_URI</span>;
+</span></span><span style="display:flex;"><span>        DefaultOAuth2AuthorizationRequestResolver resolver <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, base_uri);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">/</span> Responsible <span style="color:#66d9ef">for</span> enabling PKCE, to generate code verifier, code challenge
+</span></span><span style="display:flex;"><span>        resolver.<span style="color:#a6e22e">setAuthorizationRequestCustomizer</span>(OAuth2AuthorizationRequestCustomizers.<span style="color:#a6e22e">withPkce</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        http
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">authorizeHttpRequests</span>(authorize <span style="color:#f92672">-&gt;</span> authorize
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">requestMatchers</span>(<span style="color:#e6db74">&#34;/&#34;</span>).<span style="color:#a6e22e">permitAll</span>()
+</span></span><span style="display:flex;"><span>                    .<span style="color:#a6e22e">anyRequest</span>().<span style="color:#a6e22e">authenticated</span>())
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">oauth2Login</span>(oauth2Login <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>                oauth2Login.<span style="color:#a6e22e">loginPage</span>(<span style="color:#e6db74">&#34;/oauth2/authorization/oidc-client&#34;</span>);
+</span></span><span style="display:flex;"><span>                oauth2Login.<span style="color:#a6e22e">authorizationEndpoint</span>(authorizationEndpointConfig <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>                  authorizationEndpointConfig.<span style="color:#a6e22e">authorizationRequestResolver</span>(resolver)
+</span></span><span style="display:flex;"><span>                );
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>            .<span style="color:#a6e22e">oauth2Client</span>(withDefaults());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> http.<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>iv. <strong>WebClientConfig</strong></p>
+<p>为了让 webClient 无缝地与 OAuth2 协同工作，我们需要定义<em>WebClientConfig</em>并添加更多 bean。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebClientConfig</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> HelloClient <span style="color:#a6e22e">helloClient</span>(OAuth2AuthorizedClientManager authorizedClientManager) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> httpServiceProxyFactory(authorizedClientManager).<span style="color:#a6e22e">createClient</span>(HelloClient.<span style="color:#a6e22e">class</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> HttpServiceProxyFactory <span style="color:#a6e22e">httpServiceProxyFactory</span>(OAuth2AuthorizedClientManager authorizedClientManager) {
+</span></span><span style="display:flex;"><span>        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        oauth2Client.<span style="color:#a6e22e">setDefaultOAuth2AuthorizedClient</span>(<span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        WebClient webClient <span style="color:#f92672">=</span> WebClient.<span style="color:#a6e22e">builder</span>()
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">apply</span>(oauth2Client.<span style="color:#a6e22e">oauth2Configuration</span>())
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>        WebClientAdapter client <span style="color:#f92672">=</span> WebClientAdapter.<span style="color:#a6e22e">forClient</span>(webClient);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> HttpServiceProxyFactory.<span style="color:#a6e22e">builder</span>(client).<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> OAuth2AuthorizedClientManager <span style="color:#a6e22e">authorizedClientManager</span>(
+</span></span><span style="display:flex;"><span>            ClientRegistrationRepository clientRegistrationRepository,
+</span></span><span style="display:flex;"><span>            OAuth2AuthorizedClientRepository authorizedClientRepository) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        OAuth2AuthorizedClientProvider authorizedClientProvider <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>                OAuth2AuthorizedClientProviderBuilder.<span style="color:#a6e22e">builder</span>()
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">authorizationCode</span>()
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">refreshToken</span>()
+</span></span><span style="display:flex;"><span>                        .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        DefaultOAuth2AuthorizedClientManager authorizedClientManager <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> DefaultOAuth2AuthorizedClientManager(
+</span></span><span style="display:flex;"><span>                        clientRegistrationRepository, authorizedClientRepository);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        authorizedClientManager.<span style="color:#a6e22e">setAuthorizedClientProvider</span>(authorizedClientProvider);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> authorizedClientManager;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><em>如果您注意到HelloClient</em>的 bean ，这样我们就可以定义更多的客户端，使业务服务（资源服务器）调用过程更容易。</p>
+<p>v.<strong>调用资源服务器</strong></p>
+<p>我们需要定义一个</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@HttpExchange</span>(<span style="color:#e6db74">&#34;http://localhost:8090&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">HelloClient</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetExchange</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>    String <span style="color:#a6e22e">getHello</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在让我们从控制器调用*getHello()*方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@RequestMapping</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppController</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> AppService appService;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> HelloClient helloClient;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">AppController</span>(HelloClient helloClient) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">helloClient</span> <span style="color:#f92672">=</span> helloClient;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getPublicData</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">ok</span>(<span style="color:#e6db74">&#34;Public data&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/private-data&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getPrivateData</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">ok</span>(appService.<span style="color:#a6e22e">getJwtToken</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/hello&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">sayHello</span> () {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ResponseEntity.<span style="color:#a6e22e">ok</span>(helloClient.<span style="color:#a6e22e">getHello</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="在浏览器中测试的时间">在浏览器中测试的时间</h2>
+<p>在开始之前，让我们更改 application.yml 中的日志配置以查看所有 3 个服务器的调试日志。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">logging</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">level</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">org.springframework.boot</span>: <span style="color:#ae81ff">error</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">org.springframework.security</span>: <span style="color:#ae81ff">debug</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">org.springframework.security.web</span>: <span style="color:#ae81ff">debug</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">org.apache.catalina</span>: <span style="color:#ae81ff">error</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">com.mainul35</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">info</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">trace</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">debug</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">error</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">warn</span>
+</span></span></code></pre></div><p>现在，我们在浏览器中输入**(1)** <a href="http://localhost:8080/hello" target="_blank">http://localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是</a>http://localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-03.webp" alt="img"></p>
+<p>网络响应</p>
+<p>如果我们注意到上述网络响应，我们可以看到，当我们请求 /hello 端点时，它首先将我们重定向到**(2)** http://localhost:8080/oauth2/authorization/oidc-client端点。</p>
+<p>然后，从客户端授权端点，我们再次被重定向到授权服务器的以下端点。<strong>（3）</strong></p>
+<p><a href="http://localhost:9001/oauth2/authorize?response_type=code&amp;client_id=oidc-client&amp;scope=openid&#43;profile&#43;read&#43;write&amp;state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&amp;redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&amp;nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&amp;code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&amp;code_challenge_method=S256" target="_blank">http://localhost:9001/oauth2/authorize?response_type=code&amp;client_id=oidc-client&amp;scope=openid%20profile%20read%20write&amp;state=vyMkXghiz-H25RLcNWijBsduVpmam2sAA4_OMWmTysw%3D&amp;redirect_uri=http://127.0.0.1:8080/login/oauth2/code/oidc-client&amp;nonce=yBuntyu9zBQ_HnSpi4iB1npHn4FvbUffNwzAA6st-wc&amp;code_challenge=rSsAc3XOlEWf3GpDfPMVM7OhQX6RLXN-_X7ozWvJyrM&amp;code_challenge_method=S256</a></p>
+<p>当授权服务器发现该请求尚未获得授权时，它会再次重定向到授权服务器的登录端点。（4）</p>
+<p><a href="http://localhost:9001/login" target="_blank">http://localhost:9001/登录</a></p>
+<p>现在，让我们提供正确的用户凭证并观察。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-04.webp" alt="img"></p>
+<p>提供登录凭证后</p>
+<p>它首先使用 POST 方法将表单提交到登录端点。我们可以在浏览器网络选项卡中看到另一个重定向。</p>
+<p>接下来，如果身份验证成功，我们将进入授权同意屏幕。网址如下。<strong>（5）</strong></p>
+<p><a href="http://localhost:9001/oauth2/authorize?response_type=code&amp;client_id=oidc-client&amp;scope=openid&#43;profile&#43;read&#43;write&amp;state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&amp;redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Flogin%2Foauth2%2Fcode%2Foidc-client&amp;nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&amp;code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&amp;code_challenge_method=S256&amp;continue=" target="_blank">http://localhost:9001/oauth2/authorize?response_type=code&amp;client_id=oidc-client&amp;scope=openid%20profile%20read%20write&amp;state=hD5CGxSzNt_PZrzbUBKDqjszrouPKsfk027pRTzaPFY%3D&amp;redirect_uri=http://127.0.0.1:8080/login/oauth2/code/oidc-client&amp;nonce=azp457lnXYfTag62hBwuThxMQ66NeVmdlMQSnzI4lfQ&amp;code_challenge=8ZfGPgaJ96i14R39t7IM_540GdxFIo0XAlmmfnelgIE&amp;code_challenge_method=S256&amp;continue</a></p>
+<blockquote>
+<p>注意，如果我们授权应用程序但未获得所有同意，则可能会将我们重定向到相同的同意屏幕。因此，在提供一些同意后，我们可以点击取消，或提供所有同意。</p></blockquote>
+<p>现在，让我们提供一些同意并继续。就我的情况而言，我将提供所有同意并提交。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-05.webp" alt="img"></p>
+<p>长话短说，成功登录后，它会将我们重定向到客户端应用程序的 /login/oauth2/code/oidc-client 端点，并附带授权码参数。使用此代码，我们可以请求 /oauth2/token 端点来获取访问令牌。</p>
+<p>现在我们可以再次向 /hello 端点发出请求并查看其是否正常工作。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-06.webp" alt="img"></p>
+<p>来自 /hello 端点的响应</p>
+<h2 id="为什么收到代码后没有对-oauthtoken-端点发出任何请求">为什么收到代码后没有对 /oauth/token 端点发出任何请求？</h2>
+<p><strong>从IETF网站提供的以下OAuth2 for Browser based Apps</strong>草案中我们可以看到，对于PKCE，它不必在授权服务器中颁发访问令牌。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-07.webp" alt="img"></p>
+<p>以下是草案的链接：<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions" target="_blank">draft-ietf-oauth-browser-based-apps-10</a></p>
+<p>如果我们仍然想获取令牌，在我的客户端应用程序中，我提供了一个端点<a href="http://127.0.0.1:8080/private-data" target="_blank">127.0.0.1:8080/private-data</a>，我们可以通过它获取令牌。</p>
+<p><img src="../../../static/images/oauth2-with-spring-part-5-08.webp" alt="img"></p>
+<p>完整的源代码可以在<a href="https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce" target="_blank">这里</a>找到</p>
+<h2 id="参考">参考：</h2>
+<ol>
+<li><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions" target="_blank">draft-ietf-oauth-基于浏览器的应用程序-10</a></li>
+<li><a href="https://github.com/spring-projects/spring-authorization-server/issues/297" target="_blank">基于浏览器的应用程序 (SPA) 的实施指南 · 问题 #297 · spring-projects/spring-authorization-server (github.com)</a></li>
+<li><a href="https://www.youtube.com/watch?v=mKvi9RWGn3M" target="_blank">Spring Boot 3 教程：使用 PKCE 实现安全 Oauth2 — Spring 授权服务器 — 和 OAuth2 客户端 — YouTube</a></li>
+</ol>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/" target="_blank" title="[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示">[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/05/30/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture/" target="_blank" title="[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架构">[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架构</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/30/til/" target="_blank" title="2024-01-30｜Mybatis plus和Jackson配置">2024-01-30｜Mybatis plus和Jackson配置</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/spring-security-interview-questions/" target="_blank" title="[译]Spring Security 面试问题">[译]Spring Security 面试问题</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/09/19/spring-security-jwt/" target="_blank" title="[译]如何使用Spring Security和JWT保护您的REST API">[译]如何使用Spring Security和JWT保护您的REST API</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/exception-handling-for-rest-with-spring/" target="_blank" title="[译]使用Spring进行REST的错误处理">[译]使用Spring进行REST的错误处理</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/05/oauth2-server/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]OAuth2.0服务器</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/05\/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#怎么运行的">怎么运行的</a></li>
+    <li><a href="#授权服务器">授权服务器</a></li>
+    <li><a href="#资源服务器">资源服务器</a></li>
+    <li><a href="#social-login-client">social-login-client</a></li>
+    <li><a href="#在浏览器中测试的时间">在浏览器中测试的时间</a></li>
+    <li><a href="#为什么收到代码后没有对-oauthtoken-端点发出任何请求">为什么收到代码后没有对 /oauth/token 端点发出任何请求？</a></li>
+    <li><a href="#参考">参考：</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

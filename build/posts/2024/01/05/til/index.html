@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-01-05｜Nginx、正向代理和反向代理 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-01-05｜Nginx、正向代理和反向代理">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/01/05/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-01-05｜Nginx、正向代理和反向代理">
+  <meta itemprop="description" content="今天做了什么：
+Nginx、正向代理和反向代理 Nginx 介绍 Nginx（发音为&#34;engine-x&#34;）是一个高性能的开源Web服务器和反向代理服务器。它专注于高并发、低内存消耗和高度模块化的架构，因此被广泛用于构建性能出色的网站、应用程序和服务。">
+  <meta itemprop="datePublished" content="2024-01-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-01-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="90">
+  <meta itemprop="keywords" content="Javascript,Tutorial,Nginx,Css">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-01-05｜Nginx、正向代理和反向代理">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-01-05｜Nginx、正向代理和反向代理</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-05">2024-01-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/nginx/" rel="tag">Nginx</a>, <a class="meta__link" href="/tags/css/" rel="tag">Css</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ul>
+<li>Nginx、正向代理和反向代理</li>
+</ul>
+<h2 id="nginx-介绍">Nginx 介绍</h2>
+<p>Nginx（发音为&quot;engine-x&quot;）是一个高性能的开源Web服务器和反向代理服务器。它专注于高并发、低内存消耗和高度模块化的架构，因此被广泛用于构建性能出色的网站、应用程序和服务。</p>
+<p>以下是一些关于 Nginx 的关键特点：</p>
+<ol>
+<li>高性能：Nginx 的设计目标之一是在高并发情况下提供卓越的性能。它使用异步、事件驱动的架构来处理请求，有效地管理系统资源，提供快速响应和高吞吐量。</li>
+<li>高度可定制化：Nginx 的模块化架构使其高度可定制。它支持许多第三方模块和插件，可以根据具体需求进行扩展和定制。这使得开发人员可以根据自己的要求添加额外的功能和扩展 Nginx 的能力。</li>
+<li>轻量级和低内存消耗：Nginx 是一个轻量级的服务器，具有低内存消耗。这使得它能够在资源受限的环境中高效运行，并处理大量的并发连接。</li>
+<li>简单的配置和易于使用：Nginx 的配置文件采用简单的语法，易于理解和修改。它提供了清晰的文档和丰富的示例，使得用户可以快速上手并进行必要的配置。</li>
+</ol>
+<p>功能：</p>
+<ol>
+<li>反向代理和负载均衡：Nginx 可以作为反向代理服务器，将客户端请求转发到后端服务器。它还支持负载均衡，可以将流量分配到多个后端服务器，提高系统的可靠性和性能。</li>
+<li>静态文件服务：Nginx 可以快速、可靠地提供静态文件，减轻后端应用程序的负担。它可以通过高效的文件传输和缓存机制提供静态内容，提高网站的响应速度。</li>
+<li>SSL/TLS 加密：Nginx 支持 SSL/TLS 加密，可以安全地传输数据。它提供强大的加密功能和配置选项，以保护网站和应用程序的安全性。</li>
+<li>动态内容支持：尽管 Nginx 主要用于处理静态内容，但它也可以与后端应用程序（如 PHP、Python、Node.js 等）集成，以处理动态生成的内容。</li>
+<li>HTTP/2 和 HTTP/3 支持：Nginx 支持最新的 HTTP/2 和 HTTP/3 协议，这些协议提供更快的数据传输和更低的延迟，改善用户体验。</li>
+<li>高度可扩展：Nginx 的模块化架构使得它可以轻松地扩展和定制。它支持各种第三方模块和插件，可以满足不同场景和需求的要求。</li>
+</ol>
+<h2 id="正向代理和反向代理">正向代理和反向代理</h2>
+<h3 id="正向代理">正向代理</h3>
+<p>正向代理（Forward Proxy）是一种代理服务器的使用方式，它代表客户端向其他服务器发送请求。当客户端想要访问互联网上的资源时，它首先发送请求到正向代理服务器，然后由代理服务器代表客户端向目标服务器发起请求，获取响应并将其返回给客户端。</p>
+<p>正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。</p>
+<p>正向代理一般是<strong>在客户端设置代理服务器</strong>，通过代理服务器转发请求，最终访问到目标服务器。</p>
+<p><img src="../../../static/images/forward-proxy.webp" alt="image-20210830233450415"></p>
+<p>以下是正向代理的主要特点和用途：</p>
+<ol>
+<li>隐藏客户端身份：正向代理可以隐藏客户端的真实IP地址和身份，保护客户端的隐私和安全。目标服务器只能看到正向代理服务器的IP地址和请求，无法直接识别和追踪客户端。</li>
+<li>访问控制和过滤：正向代理可以实施访问控制和过滤策略，限制客户端对特定资源的访问。它可以用于实施访问权限、URL过滤、内容过滤等，以便控制和管理客户端对互联网资源的访问。</li>
+<li>缓存和加速：正向代理服务器可以缓存经常请求的资源，以提高访问速度并减轻目标服务器的负载。当多个客户端请求相同的资源时，代理服务器可以直接提供缓存的副本，而无需每次都向目标服务器发送请求。</li>
+<li>对抗访问限制：在某些情况下，客户端可能无法直接访问某些资源，例如由于地理位置限制或网络防火墙的阻塞。通过使用正向代理，客户端可以通过代理服务器来访问被限制的资源，代理服务器充当中间人来获取资源并传递给客户端。</li>
+<li>匿名上网：正向代理可以为用户提供匿名上网的功能，隐藏用户的真实身份和位置信息。这对于保护用户隐私、绕过地域限制和访问受限资源等情况非常有用。</li>
+</ol>
+<p>总而言之，正向代理充当客户端和目标服务器之间的中间人，代表客户端发送请求并获取响应。它可以隐藏客户端身份、实施访问控制、提供缓存和加速等功能，为用户提供更安全和更灵活的访问互联网的方式。</p>
+<h3 id="反向代理">反向代理</h3>
+<p>反向代理（Reverse Proxy）服务器位于用户与目标服务器之间，但是对于用户而言，反向代理服务器就相当于目标服务器，即用户直接访问反向代理服务器就可以获得目标服务器的资源，反向代理服务器负责将请求转发给目标服务器。用户不需要知道目标服务器的地址，也无须在用户端作任何设定，对于用户来说，访问反向代理服务器是完全无感知的。</p>
+<p><img src="../../../static/images/reverse-proxy.webp" alt="image-20210830233634695"></p>
+<p>以下是反向代理的主要特点和用途：</p>
+<ol>
+<li>负载均衡：反向代理可以作为负载均衡器，将客户端请求分发给多个后端服务器，以实现负载均衡。它可以根据服务器的负载情况、响应时间等指标动态地决定将请求发送到哪个后端服务器，以确保请求被合理地分散处理。</li>
+<li>高可用性和故障恢复：通过反向代理，可以配置多个后端服务器作为冗余的备份。如果某个后端服务器出现故障或不可用，反向代理可以自动将请求转发到其他正常工作的后端服务器，以确保服务的可用性。</li>
+<li>SSL 加密和安全性：反向代理可以与客户端之间建立安全的 SSL/TLS 连接，提供加密和身份验证功能。这样可以保护客户端与反向代理之间的通信，增强数据的安全性。</li>
+<li>缓存和加速：反向代理可以缓存后端服务器返回的静态资源，如图片、CSS、JavaScript 文件等。当客户端请求这些资源时，反向代理可以直接提供缓存的副本，减轻后端服务器的负载并提高响应速度。</li>
+<li>提供统一入口：反向代理可以将多个后端服务器提供的不同服务（如Web应用、API服务等）通过统一的入口点进行访问。这样客户端只需与反向代理通信，并由反向代理根据请求的路径将其转发到适当的后端服务器。</li>
+</ol>
+<p>总结起来，反向代理充当了客户端和后端服务器之间的中间人，负责接收客户端的请求并将其转发给后端服务器。它可以实现负载均衡、提供高可用性、增加安全性、缓存和加速等功能，为客户端提供更高效、安全和可靠的访问体验。</p>
+<h3 id="总结">总结</h3>
+<p><img src="../../../static/images/proxy-vs-reverse-proxy.webp" alt=""></p>
+<ul>
+<li>正向代理：客户端请求目标服务器，请求会先经过代理服务器，然后再转发请求到目标服务器，获得内容后最后再响应给客户端。</li>
+<li>反向代理：用户请求目标服务器，由代理服务器决定访问哪个 IP。</li>
+</ul>
+<p>转发代理是位于用户设备和互联网之间的服务器。</p>
+<p>正向代理通常用于：</p>
+<ol>
+<li>保护客户端</li>
+<li>避免浏览限制</li>
+<li>阻止访问某些内容</li>
+</ol>
+<p>反向代理是一种服务器，它接受客户端的请求，将请求转发到 Web 服务器，并将结果返回给客户端，就好像代理服务器已经处理了请求一样。</p>
+<p>反向代理适用于：</p>
+<ol>
+<li>保护服务器</li>
+<li>负载均衡</li>
+<li>缓存静态内容</li>
+<li>加密和解密 SSL 通信</li>
+</ol>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/http-in-depth/" target="_blank" title="[译]关于 HTTP 您需要了解的一切">[译]关于 HTTP 您需要了解的一切</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/02/til/" target="_blank" title="2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel">2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/12/til/" target="_blank" title="2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测">2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/11/10/distributed-systems-03/" target="_blank" title="[译]《分布式系统：为了乐趣和利益》3.时间及顺序">[译]《分布式系统：为了乐趣和利益》3.时间及顺序</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/10/12/frontend-roadmap/" target="_blank" title="前端学习路线图">前端学习路线图</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/09/22/react-create-project/" target="_blank" title="React入门：初始化应用的两种方法">React入门：初始化应用的两种方法</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/nginx/" rel="tag">nginx</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/css/" rel="tag">css</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/01/04/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-01-04｜GitHub Actions</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/01/08/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2024-01-08｜VPS 迁移</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/01\/05\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#nginx-介绍">Nginx 介绍</a></li>
+    <li><a href="#正向代理和反向代理">正向代理和反向代理</a>
+      <ul>
+        <li><a href="#正向代理">正向代理</a></li>
+        <li><a href="#反向代理">反向代理</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

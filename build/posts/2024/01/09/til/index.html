@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2024-01-09｜单点登录 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="2024-01-09｜单点登录">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/01/09/til/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="2024-01-09｜单点登录">
+  <meta itemprop="description" content="今天做了什么：
+使用 renovate 监控第三方依赖更新 ，renovate 貌似需要付费，放弃。 spring-security-oauth2-samples 示例工程重命名模块和包名，代码见 spring-security-oauth2-boot 实现单点登录并测试 实现单点登录并测试 实现单点登录（Single Sign-On，SSO）可以采用多种思路和技术。下面是几种常见的实现思路：">
+  <meta itemprop="datePublished" content="2024-01-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-01-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="47">
+  <meta itemprop="keywords" content="Java,Security,Tutorial,Github">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="2024-01-09｜单点登录">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">2024-01-09｜单点登录</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-01-09">2024-01-09</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/learning/" rel="category">Learning</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/github/" rel="tag">Github</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<p>今天做了什么：</p>
+<ul>
+<li><a href="https://zexo.dev/posts/2020/03/01/keep-your-repo-dependencies-up-to-date-with-renovate/" target="_blank">使用 renovate 监控第三方依赖更新</a> ，renovate 貌似需要付费，放弃。</li>
+<li>spring-security-oauth2-samples 示例工程重命名模块和包名，代码见 <a href="https://github.com/chensoul/spring-security-oauth2-boot" target="_blank">spring-security-oauth2-boot</a></li>
+<li>实现单点登录并测试</li>
+</ul>
+<h2 id="实现单点登录并测试">实现单点登录并测试</h2>
+<p>实现单点登录（Single Sign-On，SSO）可以采用多种思路和技术。下面是几种常见的实现思路：</p>
+<ol>
+<li>基于令牌（Token）的SSO：用户在登录时，认证服务器颁发一个令牌给用户，该令牌包含用户的身份信息。用户在访问其他应用时，将令牌发送给应用服务器进行验证，从而实现单点登录。</li>
+<li>基于会话（Session）的SSO：用户在登录时，认证服务器创建一个会话，并将会话ID发送给用户的浏览器。用户在访问其他应用时，浏览器将会话ID发送给应用服务器进行验证，从而实现单点登录。</li>
+<li>基于身份提供者（Identity Provider，IdP）的SSO：使用一个独立的身份提供者（如OpenID Connect、SAML等），用户在登录时将身份验证委托给身份提供者。身份提供者负责验证用户身份，并向应用程序提供令牌或身份凭证，实现单点登录。</li>
+<li>基于代理（Proxy）的SSO：通过在前端部署反向代理服务器或负载均衡器，将用户的登录状态存储在代理服务器中。用户访问其他应用时，代理服务器将用户的身份信息传递给应用服务器，从而实现单点登录。</li>
+<li>基于统一认证系统（CAS）的SSO：使用CAS作为中央认证服务器，用户在登录时通过CAS进行认证，并获取一个票据（ticket）。用户访问其他应用时，应用服务器将票据发送给CAS进行验证，从而实现单点登录。</li>
+</ol>
+<p>这些思路和技术并非互斥，可以根据具体需求和系统架构的复杂性选择适合的实现方式。此外，还可以使用现有的SSO解决方案和身份管理平台，如Auth0、Okta、Keycloak等，简化SSO的实现过程。</p>
+<h3 id="基于-oauth2-单点登录">基于 OAuth2 单点登录</h3>
+<p>在 <a href="https://github.com/chensoul/spring-security-oauth2-legacy-examples" target="_blank">spring-security-oauth2-legacy-examples</a> 添加单点登录 github 示例。参考了 <a href="https://github.com/apereo/oauth2-sample-java-webapp" target="_blank">oauth2-sample-java-webapp</a></p>
+<h3 id="cas-实现单点登录">CAS 实现单点登录</h3>
+<p>CAS（Central Authentication Service）是一套完整的统一身份认证解决方案，完整资料可查阅其 <a href="https://www.apereo.org/projects/cas" target="_blank">官方网站</a>。CAS包括对应的协议(CAS Protocol)、协议的实现(CAS Server)和与CAS服务交互的软件包(CAS Client)。</p>
+<p>CAS Client接入示例：https://github.com/apereo?q=client</p>
+<p>CAS 交互时序图：</p>
+<p><img src="../../../static/images/cas_flow_diagram.webp" alt="img"></p>
+<p>参考 <a href="https://blog.csdn.net/dgfdhgghd/article/details/129321234" target="_blank">SpringBoot+CAS整合服务端和客户端实现SSO单点登录与登出快速入门上手</a> 这篇文章，代码在 <a href="https://github.com/chensoul/cas-examples" target="_blank">这里</a>。</p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/" target="_blank" title="[译]REST API 的自定义错误消息处理">[译]REST API 的自定义错误消息处理</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/25/spring-security-async-principal-propagation/" target="_blank" title="[译]使用@Async进行Spring Security上下文传播">[译]使用@Async进行Spring Security上下文传播</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/" target="_blank" title="[译]没有WebSecurityConfigurerAdapter的Spring Security.md">[译]没有WebSecurityConfigurerAdapter的Spring Security.md</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-oauth2/" target="_blank" title="[译]Spring Security - OAuth2">[译]Spring Security - OAuth2</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/02/til/" target="_blank" title="2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel">2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/20/til/" target="_blank" title="2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台">2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/github/" rel="tag">github</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/01/08/til/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: 2024-01-08｜VPS 迁移</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/01/10/til/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 2024-01-10｜ Java审计框架inspektr</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/01\/09\/til\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#实现单点登录并测试">实现单点登录并测试</a>
+      <ul>
+        <li><a href="#基于-oauth2-单点登录">基于 OAuth2 单点登录</a></li>
+        <li><a href="#cas-实现单点登录">CAS 实现单点登录</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

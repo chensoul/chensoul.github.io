@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/07/26/spring-boot-authorization-server/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">
+  <meta itemprop="description" content="概述 在本文中，我们将创建一个授权服务器，为任何客户端生成 access_token。这称为 OAuth2 的 client_credentials 流程。它主要用于服务间通信。">
+  <meta itemprop="datePublished" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-07-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="462">
+  <meta itemprop="keywords" content="Java,Javascript,Backend,Security">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-07-26">2023-07-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>, <a class="meta__link" href="/tags/security/" rel="tag">Security</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h1 id="概述">概述</h1>
+<p>在本文中，我们将创建一个授权服务器，为任何客户端生成 access_token。这称为 OAuth2 的 <code>client_credentials</code> 流程。它主要用于服务间通信。</p>
+<p>我们将使用 spring boot oauth2 授权服务器依赖项来创建身份验证服务器。我们还将创建一个资源服务器和客户端来对其进行端到端测试。</p>
+<h1 id="spring-授权服务器">Spring 授权服务器</h1>
+<p>我们首先创建授权服务器。</p>
+<h2 id="依赖项">依赖项：</h2>
+<p>让我们将以下依赖项添加到我们的项目中。</p>
+<pre tabindex="0"><code>implementation &#39;org.springframework.security:spring-security-oauth2-authorization-server:1.0.0&#39;
+implementation &#39;org.springframework.boot:spring-boot-starter-security&#39;
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39;
+testImplementation &#39;org.springframework.boot:spring-boot-starter-test&#39;
+testImplementation &#39;org.springframework.security:spring-security-test&#39;
+</code></pre><p>我们正在使用 spring oauth2 依赖项的最新（当时）稳定版本。</p>
+<h2 id="java-实现">Java 实现：</h2>
+<p>让我们创建一个名为 AuthorizationServerConfig 的配置类，并向该类添加 @Configuration 注解。现在让我们创建以下 bean 来完成配置：</p>
+<ul>
+<li><strong>SecurityFilterChain</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Order</span>(Ordered.<span style="color:#a6e22e">HIGHEST_PRECEDENCE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> SecurityFilterChain <span style="color:#a6e22e">authServerSecurityFilterChain</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>    OAuth2AuthorizationServerConfiguration.<span style="color:#a6e22e">applyDefaultSecurity</span>(http);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> http.<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们将把 bean 的顺序设置为最高，因为我们想首先执行它。</p>
+<ul>
+<li><strong>RegisteredClientRepository</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> RegisteredClientRepository <span style="color:#a6e22e">registeredClientRepository</span>() {
+</span></span><span style="display:flex;"><span>    RegisteredClient registeredClient <span style="color:#f92672">=</span> RegisteredClient.<span style="color:#a6e22e">withId</span>(UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>())
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">clientId</span>(<span style="color:#e6db74">&#34;oauth-client&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">clientSecret</span>(<span style="color:#e6db74">&#34;{noop}oauth-secret&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">clientAuthenticationMethod</span>(ClientAuthenticationMethod.<span style="color:#a6e22e">CLIENT_SECRET_BASIC</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">authorizationGrantType</span>(AuthorizationGrantType.<span style="color:#a6e22e">CLIENT_CREDENTIALS</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">scope</span>(OidcScopes.<span style="color:#a6e22e">OPENID</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">scope</span>(<span style="color:#e6db74">&#34;articles.read&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> InMemoryRegisteredClientRepository(registeredClient);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在让我们使用内存存储库对内容进行硬编码。我们可以根据我们的需要更新这些。</p>
+<ul>
+<li><strong>JwtDecoder</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> JwtDecoder <span style="color:#a6e22e">jwtDecoder</span>(JWKSource<span style="color:#f92672">&lt;</span>SecurityContext<span style="color:#f92672">&gt;</span> jwkSource) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> OAuth2AuthorizationServerConfiguration.<span style="color:#a6e22e">jwtDecoder</span>(jwkSource);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们将使用它来解码令牌以进行验证。</p>
+<ul>
+<li><strong>JWKSource</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> JWKSource<span style="color:#f92672">&lt;</span>SecurityContext<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">jwkSource</span>() <span style="color:#66d9ef">throws</span> NoSuchAlgorithmException {
+</span></span><span style="display:flex;"><span>    RSAKey rsaKey <span style="color:#f92672">=</span> generateRsa();
+</span></span><span style="display:flex;"><span>    JWKSet jwkSet <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> JWKSet(rsaKey);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (jwkSelector, securityContext) <span style="color:#f92672">-&gt;</span> jwkSelector.<span style="color:#a6e22e">select</span>(jwkSet);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> RSAKey <span style="color:#a6e22e">generateRsa</span>() <span style="color:#66d9ef">throws</span> NoSuchAlgorithmException {
+</span></span><span style="display:flex;"><span>    KeyPair keyPair <span style="color:#f92672">=</span> generateRsaKey();
+</span></span><span style="display:flex;"><span>    RSAPublicKey publicKey <span style="color:#f92672">=</span> (RSAPublicKey) keyPair.<span style="color:#a6e22e">getPublic</span>();
+</span></span><span style="display:flex;"><span>    RSAPrivateKey privateKey <span style="color:#f92672">=</span> (RSAPrivateKey) keyPair.<span style="color:#a6e22e">getPrivate</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> RSAKey.<span style="color:#a6e22e">Builder</span>(publicKey)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">privateKey</span>(privateKey)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">keyID</span>(UUID.<span style="color:#a6e22e">randomUUID</span>().<span style="color:#a6e22e">toString</span>())
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> KeyPair <span style="color:#a6e22e">generateRsaKey</span>() <span style="color:#66d9ef">throws</span> NoSuchAlgorithmException {
+</span></span><span style="display:flex;"><span>    KeyPairGenerator keyPairGenerator <span style="color:#f92672">=</span> KeyPairGenerator.<span style="color:#a6e22e">getInstance</span>(<span style="color:#e6db74">&#34;RSA&#34;</span>);
+</span></span><span style="display:flex;"><span>    keyPairGenerator.<span style="color:#a6e22e">initialize</span>(2048);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> keyPairGenerator.<span style="color:#a6e22e">generateKeyPair</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们在解码器 bean 中使用这个源，所以我们需要定义它。我们使用 RSA 2048 密钥对，我们也可以在需要时更改它。</p>
+<ul>
+<li><strong>AuthorizationServerSettings</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> AuthorizationServerSettings <span style="color:#a6e22e">authorizationServerSettings</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> AuthorizationServerSettings.<span style="color:#a6e22e">builder</span>().<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在我们已经配置了一切，让我们尝试运行应用程序并获取令牌：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#39;http://localhost:9090/oauth2/token?grant_type=client_credentials&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --header <span style="color:#e6db74">&#39;Authorization: Basic b2F1dGgtY2xpZW50Om9hdXRoLXNlY3JldA==&#39;</span>
+</span></span></code></pre></div><p>注意：根据您的配置更新端口号。</p>
+<p>它应该给出如下响应：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;access_token&#34;</span>: <span style="color:#e6db74">&#34;eyJraWQiOiJiYWM0ZmMxYS02MGJiLTQ0ZTAtODU4MC1iNzcwYWU2MjkwZWEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvYXV0aC1jbGllbnQiLCJhdWQiOiJvYXV0aC1jbGllbnQiLCJuYmYiOjE2NzQ5ODYzNjcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTA5MCIsImV4cCI6MTY3NDk4NjY2NywiaWF0IjoxNjc0OTg2MzY3fQ.DxiIbV7jdRnW15WnnqcjFCLyfXmrU_trl1M3nxej_nIWK60Jx9Vm4HzpxBJugemhrMg-qizQ03TTNswfL9AgTIsLeh_D8TDjcQJy6XFWgElxfUYqUFeZmlXPmQKFmmPyIChlSAFbX1L8QvcgFE1c8GHC900RiKVgGLhT5MOZx5l1WBCbNQ_Rv2u9utcz7EqYTb0y_PjD4EC8UaGdGGlqvEAnKvRVIhxRqFarqh-OW4oUfwfwu1xQIvyWphSDegcOjIERFkhVcQeKO-a3zZS9sfJ03ppZhzAsa5O-qswtbzThO9SWQg7JUgyo7qd-zHIRhwPtEWxDGaBt2QGo7jjopw&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;token_type&#34;</span>: <span style="color:#e6db74">&#34;Bearer&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;expires_in&#34;</span>: <span style="color:#ae81ff">299</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="spring-资源服务器">Spring 资源服务器</h1>
+<p>现在让我们创建一个受此身份验证服务器保护的 API 端点，其范围为我们在令牌创建中使用的 articles.read。</p>
+<h2 id="依赖项-1">依赖项：</h2>
+<p>让我们将以下依赖项添加到我们的项目中：</p>
+<pre tabindex="0"><code>implementation &#39;org.springframework.boot:spring-boot-starter-oauth2-resource-server&#39;
+implementation &#39;org.springframework.boot:spring-boot-starter-security&#39;
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39;
+testImplementation &#39;org.springframework.boot:spring-boot-starter-test&#39;
+testImplementation &#39;org.springframework.security:spring-security-test&#39;
+</code></pre><h2 id="java-实现-1">Java 实现：</h2>
+<p>让我们首先创建一个简单的 rest 控制器，然后创建一个配置，以在正确的范围内保护该 API。之后，我们将在 application.yml 文件中配置身份验证服务器设置。</p>
+<ul>
+<li><strong>API 控制器</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ArticlesController</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/articles&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">getArticles</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> String<span style="color:#f92672">[]</span> { <span style="color:#e6db74">&#34;Article 1&#34;</span>, <span style="color:#e6db74">&#34;Article 2&#34;</span>, <span style="color:#e6db74">&#34;Article 3&#34;</span> };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们创建了一个简单的 GET API 端点 /articles，它将返回文章列表。</p>
+<ul>
+<li><strong>ResourceServerConfig</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@EnableWebSecurity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResourceServerConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    SecurityFilterChain <span style="color:#a6e22e">securityFilterChain</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        http
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">authorizeRequests</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">requestMatchers</span>(<span style="color:#e6db74">&#34;/articles/**&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">access</span>(<span style="color:#e6db74">&#34;hasAuthority(&#39;SCOPE_articles.read&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">and</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">oauth2ResourceServer</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">jwt</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> http.<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们将创建一个配置类并使用@EnableWebSecurity 对其进行注释。我们将创建一个 SecurityFilterChain 的 bean，在其中定义 API 和所需的范围。</p>
+<ul>
+<li><strong>application.yml</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">resourceserver</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">jwt</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">issuer-uri</span>: <span style="color:#ae81ff">http://localhost:9090</span>
+</span></span></code></pre></div><p>我们在这里定义 oauth2 配置，注意将 issuer-url 的端口更新为正确的端口。</p>
+<p>现在一切都已配置完毕，让我们启动该服务并向 API 发出带有或不带有令牌的请求。您应该得到一个没有令牌或带有无效令牌的 401 响应，并且您应该得到带有有效令牌的正确响应。</p>
+<h1 id="客户端服务器">客户端服务器</h1>
+<p>我们现在将创建一个简单的 Spring Boot 项目，它将使用资源服务器创建的 API。我们将在此处配置身份验证服务器详细信息，以便它在发出 API 请求之前自动获取令牌。</p>
+<h2 id="依赖项-2">依赖项：</h2>
+<pre tabindex="0"><code>implementation &#39;org.springframework.boot:spring-boot-starter-oauth2-client&#39;
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39;
+implementation &#39;org.springframework:spring-webflux&#39;
+testImplementation &#39;org.springframework.boot:spring-boot-starter-test&#39;
+testImplementation &#39;org.springframework.security:spring-security-test&#39;
+</code></pre><h2 id="java-实现-2">Java 实现：</h2>
+<p>我们首先创建配置类，然后创建一个测试 API 来向资源服务器发出请求。之后，我们将在 application.yml 文件中定义令牌配置。</p>
+<ul>
+<li>**SecurityConfig **</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityConfig</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    SecurityFilterChain <span style="color:#a6e22e">securityFilterChain</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> http.<span style="color:#a6e22e">oauth2Client</span>().<span style="color:#a6e22e">and</span>().<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    WebClient <span style="color:#a6e22e">webClient</span>(OAuth2AuthorizedClientManager authorizedClientManager) {
+</span></span><span style="display:flex;"><span>        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> WebClient.<span style="color:#a6e22e">builder</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">apply</span>(oauth2Client.<span style="color:#a6e22e">oauth2Configuration</span>())
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    OAuth2AuthorizedClientManager <span style="color:#a6e22e">authorizedClientManager</span>(ClientRegistrationRepository clientRegistrationRepository,
+</span></span><span style="display:flex;"><span>      OAuth2AuthorizedClientService oAuth2AuthorizedClientService,
+</span></span><span style="display:flex;"><span>      OAuth2AccessTokenResponseClient<span style="color:#f92672">&lt;</span>OAuth2ClientCredentialsGrantRequest<span style="color:#f92672">&gt;</span> tokenResponseClient) {
+</span></span><span style="display:flex;"><span>        OAuth2AuthorizedClientProvider authorizedClientProvider <span style="color:#f92672">=</span> OAuth2AuthorizedClientProviderBuilder.<span style="color:#a6e22e">builder</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">clientCredentials</span>(r <span style="color:#f92672">-&gt;</span> r.<span style="color:#a6e22e">accessTokenResponseClient</span>(tokenResponseClient)).<span style="color:#a6e22e">clientCredentials</span>().<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> authorizedClientManager <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AuthorizedClientServiceOAuth2AuthorizedClientManager(
+</span></span><span style="display:flex;"><span>          clientRegistrationRepository, oAuth2AuthorizedClientService);
+</span></span><span style="display:flex;"><span>        authorizedClientManager.<span style="color:#a6e22e">setAuthorizedClientProvider</span>(authorizedClientProvider);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> authorizedClientManager;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>    OAuth2AccessTokenResponseClient<span style="color:#f92672">&lt;</span>OAuth2ClientCredentialsGrantRequest<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">tokenResponseClient</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> DefaultClientCredentialsTokenResponseClient();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><strong>application.yml</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">security</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">oauth2</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">client</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">registration</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">articles-client</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-id</span>: <span style="color:#ae81ff">oauth-client</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-secret</span>: <span style="color:#ae81ff">oauth-secret</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">authorization-grant-type</span>: <span style="color:#ae81ff">client_credentials</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">scope</span>: <span style="color:#ae81ff">articles.read</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">client-name</span>: <span style="color:#ae81ff">spring-client</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">provider</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">articles-client</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">token-uri</span>: <span style="color:#ae81ff">http://localhost:9090/oauth2/token</span>
+</span></span></code></pre></div><ul>
+<li>客户端 API（向资源服务器发出请求）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ArticlesController</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> WebClient webClient;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@GetMapping</span>(value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/test&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String<span style="color:#f92672">[]</span> <span style="color:#a6e22e">test</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">webClient</span>
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">get</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">uri</span>(<span style="color:#e6db74">&#34;http://127.0.0.1:9091/articles&#34;</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">attributes</span>(clientRegistrationId(<span style="color:#e6db74">&#34;articles-client&#34;</span>))
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">retrieve</span>()
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">bodyToMono</span>(String<span style="color:#f92672">[]</span>.<span style="color:#a6e22e">class</span>)
+</span></span><span style="display:flex;"><span>          .<span style="color:#a6e22e">block</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们可以在这里看到，当我们调用 /test API 时，它会从我们的身份验证服务器获取令牌，然后向我们的资源服务器 /articles 端点发出请求并返回响应。</p>
+<p>让我们运行所有三个服务器并向客户端服务器发出请求，它应该返回正确的响应。请注意更新所有位置的端口号。在示例中，我使用了以下端口：</p>
+<ul>
+<li>9090: auth-server</li>
+<li>9091: resource-server</li>
+<li>9092: client-server</li>
+</ul>
+<h1 id="结论">结论</h1>
+<p>在本文中，我们学习了如何使用 Spring Boot 创建授权服务器以及如何在资源服务器和客户端服务器中配置它。</p>
+<p>您可以在此 GitHub 存储库中找到此 <a href="https://github.com/kumarprabhashanand/spring-authorization-server" target="_blank">示例的代码</a>。</p>
+<p>原文链接：<a href="https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2" target="_blank">https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-info-endpoint/" target="_blank" title="[译]使用Spring Boot Actuator公开有用的信息端点">[译]使用Spring Boot Actuator公开有用的信息端点</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring-scopes/" target="_blank" title="[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）">[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/using-oauth2-in-spring/" target="_blank" title="[译]在 Spring 中实现 OAuth2：第 1 部分">[译]在 Spring 中实现 OAuth2：第 1 部分</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-boot-exception-handling/" target="_blank" title="[译]Spring Boot异常处理完整指南">[译]Spring Boot异常处理完整指南</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/26/spring-cors/" target="_blank" title="[译]使用 Spring Boot 和 Spring Security 配置 CORS">[译]使用 Spring Boot 和 Spring Security 配置 CORS</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" target="_blank" title="[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权">[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/security/" rel="tag">security</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/07/26/spring-boot-exception-handling/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]Spring Boot异常处理完整指南</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/07/27/weekly_review_28/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: 周报-28｜技术文档范例</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/07\/26\/spring-boot-authorization-server\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#依赖项">依赖项：</a></li>
+    <li><a href="#java-实现">Java 实现：</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#依赖项-1">依赖项：</a></li>
+    <li><a href="#java-实现-1">Java 实现：</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#依赖项-2">依赖项：</a></li>
+    <li><a href="#java-实现-2">Java 实现：</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

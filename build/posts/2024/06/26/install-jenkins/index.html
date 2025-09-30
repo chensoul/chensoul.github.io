@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jenkins安装和部署-使用Docker - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Jenkins安装和部署-使用Docker">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2024/06/26/install-jenkins/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="Jenkins安装和部署-使用Docker">
+  <meta itemprop="description" content="使用 Docker 安装 $ docker volume create --name jenkins_data $ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21 第一次启动 Jenkins 时，Docker 日志将包含如下消息：">
+  <meta itemprop="datePublished" content="2024-06-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-06-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="574">
+  <meta itemprop="keywords" content="Docker,Javascript,Tutorial,Maven">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Jenkins安装和部署-使用Docker">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Jenkins安装和部署-使用Docker</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2024-06-26">2024-06-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/devops/" rel="category">Devops</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/docker/" rel="tag">Docker</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/tutorial/" rel="tag">Tutorial</a>, <a class="meta__link" href="/tags/maven/" rel="tag">Maven</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="使用-docker-安装">使用 Docker 安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ docker volume create --name jenkins_data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
+</span></span></code></pre></div><p>第一次启动 Jenkins 时，Docker 日志将包含如下消息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Jenkins initial setup is required. An admin user has been created and a password generated.
+</span></span><span style="display:flex;"><span>Please use the following password to proceed to installation:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1883c809f01b4ed585fb5c3e0156543a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+</span></span></code></pre></div><p>那串随机的数字和字母是初始管理员密码，这是完成 Jenkins 配置所必需的。</p>
+<h2 id="使用-docker-compose-安装">使用 Docker Compose 安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">jenkins</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">jenkins/jenkins:jdk21</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;8080:8080&#34;</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;50000:50000&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">jenkins_data://var/jenkins_home</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">/var/run/docker.sock://var/run/docker.sock</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">/etc/localtime://etc/localtime:ro</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">jenkins_data</span>:
+</span></span></code></pre></div><h2 id="在-docker-中下载并运行-jenkins">在 Docker 中下载并运行 Jenkins</h2>
+<p>参考 <a href="https://www.jenkins.io/doc/book/installing/docker/" target="_blank">在 Docker 中下载并运行 Jenkins</a>。</p>
+<p>定制官方 Jenkins Docker 镜像，例如，安装 curl、maven、docker-ce-cli</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> jenkins/jenkins:jdk21</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> root</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install -y curl maven lsb-release<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  https://download.docker.com/linux/debian/gpg<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> echo <span style="color:#e6db74">&#34;deb [arch=</span><span style="color:#66d9ef">$(</span>dpkg --print-architecture<span style="color:#66d9ef">)</span><span style="color:#e6db74"> \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  https://download.docker.com/linux/debian \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> stable&#34;</span> &gt; /etc/apt/sources.list.d/docker.list<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install -y docker-ce-cli<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> jenkins</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> jenkins-plugin-cli --plugins <span style="color:#e6db74">&#34;blueocean docker-workflow&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><blockquote>
+<p>更多定制，可以参考 <a href="https://github.com/taypo/jenkins/blob/master/Dockerfile" target="_blank">https://github.com/taypo/jenkins/blob/master/Dockerfile</a></p></blockquote>
+<p>从该 Dockerfile 构建一个新的 Docker 镜像，并为该镜像分配一个有意义的名称，例如“myjenkins-blueocean：2.452.2-1”：</p>
+<pre tabindex="0"><code>docker build -t myjenkins-blueocean:2.452.2-1 .
+</code></pre><p>创建一个 docker-compose 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">jenkins-docker</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker:dind</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">DOCKER_TLS_CERTDIR=/certs</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;2376:2376&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">jenkins_docker_certs://certs/client</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">jenkins_data://var/jenkins_home</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">jenkins-blueocean</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">myjenkins-blueocean:2.452.2-1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">DOCKER_HOST=tcp://jenkins-docker:2376</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">DOCKER_CERT_PATH=/certs/client</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">DOCKER_TLS_VERIFY=1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;8080:8080&#34;</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;50000:50000&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">jenkins_docker_certs://certs/client:ro</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#ae81ff">jenkins_data://var/jenkins_home</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">jenkins_data</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">jenkins_docker_certs</span>:
+</span></span></code></pre></div><h2 id="jenkins-设置">Jenkins 设置</h2>
+<p>登录之后，修改默认默默，安装插件，并创建第一个用户。</p>
+<h3 id="配置-jdk-和-maven">配置 JDK 和 Maven</h3>
+<p>JDK 可以使用 jenkins 镜像自带的，jenkins 默认使用 JDK17，如果需要指定 JDK 版本，可以使用 <code>jenkins/jenkins:xx-jdk8</code> 镜像。JAVA_HOME 地址 <strong>/opt/java/openjdk</strong></p>
+<p>Maven 可以进入容器安装，或者在 jenkins 配置通过命令自动安装。</p>
+<h3 id="配置镜像加速">配置镜像加速</h3>
+<p>打开宿主机 Jenkins 工作目录下的hudson.model.UpdateCenter.xml文件。url 修改为国内的清华大学官方镜像地址，最终内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#39;1.1&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;sites&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;site&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;id&gt;</span>default<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;url&gt;</span>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/site&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/sites&gt;</span>
+</span></span></code></pre></div><h3 id="配置github-ssh-key">配置Github SSH key</h3>
+<p>在Jenkins用户下，生成一对ssh key，将公钥放到github，私钥配置到上面docker token同样的位置即可。这样在job中可以使用ssh从github clone code。注意如果首次连接提示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>No ECDSA host key is known <span style="color:#66d9ef">for</span> github.houston.softwaregrp.net and you have requested strict checking.
+</span></span></code></pre></div><p>可以采用下面的方法解决：</p>
+<p><img src="../../../static/images/jenkins-ssh-key.webp" alt="img"></p>
+<h3 id="配置ssh登录">配置SSH登录</h3>
+<p>如果在Jenkins Pipeline中需要ssh到远程server，需要配置下ssh key，把生成好的public key放到远端server的authorized keys里面就行了。</p>
+<h3 id="配置反向代理">配置反向代理</h3>
+<p>参考 《<a href="https://akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c" target="_blank">CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？</a>》。</p>
+<ol>
+<li>
+<p>准备好 SSL 文件，放置 /etc/nginx/ssl 目录</p>
+</li>
+<li>
+<p>安装 nginx。</p>
+</li>
+<li>
+<p>创建一个 nginx conf 文件 jenkins.conf 放到 nginx 的相应目录下。</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e"># Required for Jenkins websocket agents
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">map</span> $http_upgrade $connection_upgrade {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">default</span> <span style="color:#e6db74">upgrade</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#39;&#39;</span> <span style="color:#e6db74">close</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">jenkins.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rewrite</span> <span style="color:#e6db74">^</span> <span style="color:#e6db74">https://</span>$http_host$request_uri? <span style="color:#e6db74">permanent</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span> <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">jenkins.chensoul.cc</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate</span> <span style="color:#e6db74">/etc/nginx/ssl/all.crt</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_certificate_key</span> <span style="color:#e6db74">/etc/nginx/ssl/all.key</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_session_timeout</span> <span style="color:#ae81ff">5m</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_protocols</span> <span style="color:#e6db74">TLSv1</span> <span style="color:#e6db74">TLSv1.1</span> <span style="color:#e6db74">TLSv1.2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_ciphers</span> <span style="color:#e6db74">ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ssl_prefer_server_ciphers</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">client_max_body_size</span> <span style="color:#e6db74">1g</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">access_log</span> <span style="color:#e6db74">/var/log/nginx/jenkins.log</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># pass through headers from Jenkins that Nginx considers invalid
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">ignore_invalid_headers</span> <span style="color:#66d9ef">off</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> ~ <span style="color:#e6db74">&#34;^/static/[0-9a-fA-F]</span>{<span style="color:#f92672">8}\/(.*)$&#34;</span> {
+</span></span><span style="display:flex;"><span>    	<span style="color:#75715e"># rewrite all static files into requests to the root
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#75715e"># E.g /static/12345678/css/something.css will become /css/something.css
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    	<span style="color:#f92672">rewrite</span> <span style="color:#e6db74">&#34;^/static/[0-9a-fA-F]</span>{<span style="color:#f92672">8}\/(.*)&#34;</span> <span style="color:#e6db74">/</span>$1 <span style="color:#e6db74">last</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://192.168.1.107:8080</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_redirect</span>     <span style="color:#e6db74">default</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_http_version</span> <span style="color:#ae81ff">1</span><span style="color:#e6db74">.1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Required for Jenkins websocket agents
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">Connection</span>        $connection_upgrade;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span>   <span style="color:#e6db74">Upgrade</span>           $http_upgrade;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-Proto</span> <span style="color:#e6db74">http</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_max_temp_file_size</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_connect_timeout</span> <span style="color:#ae81ff">150</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_send_timeout</span> <span style="color:#ae81ff">100</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_read_timeout</span> <span style="color:#ae81ff">100</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_buffer_size</span> <span style="color:#ae81ff">8k</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_buffers</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">32k</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_busy_buffers_size</span> <span style="color:#ae81ff">64k</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_temp_file_write_size</span> <span style="color:#ae81ff">64k</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>192.168.1.107 为宿主机的 IP 地址。</li>
+</ul>
+<h2 id="向-jenkins-镜像添加其他软件">向 Jenkins 镜像添加其他软件</h2>
+<p>创建一个 Dockerfile 文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> jenkins/jenkins:lts</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> root</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt update <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    apt install -y --no-install-recommends gnupg curl ca-certificates apt-transport-https<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> jenkins</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>安装新插件的最简单方法是使用 Jenkins Web UI，另外也可以使用 jenkins-plugin-cli，Jenkins 插件可以从 <a href="https://plugins.jenkins.io/" target="_blank">Jenkins 插件网站</a> 查找。</p>
+<p>比如，下面 Dockerfile 文件安装了 Git 插件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> jenkins/jenkins:lts</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> root</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt update <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    apt install -y --no-install-recommends gnupg curl ca-certificates apt-transport-https<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> jenkins</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> jenkins-plugin-cli --plugins git:5.2.2<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h2 id="备份">备份</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --rm -v jenkins_data://var/jenkins_home -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>://backup ubuntu tar cvf /backup/backup.tar /var/jenkins_home
+</span></span></code></pre></div><h2 id="将-docker-镜像作为服务运行">将 Docker 镜像作为服务运行</h2>
+<p>要创建新的 systemd 服务，请将以下内容保存到文件<code>/etc/systemd/system/docker-jenkins.service</code>：</p>
+<pre tabindex="0"><code>[Unit]
+Description=Jenkins
+
+[Service]
+SyslogIdentifier=docker-jenkins
+ExecStartPre=-/usr/bin/docker create -m 0b -p 8080:8080 -p 50000:50000 --restart=always --name jenkins jenkins/jenkins:lts
+ExecStart=/usr/bin/docker start -a jenkins
+ExecStop=-/usr/bin/docker stop --time=0 jenkins
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>要加载新的服务文件，请运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span></code></pre></div><p>要启动该服务，请运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start docker-jenkins
+</span></span></code></pre></div><p>要使服务在重新启动时运行，请运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable docker-jenkins
+</span></span></code></pre></div><p>要查看服务日志，请运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo journalctl -u docker-jenkins -f
+</span></span></code></pre></div><h2 id="参考文章">参考文章</h2>
+<ul>
+<li>
+<p><a href="https://cloud.tencent.com/developer/article/2347137" target="_blank">Docker 安装 Jenkins 并实现项目自动化部署</a></p>
+</li>
+<li>
+<p><a href="https://www.czerniga.it/2021/11/07/how-to-install-jenkins-using-docker-compose/" target="_blank">How to install Jenkins using Docker Compose?</a></p>
+</li>
+</ul>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/26/install-gitlab/" target="_blank" title="Gitlab安装和部署-使用Docker">Gitlab安装和部署-使用Docker</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/25/install-artifactory-oss/" target="_blank" title="搭建本地 Maven 仓库 Artifactory 开源版">搭建本地 Maven 仓库 Artifactory 开源版</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/06/25/install-nexus/" target="_blank" title="搭建本地Maven仓库Nexus">搭建本地Maven仓库Nexus</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2024/01/08/til/" target="_blank" title="2024-01-08｜VPS 迁移">2024-01-08｜VPS 迁移</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/12/12/til/" target="_blank" title="2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测">2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/06/01/python-wheels/" target="_blank" title="[译]什么是 Python Wheels，你为什么要关心它？">[译]什么是 Python Wheels，你为什么要关心它？</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/docker/" rel="tag">docker</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/tutorial/" rel="tag">tutorial</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/maven/" rel="tag">maven</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2024/06/26/install-cert-manager/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: Tengine动态裁剪图片</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2024/06/26/install-gitlab/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: Gitlab安装和部署-使用Docker</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2024\/06\/26\/install-jenkins\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用-docker-安装">使用 Docker 安装</a></li>
+    <li><a href="#使用-docker-compose-安装">使用 Docker Compose 安装</a></li>
+    <li><a href="#在-docker-中下载并运行-jenkins">在 Docker 中下载并运行 Jenkins</a></li>
+    <li><a href="#jenkins-设置">Jenkins 设置</a>
+      <ul>
+        <li><a href="#配置-jdk-和-maven">配置 JDK 和 Maven</a></li>
+        <li><a href="#配置镜像加速">配置镜像加速</a></li>
+        <li><a href="#配置github-ssh-key">配置Github SSH key</a></li>
+        <li><a href="#配置ssh登录">配置SSH登录</a></li>
+        <li><a href="#配置反向代理">配置反向代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#向-jenkins-镜像添加其他软件">向 Jenkins 镜像添加其他软件</a></li>
+    <li><a href="#备份">备份</a></li>
+    <li><a href="#将-docker-镜像作为服务运行">将 Docker 镜像作为服务运行</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

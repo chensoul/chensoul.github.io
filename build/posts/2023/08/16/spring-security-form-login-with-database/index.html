@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>[译]Spring Security - 使用数据库表单登录 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="[译]Spring Security - 使用数据库表单登录">
+	<meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://blog.chensoul.cc/posts/2023/08/16/spring-security-form-login-with-database/">
+	<meta property="og:site_name" content="ChenSoul Blog">
+	<meta property="og:image" content="">
+	
+  <meta itemprop="name" content="[译]Spring Security - 使用数据库表单登录">
+  <meta itemprop="description" content="内容 简介和概述 Spring Security 的基本组件 AuthenticationFilter 认证过滤器 AuthenticationManager 认证管理器 AuthenticationProvider 认证提供者 UserDetailsService 用户详情服务 PasswordEncoder 密码编码器 Spring 安全上下文 表单登录 使用数据库登录 登录尝试限制 入门（实用指南） 简介和概述 除了提供各种内置的身份验证和授权选项之外，Spring Security 还允许我们根据需要自定义身份验证过程。从自定义登录页面到我们自己的自定义身份验证提供程序和身份验证过滤器，我们几乎可以自定义身份验证过程的各个方面。">
+  <meta itemprop="datePublished" content="2023-08-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-08-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1725">
+  <meta itemprop="keywords" content="Mysql,Java,Javascript,Backend">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="[译]Spring Security - 使用数据库表单登录">
+	<meta name="twitter:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps">
+	<meta name="twitter:image" content="">
+
+	<link rel="preconnect" href="//fonts.loli.net" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.loli.net">
+	<link rel="stylesheet" href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="ChenSoul Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/logo.svg" loading="lazy" alt="Site logo" width="60" height="60">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">ChenSoul Blog</div>
+					<div class="logo__tagline">Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">菜单</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">
+				
+				<span class="menu__text">首页</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/">
+				
+				<span class="menu__text">分类</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/tags/">
+				
+				<span class="menu__text">标签</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/index.xml">
+				
+				<span class="menu__text">订阅</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/">
+				
+				<span class="menu__text">关于</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">[译]Spring Security - 使用数据库表单登录</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 1 1 0 28 1 1 0 0 1 0-28m0 3a3 3 0 1 0 0 22 3 3 0 0 0 0-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class="meta__text" datetime="2023-08-16">2023-08-16</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/spring-boot/" rel="category">Spring-Boot</a>
+	</span>
+</div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg><span class="meta__text"><a class="meta__link" href="/tags/mysql/" rel="tag">Mysql</a>, <a class="meta__link" href="/tags/java/" rel="tag">Java</a>, <a class="meta__link" href="/tags/javascript/" rel="tag">Javascript</a>, <a class="meta__link" href="/tags/backend/" rel="tag">Backend</a>
+	</span>
+</div>
+</div>
+		</header>
+		
+		<div class="content post__content clearfix">
+			<h2 id="内容">内容</h2>
+<ul>
+<li>简介和概述</li>
+<li>Spring Security 的基本组件
+<ul>
+<li>AuthenticationFilter 认证过滤器</li>
+<li>AuthenticationManager 认证管理器</li>
+<li>AuthenticationProvider 认证提供者</li>
+<li>UserDetailsService 用户详情服务</li>
+<li>PasswordEncoder 密码编码器</li>
+<li>Spring 安全上下文</li>
+<li>表单登录</li>
+<li>使用数据库登录</li>
+<li>登录尝试限制</li>
+</ul>
+</li>
+<li>入门（实用指南）</li>
+</ul>
+<h2 id="简介和概述">简介和概述</h2>
+<p>除了提供各种内置的身份验证和授权选项之外，Spring Security 还允许我们根据需要自定义身份验证过程。从自定义登录页面到我们自己的自定义身份验证提供程序和身份验证过滤器，我们几乎可以自定义身份验证过程的各个方面。</p>
+<p>我们可以定义自己的身份验证过程，范围可以从使用用户名和密码的基本身份验证到复杂的身份验证，例如使用令牌和 OTP 的双因素身份验证。此外，我们可以使用各种数据库 - 关系数据库和非关系数据库，使用各种密码编码器，将恶意用户锁定在其帐户之外，等等。</p>
+<p>今天，我们将讨论三种此类自定义，即自定义表单登录、数据库提供的身份验证以及限制登录尝试。尽管这些都是非常基本的用例，但它们仍然可以让我们更仔细地了解 Spring Security 的身份验证和授权过程。我们还将建立一个注册页面，用户可以通过该页面在我们的应用程序中进行注册。</p>
+<p>首先我们看一下 Spring Security 的架构。它从 servlet 过滤器开始。这些过滤器拦截请求，对其执行操作，然后将请求传递到过滤器链中的下一个过滤器或请求处理程序，或者在不满足某些条件时阻止它们。正是在这个过程中，Spring Security 可以对请求进行身份验证并对请求执行各种身份验证检查。</p>
+<p>它还可以通过不允许未经身份验证或恶意请求访问我们受保护的资源来阻止它们通过。因此我们的应用程序和资源受到保护。</p>
+<h2 id="spring-security-架构的组件">Spring Security 架构的组件</h2>
+<p><img src="../../../static/images/components_of_spring_security_architecture.webp" alt="Components of Spring Security Architecture"></p>
+<p>正如我们在上图中看到的那样，Spring Security 的基本组件如下所示。我们将在讨论过程中简要讨论它们。我们还将讨论它们在身份验证和授权过程中的角色。</p>
+<h3 id="authenticationfilter-认证过滤器">AuthenticationFilter 认证过滤器</h3>
+<p>这是拦截请求并尝试对其进行身份验证的过滤器。在 Spring Security 中，它将请求转换为身份验证对象并将身份验证委托给 AuthenticationManager。</p>
+<h3 id="authenticationmanager-认证管理器">AuthenticationManager 认证管理器</h3>
+<p>它是身份验证的主要策略接口。它使用单独的方法 authenticate()来验证请求。 authenticate() 方法执行身份验证，并在身份验证成功时返回 Authentication 对象，或者在身份验证失败时抛出 AuthenticationException。如果该方法无法决定，它将返回 null。这个过程中的认证过程委托给了我们接下来要讨论的 AuthenticationProvider。</p>
+<h3 id="authenticationprovider-认证提供者">AuthenticationProvider 认证提供者</h3>
+<p>AuthenticationManager 由 ProviderManager 实现，后者将流程委托给一个或多个 AuthenticationProvider 实例。任何实现 AuthenticationProvider 接口的类都必须实现两个方法——authenticate() 和 supports()。首先，我们来谈谈 supports()方法。它用于检查我们的 AuthenticationProvider 实现类是否支持特定的身份验证类型。如果支持则返回 true，否则返回 false。</p>
+<p>接下来是 authenticate() 方法。这是身份验证发生的地方。如果支持该认证类型，则启动认证过程。这里这个类可以使用 UserDetailsS​​ervice 实现的 loadUserByUsername() 方法。如果未找到用户，则会抛出 UsernameNotFoundException。</p>
+<p>另一方面，如果找到用户，则使用该用户的身份验证详细信息来验证该用户。例如，在基本认证场景中，可以将用户提供的密码与数据库中的密码进行核对。如果发现它们彼此匹配，则说明成功。然后我们可以从此方法返回一个 Authentication 对象，该对象将存储在安全上下文中，我们将在稍后讨论。</p>
+<h3 id="userdetailsservice-用户详情服务">UserDetailsService 用户详情服务</h3>
+<p>它是 Spring Security 的核心接口之一。任何请求的身份验证主要取决于 UserDetailsS​​ervice 接口的实现。它最常用于数据库支持的身份验证中以检索用户数据。通过单独的 loadUserByUsername() 方法的实现来检索数据，我们可以在其中提供逻辑来获取用户的用户详细信息。如果未找到用户，该方法将抛出 UsernameNotFoundException。</p>
+<h3 id="密码编码器">密码编码器</h3>
+<p>在 Spring Security 4 之前，PasswordEncoder 的使用是可选的。用户可以使用内存中身份验证来存储纯文本密码。但 Spring Security 5 强制使用 PasswordEncoder 来存储密码。这使用其多种实现之一对用户的密码进行编码。最常见的实现是 BCryptPasswordEncoder。此外，我们还可以使用 NoOpPasswordEncoder 的实例来进行开发。它将允许密码以纯文本形式存储。</p>
+<p>但它不应该用于生产或现实世界的应用程序。</p>
+<h3 id="spring-安全上下文">Spring 安全上下文</h3>
+<p>这是在成功验证后存储当前已验证用户的详细信息的位置。然后，身份验证对象在会话的整个应用程序中可用。因此，如果我们需要用户名或任何其他用户详细信息，我们需要首先获取 SecurityContext。这是通过 SecurityContextHolder（一个帮助程序类）完成的，它提供对安全上下文的访问。</p>
+<p>我们可以使用 setAuthentication() 和 getAuthentication() 方法分别存储和检索用户详细信息。</p>
+<p>继续，现在让我们讨论我们将在应用程序中使用的三个自定义实现。</p>
+<h3 id="表单登录">表单登录</h3>
+<p>当我们将 Spring Security 添加到现有 Spring 应用程序时，它会添加一个登录表单并设置一个虚拟用户。这是自动配置模式下的 Spring Security。在此模式下，它还设置默认过滤器、身份验证管理器、身份验证提供程序等。此设置是内存中身份验证设置。我们可以覆盖此自动配置来设置我们自己的用户和身份验证过程。我们还可以设置自定义登录方法，例如自定义登录表单。</p>
+<p>Spring Security 只需要了解登录表单的详细信息，例如登录表单的 URI、登录处理 URL 等。然后它将为应用程序呈现我们的登录表单并执行身份验证过程其他提供的配置或 Spring 自己的实现。</p>
+<p>此自定义表单设置只需遵守某些规则即可与 Spring Security 集成。我们需要有一个用户名参数和一个密码参数，参数名称应该是“用户名”和“密码”，因为这些是默认名称。如果我们在自定义中对这些字段使用我们自己的参数名称，我们必须使用 usernameParameter() 和 passwordParameter() 方法通知 Spring Security 这些更改。</p>
+<p>同样，对于我们对登录表单或表单登录方法所做的每一次更改，我们都必须使用适当的方法通知 Spring Security 这些更改，以便它可以将它们与身份验证过程集成。</p>
+<h3 id="使用数据库登录">使用数据库登录</h3>
+<p>正如我们所讨论的，Spring Security 默认情况下自动提供内存中身份验证实现。我们可以通过验证其详细信息存储在数据库中的用户来覆盖这一点。在这种情况下，在对用户进行身份验证时，我们可以根据数据库中的凭据验证用户提供的凭据以进行身份 ​​ 验证。我们还可以让新用户在我们的应用程序中注册并将他们的凭据存储在同一数据库中。</p>
+<p>此外，我们还可以提供更改或更新其密码、角色或其他数据的方法。因此，这为我们提供了可以使用更长时间的持久用户数据。</p>
+<h3 id="登录尝试限制">登录尝试限制</h3>
+<p>为了限制应用程序中的登录尝试，我们可以使用 Spring Security 的 isAccountNonLocked 属性。 Spring Security 的 UserDetails 为我们提供了该属性。我们可以设置一种身份验证方法，如果任何用户或其他人提供不正确的凭据超过一定次数，我们可以锁定他们的帐户。即使用户提供了正确的凭据，Spring Security 也会禁用锁定用户的身份验证。这是 Spring Security 提供的内置功能。</p>
+<p>我们可以将错误登录尝试的次数存储在数据库中。然后，针对每次错误的身份验证尝试，我们可以更新并检查数据库表。当此类尝试的次数超过给定数量时，我们可以将用户锁定在其帐户之外。因此，在帐户解锁之前，用户将无法再次登录。</p>
+<h2 id="入门实用指南">入门（实用指南）</h2>
+<p>现在让我们开始我们的应用程序。下面列出了此应用程序所需的工具 -</p>
+<ul>
+<li><strong>A Java IDE</strong> − 最好是 STS 4，但 Eclipse、IntelliJ Idea 或任何其他 IDE 都可以。</li>
+<li>MySql Server Community Edition - 我们需要在我们的系统中下载并安装 MySql Community Server。我们可以点击这里进入官方网站。</li>
+<li><a href="https://dev.mysql.com/downloads/workbench/" target="_blank">MySql Workbench</a> − 它是一个 GUI 工具，我们可以用来与 MySql 数据库交互。</li>
+</ul>
+<h3 id="数据库设置">数据库设置</h3>
+<p>我们先设置数据库。我们将为此应用程序使用 MySql 数据库实例。 MySql Server 社区版可供免费下载和使用。我们将使用 MySql Workbench 与 MySql 服务器连接，并创建一个名为“spring”的数据库以与我们的应用程序一起使用。</p>
+<p>然后我们将创建两个表 - 用户和尝试 - 来保存我们的用户和登录尝试。如前所述，注册我们的应用程序的用户的详细信息将存储在 users 表中。任何用户的登录尝试次数将根据其用户名存储在 attempts 表中。这样我们就可以跟踪尝试并采取必要的行动。</p>
+<p>让我们看一下设置用户表和尝试表的 SQL。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> users (
+</span></span><span style="display:flex;"><span>   username VARCHAR(<span style="color:#ae81ff">45</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> , password VARCHAR(<span style="color:#ae81ff">45</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> ,
+</span></span><span style="display:flex;"><span>   account_non_locked TINYINT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#ae81ff">1</span> ,
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (username)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> attempts (
+</span></span><span style="display:flex;"><span>   id int(<span style="color:#ae81ff">45</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> AUTO_INCREMENT,
+</span></span><span style="display:flex;"><span>   username varchar(<span style="color:#ae81ff">45</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>, attempts varchar(<span style="color:#ae81ff">45</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>, <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (id)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>我们现在可以向我们的应用程序添加一个虚拟用户。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> users(username,password,account_non_locked)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;user&#39;</span>,<span style="color:#e6db74">&#39;12345&#39;</span>, <span style="color:#66d9ef">true</span>);
+</span></span></code></pre></div><h3 id="项目设置">项目设置</h3>
+<p>像往常一样，我们将使用 Spring 初始化程序来设置我们的项目。我们将使用 Spring Boot 版本 2.3.2 创建一个 Maven 项目。让我们将项目命名为 formlogin（我们可以选择任何我们想要的名称）和组 id 为 com.tutorial.spring.security。此外，我们将在该项目中使用 Java 版本 8。</p>
+<p><img src="../../../static/images/project_setup.webp" alt="Project Setup"></p>
+<h3 id="依赖关系">依赖关系</h3>
+<p>现在，谈到依赖项，我们将在此演示中使应用程序尽可能简单。我们将继续关注今天要探索的功能。因此，我们将选择最少数量的依赖项，这将有助于我们设置应用程序并快速启动和运行。让我们看一下依赖关系 -</p>
+<ul>
+<li><strong>Spring Web</strong> − 它捆绑了与 Web 开发相关的所有依赖项，包括 Spring MVC、REST 和嵌入式 Tomcat 服务器。</li>
+<li><strong>Spring Security</strong> − 用于实现 Spring Security 提供的安全功能。</li>
+<li><strong>Thymeleaf</strong> − 用于 HTML5/XHTML/XML 的服务器端 Java 模板引擎。</li>
+<li><strong>Spring Data JPA</strong> − 除了使用 JPA 规范定义的所有功能之外，Spring Data JPA 还添加了自己的功能，例如存储库模式的无代码实现以及从方法名称创建数据库查询。</li>
+<li><strong>Mysql Driver</strong> − 用于 MySQL 数据库驱动程序。</li>
+</ul>
+<p>有了这五个依赖项，我们现在就可以设置我们的项目了。让我们点击生成按钮。这会将我们的项目下载为 zip 文件。我们可以将其解压到我们选择的文件夹中。然后我们在 IDE 中打开该项目。为此，我们将使用 Spring Tool Suite 4。例子。</p>
+<p>让我们将项目加载到 STS 中。我们的 IDE 需要一些时间来下载依赖项并验证它们。让我们看一下 pom.xml 文件。</p>
+<p>pom.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;ISO-8859-1&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;project</span> <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">   https://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/POM/4.0.0&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;modelVersion&gt;</span>4.0.0<span style="color:#f92672">&lt;/modelVersion&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;parent&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-parent<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;version&gt;</span>2.3.1.RELEASE<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;relativePath/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">&lt;!-- lookup parent from repository --&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/parent&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;groupId&gt;</span>com.tutorial.spring.security<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;artifactId&gt;</span>formlogin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;version&gt;</span>0.0.1-SNAPSHOT<span style="color:#f92672">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;name&gt;</span>formlogin<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;description&gt;</span>Demo project for Spring Boot<span style="color:#f92672">&lt;/description&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;properties&gt;</span> <span style="color:#f92672">&lt;java.version&gt;</span>1.8<span style="color:#f92672">&lt;/java.version&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/properties&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-data-jpa<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-security<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-devtools<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>runtime<span style="color:#f92672">&lt;scope&gt;</span> <span style="color:#f92672">&lt;optional&gt;</span>true<span style="color:#f92672">&lt;/optional&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;groupId&gt;</span>mysql<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;artifactId&gt;</span>mysql-connector-java<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;scope&gt;</span>runtime<span style="color:#f92672">&lt;/scope&gt;</span> <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-starter-test<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.junit.vintage<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>junit-vintage-engine<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;/exclusion&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;/exclusions&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.security<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;artifactId&gt;</span>spring-security-test<span style="color:#f92672">&lt;artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;scope&gt;</span>test<span style="color:#f92672">&lt;/scope&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/dependencies&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#f92672">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span style="color:#f92672">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/build&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/project&gt;</span>
+</span></span></code></pre></div><p>We can see that our project details along with our dependencies are enlisted here.
+我们可以看到我们的项目详细信息以及我们的依赖项都列在这里。</p>
+<h3 id="数据源">数据源</h3>
+<p>我们将在 application.properties 文件中配置数据源。由于我们将使用本地 MySQL 数据库作为数据源，因此我们在此处提供本地数据库实例的 URL、用户名和密码。我们将我们的数据库命名为“spring”。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">spring.datasource.url</span><span style="color:#f92672">=</span><span style="color:#e6db74">jdbc:mysql://localhost:3306/spring</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">spring.datasource.username</span><span style="color:#f92672">=</span><span style="color:#e6db74">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">spring.datasource.password</span><span style="color:#f92672">=</span><span style="color:#e6db74">root</span>
+</span></span></code></pre></div><h3 id="实体">实体</h3>
+<p>现在让我们创建我们的实体。我们从 User 实体开始，它包含三个字段 - 用户名、密码和 accountNonLocked。该 User 类还实现了 Spring Security 的 UserDetails 接口。此类提供核心用户信息。它用于存储用户数据，稍后可以将其封装到 Authentication 对象中。不建议直接实现接口。</p>
+<p>但对于我们的例子，由于这是一个简单的应用程序来演示数据库登录，因此我们直接在这里实现了这个接口以保持简单。我们可以通过在 User 实体周围使用包装类来实现此接口。</p>
+<p><strong>User.java</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.model;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Collection;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.List;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Column;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Entity;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Id;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Table;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.GrantedAuthority;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetails;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Entity</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Table</span>(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;users&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">implements</span> UserDetails {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   *
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> 1L;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Id</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> String username;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> String password; <span style="color:#a6e22e">@Column</span>(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;account_non_locked&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> accountNonLocked;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span>() {
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span>(String username, String password, <span style="color:#66d9ef">boolean</span> accountNonLocked) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> username;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> password;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">accountNonLocked</span> <span style="color:#f92672">=</span> accountNonLocked;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> Collection<span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">extends</span> GrantedAuthority<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getAuthorities</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> List.<span style="color:#a6e22e">of</span>(() <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;read&#34;</span>);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getPassword</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> password;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setPassword</span>(String password) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> password;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUsername</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> username;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUsername</span>(String username) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> username;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isAccountNonExpired</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isAccountNonLocked</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> accountNonLocked;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isCredentialsNonExpired</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isEnabled</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAccountNonLocked</span>(Boolean accountNonLocked) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">accountNonLocked</span> <span style="color:#f92672">=</span> accountNonLocked;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">getAccountNonLocked</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> accountNonLocked;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里要注意 accountNonLocked 字段。 Spring Security 中的每个用户的帐户默认都是解锁的。为了覆盖该属性并在用户超过允许的尝试次数后将用户锁定在其帐户之外，我们将使用该属性。如果用户超过允许的无效尝试次数，我们将使用此属性将他锁定在帐户之外。
+Also, during every authentication attempt, we shall be checking this property with the isAccountNonLocked() method along with the credentials to authenticate the user. Any user with a locked account will not be allowed to authenticate into the application.
+此外，在每次身份验证尝试期间，我们将使用 isAccountNonLocked() 方法检查此属性以及凭据以对用户进行身份验证。任何帐户被锁定的用户都将不允许通过身份验证进入应用程序。</p>
+<p>对于 UserDetails 接口的其他方法，我们现在可以简单地提供一个返回 true 的实现，因为我们不会为此应用程序探索这些属性。</p>
+<p>对于该用户的权限列表，我们现在为他分配一个虚拟角色。我们也不会将此属性用于此应用程序。</p>
+<p><strong>Attempts.java</strong></p>
+<p>继续，让我们创建尝试实体来保存无效尝试计数。在数据库中创建时，我们将在此处包含三个字段 - 用户名、一个名为 attempts 的整数（用于记录尝试次数）和一个标识符。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.model;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Entity;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.GeneratedValue;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.GenerationType;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.persistence.Id;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Entity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Attempts</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Id</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@GeneratedValue</span>(strategy <span style="color:#f92672">=</span> GenerationType.<span style="color:#a6e22e">IDENTITY</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> id;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> String username;
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> attempts;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @return the id
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getId</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> id;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @param id the id to set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setId</span>(<span style="color:#66d9ef">int</span> id) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @return the username
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getUsername</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> username;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @param username the username to set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setUsername</span>(String username) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> username;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @return the attempts
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getAttempts</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> attempts;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * @param attempts the attempts to set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setAttempts</span>(<span style="color:#66d9ef">int</span> attempts) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">attempts</span> <span style="color:#f92672">=</span> attempts;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="存储库">存储库</h3>
+<p>我们已经创建了实体，让我们创建存储库来存储和检索数据。我们将有两个存储库，每个实体类一个。对于这两个存储库接口，我们将扩展 JpaRepository，它为我们提供了内置实现，用于保存和检索 application.properties 文件中配置的数据库中的数据。除了提供的方法或查询之外，我们还可以在此处添加我们的方法或查询。</p>
+<p><strong>UserRepository.java</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.repository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Optional;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.data.jpa.repository.JpaRepository;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.stereotype.Repository;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.User;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Repository</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UserRepository</span> <span style="color:#66d9ef">extends</span> JpaRepository<span style="color:#f92672">&lt;</span>User, String<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>   Optional<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">findUserByUsername</span>(String username);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>正如所讨论的，我们在此处添加了通过用户名检索用户的方法。这将返回我们的用户详细信息，包括用户名、密码和帐户锁定状态。</p>
+<p><strong>AttemptsRepository.java</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.repository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Optional;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.data.jpa.repository.JpaRepository;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.stereotype.Repository;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.Attempts;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Repository</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">AttemptsRepository</span> <span style="color:#66d9ef">extends</span> JpaRepository<span style="color:#f92672">&lt;</span>Attempts, Integer<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>   Optional<span style="color:#f92672">&lt;</span>Attempts<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">findAttemptsByUsername</span>(String username);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>类似地，对于 Attempts，在 AttemptsRepository 中，我们添加了一个自定义方法 findAttemptsByUsername(String username) 来获取有关使用用户名的用户尝试的数据。这将返回一个 Attempts 对象，其中包含用户名和用户尝试身份验证失败的次数。</p>
+<h3 id="配置">配置</h3>
+<p>由于我们将使用自定义登录表单，因此我们必须覆盖 Spring Security 的默认配置。为此，我们创建配置类，该类扩展了 Spring Security 的 WebSecurityConfigurerAdapter 类。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.config;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Bean;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.PasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ApplicationConfig</span> <span style="color:#66d9ef">extends</span> WebSecurityConfigurerAdapter {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Bean</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> PasswordEncoder <span style="color:#a6e22e">passwordEncoder</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> BCryptPasswordEncoder();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">configure</span>(HttpSecurity http) <span style="color:#66d9ef">throws</span> Exception {
+</span></span><span style="display:flex;"><span>      http
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">csrf</span>().<span style="color:#a6e22e">disable</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">authorizeRequests</span>().<span style="color:#a6e22e">antMatchers</span>(<span style="color:#e6db74">&#34;/register**&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">permitAll</span>() .<span style="color:#a6e22e">anyRequest</span>().<span style="color:#a6e22e">authenticated</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">and</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">formLogin</span>() .<span style="color:#a6e22e">loginPage</span>(<span style="color:#e6db74">&#34;/login&#34;</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">permitAll</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">and</span>()
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">logout</span>() .<span style="color:#a6e22e">invalidateHttpSession</span>(<span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">clearAuthentication</span>(<span style="color:#66d9ef">true</span>) .<span style="color:#a6e22e">permitAll</span>();
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这里我们做了两件事 -</p>
+<ul>
+<li>
+<p>首先，我们指定了将要使用的 PasswordEncoder 接口的实现。我们使用 BCryptPasswordEncoder 的实例来对本示例的密码进行编码。 PasswordEncoder 接口有很多实现，我们可以使用其中任何一个。我们在这里选择 BCryptPasswordEncoder 作为最常用的实现。它使用非常强大的 BCrypt 哈希算法对密码进行编码。</p>
+<p>它通过加入盐来防止彩虹表攻击来实现这一点。除此之外，bcrypt 是一个自适应函数：随着时间的推移，迭代次数可以增加以使其变慢，因此即使计算能力不断增加，它仍然可以抵抗暴力搜索攻击。</p>
+</li>
+<li>
+<p>其次，我们重写了 configure()方法来提供登录方法的实现。</p>
+</li>
+<li>
+<ul>
+<li>每当我们使用自定义表单代替 Spring Security 提供的表单进行身份验证时，我们都必须使用 formLogin() 方法通知 Spring Security。</li>
+<li>然后我们还指定登录 URL – /login。稍后我们会将 URL 映射到控制器中的自定义登录页面。</li>
+<li>我们还指定以 /register、/login 开头的端点和注销页面不需要受到保护。我们使用 PermitAll() 方法来做到这一点。这允许每个人访问这些端点。除了这些端点之外，所有端点都需要进行身份验证()。也就是说，用户必须登录才能访问所有其他端点。</li>
+<li>注销时，我们指定会话失效，并清除存储在应用程序 SecurityContext 中的身份验证。</li>
+</ul>
+</li>
+</ul>
+<h3 id="安全设置">安全设置</h3>
+<p>现在，我们将设置身份验证过程。我们将使用数据库设置身份验证并锁定用户帐户。</p>
+<p>让我们首先创建 UserDetailsS​​ervice 的实现。正如我们之前讨论的，我们需要提供使用数据库进行身份验证的自定义实现。这是因为，正如我们所知，Spring Security 默认情况下仅提供内存中的身份验证实现。因此，我们需要使用基于数据库的流程来覆盖该实现。为此，我们需要重写 UserDetailsS​​ervice 的 loadUserByUsername() 方法。</p>
+<h3 id="用户详情服务">用户详情服务</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.security;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Optional;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetails;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UserDetailsService;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.provisioning.UserDetailsManager;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.stereotype.Service;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.User;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.repository.UserRepository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SecurityUserDetailsService</span> <span style="color:#66d9ef">implements</span> UserDetailsService {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> UserRepository userRepository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> UserDetails <span style="color:#a6e22e">loadUserByUsername</span>(String username)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">throws</span> UsernameNotFoundException {
+</span></span><span style="display:flex;"><span>      User user <span style="color:#f92672">=</span> userRepository.<span style="color:#a6e22e">findUserByUsername</span>(username)
+</span></span><span style="display:flex;"><span>         .<span style="color:#a6e22e">orElseThrow</span>(() <span style="color:#f92672">-&lt;</span> <span style="color:#66d9ef">new</span> UsernameNotFoundException(<span style="color:#e6db74">&#34;User not present&#34;</span>));
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> user;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">createUser</span>(UserDetails user) {
+</span></span><span style="display:flex;"><span>      userRepository.<span style="color:#a6e22e">save</span>((User) user);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>正如我们在这里看到的，我们在这里实现了 loadUserByUsername() 方法。在这里，我们使用 UserRepository 接口从数据库中获取用户。如果未找到用户，则会抛出 UsernameNotFoundException。</p>
+<p>我们还有一个 createUser() 方法。我们将使用此方法将已使用 UserRepository 在我们的应用程序中注册的用户添加到我们的数据库中。</p>
+<h3 id="认证提供者">认证提供者</h3>
+<p>我们现在将实现我们的自定义身份验证提供程序。它将实现 AuthenticationProvider 接口。我们这里有两个必须重写和实现的方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.security;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Optional;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.AuthenticationProvider;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.BadCredentialsException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.LockedException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.Authentication;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.core.AuthenticationException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.PasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.stereotype.Component;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.Attempts;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.User;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.repository.AttemptsRepository;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.repository.UserRepository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthProvider</span> <span style="color:#66d9ef">implements</span> AuthenticationProvider {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> ATTEMPTS_LIMIT <span style="color:#f92672">=</span> 3;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> SecurityUserDetailsService userDetailsService;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> PasswordEncoder passwordEncoder;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> AttemptsRepository attemptsRepository;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> UserRepository userRepository;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> Authentication <span style="color:#a6e22e">authenticate</span>(Authentication authentication)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">throws</span> AuthenticationException {
+</span></span><span style="display:flex;"><span>      String username <span style="color:#f92672">=</span> authentication.<span style="color:#a6e22e">getName</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.repository.UserRepository;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Component</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AuthProvider</span> <span style="color:#66d9ef">implements</span> AuthenticationProvider {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> ATTEMPTS_LIMIT <span style="color:#f92672">=</span> 3;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> SecurityUserDetailsService userDetailsService;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> PasswordEncoder passwordEncoder;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> AttemptsRepository attemptsRepository;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> UserRepository userRepository;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> Authentication <span style="color:#a6e22e">authenticate</span>(Authentication authentication)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">throws</span> AuthenticationException {
+</span></span><span style="display:flex;"><span>      String username <span style="color:#f92672">=</span> authentication.<span style="color:#a6e22e">getName</span>();
+</span></span><span style="display:flex;"><span>      Optional<span style="color:#f92672">&lt;</span>Attempts<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      userAttempts <span style="color:#f92672">=</span> attemptsRepository.<span style="color:#a6e22e">findAttemptsByUsername</span>(username);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (userAttempts.<span style="color:#a6e22e">isPresent</span>()) {
+</span></span><span style="display:flex;"><span>         Attempts attempts <span style="color:#f92672">=</span> userAttempts.<span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>         attempts.<span style="color:#a6e22e">setAttempts</span>(0); attemptsRepository.<span style="color:#a6e22e">save</span>(attempts);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">processFailedAttempts</span>(String username, User user) {
+</span></span><span style="display:flex;"><span>      Optional<span style="color:#f92672">&lt;</span>Attempts<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>      userAttempts <span style="color:#f92672">=</span> attemptsRepository.<span style="color:#a6e22e">findAttemptsByUsername</span>(username);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (userAttempts.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>         Attempts attempts <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Attempts();
+</span></span><span style="display:flex;"><span>         attempts.<span style="color:#a6e22e">setUsername</span>(username);
+</span></span><span style="display:flex;"><span>         attempts.<span style="color:#a6e22e">setAttempts</span>(1);
+</span></span><span style="display:flex;"><span>         attemptsRepository.<span style="color:#a6e22e">save</span>(attempts);
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>         Attempts attempts <span style="color:#f92672">=</span> userAttempts.<span style="color:#a6e22e">get</span>();
+</span></span><span style="display:flex;"><span>         attempts.<span style="color:#a6e22e">setAttempts</span>(attempts.<span style="color:#a6e22e">getAttempts</span>() <span style="color:#f92672">+</span> 1);
+</span></span><span style="display:flex;"><span>         attemptsRepository.<span style="color:#a6e22e">save</span>(attempts);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> (attempts.<span style="color:#a6e22e">getAttempts</span>() <span style="color:#f92672">+</span> 1 <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>         ATTEMPTS_LIMIT) {
+</span></span><span style="display:flex;"><span>            user.<span style="color:#a6e22e">setAccountNonLocked</span>(<span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>            userRepository.<span style="color:#a6e22e">save</span>(user);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> LockedException(<span style="color:#e6db74">&#34;Too many invalid attempts. Account is locked!!&#34;</span>);
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Override</span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">supports</span>(Class<span style="color:#f92672">&lt;?&gt;</span> authentication) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>authenticate() - 此方法返回一个经过完全身份验证的对象，包括成功身份验证时的凭据。然后将该对象存储在 SecurityContext 中。为了执行身份验证，我们将使用应用程序的 SecurityUserDetailsS​​ervice 类的 loaduserByUsername() 方法。在这里我们执行多项操作 -</p>
+</li>
+<li>
+<ul>
+<li>
+<p>首先，我们从身份验证请求对象中提取用户凭据，该对象作为参数传递给我们的函数。该身份验证对象由 AuthenticationFilter 类准备，并通过 AuthenticationManager 向下传递到 AuthenticationProvider。</p>
+</li>
+<li>
+<p>我们还使用 loadUserByUsername() 方法从数据库中获取用户详细信息。</p>
+</li>
+<li>
+<p>现在，首先，我们检查用户帐户是否由于之前失败的身份验证尝试而被锁定。如果我们发现账户被锁定，我们会抛出 LockedException，用户将无法进行身份验证，除非账户再次解锁。</p>
+</li>
+<li>
+<p>如果帐户未锁定，我们会将提供的密码与数据库中针对该用户存储的密码进行匹配。这是使用 PasswordEncoder 接口的 matches() 方法完成的。</p>
+</li>
+<li>
+<p>如果密码匹配，并且帐户尚未被锁定，我们将返回一个经过完全身份验证的对象。这里我们使用了一个实例 UsernamePasswordAuthenticationToken 类（因为它是用户名密码身份验证）来实现身份验证。同时，我们还将尝试计数器重置为 0。</p>
+</li>
+<li>
+<p>另一方面，如果密码不匹配，我们会检查一些条件 -</p>
+</li>
+<li>
+<ul>
+<li>如果这是用户第一次尝试，那么他的名字可能不会出现在数据库中。我们使用 AttemptsRepository 中的 findAttemptsByUsername() 方法来检查这一点。</li>
+<li>如果未找到，我们会在数据库中为该用户创建一个条目，并将尝试次数设置为 1。</li>
+<li>如果找到用户，那么我们将尝试次数增加 1。</li>
+<li>然后，我们使用之前定义的常量值检查允许的最大失败尝试次数。</li>
+<li>如果该次数超过允许的尝试次数，则用户将被锁定应用程序并引发 LockedException。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>supports() - 我们还有 supports 方法来检查我们的 AuthenticationProvider 实现类是否支持我们的身份验证类型。如果匹配、不匹配或无法决定，则分别返回 true、false 或 null。目前我们已将其硬编码为 true。</p>
+</li>
+</ul>
+<h3 id="控制器">控制器</h3>
+<p>现在让我们创建控制器包。它将包含我们的 HelloController 类。使用这个控制器类，我们将把视图映射到端点，并在命中相应的端点时提供这些视图。我们还将自动装配该组件中的 PasswordEncoder 和 UserDetailsS​​ervice 类。这些注入的依赖项将用于创建我们的用户。现在让我们创建端点。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">package</span> com.tutorial.spring.security.formlogin.controller;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Map;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.servlet.http.HttpServletRequest;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> javax.servlet.http.HttpSession;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.http.MediaType;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.BadCredentialsException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.authentication.LockedException;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.password.PasswordEncoder;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.stereotype.Controller;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.web.bind.annotation.GetMapping;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.web.bind.annotation.PostMapping;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.web.bind.annotation.RequestParam;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.model.User;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> com.tutorial.spring.security.formlogin.security.SecurityUserDetailsService;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@Controller</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelloController</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span> <span style="color:#66d9ef">private</span> SecurityUserDetailsService userDetailsManager;
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@Autowired</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> PasswordEncoder passwordEncoder;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">index</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;index&#34;</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/login&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">login</span>(HttpServletRequest request, HttpSession session) {
+</span></span><span style="display:flex;"><span>      session.<span style="color:#a6e22e">setAttribute</span>(
+</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;error&#34;</span>, getErrorMessage(request, <span style="color:#e6db74">&#34;SPRING_SECURITY_LAST_EXCEPTION&#34;</span>)
+</span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;login&#34;</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@GetMapping</span>(<span style="color:#e6db74">&#34;/register&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">register</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;register&#34;</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">@PostMapping</span>(
+</span></span><span style="display:flex;"><span>      value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/register&#34;</span>,
+</span></span><span style="display:flex;"><span>      consumes <span style="color:#f92672">=</span> MediaType.<span style="color:#a6e22e">APPLICATION_FORM_URLENCODED_VALUE</span>, produces <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>      MediaType.<span style="color:#a6e22e">APPLICATION_ATOM_XML_VALUE</span>, MediaType.<span style="color:#a6e22e">APPLICATION_JSON_VALUE</span> }
+</span></span><span style="display:flex;"><span>   )
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">addUser</span>(<span style="color:#a6e22e">@RequestParam</span> Map<span style="color:#f92672">&lt;</span>String, String<span style="color:#f92672">&gt;</span> body) {
+</span></span><span style="display:flex;"><span>      User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> User(); user.<span style="color:#a6e22e">setUsername</span>(body.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;username&#34;</span>));
+</span></span><span style="display:flex;"><span>      user.<span style="color:#a6e22e">setPassword</span>(passwordEncoder.<span style="color:#a6e22e">encode</span>(body.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#34;password&#34;</span>)));
+</span></span><span style="display:flex;"><span>      user.<span style="color:#a6e22e">setAccountNonLocked</span>(<span style="color:#66d9ef">true</span>); userDetailsManager.<span style="color:#a6e22e">createUser</span>(user);
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">private</span> String <span style="color:#a6e22e">getErrorMessage</span>(HttpServletRequest request, String key) {
+</span></span><span style="display:flex;"><span>      Exception exception <span style="color:#f92672">=</span> (Exception) request.<span style="color:#a6e22e">getSession</span>().<span style="color:#a6e22e">getAttribute</span>(key);
+</span></span><span style="display:flex;"><span>      String error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (exception <span style="color:#66d9ef">instanceof</span> BadCredentialsException) {
+</span></span><span style="display:flex;"><span>         error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Invalid username and password!&#34;</span>;
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (exception <span style="color:#66d9ef">instanceof</span> LockedException) {
+</span></span><span style="display:flex;"><span>         error <span style="color:#f92672">=</span> exception.<span style="color:#a6e22e">getMessage</span>();
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>         error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Invalid username and password!&#34;</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> error;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>index (&quot;/&quot;) – 该端点将为我们的应用程序的索引页面提供服务。正如我们之前配置的那样，我们将保护此页面并仅允许经过身份验证的用户能够访问此页面。</li>
+<li>login (&quot;/login&quot;) – 如前所述，这将用于服务我们的自定义登录页面。任何未经身份验证的用户都将被重定向到此端点进行身份验证。</li>
+<li>register(&quot;/register&quot;) (GET) – 我们的应用程序将有两个“注册”端点。其中之一是提供注册页面。另一项任务是处理注册过程。因此，前者将使用 Http GET，后者将使用 POST 端点。</li>
+<li>register(&quot;/register&quot;) (POST) – 我们将使用此端点来处理用户注册过程。我们将从参数中获取用户名和密码。然后我们将使用@Autowired 到该组件中的 passwordEncoder 对密码进行编码。此时我们还将用户帐户设置为解锁。然后，我们将使用 createUser() 方法将此用户数据保存在用户表中。</li>
+</ul>
+<p>除了上面的方法之外，我们还有 getErrorMessage() 方法。它用于确定最后抛出的异常以在我们的登录模板中添加消息。这样，我们就可以意识到身份验证错误并显示正确的消息。</p>
+<h3 id="资源">资源</h3>
+<p>我们已经创建了端点，唯一剩下的就是创建视图。</p>
+<p>首先，我们将创建索引页面。只有成功验证后，用户才能访问此页面。该页面可以访问 Servlet 请求对象，使用该对象我们可以显示登录用户的用户名。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/1999/xhtml&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xmlns:th</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.thymeleaf.org&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">xmlns:sec</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&#34;</span>
+</span></span><span style="display:flex;"><span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;Hello World!&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">th:inline</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>&gt;Hello [[${#httpServletRequest.remoteUser}]]!&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/logout}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Sign Out&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">form</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">html</span>&gt;&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><p>接下来，我们创建登录视图。这将显示我们的自定义登录表单，其中包含用户名和密码字段。在注销或身份验证失败的情况下也会呈现此视图，并将针对每种情况显示适当的消息。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/1999/xhtml&#34;</span>      <span style="color:#a6e22e">xmlns:th</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.thymeleaf.org&#34;</span> <span style="color:#a6e22e">xmlns:sec</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.thymeleaf.org/thymeleaf-extras-springsecurity3&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">title</span>&gt;Spring Security Example&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">th:if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${param.error}&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${session.error}&#34;</span> <span style="color:#a6e22e">th:unless</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${session == null}&#34;</span>&gt;[...]&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">th:if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${param.logout}&#34;</span>&gt;You have been logged out.&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/login}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">   &lt;div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      &lt;label&gt; User Name : &lt;input type=&#34;</span><span style="color:#a6e22e">text</span><span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span> /&gt; &lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">label</span>&gt; Password: &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> /&gt; &lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Sign In&#34;</span> /&gt; &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#f92672">form</span>&gt;
+</span></span><span style="display:flex;"><span>   &lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><p>接下来，我们创建所需的视图，即寄存器视图。该视图将允许用户在应用程序中注册自己。该用户数据将存储在数据库中，然后用于身份验证。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ISO-8859-1&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;Insert title here&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/register&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">h1</span>&gt;Register&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">p</span>&gt;Please fill in this form to create an account.&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">hr</span> /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>          &lt;<span style="color:#f92672">b</span>&gt;Username&lt;/<span style="color:#f92672">b</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">input</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter Username&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">required</span>
+</span></span><span style="display:flex;"><span>        /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>&gt;&lt;<span style="color:#f92672">b</span>&gt;Password&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">label</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">input</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter Password&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">required</span>
+</span></span><span style="display:flex;"><span>        /&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;registerbtn&#34;</span>&gt;Register&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">form</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><h3 id="最终项目结构">最终项目结构</h3>
+<p>我们最终的项目结构应该与此类似。</p>
+<p><img src="../../../static/images/form_login.webp" alt="Form Login"></p>
+<p><strong>运行应用程序</strong></p>
+<p>然后我们可以将应用程序作为 SpringBootApp 运行。当我们在浏览器上访问 localhost:8080 时，它会将我们重定向回登录页面。</p>
+<p><img src="../../../static/images/running_the_application.webp" alt="Running the Application"></p>
+<p>身份验证成功后，它将带我们进入带有问候语的索引视图。</p>
+<p><img src="../../../static/images/hello_users.webp" alt="Hello Users"></p>
+<p>因为，在帐户被锁定之前，我们只允许三次失败的尝试，因此在第三次失败的身份验证中，用户将被锁定，并且该消息会显示在屏幕上。</p>
+<p><img src="../../../static/images/third_failed_authentication.webp" alt="Third Failed Authentication"></p>
+<p>在点击 /register 端点时，我们还可以注册一个新用户。</p>
+<p><img src="../../../static/images/register.webp" alt="Register"></p>
+<h2 id="结论"><strong>结论</strong></h2>
+<p>从今天的文章中，我们学习了如何使用基于注释的配置使用数据库来使用自定义表单进行登录。我们还学习了如何防止多次登录尝试失败。在这样做的过程中，我们已经看到了如何实现我们自己的 AuthenticationProvider 和 UserDetailsS​​ervice 来使用我们的自定义身份验证流程对用户进行身份验证。</p>
+<p>原文链接：<a href="https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm" target="_blank">https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm</a></p>
+
+		</div>
+
+
+	</article>
+</main>
+<footer class="post__footer">
+	
+
+<div class="post-related">
+	<h3>相关文章</h3>
+	<ul class="post-related-list">
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-transaction-management-transactional-in-depth/" target="_blank" title="[译]深入了解Spring事务管理：@Transactional">[译]深入了解Spring事务管理：@Transactional</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/" target="_blank" title="[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权">[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-with-jwt/" target="_blank" title="[译]Spring Security - JWT">[译]Spring Security - JWT</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/" target="_blank" title="[译]Spring Security - 表单登录、记住我和注销">[译]Spring Security - 表单登录、记住我和注销</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security/" target="_blank" title="[译]Spring Security 和 Spring Boot 入门">[译]Spring Security 和 Spring Boot 入门</a>
+		</li>
+		
+		<li class="post-related-item">
+			<a href="/posts/2023/08/16/spring-security-authentication-and-authorization/" target="_blank" title="[译]Spring Security：深入了解身份验证和授权">[译]Spring Security：深入了解身份验证和授权</a>
+		</li>
+		
+	</ul>
+</div>
+
+</footer>
+
+<footer class="post__footer">
+	<footer class="post__footer">
+		
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 0 0 0-6 3 3 0 0 0 0 6"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/mysql/" rel="tag">mysql</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/javascript/" rel="tag">javascript</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/backend/" rel="tag">backend</a>
+		</li>
+	</ul>
+</div>
+	</footer>
+</footer>
+
+
+<nav class="pagination flex">
+	<div class="pagination__item pagination__item--prev">
+		<a class="pagination__link" href="/posts/2023/08/16/spring-security/" rel="prev">
+			<p class="pagination__title">«&thinsp;上一篇: [译]Spring Security 和 Spring Boot 入门</p>
+		</a>
+	</div>
+	<div class="pagination__item pagination__item--next">
+		<a class="pagination__link" href="/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/" rel="next">
+			<p class="pagination__title">&thinsp;» 下一篇: [译]Spring Security - 表单登录、记住我和注销</p>
+		</a>
+	</div>
+</nav>
+
+
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="ChenSoul avatar" src="/avatar.jpg" class="avatar" height="60" width="60" loading="lazy">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">关于 ChenSoul</span>
+	</div>
+	<div class="authorbox__description">
+		一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href="%28/posts%29">博客文章</a>，订阅我的 <a href="/index.xml">RSS</a> 源，或了解更多<a href="/about/">关于我</a>的信息。
+	</div>
+</div>
+
+
+
+
+	<p><h3>欢迎留言！</h3></p>
+<div id="remark42"></div>
+<script>
+	var remark_config = {
+		host: 'https:\/\/comment.chensoul.cc',
+		site_id: 'remark',
+		components: ['embed'],
+		url: 'https:\/\/blog.chensoul.cc\/posts\/2023\/08\/16\/spring-security-form-login-with-database\/',
+		locale: 'zh'
+	};
+
+	!function(e, n) {
+		for (var o = 0; o < e.length; o++) {
+			var r = n.createElement('script'),
+			c = '.js',
+			d = n.head || n.body;
+			'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
+		}
+	}(remark_config.components || ['embed'], document);
+
+</script>
+
+
+
+
+
+			</div>
+			
+
+<aside class="sidebar sidebar--right">
+	<div class="post__toc toc">
+		<div class="toc__title">目录</div>
+		<div class="toc__menu">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#内容">内容</a></li>
+    <li><a href="#简介和概述">简介和概述</a></li>
+    <li><a href="#spring-security-架构的组件">Spring Security 架构的组件</a>
+      <ul>
+        <li><a href="#authenticationfilter-认证过滤器">AuthenticationFilter 认证过滤器</a></li>
+        <li><a href="#authenticationmanager-认证管理器">AuthenticationManager 认证管理器</a></li>
+        <li><a href="#authenticationprovider-认证提供者">AuthenticationProvider 认证提供者</a></li>
+        <li><a href="#userdetailsservice-用户详情服务">UserDetailsService 用户详情服务</a></li>
+        <li><a href="#密码编码器">密码编码器</a></li>
+        <li><a href="#spring-安全上下文">Spring 安全上下文</a></li>
+        <li><a href="#表单登录">表单登录</a></li>
+        <li><a href="#使用数据库登录">使用数据库登录</a></li>
+        <li><a href="#登录尝试限制">登录尝试限制</a></li>
+      </ul>
+    </li>
+    <li><a href="#入门实用指南">入门（实用指南）</a>
+      <ul>
+        <li><a href="#数据库设置">数据库设置</a></li>
+        <li><a href="#项目设置">项目设置</a></li>
+        <li><a href="#依赖关系">依赖关系</a></li>
+        <li><a href="#数据源">数据源</a></li>
+        <li><a href="#实体">实体</a></li>
+        <li><a href="#存储库">存储库</a></li>
+        <li><a href="#配置">配置</a></li>
+        <li><a href="#安全设置">安全设置</a></li>
+        <li><a href="#用户详情服务">用户详情服务</a></li>
+        <li><a href="#认证提供者">认证提供者</a></li>
+        <li><a href="#控制器">控制器</a></li>
+        <li><a href="#资源">资源</a></li>
+        <li><a href="#最终项目结构">最终项目结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#结论"><strong>结论</strong></a></li>
+  </ul>
+</nav>
+		</div>
+	</div>
+</aside>
+
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+<div class="footer__links">
+	<a class="footer__link" href="/">首页</a> | <a class="footer__link" href="/categories/">分类</a> | <a class="footer__link" href="/tags/">标签</a> | <a class="footer__link" href="/index.xml">订阅</a> | <a class="footer__link" href="/about/">关于</a>
+</div>
+		<div class="footer__copyright">
+			&copy; 2025 ChenSoul.
+			<span class="footer__copyright-credits">基于 <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> 引擎和 <a href="https://github.com/chensoul/rose-hugo/" rel="nofollow noopener" target="_blank">Rose Hugo</a> 主题</span>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+<style>
+	.scroll-up a {
+		display: block;
+		height: 3.125rem;
+		width: 3.125rem;
+		text-align: center;
+		line-height: 2.7;
+		border-radius: 50px;
+		font-size: 1.125rem;
+		color: #fff;
+		opacity: 1;
+		transition: all 0.3s ease 0s;
+		box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+	}
+	.scroll-up a {
+		background: #ee591f;
+	}
+	.scroll-up {
+		position: fixed;
+		display: none;
+		bottom: 50px;
+		z-index: 999;
+	}
+	.scroll-up.right {
+		right: 60px;
+	}
+</style>
+
+<div class="scroll-up custom right" style="display: block;"><a href="#top" id="top-link" accesskey="g"><i
+	class="fa fa-arrow-up"></i></a></div>
+
+<script>
+	var mybutton = document.getElementById("top-link");
+	window.onscroll = function () {
+		if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+			mybutton.style.visibility = "visible";
+			mybutton.style.opacity = "1";
+		} else {
+			mybutton.style.visibility = "hidden";
+			mybutton.style.opacity = "0";
+		}
+	};
+</script>
+
+
+    <script defer src="https://umami.chensoul.cc/random-string.js" data-website-id="1e07d36d-bec3-4ba6-9459-876b1ac3bbe7"></script>
+</footer>
+
+
+	</div>
+
+	<script>
+		'use strict';
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+	</script>
+</body>
+</html>

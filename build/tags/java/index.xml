@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on ChenSoul Blog</title>
+    <link>https://blog.chensoul.cc/tags/java/</link>
+    <description>Recent content in Java on ChenSoul Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 30 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://blog.chensoul.cc/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/30/spring-ai-text2sql-showcase/</link>
+      <pubDate>Tue, 30 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/30/spring-ai-text2sql-showcase/</guid>
+      <description>&lt;p&gt;&amp;ldquo;能不能让数据库直接听懂中文问题，然后自动生成 SQL？&amp;rdquo; 这个想法在我脑海中盘旋了很久。最近终于用 &lt;strong&gt;Spring AI&lt;/strong&gt; 实现了这个功能，从最初的简单实现到后来的 &lt;strong&gt;MCP 工具集成&lt;/strong&gt;，再到&lt;strong&gt;分步骤查询模式&lt;/strong&gt;，整个过程充满了惊喜和踩坑。今天就来分享一下我的 &lt;strong&gt;Text2SQL&lt;/strong&gt; 实践心得。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/26/spring-ai-restaurant-showcase-rag/</link>
+      <pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/26/spring-ai-restaurant-showcase-rag/</guid>
+      <description>&lt;p&gt;最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>基于 Spring AI 构建智能餐厅推荐系统：多模型集成的实践指南</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/25/spring-ai-restaurant-showcase/</link>
+      <pubDate>Thu, 25 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/25/spring-ai-restaurant-showcase/</guid>
+      <description>&lt;p&gt;本文将教您如何使用 Spring AI 项目构建基于不同聊天模型的应用程序。Spring AI 聊天模型是一个简单易用的接口，允许我们与这些模型进行交互。我们的 Spring Boot 示例应用程序将在 OpenAI、Mistral AI 和 Ollama 提供的三种流行聊天模型之间切换，并展示如何使用 Spring AI 框架实现多轮对话、结构化输出等核心功能。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>OpenAI API 接口与 Spring AI 对应关系</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/22/openai-api-with-spring-ai/</link>
+      <pubDate>Mon, 22 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/22/openai-api-with-spring-ai/</guid>
+      <description>&lt;p&gt;OpenAI API 提供了一套强大的接口，允许开发者将其先进的人工智能模型集成到各种应用中。它支持文本生成、翻译、总结、问答、对话、代码生成、图像生成、音频处理等多种任务。&lt;/p&gt;&#xA;&lt;p&gt;Spring AI 通过统一的 API 对 OpenAI 的各种接口进行了封装，使得开发者可以在 Spring 生态系统中轻松使用 OpenAI 的所有功能。Spring AI 不仅支持 OpenAI，还支持其他遵循 OpenAI 接口规范的模型提供商。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring AI ChatClient API 介绍</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/19/spring-ai-chat-client-api/</link>
+      <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/19/spring-ai-chat-client-api/</guid>
+      <description>&lt;p&gt;&lt;code&gt;ChatClient&lt;/code&gt; 是 Spring AI 提供的核心 API，它是一个流畅的接口，旨在简化 Java 应用程序与 AI 模型的交互。ChatClient 支持同步和流式编程模型，提供了构建提示（Prompt）和处理 AI 响应的便捷方式。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring AI 介绍</title>
+      <link>https://blog.chensoul.cc/posts/2025/09/18/spring-ai/</link>
+      <pubDate>Thu, 18 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/09/18/spring-ai/</guid>
+      <description>&lt;p&gt;Spring AI 是 Spring 团队推出的开源项目，当前版本为 1.0.2。它是一个专门为 AI 工程设计的应用程序框架，旨在将 Spring 生态系统的设计原则（如可移植性和模块化设计）应用到 AI 领域，并推广使用 POJO 作为应用程序的构建块。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;核心目标&lt;/strong&gt;：解决 AI 集成的基本挑战 - &lt;strong&gt;连接企业数据和 API 与 AI 模型&lt;/strong&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>我的 2025 年开发设置</title>
+      <link>https://blog.chensoul.cc/posts/2025/08/24/my-development-setup-2025/</link>
+      <pubDate>Sun, 24 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/08/24/my-development-setup-2025/</guid>
+      <description>&lt;p&gt;经过多年的调整和优化，我最终确定了一套既能最大程度提升效率又能提升乐趣的开发配置。以下是我在 2025 年会使用的配置，希望能为其他开发者提供一些参考。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>RuoYi AI 源码分析</title>
+      <link>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</link>
+      <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2025/07/15/ruoyi-ai/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;RuoYi AI&lt;/strong&gt; 是一个基于Spring Boot 3.4的企业级AI助手平台，深度集成FastGPT、扣子(Coze)、DIFY等主流AI平台，提供先进的RAG技术和多模型支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-11-04｜SivaLabs博客文章</title>
+      <link>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/11/04/sivalabs-blog-posts/</guid>
+      <description>&lt;p&gt;以下是 &lt;a href=&#34;https://www.sivalabs.in/&#34; target=&#34;_blank&#34;&gt;SivaLabs 博客&lt;/a&gt; 中的一些文章，记录在此，方便后面阅读。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security 和 JWT 入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/10/15/spring-security-jwt/</link>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/10/15/spring-security-jwt/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.spring.io/spring-security/reference/index.html&#34; target=&#34;_blank&#34;&gt;Spring Security&lt;/a&gt; 为 Java 应用程序提供了一套全面的安全功能，涵盖身份验证、授权、会话管理以及针对&lt;a href=&#34;https://reflectoring.io/spring-csrf/&#34; target=&#34;_blank&#34;&gt;CSRF（跨站点请求伪造）&lt;/a&gt;等常见安全威胁的防护。Spring Security 框架具有高度可定制性，允许开发人员根据其应用程序需求来管理安全配置。它提供了一个灵活的架构，支持各种身份验证机制，如基本身份验证、JWT 和 OAuth。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]测试 Spring Boot 应用程序：最佳实践和框架</title>
+      <link>https://blog.chensoul.cc/posts/2024/10/14/testing-spring-boot-applications-best-practices-and-frameworks/</link>
+      <pubDate>Mon, 14 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/10/14/testing-spring-boot-applications-best-practices-and-frameworks/</guid>
+      <description>&lt;p&gt;测试是软件开发不可或缺的一部分。它可确保您的 Spring Boot 应用程序按预期运行，并在不断发展的过程中继续保持这种状态。在本文中，我们将探讨如何使用最佳实践和工具测试 Spring Boot 应用程序。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring Boot集成SpringDoc生成Api文档</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/10/springdoc-with-spring-boot/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/10/springdoc-with-spring-boot/</guid>
+      <description>&lt;p&gt;以下以 Maven 为例介绍 Spring Boot集成SpringDoc生成Api文档。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>使用 Docker 容器化并运行 Spring Boot 应用程序</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/</link>
+      <pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/09/docker-for-spring-boot/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;本文翻译自 Docker 官方网站的《&lt;a href=&#34;https://docs.docker.com/guides/java/&#34; target=&#34;_blank&#34;&gt;Java language-specific guide&lt;/a&gt;》文章，并做了一些改动。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/</link>
+      <pubDate>Mon, 08 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/</guid>
+      <description>&lt;p&gt;我们希望我们的微服务是可复制、可替换的工作程序，我们可以轻松升级或降级，无需停机，管理也只需最少。我们可能会说我们希望他们是我们的奴才。在本文中，我们将通过一个简单的示例来了解 Kubernetes 通过创建和编排奴才大军可以为我们做些什么。您可以按照本文进行编码，也可以从&lt;a href=&#34;https://github.com/ryandawsonuk/minions/blob/master/minion-army.yml&#34; target=&#34;_blank&#34;&gt;此处&lt;/a&gt;克隆项目。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]面向 Java 开发人员的 Kubernetes</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/08/kubernetes-for-java-developers/</link>
+      <pubDate>Mon, 08 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/08/kubernetes-for-java-developers/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;有一类新工具可用于将应用程序 docker 化并部署到 Kubernetes，这些工具专门面向开发人员。该类别中的最新工具是 RedHat 的 JKube。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ActiveMQ安装和使用</title>
+      <link>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/07/05/install-activemq/</guid>
+      <description>&lt;p&gt;ActiveMQ 是一个实现了 JMS 协议的开源消息中间件，目前它有两种版本：ActiveMQ &amp;ldquo;Classic&amp;rdquo; 和 ActiveMQ Artemis。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring Boot项目创建Docker镜像并运行应用</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/06/spring-boot-docker-image/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/06/spring-boot-docker-image/</guid>
+      <description>&lt;h2 id=&#34;手动创建-dockerfile&#34;&gt;手动创建 Dockerfile&lt;/h2&gt;&#xA;&lt;p&gt;在您的 Spring Boot 项目根目录下创建一个名为 &lt;code&gt;Dockerfile&lt;/code&gt; 的文件，并添加以下内容:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2 with Spring 第1部分：了解基本概念</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a&#34; target=&#34;_blank&#34;&gt;https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在本系列&lt;strong&gt;关于 Spring 的 OAuth2&lt;/strong&gt;的文章中，我将尝试介绍和解释与 OAuth2 相关的每一个问题以及如何在 Spring 框架中实现这些问题。请记住，OAuth2 完全是一个概念性的东西，在不同的框架中，它有自己的实现。此外，许多应用程序开发人员开发自己的 OAuth2 实现，而不使用 Spring 框架提供的 OAuth2 框架支持。因此，我将就这个主题撰写一系列文章。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2 with Spring 第2部分：授权服务器入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a&#34; target=&#34;_blank&#34;&gt;https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Spring 团队最近发布了他们的授权服务器。OAuth2 一直是一个热门话题，而构建或理解授权服务器一直是一个谜。在本系列的&lt;a href=&#34;https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-1-knowing-the-basic-concepts/&#34;&gt;第 1 部分&lt;/a&gt;中，我描述了几乎所有您需要了解的有关 OAuth2 的概念性内容。在本系列的这篇文章中，我将尝试演示如何构建具有&lt;strong&gt;client_credential&lt;/strong&gt;授权类型的授权服务器。我将从使用配置属性进行自动配置开始解释它们，并通过编写 Java 代码自定义配置。让我们开始吧。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a&#34; target=&#34;_blank&#34;&gt;https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在&lt;a href=&#34;https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/&#34;&gt;上一篇文章&lt;/a&gt;中，我们讨论了使用 client_credential 的 OAuth2 授权服务器配置。在本文中，我们将讨论使用 authorization_code 授予类型的授权服务器配置。此授权流程将有一个 OIDC 客户端，它将通过使用授权码进行请求来获取 JWT 令牌。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5&#34; target=&#34;_blank&#34;&gt;https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在&lt;a href=&#34;https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/&#34;&gt;之前的文章&lt;/a&gt;中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性</title>
+      <link>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/</link>
+      <pubDate>Wed, 05 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/06/05/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security/</guid>
+      <description>&lt;p&gt;原文地址：&lt;a href=&#34;https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769&#34; target=&#34;_blank&#34;&gt;https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769&lt;/a&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;免责声明：本文技术性很强，需要清楚了解本系列前几篇文章，特别是第 1 部分和第 3 部分。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架构</title>
+      <link>https://blog.chensoul.cc/posts/2024/05/30/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture/</link>
+      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/05/30/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://medium.com/@juannegrin/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture-df50fe24a1ff&#34; target=&#34;_blank&#34;&gt;Building a RESTful API with Spring Boot: Integrating DDD and Hexagonal Architecture&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/20/til/</link>
+      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/20/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-05｜Spring Cloud Config快速入门</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/05/til/</link>
+      <pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;创建项目 &lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt;，测试 &lt;em&gt;Spring Cloud&lt;/em&gt; Config 使用本地文件和 git 仓库作为配置中心&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 是一个基于http协议的远程配置实现方式。通过统一的配置管理服务器进行配置管理，客户端通过http协议主动的拉取服务的的配置信息，完成配置获取。&#xA;&lt;em&gt;Spring Cloud&lt;/em&gt; Config 支持以下几种存储方式：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/02/til/</link>
+      <pubDate>Fri, 02 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/02/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;参考 《&lt;a href=&#34;https://download.packt.com/free-ebook/9781805128694&#34; target=&#34;_blank&#34;&gt;Microservices with Spring Boot 3 and Spring Cloud&lt;/a&gt;》，重构&#xA;foodie-cloud 项目&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-02-01｜使用 Spring Initializr 创建项目</title>
+      <link>https://blog.chensoul.cc/posts/2024/02/01/til/</link>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/02/01/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;重构 foodie-cloud 项目，部署到 docker 容器&lt;/li&gt;&#xA;&lt;li&gt;使用 Spring Initializr 创建项目&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;使用-spring-initializr-创建项目&#34;&gt;使用 Spring Initializr 创建项目&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;安装  spring cli&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-31｜Redis事务</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/31/til/</link>
+      <pubDate>Wed, 31 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/31/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;下载 《&lt;a href=&#34;https://download.packt.com/free-ebook/9781805128694&#34; target=&#34;_blank&#34;&gt;Microservices with Spring Boot 3 and Spring Cloud&lt;/a&gt;》，源码在 &lt;a href=&#34;https://github.com/PacktPublishing/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Redis 事务&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h1 id=&#34;redis事务&#34;&gt;Redis事务&lt;/h1&gt;&#xA;&lt;h2 id=&#34;原理&#34;&gt;原理&lt;/h2&gt;&#xA;&lt;p&gt;Redis 是一个内存数据库，它支持事务操作。Redis 事务是一系列的命令操作，这些命令会被一起执行，要么全部成功，要么全部失败。在事务执行期间，其他客户端提交的命令不会被插入到事务中，确保事务的原子性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-30｜Mybatis plus和Jackson配置</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/30/til/</link>
+      <pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/30/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;重构 foodie-cloud 项目&#xA;&lt;ul&gt;&#xA;&lt;li&gt;参考 DDD 组织包结构&lt;/li&gt;&#xA;&lt;li&gt;Mybatis plus 配置主键生成策略和数据审计功能&lt;/li&gt;&#xA;&lt;li&gt;Jackson 配置日期序列化&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;重构-foodie-cloud-项目&#34;&gt;重构 foodie-cloud 项目&lt;/h2&gt;&#xA;&lt;h3 id=&#34;mybatis-plus-配置主键生成策略&#34;&gt;Mybatis plus 配置主键生成策略&lt;/h3&gt;&#xA;&lt;p&gt;实体类中可以不用添加@TableId，减少实体类对 mybatis-plus-annotation的依赖&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-26｜foodie-cloud集成Feign</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/26/til/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/26/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;重构 foodie-cloud 项目&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-17｜MySQL 主从复制、ShardingJDBC实现读写分离、集成Springdoc&#43;Javadoc</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/17/til/</link>
+      <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/17/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;观看《2022年黑马程序员新版java课程》中 MySQL 主从复制和读写分离相关视频，使用 Docker 搭建 MySQL 主从复制环境。&lt;/li&gt;&#xA;&lt;li&gt;foodie-cloud 项目实现读写分离并集成 Springdoc&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;docker-搭建-mysql-主从复制环境&#34;&gt;Docker 搭建 MySQL 主从复制环境&lt;/h2&gt;&#xA;&lt;p&gt;参考文章 ：&lt;a href=&#34;https://learnku.com/articles/30439&#34; target=&#34;_blank&#34;&gt;基于 Docker 的 MySQL 主从复制搭建及原理（真正弄懂）&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-16｜Redis安装</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/16/til/</link>
+      <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/16/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;1、&lt;a href=&#34;https://github.com/chensoul/spring-cloud-examples&#34; target=&#34;_blank&#34;&gt;spring-cloud-examples&lt;/a&gt; 添加分布式锁、rabbitmq、kafka、分库分表等示例代码&#xA;2、foodie-cloud 添加登录部分代码&#xA;3、整理 Redis 安装文档&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/11/til/</link>
+      <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/11/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 1、观看 B 站 《&lt;a href=&#34;https://www.bilibili.com/video/BV1ht4y1E7EL?p=1&#34; target=&#34;_blank&#34;&gt;SSO单点登录&lt;/a&gt;》视频&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-10｜ Java审计框架inspektr</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/10/til/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/10/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;p&gt;1、Java Lambda 增强 &lt;a href=&#34;https://github.com/jOOQ/jOOL&#34; target=&#34;_blank&#34;&gt;https://github.com/jOOQ/jOOL&lt;/a&gt; 和 &lt;a href=&#34;https://github.com/vavr-io/vavr&#34; target=&#34;_blank&#34;&gt;https://github.com/vavr-io/vavr&lt;/a&gt; ，jOOL 在 jdk8 下存在编译错误，计划，整合这两个项目，创建一个新的项目，只引入自己需要的一些类。&#xA;2、&lt;a href=&#34;https://www.pac4j.org/&#34; target=&#34;_blank&#34;&gt;https://www.pac4j.org/&lt;/a&gt; 一个安全框架&#xA;3、&lt;a href=&#34;https://github.com/apereo/inspektr&#34; target=&#34;_blank&#34;&gt;https://github.com/apereo/inspektr&lt;/a&gt; 一个轻量级的 Java 审计框架。这个是在看 CAS 源码的过程中，发现的。&#xA;在 CAS 的源码中，有一些比较不错的代码，引入到自己的项目中，另外，打算仿照这个 inspektr 框架，重写公司微服务项目中的日志记录模块。&#xA;4、分享一个安全相关的 wiki 网站：&lt;a href=&#34;https://wukong-doc.redhtc.com/security&#34; target=&#34;_blank&#34;&gt;https://wukong-doc.redhtc.com/security&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-09｜单点登录</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/09/til/</link>
+      <pubDate>Tue, 09 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/09/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zexo.dev/posts/2020/03/01/keep-your-repo-dependencies-up-to-date-with-renovate/&#34; target=&#34;_blank&#34;&gt;使用 renovate 监控第三方依赖更新&lt;/a&gt; ，renovate 貌似需要付费，放弃。&lt;/li&gt;&#xA;&lt;li&gt;spring-security-oauth2-samples 示例工程重命名模块和包名，代码见 &lt;a href=&#34;https://github.com/chensoul/spring-security-oauth2-boot&#34; target=&#34;_blank&#34;&gt;spring-security-oauth2-boot&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;实现单点登录并测试&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;实现单点登录并测试&#34;&gt;实现单点登录并测试&lt;/h2&gt;&#xA;&lt;p&gt;实现单点登录（Single Sign-On，SSO）可以采用多种思路和技术。下面是几种常见的实现思路：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-04｜GitHub Actions</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/04/til/</link>
+      <pubDate>Thu, 04 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/04/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;修改个人联系方式&lt;/li&gt;&#xA;&lt;li&gt;注销亚马逊账号&lt;/li&gt;&#xA;&lt;li&gt;利用GitHub Actions自动优雅地为项目构建Releases&lt;/li&gt;&#xA;&lt;li&gt;利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;修改个人联系方式&#34;&gt;修改个人联系方式&lt;/h2&gt;&#xA;&lt;p&gt;使用 ichensoul 注册了新的 Gmail、163 邮箱，并将各种网站绑定的邮箱修改到新的 gmail 邮箱。自此，gmail、github、推特、微信、163 的账号都保持为一致，都是 ichensoul。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</title>
+      <link>https://blog.chensoul.cc/posts/2024/01/02/til/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2024/01/02/til/</guid>
+      <description>&lt;p&gt;今天做了什么：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;雪崩问题&lt;/li&gt;&#xA;&lt;li&gt;Spring Cloud微服务集成 Sentinel&lt;/li&gt;&#xA;&lt;li&gt;扩展 Sentinel 集成 OpenFeign，实现自动降级&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;雪崩问题&#34;&gt;雪崩问题&lt;/h2&gt;&#xA;&lt;p&gt;1、什么是雪崩问题？&#xA;雪崩问题（Avalanche Effect）是指在分布式系统中，当一个节点或服务出现故障或不可用时，其影响会扩散到其他节点或服务，导致级联故障的现象。这种现象类似于雪崩，一旦开始，会不断放大和蔓延，最终导致整个系统崩溃。&#xA;雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-21｜Spring Security对OAuth2的支持及实现方式</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/21/til/</link>
+      <pubDate>Thu, 21 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/21/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：Spring Security 对 OAuth2 的支持&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/20/til/</link>
+      <pubDate>Wed, 20 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/20/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2023-12-18｜使用Spring Security实现OAuth2授权和认证</title>
+      <link>https://blog.chensoul.cc/posts/2023/12/18/til/</link>
+      <pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/12/18/til/</guid>
+      <description>&lt;p&gt;Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和认证。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot3和Spring6中的新特性</title>
+      <link>https://blog.chensoul.cc/posts/2023/10/13/new-features-in-spring-boot-3-and-spring-6/</link>
+      <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/10/13/new-features-in-spring-boot-3-and-spring-6/</guid>
+      <description>&lt;p&gt;Spring Boot 3.0 于 2022 年 11 月正式发布，包含一些新功能和改进。这是继大约 4.5 年前发布 Spring Boot 2.0 后 Spring Boot 的第一个主要版本。它也是第一个支持 Spring Framework 6.0 的 Spring Boot GA 版本。作为开发人员，我们需要了解这些更新，才能顺利使用 Spring Boot。毫无疑问，新版本中最大的转变之一是放弃了对旧版本 Java 的支持。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]DevOps 和测试人员的 Git 面试问题</title>
+      <link>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/10/12/git-interview-questions/</guid>
+      <description>&lt;p&gt;欢迎来到 Git 面试准备指南，我们将在这里向初学者和经验丰富的专业人士讨论最常见的 Git 面试问题。无论您是准备参加 DevOps 或测试面试，还是希望提高 Git 技能，此资源都可以通过深入研究一些与 Git 基本概念和实践相关的最常见面试问题来帮助您。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security 面试问题</title>
+      <link>https://blog.chensoul.cc/posts/2023/10/12/spring-security-interview-questions/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/10/12/spring-security-interview-questions/</guid>
+      <description>&lt;p&gt;本面试准备指南将讨论一些常见的 Spring Security 面试问题。无论您是准备面试还是只是想增强对 Spring Security 的了解，这些问题都将帮助您理解关键概念并指导您设计常见安全问题的解决方案。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security 与 JWT for REST API</title>
+      <link>https://blog.chensoul.cc/posts/2023/09/19/spring-security-tutorial/</link>
+      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/09/19/spring-security-tutorial/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;免责声明：Spring Security 5+ 已发布 OAuth JWT 支持。建议使用最新版本的 OAuth 来支持 JWT，而不是使用自定义安全性或过滤器。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何使用Spring Security和JWT保护您的REST API</title>
+      <link>https://blog.chensoul.cc/posts/2023/09/19/spring-security-jwt/</link>
+      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/09/19/spring-security-jwt/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;https://www.danvega.dev/blog/spring-security-jwt&#34; target=&#34;_blank&#34;&gt;How to Secure your REST APIs with Spring Security &amp;amp; JSON Web Tokens (JWTs)&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]REST API 的自定义错误消息处理</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/25/global-error-handler-in-a-spring-rest-api/</guid>
+      <description>&lt;h2 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h2&gt;&#xA;&lt;p&gt;在本教程中，我们将讨论如何为 Spring REST API 实现全局错误处理程序。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Events</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/25/spring-events/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/25/spring-events/</guid>
+      <description>&lt;h2 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h2&gt;&#xA;&lt;p&gt;在本教程中，我们将讨论如何在 Spring 中使用事件。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何在Spring中执行@Async</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/25/spring-async/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/25/spring-async/</guid>
+      <description>&lt;h2 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h2&gt;&#xA;&lt;p&gt;在本教程中，我们将探讨 Spring 中的异步执行支持和 &lt;code&gt;@Async&lt;/code&gt; 注解。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用@Async进行Spring Security上下文传播</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/25/spring-security-async-principal-propagation/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/25/spring-security-async-principal-propagation/</guid>
+      <description>&lt;h2 id=&#34;1-简介&#34;&gt;1. 简介&lt;/h2&gt;&#xA;&lt;p&gt;在本教程中，我们将重点关注使用 &lt;code&gt;@Async&lt;/code&gt; 传播 Spring Security 主体&#xA;默认情况下，Spring Security 身份验证绑定到 &lt;code&gt;ThreadLocal&lt;/code&gt; - 因此，当执行流在带有 &lt;code&gt;@Async&lt;/code&gt; 的新线程中运行时，它不会是经过身份验证的上下文。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用Spring进行REST的错误处理</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/25/exception-handling-for-rest-with-spring/</link>
+      <pubDate>Fri, 25 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/25/exception-handling-for-rest-with-spring/</guid>
+      <description>&lt;h2 id=&#34;1-概述&#34;&gt;1. 概述&lt;/h2&gt;&#xA;&lt;p&gt;本教程将说明如何使用 Spring 为 REST API 实现异常处理。我们还将获得一些历史概述，并了解不同版本引入了哪些新选项。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot项目如何实现JWT认证？</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-jwt-authentication-in-spring-boot-project/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-jwt-authentication-in-spring-boot-project/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/JWT_With_SpringBoot-1.webp&#34; alt=&#34;How to implement JWT Authentication in Spring Boot Project?&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot项目如何实现Security？</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot-project/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot-project/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/SpringSecurityBasics-2.webp&#34; alt=&#34;How to implement Security in Spring Boot Project?&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]没有WebSecurityConfigurerAdapter的Spring Security.md</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/18/spring-security-without-websecurityconfigureradapter/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/WebSecurityConfigurerAdapter-Deprecated-1.webp&#34; alt=&#34;WebSecurityConfigurerAdapter Deprecated&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 &lt;a href=&#34;https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter&#34; target=&#34;_blank&#34;&gt;Spring 官方网站&lt;/a&gt; 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展 configure() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何在Spring Boot2中使用UserDetailsService实现安全性？</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot2-using-userdetailsservice/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot2-using-userdetailsservice/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/Thymeleaf_SpringSecurity-1.webp&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;继续上一篇&lt;a href=&#34;https://javatechonline.com/how-to-implement-security-in-spring-boot-project/&#34; target=&#34;_blank&#34;&gt;关于实现 Spring Security 的两种不同方法&lt;/a&gt;的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]如何在Spring Boot3中使用UserDetailsService实现安全性？</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot3-using-userdetailsservice/</link>
+      <pubDate>Fri, 18 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/18/how-to-implement-security-in-spring-boot3-using-userdetailsservice/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;../../../static/images/UserDetailsServiceSpringBoot3-1.webp&#34; alt=&#34;Spring Security UserDetailsService Using Spring Boot 3&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security - JWT</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security-with-jwt/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security-with-jwt/</guid>
+      <description>&lt;h3 id=&#34;简介和概述&#34;&gt;简介和概述&lt;/h3&gt;&#xA;&lt;p&gt;JSON Web Token 或 JWT（更常见的名称）是一种开放的互联网标准 (RFC 7519)，用于以紧凑的方式在各方之间安全地传输可信信息。令牌包含编码为 JSON 对象的声明，并使用私有密钥或公钥/私钥对进行数字签名。它们是独立且可验证的，因为它们经过数字签名。 JWT 可以进行签名和/或加密。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security - OAuth2</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security-with-oauth2/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security-with-oauth2/</guid>
+      <description>&lt;h2 id=&#34;oauth-20-基础知识&#34;&gt;OAuth 2.0 基础知识&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://www.tutorialspoint.com/spring_security/images/oauth_2_fundamentals.webp&#34; alt=&#34;OAuth 2.0 Fundamentals&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security - 表单登录、记住我和注销</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security-form-login-remember-me-and-logout/</guid>
+      <description>&lt;h2 id=&#34;内容&#34;&gt;内容&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;简介和概述&lt;/li&gt;&#xA;&lt;li&gt;入门（实用指南）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;简介和概述&#34;&gt;简介和概述&lt;/h2&gt;&#xA;&lt;p&gt;Spring Security 附带了大量内置功能和工具，为我们提供方便。在这个例子中，我们将讨论其中三个有趣且有用的功能 -&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security - 使用数据库表单登录</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security-form-login-with-database/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security-form-login-with-database/</guid>
+      <description>&lt;h2 id=&#34;内容&#34;&gt;内容&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;简介和概述&lt;/li&gt;&#xA;&lt;li&gt;Spring Security 的基本组件&#xA;&lt;ul&gt;&#xA;&lt;li&gt;AuthenticationFilter 认证过滤器&lt;/li&gt;&#xA;&lt;li&gt;AuthenticationManager 认证管理器&lt;/li&gt;&#xA;&lt;li&gt;AuthenticationProvider 认证提供者&lt;/li&gt;&#xA;&lt;li&gt;UserDetailsService 用户详情服务&lt;/li&gt;&#xA;&lt;li&gt;PasswordEncoder 密码编码器&lt;/li&gt;&#xA;&lt;li&gt;Spring 安全上下文&lt;/li&gt;&#xA;&lt;li&gt;表单登录&lt;/li&gt;&#xA;&lt;li&gt;使用数据库登录&lt;/li&gt;&#xA;&lt;li&gt;登录尝试限制&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;入门（实用指南）&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;简介和概述&#34;&gt;简介和概述&lt;/h2&gt;&#xA;&lt;p&gt;除了提供各种内置的身份验证和授权选项之外，Spring Security 还允许我们根据需要自定义身份验证过程。从自定义登录页面到我们自己的自定义身份验证提供程序和身份验证过滤器，我们几乎可以自定义身份验证过程的各个方面。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security 和 Spring Boot 入门</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://docs.spring.io/spring-security/reference/index.html&#34; target=&#34;_blank&#34;&gt;Spring Security&lt;/a&gt; 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Spring Security 提供的默认配置及其工作原理。我们将进一步尝试自定义它们并分析它们对示例 Spring Boot 应用程序的影响。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Security：深入了解身份验证和授权</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-security-authentication-and-authorization/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-security-authentication-and-authorization/</guid>
+      <description>&lt;p&gt;您可以使用本指南来了解 Spring Security 是什么以及其核心功能（如身份验证、授权或常见漏洞保护）如何工作。此外，还有全面的常见问题解答。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]深入了解Spring事务管理：@Transactional</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-transaction-management-transactional-in-depth/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-transaction-management-transactional-in-depth/</guid>
+      <description>&lt;p&gt;您可以使用本指南来简单实用地了解 Spring 使用 @Transactional 注释进行事务管理的工作原理。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]为 Spring Boot 应用程序创建优化的 Docker 映像</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/16/spring-boot-docker/</link>
+      <pubDate>Wed, 16 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/16/spring-boot-docker/</guid>
+      <description>&lt;p&gt;容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。&lt;/p&gt;&#xA;&lt;p&gt;本文着眼于容器化 Spring Boot 应用程序的不同方法：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Spring Security和OAuth2发展过程</title>
+      <link>https://blog.chensoul.cc/posts/2023/08/15/spring-security-oauth2-history/</link>
+      <pubDate>Tue, 15 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/08/15/spring-security-oauth2-history/</guid>
+      <description>&lt;h2 id=&#34;spring-security-的发展过程&#34;&gt;Spring Security 的发展过程&lt;/h2&gt;&#xA;&lt;p&gt;Spring Security 是一个功能强大且广泛使用的安全框架，为企业级应用程序提供了全面的安全性。Spring Security 最初是 Acegi Security 项目的一部分，于 2004 年发布，现在已经成为 Spring 生态系统的核心组件。 Spring Security 的发展过程可以分为三个阶段：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-authorization-server/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-authorization-server/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;&#xA;&lt;p&gt;在本文中，我们将创建一个授权服务器，为任何客户端生成 access_token。这称为 OAuth2 的 &lt;code&gt;client_credentials&lt;/code&gt; 流程。它主要用于服务间通信。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]Spring Boot异常处理完整指南</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-exception-handling/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-exception-handling/</guid>
+      <description>&lt;p&gt;处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用 Spring Boot 和 Spring Security 配置 CORS</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/spring-cors/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/spring-cors/</guid>
+      <description>&lt;p&gt;跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPointerExceptions 的影响</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-null-safety-annotations/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-null-safety-annotations/</guid>
+      <description>&lt;p&gt;&lt;code&gt;NullPointerExceptions&lt;/code&gt; （通常缩写为“NPE”）对于每个 Java 程序员来说都是一场噩梦。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用Spring Boot Actuator公开有用的信息端点</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-info-endpoint/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/spring-boot-info-endpoint/</guid>
+      <description>&lt;p&gt;在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]在 Spring 中实现 OAuth2：第 1 部分</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring/</guid>
+      <description>&lt;p&gt;OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 &lt;a href=&#34;https://tools.ietf.org/html/rfc6749&#34; target=&#34;_blank&#34;&gt;OAuth RFC&lt;/a&gt; 或&lt;a href=&#34;https://en.wikipedia.org/wiki/OAuth&#34; target=&#34;_blank&#34;&gt;维基百科&lt;/a&gt;以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring-scopes/</link>
+      <pubDate>Wed, 26 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring-scopes/</guid>
+      <description>&lt;p&gt;我们在&lt;a href=&#34;https://blog.chensoul.cc/posts/2023/07/26/using-oauth2-in-spring/&#34;&gt;上一篇文章&lt;/a&gt;中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行Oauth2集中授权</title>
+      <link>https://blog.chensoul.cc/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/</link>
+      <pubDate>Fri, 14 Jul 2023 00:00:00 +0000</pubDate>
+      <guid>https://blog.chensoul.cc/posts/2023/07/14/oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store/</guid>
+      <description>&lt;p&gt;在这篇文章中，我们将了解如何使用 Spring Boot 2 和 Spring Security 5 OAuth2 来实现集中授权的授权服务器以及如何通过 GUI 对其进行管理，还将提供资源服务器演示以及 github 下的整个项目。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
