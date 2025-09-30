@@ -2,7 +2,7 @@
 title: "OpenAI API 接口与 Spring AI 对应关系"
 date: 2025-09-22
 slug: openai-api-with-spring-ai
-categories: ["java"]
+categories: ["AI"]
 tags: [spring-ai,ai]
 ---
 

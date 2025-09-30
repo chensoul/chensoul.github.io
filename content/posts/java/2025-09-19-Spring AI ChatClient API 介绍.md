@@ -2,7 +2,7 @@
 title: "Spring AI ChatClient API 介绍"
 date: 2025-09-19
 slug: spring-ai-chat-client-api
-categories: ["java"]
+categories: ["AI"]
 tags: [spring-ai,ai]
 ---
 
