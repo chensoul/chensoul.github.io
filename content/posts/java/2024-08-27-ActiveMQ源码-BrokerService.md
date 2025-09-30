@@ -3,7 +3,7 @@ title: "ActiveMQ源码-BrokerService和PersistenceAdapter"
 date: 2024-08-27
 slug: activemq-source-code-broker-service
 categories: ["java"]
-tags: [ activemq]
+tags: ['javascript', 'backend', 'security', 'tutorial']
 ---
 
 activemq-broker 模块 test/java 目录下有个 IDERunner 类：

@@ -3,7 +3,7 @@ title: "ThingsBoard源码中的Github Actions"
 date: 2024-12-03
 slug: github-actions-in-thingsboard
 categories: ["java"]
-tags: [thingsboard]
+tags: ['docker', 'javascript', 'backend', 'tutorial']
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：

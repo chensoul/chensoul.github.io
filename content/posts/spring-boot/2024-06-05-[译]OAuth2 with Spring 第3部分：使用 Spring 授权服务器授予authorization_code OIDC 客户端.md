@@ -3,7 +3,7 @@ title: "[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予au
 date: 2024-06-05
 slug: oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring
 categories: ["spring-boot"]
-tags: [ oauth2,java]
+tags: ['java', 'backend', 'security', 'tutorial']
 ---
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a>

@@ -48,12 +48,16 @@ ignoreLogs = ['warning-goldmark-raw-html']
     name = "分类"
     url = "/categories/"
     weight = 2
+   [[menu.main]]
+      name = "标签"
+      url = "/tags/"
+      weight = 3
   [[menu.main]]
-    name = "关于"
-    url = "/about/"
-    weight = 4
-  [[menu.main]]
-      name = "RSS"
+      name = "订阅"
       url = "/index.xml"
-      weight = 5
+      weight = 4
       target = "_blank"
+  [[menu.main]]
+      name = "关于"
+      url = "/about/"
+      weight = 10

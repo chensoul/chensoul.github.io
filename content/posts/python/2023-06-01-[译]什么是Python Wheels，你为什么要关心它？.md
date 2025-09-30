@@ -3,7 +3,7 @@ title: "[译]什么是 Python Wheels，你为什么要关心它？"
 date: 2023-06-01
 slug: python-wheels
 categories: ["python"]
-tags: ["python"]
+tags: ['docker', 'javascript', 'tutorial', 'git']
 ---
 
 ![What Are Python Wheels and Why Should You Care?](../../../static/images/What-are-Python-Wheels-and-Why-Should-You-Care_Watermarked.22246cad13be.webp)

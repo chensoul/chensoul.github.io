@@ -3,7 +3,7 @@ title: "[译]使用Spring Boot Actuator公开有用的信息端点"
 date: 2023-07-26
 slug: spring-boot-info-endpoint
 categories: ["spring-boot"]
-tags: [spring-boot]
+tags: ['java', 'javascript', 'backend', 'security']
 ---
 
 在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。

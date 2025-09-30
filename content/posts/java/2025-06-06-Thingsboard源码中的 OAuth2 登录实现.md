@@ -3,7 +3,7 @@ title: "Thingsboard源码中的OAuth2登录实现"
 date: 2025-06-06
 slug: oauth2-client-login-in-thingsboard
 categories: ["java"]
-tags: [thingsboard,oauth2]
+tags: ['javascript', 'spring-boot', 'backend', 'security']
 ---
 
 ## Thingsboard 启用 OAuth2 功能

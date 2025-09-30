@@ -3,7 +3,7 @@ title: "Github Action 发布 Jar 到 Maven 中央仓库"
 date: 2024-08-01
 slug: publishing-a-jar-to-maven-repository-with-github-action
 categories: ["java"]
-tags: [ maven]
+tags: ['docker', 'javascript', 'redis', 'backend']
 ---
 
 作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。
@@ -248,7 +248,7 @@ name: Maven Release
 on:
   push:
     branches: [ "main" ]
-    tags: [ "*" ]
+    tags: ['java', 'backend', 'tutorial', 'redis', 'docker', 'javascript', 'git', 'maven']
   release:
     types: [ created ]
 
@@ -330,7 +330,7 @@ name: Maven Release
 on:
   push:
     branches: [ "main" ]
-    tags: [ "*" ]
+    tags: ['java', 'backend', 'tutorial', 'redis', 'docker', 'javascript', 'git', 'maven']
   release:
     types: [ created ]
 

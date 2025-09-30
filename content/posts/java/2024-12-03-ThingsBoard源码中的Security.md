@@ -3,7 +3,7 @@ title: "ThingsBoard源码中的Security"
 date: 2024-12-03
 slug: security-in-thingsboard
 categories: ["java"]
-tags: [thingsboard,spring-security,oauth2]
+tags: ['javascript', 'backend', 'security', 'tutorial']
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。

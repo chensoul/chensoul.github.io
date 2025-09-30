@@ -3,7 +3,7 @@ title: "[译]Spring Boot异常处理完整指南"
 date: 2023-07-26
 slug: spring-boot-exception-handling
 categories: ["spring-boot"]
-tags: [spring-boot]
+tags: ['java', 'javascript', 'backend', 'tutorial']
 ---
 
 处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。

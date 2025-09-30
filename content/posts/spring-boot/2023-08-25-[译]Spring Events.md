@@ -3,7 +3,7 @@ title: "[译]Spring Events"
 date: 2023-08-25
 slug: spring-events
 categories: ["spring-boot"]
-tags: [spring]
+tags: ['java', 'backend', 'tutorial', 'translation']
 ---
 
 ## 1. 概述

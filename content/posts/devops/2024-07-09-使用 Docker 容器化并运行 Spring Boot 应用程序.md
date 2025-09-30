@@ -3,7 +3,7 @@ title: "使用 Docker 容器化并运行 Spring Boot 应用程序"
 date: 2024-07-09
 slug: docker-for-spring-boot
 categories: ["devops"]
-tags: [ "spring-boot","docker"]
+tags: ['docker', 'java', 'kubernetes', 'javascript']
 ---
 
 > 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/guides/java/)》文章，并做了一些改动。
@@ -565,7 +565,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
    on:
      push:
        branches: [ "main" ]
-       tags: [ "*" ]
+       tags: ['spring-boot', 'java', 'backend', 'tutorial', 'docker', 'kubernetes', 'security', 'javascript']
      release:
        types: [ created ]
    

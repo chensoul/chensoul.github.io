@@ -3,7 +3,7 @@ title: "[译]使用Spring Boot2和Spring Security 5以及JDBC令牌存储进行O
 date: 2023-07-14
 slug: oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store
 categories: ["spring-boot"]
-tags: [spring-security,oauth2]
+tags: ['mysql', 'java', 'javascript', 'backend']
 ---
 
 在这篇文章中，我们将了解如何使用 Spring Boot 2 和 Spring Security 5 OAuth2 来实现集中授权的授权服务器以及如何通过 GUI 对其进行管理，还将提供资源服务器演示以及 github 下的整个项目。

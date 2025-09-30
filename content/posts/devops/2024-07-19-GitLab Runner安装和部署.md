@@ -3,7 +3,7 @@ title: "GitLab Runner安装和部署"
 date: 2024-07-19
 slug: gitlab-runner-install
 categories: ["devops"]
-tags: [ "gitlab"]
+tags: ['docker', 'kubernetes', 'javascript', 'redis']
 ---
 
 ## 介绍

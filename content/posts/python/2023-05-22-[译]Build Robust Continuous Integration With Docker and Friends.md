@@ -3,7 +3,7 @@ title: "[译]Build Robust Continuous Integration With Docker and Friends"
 date: 2023-05-22
 slug: docker-continuous-integration
 categories: ["python"]
-tags: [docker]
+tags: ['mysql', 'docker', 'rabbitmq', 'kafka']
 ---
 
 ![Build Robust Continuous Integration With Docker and Friends](../../../static/images/UPDATE-Docker-in-Action-Fitter-Happier-More-Productive_Watermarked-0765910.webp)

@@ -3,7 +3,7 @@ title: "[译]如何在Spring Boot2中使用UserDetailsService实现安全性？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot2-using-userdetailsservice
 categories: ["spring-boot"]
-tags: [ spring-security]
+tags: ['mysql', 'java', 'backend', 'security']
 ---
 
 ![img](../../../static/images/Thymeleaf_SpringSecurity-1.webp)

@@ -3,7 +3,7 @@ title: "ThingsBoard接口设计"
 date: 2025-07-24
 slug: thingsboard-api
 categories: ["java"]
-tags: [thingsboard]
+tags: ['docker', 'javascript', 'backend', 'tutorial']
 ---
 
 本文档整理了ThingsBoard平台的各种协议接口设计，作为IoT平台开发的参考。

@@ -3,7 +3,7 @@ title: "[译]WebSocket与REST"
 date: 2024-05-07
 slug: websocket-vs-rest
 categories: ["java"]
-tags: [ websocket]
+tags: ['javascript', 'spring-boot', 'backend', 'tutorial']
 ---
 
 原文链接：[https://ably.com/topic/websocket-vs-rest](https://ably.com/topic/websocket-vs-rest)

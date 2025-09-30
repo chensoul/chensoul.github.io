@@ -3,7 +3,7 @@ title: "[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授�
 date: 2024-06-05
 slug: oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google
 categories: ["spring-boot"]
-tags: [ oauth2,java]
+tags: ['java', 'javascript', 'backend', 'security']
 ---
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5>

@@ -3,7 +3,7 @@ title: "[译]《Grokking the System Design Interview》系统设计主模板"
 date: 2023-11-16
 slug: system-design-master-template
 categories: ["architecture"]
-tags: ["architecture"]
+tags: ['javascript', 'rabbitmq', 'kafka', 'redis']
 ---
 
 这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [System Design Master Template](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1) 这篇章节。

@@ -3,7 +3,7 @@ title: "ThingsBoard HTTP Transport 实现方式"
 date: 2025-07-02
 slug: thingsboard-http-transport
 categories: ["java"]
-tags: ["thingsboard"]
+tags: ['javascript', 'spring-boot', 'kafka', 'rabbitmq']
 thumbnail: "/images/favicon.webp"
 ---
 

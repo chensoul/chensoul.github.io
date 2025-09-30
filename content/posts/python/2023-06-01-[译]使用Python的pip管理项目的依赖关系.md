@@ -3,7 +3,7 @@ title: "[译]使用 Python 的 pip 管理项目的依赖关系"
 date: 2023-06-01
 slug: what-is-pip
 categories: ["python"]
-tags: ["python"]
+tags: ['javascript', 'tutorial', 'translation', 'github']
 ---
 
 ![Using Python's pip to Manage Your Projects' Dependencies](https://files.realpython.com/media/What-is-PIP_Watermarked.4944e95d83ad.jpg)
