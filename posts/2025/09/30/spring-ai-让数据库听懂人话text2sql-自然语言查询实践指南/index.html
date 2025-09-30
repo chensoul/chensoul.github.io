@@ -1,0 +1,778 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"><meta property="og:title" content="Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南"><meta property="og:description" content="深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.chensoul.cc/posts/2025/09/30/spring-ai-%E8%AE%A9%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%AC%E6%87%82%E4%BA%BA%E8%AF%9Dtext2sql-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:image" content><meta itemprop=name content="Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南"><meta itemprop=description content="深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"><meta itemprop=datePublished content="2025-09-30T00:00:00+00:00"><meta itemprop=dateModified content="2025-09-30T00:00:00+00:00"><meta itemprop=wordCount content="2650"><meta itemprop=keywords content="Spring,AI,,Text2SQL,,自然语言查询,,NL2SQL,,Spring,Boot,,DeepSeek,,MCP工具,,数据库查询,,AI编程,,机器学习,,SQL生成,,智能查询,,自然语言处理,,人工智能,,数据库交互,,智能SQL,,中文查询,,业务规则推理,,安全防护,,提示词工程"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南"><meta name=twitter:description content="深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"><meta name=twitter:image content><link rel=preconnect href=//fonts.loli.net crossorigin><link rel=dns-prefetch href=//fonts.loli.net><link rel=stylesheet href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class="logo logo--mixed"><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__imagebox"><img class=logo__img src=/logo.svg loading=lazy alt="Site logo" width=60 height=60></div><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
+<span class=menu__btn-title tabindex=-1>菜单</span></button><ul class=menu__list><li class=menu__item><a class=menu__link href=/><span class=menu__text>首页</span></a></li><li class=menu__item><a class=menu__link href=/categories/><span class=menu__text>分类</span></a></li><li class=menu__item><a class=menu__link href=/about/><span class=menu__text>关于</span></a></li><li class=menu__item><a class=menu__link href=/index.xml><span class=menu__text>RSS</span></a></li></ul></nav></div></header><div class="wrapper flex"><div class=primary><main class=main role=main><article class=post><header class=post__header><h1 class=post__title>Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南</h1><div class="post__meta meta"><div class="meta__item-datetime meta__item"><svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 110 28 1 1 0 010-28m0 3a3 3 0 100 22 3 3 0 000-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class=meta__text datetime=2025-09-30>2025-09-30</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class=meta__text><a class=meta__link href=/categories/ai/ rel=category>AI</a></span></div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><span class=meta__text><a class=meta__link href=/tags/spring-ai/ rel=tag>Spring AI</a>, <a class=meta__link href=/tags/text2sql/ rel=tag>Text2SQL</a>, <a class=meta__link href=/tags/nl2sql/ rel=tag>NL2SQL</a>, <a class=meta__link href=/tags/spring-boot/ rel=tag>Spring-Boot</a>, <a class=meta__link href=/tags/deepseek/ rel=tag>DeepSeek</a>, <a class=meta__link href=/tags/mcp/ rel=tag>MCP</a></span></div></div></header><div class="content post__content clearfix"><p>&ldquo;能不能让数据库直接听懂中文问题，然后自动生成 SQL？&rdquo; 这个想法在我脑海中盘旋了很久。最近终于用 <strong>Spring AI</strong> 实现了这个功能，从最初的简单实现到后来的 <strong>MCP 工具集成</strong>，再到<strong>分步骤查询模式</strong>，整个过程充满了惊喜和踩坑。今天就来分享一下我的 <strong>Text2SQL</strong> 实践心得。</p><h2 id=源代码>源代码</h2><p>如果您想亲自尝试，可以随时查看我的源代码。为此，您必须克隆我的示例 <a href=https://github.com/chensoul/spring-ai-text2sql-showcase target=_blank>GitHub 仓库</a>。然后，您只需按照我的说明进行操作即可。</p><h2 id=为什么选择-text2sql>为什么选择 Text2SQL</h2><p>想象一下这样的场景：产品经理问"上个月技术部的平均工资是多少？"，你不需要写复杂的 <strong>SQL 查询语句</strong>，只需要用<strong>自然语言描述</strong>，系统就能自动生成并执行查询。这就是 <strong>Text2SQL</strong>（也称 <strong>NL2SQL</strong>）的魅力所在。</p><p>我选择 <strong>Spring AI</strong> 作为<strong>自然语言处理</strong>框架，主要看中了它的：</p><ul><li><strong>简单易用</strong>：几行配置就能接入各种 <strong>LLM 大语言模型</strong>（OpenAI、DeepSeek、通义千问等）</li><li><strong>工具集成</strong>：支持 <strong>MCP（Model Context Protocol）<strong>工具调用，实现</strong>函数调用</strong>能力</li><li><strong>Spring 生态</strong>：与现有 <strong>Spring Boot</strong> 项目无缝集成，支持<strong>依赖注入</strong>和<strong>自动配置</strong></li></ul><p><strong>核心技术栈</strong> ：</p><ul><li><strong>Spring Boot 3.5.6</strong> + <strong>Spring AI 1.1.0-M2</strong>（企业级 Java 框架）</li><li><strong>MySQL 9</strong> (Docker容器化部署)</li><li><strong>DeepSeek Chat API</strong>（国产大语言模型）</li><li><strong>Bootstrap 5</strong> + <strong>Thymeleaf</strong>（响应式前端框架）</li><li><strong>Maven</strong> 构建工具</li></ul><p><strong>关键特性</strong>：</p><ul><li>支持三种<strong>智能查询模式</strong>：直接模式、<strong>MCP工具模式</strong>、<strong>分步骤模式</strong></li><li>内置<strong>SQL注入防护</strong>（仅允许SELECT查询，防止数据泄露）</li><li><strong>现代化Web界面</strong>（支持移动端适配）</li><li><strong>数据库结构自动获取</strong>（支持多表关联查询）</li></ul><h2 id=10-分钟快速体验>10 分钟快速体验</h2><p>让我们先快速跑起来，看看<strong>自然语言数据库查询</strong>的效果如何：</p><p><strong>第一步：环境准备</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 设置 DeepSeek API Key（支持 OpenAI、Claude、通义千问等多种 LLM）</span>
+</span></span><span style=display:flex><span>export DEEPSEEK_API_KEY<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;your-deepseek-api-key-here&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 启动 MySQL 数据库容器（Docker 容器化部署）</span>
+</span></span><span style=display:flex><span>docker-compose up -d
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Maven 编译并运行 Spring Boot 应用</span>
+</span></span><span style=display:flex><span>mvn clean spring-boot:run
+</span></span></code></pre></div><p><strong>第二步：体验智能查询</strong></p><ul><li><strong>直接查询模式</strong>：http://localhost:8080 （单步 SQL 生成）</li><li><strong>分步骤模式</strong>：http://localhost:8080/step （多步推理查询）</li></ul><blockquote><p>💡 <strong>小贴士</strong>：首次启动会自动执行<strong>数据库初始化脚本</strong>，加载员工、部门、项目示例数据。</p></blockquote><h2 id=第一版简单粗暴的直接模式>第一版：简单粗暴的直接模式</h2><p>最开始，我采用了最简单直接的方式：把<strong>数据库 Schema</strong> 作为<strong>上下文信息</strong>注入到<strong>提示词工程</strong>中，让 <strong>LLM 大语言模型</strong>直接生成 SQL。这种<strong>零样本学习</strong>方式虽然简单，但效果出奇地好。</p><p><strong>核心思路</strong>：<strong>数据库结构</strong> + <strong>用户问题</strong> → <strong>AI 模型推理</strong> → <strong>SQL 语句</strong> → <strong>安全校验</strong> → <strong>执行查询</strong></p><h3 id=系统架构图>系统架构图</h3><pre class=mermaid>
+	flowchart LR
+User[Browser UI] --&gt; Controller[REST Controller]
+Controller --&gt; Service[DirectText2SqlService]
+Service --&gt; ChatClient[Spring AI ChatClient]
+Service --&gt; DatabaseTool[JdbcTemplate Tool]
+ChatClient --&gt; DeepSeek[DeepSeek Chat API]
+DatabaseTool --&gt; MySQL[MySQL Database]
+</pre><h3 id=核心代码实现>核心代码实现</h3><p>让我来展示一下最核心的 <code>DirectText2SqlService</code> 类：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Slf4j</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@RequiredArgsConstructor</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DirectText2SqlService</span> <span style=color:#66d9ef>implements</span> Text2SqlService {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> ChatClient chatClient;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> DatabaseTool databaseTool;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// SQL 生成提示模板</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String SQL_GENERATION_PROMPT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            你是一个专业的 SQL 生成助手。基于以下数据库结构信息，将用户的自然语言查询转换为 SQL 语句。
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            数据库结构信息：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            {schema}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            请遵循以下规则：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            1. 只生成 SELECT 查询语句
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            2. 使用正确的表名和字段名
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            3. 添加适当的 WHERE 条件
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            4. 使用 LIMIT 限制结果数量（最多 1000 条）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            5. 确保 SQL 语法正确
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            6. 如果查询涉及多表，请使用适当的 JOIN
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            7. 只返回 SQL 语句，不要包含其他解释
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            用户查询：{userQuery}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            &#34;&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 将自然语言转换为 SQL 并执行查询
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     *
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @param userQuery 用户自然语言查询
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * @return 查询结果
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Text2SqlResult <span style=color:#a6e22e>processQuery</span>(String userQuery) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 1. 验证输入</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (userQuery <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> userQuery.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;查询内容不能为空&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 2. 生成 SQL</span>
+</span></span><span style=display:flex><span>            String sql <span style=color:#f92672>=</span> generateSql(userQuery);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> sql.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;无法生成有效的SQL查询，请检查您的查询描述&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 3. 验证 SQL 安全性</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>SqlUtils.<span style=color:#a6e22e>isSqlSafe</span>(sql)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;生成的 SQL 包含不安全的操作，请重新描述您的查询需求&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>info</span>(<span style=color:#e6db74>&#34;sql: {}&#34;</span>, sql);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 4. 执行 SQL 查询</span>
+</span></span><span style=display:flex><span>            List<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;</span> results <span style=color:#f92672>=</span> databaseTool.<span style=color:#a6e22e>executeQuery</span>(sql);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>success</span>(sql, results);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;处理查询时发生错误: {}&#34;</span>, e.<span style=color:#a6e22e>getMessage</span>(), e);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;处理查询时发生错误: &#34;</span> <span style=color:#f92672>+</span> e.<span style=color:#a6e22e>getMessage</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 生成 SQL 查询语句
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>generateSql</span>(String userQuery) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 获取数据库结构信息</span>
+</span></span><span style=display:flex><span>        String schema <span style=color:#f92672>=</span> databaseTool.<span style=color:#a6e22e>getDatabaseSchema</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 创建提示模板</span>
+</span></span><span style=display:flex><span>        PromptTemplate promptTemplate <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> PromptTemplate(SQL_GENERATION_PROMPT);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 构建提示</span>
+</span></span><span style=display:flex><span>        Prompt prompt <span style=color:#f92672>=</span> promptTemplate.<span style=color:#a6e22e>create</span>(Map.<span style=color:#a6e22e>of</span>(
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;schema&#34;</span>, schema,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;userQuery&#34;</span>, userQuery
+</span></span><span style=display:flex><span>        ));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 调用 AI 生成 SQL</span>
+</span></span><span style=display:flex><span>        ChatResponse response <span style=color:#f92672>=</span> chatClient.<span style=color:#a6e22e>prompt</span>(prompt).<span style=color:#a6e22e>call</span>().<span style=color:#a6e22e>chatResponse</span>();
+</span></span><span style=display:flex><span>        String sql <span style=color:#f92672>=</span> response.<span style=color:#a6e22e>getResult</span>().<span style=color:#a6e22e>getOutput</span>().<span style=color:#a6e22e>getText</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 清理 SQL 语句（移除可能的代码块标记）</span>
+</span></span><span style=display:flex><span>        sql <span style=color:#f92672>=</span> sql.<span style=color:#a6e22e>replaceAll</span>(<span style=color:#e6db74>&#34;```sql&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>).<span style=color:#a6e22e>replaceAll</span>(<span style=color:#e6db74>&#34;```&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>).<span style=color:#a6e22e>trim</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> sql;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=核心配置>核心配置</h3><p>让我来展示一下关键的配置文件。首先是 <code>application.yml</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>spring</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>datasource</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>url</span>: <span style=color:#ae81ff>jdbc:mysql://localhost:3306/text2sql_db?useUnicode=true&amp;characterEncoding=UTF-8</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>username</span>: <span style=color:#ae81ff>root</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>password</span>: <span style=color:#ae81ff>root123</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ai</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>openai</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>base-url</span>: <span style=color:#ae81ff>https://api.deepseek.com</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>api-key</span>: <span style=color:#ae81ff>${DEEPSEEK_API_KEY}</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>chat</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>options</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>model</span>: <span style=color:#ae81ff>deepseek-chat</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>temperature</span>: <span style=color:#ae81ff>0.1</span>
+</span></span></code></pre></div><p>然后是 <code>docker-compose.yml</code> 的数据库配置：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>mysql</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>mysql:8</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>text2sql-mysql</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>MYSQL_ROOT_PASSWORD</span>: <span style=color:#ae81ff>root123</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>MYSQL_DATABASE</span>: <span style=color:#ae81ff>text2sql_db</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#34;3306:3306&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>volumes</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>./mysql.cnf:/etc/mysql/conf.d/mysql.cnf</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>./src/main/resources/data.sql:/docker-entrypoint-initdb.d/02-data.sql</span>
+</span></span></code></pre></div><h3 id=spring-ai-配置类>Spring AI 配置类</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Configuration</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AppConfig</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ChatClient <span style=color:#a6e22e>chatClient</span>(OpenAiChatModel chatModel) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ChatClient.<span style=color:#a6e22e>builder</span>(chatModel)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>defaultAdvisors</span>(<span style=color:#66d9ef>new</span> SimpleLoggerAdvisor())
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>build</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这个配置类做了一件事：</p><ol><li><strong>基础 ChatClient</strong>：用于直接模式的 SQL 生成</li></ol><h3 id=api-接口设计>API 接口设计</h3><p>我设计了两个核心接口：</p><ul><li><strong>查询接口</strong>：<code>POST /api/query</code> - 接收自然语言问题，返回 SQL 和查询结果</li><li><strong>结构接口</strong>：<code>GET /api/schema</code> - 获取数据库结构信息</li></ul><h3 id=rest-controller-实现>REST Controller 实现</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Controller</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@RequiredArgsConstructor</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Text2SqlController</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> Text2SqlService text2SqlService;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> DatabaseTool databaseTool;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 处理自然语言查询的 API 接口
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@PostMapping</span>(<span style=color:#e6db74>&#34;/api/query&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@ResponseBody</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ResponseEntity<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;</span> <span style=color:#a6e22e>processQuery</span>(<span style=color:#a6e22e>@RequestBody</span> Map<span style=color:#f92672>&lt;</span>String, String<span style=color:#f92672>&gt;</span> request) {
+</span></span><span style=display:flex><span>        String query <span style=color:#f92672>=</span> request.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;query&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (query <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> query.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;success&#34;</span>, <span style=color:#66d9ef>false</span>);
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;error&#34;</span>, <span style=color:#e6db74>&#34;查询内容不能为空&#34;</span>);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> ResponseEntity.<span style=color:#a6e22e>badRequest</span>().<span style=color:#a6e22e>body</span>(response);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 处理查询</span>
+</span></span><span style=display:flex><span>        Text2SqlResult result <span style=color:#f92672>=</span> text2SqlService.<span style=color:#a6e22e>processQuery</span>(query);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>        response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;success&#34;</span>, result.<span style=color:#a6e22e>isSuccess</span>());
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (result.<span style=color:#a6e22e>isSuccess</span>()) {
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;sql&#34;</span>, result.<span style=color:#a6e22e>getSql</span>());
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;data&#34;</span>, result.<span style=color:#a6e22e>getData</span>());
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;count&#34;</span>, result.<span style=color:#a6e22e>getData</span>().<span style=color:#a6e22e>size</span>());
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>            response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;error&#34;</span>, result.<span style=color:#a6e22e>getError</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ResponseEntity.<span style=color:#a6e22e>ok</span>(response);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 获取数据库结构信息的 API
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@GetMapping</span>(<span style=color:#e6db74>&#34;/api/schema&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@ResponseBody</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ResponseEntity<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, String<span style=color:#f92672>&gt;&gt;</span> <span style=color:#a6e22e>getSchema</span>() {
+</span></span><span style=display:flex><span>        Map<span style=color:#f92672>&lt;</span>String, String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>        response.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;schema&#34;</span>, databaseTool.<span style=color:#a6e22e>getDatabaseSchema</span>());
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ResponseEntity.<span style=color:#a6e22e>ok</span>(response);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>让我们看看实际的使用效果：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -X POST http://localhost:8080/api/query <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;query&#34;: &#34;统计每个部门的员工数量&#34;}&#39;</span>
+</span></span></code></pre></div><p><strong>返回结果</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;success&#34;</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;sql&#34;</span>: <span style=color:#e6db74>&#34;SELECT department, COUNT(*) as count FROM employees GROUP BY department&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;data&#34;</span>: [ { <span style=color:#f92672>&#34;department&#34;</span>: <span style=color:#e6db74>&#34;技术部&#34;</span>, <span style=color:#f92672>&#34;count&#34;</span>: <span style=color:#ae81ff>3</span> } ],
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;count&#34;</span>: <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>看到没？AI 不仅生成了正确的 SQL，还直接返回了查询结果！这就是 Text2SQL 的魅力。</p><h3 id=前端界面展示>前端界面展示</h3><p>我设计了一个简洁美观的 Web 界面，让用户能够直观地体验 Text2SQL 功能：</p><p><img src=https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-01.png alt="Spring AI Text2SQL 直接模式界面展示 - 自然语言数据库查询系统前端界面，包含中文查询输入框、示例查询模板、SQL生成结果展示和数据库结构查看功能"></p><p><strong>主要功能</strong>：</p><ul><li><strong>自然语言输入</strong>：用户可以直接用中文描述查询需求</li><li><strong>示例查询</strong>：提供常用的查询模板，点击即可使用</li><li><strong>实时结果展示</strong>：显示生成的 SQL 和查询结果</li><li><strong>数据库结构查看</strong>：可以查看完整的数据库结构信息</li></ul><p><strong>界面特色</strong>：</p><ul><li>使用 Bootstrap 5 构建，响应式设计</li><li>渐变色背景，视觉效果现代</li><li>代码高亮显示，SQL 语句清晰可读</li><li>表格结果展示，数据一目了然</li></ul><p><strong>示例数据表结构</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- 员工表数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> employees (name, department, <span style=color:#66d9ef>position</span>, salary, hire_date, email) <span style=color:#66d9ef>VALUES</span>
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;张三&#39;</span>, <span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#e6db74>&#39;高级工程师&#39;</span>, <span style=color:#ae81ff>15000</span>, <span style=color:#e6db74>&#39;2022-01-15&#39;</span>, <span style=color:#e6db74>&#39;zhangsan@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;李四&#39;</span>, <span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#e6db74>&#39;工程师&#39;</span>, <span style=color:#ae81ff>12000</span>, <span style=color:#e6db74>&#39;2022-03-20&#39;</span>, <span style=color:#e6db74>&#39;lisi@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;王五&#39;</span>, <span style=color:#e6db74>&#39;销售部&#39;</span>, <span style=color:#e6db74>&#39;销售经理&#39;</span>, <span style=color:#ae81ff>18000</span>, <span style=color:#e6db74>&#39;2021-11-10&#39;</span>, <span style=color:#e6db74>&#39;wangwu@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;赵六&#39;</span>, <span style=color:#e6db74>&#39;销售部&#39;</span>, <span style=color:#e6db74>&#39;销售代表&#39;</span>, <span style=color:#ae81ff>10000</span>, <span style=color:#e6db74>&#39;2023-02-01&#39;</span>, <span style=color:#e6db74>&#39;zhaoliu@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;钱七&#39;</span>, <span style=color:#e6db74>&#39;人事部&#39;</span>, <span style=color:#e6db74>&#39;人事经理&#39;</span>, <span style=color:#ae81ff>16000</span>, <span style=color:#e6db74>&#39;2021-08-05&#39;</span>, <span style=color:#e6db74>&#39;qianqi@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;孙八&#39;</span>, <span style=color:#e6db74>&#39;财务部&#39;</span>, <span style=color:#e6db74>&#39;会计师&#39;</span>, <span style=color:#ae81ff>14000</span>, <span style=color:#e6db74>&#39;2022-06-15&#39;</span>, <span style=color:#e6db74>&#39;sunba@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;周九&#39;</span>, <span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#e6db74>&#39;架构师&#39;</span>, <span style=color:#ae81ff>25000</span>, <span style=color:#e6db74>&#39;2020-12-01&#39;</span>, <span style=color:#e6db74>&#39;zhoujiu@company.com&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;吴十&#39;</span>, <span style=color:#e6db74>&#39;市场部&#39;</span>, <span style=color:#e6db74>&#39;市场专员&#39;</span>, <span style=color:#ae81ff>11000</span>, <span style=color:#e6db74>&#39;2023-01-10&#39;</span>, <span style=color:#e6db74>&#39;wushi@company.com&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- 项目表数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> projects (name, description, start_date, end_date, status, budget) <span style=color:#66d9ef>VALUES</span>
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;电商平台重构&#39;</span>, <span style=color:#e6db74>&#39;重构现有电商平台，提升性能和用户体验&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>, <span style=color:#e6db74>&#39;2023-06-30&#39;</span>, <span style=color:#e6db74>&#39;进行中&#39;</span>, <span style=color:#ae81ff>500000</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;移动端应用开发&#39;</span>, <span style=color:#e6db74>&#39;开发公司移动端应用&#39;</span>, <span style=color:#e6db74>&#39;2023-03-01&#39;</span>, <span style=color:#e6db74>&#39;2023-08-31&#39;</span>, <span style=color:#e6db74>&#39;进行中&#39;</span>, <span style=color:#ae81ff>300000</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;数据分析系统&#39;</span>, <span style=color:#e6db74>&#39;构建企业数据分析平台&#39;</span>, <span style=color:#e6db74>&#39;2022-10-01&#39;</span>, <span style=color:#e6db74>&#39;2023-02-28&#39;</span>, <span style=color:#e6db74>&#39;已完成&#39;</span>, <span style=color:#ae81ff>200000</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;客户管理系统&#39;</span>, <span style=color:#e6db74>&#39;升级客户关系管理系统&#39;</span>, <span style=color:#e6db74>&#39;2023-02-15&#39;</span>, <span style=color:#e6db74>&#39;2023-07-15&#39;</span>, <span style=color:#e6db74>&#39;进行中&#39;</span>, <span style=color:#ae81ff>150000</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;财务系统优化&#39;</span>, <span style=color:#e6db74>&#39;优化财务系统性能&#39;</span>, <span style=color:#e6db74>&#39;2022-12-01&#39;</span>, <span style=color:#e6db74>&#39;2023-01-31&#39;</span>, <span style=color:#e6db74>&#39;已完成&#39;</span>, <span style=color:#ae81ff>80000</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- 项目成员关系表数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> project_members (project_id, employee_id, <span style=color:#66d9ef>role</span>, join_date) <span style=color:#66d9ef>VALUES</span>
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#39;开发负责人&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#e6db74>&#39;开发工程师&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>7</span>, <span style=color:#e6db74>&#39;技术架构师&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#39;项目经理&#39;</span>, <span style=color:#e6db74>&#39;2023-03-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>2</span>, <span style=color:#e6db74>&#39;开发工程师&#39;</span>, <span style=color:#e6db74>&#39;2023-03-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>7</span>, <span style=color:#e6db74>&#39;技术负责人&#39;</span>, <span style=color:#e6db74>&#39;2022-10-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>6</span>, <span style=color:#e6db74>&#39;数据分析师&#39;</span>, <span style=color:#e6db74>&#39;2022-10-01&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>3</span>, <span style=color:#e6db74>&#39;项目经理&#39;</span>, <span style=color:#e6db74>&#39;2023-02-15&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>4</span>, <span style=color:#e6db74>&#39;业务分析师&#39;</span>, <span style=color:#e6db74>&#39;2023-02-15&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#e6db74>&#39;项目经理&#39;</span>, <span style=color:#e6db74>&#39;2022-12-01&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- 部门表数据
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> departments (name, manager_id, budget, <span style=color:#66d9ef>location</span>) <span style=color:#66d9ef>VALUES</span>
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>2000000</span>, <span style=color:#e6db74>&#39;北京&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;销售部&#39;</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>1500000</span>, <span style=color:#e6db74>&#39;上海&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;人事部&#39;</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>800000</span>, <span style=color:#e6db74>&#39;北京&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;财务部&#39;</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>600000</span>, <span style=color:#e6db74>&#39;北京&#39;</span>),
+</span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;市场部&#39;</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>1000000</span>, <span style=color:#e6db74>&#39;上海&#39;</span>);
+</span></span></code></pre></div><h2 id=第二版mcp-工具集成模式---让-ai-更聪明>第二版：MCP 工具集成模式 - 让 AI 更聪明</h2><p>直接模式虽然简单，但遇到<strong>复杂数据库查询</strong>时就开始力不从心了。比如<strong>多表关联查询</strong>、<strong>字段语义理解</strong>等情况，AI 容易产生<strong>幻觉问题</strong>。</p><p>这时候，我引入了 <strong>MCP（Model Context Protocol）工具集成</strong>，让 <strong>LLM 大语言模型</strong>能够：</p><ol><li><strong>先认知</strong>：通过<strong>函数调用</strong>获取真实的<strong>数据库 Schema</strong></li><li><strong>再生成</strong>：基于真实结构生成<strong>精准 SQL</strong></li><li><strong>后验证</strong>：执行前先做<strong>语法校验</strong>和<strong>安全检查</strong></li></ol><h3 id=为什么需要-mcp-工具调用>为什么需要 MCP 工具调用？</h3><p>想象一下，你的数据库有 50 张表，每张表都有复杂的<strong>外键关联</strong>。如果把这些信息都塞进<strong>提示词上下文</strong>，不仅会超出<strong>模型上下文窗口</strong>限制，还容易让 AI 产生<strong>数据幻觉</strong>。</p><p><strong>MCP 工具模式</strong>的核心优势：</p><ul><li><strong>动态获取</strong>：实时从数据库获取<strong>元数据信息</strong>，避免过时数据</li><li><strong>安全验证</strong>：生成 SQL 后先做<strong>语法检查</strong>，确保查询正确</li><li><strong>智能纠错</strong>：如果 SQL 有问题，AI 可以根据<strong>错误信息</strong>自动修正</li></ul><p><strong>适用场景</strong>：</p><ul><li><strong>复杂多表关联查询</strong>（JOIN、子查询）</li><li>对<strong>字段语义</strong>敏感的查询</li><li>需要<strong>高准确性</strong>的生产环境</li></ul><h3 id=mcp-工具调用流程图>MCP 工具调用流程图</h3><pre class=mermaid>
+	sequenceDiagram
+    participant User as 用户
+    participant Controller as REST Controller
+    participant Service as MCP Text2SQL Service
+    participant AI as AI 模型
+    participant Tool as 数据库工具
+    participant DB as MySQL 数据库
+
+    User-&gt;&gt;Controller: 发送自然语言查询
+    Controller-&gt;&gt;Service: 处理查询请求
+    Service-&gt;&gt;AI: 请求获取数据库结构
+    AI-&gt;&gt;Tool: 调用 getDatabaseSchema 工具
+    Tool-&gt;&gt;DB: 查询 INFORMATION_SCHEMA
+    DB--&gt;&gt;Tool: 返回表结构信息
+    Tool--&gt;&gt;AI: 返回结构数据
+    AI--&gt;&gt;Service: 返回结构信息
+    Service-&gt;&gt;AI: 基于结构生成 SQL
+    AI--&gt;&gt;Service: 返回生成的 SQL
+    Service-&gt;&gt;AI: 请求验证 SQL（小范围测试）
+    AI-&gt;&gt;Tool: 调用 executeQuery 工具（LIMIT 1）
+    Tool-&gt;&gt;DB: 执行测试查询
+    DB--&gt;&gt;Tool: 返回测试结果
+    Tool--&gt;&gt;AI: 返回验证结果
+    AI--&gt;&gt;Service: 返回验证通过/失败信息
+    
+    alt SQL 验证通过
+        Service-&gt;&gt;Tool: 执行完整查询
+        Tool-&gt;&gt;DB: 执行完整 SQL
+        DB--&gt;&gt;Tool: 返回完整结果
+        Tool--&gt;&gt;Service: 返回查询结果
+        Service--&gt;&gt;Controller: 返回成功结果
+        Controller--&gt;&gt;User: 返回 SQL 和查询结果
+    else SQL 验证失败
+        Service-&gt;&gt;AI: 请求修正 SQL
+        AI--&gt;&gt;Service: 返回修正后的 SQL
+        Service-&gt;&gt;AI: 再次验证修正后的 SQL
+        AI--&gt;&gt;Service: 返回验证结果
+        Service--&gt;&gt;Controller: 返回错误或修正后的结果
+        Controller--&gt;&gt;User: 返回错误信息或修正后的结果
+    end
+</pre><h3 id=spring-ai-配置类-1>Spring AI 配置类</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Configuration</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AppConfig</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ChatClient <span style=color:#a6e22e>chatClient</span>(OpenAiChatModel chatModel) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> ChatClient.<span style=color:#a6e22e>builder</span>(chatModel).<span style=color:#a6e22e>defaultAdvisors</span>(<span style=color:#66d9ef>new</span> SimpleLoggerAdvisor()).<span style=color:#a6e22e>build</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Bean</span>(<span style=color:#e6db74>&#34;mcpChatClient&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> ChatClient <span style=color:#a6e22e>mcpChatClient</span>(ChatClient.<span style=color:#a6e22e>Builder</span> chatClientBuilder, DatabaseTool databaseTool) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> chatClientBuilder
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>defaultTools</span>(databaseTool)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>build</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>mcpChatClient 设置了默认的工具 databaseTool，DatabaseTool 的方法需要添加 MCP 的 @Tool 注解：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Slf4j</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Service</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@RequiredArgsConstructor</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DatabaseTool</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> JdbcTemplate jdbcTemplate;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Tool</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;getTableNames&#34;</span>, description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;获取数据库中所有表的名称列表&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> List<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>getTableNames</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            String sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    SELECT TABLE_NAME 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    FROM INFORMATION_SCHEMA.TABLES 
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    WHERE TABLE_SCHEMA = DATABASE()
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    AND TABLE_TYPE = &#39;BASE TABLE&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    ORDER BY TABLE_NAME
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    &#34;&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> jdbcTemplate.<span style=color:#a6e22e>queryForList</span>(sql, String.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;获取表列表失败&#34;</span>, e);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> List.<span style=color:#a6e22e>of</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//...</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=mcptext2sqlservice>McpText2SqlService</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Slf4j</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Service</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@RequiredArgsConstructor</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>McpText2SqlService</span> <span style=color:#66d9ef>implements</span> Text2SqlService {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Qualifier</span>(<span style=color:#e6db74>&#34;mcpChatClient&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> ChatClient mcpChatClient;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// SQL 生成提示模板（MCP版本）</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String SQL_GENERATION_PROMPT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            你是一个专业的 SQL 生成助手。你可以使用以下工具来获取数据库结构信息：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            可用工具：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            - getTableNames(): 获取所有表名
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            - getTableSchema(tableName): 获取指定表的完整结构
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            - getDatabaseSchema(): 获取所有表的完整结构
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            - getTableColumns(tableName): 获取指定表的列信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            - executeQuery(sql): 执行 SQL 查询验证结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            请遵循以下规则：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            1. 首先使用 getTableNames() 了解数据库中有哪些表
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            2. 根据用户查询需求，使用 getTableSchema() 获取相关表的结构信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            3. 只生成 SELECT 查询语句
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            4. 使用正确的表名和字段名
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            5. 添加适当的 WHERE 条件
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            6. 使用 LIMIT 限制结果数量（最多 1000 条）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            7. 确保 SQL 语法正确
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            8. 如果查询涉及多表，请使用适当的 JOIN
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            9. 生成 SQL 后，可以使用 executeQuery() 验证结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            10. 只返回 SQL 语句，不要包含其他解释
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            用户查询：{userQuery}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            &#34;&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 将自然语言转换为 SQL 并执行查询（MCP版本）
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Text2SqlResult <span style=color:#a6e22e>processQuery</span>(String userQuery) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 1. 验证输入</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (userQuery <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> userQuery.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;查询不能为空&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 2. 使用 MCP 工具生成 SQL</span>
+</span></span><span style=display:flex><span>            String sql <span style=color:#f92672>=</span> generateSqlWithMcpTools(userQuery);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> sql.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;无法生成有效的 SQL 查询&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 3. 验证 SQL 安全性</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>SqlUtils.<span style=color:#a6e22e>isSqlSafe</span>(sql)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;生成的 SQL 不安全，包含危险操作&#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 4. 执行查询</span>
+</span></span><span style=display:flex><span>            List<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;</span> results <span style=color:#f92672>=</span> executeQuery(sql);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>success</span>(sql, results);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;MCP Text2SQL 处理失败&#34;</span>, e);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Text2SqlResult.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;处理查询时发生错误: &#34;</span> <span style=color:#f92672>+</span> e.<span style=color:#a6e22e>getMessage</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>generateSqlWithMcpTools</span>(String userQuery) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            PromptTemplate promptTemplate <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> PromptTemplate(SQL_GENERATION_PROMPT);
+</span></span><span style=display:flex><span>            Prompt prompt <span style=color:#f92672>=</span> promptTemplate.<span style=color:#a6e22e>create</span>(Map.<span style=color:#a6e22e>of</span>(<span style=color:#e6db74>&#34;userQuery&#34;</span>, userQuery));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            ChatResponse response <span style=color:#f92672>=</span> mcpChatClient.<span style=color:#a6e22e>prompt</span>(prompt).<span style=color:#a6e22e>call</span>().<span style=color:#a6e22e>chatResponse</span>();
+</span></span><span style=display:flex><span>            String sql <span style=color:#f92672>=</span> response.<span style=color:#a6e22e>getResult</span>().<span style=color:#a6e22e>getOutput</span>().<span style=color:#a6e22e>getText</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 清理 SQL 语句，移除可能的解释文本</span>
+</span></span><span style=display:flex><span>            sql <span style=color:#f92672>=</span> SqlUtils.<span style=color:#a6e22e>cleanSql</span>(sql);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>info</span>(<span style=color:#e6db74>&#34;MCP 工具生成的 SQL: {}&#34;</span>, sql);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> sql;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            log.<span style=color:#a6e22e>error</span>(<span style=color:#e6db74>&#34;使用 MCP 工具生成 SQL 失败&#34;</span>, e);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> List<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;</span> <span style=color:#a6e22e>executeQuery</span>(String sql) {
+</span></span><span style=display:flex><span>        log.<span style=color:#a6e22e>info</span>(<span style=color:#e6db74>&#34;使用 MCP 工具执行查询: {}&#34;</span>, sql);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        List<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;</span> result <span style=color:#f92672>=</span> mcpChatClient.<span style=color:#a6e22e>prompt</span>()
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>user</span>(<span style=color:#e6db74>&#34;请使用 executeQuery 工具执行以下 SQL 查询: &#34;</span> <span style=color:#f92672>+</span> sql)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>call</span>()
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>entity</span>(<span style=color:#66d9ef>new</span> ParameterizedTypeReference<span style=color:#f92672>&lt;</span>List<span style=color:#f92672>&lt;</span>Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;&gt;&gt;</span>() {
+</span></span><span style=display:flex><span>                });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        log.<span style=color:#a6e22e>info</span>(<span style=color:#e6db74>&#34;MCP 工具执行查询完成，返回 {} 条记录&#34;</span>, result.<span style=color:#a6e22e>size</span>());
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> result;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=第三版分步骤查询模式---让-ai-推理过程透明化>第三版：分步骤查询模式 - 让 AI 推理过程透明化</h2><p>有时候，我们不仅想要结果，还想知道 <strong>AI 大语言模型</strong>是怎么<strong>逻辑推理</strong>的。特别是在<strong>教学演示</strong>、<strong>调试复杂查询</strong>或者<strong>生产环境监控</strong>时，<strong>分步骤展示</strong>就显得尤为重要。</p><p>参考阿里的<strong>析言产品</strong>，把整个 <strong>Text2SQL 自然语言处理</strong>过程拆解成了 5 个清晰的<strong>推理步骤</strong>：</p><pre class=mermaid>
+	flowchart TD
+Q[Step 1 问题改写] --&gt; T[Step 2 数据表选取]
+T --&gt; I[Step 3 信息推理]
+I --&gt; G[Step 4 SQL生成]
+G --&gt; E[Step 5 SQL执行]
+</pre><h3 id=每一步都在做什么>每一步都在做什么？</h3><p>以执行 &ldquo;找出工资最高的员工&rdquo; 为例，展示<strong>多步推理</strong>过程：</p><p><strong>步骤 1：自然语言问题改写</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>问题改写，改写为：查询工资最高的员工信息
+</span></span></code></pre></div><p><strong>步骤 2：数据表智能选取</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>数据表选取，选择表为：employees
+</span></span></code></pre></div><p><strong>步骤 3：业务逻辑信息推理</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>信息推理，本次推理参考业务信息是：
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 需要查询的字段：id, name, department, position, salary, hire_date, email
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 筛选条件：无特定筛选条件
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 表关联关系：单表查询，无需表关联
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 排序规则：按salary字段降序排列，以找到工资最高的员工
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 分组统计：无需分组统计
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 结果限制：使用LIMIT 1限制结果数量，确保只返回工资最高的员工信息
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 业务含义：用于识别公司中薪酬最高的员工，便于人力资源管理和薪酬结构分析
+</span></span></code></pre></div><p><strong>步骤 4：SQL 语句智能生成</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>查询SQL生成，生成SQL查询语句为：
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>SELECT 
+</span></span><span style=display:flex><span>    id,
+</span></span><span style=display:flex><span>    name,
+</span></span><span style=display:flex><span>    department,
+</span></span><span style=display:flex><span>    position,
+</span></span><span style=display:flex><span>    salary,
+</span></span><span style=display:flex><span>    hire_date,
+</span></span><span style=display:flex><span>    email
+</span></span><span style=display:flex><span>FROM employees
+</span></span><span style=display:flex><span>ORDER BY salary DESC
+</span></span><span style=display:flex><span>LIMIT 1
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-weight:700>**SQL智能注释**</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>1. **查询目的**: 查询公司中工资最高的员工信息，用于识别薪酬最高的员工
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>2. **字段说明**:
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - id: 员工唯一标识符，用于精确识别员工
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - name: 员工姓名，便于人力资源识别具体人员
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - department: 所属部门，分析高薪员工分布情况
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - position: 职位信息，了解高薪对应的岗位级别
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - salary: 工资数额，核心查询字段
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - hire_date: 入职日期，分析高薪与入职时间的关系
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - email: 联系方式，便于后续沟通
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>3. **表关联**: 单表查询，直接从employees表中获取数据，无需表关联
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>4. **条件筛选**: 无特定筛选条件，查询全公司所有员工
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>5. **分组聚合**: 无需分组统计，直接查询单个最高薪员工
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>6. **排序逻辑**: 按salary字段降序排列(DESC)，确保工资最高的员工排在第一位
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>7. **性能优化**: 使用LIMIT 1限制结果数量，避免返回不必要的数据，提高查询效率
+</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>8. **业务价值**: 该查询结果有助于人力资源部门了解公司薪酬结构，识别关键人才，为薪酬调整和人才保留策略提供数据支持
+</span></span></span></code></pre></div><p><strong>步骤 5：SQL执行</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>执行成功，找到 1 条记录
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>| id | name | department | position | salary | hire_date | email |
+</span></span><span style=display:flex><span>|----|------|------------|----------|--------|-----------|-------|
+</span></span><span style=display:flex><span>| 7 | 周九 | 技术部 | 架构师 | 25000.00 | 1606752000000 | zhoujiu@company.com |
+</span></span></code></pre></div><h3 id=分步骤查询的提示词设计>分步骤查询的提示词设计</h3><p>为了实现这种分步骤展示，为每个步骤设计了专门的提示词模板：</p><p>比如以下是步骤 1 的提示词模板，为了识别出不是数据库查询的输入，对提示词做了一些修改。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>    <span style=color:#75715e>// 步骤1: 问题改写提示模板</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String STEP1_PROMPT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            请将用户的自然语言查询改写为更清晰、更具体的查询描述。
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            用户查询：{userQuery}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            判断规则：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            1. 数据库查询特征词：查询、统计、查找、获取、显示、列出、计算、汇总、分析、筛选、排序、分组、连接、关联
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            2. 非数据库查询特征：问候语、自我介绍、聊天、天气、新闻、娱乐、技术问题、编程问题、系统问题
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            请使用 getDatabaseSchema MCP工具查询数据库表结构
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            判断流程：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            1. 检查是否包含数据库查询特征词
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            2. 检查是否涉及数据库里面的业务实体
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            3. 检查是否包含数据操作意图
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            4. 排除明显的非数据库查询内容
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            5. 使用MCP工具查询实际表结构，判断查询是否可行
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            请严格按照以下格式返回，不要包含任何其他内容：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            如果是数据库查询且与现有表相关：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            问题改写，改写为：[改写后的查询描述]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            如果不是数据库查询：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            提示：请输入与数据库查询相关的问题，例如&#34;查询员工信息&#34;、&#34;统计销售数据&#34;等
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            如果是数据库查询但与现有表无关：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            提示：当前数据库中没有相关的业务表，请查询员工、部门、项目等相关信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            要求：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            1. 必须严格按照上述格式返回
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            2. 对于数据库查询，改写后的描述要简洁明了，突出查询的核心需求
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            3. 使用标准的数据库查询术语
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            4. 不要包含任何分析过程或额外说明
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            5. 必须使用MCP工具查询数据库结构后再做判断
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            &#34;&#34;&#34;</span>;
+</span></span></code></pre></div><p><strong>这种方式的优势</strong>：</p><ul><li><strong>教学友好</strong>：每一步都可以单独观察和调整</li><li><strong>调试便利</strong>：出问题时能快速定位到具体步骤</li><li><strong>可干预</strong>：可以在任意步骤插入人工检查或规则修正</li><li><strong>结果清晰</strong>：使用 Markdown 表格让查询结果更加直观易读</li></ul><h3 id=分步骤查询的前端界面>分步骤查询的前端界面</h3><p>启动应用之后，访问 http://localhost:8080/step 即可访问分步骤查询的前端界面：</p><p><img src=https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-02.png alt="Spring AI Text2SQL 分步骤查询模式界面 - 多步推理过程展示界面，包含问题改写、数据表选取、信息推理、SQL生成和执行结果的完整AI推理链路"></p><h2 id=第四版智能业务规则推理让ai更懂业务>第四版：智能业务规则推理，让AI更懂业务</h2><p>在前面的版本中，AI 虽然能够生成 SQL，但在理解业务含义和推理逻辑方面还有提升空间。第四版引入了<strong>智能业务规则推理</strong>，让 AI 不仅会写 SQL，更能理解业务逻辑。</p><h3 id=为什么需要业务规则推理>为什么需要业务规则推理？</h3><p>想象一下这样的场景：</p><ul><li>用户问：&ldquo;近两年入职的员工平均薪水是多少？&rdquo;</li><li>用户问：&ldquo;技术部工资最高的前3名员工&rdquo;</li><li>用户问：&ldquo;每个部门的人数统计&rdquo;</li></ul><p>这些查询不仅需要正确的 SQL 语法，更需要理解：</p><ul><li><strong>时间推理</strong>：什么是"近两年"？如何转换为具体的日期范围？</li><li><strong>业务术语</strong>：什么是"平均薪水"？应该用哪个字段？</li><li><strong>排序逻辑</strong>：如何找到"最高"的员工？</li><li><strong>分组统计</strong>：如何按部门分组？</li></ul><h3 id=业务规则推理的核心组件>业务规则推理的核心组件</h3><p>第四版引入了 <code>BusinessRuleService</code>，提供五大核心推理能力：</p><h4 id=1-业务术语解释>1. 业务术语解释</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 业务术语映射</span>
+</span></span><span style=display:flex><span>BUSINESS_TERMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;员工&#34;</span>, <span style=color:#e6db74>&#34;employees表中的员工记录&#34;</span>);
+</span></span><span style=display:flex><span>BUSINESS_TERMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;工资&#34;</span>, <span style=color:#e6db74>&#34;salary字段，使用decimal(10,2)类型存储&#34;</span>);
+</span></span><span style=display:flex><span>BUSINESS_TERMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;部门&#34;</span>, <span style=color:#e6db74>&#34;department字段，表示员工所属部门&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 同义词处理</span>
+</span></span><span style=display:flex><span>SYNONYMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;薪水&#34;</span>, <span style=color:#e6db74>&#34;工资&#34;</span>);
+</span></span><span style=display:flex><span>SYNONYMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;薪资&#34;</span>, <span style=color:#e6db74>&#34;工资&#34;</span>);
+</span></span><span style=display:flex><span>SYNONYMS.<span style=color:#a6e22e>put</span>(<span style=color:#e6db74>&#34;收入&#34;</span>, <span style=color:#e6db74>&#34;工资&#34;</span>);
+</span></span></code></pre></div><h4 id=2-时间推理引擎>2. 时间推理引擎</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 支持多种时间表达式</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;近两年&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;时间范围: 2022-01-01 至 2024-12-31&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;过去6个月&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;时间范围: 2024-06-01 至 2024-12-31&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;今年&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;时间范围: 2024-01-01 至 2024-12-31&#34;</span>
+</span></span></code></pre></div><h4 id=3-聚合规则推理>3. 聚合规则推理</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 根据指标类型推荐聚合函数</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;工资总数&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;建议使用SUM聚合函数&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;员工人数&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;建议使用COUNT聚合函数&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;平均工资&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;建议使用AVG聚合函数&#34;</span>
+</span></span></code></pre></div><h4 id=4-表关联规则>4. 表关联规则</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 智能识别表关联关系</span>
+</span></span><span style=display:flex><span>employees <span style=color:#f92672>+</span> project_members <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;通过employee_id字段关联&#34;</span>
+</span></span><span style=display:flex><span>projects <span style=color:#f92672>+</span> project_members <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;通过project_id字段关联&#34;</span>
+</span></span></code></pre></div><h4 id=5-字段需求推理>5. 字段需求推理</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 根据查询内容推断需要的字段</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;查询员工姓名&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;需要name字段&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;按部门统计&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;需要department字段&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;工资排序&#34;</span> <span style=color:#960050;background-color:#1e0010>→</span> <span style=color:#e6db74>&#34;需要salary字段&#34;</span>
+</span></span></code></pre></div><h3 id=步骤3信息推理的智能化升级>步骤3：信息推理的智能化升级</h3><p>在分步骤查询模式中，步骤3"信息推理"得到了显著增强：</p><h4 id=原始步骤3第三版>原始步骤3（第三版）</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>信息推理，本次推理参考业务信息是：
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 需要查询的字段：id, name, department, position, salary, hire_date, email
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 筛选条件：无特定筛选条件
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 表关联关系：单表查询，无需表关联
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 排序规则：按salary字段降序排列，以找到工资最高的员工
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 分组统计：无需分组统计
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 结果限制：使用LIMIT 1限制结果数量，确保只返回工资最高的员工信息
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 业务含义：用于识别公司中薪酬最高的员工，便于人力资源管理和薪酬结构分析
+</span></span></code></pre></div><h4 id=增强版步骤3第四版>增强版步骤3（第四版）</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>信息推理，本次推理参考业务信息是：
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 需要查询的字段：id, name, department, position, salary, hire_date, email
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 筛选条件：无特定筛选条件
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 表关联关系：单表查询，无需表关联
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 排序规则：按salary字段降序排列，以找到工资最高的员工
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 分组统计：无需分组统计
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 结果限制：使用LIMIT 1限制结果数量，确保只返回工资最高的员工信息
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 业务含义：用于识别公司中薪酬最高的员工，便于人力资源管理和薪酬结构分析
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-weight:700>**业务规则参考**</span>：
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 时间范围: 无特定时间限制
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 业务规则: 需要添加ORDER BY子句进行排序; 需要添加LIMIT子句限制返回结果数量
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 关键字段: salary, name, department, position
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 聚合建议: 无需聚合，直接查询单个记录
+</span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 同义词映射: 工资 → salary字段
+</span></span></code></pre></div><h3 id=业务规则推理的实际效果>业务规则推理的实际效果</h3><p>让我们看看几个具体的例子：</p><h4 id=例子1时间推理>例子1：时间推理</h4><p><strong>用户查询</strong>：&ldquo;近一年入职的员工信息&rdquo;</p><p><strong>业务规则推理</strong>：</p><ul><li>时间范围: 2023-12-01 至 2024-12-31</li><li>筛选条件: hire_date >= &lsquo;2023-12-01&rsquo;</li><li>业务规则: 需要添加WHERE条件进行时间筛选</li></ul><p><strong>生成的SQL</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> <span style=color:#f92672>*</span> <span style=color:#66d9ef>FROM</span> employees 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> hire_date <span style=color:#f92672>&gt;=</span> <span style=color:#e6db74>&#39;2023-12-01&#39;</span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>ORDER</span> <span style=color:#66d9ef>BY</span> hire_date <span style=color:#66d9ef>DESC</span>
+</span></span></code></pre></div><h4 id=例子2聚合推理>例子2：聚合推理</h4><p><strong>用户查询</strong>：&ldquo;每个部门的平均工资&rdquo;</p><p><strong>业务规则推理</strong>：</p><ul><li>分组统计: 按department字段分组</li><li>聚合建议: 使用AVG聚合函数计算平均工资</li><li>关键字段: department, salary</li><li>业务规则: 需要添加GROUP BY子句进行分组统计</li></ul><p><strong>生成的SQL</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> department, <span style=color:#66d9ef>AVG</span>(salary) <span style=color:#66d9ef>as</span> avg_salary 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>FROM</span> employees 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>GROUP</span> <span style=color:#66d9ef>BY</span> department 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>ORDER</span> <span style=color:#66d9ef>BY</span> avg_salary <span style=color:#66d9ef>DESC</span>
+</span></span></code></pre></div><h4 id=例子3排序推理>例子3：排序推理</h4><p><strong>用户查询</strong>：&ldquo;技术部工资最高的前3名员工&rdquo;</p><p><strong>业务规则推理</strong>：</p><ul><li>筛选条件: department = &lsquo;技术部&rsquo;</li><li>排序规则: 按salary字段降序排列</li><li>结果限制: 使用LIMIT 3限制结果数量</li><li>关键字段: name, salary, department, position</li></ul><p><strong>生成的SQL</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#66d9ef>SELECT</span> name, salary, <span style=color:#66d9ef>position</span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>FROM</span> employees 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>WHERE</span> department <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;技术部&#39;</span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>ORDER</span> <span style=color:#66d9ef>BY</span> salary <span style=color:#66d9ef>DESC</span> 
+</span></span><span style=display:flex><span><span style=color:#66d9ef>LIMIT</span> <span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><h3 id=技术实现细节>技术实现细节</h3><h4 id=businessruleservice-核心方法>BusinessRuleService 核心方法</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Service</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>BusinessRuleService</span> {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 时间推理 - 解析相对时间表达式
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>parseTimeExpression</span>(String timeExpression) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 支持&#34;近X年&#34;、&#34;过去X个月&#34;、&#34;今年&#34;、&#34;去年&#34;等表达式</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 自动转换为具体的日期范围</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 聚合规则推理
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getAggregationRule</span>(String metric, String dimension) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 根据指标类型推荐合适的聚合函数</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// SUM、COUNT、AVG、MAX、MIN等</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 表关联规则推理
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getTableJoinRule</span>(String table1, String table2) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 智能识别表之间的关联字段</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 支持外键关联、业务字段关联等</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 业务逻辑推理
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getBusinessLogic</span>(String query, String selectedTables) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 综合推理查询的业务逻辑</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 包括时间、状态、排序、分组、限制等</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 字段需求推理
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getFieldRequirements</span>(String query, String tableName) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 根据查询内容推断需要的字段</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 支持同义词映射和业务术语解释</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=步骤3的提示词模板>步骤3的提示词模板</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> String STEP3_PROMPT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        基于选中的表和查询需求，进行智能信息推理。
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        查询需求：{rewrittenQuery}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        选中表：{selectedTables}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        业务规则参考：{businessRules}
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        请严格按照以下格式返回，不要添加任何其他内容：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        信息推理，本次推理参考业务信息是：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 需要查询的字段：[具体列出需要查询的字段名]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 筛选条件：[说明WHERE条件，如无特定条件则说明&#34;无特定筛选条件&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 表关联关系：[说明表关联情况，如单表查询则说明&#34;单表查询，无需表关联&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 排序规则：[说明ORDER BY的排序逻辑和目的]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 分组统计：[说明是否需要GROUP BY，如不需要则说明&#34;无需分组统计&#34;]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 结果限制：[说明LIMIT限制数量和目的]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        - 业务含义：[解释查询的业务价值和实际应用场景]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        要求：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        1. 严格按照上述格式输出，每行一个要点
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        2. 基于业务规则参考信息进行推理
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        3. 推理结果要具体、准确、有业务价值
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        4. 不要包含SQL语句，只做逻辑推理
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>;
+</span></span></code></pre></div><h3 id=业务规则推理的优势>业务规则推理的优势</h3><ol><li><strong>智能化程度更高</strong>：AI 不仅会写 SQL，更能理解业务含义</li><li><strong>准确性显著提升</strong>：通过业务规则约束，减少 SQL 生成错误</li><li><strong>用户体验更好</strong>：支持自然语言表达，无需学习 SQL 语法</li><li><strong>可扩展性强</strong>：业务规则可以持续优化和扩展</li><li><strong>教学价值高</strong>：分步骤展示让用户理解 AI 的思考过程</li></ol><p>通过引入智能业务规则推理，第四版让 Text2SQL 系统真正具备了"理解业务"的能力，不仅能够生成正确的 SQL，更能理解用户的真实意图，提供更有价值的业务洞察。</p><h3 id=实际应用场景>实际应用场景</h3><p><strong>人力资源场景</strong>：</p><ul><li>&ldquo;近半年入职的员工平均工资&rdquo;</li><li>&ldquo;各部门工资分布情况&rdquo;</li><li>&ldquo;技术部薪资最高的前5名&rdquo;</li></ul><p><strong>项目管理场景</strong>：</p><ul><li>&ldquo;进行中的项目预算统计&rdquo;</li><li>&ldquo;每个项目的参与人数&rdquo;</li><li>&ldquo;项目完成率分析&rdquo;</li></ul><p><strong>财务分析场景</strong>：</p><ul><li>&ldquo;各部门年度预算使用情况&rdquo;</li><li>&ldquo;项目成本效益分析&rdquo;</li><li>&ldquo;员工薪酬结构分析&rdquo;</li></ul><h3 id=版本演进对比>版本演进对比</h3><table><thead><tr><th>特性</th><th>第一版</th><th>第二版</th><th>第三版</th><th>第四版</th></tr></thead><tbody><tr><td><strong>实现方式</strong></td><td>直接模式</td><td>MCP工具</td><td>分步骤查询</td><td>智能业务规则</td></tr><tr><td><strong>准确性</strong></td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td><strong>可解释性</strong></td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td><strong>业务理解</strong></td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td><strong>教学价值</strong></td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td><strong>适用场景</strong></td><td>简单查询</td><td>复杂查询</td><td>教学演示</td><td>生产环境</td></tr></tbody></table><h2 id=安全第一sql-注入防护与数据安全策略>安全第一：SQL 注入防护与数据安全策略</h2><p><strong>Text2SQL 自然语言查询</strong>虽然方便，但<strong>数据库安全</strong>问题绝对不能忽视。我在开发过程中总结了几条<strong>安全防护</strong>铁律：</p><h3 id=核心安全防护策略>核心安全防护策略</h3><p><strong>1. 只读权限策略</strong></p><ul><li>严格限制只能执行 <code>SELECT</code> 查询语句</li><li>拒绝所有 <code>DROP</code>、<code>DELETE</code>、<code>UPDATE</code>、<code>INSERT</code> 等<strong>危险操作</strong></li><li>在<strong>代码层面</strong>和<strong>数据库层面</strong>做双重检查</li></ul><p><strong>2. 系统表保护</strong></p><ul><li>拦截访问 <code>INFORMATION_SCHEMA</code> 的查询</li><li>禁止访问<strong>系统数据库</strong>和<strong>敏感表</strong></li><li>限制查询范围，避免<strong>数据泄露</strong></li></ul><p><strong>3. 输出内容控制</strong></p><ul><li>清理 <strong>AI 模型输出</strong>中的代码块包裹</li><li>自动添加 <code>LIMIT</code> 限制，防止<strong>大数据量查询</strong></li><li>对<strong>敏感字段</strong>进行脱敏处理</li></ul><p><strong>4. 智能安全校验</strong></p><ul><li><strong>MCP 模式</strong>下先做小范围测试</li><li>失败时提供具体的<strong>错误信息</strong>和修正建议</li><li>建立查询<strong>白名单</strong>和<strong>黑名单</strong>机制</li></ul><h3 id=sql-注入防护代码示例>SQL 注入防护代码示例</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SqlUtils</span> {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 危险操作黑名单</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> Set<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> DANGEROUS_KEYWORDS <span style=color:#f92672>=</span> Set.<span style=color:#a6e22e>of</span>(
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;DROP&#34;</span>, <span style=color:#e6db74>&#34;DELETE&#34;</span>, <span style=color:#e6db74>&#34;UPDATE&#34;</span>, <span style=color:#e6db74>&#34;INSERT&#34;</span>, <span style=color:#e6db74>&#34;ALTER&#34;</span>, <span style=color:#e6db74>&#34;CREATE&#34;</span>, 
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;TRUNCATE&#34;</span>, <span style=color:#e6db74>&#34;EXEC&#34;</span>, <span style=color:#e6db74>&#34;EXECUTE&#34;</span>, <span style=color:#e6db74>&#34;CALL&#34;</span>, <span style=color:#e6db74>&#34;MERGE&#34;</span>, <span style=color:#e6db74>&#34;REPLACE&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;UNION&#34;</span>, <span style=color:#e6db74>&#34;INFORMATION_SCHEMA&#34;</span>
+</span></span><span style=display:flex><span>    );
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 系统表黑名单</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>final</span> Set<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> SYSTEM_TABLES <span style=color:#f92672>=</span> Set.<span style=color:#a6e22e>of</span>(
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;information_schema&#34;</span>, <span style=color:#e6db74>&#34;mysql&#34;</span>, <span style=color:#e6db74>&#34;performance_schema&#34;</span>, 
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;sys&#34;</span>, <span style=color:#e6db74>&#34;test&#34;</span>, <span style=color:#e6db74>&#34;tmp&#34;</span>
+</span></span><span style=display:flex><span>    );
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 清理 SQL 语句
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>cleanSql</span>(String sql) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 移除可能的代码块标记</span>
+</span></span><span style=display:flex><span>        sql <span style=color:#f92672>=</span> sql.<span style=color:#a6e22e>replaceAll</span>(<span style=color:#e6db74>&#34;```sql\\s*&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>).<span style=color:#a6e22e>replaceAll</span>(<span style=color:#e6db74>&#34;```\\s*&#34;</span>, <span style=color:#e6db74>&#34;&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 查找第一个 SELECT 语句</span>
+</span></span><span style=display:flex><span>        Pattern pattern <span style=color:#f92672>=</span> Pattern.<span style=color:#a6e22e>compile</span>(<span style=color:#e6db74>&#34;(SELECT.*?)(?=\\n\\n|$)&#34;</span>, Pattern.<span style=color:#a6e22e>DOTALL</span> <span style=color:#f92672>|</span> Pattern.<span style=color:#a6e22e>CASE_INSENSITIVE</span>);
+</span></span><span style=display:flex><span>        Matcher matcher <span style=color:#f92672>=</span> pattern.<span style=color:#a6e22e>matcher</span>(sql);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (matcher.<span style=color:#a6e22e>find</span>()) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> matcher.<span style=color:#a6e22e>group</span>(1).<span style=color:#a6e22e>trim</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> sql.<span style=color:#a6e22e>trim</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 验证 SQL 安全性
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>isSqlSafe</span>(String sql) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> sql.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        String upperSql <span style=color:#f92672>=</span> sql.<span style=color:#a6e22e>toUpperCase</span>().<span style=color:#a6e22e>trim</span>();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 1. 检查是否只包含SELECT语句</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>upperSql.<span style=color:#a6e22e>startsWith</span>(<span style=color:#e6db74>&#34;SELECT&#34;</span>)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 2. 检查危险关键词</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String keyword : DANGEROUS_KEYWORDS) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (upperSql.<span style=color:#a6e22e>contains</span>(keyword)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 3. 检查系统表访问</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String systemTable : SYSTEM_TABLES) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (upperSql.<span style=color:#a6e22e>contains</span>(systemTable)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 4. 检查SQL注入模式</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (containsSqlInjection(sql)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 检测SQL注入攻击
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>containsSqlInjection</span>(String sql) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 检测常见的SQL注入模式</span>
+</span></span><span style=display:flex><span>        String<span style=color:#f92672>[]</span> injectionPatterns <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;&#39;.*--&#34;</span>, <span style=color:#e6db74>&#34;&#39;.*;&#34;</span>, <span style=color:#e6db74>&#34;&#39;.*UNION&#34;</span>, <span style=color:#e6db74>&#34;&#39;.*OR.*=&#34;</span>, 
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;&#39;.*AND.*=&#34;</span>, <span style=color:#e6db74>&#34;&#39;.*OR.*1=1&#34;</span>, <span style=color:#e6db74>&#34;&#39;.*AND.*1=1&#34;</span>
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String pattern : injectionPatterns) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (sql.<span style=color:#a6e22e>matches</span>(<span style=color:#e6db74>&#34;.*&#34;</span> <span style=color:#f92672>+</span> pattern <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;.*&#34;</span>)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 清理和标准化SQL
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>sanitizeSql</span>(String sql) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span>) <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 移除代码块标记</span>
+</span></span><span style=display:flex><span>        sql <span style=color:#f92672>=</span> cleanSql(sql);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 确保有LIMIT限制</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>sql.<span style=color:#a6e22e>toUpperCase</span>().<span style=color:#a6e22e>contains</span>(<span style=color:#e6db74>&#34;LIMIT&#34;</span>)) {
+</span></span><span style=display:flex><span>            sql <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#34; LIMIT 1000&#34;</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> sql;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 获取SQL安全验证的详细错误信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> String <span style=color:#a6e22e>getSecurityError</span>(String sql) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (sql <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> sql.<span style=color:#a6e22e>trim</span>().<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;SQL语句不能为空&#34;</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        String upperSql <span style=color:#f92672>=</span> sql.<span style=color:#a6e22e>toUpperCase</span>().<span style=color:#a6e22e>trim</span>();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>upperSql.<span style=color:#a6e22e>startsWith</span>(<span style=color:#e6db74>&#34;SELECT&#34;</span>)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;只允许执行SELECT查询语句&#34;</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String keyword : DANGEROUS_KEYWORDS) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (upperSql.<span style=color:#a6e22e>contains</span>(keyword)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;检测到危险操作: &#34;</span> <span style=color:#f92672>+</span> keyword;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String systemTable : SYSTEM_TABLES) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (upperSql.<span style=color:#a6e22e>contains</span>(systemTable)) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;禁止访问系统表: &#34;</span> <span style=color:#f92672>+</span> systemTable;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (containsSqlInjection(sql)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;检测到SQL注入攻击模式&#34;</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;SQL语句安全&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=常见问题排查指南与故障诊断>常见问题排查指南与故障诊断</h2><p>开发过程中遇到问题很正常，这里是我总结的<strong>Text2SQL 系统</strong>常见问题及<strong>故障排查</strong>解决方案：</p><h3 id=环境配置问题>环境配置问题</h3><p><strong>API Key 配置问题</strong></p><ul><li>确保 <code>DEEPSEEK_API_KEY</code> <strong>环境变量</strong>已正确设置</li><li>检查<strong>网络连接</strong>，确保能访问 <strong>DeepSeek API 服务</strong></li></ul><p><strong>数据库连接问题</strong></p><ul><li><strong>端口冲突</strong>：3306 被占用时，修改 <code>docker-compose.yml</code> 中的<strong>端口映射</strong></li><li><strong>字符集问题</strong>：确保 <code>mysql.cnf</code> 正确挂载，字符集统一为 <code>utf8mb4</code></li></ul><h3 id=功能性问题>功能性问题</h3><p><strong>AI 自然语言理解不准确</strong></p><ul><li>提供更具体的<strong>上下文信息</strong>（表名、字段含义、业务规则）</li><li>在<strong>提示词模板</strong>中加入更多示例</li><li>考虑使用 <strong>MCP 模式</strong>获取真实<strong>数据库 Schema 结构</strong></li></ul><p><strong>SQL 语法错误</strong></p><ul><li>启用 MCP 模式，先做小范围测试</li><li>根据错误信息调整提示词</li><li>建立 SQL 语法检查机制</li></ul><h3 id=性能问题>性能问题</h3><p><strong>查询速度慢</strong></p><ul><li>为常用查询字段添加索引</li><li>限制查询结果数量</li><li>考虑添加查询缓存机制</li></ul><h3 id=最佳实践建议>最佳实践建议</h3><p><strong>1. 提示词优化</strong></p><ul><li>使用具体的业务场景描述</li><li>提供足够的上下文信息</li><li>定期更新和测试提示词</li></ul><p><strong>2. 错误处理</strong></p><ul><li>实现完善的异常捕获机制</li><li>提供用户友好的错误信息</li><li>记录详细的错误日志用于调试</li></ul><p><strong>3. 性能监控</strong></p><ul><li>监控SQL执行时间</li><li>记录AI模型调用次数和成本</li><li>设置合理的超时时间</li></ul><p><strong>4. 用户体验</strong></p><ul><li>提供查询进度指示</li><li>支持查询历史记录</li><li>实现查询结果导出功能</li></ul><h2 id=项目总结与技术展望>项目总结与技术展望</h2><p>从最初的一个想法，到现在的完整实现，这个过程让我深刻体会到了 <strong>AI 技术</strong>的魅力。<strong>Text2SQL 自然语言查询</strong>不仅仅是一个技术功能，它真正改变了我们与<strong>数据库</strong>交互的方式。</p><h3 id=技术收获与成长>技术收获与成长</h3><ol><li><strong>AI 技术成长</strong>：从简单的<strong>提示词工程</strong>到复杂的 <strong>MCP 工具集成</strong>，每一步都是学习</li><li><strong>问题解决能力</strong>：<strong>中文乱码</strong>、<strong>安全防护</strong>、<strong>性能优化</strong>，每个坑都让我更强大</li><li><strong>产品思维</strong>：从<strong>技术实现</strong>到<strong>用户体验</strong>，考虑用户真正需要什么</li></ol><h3 id=未来技术规划>未来技术规划</h3><p>这个 <strong>Spring AI Text2SQL</strong> 项目还有很多可以改进的地方：</p><p><strong>短期技术目标</strong>：</p><ul><li>支持<strong>多模型切换</strong>（OpenAI、Gemini、Claude 等）</li><li>添加<strong>查询历史</strong>和<strong>多轮对话</strong>功能</li><li>优化<strong>提示词模板</strong>，提高 <strong>SQL 生成准确率</strong></li></ul><p><strong>长期技术愿景</strong>：</p><ul><li><strong>智能查询优化</strong>建议</li><li><strong>数据可视化报表</strong>生成</li><li>更严格的<strong>权限控制</strong>和<strong>审计机制</strong></li><li>支持更多<strong>数据库类型</strong>（PostgreSQL、Oracle、MongoDB）</li></ul><h3 id=给开发者的建议>给开发者的建议</h3><p>如果你也想尝试 <strong>Text2SQL 开发</strong>，我的建议是：</p><ol><li><strong>从简单开始</strong>：先用<strong>直接模式</strong>快速验证想法</li><li><strong>逐步优化</strong>：根据实际需求引入 <strong>MCP</strong> 和<strong>分步骤模式</strong></li><li><strong>安全第一</strong>：从一开始就考虑<strong>安全问题</strong>，不要事后补救</li><li><strong>持续学习</strong>：<strong>AI 技术</strong>发展很快，保持学习的心态</li></ol><h3 id=技术选型与架构建议>技术选型与架构建议</h3><p><strong>AI 大语言模型选择</strong>：</p><ul><li><strong>DeepSeek</strong>：性价比高，<strong>中文理解</strong>好，适合个人项目</li><li><strong>OpenAI GPT-4</strong>：准确率高，但成本较高</li><li><strong>Claude</strong>：<strong>推理能力</strong>强，适合复杂查询</li><li><strong>本地模型</strong>：数据安全，但需要强大的硬件支持</li></ul><p><strong>数据库支持</strong>：</p><ul><li><strong>MySQL</strong>：最常用，生态完善</li><li><strong>PostgreSQL</strong>：功能强大，支持复杂查询</li><li><strong>SQLite</strong>：轻量级，适合原型开发</li><li><strong>ClickHouse</strong>：适合大数据分析场景</li></ul><h3 id=项目扩展方向>项目扩展方向</h3><p><strong>短期扩展</strong>：</p><ul><li>支持更多数据库类型</li><li>添加查询历史和管理功能</li><li>实现查询结果可视化</li><li>支持多语言查询</li></ul><p><strong>长期规划</strong>：</p><ul><li>集成向量数据库，支持语义搜索</li><li>实现智能查询优化建议</li><li>添加数据血缘分析功能</li><li>支持自然语言到复杂报表的生成</li></ul><h2 id=学习资源推荐>学习资源推荐</h2><p><strong>官方文档</strong>：</p><ul><li><a href=https://docs.spring.io/spring-ai/reference/ target=_blank>Spring AI 官方文档</a> - Spring AI 框架完整指南</li><li><a href=https://platform.openai.com/docs target=_blank>OpenAI API 文档</a> - GPT 模型 API 使用文档</li><li><a href=https://dev.mysql.com/doc/ target=_blank>MySQL 官方文档</a> - MySQL 数据库完整文档</li><li><a href=https://platform.deepseek.com/api-docs target=_blank>DeepSeek API 文档</a> - DeepSeek 大语言模型 API</li></ul><p><strong>相关技术框架</strong>：</p><ul><li><a href=https://python.langchain.com/ target=_blank>LangChain</a> - Python 生态的 AI 应用开发框架</li><li><a href=https://www.llamaindex.ai/ target=_blank>LlamaIndex</a> - 数据索引和检索框架</li><li><a href=https://modelcontextprotocol.io/ target=_blank>MCP 协议</a> - 模型上下文协议标准</li><li><a href=https://spring.io/projects/spring-boot target=_blank>Spring Boot</a> - Java 企业级应用开发框架</li></ul><p><strong>Text2SQL 相关资源</strong>：</p><ul><li><a href=https://github.com/eosphoros-ai/awesome-text2sql target=_blank>Text2SQL 论文集合</a> - Text2SQL 学术研究资源</li><li><a href=https://owasp.org/www-community/attacks/SQL_Injection target=_blank>SQL 注入防护指南</a> - OWASP SQL 注入防护</li><li><a href=https://www.sqlstyle.guide/ target=_blank>数据库设计最佳实践</a> - SQL 编码规范指南</li></ul><p>希望这篇文章能对你有帮助。如果你在实现过程中遇到问题，欢迎交流讨论！</p><h2 id=致谢>致谢</h2><p>感谢 <a href=https://spring.io/projects/spring-ai target=_blank>Spring AI 团队</a> 提供的优秀框架，感谢 <a href=https://www.deepseek.com/ target=_blank>DeepSeek</a> 提供的 AI 服务支持，感谢所有 <a href=https://github.com/ target=_blank>开源社区</a> 的贡献者们。正是有了这些优秀的工具和社区，我们才能快速构建出如此强大的 <strong>Text2SQL 自然语言查询系统</strong>。</p><hr><p><em>本文基于 Spring AI 1.1.0-M2 版本编写，<a href=https://github.com/chensoul/spring-ai-text2sql-showcase target=_blank>项目代码已开源</a>，欢迎 Star 和 Fork！</em></p></div></article></main><footer class=post__footer></footer><footer class=post__footer><footer class=post__footer><div class="post__tags tags clearfix"><svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><ul class=tags__list><li class=tags__item><a class="tags__link btn" href=/tags/spring-ai/ rel=tag>Spring AI</a></li><li class=tags__item><a class="tags__link btn" href=/tags/text2sql/ rel=tag>Text2SQL</a></li><li class=tags__item><a class="tags__link btn" href=/tags/nl2sql/ rel=tag>NL2SQL</a></li><li class=tags__item><a class="tags__link btn" href=/tags/spring-boot/ rel=tag>Spring Boot</a></li><li class=tags__item><a class="tags__link btn" href=/tags/deepseek/ rel=tag>DeepSeek</a></li><li class=tags__item><a class="tags__link btn" href=/tags/mcp/ rel=tag>MCP</a></li></ul></div></footer></footer><nav class="pagination flex"><div class="pagination__item pagination__item--prev"><a class=pagination__link href=/posts/2025/09/29/spec-kit-with-cursor/ rel=prev><p class=pagination__title>«&#8201;上一篇: Spec-Kit 在 Cursor 中的安装和使用指南</p></a></div></nav><div class="authorbox clearfix"><figure class=authorbox__avatar><img alt="ChenSoul avatar" src=/avatar.jpg class=avatar height=60 width=60 loading=lazy></figure><div class=authorbox__header><span class=authorbox__name>关于 ChenSoul</span></div><div class=authorbox__description>一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href=%28/posts%29>博客文章</a>，订阅我的 <a href=/index.xml>RSS</a> 源，或了解更多<a href=/about/>关于我</a>的信息。</div></div><p><h3>欢迎留言！</h3></p><div id=remark42></div><script>var remark_config={host:"https://comment.chensoul.cc",site_id:"remark",components:["embed"],url:"https://blog.chensoul.cc/posts/2025/09/30/spring-ai-%E8%AE%A9%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%AC%E6%87%82%E4%BA%BA%E8%AF%9Dtext2sql-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E6%9F%A5%E8%AF%A2%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97/",locale:"zh"};!function(e,t){for(s=0;s<e.length;s++){var s,n=t.createElement("script"),o=".js",i=t.head||t.body;"noModule"in n?(n.type="module",o=".mjs"):n.async=!0,n.defer=!0,n.src=remark_config.host+"/web/"+e[s]+o,i.appendChild(n)}}(remark_config.components||["embed"],document)</script><script defer src=https://cdn.jsdmirror.com/npm/mermaid@11.8.0/dist/mermaid.min.js integrity="sha256-ozuDfeDhjEI9EXLi0CdigeIiAcaRYi3E5T+VLC9yIB4=" crossorigin=anonymous async></script></div><aside class="sidebar sidebar--right"><div class="post__toc toc"><div class=toc__title>目录</div><div class=toc__menu><nav id=TableOfContents><ul><li><a href=#源代码>源代码</a></li><li><a href=#为什么选择-text2sql>为什么选择 Text2SQL</a></li><li><a href=#10-分钟快速体验>10 分钟快速体验</a></li><li><a href=#第一版简单粗暴的直接模式>第一版：简单粗暴的直接模式</a><ul><li><a href=#系统架构图>系统架构图</a></li><li><a href=#核心代码实现>核心代码实现</a></li><li><a href=#核心配置>核心配置</a></li><li><a href=#spring-ai-配置类>Spring AI 配置类</a></li><li><a href=#api-接口设计>API 接口设计</a></li><li><a href=#rest-controller-实现>REST Controller 实现</a></li><li><a href=#前端界面展示>前端界面展示</a></li></ul></li><li><a href=#第二版mcp-工具集成模式---让-ai-更聪明>第二版：MCP 工具集成模式 - 让 AI 更聪明</a><ul><li><a href=#为什么需要-mcp-工具调用>为什么需要 MCP 工具调用？</a></li><li><a href=#mcp-工具调用流程图>MCP 工具调用流程图</a></li><li><a href=#spring-ai-配置类-1>Spring AI 配置类</a></li><li><a href=#mcptext2sqlservice>McpText2SqlService</a></li></ul></li><li><a href=#第三版分步骤查询模式---让-ai-推理过程透明化>第三版：分步骤查询模式 - 让 AI 推理过程透明化</a><ul><li><a href=#每一步都在做什么>每一步都在做什么？</a></li><li><a href=#分步骤查询的提示词设计>分步骤查询的提示词设计</a></li><li><a href=#分步骤查询的前端界面>分步骤查询的前端界面</a></li></ul></li><li><a href=#第四版智能业务规则推理让ai更懂业务>第四版：智能业务规则推理，让AI更懂业务</a><ul><li><a href=#为什么需要业务规则推理>为什么需要业务规则推理？</a></li><li><a href=#业务规则推理的核心组件>业务规则推理的核心组件</a></li><li><a href=#步骤3信息推理的智能化升级>步骤3：信息推理的智能化升级</a></li><li><a href=#业务规则推理的实际效果>业务规则推理的实际效果</a></li><li><a href=#技术实现细节>技术实现细节</a></li><li><a href=#业务规则推理的优势>业务规则推理的优势</a></li><li><a href=#实际应用场景>实际应用场景</a></li><li><a href=#版本演进对比>版本演进对比</a></li></ul></li><li><a href=#安全第一sql-注入防护与数据安全策略>安全第一：SQL 注入防护与数据安全策略</a><ul><li><a href=#核心安全防护策略>核心安全防护策略</a></li><li><a href=#sql-注入防护代码示例>SQL 注入防护代码示例</a></li></ul></li><li><a href=#常见问题排查指南与故障诊断>常见问题排查指南与故障诊断</a><ul><li><a href=#环境配置问题>环境配置问题</a></li><li><a href=#功能性问题>功能性问题</a></li><li><a href=#性能问题>性能问题</a></li><li><a href=#最佳实践建议>最佳实践建议</a></li></ul></li><li><a href=#项目总结与技术展望>项目总结与技术展望</a><ul><li><a href=#技术收获与成长>技术收获与成长</a></li><li><a href=#未来技术规划>未来技术规划</a></li><li><a href=#给开发者的建议>给开发者的建议</a></li><li><a href=#技术选型与架构建议>技术选型与架构建议</a></li><li><a href=#项目扩展方向>项目扩展方向</a></li></ul></li><li><a href=#学习资源推荐>学习资源推荐</a></li><li><a href=#致谢>致谢</a></li></ul></nav></div></div></aside></div><footer class=footer><div class="container footer__container flex"><div class=footer__links><a class=footer__link href=/>首页</a> | <a class=footer__link href=/categories/>分类</a> | <a class=footer__link href=/about/>关于</a> | <a class=footer__link href=/index.xml>RSS</a></div><div class=footer__copyright>&copy; 2025 ChenSoul.
+<span class=footer__copyright-credits>基于 <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> 引擎和 <a href=https://github.com/chensoul/rose-hugo/ rel="nofollow noopener" target=_blank>Rose Hugo</a> 主题</span></div></div><style>.scroll-up a{display:block;height:3.125rem;width:3.125rem;text-align:center;line-height:2.7;border-radius:50px;font-size:1.125rem;color:#fff;opacity:1;transition:all .3s ease 0s;box-shadow:0 0 10px rgb(0 0 0/.2)}.scroll-up a{background:#ee591f}.scroll-up{position:fixed;display:none;bottom:50px;z-index:999}.scroll-up.right{right:60px}</style><div class="scroll-up custom right" style=display:block><a href=#top id=top-link accesskey=g><i class="fa fa-arrow-up"></i></a></div><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script defer src=https://umami.chensoul.cc/random-string.js data-website-id=1e07d36d-bec3-4ba6-9459-876b1ac3bbe7></script></footer></div><script>"use strict";(function(t){var i=t.querySelector(".menu__btn"),o=t.querySelector(".menu__list");function a(){o.classList.toggle("menu__list--active"),o.classList.toggle("menu__list--transition"),this.classList.toggle("menu__btn--active"),this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="true"?"false":"true")}function r(){this.classList.remove("menu__list--transition")}i&&o&&(i.addEventListener("click",a,!1),o.addEventListener("transitionend",r,!1))})(document,window)</script></body></html>
