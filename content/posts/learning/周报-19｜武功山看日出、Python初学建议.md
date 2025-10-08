@@ -2,8 +2,8 @@
 title: "周报-19｜武功山看日出、Python初学建议"
 date: 2023-05-18
 slug: weekly_review_19
-categories: [Review]
-tags: ['weekly-report', 'learning', 'personal']
+categories: [learning]
+tags: ['weekly-report']
 ---
 
 ## 前言

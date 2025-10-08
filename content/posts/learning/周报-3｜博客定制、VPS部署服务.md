@@ -2,8 +2,8 @@
 title: "周报-3｜博客定制、VPS部署服务"
 date: 2023-01-25
 slug: weekly_review_3
-categories: [Review]
-tags: ['weekly-report', 'learning', 'personal']
+categories: [learning]
+tags: ['weekly-report','vps']
 ---
 
 ## 前言

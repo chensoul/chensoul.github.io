@@ -3,7 +3,7 @@ title: "2024-02-01｜使用 Spring Initializr 创建项目"
 date: 2024-02-01
 slug: til
 categories: ["learning"]
-tags: ['mysql', 'java', 'spring-boot', 'mongodb']
+tags: ['spring-boot']
 ---
 
 

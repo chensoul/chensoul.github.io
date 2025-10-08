@@ -3,7 +3,7 @@ title: "2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples�
 date: 2024-02-20
 slug: til
 categories: ["learning"]
-tags: ['java', 'redis', 'microservice', 'tutorial']
+tags: [ 'redis', 'microservice']
 ---
 
 今天做了什么：

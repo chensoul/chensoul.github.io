@@ -3,7 +3,7 @@ title: "2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-f
 date: 2024-02-18
 slug: til
 categories: ["learning"]
-tags: ['javascript', 'tutorial', 'html', 'testing']
+tags: [ 'plantuml', 'mermaid']
 ---
 
 今天做了什么：

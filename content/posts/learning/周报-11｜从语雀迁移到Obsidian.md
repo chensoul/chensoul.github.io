@@ -2,8 +2,8 @@
 title: "周报-11｜从语雀迁移到Obsidian"
 date: 2023-03-20
 slug: weekly_review_11
-categories: [Review]
-tags: ['weekly-report', 'learning', 'personal']
+categories: [learning]
+tags: ['weekly-report']
 ---
 
 ## 前言

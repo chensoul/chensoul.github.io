@@ -2,8 +2,8 @@
 title: "周报-5｜项目事故、牙疼、Damus"
 date: 2023-02-07
 slug: weekly_review_5
-categories: [Review]
-tags: ['weekly-report', 'learning', 'personal']
+categories: [learning]
+tags: ['weekly-report']
 ---
 
 ## 前言

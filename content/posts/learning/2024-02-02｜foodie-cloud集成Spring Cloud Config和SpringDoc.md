@@ -2,8 +2,8 @@
 title: "2024-02-02｜foodie-cloud集成Spring Cloud Config和SpringDoc"
 date: 2024-02-02
 slug: til
-categories: [ "Review" ]
-tags: ['java', 'kubernetes', 'spring-boot', 'backend']
+categories: [ "learning" ]
+tags: ['spring-boot']
 ---
 
 
@@ -20,6 +20,6 @@ foodie-cloud 项目
     - 部署到 Kubernetes
     - 集成 EFK
     - 集成 Spring Cloud Bus
-   
+    
        
 

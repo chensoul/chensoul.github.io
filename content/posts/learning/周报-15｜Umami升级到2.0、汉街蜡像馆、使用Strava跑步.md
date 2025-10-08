@@ -2,8 +2,8 @@
 title: "周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步"
 date: 2023-04-18
 slug: weekly_review_15
-categories: [Review]
-tags: ['weekly-report', 'learning', 'personal']
+categories: [learning]
+tags: ['weekly-report']
 ---
 
 ## 前言

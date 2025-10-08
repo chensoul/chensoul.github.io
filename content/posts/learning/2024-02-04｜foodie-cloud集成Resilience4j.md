@@ -3,7 +3,7 @@ title: "2024-02-04｜foodie-cloud集成Resilience4j"
 date: 2024-02-04
 slug: til
 categories: ["learning"]
-tags: ['tutorial']
+tags: ['resilience4j']
 ---
 
 

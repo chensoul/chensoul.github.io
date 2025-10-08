@@ -3,7 +3,7 @@ title: "2023-12-20｜Maven配置继承和生命周期、源码运行Nacos 2.3.0�
 date: 2023-12-20
 slug: til
 categories: [ "Review" ]
-tags: ['mysql', 'java', 'backend', 'tutorial']
+tags: ['mysql', 'nacos']
 ---
 
 Today I Learned. 今天分享内容：Maven配置继承和生命周期、源码运行Nacos 2.3.0控制台

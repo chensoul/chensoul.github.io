@@ -2,7 +2,7 @@
 title: "GitHub中配置Renovate自动依赖更新和自动合并PR"
 date: 2025-09-28
 slug: config-renovate-in-github
-categories: ["java"]
+categories: ["devops"]
 tags: ['github','renovate']
 ---
 

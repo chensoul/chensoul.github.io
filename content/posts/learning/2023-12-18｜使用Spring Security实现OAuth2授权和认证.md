@@ -3,7 +3,7 @@ title: "2023-12-18｜使用Spring Security实现OAuth2授权和认证"
 date: 2023-12-18
 slug: til
 categories: ["learning"]
-tags: ['java', 'spring-boot', 'backend', 'security']
+tags: ['spring-boot','security']
 ---
 
 Today I Learned. 今天分享内容：使用Spring Security实现OAuth2授权和认证。

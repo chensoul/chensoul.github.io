@@ -3,7 +3,7 @@ title: "2023-12-12｜RMI、Java漏洞安全、Semgrep漏洞检测"
 date: 2023-12-12
 slug: til
 categories: ["learning"]
-tags: ['docker', 'javascript', 'tutorial', 'github']
+tags: ['rmi', 'java']
 ---
 
 Today I Learned. 今天我学了：RMI、Java漏洞安全、Semgrep漏洞检测。

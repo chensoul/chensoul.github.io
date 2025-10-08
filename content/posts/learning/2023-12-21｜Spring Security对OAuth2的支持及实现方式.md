@@ -2,8 +2,8 @@
 title: "2023-12-21｜Spring Security对OAuth2的支持及实现方式"
 date: 2023-12-21
 slug: til
-categories: [ "Review" ]
-tags: ['docker', 'java', 'kubernetes', 'spring-boot']
+categories: [ "learning" ]
+tags: ['security', 'oauth2']
 ---
 
 Today I Learned. 今天分享内容：Spring Security 对 OAuth2 的支持

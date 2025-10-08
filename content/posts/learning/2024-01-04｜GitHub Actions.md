@@ -3,7 +3,7 @@ title: "2024-01-04｜GitHub Actions"
 date: 2024-01-04
 slug: til
 categories: ["learning"]
-tags: ['docker', 'java', 'spring-boot', 'backend']
+tags: ['GitHub']
 ---
 
 今天做了什么：

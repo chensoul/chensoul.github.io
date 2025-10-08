@@ -3,7 +3,7 @@ title: "2024-01-11｜Session和Cookie的区别、单点登录和三方登录的�
 date: 2024-01-11
 slug: til
 categories: ["learning"]
-tags: ['java', 'javascript', 'security', 'tutorial']
+tags: ['java']
 ---
 
 今天做了什么：
