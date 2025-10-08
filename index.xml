@@ -137,7 +137,7 @@
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name jenkins_data
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一次启动 Jenkins 时，Docker 日志将包含如下消息：&lt;/p&gt;</description></item><item><title>Tengine动态裁剪图片</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-cert-manager/</guid><description>&lt;h2 id="软件列表"&gt;软件列表&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一次启动 Jenkins 时，Docker 日志将包含如下消息：&lt;/p&gt;</description></item><item><title>Tengine动态裁剪图片</title><link>https://blog.chensoul.cc/posts/2024/06/26/tengine/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/tengine/</guid><description>&lt;h2 id="软件列表"&gt;软件列表&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Tengine：&lt;a href="https://github.com/alibaba/tengine" target="_blank"&gt;https://github.com/alibaba/tengine&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Lua：&lt;a href="http://www.lua.org/ftp/" target="_blank"&gt;http://www.lua.org/ftp/&lt;/a&gt; ，这里使用 lua-5.3.1.tar.gz&lt;/li&gt;
