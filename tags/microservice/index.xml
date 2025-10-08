@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Microservice on ChenSoul Blog</title><link>https://blog.chensoul.cc/tags/microservice/</link><description>Recent content in Microservice on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 20 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/tags/microservice/index.xml" rel="self" type="application/rss+xml"/><item><title>2024-02-20｜RateLimitAspect请求限流、调整spring-cloud-examples项目结构</title><link>https://blog.chensoul.cc/posts/2024/02/20/til/</link><pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/20/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;ChatGPT 编写一个 RateLimitAspect 类，实现基于用户的 get 查询请求的限流功能&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>2024-01-26｜foodie-cloud集成Feign</title><link>https://blog.chensoul.cc/posts/2024/01/26/til/</link><pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/26/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;重构 foodie-cloud 项目&lt;/p&gt;</description></item><item><title>2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</title><link>https://blog.chensoul.cc/posts/2024/01/02/til/</link><pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/02/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
+&lt;/ol&gt;</description></item><item><title>2024-01-02｜雪崩问题、Spring Cloud微服务集成 Sentinel</title><link>https://blog.chensoul.cc/posts/2024/01/02/til/</link><pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/01/02/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;雪崩问题&lt;/li&gt;
 &lt;li&gt;Spring Cloud微服务集成 Sentinel&lt;/li&gt;
@@ -13,4 +10,4 @@
 &lt;h2 id="雪崩问题"&gt;雪崩问题&lt;/h2&gt;
 &lt;p&gt;1、什么是雪崩问题？
 雪崩问题（Avalanche Effect）是指在分布式系统中，当一个节点或服务出现故障或不可用时，其影响会扩散到其他节点或服务，导致级联故障的现象。这种现象类似于雪崩，一旦开始，会不断放大和蔓延，最终导致整个系统崩溃。
-雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。&lt;/p&gt;</description></item></channel></rss>
+雪崩问题的主要原因是系统中的节点或服务之间存在过度依赖、高度耦合，以及缺乏容错机制。当一个节点或服务出现故障时，由于其他节点或服务无法及时处理或适应，故障会不断传播，最终导致整个系统的崩溃。&lt;/p&gt;</description></item><item><title>[译]微服务设计模式</title><link>https://blog.chensoul.cc/posts/2023/06/26/microservice-design-patterns/</link><pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/06/26/microservice-design-patterns/</guid><description>&lt;p&gt;基于微服务的应用程序的主要特征在 &lt;a href="http://web.archive.org/web/20190705163602/http://blog.arungupta.me/microservices-monoliths-noops/" target="_blank"&gt;微服务、单体和 NoOps&lt;/a&gt; 中定义。它们是功能分解或领域驱动设计、定义良好的接口、明确发布的接口、单一责任原则和潜在的多语言。每项服务都是完全自主和全栈的。&lt;/p&gt;</description></item></channel></rss>
