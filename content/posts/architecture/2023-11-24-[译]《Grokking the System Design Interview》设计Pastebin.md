@@ -3,7 +3,7 @@ title: "[译]《Grokking the System Design Interview》设计Pastebin"
 date: 2023-11-24
 slug: designing-pastebin
 categories: ["architecture"]
-tags: ['mysql', 'security', 'tutorial', 'translation']
+tags: ['architecture']
 
 ---
 

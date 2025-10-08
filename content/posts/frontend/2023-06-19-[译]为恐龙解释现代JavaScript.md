@@ -3,7 +3,7 @@ title: "[译]为恐龙解释现代JavaScript"
 date: 2023-06-19
 slug: modern-javascript-explained-for-dinosaurs
 categories: ["frontend"]
-tags: ['javascript', 'vue', 'react', 'tutorial']
+tags: ['javascript']
 ---
 
 ![Images from Dinosaur Comics by Ryan North](../../../static/images/modern-javascript-explained-for-dinosaurs-01.webp)

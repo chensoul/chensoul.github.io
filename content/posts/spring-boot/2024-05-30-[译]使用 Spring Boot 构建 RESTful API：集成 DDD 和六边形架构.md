@@ -3,7 +3,7 @@ title: "[译]使用 Spring Boot 构建 RESTful API：集成 DDD 和六边形架�
 date: 2024-05-30
 slug: building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture
 categories: ["spring-boot"]
-tags: ['java', 'javascript', 'backend', 'security']
+tags: ['spring-boot','ddd']
 ---
 
 原文链接：[Building a RESTful API with Spring Boot: Integrating DDD and Hexagonal Architecture](https://medium.com/@juannegrin/building-a-restful-api-with-spring-boot-integrating-ddd-and-hexagonal-architecture-df50fe24a1ff)

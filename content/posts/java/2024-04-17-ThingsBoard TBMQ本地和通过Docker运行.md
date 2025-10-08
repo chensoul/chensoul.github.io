@@ -3,7 +3,7 @@ title: "ThingsBoard TBMQ本地和通过Docker运行"
 date: 2024-04-17
 slug: thingsboard-tbmq-local-docker-run
 categories: ["java"]
-tags: ['docker', 'kafka', 'redis', 'backend']
+tags: ['thingsboard']
 ---
 
 ## docker-compose 运行

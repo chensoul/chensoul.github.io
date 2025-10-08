@@ -3,7 +3,7 @@ title: "Thingsboard源码中的代码片段"
 date: 2025-04-30
 slug: codes-in-thingsboard
 categories: ["java"]
-tags: ['backend', 'tutorial', 'source-code', 'oauth2']
+tags: ['thingsboard']
 ---
 
 Uuids

@@ -3,7 +3,7 @@ title: "[译]探索 http2（第 2 部分）：使用 node-http2 核心和 hapijs
 date: 2024-05-08
 slug: exploring-http2-part-2-overview
 categories: ["java"]
-tags: ['javascript', 'backend', 'tutorial', 'github']
+tags: [ 'http2', 'node']
 ---
 
 

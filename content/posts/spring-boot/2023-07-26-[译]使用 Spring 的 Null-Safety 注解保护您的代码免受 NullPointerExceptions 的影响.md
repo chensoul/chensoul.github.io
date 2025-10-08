@@ -3,7 +3,7 @@ title: "[译]使用 Spring 的 Null-Safety 注解保护您的代码免受 NullPo
 date: 2023-07-26
 slug: spring-boot-null-safety-annotations
 categories: ["spring-boot"]
-tags: ['java', 'backend', 'tutorial', 'maven']
+tags: ['spring-boot']
 ---
 
 `NullPointerExceptions` （通常缩写为“NPE”）对于每个 Java 程序员来说都是一场噩梦。

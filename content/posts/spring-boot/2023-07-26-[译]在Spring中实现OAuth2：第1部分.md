@@ -3,7 +3,7 @@ title: "[译]在 Spring 中实现 OAuth2：第 1 部分"
 date: 2023-07-26
 slug: using-oauth2-in-spring
 categories: ["spring-boot"]
-tags: ['java', 'javascript', 'backend', 'security']
+tags: ['spring-boot', 'oauth2']
 ---
 
 OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。

@@ -3,7 +3,7 @@ title: "[译]《Grokking the System Design Interview》域名系统"
 date: 2023-11-17
 slug: dns
 categories: ["architecture"]
-tags: ['security', 'tutorial', 'translation', 'testing']
+tags: ['architecture']
 ---
 
 这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-name-system-dns) 这篇章节。

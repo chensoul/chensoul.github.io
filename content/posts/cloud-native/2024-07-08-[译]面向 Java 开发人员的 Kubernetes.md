@@ -2,7 +2,7 @@
 title: "[译]面向 Java 开发人员的 Kubernetes"
 date: 2024-07-08
 slug: kubernetes-for-java-developers
-tags: ['docker', 'java', 'kubernetes', 'spring-boot']
+tags: ['java', 'kubernetes']
 categories: ["cloud-native"]
 ---
 

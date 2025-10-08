@@ -3,7 +3,7 @@ title: "[译]为 JMS 安装和设置 Glassfish"
 date: 2024-07-23
 slug: install-and-setup-glassfish-for-jms
 categories: ["java"]
-tags: ['javascript', 'backend', 'tutorial', 'maven']
+tags: ['jms']
 ---
 
 在本文中，我们将为 JMS 2.0 设置 Glassfish，创建一个 Java 项目并添加必要的依赖项。

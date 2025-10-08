@@ -3,7 +3,7 @@ title: "[译]为 Spring Boot 应用程序创建优化的 Docker 映像"
 date: 2023-08-16
 slug: spring-boot-docker
 categories: ["spring-boot"]
-tags: ['docker', 'java', 'backend', 'tutorial']
+tags: ['spring-boot']
 ---
 
 容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。

@@ -3,7 +3,7 @@ title: "[译]Spring Boot项目如何实现Security？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot-project
 categories: ["spring-boot"]
-tags: ['mysql', 'java', 'backend', 'security']
+tags: ['spring-boot', 'security']
 ---
 
 ![How to implement Security in Spring Boot Project?](../../../static/images/SpringSecurityBasics-2.webp)

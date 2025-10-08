@@ -3,7 +3,7 @@ title: "[译]使用 Spring Boot 和 Spring Security 配置 CORS"
 date: 2023-07-26
 slug: spring-cors
 categories: ["spring-boot"]
-tags: ['java', 'react', 'backend', 'security']
+tags: ['spring-boot']
 ---
 
 跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。

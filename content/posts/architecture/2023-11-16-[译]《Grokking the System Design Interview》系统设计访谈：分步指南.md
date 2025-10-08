@@ -3,7 +3,7 @@ title: "[译]《Grokking the System Design Interview》系统设计访谈：分�
 date: 2023-11-16
 slug: sdi-a-step-by-step-guide
 categories: ["architecture"]
-tags: ['mysql', 'tutorial', 'translation', 'github']
+tags: ['architecture']
 ---
 
 这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《System Design Interviews: A step by step guide》系统设计访谈：分步指南。

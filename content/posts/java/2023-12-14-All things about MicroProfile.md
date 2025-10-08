@@ -3,7 +3,7 @@ title: "All things about MicroProfile"
 date: 2023-12-14
 slug: all-things-about-microprofile
 categories: ["java"]
-tags: ['kubernetes', 'javascript', 'spring-boot', 'backend']
+tags: ['microprofile']
 ---
 
 最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。

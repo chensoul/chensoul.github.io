@@ -3,7 +3,7 @@ title: "[译]如何使用Spring Security和JWT保护您的REST API"
 date: 2023-09-19
 slug: spring-security-jwt
 categories: ["spring-boot"]
-tags: ['java', 'javascript', 'backend', 'security']
+tags: ['spring-boot','security','jwt']
 ---
 
 原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https://www.danvega.dev/blog/spring-security-jwt)

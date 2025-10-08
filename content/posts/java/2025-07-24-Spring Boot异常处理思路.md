@@ -3,7 +3,7 @@ title: "Spring Boot异常处理思路"
 date: 2025-07-24
 slug: spring-exception
 categories: ["java"]
-tags: ['javascript', 'spring-boot', 'backend', 'tutorial']
+tags: ['spring-boot']
 ---
 本文档描述了基于 Spring Boot 的异常处理设计思路，旨在构建一个统一、可扩展、支持国际化的异常处理体系。通过合理的异常分类、统一的响应格式和完善的国际化支持，为前端提供友好的错误信息，同时便于后端进行问题定位和监控。
 

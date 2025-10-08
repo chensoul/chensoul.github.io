@@ -3,7 +3,7 @@ title: "GitHub中配置Renovate自动依赖更新和自动合并PR"
 date: 2025-09-28
 slug: config-renovate-in-github
 categories: ["java"]
-tags: ['docker', 'javascript', 'spring-boot', 'backend']
+tags: ['github','renovate']
 ---
 
 本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。

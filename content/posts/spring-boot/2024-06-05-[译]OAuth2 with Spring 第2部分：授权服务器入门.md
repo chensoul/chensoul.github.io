@@ -3,7 +3,7 @@ title: "[译]OAuth2 with Spring 第2部分：授权服务器入门"
 date: 2024-06-05
 slug: oauth2-with-spring-part-2-getting-started-with-authorization-server
 categories: ["spring-boot"]
-tags: ['java', 'backend', 'security', 'tutorial']
+tags: ['spring-boot','oauth2']
 ---
 
 原文地址：[https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a](https://mainul35.medium.com/oauth2-with-spring-part-2-getting-started-with-authorization-server-13804910cb2a)
