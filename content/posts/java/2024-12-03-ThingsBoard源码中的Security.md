@@ -8,6 +8,8 @@ tags: ['security', 'thingsboard']
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
 
+<!--more-->
+
 ## 设置和安全
 
 登陆系统之后，点击左边的设置和安全菜单，进行相应的配置。

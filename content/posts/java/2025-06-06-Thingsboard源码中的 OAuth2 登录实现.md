@@ -10,6 +10,8 @@ tags: ['oauth2', 'thingsboard']
 
 使用 [sysadmin@thingsboard.org](mailto:sysadmin@thingsboard.org) / sysadmin 账号登录 Thingsboard 系统之后，在安全 -> OAuth2.0 页面，点击OAuth2.0客户端，先创建一个客户端，这里我创建的是 Github 客户端。
 
+<!--more-->
+
 ![create-oauth2-client-in-thingsboard](../../../static/images/create-oauth2-client-in-thingsboard.webp)
 
 然后，创建一个域：

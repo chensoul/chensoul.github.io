@@ -8,6 +8,8 @@ tags: ['activemq']
 
 activemq-broker 模块 test/java 目录下有个 IDERunner 类：
 
+<!--more-->
+
 ```java
 public class IDERunner {
     private static final boolean TRANSPORT_TRACE = false;

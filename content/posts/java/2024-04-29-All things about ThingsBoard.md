@@ -10,7 +10,7 @@ tags: ['thingsboard']
 
 thingsboard 是一款乌克兰团队基于java语言研发的开源物联网框架，开源的是ce版，企业版需要购买授权且无源码。
 
-
+<!--more-->
 
 官方网站：
 

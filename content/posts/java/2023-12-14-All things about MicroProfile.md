@@ -8,6 +8,8 @@ tags: ['microprofile']
 
 最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。
 
+<!--more-->
+
 ## MicroProfile
 
 MicroProfile是一个开放的企业级Java微服务框架，旨在简化和标准化基于微服务架构的应用程序开发。它是由Eclipse Foundation主导的一个开源项目，致力于提供轻量级、可移植和可互操作的Java微服务规范和实现。

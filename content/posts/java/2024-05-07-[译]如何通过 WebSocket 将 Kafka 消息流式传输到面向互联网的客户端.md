@@ -12,6 +12,8 @@ tags: ['websocket', 'kafka']
 
 Apache Kafka 是目前最强大的异步消息传递技术之一。 Kafka 由 Jay Kreps、Jun Rao 和 Neha Narkhede 等团队于 2010 年在 LinkedIn 设计，并于 2011 年初开源。如今，该工具被众多公司（包括科技巨头，例如 Slack、Airbnb 或 Netflix 使用）为其实时数据流管道提供支持。 
 
+<!--more-->
+
 由于 Kafka 如此受欢迎，我很好奇是否可以使用它**通过互联网和 WebSockets 将实时数据直接流式传输给最终用户**。毕竟，Kafka 具有一系列特征，似乎使其成为一个值得注意的选择，例如：
 
 - 高通量

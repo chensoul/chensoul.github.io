@@ -11,6 +11,8 @@ ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://
 - `check-configuration-files.yml`：使用 python 脚本校验 yaml 文件
 - `license-header-format.yml`：是给文件添加 license 并提交代码到 git 仓库
 
+<!--more-->
+
 ## check-configuration-files.yml 
 
 check-configuration-files.yml 

@@ -10,6 +10,8 @@ tags: ['thingsboard']
 
 参考：[https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/](https://thingsboard.io/docs/mqtt-broker/install/cluster/docker-compose-setup/)
 
+<!--more-->
+
 1. 下载源代码
 
    ```bash

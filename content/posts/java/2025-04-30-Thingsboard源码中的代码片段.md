@@ -15,6 +15,8 @@ Uuids.unixTimestamp(uuid)
 UUID NULL_UUID = Uuids.startOf(0);
 ```
 
+<!--more-->
+
 UUIDConverter
 
 ```java

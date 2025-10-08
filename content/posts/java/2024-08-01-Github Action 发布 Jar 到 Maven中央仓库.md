@@ -3,12 +3,14 @@ title: "Github Action 发布 Jar 到 Maven 中央仓库"
 date: 2024-08-01
 slug: publishing-a-jar-to-maven-repository-with-github-action
 categories: ["java"]
-tags: ['github']
+tags: ['github','maven']
 ---
 
 作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。
 
-在过去,发布 Jar 到 Maven 中央仓库通常需要手动完成一系列繁琐的步骤，比如：申请 JIRA 账号、创建 Sonatype JIRA Issure、上传 Jar 包、签名 Jar 包等。但是随着 Github Action 的出现，这个过程变得更加自动化和简单。
+<!--more-->
+
+在过去，发布 Jar 到 Maven 中央仓库通常需要手动完成一系列繁琐的步骤，比如：申请 JIRA 账号、创建 Sonatype JIRA Issure、上传 Jar 包、签名 Jar 包等。但是随着 Github Action 的出现，这个过程变得更加自动化和简单。
 
 下面我将以一个简单的 Maven 项目为例，介绍如何使用 Github Action 实现自动发布 Jar 到 Maven 中央仓库。
 

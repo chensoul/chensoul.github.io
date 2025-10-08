@@ -9,6 +9,8 @@ tags: ['thingsboard']
 本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP
 自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。
 
+<!--more-->
+
 ## 一、测试 HTTP Transport 
 
 1、本地启动 thingsboard 服务，然后打开 [http://localhost:8080/](http://localhost:8080/) 并使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆
