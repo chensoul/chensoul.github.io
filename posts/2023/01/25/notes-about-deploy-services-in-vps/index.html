@@ -1,4 +1,4 @@
-<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>我的VPS服务部署记录 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:title" content="我的VPS服务部署记录"><meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:image" content><meta itemprop=name content="我的VPS服务部署记录"><meta itemprop=description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta itemprop=datePublished content="2023-01-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-25T00:00:00+00:00"><meta itemprop=wordCount content="2072"><meta itemprop=keywords content="Vps,Centos"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="我的VPS服务部署记录"><meta name=twitter:description content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps"><meta name=twitter:image content><link rel=preconnect href=//fonts.loli.net crossorigin><link rel=dns-prefetch href=//fonts.loli.net><link rel=stylesheet href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class="logo logo--mixed"><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__imagebox"><img class=logo__img src=/logo.svg loading=lazy alt="Site logo" width=60 height=60></div><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>我的VPS服务部署记录 - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:title" content="我的VPS服务部署记录"><meta property="og:description" content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:image" content><meta itemprop=name content="我的VPS服务部署记录"><meta itemprop=description content="我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。"><meta itemprop=datePublished content="2023-01-25T00:00:00+00:00"><meta itemprop=dateModified content="2023-01-25T00:00:00+00:00"><meta itemprop=wordCount content="2139"><meta itemprop=keywords content="Vps,Centos"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="我的VPS服务部署记录"><meta name=twitter:description content="Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps"><meta name=twitter:image content><link rel=preconnect href=//fonts.loli.net crossorigin><link rel=dns-prefetch href=//fonts.loli.net><link rel=stylesheet href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class="logo logo--mixed"><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__imagebox"><img class=logo__img src=/logo.svg loading=lazy alt="Site logo" width=60 height=60></div><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
 <span class=menu__btn-title tabindex=-1>菜单</span></button><ul class=menu__list><li class=menu__item><a class=menu__link href=/><span class=menu__text>首页</span></a></li><li class=menu__item><a class=menu__link href=/categories/><span class=menu__text>分类</span></a></li><li class=menu__item><a class=menu__link href=/tags/><span class=menu__text>标签</span></a></li><li class=menu__item><a class=menu__link href=/index.xml><span class=menu__text>订阅</span></a></li><li class=menu__item><a class=menu__link href=/about/><span class=menu__text>关于</span></a></li></ul></nav></div></header><div class="wrapper flex"><div class=primary><main class=main role=main><article class=post><header class=post__header><h1 class=post__title>我的VPS服务部署记录</h1><div class="post__meta meta"><div class="meta__item-datetime meta__item"><svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 110 28 1 1 0 010-28m0 3a3 3 0 100 22 3 3 0 000-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class=meta__text datetime=2023-01-25>2023-01-25</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class=meta__text><a class=meta__link href=/categories/devops/ rel=category>Devops</a></span></div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><span class=meta__text><a class=meta__link href=/tags/vps/ rel=tag>Vps</a>, <a class=meta__link href=/tags/centos/ rel=tag>Centos</a></span></div></div></header><div class="content post__content clearfix"><p>我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。</p><h2 id=服务器设置>服务器设置</h2><p>设置 yum 源：</p><p>/etc/yum.repos.d/centos.repo</p><pre tabindex=0><code>[base]
 name=CentOS-$releasever - Base
 baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
@@ -102,7 +102,7 @@ enabled=1
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#34;3003:3000&#34;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>postgresql://umami:vps@027!@postgres:5432/umami</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>postgresql://postgres:vps@027!@postgres:5432/umami</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_TYPE</span>: <span style=color:#ae81ff>postgresql</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>HASH_SALT</span>: <span style=color:#ae81ff>vps@2025</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>TRACKER_SCRIPT_NAME</span>: <span style=color:#ae81ff>random-string.js</span>
@@ -154,10 +154,7 @@ enabled=1
 </span></span><span style=display:flex><span>        <span style=color:#f92672>expires</span> <span style=color:#e6db74>12h</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>5、添加网站</p><p>访问 <a href=https://umami.chensoul.cc/ target=_blank>https://umami.chensoul.cc/</a>，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。</p><p>6、升级</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f umami.yaml down
-</span></span><span style=display:flex><span>docker pull ghcr.io/umami-software/umami:postgresql-latest
-</span></span><span style=display:flex><span>docker-compose -f umami.yaml up -d
-</span></span></code></pre></div><h3 id=memos>Memos</h3><p>1、在 postgres 容器创建 memos 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it postgres psql -U postgres
+</span></span></code></pre></div><p>5、添加网站</p><p>访问 <a href=https://umami.chensoul.cc/ target=_blank>https://umami.chensoul.cc/</a>，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。</p><h3 id=memos>Memos</h3><p>1、在 postgres 容器创建 memos 数据库和用户：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it postgres psql -U postgres
 </span></span><span style=display:flex><span>CREATE DATABASE memos OWNER postgres;
 </span></span></code></pre></div><p>2、通过 docker-compose 安装，创建 memos.yaml：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>memos</span>:
@@ -165,7 +162,7 @@ enabled=1
 </span></span><span style=display:flex><span>    <span style=color:#f92672>container_name</span>: <span style=color:#ae81ff>memos</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>MEMOS_DRIVER=postgres</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>MEMOS_DSN=postgres://memos:vps@027!@postgres:5432/memos?sslmode=disable</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>MEMOS_DSN=postgres://postgres:vps@027!@postgres:5432/memos?sslmode=disable</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>volumes</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>~/.memos/:/var/opt/memos</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
@@ -330,7 +327,7 @@ enabled=1
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#34;1337:1337&#34;</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>BASE_URL=http://localhost:1337/</span>
-</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DATABASE_URL=postgresql://planka:vps@027!@postgres:5432/planka</span>
+</span></span><span style=display:flex><span>      - <span style=color:#ae81ff>DATABASE_URL=postgresql://postgres:vps@027!@postgres:5432/planka</span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>SECRET_KEY=notsecretkey</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>      <span style=color:#75715e># - TRUST_PROXY=0</span>
@@ -589,8 +586,7 @@ enabled=1
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Forwarded-Proto</span> $scheme;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>REMOTE-HOST</span> $remote_addr;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>add_header</span> <span style=color:#e6db74>X-Cache</span> $upstream_cache_status;
-</span></span><span style=display:flex><span>        <span style=color:#75715e># 缓存
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>no-cache</span>;
+</span></span><span style=display:flex><span>        <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>no-cache</span>;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>expires</span> <span style=color:#e6db74>12h</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
@@ -605,7 +601,7 @@ enabled=1
 </span></span><span style=display:flex><span>    <span style=color:#f92672>environment</span>:
 </span></span><span style=display:flex><span>      <span style=color:#f92672>NODE_ENV</span>: <span style=color:#ae81ff>production</span>
 </span></span><span style=display:flex><span>      <span style=color:#f92672>NEXTAUTH_SECRET</span>: <span style=color:#ae81ff>my_ultra_secure_nextauth_secret</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>postgresql://blinko:vps@027!@postgres:5432/blinko</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>DATABASE_URL</span>: <span style=color:#ae81ff>postgresql://postgres:vps@027!@postgres:5432/blinko</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
 </span></span><span style=display:flex><span>    <span style=color:#f92672>ports</span>:
 </span></span><span style=display:flex><span>      - <span style=color:#e6db74>&#34;1111:1111&#34;</span>
@@ -621,10 +617,42 @@ enabled=1
 </span></span><span style=display:flex><span><span style=color:#f92672>networks</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>custom</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>external</span>: <span style=color:#66d9ef>true</span>
-</span></span></code></pre></div><p>命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it postgres psql -d postgres -U postgres
+</span></span></code></pre></div><p>创建数据库：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker exec -it postgres psql -d postgres -U postgres
 </span></span><span style=display:flex><span>CREATE DATABASE blinko;
+</span></span></code></pre></div><p>启动服务：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker-compose -f blinko.yaml up -d
+</span></span></code></pre></div><p>配置 nginx 配置文件 /etc/nginx/conf.d/blinko.conf</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=display:flex><span><span style=color:#66d9ef>server</span> {
+</span></span><span style=display:flex><span>   <span style=color:#f92672>listen</span> <span style=color:#ae81ff>80</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>listen</span> <span style=color:#e6db74>[::]:80</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>server_name</span> <span style=color:#e6db74>blinko.chensoul.cc</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>docker-compose -f blinko.yaml up -d
+</span></span><span style=display:flex><span>   <span style=color:#f92672>return</span> <span style=color:#ae81ff>301</span> <span style=color:#e6db74>https://</span>$host$request_uri;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>server</span> {
+</span></span><span style=display:flex><span>   <span style=color:#f92672>listen</span>          <span style=color:#ae81ff>443</span> <span style=color:#e6db74>ssl</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>server_name</span>     <span style=color:#e6db74>blinko.chensoul.cc</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_certificate</span>      <span style=color:#e6db74>/etc/nginx/ssl/fullchain.cer</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_certificate_key</span>  <span style=color:#e6db74>/etc/nginx/ssl/chensoul.cc.key</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_session_cache</span>    <span style=color:#e6db74>shared:SSL:1m</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_session_timeout</span>  <span style=color:#ae81ff>5m</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_ciphers</span>  <span style=color:#e6db74>HIGH:!aNULL:!MD5</span>;
+</span></span><span style=display:flex><span>   <span style=color:#f92672>ssl_prefer_server_ciphers</span>  <span style=color:#66d9ef>on</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_pass</span> <span style=color:#e6db74>http://127.0.0.1:1111</span>;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>Host</span> $host;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Real-IP</span> $remote_addr;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>X-Forwarded-Proto</span> $scheme;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>proxy_set_header</span> <span style=color:#e6db74>REMOTE-HOST</span> $remote_addr;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>add_header</span> <span style=color:#e6db74>X-Cache</span> $upstream_cache_status;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>no-cache</span>;
+</span></span><span style=display:flex><span>     <span style=color:#f92672>expires</span> <span style=color:#e6db74>12h</span>;
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h3 id=remark42-评论>remark42 评论</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>services</span>:
 </span></span><span style=display:flex><span>  <span style=color:#f92672>remark42</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>ghcr.io/umputun/remark42:latest</span>
@@ -660,7 +688,7 @@ enabled=1
 </span></span><span style=display:flex><span>BACKUP_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/opt/vps-backup/database&#34;</span>
 </span></span><span style=display:flex><span>BACKUP_PREFIX<span style=color:#f92672>=</span>postgres
 </span></span><span style=display:flex><span>BACKUP_POSTFIX<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>date +%Y%m%d_%H<span style=color:#66d9ef>)</span>
-</span></span><span style=display:flex><span>DATABASES<span style=color:#f92672>=(</span><span style=color:#e6db74>&#34;memos&#34;</span> <span style=color:#e6db74>&#34;n8n&#34;</span> <span style=color:#e6db74>&#34;umami&#34;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>DATABASES<span style=color:#f92672>=(</span><span style=color:#e6db74>&#34;memos&#34;</span> <span style=color:#e6db74>&#34;n8n&#34;</span> <span style=color:#e6db74>&#34;umami&#34;</span> <span style=color:#e6db74>&#34;blinko&#34;</span><span style=color:#f92672>)</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>mkdir -p $BACKUP_DIR
 </span></span><span style=display:flex><span>
@@ -687,7 +715,10 @@ enabled=1
 </span></span><span style=display:flex><span>git commit -m <span style=color:#e6db74>&#34;backup database for </span>$BACKUP_POSTFIX<span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span>git push origin main
 </span></span></code></pre></div><p>恢复：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker cp /opt/vps-backup/database/postgres_memos_20251111_12.sql postgres:/tmp/
-</span></span><span style=display:flex><span>docker exec -it postgres psql -U postgres -d umami -f /tmp/postgres_memos_20251111_12.sql
+</span></span><span style=display:flex><span>docker exec -it postgres psql -U postgres -d memos -f /tmp/postgres_memos_20251111_12.sql
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>docker cp /opt/vps-backup/database/postgres_umami_20251111_12.sql postgres:/tmp/
+</span></span><span style=display:flex><span>docker exec -it postgres psql -U postgres -d umami -f /tmp/postgres_umami_20251111_12.sql
 </span></span></code></pre></div><p>backup_n8n.sh：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
 </span></span></span><span style=display:flex><span><span style=color:#75715e></span>
 </span></span><span style=display:flex><span>DATE<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>date +%Y%m%d<span style=color:#66d9ef>)</span>
