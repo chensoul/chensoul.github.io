@@ -36,9 +36,6 @@ ignoreLogs = ['warning-goldmark-raw-html']
   tag = "tags"
   category = "categories"
 
-[outputs]
-  home = ["HTML", "RSS"]
-
 [menu]
   [[menu.main]]
     name = "首页"
@@ -61,3 +58,22 @@ ignoreLogs = ['warning-goldmark-raw-html']
       name = "关于"
       url = "/about/"
       weight = 10
+
+[outputs]
+  page = ["HTML", "Markdown"]
+  home = ["HTML", "RSS", "JSON", "TXT"]
+
+[mediaTypes."text/markdown"]
+  suffixes = ["md"]
+
+[outputFormats.Markdown]
+  mediaType = "text/markdown"
+  isPlainText = true
+  isHTML = false
+  baseName = "index"
+  rel = "alternate"
+
+[outputFormats.TXT]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
