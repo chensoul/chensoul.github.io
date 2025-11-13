@@ -116,7 +116,7 @@ spring.ai.model.embedding=openai
 ```java
 @Bean
 QuestionAnswerAdvisor questionAnswerAdvisor(VectorStore vectorStore) {
-    return new QuestionAnswerAdvisor(vectorStore);
+    return QuestionAnswerAdvisor.builder(vectorStore).build();
 }
 ```
 
