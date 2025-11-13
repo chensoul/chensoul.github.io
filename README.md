@@ -1,7 +1,7 @@
 # ChenSoul Blog
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://blog.chensoul.cc)
-[![Hugo](https://img.shields.io/badge/Hugo-0.141.0-blue)](https://gohugo.io/)
+[![Hugo](https://img.shields.io/badge/Hugo-0.149.0-blue)](https://gohugo.io/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 > 一个专注于 Java、Spring Boot、微服务、云架构和 DevOps 的技术博客网站
@@ -19,7 +19,7 @@
 
 ## 🛠 技术栈
 
-- **静态站点生成器**: [Hugo](https://gohugo.io/) v0.141.0
+- **静态站点生成器**: [Hugo](https://gohugo.io/) v0.149.0
 - **主题**: [rose-hugo](https://github.com/your-theme-repo)
 - **包管理器**: npm
 - **图片处理**: imagemin, imagemin-webp, imagemin-pngquant
