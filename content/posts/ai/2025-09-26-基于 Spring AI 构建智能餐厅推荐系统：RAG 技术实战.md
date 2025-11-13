@@ -522,5 +522,5 @@ DELETE FROM vector_store WHERE id = 'test-1';
 
 **项目地址**：[GitHub - spring-ai-restaurant-showcase](https://github.com/chensoul/spring-ai-restaurant-showcase)
 
-*本文基于 Spring AI 1.1.0-M2 版本编写，代码已在实际项目中验证。*
+*本文基于 Spring AI 1.1.0 版本编写，代码已在实际项目中验证。*
 

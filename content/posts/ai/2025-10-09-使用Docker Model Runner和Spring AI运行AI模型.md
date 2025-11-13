@@ -33,7 +33,7 @@ Docker Model Runner是Docker官方推出的AI模型管理工具，相比传统�
 我们的**本地AI应用解决方案**基于以下技术栈：
 
 - **🐳 Docker Model Runner**: 运行AI模型，提供OpenAI兼容API
-- **🌱 Spring AI 1.0.3**: 提供统一的AI应用开发框架
+- **🌱 Spring AI 1.1.0**: 提供统一的AI应用开发框架
 - **🐘 PostgreSQL 16 + pgvector 0.8.1**: 存储向量数据，支持RAG功能
 - **🤖 ai/gemma3**: 文本生成模型（基于Gemma架构）
 - **🔍 ai/embeddinggemma**: 768维向量嵌入模型（基于Gemma架构）
@@ -110,7 +110,7 @@ Docker Model Runner是Docker官方推出的AI模型管理工具，相比传统�
 
 在`application.yml`中配置Docker Model Runner：
 
-> 📝 **配置说明**: 以下配置包含了聊天模型、嵌入模型、向量存储和数据库连接等关键设置。特别注意`distance-type: EUCLIDEAN_DISTANCE`配置，这是解决Spring AI 1.0.3与pgvector 0.8.1兼容性的关键。
+> 📝 **配置说明**: 以下配置包含了聊天模型、嵌入模型、向量存储和数据库连接等关键设置。特别注意`distance-type: EUCLIDEAN_DISTANCE`配置，这是解决Spring AI 1.1.0与pgvector 0.8.1兼容性的关键。
 
 ```yaml
 # Spring AI + Docker Model Runner 配置
