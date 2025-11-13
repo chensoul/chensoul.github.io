@@ -1,0 +1,1186 @@
+---
+categories: [devops]
+date: 2023-01-25 00:00:00 +0000 UTC
+lastmod: 2023-01-25 00:00:00 +0000 UTC
+publishdate: 2023-01-25 00:00:00 +0000 UTC
+slug: notes-about-deploy-services-in-vps
+tags: [vps centos]
+title: 我的VPS服务部署记录
+---
+
+我的 VPS 使用的是 centos 服务器，所以以下操作都是基于 centos 系统。
+
+## 服务器设置
+
+设置 yum 源：
+
+/etc/yum.repos.d/centos.repo
+
+```
+[base]
+name=CentOS-$releasever - Base
+baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+enabled=1
+
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=https://vault.centos.org/7.9.2009/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+enabled=1
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=https://vault.centos.org/7.9.2009/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+enabled=1
+```
+
+更新 yum 源：
+
+```bash
+yum update
+```
+
+安装常用软件：
+
+```bash
+yum install wget curl git vim jq ntp -y
+```
+
+设置时钟同步：
+
+```bash
+systemctl start ntpd
+systemctl enable ntpd
+ntpdate pool.ntp.org
+```
+
+**[可选] 设置系统 Swap 交换分区**
+
+因为 vps 服务器的运行内存很小，所以这里先设置下 Swap
+
+```bash
+# 1GB RAM with 2GB Swap
+sudo fallocate -l 2G /swapfile && \
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=2097152 && \
+sudo chmod 600 /swapfile && \
+sudo mkswap /swapfile && \
+sudo swapon /swapfile && \
+echo "/swapfile swap swap defaults 0 0" | sudo tee -a /etc/fstab && \
+sudo swapon --show && \
+sudo free -h
+```
+
+## 安装 Nginx
+
+参考 [CentOS 7 下 yum 安装和配置 Nginx](https://qizhanming.com/blog/2018/08/06/how-to-install-nginx-on-centos-7) ，使用 yum 安装：
+
+```bash
+rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+yum install nginx -y
+
+systemctl enable nginx
+```
+
+打开防火墙端口
+
+```bash
+yum install firewalld -y
+
+firewall-cmd --zone=public --permanent --add-service=http
+firewall-cmd --reload
+```
+
+使用反向代理需要打开网络访问权限
+
+```bash
+setsebool -P httpd_can_network_connect on
+```
+
+## 安装并生成证书
+
+域名托管在 CloudFlare，可以参考 [文章](https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_cf)
+
+```bash
+curl https://get.acme.sh | sh -s email=ichensoul@gmail.com
+
+export CF_Key="XXXXXXXXXXXXXXXXXX"
+export CF_Email="ichensoul@gmail.com"
+
+.acme.sh/acme.sh --issue --server letsencrypt --dns dns_cf -d chensoul.cc -d '*.chensoul.cc'
+
+cp .acme.sh/chensoul.cc_ecc/{chensoul.cc.cer,chensoul.cc.key,fullchain.cer,ca.cer} /etc/nginx/ssl/
+
+.acme.sh/acme.sh --installcert -d chensoul.cc -d *.chensoul.cc --cert-file /etc/nginx/ssl/chensoul.cc.cer --key-file /etc/nginx/ssl/chensoul.cc.key --fullchain-file /etc/nginx/ssl/fullchain.cer --ca-file /etc/nginx/ssl/ca.cer --reloadcmd "sudo nginx -s reload"
+```
+
+## Docker 安装和配置
+
+Docker 安装
+
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+
+启动 docker：
+
+```bash
+systemctl enable docker
+systemctl start docker
+```
+
+设置 iptables 允许流量转发：
+
+```bash
+iptables -P FORWARD ACCEPT
+```
+安装 Compose
+
+```bash
+curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+设置执行权限：
+
+```bash
+chmod +x /usr/local/bin/docker-compose
+```
+
+参考 [Best Practice: Use a Docker network ](https://nginxproxymanager.com/advanced-config/#best-practice-use-a-docker-network) ，创建一个自定义的网络：
+
+```bash
+docker network create custom
+```
+
+查看 docker 网络：
+
+```bash
+docker network ls
+NETWORK ID     NAME            DRIVER    SCOPE
+68f4aeaa57bd   bridge          bridge    local
+6a96b9d8617e   custom          bridge    local
+4a8679e35f4d   host            host      local
+ba21bef23b04   none            null      local
+```
+
+> 注意：bridge、host、none 是内部预先创建的网络。
+
+然后，在其他服务的 docker-compose.yml 文件添加：
+
+```yaml
+  networks:
+    - custom
+
+networks:
+  custom:
+    external: true
+```
+
+## 服务部署
+
+### Postgres
+
+postgres.yaml
+
+```yaml
+services:
+    postgres:
+      image: postgres:18
+      restart: always
+      ports:
+        - 5435:5432
+      environment:
+        POSTGRES_DB: postgres
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: vps@027!
+        TZ: Asia/Shanghai
+      healthcheck:
+        test:
+          ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+      networks:
+        - custom
+```
+
+启动：
+
+```bash
+docker-compose -f postgres.yaml up -d
+```
+
+### Umami
+
+1、在 postgres 容器创建 umami 数据库：
+
+```bash
+docker exec -it postgres psql -U postgres
+CREATE DATABASE umami OWNER postgres;
+```
+
+2、通过 docker-compose 安装，创建 umami.yaml：
+
+```yaml
+services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    ports:
+      - "3003:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:vps@027!@postgres:5432/umami
+      DATABASE_TYPE: postgresql
+      HASH_SALT: vps@2025
+      TRACKER_SCRIPT_NAME: random-string.js
+      TZ: "Asia/Shanghai"
+      GENERIC_TIMEZONE: "Asia/Shanghai"
+    networks:
+      - custom
+    restart: always
+
+networks:
+  custom:
+    external: true
+```
+
+参考 [https://eallion.com/umami/](https://eallion.com/umami/)，Umami 的默认跟踪代码是被大多数的广告插件屏蔽的，被屏蔽了你就统计不到访客信息了。如果需要反屏蔽，需要在 docker-compose.yml 文件中添加环境变量：TRACKER_SCRIPT_NAME，如：
+
+```bash
+    environment:
+      TRACKER_SCRIPT_NAME: random-string.js
+```
+
+然后获取到的跟踪代码的 src 会变成：
+
+```
+srcipt.js => random-string.js
+```
+
+启动：
+
+```bash
+docker-compose -f umami.yaml up -d
+docker logs -f umami
+```
+
+3、设置自定义域名
+
+umami.chensoul.cc
+
+4、配置 nginx 配置文件 /etc/nginx/conf.d/umami.conf
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name umami.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     umami.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        add_header X-Cache $upstream_cache_status;
+        # 缓存
+        add_header Cache-Control no-cache;
+        expires 12h;
+    }
+}
+```
+
+5、添加网站
+
+访问 https://umami.chensoul.cc/，默认用户名和密码为 admin/umami。登陆之后，修改密码，并添加网站。
+
+
+### Memos
+
+1、在 postgres 容器创建 memos 数据库和用户：
+
+```bash
+docker exec -it postgres psql -U postgres
+CREATE DATABASE memos OWNER postgres;
+```
+
+2、通过 docker-compose 安装，创建 memos.yaml：
+
+```yaml
+services:
+  memos:
+    image: neosmemo/memos:0.18.2
+    container_name: memos
+    environment:
+      - MEMOS_DRIVER=postgres
+      - MEMOS_DSN=postgres://postgres:vps@027!@postgres:5432/memos?sslmode=disable
+    volumes:
+      - ~/.memos/:/var/opt/memos
+    ports:
+      - '5230:5230'
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+```
+
+注意：
+
+- 推荐两个版本：
+  - 0.18.2 版本。具有丰富的功能，包括电报机器人、webhook、S3储存和自定义CDN域名等。此外，它还支持多数据库，如postgresql、mysql和sqlite。
+  - 0.14.4 版本。没有多余的评论功能，只支持sqlite3。
+
+
+3. 启动
+
+```bash
+docker-compose -f memos.yaml up -d
+docker logs -f memos
+```
+
+4. 配置 nginx 配置文件 /etc/nginx/conf.d/memos.conf
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name memos.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     memos.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:5230;
+    }
+}
+```
+
+5. 自定义样式
+
+美化标签
+
+ ```css
+.status-text{font-size:10px !important;border:none;color:rgb(156,163,175) !important;}
+.tag-span,.dark .tag-span{border: 1px solid;border-radius:6px;padding:0px 6px;color:rgb(22,163,74) !important;font-size:12px !important;-webkit-transform: scale(calc(10 / 12));transform-origin: left center;}
+.memo-content-text .link{color:rgb(22,163,74) !important;margin-right:-6px;}
+header .bg-blue-600{display:none !important;}
+.text-lg {font-size: 1rem !important;}
+.header-wrapper,.sidebar-wrapper{width: 11rem !important;}
+.filter-query-container{padding-bottom:0.5rem;}
+ ```
+
+6、添加网站
+
+访问 https://memos.chensoul.cc/ ，默认用户名和密码为 admin/memos。登陆之后，修改密码，并添加网站。
+
+### N8n
+
+1、在 postgres 容器创建 n8n 数据库和用户：
+
+```bash
+docker exec -it postgres psql -U postgres
+CREATE DATABASE n8n OWNER postgres;
+```
+
+2、通过 docker-compose 安装，创建 n8n.yaml：
+
+```yaml
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=postgres
+      - DB_POSTGRESDB_PASSWORD=vps@027!
+      - TZ="Asia/Shanghai"
+      - GENERIC_TIMEZONE="Asia/Shanghai"
+      - N8N_DEFAULT_LOCALE=zh-CN 
+
+      # 是否启用诊断和个性化推荐
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      # 是否在启动时重新安装缺失的包
+      - N8N_REINSTALL_MISSING_PACKAGES=true
+
+      - WEBHOOK_URL=https://n8n.chensoul.cc/
+      - N8N_HOST=n8n.chensoul.cc
+      - N8N_ENCRYPTION_KEY=2cc5b5f9e31b43ff3817c1d04e5fa735
+    ports:
+      - '5678:5678'
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+```
+
+3、启动
+
+```bash
+docker-compose -f n8n.yaml up -d
+
+docker logs -f n8n
+```
+
+4、配置 nginx 配置文件 /etc/nginx/conf.d/n8n.conf
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name n8n.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     n8n.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+      proxy_pass http://127.0.0.1:5678;
+      proxy_set_header Host $host;
+      proxy_http_version 1.1;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Upgrade $http_upgrade;     
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Origin 'https://n8n.chensoul.cc';
+      access_log /var/log/nginx/n8n.log combined buffer=128k flush=5s;
+    }
+}
+```
+
+> 如果出现 `Origin header does NOT match the expected origin. (Origin: "n8n.chensoul.cc", Expected: "127.0.0.1:5678")`，则需要在 nginx 配置里添加 `proxy_set_header Origin 'https://n8n.chensoul.cc';`
+
+5、添加 workflow
+
+参考这篇文章 http://stiles.cc/archives/237/ ，目前我配置了以下 workflows，实现了 github、douban、rss、memos 同步到 Telegram。
+
+workflows 参考：
+
+- [Reorx](https://reorx.com/blog/sharing-my-footprints-automation/)
+- [Pseudoyu](https://www.pseudoyu.com/zh/2022/09/19/weekly_review_20220919/)
+- [raye](https://raye.xlog.app/gou-jian-ge-xing-hua-de-shu-zi-ri-ji--zi-dong-hua-gong-zuo-liu-shi-xian-xin-xi-ju-he)
+- [Zeabur](https://zeabur.com/docs/marketplace/n8n)
+
+### Bark
+
+Bark is an iOS App which allows you to push custom notifications to your iPhone.
+
+https://github.com/Finb/Bark
+
+需要的时候就可以调用 bark api 给 iPhone 推送消息。
+
+1. 在ios 上安装 bark
+
+2. 服务端使用 docker 安装
+
+```bash
+docker run -dt --name bark -p 8090:8080 -v /data/bark://data finab/bark-server
+```
+
+3. 在 ios bark app上添加私有服务器 http://x.x.x.x:8090
+4. 测试
+
+```bash
+curl -X "POST" "http://x.x.x.x:8090/erWZgGQoV9CqGGwHD8AkBT" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "body": "这是一个测试",
+  "title": "Test Title",
+  "badge": 1,
+  "category": "myNotificationCategory",
+  "icon": "https://www.usememos.com/logo-rounded.png",
+  "group": "test"
+}'
+```
+
+3. 在 ios bark app 上添加私有服务器：http://x.x.x.x:8090
+
+5. 配置 nginx 配置文件 /etc/nginx/conf.d/bark.conf
+
+   ```nginx
+   server {
+       listen 80;
+       listen [::]:80;
+       server_name bark.chensoul.cc;
+   
+       return 301 https://$host$request_uri;
+   }
+   
+   server {
+       listen          443 ssl;
+       server_name     bark.chensoul.cc;
+   
+       ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+       ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+   
+       ssl_session_cache    shared:SSL:1m;
+       ssl_session_timeout  5m;
+   
+       ssl_ciphers  HIGH:!aNULL:!MD5;
+       ssl_prefer_server_ciphers  on;
+   
+       location / {
+         proxy_pass http://127.0.0.1:8090;
+       }
+   }
+   ```
+
+### Planka
+
+The realtime kanban board for workgroups built with React and Redux.
+
+https://github.com/plankanban/planka
+
+替换 Trello 的看板工具。
+
+安装步骤，参考 [官方文档](https://docs.planka.cloud/docs/installation/docker/production_version)。
+
+1. 为了使用提前安装好的 postgres 数据库，修改 docker-compose 文件：
+   - 修改端口为 1337
+   - 修改 DATABASE_URL
+   - 修改 volumes
+   - 设置默认登录用户
+
+```yaml
+services:
+  planka:
+    image: ghcr.io/plankanban/planka:latest
+    container_name: planka
+    restart: on-failure
+    volumes:
+      - /data/planka/user-avatars://app/public/user-avatars
+      - /data/planka/project-background-images://app/public/project-background-images
+      - /data/planka/attachments://app/private/attachments
+    ports:
+      - "1337:1337"
+    environment:
+      - BASE_URL=http://localhost:1337/
+      - DATABASE_URL=postgresql://postgres:vps@027!@postgres:5432/planka
+      - SECRET_KEY=notsecretkey
+
+      # - TRUST_PROXY=0
+      # - TOKEN_EXPIRES_IN=365 # In days
+
+      # related: https://github.com/knex/knex/issues/2354
+      # As knex does not pass query parameters from the connection string we
+      # have to use environment variables in order to pass the desired values, e.g.
+      # - PGSSLMODE=<value>
+
+      # Configure knex to accept SSL certificates
+      # - KNEX_REJECT_UNAUTHORIZED_SSL_CERTIFICATE=false
+
+      # - DEFAULT_ADMIN_EMAIL=demo@demo.demo # Do not remove if you want to prevent this user from being edited/deleted
+      - DEFAULT_ADMIN_PASSWORD=demo
+      - DEFAULT_ADMIN_NAME=Demo Demo
+      - DEFAULT_ADMIN_USERNAME=demo
+
+      # - SHOW_DETAILED_AUTH_ERRORS=false # Set to true to show more detailed authentication error messages. It should not be enabled without a rate limiter for security reasons.
+      # - ALLOW_ALL_TO_CREATE_PROJECTS=true
+
+      # - S3_ENDPOINT=
+      # - S3_REGION=
+      # - S3_ACCESS_KEY_ID=
+      # - S3_SECRET_ACCESS_KEY=
+      # - S3_BUCKET=
+      # - S3_FORCE_PATH_STYLE=true
+
+      # - OIDC_ISSUER=
+      # - OIDC_CLIENT_ID=
+      # - OIDC_CLIENT_SECRET=
+      # - OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG=
+      # - OIDC_USERINFO_SIGNED_RESPONSE_ALG=
+      # - OIDC_SCOPES=openid email profile
+      # - OIDC_RESPONSE_MODE=fragment
+      # - OIDC_USE_DEFAULT_RESPONSE_MODE=true
+      # - OIDC_ADMIN_ROLES=admin
+      # - OIDC_CLAIMS_SOURCE=userinfo
+      # - OIDC_EMAIL_ATTRIBUTE=email
+      # - OIDC_NAME_ATTRIBUTE=name
+      # - OIDC_USERNAME_ATTRIBUTE=preferred_username
+      # - OIDC_ROLES_ATTRIBUTE=groups
+      # - OIDC_IGNORE_USERNAME=true
+      # - OIDC_IGNORE_ROLES=true
+      # - OIDC_ENFORCED=true
+
+      # Email Notifications (https://nodemailer.com/smtp/)
+      # - SMTP_HOST=
+      # - SMTP_PORT=587
+      # - SMTP_NAME=
+      # - SMTP_SECURE=true
+      # - SMTP_USER=
+      # - SMTP_PASSWORD=
+      # - SMTP_FROM="Demo Demo" <demo@demo.demo>
+      # - SMTP_TLS_REJECT_UNAUTHORIZED=false
+
+      # Optional fields: accessToken, events, excludedEvents
+      # - |
+      #   WEBHOOKS=[{
+      #     "url": "http://localhost:3001",
+      #     "accessToken": "notaccesstoken",
+      #     "events": ["cardCreate", "cardUpdate", "cardDelete"],
+      #     "excludedEvents": ["notificationCreate", "notificationUpdate"]
+      #   }]
+
+      # - SLACK_BOT_TOKEN=
+      # - SLACK_CHANNEL_ID=
+
+      # - GOOGLE_CHAT_WEBHOOK_URL=
+
+      # - TELEGRAM_BOT_TOKEN=
+      # - TELEGRAM_CHAT_ID=
+      # - TELEGRAM_THREAD_ID=
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+```
+
+2. 在 postgres 容器创建 planka 数据库和用户：
+
+```bash
+docker exec -it postgres psql -U postgres
+CREATE DATABASE planka OWNER postgres;
+```
+
+3、启动
+
+```bash
+docker-compose -f planka.yaml up -d
+```
+
+4、配置 nginx 配置文件 /etc/nginx/conf.d/planka.conf
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name planka.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     planka.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+      proxy_pass http://127.0.0.1:1337;
+    }
+}
+```
+
+### Rsshub
+
+直接通过 Docker 安装运行：
+
+```bash
+docker run -d --name rsshub -p 1200:1200 diygod/rsshub
+```
+
+配置 nginx ：
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rsshub.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     rsshub.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:1200;
+    }
+}
+```
+
+### Kuma
+
+参考 [kuma](https://uptime.kuma.pet/)，使用 docker compose 部署，创建 uptime.yaml：
+
+```yaml
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ~/.uptime-kuma://app/data
+    ports:
+      - 3001:3001 
+    restart: always
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+```
+
+启动：
+
+```bash
+docker-compose -f uptime.yaml up -d
+```
+
+配置 nginx  配置文件 /etc/nginx/conf.d/uptime.conf ：
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name uptime.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     uptime.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3001;
+	      proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   Host $host;
+
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection "upgrade";
+    }
+}
+```
+
+升级
+
+```bash
+docker compose -f uptime.yaml down
+docker pull louislam/uptime-kuma:1
+docker-compose -f uptime.yaml up -d
+```
+
+### Hoarder
+
+A self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
+
+一款可自托管的书签应用程序，带有 AI智能功能。
+
+https://github.com/hoarder-app/hoarder
+
+1. 通过 docker-compose 安装，创建 hoarder.yaml：
+
+```yaml
+version: "3.8"
+services:
+  web:
+    image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}
+    container_name: hoarder
+    restart: unless-stopped
+    volumes:
+      - /data/hoarder://data
+    ports:
+      - 3002:3000
+    environment:
+      NEXTAUTH_SECRET: super_random_string
+      MEILI_MASTER_KEY: another_random_string
+      NEXTAUTH_URL: https://hoarder.chensoul.cc
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      # OPENAI_API_KEY: ...
+      DATA_DIR: /data
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+  meilisearch:
+    image: getmeili/meilisearch:v1.11.1
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilisearch://meili_data
+    networks:
+      - custom
+
+networks:
+  custom:
+    external: true
+    
+volumes:
+  meilisearch:
+```
+
+2. 启动
+
+```bash
+docker-compose -f hoarder.yaml up -d
+```
+
+3. 配置 nginx 配置文件 /etc/nginx/conf.d/hoarder.conf
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name hoarder.chensoul.cc;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen          443 ssl;
+    server_name     hoarder.chensoul.cc;
+
+    ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+    ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        proxy_pass http://127.0.0.1:3002;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        add_header X-Cache $upstream_cache_status;
+        add_header Cache-Control no-cache;
+        expires 12h;
+    }
+}
+```
+
+4. 使用 api 接口导入 url
+
+先创建 api-key。
+
+查询 memos 数据库（我使用的是 postgres ）中包含 url 链接的记录：
+
+```sql
+SELECT (regexp_matches(content, 'https?://\S+', 'g'))[1] AS url FROM memo where content like '%https:%'
+```
+
+将查询结果保存为 all_links.txt
+
+然后运行导入命令：
+
+```bash
+while IFS= read -r url; do
+    docker run --rm ghcr.io/hoarder-app/hoarder-cli:release --api-key "ak1_066c79d8a9d634d4b826_d99f3a2732cab381f7c9" --server-addr "https://hoarder.chensoul.cc/" bookmarks add --link "$url"
+done < all_links.txt
+```
+
+### Blinko
+
+```yaml
+services:
+  blinko:
+    image: blinkospace/blinko:latest
+    container_name: blinko
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_SECRET: my_ultra_secure_nextauth_secret
+      DATABASE_URL: postgresql://postgres:vps@027!@postgres:5432/blinko
+    restart: always
+    ports:
+      - "1111:1111"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://blinko:1111/"]
+      interval: 30s 
+      timeout: 10s   
+      retries: 5     
+      start_period: 30s 
+    networks:
+      - custom
+      
+networks:
+  custom:
+    external: true
+```
+
+创建数据库：
+
+```bash
+docker exec -it postgres psql -d postgres -U postgres
+CREATE DATABASE blinko;
+```
+
+启动服务：
+```bash
+docker-compose -f blinko.yaml up -d
+```
+
+配置 nginx 配置文件 /etc/nginx/conf.d/blinko.conf
+
+```nginx
+server {
+   listen 80;
+   listen [::]:80;
+   server_name blinko.chensoul.cc;
+
+   return 301 https://$host$request_uri;
+}
+
+server {
+   listen          443 ssl;
+   server_name     blinko.chensoul.cc;
+
+   ssl_certificate      /etc/nginx/ssl/fullchain.cer;
+   ssl_certificate_key  /etc/nginx/ssl/chensoul.cc.key;
+
+   ssl_session_cache    shared:SSL:1m;
+   ssl_session_timeout  5m;
+
+   ssl_ciphers  HIGH:!aNULL:!MD5;
+   ssl_prefer_server_ciphers  on;
+
+   location / {
+     proxy_pass http://127.0.0.1:1111;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header X-Forwarded-Proto $scheme;
+     proxy_set_header REMOTE-HOST $remote_addr;
+     add_header X-Cache $upstream_cache_status;
+     add_header Cache-Control no-cache;
+     expires 12h;
+   }
+}
+```
+
+### remark42 评论
+
+```yaml
+services:
+  remark42:
+    image: ghcr.io/umputun/remark42:latest
+    container_name: "remark42"
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      - REMARK_URL=https://comment.chensoul.cc
+      - DEBUG=true
+      - SECRET=H8qRx8F8UnypUqTU8zep8UJFH5KSm6DQHTGSCBwonilj5kSXpzzn5SfqIPAay1JQ
+      - EMOJI=true
+      - AUTH_ANON=true
+      - AUTH_GITHUB_CID=Ov23liht9yN7BA9etHPQ
+      - AUTH_GITHUB_CSEC=079c021e178d89b9fab1716a804bde4a15c8f845
+      - AUTH_GOOGLE_CID=965478940080-69m2afa4kb6hj91ehm1o01ecfv1qkpcc.apps.googleusercontent.com
+      - AUTH_GOOGLE_CSEC=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
+    volumes:
+      - /data/remark42:/srv/var
+```
+
+```bash
+docker-compose -f remark42.yaml up -d
+```
+
+## 服务升级
+
+使用Watchtower自动更新Docker镜像与容器
+
+```bash
+# 每天凌晨3点05分更新
+docker run -d \
+    --name watchtower \
+    --restart always \
+    -e TZ=Asia/Shanghai \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower \
+    --cleanup \
+    -s "0 5 3 * * *"
+```
+
+## 数据库备份和恢复
+
+/opt/vps-backup/scripts/backup_database.sh
+
+```bash
+#!/bin/bash
+
+CONTAINER_NAME="postgres"
+BACKUP_DIR="/opt/vps-backup/database"
+BACKUP_PREFIX=postgres
+BACKUP_POSTFIX=$(date +%Y%m%d_%H)
+DATABASES=("memos" "n8n" "umami" "blinko")
+
+mkdir -p $BACKUP_DIR
+
+for DB_NAME in "${DATABASES[@]}"
+do
+  BACKUP_FILE="${BACKUP_PREFIX}_${DB_NAME}_${BACKUP_POSTFIX}.sql"
+
+  echo "docker exec -it $CONTAINER_NAME pg_dump -U postgres $DB_NAME > $BACKUP_DIR/$BACKUP_FILE"
+  docker exec -it $CONTAINER_NAME pg_dump -U postgres $DB_NAME > $BACKUP_DIR/$BACKUP_FILE
+
+  if [ $? -eq 0 ]; then
+    echo "DB $DB_NAME backup success: $BACKUP_FILE"
+  else
+    echo "DB $DB_NAME backup fail"
+  fi
+done
+
+# 删除超过3天的备份文件
+find $BACKUP_DIR -name "${BACKUP_PREFIX}_*.sql" -type f -mtime +3 -exec rm -f {} \;
+
+cd /opt/vps-backup
+git pull
+git add .
+git commit -m "backup database for $BACKUP_POSTFIX"
+git push origin main
+```
+
+恢复：
+
+```bash
+docker cp /opt/vps-backup/database/postgres_memos_20251111_12.sql postgres:/tmp/
+docker exec -it postgres psql -U postgres -d memos -f /tmp/postgres_memos_20251111_12.sql
+
+docker cp /opt/vps-backup/database/postgres_umami_20251111_12.sql postgres:/tmp/
+docker exec -it postgres psql -U postgres -d umami -f /tmp/postgres_umami_20251111_12.sql
+```
+backup_n8n.sh：
+
+```bash
+#!/bin/bash
+
+DATE=$(date +%Y%m%d)
+BACKUP_DIR="/opt/vps-backup/n8n"
+mkdir -p $BACKUP_DIR/$DATE
+
+cd $BACKUP_DIR
+
+docker exec -u node -it n8n n8n export:workflow --backup --output=./$DATE
+docker cp n8n://home/node/$DATE ${BACKUP_DIR}
+
+cd ${BACKUP_DIR}/$DATE
+for file in `ls`; do
+    filename=$(cat "$file" | jq -r '.name')  
+    mv "$file" "$filename".json
+done
+
+docker exec -u node -it n8n n8n export:credentials --all --output=./credentials.json
+docker cp n8n://home/node/credentials.json ${BACKUP_DIR}
+
+# 删除超过3天的备份目录
+find $BACKUP_DIR -type d -mtime +3 -exec rm -rf {} \;
+
+cd /opt/vps-backup
+git pull
+git add .
+git commit -m "backup n8n files for $DATE"
+git push origin main
+```
+
+## 定时任务
+
+```bash
+8 9 * * * "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" > /dev/null
+*/20 * * * * /usr/sbin/ntpdate pool.ntp.org > /dev/null 2>&1
+0 */3 * * * sh /opt/vps-backup/scripts/backup_database.sh
+0 2 * * * sh /opt/vps-backup/scripts/backup_n8n.sh
+```
+
+## 参考文章
+
+- [我的 VPS 上运行了什么](https://www.jinhuaiyao.com/posts/what-is-running-on-my-vps/)
+
