@@ -1,0 +1,516 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Vibesafe4j 使用 Annotation Processor 实现（编译时代码生成） - Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"><meta property="og:title" content="Vibesafe4j 使用 Annotation Processor 实现（编译时代码生成）"><meta property="og:description" content="详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.chensoul.cc/posts/2025/11/13/vibesafe4j-annotation-processor-implementation/"><meta property="og:site_name" content="ChenSoul Blog"><meta property="og:image" content><meta itemprop=name content="Vibesafe4j 使用 Annotation Processor 实现（编译时代码生成）"><meta itemprop=description content="详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"><meta itemprop=datePublished content="2025-11-13T00:00:00+00:00"><meta itemprop=dateModified content="2025-11-13T00:00:00+00:00"><meta itemprop=wordCount content="1514"><meta itemprop=keywords content="Annotation Processor,Java编译时代码生成,vibesafe4j,注解处理器,编译时生成,Java代码生成,AI代码生成,Maven配置,Gradle配置"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Vibesafe4j 使用 Annotation Processor 实现（编译时代码生成）"><meta name=twitter:description content="详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"><meta name=twitter:image content><link rel=preconnect href=//fonts.loli.net crossorigin><link rel=dns-prefetch href=//fonts.loli.net><link rel=stylesheet href="https://fonts.loli.net/css?family=Open+Sans:400,400i,700"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=/css/style.css><link rel="shortcut icon" href=/favicon.ico></head><body class=body><div class="container container--outer"><header class=header><div class="container header__container"><div class="logo logo--mixed"><a class=logo__link href=/ title="ChenSoul Blog" rel=home><div class="logo__item logo__imagebox"><img class=logo__img src=/logo.svg loading=lazy alt="Site logo" width=60 height=60></div><div class="logo__item logo__text"><div class=logo__title>ChenSoul Blog</div><div class=logo__tagline>Java、Spring、Spring Boot、MicroServices、Architecture、Kubernetes、DevOps</div></div></a></div><nav class=menu><button class=menu__btn aria-haspopup=true aria-expanded=false tabindex=0>
+<span class=menu__btn-title tabindex=-1>菜单</span></button><ul class=menu__list><li class=menu__item><a class=menu__link href=/><span class=menu__text>首页</span></a></li><li class=menu__item><a class=menu__link href=/categories/><span class=menu__text>分类</span></a></li><li class=menu__item><a class=menu__link href=/tags/><span class=menu__text>标签</span></a></li><li class=menu__item><a class=menu__link href=/about/><span class=menu__text>关于</span></a></li></ul></nav></div></header><div class="wrapper flex"><div class=primary><main class=main role=main><article class=post><header class=post__header><h1 class=post__title>Vibesafe4j 使用 Annotation Processor 实现（编译时代码生成）</h1><div class="post__meta meta"><div class="meta__item-datetime meta__item"><svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0a14 14 0 110 28 1 1 0 010-28m0 3a3 3 0 100 22 3 3 0 000-22m1 4h-2v8.4l6.8 4.4L22 18l-6-3.8z"/></svg><time class=meta__text datetime=2025-11-13>2025-11-13</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2 1 2h8v11H0V2z"/></svg><span class=meta__text><a class=meta__link href=/categories/ai/ rel=category>Ai</a></span></div><div class="meta__item-tags meta__item"><svg class="meta__icon icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><span class=meta__text><a class=meta__link href=/tags/vibesafe4j/ rel=tag>Vibesafe4j</a>, <a class=meta__link href=/tags/annotation-processor/ rel=tag>Annotation-Processor</a>, <a class=meta__link href=/tags/java/ rel=tag>Java</a>, <a class=meta__link href=/tags/ai/ rel=tag>Ai</a>, <a class=meta__link href=/tags/code-generation/ rel=tag>Code-Generation</a></span></div></div></header><div class="content post__content clearfix"><p><a href=https://github.com/joshlong-attic/vibesafe4j target=_blank>Vibesafe4j</a> 默认在运行时生成代码，这种方式虽然灵活，但在生产环境中可能遇到一些问题：性能开销、调试困难、IDE 支持有限等。</p><p><strong>Annotation Processor（注解处理器）</strong> 可以在编译时生成代码，解决这些问题。</p><h3 id=编译时生成的优势>编译时生成的优势</h3><ul><li>⚡ <strong>性能更好</strong>：代码在编译时一次性生成，运行时无额外开销</li><li>🐛 <strong>易于调试</strong>：生成的源代码文件可以直接查看和调试</li><li>💡 <strong>IDE 友好</strong>：IDE 可以识别生成的代码，提供完整的代码补全</li><li>✅ <strong>提前发现问题</strong>：编译时就能发现错误，不用等到运行时</li><li>🚀 <strong>生产环境友好</strong>：无需运行时编译器，部署更简单</li></ul><h3 id=什么时候用>什么时候用？</h3><p>如果你需要：</p><ul><li>更好的性能表现</li><li>可以查看和审查生成的代码</li><li>完整的 IDE 支持</li><li>适合生产环境使用</li></ul><p>那么编译时生成是更好的选择。</p><h2 id=什么是-annotation-processor>什么是 Annotation Processor？</h2><p>虽然 vibesafe4j 的当前实现使用运行时动态编译，但我们可以改用 <strong>Annotation Processor（注解处理器）</strong> 在编译时生成代码。Annotation Processor 是 Java 编译器的一个插件机制，允许在编译阶段处理注解并生成新的源代码文件。</p><p>这种方式相比运行时编译有以下优势：</p><h3 id=annotation-processor-的优势>Annotation Processor 的优势</h3><ol><li><strong>编译时生成</strong>：代码在编译阶段生成，无需运行时编译器</li><li><strong>性能更好</strong>：无需运行时编译和类加载开销</li><li><strong>可调试性</strong>：生成的源代码文件可以直接查看和调试</li><li><strong>IDE 支持</strong>：更好的 IDE 集成和代码补全</li><li><strong>类型安全</strong>：编译时就能发现类型错误</li><li><strong>无运行时依赖</strong>：不需要 <code>javac</code> 在运行时可用</li></ol><h3 id=实现架构设计>实现架构设计</h3><h4 id=方案一编译时调用-ai推荐用于开发环境>方案一：编译时调用 AI（推荐用于开发环境）</h4><p>在编译时直接调用 AI API 生成代码。这需要 Annotation Processor 能够进行网络请求。</p><h4 id=方案二预生成代码推荐用于生产环境>方案二：预生成代码（推荐用于生产环境）</h4><p>使用 Gradle/Maven 插件在编译前调用 AI 生成代码，然后 Annotation Processor 读取生成的代码。</p><h2 id=项目模块结构>项目模块结构</h2><p>如果采用 Annotation Processor 方式，建议将项目拆分为两个模块：</p><h3 id=模块划分>模块划分</h3><ol><li><p><strong><code>vibesafe4j-annotations</code></strong>（注解模块）</p><ul><li>包含 <code>@Func</code> 注解定义</li><li>轻量级，只包含注解接口</li><li>用户项目需要依赖此模块</li></ul></li><li><p><strong><code>vibesafe4j-processor</code></strong>（处理器模块）</p><ul><li>包含 Annotation Processor 实现</li><li>包含 AI 代码生成器</li><li>只在编译时使用，不会打包到最终应用</li></ul></li></ol><p>这种模块化设计的优势：</p><ul><li><strong>依赖分离</strong>：注解模块轻量，处理器模块只在编译时需要</li><li><strong>性能优化</strong>：运行时不需要加载 Processor 相关代码</li><li><strong>清晰职责</strong>：注解和处理器职责分离，便于维护</li></ul><blockquote><p><strong>注意</strong>：如果项目是单一模块，也可以将所有代码放在一个模块中，但需要确保 Processor 不会被打包到运行时依赖中。</p></blockquote><h2 id=完整实现代码>完整实现代码</h2><h3 id=1-修改-func-注解支持编译时处理>1. 修改 <code>@Func</code> 注解（支持编译时处理）</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.lang.annotation.*;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Target</span>({ ElementType.<span style=color:#a6e22e>TYPE</span>, ElementType.<span style=color:#a6e22e>METHOD</span> })
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Retention</span>(RetentionPolicy.<span style=color:#a6e22e>SOURCE</span>)  <span style=color:#75715e>// 改为 SOURCE，编译时处理</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Documented</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#a6e22e>@interface</span> Func {
+</span></span><span style=display:flex><span>    String <span style=color:#a6e22e>value</span>() <span style=color:#66d9ef>default</span> <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 是否在编译时生成实现
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 如果为 false，则跳过该方法的代码生成
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>generate</span>() <span style=color:#66d9ef>default</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=2-创建-annotation-processor>2. 创建 Annotation Processor</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j.processor;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> com.google.auto.service.AutoService;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> vibesafe4j.Func;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.annotation.processing.*;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.SourceVersion;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.element.*;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.type.TypeMirror;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.tools.Diagnostic;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.tools.JavaFileObject;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.Writer;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.*;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Annotation Processor for @Func annotation
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * 在编译时扫描 @Func 注解并生成实现类
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@SupportedAnnotationTypes</span>(<span style=color:#e6db74>&#34;vibesafe4j.Func&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@SupportedSourceVersion</span>(SourceVersion.<span style=color:#a6e22e>RELEASE_17</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@AutoService</span>(Processor.<span style=color:#a6e22e>class</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FuncAnnotationProcessor</span> <span style=color:#66d9ef>extends</span> AbstractProcessor {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Messager messager;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Filer filer;
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// AI 客户端接口（需要在编译时可用）</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> AiCodeGenerator aiCodeGenerator;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>synchronized</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>init</span>(ProcessingEnvironment processingEnv) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>super</span>.<span style=color:#a6e22e>init</span>(processingEnv);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>messager</span> <span style=color:#f92672>=</span> processingEnv.<span style=color:#a6e22e>getMessager</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>filer</span> <span style=color:#f92672>=</span> processingEnv.<span style=color:#a6e22e>getFiler</span>();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 初始化 AI 代码生成器</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 可以通过系统属性或配置文件配置 AI API</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>aiCodeGenerator</span> <span style=color:#f92672>=</span> createAiCodeGenerator();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>process</span>(Set<span style=color:#f92672>&lt;?</span> <span style=color:#66d9ef>extends</span> TypeElement<span style=color:#f92672>&gt;</span> annotations, 
+</span></span><span style=display:flex><span>                          RoundEnvironment roundEnv) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (roundEnv.<span style=color:#a6e22e>processingOver</span>()) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 按接口分组处理方法</span>
+</span></span><span style=display:flex><span>        Map<span style=color:#f92672>&lt;</span>TypeElement, List<span style=color:#f92672>&lt;</span>ExecutableElement<span style=color:#f92672>&gt;&gt;</span> interfaceMethods <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> HashMap<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 扫描所有带 @Func 注解的方法</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Element element : roundEnv.<span style=color:#a6e22e>getElementsAnnotatedWith</span>(Func.<span style=color:#a6e22e>class</span>)) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (element.<span style=color:#a6e22e>getKind</span>() <span style=color:#f92672>==</span> ElementKind.<span style=color:#a6e22e>METHOD</span>) {
+</span></span><span style=display:flex><span>                ExecutableElement method <span style=color:#f92672>=</span> (ExecutableElement) element;
+</span></span><span style=display:flex><span>                TypeElement enclosingInterface <span style=color:#f92672>=</span> (TypeElement) method.<span style=color:#a6e22e>getEnclosingElement</span>();
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                Func funcAnnotation <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>getAnnotation</span>(Func.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> (funcAnnotation.<span style=color:#a6e22e>generate</span>()) {
+</span></span><span style=display:flex><span>                    interfaceMethods.<span style=color:#a6e22e>computeIfAbsent</span>(enclosingInterface, k <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>new</span> ArrayList<span style=color:#f92672>&lt;&gt;</span>())
+</span></span><span style=display:flex><span>                                   .<span style=color:#a6e22e>add</span>(method);
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 为每个接口生成实现类</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Map.<span style=color:#a6e22e>Entry</span><span style=color:#f92672>&lt;</span>TypeElement, List<span style=color:#f92672>&lt;</span>ExecutableElement<span style=color:#f92672>&gt;&gt;</span> entry : interfaceMethods.<span style=color:#a6e22e>entrySet</span>()) {
+</span></span><span style=display:flex><span>            TypeElement interfaceElement <span style=color:#f92672>=</span> entry.<span style=color:#a6e22e>getKey</span>();
+</span></span><span style=display:flex><span>            List<span style=color:#f92672>&lt;</span>ExecutableElement<span style=color:#f92672>&gt;</span> methods <span style=color:#f92672>=</span> entry.<span style=color:#a6e22e>getValue</span>();
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                generateImplementation(interfaceElement, methods);
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (IOException e) {
+</span></span><span style=display:flex><span>                messager.<span style=color:#a6e22e>printMessage</span>(Diagnostic.<span style=color:#a6e22e>Kind</span>.<span style=color:#a6e22e>ERROR</span>, 
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;Failed to generate implementation for &#34;</span> <span style=color:#f92672>+</span> interfaceElement.<span style=color:#a6e22e>getQualifiedName</span>() <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;: &#34;</span> <span style=color:#f92672>+</span> e.<span style=color:#a6e22e>getMessage</span>());
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 生成接口实现类
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>generateImplementation</span>(TypeElement interfaceElement, 
+</span></span><span style=display:flex><span>                                       List<span style=color:#f92672>&lt;</span>ExecutableElement<span style=color:#f92672>&gt;</span> methods) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>        String packageName <span style=color:#f92672>=</span> getPackageName(interfaceElement);
+</span></span><span style=display:flex><span>        String interfaceName <span style=color:#f92672>=</span> interfaceElement.<span style=color:#a6e22e>getSimpleName</span>().<span style=color:#a6e22e>toString</span>();
+</span></span><span style=display:flex><span>        String implClassName <span style=color:#f92672>=</span> interfaceName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;Impl&#34;</span>;
+</span></span><span style=display:flex><span>        String qualifiedImplName <span style=color:#f92672>=</span> packageName.<span style=color:#a6e22e>isEmpty</span>() 
+</span></span><span style=display:flex><span>            <span style=color:#f92672>?</span> implClassName 
+</span></span><span style=display:flex><span>            : packageName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;.&#34;</span> <span style=color:#f92672>+</span> implClassName;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 生成源代码</span>
+</span></span><span style=display:flex><span>        StringBuilder sourceCode <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> StringBuilder();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Package 声明</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>packageName.<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;package &#34;</span>).<span style=color:#a6e22e>append</span>(packageName).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;;\n\n&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 导入语句</span>
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;import java.util.*;\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;import java.time.*;\n\n&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 类声明</span>
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;/**\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; * Auto-generated implementation of &#34;</span>).<span style=color:#a6e22e>append</span>(interfaceName).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; * Generated by vibesafe4j Annotation Processor\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; */\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;public class &#34;</span>).<span style=color:#a6e22e>append</span>(implClassName)
+</span></span><span style=display:flex><span>                  .<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; implements &#34;</span>).<span style=color:#a6e22e>append</span>(interfaceName).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; {\n\n&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 生成每个方法的实现</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (ExecutableElement method : methods) {
+</span></span><span style=display:flex><span>            generateMethodImplementation(sourceCode, method);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;}\n&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 写入文件</span>
+</span></span><span style=display:flex><span>        JavaFileObject sourceFile <span style=color:#f92672>=</span> filer.<span style=color:#a6e22e>createSourceFile</span>(qualifiedImplName, interfaceElement);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> (Writer writer <span style=color:#f92672>=</span> sourceFile.<span style=color:#a6e22e>openWriter</span>()) {
+</span></span><span style=display:flex><span>            writer.<span style=color:#a6e22e>write</span>(sourceCode.<span style=color:#a6e22e>toString</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        messager.<span style=color:#a6e22e>printMessage</span>(Diagnostic.<span style=color:#a6e22e>Kind</span>.<span style=color:#a6e22e>NOTE</span>, 
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;Generated implementation: &#34;</span> <span style=color:#f92672>+</span> qualifiedImplName);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 生成单个方法的实现
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>generateMethodImplementation</span>(StringBuilder sourceCode, 
+</span></span><span style=display:flex><span>                                             ExecutableElement method) {
+</span></span><span style=display:flex><span>        Func funcAnnotation <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>getAnnotation</span>(Func.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>        String prompt <span style=color:#f92672>=</span> buildPrompt(method, funcAnnotation.<span style=color:#a6e22e>value</span>());
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 调用 AI 生成代码</span>
+</span></span><span style=display:flex><span>        String methodBody <span style=color:#f92672>=</span> aiCodeGenerator.<span style=color:#a6e22e>generateMethodBody</span>(prompt, method);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 方法签名</span>
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;    @Override\n&#34;</span>);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;    public &#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 返回类型</span>
+</span></span><span style=display:flex><span>        TypeMirror returnType <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>getReturnType</span>();
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(getTypeName(returnType)).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; &#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 方法名</span>
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(method.<span style=color:#a6e22e>getSimpleName</span>()).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;(&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 参数列表</span>
+</span></span><span style=display:flex><span>        List<span style=color:#f92672>&lt;?</span> <span style=color:#66d9ef>extends</span> VariableElement<span style=color:#f92672>&gt;</span> parameters <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>getParameters</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0; i <span style=color:#f92672>&lt;</span> parameters.<span style=color:#a6e22e>size</span>(); i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>            VariableElement param <span style=color:#f92672>=</span> parameters.<span style=color:#a6e22e>get</span>(i);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (i <span style=color:#f92672>&gt;</span> 0) {
+</span></span><span style=display:flex><span>                sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;, &#34;</span>);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            sourceCode.<span style=color:#a6e22e>append</span>(getTypeName(param.<span style=color:#a6e22e>asType</span>()))
+</span></span><span style=display:flex><span>                      .<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; &#34;</span>)
+</span></span><span style=display:flex><span>                      .<span style=color:#a6e22e>append</span>(param.<span style=color:#a6e22e>getSimpleName</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;) {\n&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 方法体（AI 生成）</span>
+</span></span><span style=display:flex><span>        String indentedBody <span style=color:#f92672>=</span> indentMethodBody(methodBody);
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(indentedBody);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        sourceCode.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;    }\n\n&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 构建发送给 AI 的 prompt
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>buildPrompt</span>(ExecutableElement method, String annotationValue) {
+</span></span><span style=display:flex><span>        StringBuilder prompt <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> StringBuilder();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;Write a valid Java method body that implements the following signature:\n\n&#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;Method signature: &#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(getTypeName(method.<span style=color:#a6e22e>getReturnType</span>())).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; &#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(method.<span style=color:#a6e22e>getSimpleName</span>()).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;(&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        List<span style=color:#f92672>&lt;?</span> <span style=color:#66d9ef>extends</span> VariableElement<span style=color:#f92672>&gt;</span> params <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>getParameters</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0; i <span style=color:#f92672>&lt;</span> params.<span style=color:#a6e22e>size</span>(); i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (i <span style=color:#f92672>&gt;</span> 0) prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;, &#34;</span>);
+</span></span><span style=display:flex><span>            VariableElement param <span style=color:#f92672>=</span> params.<span style=color:#a6e22e>get</span>(i);
+</span></span><span style=display:flex><span>            prompt.<span style=color:#a6e22e>append</span>(getTypeName(param.<span style=color:#a6e22e>asType</span>()))
+</span></span><span style=display:flex><span>                  .<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34; &#34;</span>)
+</span></span><span style=display:flex><span>                  .<span style=color:#a6e22e>append</span>(param.<span style=color:#a6e22e>getSimpleName</span>());
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;)\n\n&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>annotationValue.<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;Requirements:\n&#34;</span>);
+</span></span><span style=display:flex><span>            prompt.<span style=color:#a6e22e>append</span>(annotationValue).<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;\n\n&#34;</span>);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;Requirements:\n&#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;- Return only the method body code\n&#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;- Do not include the method signature\n&#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;- Do not include any comments or explanations\n&#34;</span>);
+</span></span><span style=display:flex><span>        prompt.<span style=color:#a6e22e>append</span>(<span style=color:#e6db74>&#34;- Use proper Java syntax\n&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> prompt.<span style=color:#a6e22e>toString</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 创建 AI 代码生成器
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 可以通过系统属性配置
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> AiCodeGenerator <span style=color:#a6e22e>createAiCodeGenerator</span>() {
+</span></span><span style=display:flex><span>        String apiKey <span style=color:#f92672>=</span> System.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;vibesafe4j.ai.apiKey&#34;</span>);
+</span></span><span style=display:flex><span>        String apiUrl <span style=color:#f92672>=</span> System.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;vibesafe4j.ai.apiUrl&#34;</span>, 
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;https://api.openai.com/v1/chat/completions&#34;</span>);
+</span></span><span style=display:flex><span>        String model <span style=color:#f92672>=</span> System.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;vibesafe4j.ai.model&#34;</span>, <span style=color:#e6db74>&#34;gpt-4&#34;</span>);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (apiKey <span style=color:#f92672>==</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>||</span> apiKey.<span style=color:#a6e22e>isEmpty</span>()) {
+</span></span><span style=display:flex><span>            messager.<span style=color:#a6e22e>printMessage</span>(Diagnostic.<span style=color:#a6e22e>Kind</span>.<span style=color:#a6e22e>WARNING</span>,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;No AI API key configured. Using mock generator. &#34;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;Set -Avibesafe4j.ai.apiKey=your-key to enable AI code generation.&#34;</span>);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> MockAiCodeGenerator();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> OpenAiCodeGenerator(apiKey, apiUrl, model);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 辅助方法</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>getPackageName</span>(TypeElement typeElement) {
+</span></span><span style=display:flex><span>        Element packageElement <span style=color:#f92672>=</span> typeElement.<span style=color:#a6e22e>getEnclosingElement</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> (packageElement <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>&amp;&amp;</span> packageElement.<span style=color:#a6e22e>getKind</span>() <span style=color:#f92672>!=</span> ElementKind.<span style=color:#a6e22e>PACKAGE</span>) {
+</span></span><span style=display:flex><span>            packageElement <span style=color:#f92672>=</span> packageElement.<span style=color:#a6e22e>getEnclosingElement</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> packageElement <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>?</span> packageElement.<span style=color:#a6e22e>toString</span>() : <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>getTypeName</span>(TypeMirror type) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> type.<span style=color:#a6e22e>toString</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>indentMethodBody</span>(String body) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> body.<span style=color:#a6e22e>lines</span>()
+</span></span><span style=display:flex><span>                   .<span style=color:#a6e22e>map</span>(line <span style=color:#f92672>-&gt;</span> <span style=color:#e6db74>&#34;        &#34;</span> <span style=color:#f92672>+</span> line)
+</span></span><span style=display:flex><span>                   .<span style=color:#a6e22e>reduce</span>((a, b) <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;\n&#34;</span> <span style=color:#f92672>+</span> b)
+</span></span><span style=display:flex><span>                   .<span style=color:#a6e22e>orElse</span>(<span style=color:#e6db74>&#34;&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=3-ai-代码生成器接口和实现>3. AI 代码生成器接口和实现</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j.processor;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.element.ExecutableElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * AI 代码生成器接口
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>AiCodeGenerator</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     * 根据 prompt 和方法签名生成方法体代码
+</span></span></span><span style=display:flex><span><span style=color:#75715e>     */</span>
+</span></span><span style=display:flex><span>    String <span style=color:#a6e22e>generateMethodBody</span>(String prompt, ExecutableElement method);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j.processor;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.element.ExecutableElement;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.net.URI;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.net.http.HttpClient;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.net.http.HttpRequest;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.net.http.HttpResponse;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.time.Duration;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * OpenAI API 实现
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>OpenAiCodeGenerator</span> <span style=color:#66d9ef>implements</span> AiCodeGenerator {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> String apiKey;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> String apiUrl;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> String model;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>final</span> HttpClient httpClient;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>OpenAiCodeGenerator</span>(String apiKey, String apiUrl, String model) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>apiKey</span> <span style=color:#f92672>=</span> apiKey;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>apiUrl</span> <span style=color:#f92672>=</span> apiUrl;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>model</span> <span style=color:#f92672>=</span> model;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>httpClient</span> <span style=color:#f92672>=</span> HttpClient.<span style=color:#a6e22e>newBuilder</span>()
+</span></span><span style=display:flex><span>            .<span style=color:#a6e22e>connectTimeout</span>(Duration.<span style=color:#a6e22e>ofSeconds</span>(30))
+</span></span><span style=display:flex><span>            .<span style=color:#a6e22e>build</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>generateMethodBody</span>(String prompt, ExecutableElement method) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            String requestBody <span style=color:#f92672>=</span> buildRequestBody(prompt);
+</span></span><span style=display:flex><span>            HttpRequest request <span style=color:#f92672>=</span> HttpRequest.<span style=color:#a6e22e>newBuilder</span>()
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>uri</span>(URI.<span style=color:#a6e22e>create</span>(apiUrl))
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>header</span>(<span style=color:#e6db74>&#34;Content-Type&#34;</span>, <span style=color:#e6db74>&#34;application/json&#34;</span>)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>header</span>(<span style=color:#e6db74>&#34;Authorization&#34;</span>, <span style=color:#e6db74>&#34;Bearer &#34;</span> <span style=color:#f92672>+</span> apiKey)
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>POST</span>(HttpRequest.<span style=color:#a6e22e>BodyPublishers</span>.<span style=color:#a6e22e>ofString</span>(requestBody))
+</span></span><span style=display:flex><span>                .<span style=color:#a6e22e>build</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            HttpResponse<span style=color:#f92672>&lt;</span>String<span style=color:#f92672>&gt;</span> response <span style=color:#f92672>=</span> httpClient.<span style=color:#a6e22e>send</span>(
+</span></span><span style=display:flex><span>                request, HttpResponse.<span style=color:#a6e22e>BodyHandlers</span>.<span style=color:#a6e22e>ofString</span>());
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> parseResponse(response.<span style=color:#a6e22e>body</span>());
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(<span style=color:#e6db74>&#34;Failed to generate code from AI&#34;</span>, e);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>buildRequestBody</span>(String prompt) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#34;model&#34;: &#34;%s&#34;,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#34;messages&#34;: [
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        &#34;role&#34;: &#34;system&#34;,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        &#34;content&#34;: &#34;You are a Java code generator. Return only valid Java code, no explanations.&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    },
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    {
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        &#34;role&#34;: &#34;user&#34;,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        &#34;content&#34;: &#34;%s&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                ],
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#34;temperature&#34;: 0.3,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#34;max_tokens&#34;: 1000
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            }
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>            &#34;&#34;&#34;</span>, model, prompt.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>&#34;\&#34;&#34;</span>, <span style=color:#e6db74>&#34;\\\&#34;&#34;</span>));
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String <span style=color:#a6e22e>parseResponse</span>(String jsonResponse) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 简化实现，实际应该使用 JSON 解析库</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> start <span style=color:#f92672>=</span> jsonResponse.<span style=color:#a6e22e>indexOf</span>(<span style=color:#e6db74>&#34;\&#34;content\&#34;:\&#34;&#34;</span>) <span style=color:#f92672>+</span> 11;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> end <span style=color:#f92672>=</span> jsonResponse.<span style=color:#a6e22e>indexOf</span>(<span style=color:#e6db74>&#34;\&#34;&#34;</span>, start);
+</span></span><span style=display:flex><span>        String content <span style=color:#f92672>=</span> jsonResponse.<span style=color:#a6e22e>substring</span>(start, end);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> content.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>&#34;\\n&#34;</span>, <span style=color:#e6db74>&#34;\n&#34;</span>).<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>&#34;\\\&#34;&#34;</span>, <span style=color:#e6db74>&#34;\&#34;&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j.processor;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> javax.lang.model.element.ExecutableElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Mock 实现，用于测试或当 AI API 不可用时
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MockAiCodeGenerator</span> <span style=color:#66d9ef>implements</span> AiCodeGenerator {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>generateMethodBody</span>(String prompt, ExecutableElement method) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 返回一个简单的实现</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;throw new UnsupportedOperationException(\&#34;Method not implemented\&#34;);&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=4-maven-配置>4. Maven 配置</h3><blockquote><p><strong>注意</strong>：<code>vibesafe4j-annotations</code> 和 <code>vibesafe4j-processor</code> 是推荐的模块化结构。如果项目是单一模块，可以将所有代码放在一个模块中，并相应调整依赖配置。</p></blockquote><p><strong>推荐的模块化结构：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;project&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>&lt;!-- ... --&gt;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;dependencies&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- Annotation Processor 依赖 --&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;dependency&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;groupId&gt;</span>com.google.auto.service<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;artifactId&gt;</span>auto-service<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;version&gt;</span>1.1.1<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;optional&gt;</span>true<span style=color:#f92672>&lt;/optional&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;/dependency&gt;</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>&lt;!-- 注解模块：包含 @Func 注解定义 --&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;dependency&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;groupId&gt;</span>vibesafe4j<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;artifactId&gt;</span>vibesafe4j-annotations<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;version&gt;</span>1.0.0<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;/dependency&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;/dependencies&gt;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;build&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;plugins&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;plugin&gt;</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&lt;groupId&gt;</span>org.apache.maven.plugins<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&lt;artifactId&gt;</span>maven-compiler-plugin<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&lt;version&gt;</span>3.11.0<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&lt;configuration&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;source&gt;</span>17<span style=color:#f92672>&lt;/source&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;target&gt;</span>17<span style=color:#f92672>&lt;/target&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;annotationProcessorPaths&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#75715e>&lt;!-- Processor 模块：包含 Annotation Processor 实现 --&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;path&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;groupId&gt;</span>vibesafe4j<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;artifactId&gt;</span>vibesafe4j-processor<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;version&gt;</span>1.0.0<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;/path&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;path&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;groupId&gt;</span>com.google.auto.service<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;artifactId&gt;</span>auto-service<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>&lt;version&gt;</span>1.1.1<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;/path&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;/annotationProcessorPaths&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;compilerArgs&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#75715e>&lt;!-- 传递 AI API 配置 --&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;arg&gt;</span>-Avibesafe4j.ai.apiKey=${VIBESAFE4J_API_KEY}<span style=color:#f92672>&lt;/arg&gt;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&lt;arg&gt;</span>-Avibesafe4j.ai.model=${VIBESAFE4J_MODEL:gpt-4}<span style=color:#f92672>&lt;/arg&gt;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>&lt;/compilerArgs&gt;</span>
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&lt;/configuration&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>&lt;/plugin&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;/plugins&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;/build&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&lt;/project&gt;</span>
+</span></span></code></pre></div><p><strong>模块说明：</strong></p><ul><li><strong><code>vibesafe4j-annotations</code></strong>：包含 <code>@Func</code> 注解定义，运行时不需要，但编译时需要</li><li><strong><code>vibesafe4j-processor</code></strong>：包含 Annotation Processor 实现，只在编译时使用，不会打包到最终应用中</li></ul><p><strong>如果使用单一模块：</strong></p><p>如果项目是单一模块结构，可以将 Processor 配置为同一个 artifact：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;annotationProcessorPaths&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;path&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;groupId&gt;</span>vibesafe4j<span style=color:#f92672>&lt;/groupId&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;artifactId&gt;</span>vibesafe4j<span style=color:#f92672>&lt;/artifactId&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;version&gt;</span>1.0.0<span style=color:#f92672>&lt;/version&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>&lt;/path&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&lt;/annotationProcessorPaths&gt;</span>
+</span></span></code></pre></div><h3 id=5-gradle-配置>5. Gradle 配置</h3><p><strong>推荐的模块化结构：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gradle data-lang=gradle><span style=display:flex><span>dependencies <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Annotation Processor
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    annotationProcessor <span style=color:#e6db74>&#39;com.google.auto.service:auto-service:1.1.1&#39;</span>
+</span></span><span style=display:flex><span>    compileOnly <span style=color:#e6db74>&#39;com.google.auto.service:auto-service:1.1.1&#39;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// vibesafe4j 注解模块
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    implementation <span style=color:#e6db74>&#39;vibesafe4j:vibesafe4j-annotations:1.0.0&#39;</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// vibesafe4j Processor 模块（只在编译时使用）
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    annotationProcessor <span style=color:#e6db74>&#39;vibesafe4j:vibesafe4j-processor:1.0.0&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>tasks<span style=color:#f92672>.</span><span style=color:#a6e22e>withType</span><span style=color:#f92672>(</span>JavaCompile<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    options<span style=color:#f92672>.</span><span style=color:#a6e22e>compilerArgs</span> <span style=color:#f92672>+=</span> <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;-Avibesafe4j.ai.apiKey=&#39;</span> <span style=color:#f92672>+</span> <span style=color:#f92672>(</span>System<span style=color:#f92672>.</span><span style=color:#a6e22e>getenv</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;VIBESAFE4J_API_KEY&#39;</span><span style=color:#f92672>)</span> <span style=color:#f92672>?:</span> <span style=color:#e6db74>&#39;&#39;</span><span style=color:#f92672>),</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;-Avibesafe4j.ai.model=&#39;</span> <span style=color:#f92672>+</span> <span style=color:#f92672>(</span>System<span style=color:#f92672>.</span><span style=color:#a6e22e>getenv</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;VIBESAFE4J_MODEL&#39;</span><span style=color:#f92672>)</span> <span style=color:#f92672>?:</span> <span style=color:#e6db74>&#39;gpt-4&#39;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p><strong>如果使用单一模块：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gradle data-lang=gradle><span style=display:flex><span>dependencies <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    annotationProcessor <span style=color:#e6db74>&#39;com.google.auto.service:auto-service:1.1.1&#39;</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 单一模块时，使用同一个 artifact
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    implementation <span style=color:#e6db74>&#39;vibesafe4j:vibesafe4j:1.0.0&#39;</span>
+</span></span><span style=display:flex><span>    annotationProcessor <span style=color:#e6db74>&#39;vibesafe4j:vibesafe4j:1.0.0&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h3 id=6-使用示例>6. 使用示例</h3><p>接口定义保持不变：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> vibesafe4j.Func;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>Greeting</span> {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Func</span>(<span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        return a greeting String
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &gt;&gt;&gt; greet(&#34;Alice&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#39;Hello, Alice!&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>)
+</span></span><span style=display:flex><span>    String <span style=color:#a6e22e>greet</span>(String name);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>编译后会自动生成 <code>GreetingImpl.java</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.example;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Auto-generated implementation of Greeting
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * Generated by vibesafe4j Annotation Processor
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GreetingImpl</span> <span style=color:#66d9ef>implements</span> Greeting {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>greet</span>(String name) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Hello, &#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;!&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=7-spring-boot-集成简化版>7. Spring Boot 集成（简化版）</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> vibesafe4j.spring;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> org.springframework.context.annotation.Configuration;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> org.springframework.context.annotation.Import;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * 自动配置：扫描生成的实现类并注册为 Bean
+</span></span></span><span style=display:flex><span><span style=color:#75715e> */</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Configuration</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@ConditionalOnClass</span>(name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vibesafe4j.Func&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Vibesafe4jAutoConfiguration</span> {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 由于实现类已经在编译时生成，可以直接扫描</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Spring 会自动发现并注册这些类</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=两种方案对比>两种方案对比</h2><table><thead><tr><th>特性</th><th>运行时编译（当前）</th><th>Annotation Processor（编译时）</th></tr></thead><tbody><tr><td><strong>代码生成时机</strong></td><td>运行时</td><td>编译时</td></tr><tr><td><strong>性能</strong></td><td>首次调用较慢</td><td>编译时一次性生成</td></tr><tr><td><strong>运行时依赖</strong></td><td>需要 javac</td><td>无需编译器</td></tr><tr><td><strong>可调试性</strong></td><td>难以调试</td><td>可查看源代码</td></tr><tr><td><strong>IDE 支持</strong></td><td>有限</td><td>完整支持</td></tr><tr><td><strong>AI 调用</strong></td><td>运行时调用</td><td>编译时调用</td></tr><tr><td><strong>离线编译</strong></td><td>支持</td><td>需要网络（除非预生成）</td></tr><tr><td><strong>错误发现</strong></td><td>运行时发现</td><td>编译时发现</td></tr></tbody></table><h2 id=混合方案预生成--annotation-processor>混合方案：预生成 + Annotation Processor</h2><p>结合两种方式的优势：</p><ol><li><strong>开发阶段</strong>：使用 Gradle/Maven 插件在编译前调用 AI 生成代码</li><li><strong>Annotation Processor</strong>：读取预生成的代码并生成实现类</li><li><strong>生产环境</strong>：使用预生成的代码，无需 AI API</li></ol><h3 id=gradle-插件示例>Gradle 插件示例</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-gradle data-lang=gradle><span style=display:flex><span><span style=color:#75715e>// build.gradle
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>plugins <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    id <span style=color:#e6db74>&#39;java&#39;</span>
+</span></span><span style=display:flex><span>    id <span style=color:#e6db74>&#39;vibesafe4j&#39;</span> version <span style=color:#e6db74>&#39;1.0.0&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>vibesafe4j <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    apiKey <span style=color:#f92672>=</span> project<span style=color:#f92672>.</span><span style=color:#a6e22e>findProperty</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;vibesafe4j.apiKey&#39;</span><span style=color:#f92672>)</span> <span style=color:#f92672>?:</span> System<span style=color:#f92672>.</span><span style=color:#a6e22e>getenv</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#39;VIBESAFE4J_API_KEY&#39;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>    model <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;gpt-4&#39;</span>
+</span></span><span style=display:flex><span>    outputDir <span style=color:#f92672>=</span> file<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;src/generated/vibesafe4j&#39;</span><span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>sourceSets <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    main <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>        java <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>            srcDirs <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#39;src/generated/vibesafe4j&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><h2 id=实现总结>实现总结</h2><p>使用 Annotation Processor 实现 vibesafe4j 的主要改动：</p><ol><li><strong>注解保留策略</strong>：<code>@Retention(RetentionPolicy.SOURCE)</code></li><li><strong>创建 Processor</strong>：实现 <code>AbstractProcessor</code> 接口</li><li><strong>代码生成</strong>：使用 <code>Filer.createSourceFile()</code> 生成源代码</li><li><strong>AI 集成</strong>：在编译时调用 AI API（或使用预生成代码）</li><li><strong>构建配置</strong>：配置 Annotation Processor 路径和参数</li></ol><p>这种方式更适合生产环境，提供了更好的性能和可维护性。</p><h2 id=常见问题faq>常见问题（FAQ）</h2><p><strong>Q: Annotation Processor 和运行时编译有什么区别？</strong><br>A: Annotation Processor 在编译时生成代码，性能更好，可调试性强；运行时编译在程序运行时生成代码，更灵活但性能较差。</p><p><strong>Q: 如何在编译时调用 AI API？</strong><br>A: 可以在 Annotation Processor 中使用 HTTP 客户端调用 AI API，或使用预生成代码方案。</p><p><strong>Q: <code>vibesafe4j-annotations</code> 和 <code>vibesafe4j-processor</code> 是两个独立的项目吗？</strong><br>A: 这是推荐的模块化结构。<code>vibesafe4j-annotations</code> 包含注解定义，<code>vibesafe4j-processor</code> 包含处理器实现。如果项目是单一模块，也可以将两者合并，但需要确保 Processor 不会被打包到运行时依赖中。</p><p><strong>Q: 生成的代码在哪里？</strong><br>A: 生成的代码通常在 <code>target/generated-sources/annotations</code>（Maven）或 <code>build/generated/sources/annotationProcessor</code>（Gradle）目录。</p><p><strong>Q: IDE 能识别生成的代码吗？</strong><br>A: 可以，现代 IDE（IntelliJ IDEA、Eclipse）都能自动识别和索引生成的代码。</p><p><strong>Q: 如何调试 Annotation Processor？</strong><br>A: 可以使用 <code>messager.printMessage()</code> 输出调试信息，或使用 IDE 的远程调试功能。</p><h2 id=相关文章>相关文章</h2><ul><li><a href=/posts/2025/11/13/vibesafe4j-introduction/>Vibesafe4j 详细介绍</a> - 了解 Vibesafe4j 框架基础</li><li><a href=/posts/2025/09/18/spring-ai/>Spring AI 介绍</a> - Spring AI 框架使用指南</li></ul><h2 id=参考资源>参考资源</h2><ul><li><a href=https://github.com/joshlong-attic/vibesafe4j target=_blank>Vibesafe4j 项目仓库</a> - GitHub 源代码和示例</li><li><a href=https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/package-summary.html target=_blank>Java Annotation Processor 官方文档</a> - Oracle 官方文档</li><li><a href=https://github.com/google/auto/tree/main/service target=_blank>Google Auto Service</a> - Auto Service 库文档</li><li><a href=https://projectlombok.org/ target=_blank>Lombok 实现参考</a> - 优秀的 Annotation Processor 实现示例</li><li><a href=https://www.baeldung.com/java-annotation-processing-builder target=_blank>Java Annotation Processing 教程</a> - Baeldung 教程</li></ul><hr><p><em>本文详细介绍了如何使用 Annotation Processor 实现 vibesafe4j 的编译时代码生成功能。通过编译时生成代码，可以获得更好的性能和可维护性。</em></p></div></article></main><footer class=post__footer><div class=post-related><h3>相关文章</h3><ul class=post-related-list><li class=post-related-item><a href=/posts/2025/11/13/vibesafe4j-introduction/ target=_blank title="Vibesafe4j：使用 AI 自动生成 Java 接口实现的革命性框架">Vibesafe4j：使用 AI 自动生成 Java 接口实现的革命性框架</a></li><li class=post-related-item><a href=/posts/2024/11/04/sivalabs-blog-posts/ target=_blank title=2024-11-04｜SivaLabs博客文章>2024-11-04｜SivaLabs博客文章</a></li><li class=post-related-item><a href=/posts/2024/07/08/minions-in-minikube-a-kubernetes-intro-for-java-de/ target=_blank title="[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介">[译]Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介</a></li><li class=post-related-item><a href=/posts/2024/07/08/kubernetes-for-java-developers/ target=_blank title="[译]面向 Java 开发人员的 Kubernetes">[译]面向 Java 开发人员的 Kubernetes</a></li><li class=post-related-item><a href=/posts/2024/01/11/til/ target=_blank title=2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别>2024-01-11｜Session和Cookie的区别、单点登录和三方登录的区别</a></li><li class=post-related-item><a href=/posts/2024/01/10/til/ target=_blank title="2024-01-10｜ Java审计框架inspektr">2024-01-10｜ Java审计框架inspektr</a></li></ul></div></footer><footer class=post__footer><footer class=post__footer><div class="post__tags tags clearfix"><svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M4 0h8s2 0 4 2l15 15s2 2 0 4L21 31s-2 2-4 0L2 16s-2-2-2-4V3s0-3 4-3m3 10a3 3 0 000-6 3 3 0 000 6"/></svg><ul class=tags__list><li class=tags__item><a class="tags__link btn" href=/tags/vibesafe4j/ rel=tag>vibesafe4j</a></li><li class=tags__item><a class="tags__link btn" href=/tags/annotation-processor/ rel=tag>annotation-processor</a></li><li class=tags__item><a class="tags__link btn" href=/tags/java/ rel=tag>java</a></li><li class=tags__item><a class="tags__link btn" href=/tags/ai/ rel=tag>ai</a></li><li class=tags__item><a class="tags__link btn" href=/tags/code-generation/ rel=tag>code-generation</a></li></ul></div></footer></footer><nav class="pagination flex"><div class="pagination__item pagination__item--prev"><a class=pagination__link href=/posts/2025/11/13/vibesafe4j-introduction/ rel=prev><p class=pagination__title>«&#8201;上一篇: Vibesafe4j：使用 AI 自动生成 Java 接口实现的革命性框架</p></a></div></nav><div class="authorbox clearfix"><figure class=authorbox__avatar><img alt="ChenSoul avatar" src=/avatar.jpg class=avatar height=60 width=60 loading=lazy></figure><div class=authorbox__header><span class=authorbox__name>关于 ChenSoul</span></div><div class=authorbox__description>一个来自中国武汉的开发者，主要撰写软件开发和开源方面的文章。浏览我的<a href=/posts>博客文章</a>，订阅我的 <a href=/index.xml>RSS</a> 源，或了解更多<a href=/about/>关于我</a>的信息。</div></div><p><h3>欢迎留言！</h3></p><div id=remark42></div><script>var remark_config={host:"https://comment.chensoul.cc",site_id:"remark",components:["embed"],url:"https://blog.chensoul.cc/posts/2025/11/13/vibesafe4j-annotation-processor-implementation/",locale:"zh"};!function(e,t){for(s=0;s<e.length;s++){var s,n=t.createElement("script"),o=".js",i=t.head||t.body;"noModule"in n?(n.type="module",o=".mjs"):n.async=!0,n.defer=!0,n.src=remark_config.host+"/web/"+e[s]+o,i.appendChild(n)}}(remark_config.components||["embed"],document)</script></div><aside class="sidebar sidebar--right"><div class="post__toc toc"><div class=toc__title>目录</div><div class=toc__menu><nav id=TableOfContents><ul><li><ul><li><a href=#编译时生成的优势>编译时生成的优势</a></li><li><a href=#什么时候用>什么时候用？</a></li></ul></li><li><a href=#什么是-annotation-processor>什么是 Annotation Processor？</a><ul><li><a href=#annotation-processor-的优势>Annotation Processor 的优势</a></li><li><a href=#实现架构设计>实现架构设计</a></li></ul></li><li><a href=#项目模块结构>项目模块结构</a><ul><li><a href=#模块划分>模块划分</a></li></ul></li><li><a href=#完整实现代码>完整实现代码</a><ul><li><a href=#1-修改-func-注解支持编译时处理>1. 修改 <code>@Func</code> 注解（支持编译时处理）</a></li><li><a href=#2-创建-annotation-processor>2. 创建 Annotation Processor</a></li><li><a href=#3-ai-代码生成器接口和实现>3. AI 代码生成器接口和实现</a></li><li><a href=#4-maven-配置>4. Maven 配置</a></li><li><a href=#5-gradle-配置>5. Gradle 配置</a></li><li><a href=#6-使用示例>6. 使用示例</a></li><li><a href=#7-spring-boot-集成简化版>7. Spring Boot 集成（简化版）</a></li></ul></li><li><a href=#两种方案对比>两种方案对比</a></li><li><a href=#混合方案预生成--annotation-processor>混合方案：预生成 + Annotation Processor</a><ul><li><a href=#gradle-插件示例>Gradle 插件示例</a></li></ul></li><li><a href=#实现总结>实现总结</a></li><li><a href=#常见问题faq>常见问题（FAQ）</a></li><li><a href=#相关文章>相关文章</a></li><li><a href=#参考资源>参考资源</a></li></ul></nav></div></div></aside></div><footer class=footer><div class="container footer__container flex"><div class=footer__links><a class=footer__link href=/>首页</a> | <a class=footer__link href=/categories/>分类</a> | <a class=footer__link href=/tags/>标签</a> | <a class=footer__link href=/about/>关于</a></div><div class=footer__copyright>&copy; 2025 ChenSoul.
+<span class=footer__copyright-credits>基于 <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> 引擎和 <a href=https://github.com/chensoul/rose-hugo/ rel="nofollow noopener" target=_blank>Rose Hugo</a> 主题</span></div></div><style>.scroll-up a{display:block;height:3.125rem;width:3.125rem;text-align:center;line-height:2.7;border-radius:50px;font-size:1.125rem;color:#fff;opacity:1;transition:all .3s ease 0s;box-shadow:0 0 10px rgb(0 0 0/.2)}.scroll-up a{background:#ee591f}.scroll-up{position:fixed;display:none;bottom:50px;z-index:999}.scroll-up.right{right:60px}</style><div class="scroll-up custom right" style=display:block><a href=#top id=top-link accesskey=g><i class="fa fa-arrow-up"></i></a></div><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script defer src=https://umami.chensoul.cc/random-string.js data-website-id=1e07d36d-bec3-4ba6-9459-876b1ac3bbe7></script></footer></div><script>"use strict";(function(t){var i=t.querySelector(".menu__btn"),o=t.querySelector(".menu__list");function a(){o.classList.toggle("menu__list--active"),o.classList.toggle("menu__list--transition"),this.classList.toggle("menu__btn--active"),this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="true"?"false":"true")}function r(){this.classList.remove("menu__list--transition")}i&&o&&(i.addEventListener("click",a,!1),o.addEventListener("transitionend",r,!1))})(document,window)</script></body></html>
