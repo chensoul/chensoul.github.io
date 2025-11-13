@@ -11,7 +11,6 @@
       "hugo:serve": "hugo server -D -F",
       "hugo:clean": "rm -rf build resources public",
       "images:optimize": "node scripts/optimize-images.mjs",
-      "about:update": "node scripts/update-about.js",
       "dev": "npm run images:optimize && npm run hugo:serve"
     },
     "author": "",
