@@ -5,6 +5,11 @@ authorbox: false
 toc: false
 ---
 
+[![blog](https://img.shields.io/badge/blog-blog-9cf?style=flat-square)](https://blog.chensoul.cc)
+[![wakatime](https://wakatime.com/badge/user/2e164599-9a84-4d02-b61d-3c57e57e8735.svg)](https://wakatime.com/@2e164599-9a84-4d02-b61d-3c57e57e8735)
+[![GitHub](https://img.shields.io/github/followers/chensoul?logo=github&style=flat-square)](https://github.com/chensoul)
+[![Visits Badge](https://badges.strrl.dev/visits/chensoul/chensoul?style=flat-square)](https://github.com/chensoul)
+
 我是 chensoul，一个来自中国武汉的开发者，喜欢编程、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
 > 如果您觉得我的文章有用且有趣，请考虑在您喜欢的 RSS 阅读器中订阅我的 [RSS](/index.xml) 源。
