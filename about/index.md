@@ -3,7 +3,7 @@ slug: /about/
 title: About
 ---
 
-[![blog](https://img.shields.io/badge/blog-blog-9cf?style=flat-square)](https://blog.chensoul.cc)
+[![blog](https://img.shields.io/badge/blog-chensoul-9cf?style=flat-square)](https://blog.chensoul.cc)
 [![wakatime](https://wakatime.com/badge/user/2e164599-9a84-4d02-b61d-3c57e57e8735.svg)](https://wakatime.com/@2e164599-9a84-4d02-b61d-3c57e57e8735)
 [![GitHub](https://img.shields.io/github/followers/chensoul?logo=github&style=flat-square)](https://github.com/chensoul)
 [![Visits Badge](https://badges.strrl.dev/visits/chensoul/chensoul?style=flat-square)](https://github.com/chensoul)
