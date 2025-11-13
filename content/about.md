@@ -5,7 +5,7 @@ authorbox: false
 toc: false
 ---
 
-我是 chensoul，一个来自中国武汉的开发者。关注前沿技术趋势，持续提升技能；定期更新技术博客，分享学习心得。
+我是 chensoul，一个来自中国武汉的开发者，喜欢编程、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
 > 如果您觉得我的文章有用且有趣，请考虑在您喜欢的 RSS 阅读器中订阅我的 [RSS](/index.xml) 源。
 
