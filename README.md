@@ -55,7 +55,7 @@ npm run dev
 npm run serve
 ```
 
-访问 http://localhost:1313 查看网站
+访问 <http://localhost:1313> 查看网站
 
 ### 构建部署
 
@@ -72,7 +72,7 @@ npm run images:optimize
 
 ## 📁 项目结构
 
-```
+```text
 ├── content/                 # 内容目录
 │   ├── posts/              # 博客文章
 │   │   ├── architecture/   # 架构相关文章
@@ -114,6 +114,7 @@ defaultContentLanguage = 'zh-cn'         # 默认语言
   twitter = "ichensoul"
   mastodon = "ichensoul"
 ```
+
 ## 🚀 部署流程
 
 ### 自动部署 (推荐)
@@ -151,6 +152,8 @@ npm run build
 
 - 自动压缩 PNG 图片
 - 转换为 WebP 格式以减小文件大小
+- 图片懒加载和异步解码
+- 响应式图片尺寸属性
 - 保持原始图片质量的同时优化加载速度
 
 ```bash
@@ -164,6 +167,7 @@ npm run images:optimize
 - RSS 订阅支持
 - 语义化 HTML 结构
 - Meta 标签优化
+- 结构化数据（Schema.org）
 
 ## 🤝 贡献指南
 
@@ -188,7 +192,7 @@ npm run images:optimize
 ## 📞 联系方式
 
 - **作者**: ChenSoul
-- **博客**: https://blog.chensoul.cc
+- **博客**: <https://blog.chensoul.cc>
 - **GitHub**: [@chensoul](https://github.com/chensoul)
 - **Twitter**: [@ichensoul](https://twitter.com/ichensoul)
 

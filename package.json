@@ -1,24 +1,24 @@
 {
-    "name": "hugo-npm",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-      "build": "npm run hugo:build",
-      "clean": "npm run hugo:clean",
-      "serve": "npm run hugo:serve",
-      "hugo:build": "hugo -d build",
-      "hugo:serve": "hugo server -D -F",
-      "hugo:clean": "rm -rf build resources public",
-      "images:optimize": "node scripts/optimize-images.mjs",
-      "dev": "npm run images:optimize && npm run hugo:serve"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-      "hugo-bin": "^0.149.0",
-      "imagemin": "^9.0.0",
-      "imagemin-webp": "^8.0.0",
-      "imagemin-pngquant": "^10.0.0"
-    }
+  "name": "hugo-npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run hugo:build",
+    "clean": "npm run hugo:clean",
+    "serve": "npm run hugo:serve",
+    "hugo:build": "hugo --minify",
+    "hugo:serve": "hugo server -D -F",
+    "hugo:clean": "rm -rf build resources public",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "dev": "npm run images:optimize && npm run hugo:serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hugo-bin": "^0.149.0",
+    "imagemin": "^9.0.0",
+    "imagemin-webp": "^8.0.0",
+    "imagemin-pngquant": "^10.0.0"
   }
+}
