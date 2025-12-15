@@ -33,8 +33,8 @@ echo "\033[0;32mDeploying updates to GitHub...\033[0m"
 sed -i "" "s#(/images#(../../../static/images#g" content/posts/*/*.md
 sed -i "" "s#(../../../static/images#(/images#g" content/posts/*/*.md
 
-# Build the project.
-hugo # if using a theme, replace by `hugo -t <yourtheme>`
+# Build the project with minification for better performance.
+hugo --minify # if using a theme, replace by `hugo -t <yourtheme> --minify`
 
 # Add changes to git.
 git add -A

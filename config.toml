@@ -72,3 +72,13 @@ ignoreLogs = ['warning-goldmark-raw-html']
   mediaType = "text/plain"
   baseName = "llms"
   isPlainText = true
+
+# Performance optimization: Enable minification
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
