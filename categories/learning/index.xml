@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Learning on ChenSoul Blog</title><link>https://blog.chensoul.cc/categories/learning/</link><description>Recent content in Learning on ChenSoul Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 27 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.chensoul.cc/categories/learning/index.xml" rel="self" type="application/rss+xml"/><item><title>2024-12-27｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/12/27/til/</link><pubDate>Fri, 27 Dec 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/12/27/til/</guid><description>&lt;p&gt;今天我做了什么？&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;更新文章 &lt;a href="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"&gt;我的VPS服务部署记录&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 docker 部署 &lt;a href="https://github.com/Finb/Bark" target="_blank"&gt;Bark&lt;/a&gt;、&lt;a href="https://github.com/plankanban/planka" target="_blank"&gt;Planka&lt;/a&gt;、&lt;a href="https://github.com/hoarder-app/hoarder" target="_blank"&gt;Hoarder&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;将 memos 中的书签导入 hoarder，并将 memos 版本退回到 0.21.0 ，因为 0.21.0 之后的版本去掉了分享功能。同时需要修改 memos api，同步修改 &lt;a href="https://github.com/chensoul/chensoul/blob/main/fetch_memos.py" target="_blank"&gt;fetch_memos.py&lt;/a&gt; 文件，将 &lt;a href="https://memos.chensoul.cc/api/v1/memos" target="_blank"&gt;https://memos.chensoul.cc/api/v1/memos&lt;/a&gt; 改为 &lt;a href="https://memos.chensoul.cc/api/v2/memos" target="_blank"&gt;https://memos.chensoul.cc/api/v2/memos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;完善备份脚本，并在 macos 上通过 crontab 下载 vps 上的备份文件到本地的 icloud 目录下&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;10&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; * * * scp -r root@vps.chensoul.cc://data/backup /Users/chensoul/Library/Mobile&lt;span style="color:#ae81ff"&gt;\ &lt;/span&gt;Documents/com&lt;span style="color:#ae81ff"&gt;\~&lt;/span&gt;apple&lt;span style="color:#ae81ff"&gt;\~&lt;/span&gt;CloudDocs/vps/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;推荐博客 &lt;a href="https://www.jinhuaiyao.com/" target="_blank"&gt;Huaiyao Jin&lt;/a&gt;&lt;/p&gt;</description></item><item><title>2024-11-13｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/13/til/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/13/til/</guid><description>&lt;h2 id="spring-周报"&gt;Spring 周报&lt;/h2&gt;
+&lt;p&gt;更新文章 &lt;a href="https://blog.chensoul.cc/posts/2023/01/25/notes-about-deploy-services-in-vps/"&gt;我的VPS服务部署记录&lt;/a&gt;&lt;/p&gt;</description></item><item><title>2024-11-13｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/13/til/</link><pubDate>Wed, 13 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/13/til/</guid><description>&lt;h2 id="spring-周报"&gt;Spring 周报&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://spring.io/blog/2024/11/12/this-week-in-spring-november-12th-2024" target="_blank"&gt;This Week in Spring - November 12th, 2024&lt;/a&gt;&lt;/p&gt;</description></item><item><title>2024-11-07｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/07/til/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/07/til/</guid><description>&lt;h1 id="构建-docker-镜像---最佳实践"&gt;构建 Docker 镜像 - 最佳实践&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://www.marcobehler.com/guides/building-docker-images" target="_blank"&gt;构建 Docker 镜像 - 最佳实践&lt;/a&gt; 笔记：&lt;/p&gt;</description></item><item><title>2024-11-06｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/06/til/</link><pubDate>Wed, 06 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/06/til/</guid><description>&lt;p&gt;&lt;a href="https://x.com/david_syer/status/1849839624325157198?s=12" target="_blank"&gt;David Syer 博士宣布推出 Spring GRPC 项目&lt;/a&gt;&lt;/p&gt;</description></item><item><title>2024-11-05｜今天我做了什么</title><link>https://blog.chensoul.cc/posts/2024/11/05/til/</link><pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/11/05/til/</guid><description>&lt;h2 id="图片转换"&gt;图片转换&lt;/h2&gt;
 &lt;h3 id="使用-sip-将-jpg-图片转为-png"&gt;使用 sip 将 JPG 图片转为 PNG&lt;/h3&gt;
@@ -27,13 +18,7 @@
 &lt;/ol&gt;</description></item><item><title>2024-02-18｜NewRelice应用性能监控、6个Diagrams工具、foodie-food测试</title><link>https://blog.chensoul.cc/posts/2024/02/18/til/</link><pubDate>Sun, 18 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/18/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://newrelic.com/" target="_blank"&gt;NewRelice&lt;/a&gt;：应用性能监控&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.cnblogs.com/caoweixiong/p/14798449.html" target="_blank"&gt;https://www.cnblogs.com/caoweixiong/p/14798449.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=jCd6XfWLZsg" target="_blank"&gt;Top 6 Tools to Turn Code into Beautiful Diagrams&lt;/a&gt; ：&lt;/p&gt;</description></item><item><title>2024-02-05｜Spring Cloud Config快速入门</title><link>https://blog.chensoul.cc/posts/2024/02/05/til/</link><pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://newrelic.com/" target="_blank"&gt;NewRelice&lt;/a&gt;：应用性能监控&lt;/p&gt;</description></item><item><title>2024-02-05｜Spring Cloud Config快速入门</title><link>https://blog.chensoul.cc/posts/2024/02/05/til/</link><pubDate>Mon, 05 Feb 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/02/05/til/</guid><description>&lt;p&gt;今天做了什么：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;创建项目 &lt;a href="https://github.com/chensoul/spring-cloud-examples" target="_blank"&gt;spring-cloud-examples&lt;/a&gt;，测试 &lt;em&gt;Spring Cloud&lt;/em&gt; Config 使用本地文件和 git 仓库作为配置中心&lt;/li&gt;
 &lt;/ol&gt;
@@ -231,25 +216,19 @@ TokenStore。&lt;/li&gt;
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-05-22&lt;/code&gt; 到 &lt;code&gt;2023-05-28&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-20｜自动生成每日早报、周末团建</title><link>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</link><pubDate>Thu, 25 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-20｜自动生成每日早报、周末团建</title><link>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</link><pubDate>Thu, 25 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/25/weekly_review_20/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-20-00.webp" 
  alt="weekly-review-20-00"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-05-15&lt;/code&gt; 到 &lt;code&gt;2023-05-21&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-19｜武功山看日出、Python初学建议</title><link>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</link><pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-19｜武功山看日出、Python初学建议</title><link>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</link><pubDate>Thu, 18 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/18/weekly_review_19/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-19-00.webp" 
  alt="weekly-review-19-00"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-05-08&lt;/code&gt; 到 &lt;code&gt;2023-05-14&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-18｜导出豆瓣数据、Effective Java 3第二章总结</title><link>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</link><pubDate>Wed, 10 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-18｜导出豆瓣数据、Effective Java 3第二章总结</title><link>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</link><pubDate>Wed, 10 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/10/weekly_review_18/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇是对 &lt;code&gt;2023-05-01&lt;/code&gt; 到 &lt;code&gt;2023-05-07&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-17｜导出苹果健康数据、自动化收集个人数据、FlexyPool动态连接池</title><link>https://blog.chensoul.cc/posts/2023/05/06/weekly_review_17/</link><pubDate>Sat, 06 May 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/05/06/weekly_review_17/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇是对 &lt;code&gt;2023-04-24&lt;/code&gt; 到 &lt;code&gt;2023-04-30&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-16｜《灌篮高手》电影、《春山如笑》话剧</title><link>https://blog.chensoul.cc/posts/2023/04/25/weekly_review_16/</link><pubDate>Tue, 25 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/25/weekly_review_16/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-16-01.webp" 
@@ -257,57 +236,49 @@ TokenStore。&lt;/li&gt;
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-04-17&lt;/code&gt; 到 &lt;code&gt;2023-04-23&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</title><link>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</link><pubDate>Tue, 18 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-15｜Umami升级到2.0、汉街蜡像馆、使用Strava跑步</title><link>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</link><pubDate>Tue, 18 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/18/weekly_review_15/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-15-01.webp" 
  alt="weekly-review-15-01"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;题图：楚河汉街蜡像馆&lt;/em&gt;&lt;/p&gt;</description></item><item><title>周报-14｜如何学习一门编程语言</title><link>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</link><pubDate>Thu, 13 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-14｜如何学习一门编程语言</title><link>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</link><pubDate>Thu, 13 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/13/weekly_review_14/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekl-review-14-01.webp" 
  alt="weekl-review-14-01"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-04-03&lt;/code&gt; 到 &lt;code&gt;2023-04-09&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</title><link>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-13｜健身、记账、更新SSL证书、代码提交百度站点收录</title><link>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/04/04/weekly_review_13/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-13-01.webp" 
  alt="weekly-review-13-01"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-03-27&lt;/code&gt; 到 &lt;code&gt;2023-04-02&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-12｜车辆被堵、开车总结、Effective Java3笔记</title><link>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</link><pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-12｜车辆被堵、开车总结、Effective Java3笔记</title><link>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</link><pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/28/weekly_review_12/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-12-01.webp" 
  alt="weekly-review-12-01"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-03-20&lt;/code&gt; 到 &lt;code&gt;2023-03-26&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-11｜从语雀迁移到Obsidian</title><link>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</link><pubDate>Mon, 20 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-11｜从语雀迁移到Obsidian</title><link>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</link><pubDate>Mon, 20 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/20/weekly_review_11/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-11-04.webp" 
  alt="weekly-review-11-04"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;图片：&lt;em&gt;涨渡湖湿地水上森林公园&lt;/em&gt;&lt;/p&gt;</description></item><item><title>周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami</title><link>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</link><pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-10｜通过Cloudflare Tunnel访问服务、Vercel部署Cusdis和Umami</title><link>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</link><pubDate>Mon, 13 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/13/weekly_review_10/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-10-00.webp" 
  alt="weekly-review-10-00"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-03-06&lt;/code&gt; 到 &lt;code&gt;2023-03-12&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-9｜开车总结、博客该写什么、Web3批量空投</title><link>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</link><pubDate>Tue, 07 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-9｜开车总结、博客该写什么、Web3批量空投</title><link>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</link><pubDate>Tue, 07 Mar 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/03/07/weekly_review_9/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;&lt;img src="https://blog.chensoul.cc/static/images/weekly-review-09-07.webp" 
  alt="将军山"loading="lazy"
  decoding="async"width="800"
  height="450"class="content-image"&gt;
 
-&lt;/p&gt;
-&lt;p&gt;本篇是对 &lt;code&gt;2023-02-27&lt;/code&gt; 到 &lt;code&gt;2023-03-05&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-8｜内存泄漏、公司裁员、练车</title><link>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</link><pubDate>Mon, 27 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;/p&gt;</description></item><item><title>周报-8｜内存泄漏、公司裁员、练车</title><link>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</link><pubDate>Mon, 27 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/27/weekly_review_8/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇是对 &lt;code&gt;2023-02-20&lt;/code&gt; 到 &lt;code&gt;2023-02-26&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-7｜练车、博客优化、注册ChatGPT账号</title><link>https://blog.chensoul.cc/posts/2023/02/21/weekly_review_7/</link><pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/21/weekly_review_7/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇是对 &lt;code&gt;2023-02-13&lt;/code&gt; 到 &lt;code&gt;2023-02-19&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-6｜买车和选号、粉色理论</title><link>https://blog.chensoul.cc/posts/2023/02/13/weekly_review_6/</link><pubDate>Mon, 13 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/13/weekly_review_6/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
 &lt;p&gt;本篇是对 &lt;code&gt;2023-02-06&lt;/code&gt; 到 &lt;code&gt;2023-02-12&lt;/code&gt; 这周生活的记录与思考。首发在我的个人 &lt;a href="https://blog.chensoul.cc/" target="_blank"&gt;博客&lt;/a&gt;，你可以移步了解更多或者给我留言。&lt;/p&gt;</description></item><item><title>周报-5｜项目事故、牙疼、Damus</title><link>https://blog.chensoul.cc/posts/2023/02/07/weekly_review_5/</link><pubDate>Tue, 07 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2023/02/07/weekly_review_5/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
