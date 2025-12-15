@@ -1,0 +1,39 @@
+# HTTP Headers for Performance and Security Optimization
+# This file is for GitHub Pages, Netlify, or similar static hosting
+
+# Cache static assets for 1 year
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/preview-images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/logo.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/avatar.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache fonts for 1 year
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML for 1 hour
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Don't cache index pages
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Security headers for all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
