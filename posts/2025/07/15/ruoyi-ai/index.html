@@ -239,7 +239,7 @@
 </span></span></code></pre></div></li><li><p>过滤启动事件</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span>BufferingApplicationStartup startup <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> BufferingApplicationStartup(2048);
 </span></span><span style=display:flex><span>startup.<span style=color:#a6e22e>addFilter</span>(startupStep <span style=color:#f92672>-&gt;</span> startupStep.<span style=color:#a6e22e>getName</span>().<span style=color:#a6e22e>matches</span>(<span style=color:#e6db74>&#34;spring.beans.instantiate&#34;</span>);
 </span></span></code></pre></div></li><li><p>分析启动时间</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl <span style=color:#e6db74>&#39;http://localhost:8080/actuator/startup&#39;</span> -X POST <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>| jq <span style=color:#e6db74>&#39;[.timeline.events
+</span></span></span><span style=display:flex><span>| jq <span style=color:#e6db74>&#39;[.timeline.events
 </span></span></span><span style=display:flex><span><span style=color:#e6db74> | sort_by(.duration) | reverse[]
 </span></span></span><span style=display:flex><span><span style=color:#e6db74> | select(.startupStep.name | match(&#34;spring.beans.instantiate&#34;))
 </span></span></span><span style=display:flex><span><span style=color:#e6db74> | {beanName: .startupStep.tags[0].value, duration: .duration}]&#39;</span>

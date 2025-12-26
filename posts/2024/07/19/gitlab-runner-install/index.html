@@ -55,15 +55,15 @@
 </span></span></code></pre></div><h2 id=注册>注册</h2><p>Gitlab Runner类型有三种，注册方法如下：</p><ul><li>shared：运行整个平台项目的作业（gitlab）。依次点击主页——>管理中心——>CI/CD——>Runner——>新建实例runner</li><li>group：运行特定group下的所有项目的作业（group）。依次点击主页——>群组——>指定组——>设置——>构建——>runner——>新建群组runner</li><li>specific：运行指定的项目作业（project）。依次点击主页——>项目——>指定项目——>设置——>CI/CD——>Runner——>新建项目runner</li></ul><p>生成注册命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span></code></pre></div><p>Runner 执行器的类型有：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker, docker-windows, instance, virtualbox, docker+machine, kubernetes, docker-autoscaler, custom, shell, ssh, parallels
 </span></span></code></pre></div><p>注册一个 shell 类型的执行器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--executor <span style=color:#e6db74>&#34;shell&#34;</span> 
+</span></span></span><span style=display:flex><span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--executor <span style=color:#e6db74>&#34;shell&#34;</span> 
 </span></span></code></pre></div><p>注册一个 docker 类型的执行器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --non-interactive <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-privileged
+</span></span></span><span style=display:flex><span>  --non-interactive <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--token glrt-JhEv5bxs4ezxY53uyYiz <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --docker-privileged
 </span></span></code></pre></div><p>docker 类型的执行器的有两种：</p><p>1、使用 sock，需要挂载 /var/run/docker.sock</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span> <span style=color:#f92672>services</span>: 
 </span></span><span style=display:flex><span>  <span style=color:#f92672>gitlab-runner</span>:
 </span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>gitlab/gitlab-runner</span>
@@ -75,11 +75,11 @@
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/hosts://etc/hosts </span>
 </span></span><span style=display:flex><span>      - <span style=color:#ae81ff>/etc/docker/daemon.json://etc/docker/daemon.json</span>
 </span></span></code></pre></div><p>注册执行器命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz
+</span></span></span><span style=display:flex><span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span><span style=display:flex><span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-image docker:latest <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-volumes /var/run/docker.sock://var/run/docker.sock
+</span></span></span><span style=display:flex><span>  --docker-image docker:latest <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --docker-volumes /var/run/docker.sock://var/run/docker.sock
 </span></span></code></pre></div><p>/srv/gitlab/gitlab-runner/config.toml 文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#ae81ff>concurrent = 10</span> <span style=color:#75715e># 并行执行作业数</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>check_interval = 0</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>shutdown_timeout = 0</span>
@@ -107,10 +107,10 @@
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>shm_size = 0</span>
 </span></span><span style=display:flex><span>    <span style=color:#ae81ff>network_mtu = 0</span>
 </span></span></code></pre></div><p>2、使用 docker in docker</p><p>注册执行器命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo gitlab-runner register <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--token glrt-JhEv5bxs4ezxY53uyYiz
+</span></span></span><span style=display:flex><span>	--url https://gitlab.example.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--token glrt-JhEv5bxs4ezxY53uyYiz
 </span></span><span style=display:flex><span>  --executor <span style=color:#e6db74>&#34;docker&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --docker-image docker:latest 
+</span></span></span><span style=display:flex><span>  --docker-image docker:latest 
 </span></span></code></pre></div><p>/srv/gitlab/gitlab-runner/config.toml 文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#ae81ff>concurrent = 10</span> <span style=color:#75715e># 并行执行作业数</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>check_interval = 0</span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>shutdown_timeout = 0</span>

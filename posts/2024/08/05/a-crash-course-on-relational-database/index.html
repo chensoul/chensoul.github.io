@@ -42,14 +42,14 @@
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span> (CustomerID) <span style=color:#66d9ef>REFERENCES</span> Customers(CustomerID) <span style=color:#66d9ef>ON</span> <span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>CASCADE</span>
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><h2 id=关系数据库中的关系类型>关系数据库中的关系类型</h2><p>在关系数据库中，表之间的关系在定义数据如何连接方面起着关键作用。这些关系决定了数据库的结构和完整性。</p><p>让我们探讨三种主要的关系类型：一对一、一对多和多对多。</p><h3 id=一对一关系>一对一关系</h3><p>一对一关系是一种关系类型，其中一个表中的每个记录都与另一个表中的一个记录相关联，反之亦然。</p><p>这意味着表 A 中的每条记录，表 B 中都有一个对应的唯一记录，并且表 B 中没有其他记录与表 A 中的该记录相关联。</p><p>一对一关系在实践中相对少见，因为它们通常表示两个表可以合并为一个表。但是，在某些情况下，一对一关系很有用，例如当您出于安全或性能原因想要将某些属性分离到单独的表中时。</p><p>下面的示例显示了“用户”和“用户配置文件”表之间的一对一关系。</p><p><img src=/static/images/a-crash-course-on-relational-database-03.webp alt=img loading=lazy decoding=async width=800 height=450 class=content-image></p><p>此外，下面的 SQL 显示了如何创建这种关系。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Users table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Users (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Users (
 </span></span><span style=display:flex><span>    UserID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    Username VARCHAR(<span style=color:#ae81ff>50</span>),
 </span></span><span style=display:flex><span>    Email VARCHAR(<span style=color:#ae81ff>100</span>)
 </span></span><span style=display:flex><span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the UserProfiles table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> UserProfiles (
 </span></span><span style=display:flex><span>    ProfileID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    UserID INT <span style=color:#66d9ef>UNIQUE</span>,
@@ -59,7 +59,7 @@
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span> (UserID) <span style=color:#66d9ef>REFERENCES</span> Users(UserID)
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><h3 id=一对多关系>一对多关系</h3><p>一对多关系是关系数据库中最常见的关系类型。</p><p>在这种关系中，一个表（“一”方）中的每个记录可以与另一个表（“多”方）中的多个记录相关联，但是“多”表中的每个记录仅与“一”表中的一条记录相关联。</p><p>一对多关系通常使用“多”表中的外键来实现，该外键引用“一”表的主键。此外键确保引用完整性并维护两个表之间的关系。</p><p>下图显示了两个表“客户”和“订单”之间的一对多关系。每个客户可以有多个订单，但每个订单只属于一个客户。</p><p><img src=/static/images/a-crash-course-on-relational-database-04.webp alt=img loading=lazy decoding=async width=800 height=450 class=content-image></p><p>以下是实际创建表和建立一对多关系的 SQL 代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Customers table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Customers (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Customers (
 </span></span><span style=display:flex><span>    CustomerID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    FirstName VARCHAR(<span style=color:#ae81ff>50</span>),
 </span></span><span style=display:flex><span>    LastName VARCHAR(<span style=color:#ae81ff>50</span>),
@@ -67,7 +67,7 @@
 </span></span><span style=display:flex><span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the Orders table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Orders (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Orders (
 </span></span><span style=display:flex><span>    OrderID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    CustomerID INT,
 </span></span><span style=display:flex><span>    OrderDate DATE,
@@ -75,7 +75,7 @@
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span> (CustomerID) <span style=color:#66d9ef>REFERENCES</span> Customers(CustomerID)
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><h3 id=多对多关系>多对多关系</h3><p>多对多关系是一种关系类型，其中一个表中的每条记录可以与另一个表中的多个记录相关联，反之亦然。换句话说，两个表中的记录都可以在另一个表中有多个对应的记录。</p><p>多对多关系通常使用连接表（也称为桥接表或关联表）来实现。</p><p>连接表包含引用关系中涉及的两个表的主键的外键。连接表中的每个记录都表示两个表中的记录之间的关联。</p><p>下图显示了“产品”表和“类别”表之间的多对多关系。连接表“ProductCategories”巩固了这种关系。</p><p><img src=/static/images/a-crash-course-on-relational-database-05.webp alt=img loading=lazy decoding=async width=800 height=450 class=content-image></p><p>以下是创建表和建立多对多关系的 SQL 代码。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Products table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Products (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Products (
 </span></span><span style=display:flex><span>    ProductID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    ProductName VARCHAR(<span style=color:#ae81ff>100</span>),
 </span></span><span style=display:flex><span>    Description VARCHAR(<span style=color:#ae81ff>500</span>),
@@ -84,7 +84,7 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the Categories table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Categories (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Categories (
 </span></span><span style=display:flex><span>    CategoryID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    CategoryName VARCHAR(<span style=color:#ae81ff>50</span>),
 </span></span><span style=display:flex><span>    Description VARCHAR(<span style=color:#ae81ff>500</span>)
@@ -92,7 +92,7 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the ProductCategories table (junction table)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> ProductCategories (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> ProductCategories (
 </span></span><span style=display:flex><span>    ProductCategoryID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    ProductID INT,
 </span></span><span style=display:flex><span>    CategoryID INT,
@@ -109,13 +109,13 @@
 </span></span><span style=display:flex><span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>INTO</span> Students (StudentID, Name, Courses)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>VALUES</span> (<span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#39;John Doe&#39;</span>, <span style=color:#e6db74>&#39;Math, Science, History&#39;</span>);
 </span></span></code></pre></div><p>在此表中，Students 表中的 Courses 列包含每个学生所注册的课程的逗号分隔列表。这违反了第一范式，因为 Courses 列在单个单元格中包含多个值。</p><p>解决这个问题的一种方法是建立单独的表来存储学生和课程之间的映射。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Courses table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Courses (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Courses (
 </span></span><span style=display:flex><span>    CourseID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    CourseName VARCHAR(<span style=color:#ae81ff>100</span>)
 </span></span><span style=display:flex><span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the StudentCourses table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> StudentCourses (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> StudentCourses (
 </span></span><span style=display:flex><span>    StudentID INT,
 </span></span><span style=display:flex><span>    CourseID INT,
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span> (StudentID, CourseID),
@@ -131,13 +131,13 @@
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span> (OrderID, ProductID)
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><p>该表中，主键是由OrderID和ProductID组成的复合键。</p><p>但是，CustomerName 列仅依赖于 CustomerID，而 CustomerID 不属于主键。这违反了第二范式。</p><p>为了使该表符合 2NF，我们需要将其拆分为两个独立的表：“订单”和“客户”。</p><p>请参阅下面的 SQL 代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Customers table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Customers (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Customers (
 </span></span><span style=display:flex><span>    CustomerID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    CustomerName VARCHAR(<span style=color:#ae81ff>100</span>)
 </span></span><span style=display:flex><span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the Orders table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Orders (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Orders (
 </span></span><span style=display:flex><span>    OrderID INT,
 </span></span><span style=display:flex><span>    ProductID INT,
 </span></span><span style=display:flex><span>    CustomerID INT,
@@ -146,7 +146,7 @@
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span> (CustomerID) <span style=color:#66d9ef>REFERENCES</span> Customers(CustomerID)
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><h3 id=3nf数据库规范化的第三范式>3NF（数据库规范化的第三范式）</h3><p>第三范式（3NF）是实现第二范式（2NF）之后规范化过程的下一步。</p><p>它专注于消除表内的传递依赖关系，确保所有非关键属性仅依赖于主键，而不依赖于其他非关键属性。</p><p>为了理解 3NF，我们首先来定义传递依赖的概念。当一个非键属性依赖于另一个非键属性，而后者又依赖于主键时，就会发生传递依赖。</p><p>如果表满足以下条件，则认为它符合 3NF：</p><ul><li>该表符合 2NF。</li><li>不存在传递依赖关系。</li></ul><p>例如，考虑一个名为“Employee”的表，如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Employee Table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Employee (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Employee (
 </span></span><span style=display:flex><span>    EmployeeID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    Name VARCHAR(<span style=color:#ae81ff>100</span>),
 </span></span><span style=display:flex><span>    DepartmentID INT,
@@ -154,14 +154,14 @@
 </span></span><span style=display:flex><span>    DepartmentLocation VARCHAR(<span style=color:#ae81ff>100</span>)
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><p>此表违反了第三范式，因为它包含传递依赖关系。DepartmentName 和 DepartmentLocation 列依赖于 DepartmentID，而 DepartmentID 又依赖于 EmployeeID 列。</p><p>为了使表符合 3NF，我们需要将“员工”表拆分为两个独立的表：“员工”表和“部门”表。</p><p>请参阅下面的 SQL 代码示例：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- Create the Department table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Department (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Department (
 </span></span><span style=display:flex><span>    DepartmentID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    DepartmentName VARCHAR(<span style=color:#ae81ff>100</span>),
 </span></span><span style=display:flex><span>    DepartmentLocation VARCHAR(<span style=color:#ae81ff>100</span>)
 </span></span><span style=display:flex><span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- Create the Employee table
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Employee (
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Employee (
 </span></span><span style=display:flex><span>    EmployeeID INT <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
 </span></span><span style=display:flex><span>    Name VARCHAR(<span style=color:#ae81ff>100</span>),
 </span></span><span style=display:flex><span>    DepartmentID INT,

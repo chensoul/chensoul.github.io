@@ -32,8 +32,8 @@
 </span></span><span style=display:flex><span>ExecStartPre<span style=color:#f92672>=</span>-/sbin/modprobe br_netfilter
 </span></span><span style=display:flex><span>ExecStartPre<span style=color:#f92672>=</span>-/sbin/modprobe overlay
 </span></span><span style=display:flex><span>ExecStart<span style=color:#f92672>=</span>/usr/local/bin/k3s <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>    server <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	<span style=color:#e6db74>&#39;--docker&#39;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>    server <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	<span style=color:#e6db74>&#39;--docker&#39;</span> <span style=color:#ae81ff>\
 </span></span></span></code></pre></div><p>根据需要，可以调整下 K3s 的服务配置文件，以将 K3s 的默认容器引擎从 Containerd 切换到 Docker，或者不部署 traefik</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ExecStart<span style=color:#f92672>=</span>/usr/local/bin/k3s server --docker --no-deploy traefik
 </span></span></code></pre></div><p>之后保存退出，执行命令重新加载新的服务配置文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>systemctl daemon-reload
 </span></span><span style=display:flex><span>systemctl restart k3s 

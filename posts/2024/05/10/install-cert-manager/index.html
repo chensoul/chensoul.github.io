@@ -4,10 +4,10 @@
 </span></span></code></pre></div><h3 id=使用helm安装>使用helm安装</h3><p>添加 repo：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>helm repo add jetstack https://charts.jetstack.io --force-update
 </span></span><span style=display:flex><span>helm repo update
 </span></span></code></pre></div><p>安装 cert-manager：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>helm install cert-manager jetstack/cert-manager <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--namespace cert-manager   <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--create-namespace    <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--version v1.14.5    <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--set installCRDs<span style=color:#f92672>=</span>true
+</span></span></span><span style=display:flex><span>	--namespace cert-manager   <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--create-namespace    <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--version v1.14.5    <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--set installCRDs<span style=color:#f92672>=</span>true
 </span></span></code></pre></div><p>更多配置参数，参考：<a href=https://artifacthub.io/packages/helm/cert-manager/cert-manager target=_blank>https://artifacthub.io/packages/helm/cert-manager/cert-manager</a></p><p>查看状态</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ kubectl -n cert-manager rollout status deploy/cert-manager
 </span></span><span style=display:flex><span>deployment <span style=color:#e6db74>&#34;cert-manager&#34;</span> successfully rolled out
 </span></span><span style=display:flex><span>

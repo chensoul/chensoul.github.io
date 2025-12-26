@@ -9,25 +9,25 @@
 </span></span><span style=display:flex><span>helm repo update
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>helm install cert-manager jetstack/cert-manager <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--namespace cert-manager   <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--create-namespace    <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--version v1.14.5  <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>	--set installCRDs<span style=color:#f92672>=</span>true
+</span></span></span><span style=display:flex><span>	--namespace cert-manager   <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--create-namespace    <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--version v1.14.5  <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>	--set installCRDs<span style=color:#f92672>=</span>true
 </span></span><span style=display:flex><span>	
 </span></span><span style=display:flex><span>kubectl get pods --namespace cert-manager
 </span></span></code></pre></div><ol start=2><li>不同的证书配置需要使用不同的 Rancher 安装命令。</li></ol><p>先创建命名空间：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>kubectl create namespace cattle-system
 </span></span></code></pre></div><ul><li><p>默认情况是使用 Rancher 生成 CA，并使用 <code>cert-manager</code> 颁发用于访问 Rancher Server 接口的证书。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>helm install rancher rancher-stable/rancher <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --namespace cattle-system <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set hostname<span style=color:#f92672>=</span>rancher.chensoul.cc <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set bootstrapPassword<span style=color:#f92672>=</span>admin 
+</span></span></span><span style=display:flex><span>  --namespace cattle-system <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set hostname<span style=color:#f92672>=</span>rancher.chensoul.cc <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set bootstrapPassword<span style=color:#f92672>=</span>admin 
 </span></span></code></pre></div></li><li><p>使用 <code>cert-manager</code> 来自动请求和续订 <a href=https://letsencrypt.org/ target=_blank>Let&rsquo;s Encrypt</a> 证书。Let&rsquo;s Encrypt 是免费的，而且是受信的 CA，因此可以为你提供有效的证书。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#Let’s Encrypt</span>
 </span></span><span style=display:flex><span>helm install rancher rancher-stable/rancher <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --namespace cattle-system <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set hostname<span style=color:#f92672>=</span>rancher.chensoul.cc <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set bootstrapPassword<span style=color:#f92672>=</span>admin <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set ingress.tls.source<span style=color:#f92672>=</span>letsEncrypt <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set letsEncrypt.email<span style=color:#f92672>=</span>ichensoul@gmail.com <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --set letsEncrypt.ingress.class<span style=color:#f92672>=</span>nginx
+</span></span></span><span style=display:flex><span>  --namespace cattle-system <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set hostname<span style=color:#f92672>=</span>rancher.chensoul.cc <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set bootstrapPassword<span style=color:#f92672>=</span>admin <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set ingress.tls.source<span style=color:#f92672>=</span>letsEncrypt <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set letsEncrypt.email<span style=color:#f92672>=</span>ichensoul@gmail.com <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --set letsEncrypt.ingress.class<span style=color:#f92672>=</span>nginx
 </span></span></code></pre></div></li><li><p>使用你自己的证书来创建 Kubernetes 密文，以供 Rancher 使用。</p><p>生成自签名证书，参考：<a href=https://docs.rancher.cn/docs/rancher2.5/installation/resources/advanced/self-signed-ssl/_index/#42-%E8%84%9A%E6%9C%AC%E8%AF%B4%E6%98%8E target=_blank>一键生成-ssl-自签名证书脚本</a></p></li></ul><ol start=3><li>检查 Rancher 是否已成功运行：</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>kubectl -n cattle-system rollout status deploy/rancher
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>kubectl -n cattle-system get deploy rancher

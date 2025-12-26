@@ -100,34 +100,34 @@
 </span></span></code></pre></div><p><strong>输出</strong>：生成包含以下内容的宪法文档：</p><ul><li>测试覆盖率必须达到80%以上</li><li>采用微服务架构，服务间通过API通信</li><li>API必须支持版本管理（v1, v2等）</li><li>所有数据必须加密存储和传输</li><li>必须实现完整的性能监控和日志记录</li></ul><p><strong>生成的原则文档示例</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span># 待办事项管理系统项目原则
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 核心原则
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### 一、测试优先开发（不可妥协）
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>强制测试驱动开发：测试编写 → 用户确认 → 测试失败 → 然后实现；
+</span></span></span><span style=display:flex><span>强制测试驱动开发：测试编写 → 用户确认 → 测试失败 → 然后实现；
 </span></span><span style=display:flex><span>严格执行红-绿-重构循环
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### 二、代码质量保证
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>所有代码必须通过代码检查，遵循编码规范，并保持90%以上的测试覆盖率
+</span></span></span><span style=display:flex><span>所有代码必须通过代码检查，遵循编码规范，并保持90%以上的测试覆盖率
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### 三、文档完整性
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>每个公共API都必须有完整的文档和示例
+</span></span></span><span style=display:flex><span>每个公共API都必须有完整的文档和示例
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### 四、安全设计
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>安全考虑必须从一开始就集成，而不是事后添加
+</span></span></span><span style=display:flex><span>安全考虑必须从一开始就集成，而不是事后添加
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 技术约束
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> Java 17+ 配合 Spring Boot 3.5+
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Java 17+ 配合 Spring Boot 3.5+
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 开发环境使用H2数据库，生产环境使用PostgreSQL
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> RESTful API设计，遵循OpenAPI 3.0规范
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 使用JUnit 5进行测试，Mockito进行模拟
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 开发工作流程
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> 所有功能必须从失败的测试开始
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 所有功能必须从失败的测试开始
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 所有变更都需要代码审查
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> 合并前必须通过持续集成
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> API变更需要更新文档
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 治理规则
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>项目原则超越所有其他实践；原则修改需要团队批准和文档记录
+</span></span></span><span style=display:flex><span>项目原则超越所有其他实践；原则修改需要团队批准和文档记录
 </span></span><span style=display:flex><span><span style=font-weight:700>**版本**</span>: 1.0.0 | <span style=font-weight:700>**制定日期**</span>: 2024-01-15 | <span style=font-weight:700>**最后修改**</span>: 2024-01-15
 </span></span></code></pre></div><h4 id=constitution-使用技巧>Constitution 使用技巧</h4><p><strong>1. 原则数量控制</strong>：</p><ul><li>建议 3-7 个核心原则，太多会难以执行</li><li>每个原则都要有明确的验收标准</li></ul><p><strong>2. 原则描述要具体</strong>：</p><ul><li>❌ 避免：&ldquo;代码质量要好&rdquo;、&ldquo;性能要优化&rdquo;</li><li>✅ 推荐：&ldquo;代码覆盖率必须达到90%以上，所有公共方法必须有单元测试&rdquo;、&ldquo;API响应时间必须小于200ms&rdquo;</li></ul><p><strong>3. 定期更新原则</strong>：</p><ul><li>项目发展过程中可能需要调整原则</li><li>使用版本管理跟踪原则变更</li></ul><p><strong>4. 团队共识</strong>：</p><ul><li>原则制定后需要团队讨论和确认</li><li>确保所有成员理解和认同这些原则</li></ul><h3 id=阶段-1specify规范化>阶段 1：Specify（规范化）</h3><p><strong>目的</strong>：将自然语言描述的需求转化为结构化的规范文档</p><p>在 Cursor 中使用 <code>/specify</code> 命令描述功能需求：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>/specify 构建一个待办事项管理系统，用户可以创建、查看、更新和删除待办事项。每个待办事项包含标题、描述、状态（待处理、进行中、已完成）和创建时间。系统需要支持按状态筛选和搜索功能。
 </span></span></code></pre></div><p><strong>输出结果</strong>：AI 将生成 <code>specs/001-项目名/spec.md</code> 文件，包含：</p><ul><li>用户场景和测试用例</li><li>功能需求列表</li><li>关键实体定义</li><li>验收标准</li></ul><h3 id=阶段-15clarify澄清需求--可选>阶段 1.5：Clarify（澄清需求）- 可选</h3><p><strong>目的</strong>：消除规范中的模糊点，确保需求清晰明确</p><p>如果规范中存在模糊点，使用 <code>/clarify</code> 命令进行澄清：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>/clarify 澄清待办事项管理系统中用户角色和权限的模糊定义

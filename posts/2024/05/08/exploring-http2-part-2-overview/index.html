@@ -8,12 +8,12 @@ touch http1Server.js
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>server</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Hapi</span>.<span style=color:#a6e22e>Server</span>();
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// define server config
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>port</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;8000&#39;</span>
 </span></span><span style=display:flex><span>});
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// define route config
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>method</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;GET&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;/ping&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span><span style=color:#f92672>:</span> (<span style=color:#a6e22e>request</span>, <span style=color:#a6e22e>reply</span>) =&gt; {
@@ -22,7 +22,7 @@ touch http1Server.js
 </span></span><span style=display:flex><span>}]);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// start server
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>err</span>) <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#a6e22e>err</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`Started </span><span style=color:#e6db74>${</span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connections</span>.<span style=color:#a6e22e>length</span><span style=color:#e6db74>}</span><span style=color:#e6db74> connections`</span>)
 </span></span><span style=display:flex><span>});
@@ -36,22 +36,22 @@ touch http1Server.js
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>server</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Hapi</span>.<span style=color:#a6e22e>Server</span>();
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// read certificate and private key
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>serverOptions</span> <span style=color:#f92672>=</span> {
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>serverOptions</span> <span style=color:#f92672>=</span> {
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>key</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fs</span>.<span style=color:#a6e22e>readFileSync</span>(<span style=color:#e6db74>&#39;localhost-privkey.pem&#39;</span>),
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>cert</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>fs</span>.<span style=color:#a6e22e>readFileSync</span>(<span style=color:#e6db74>&#39;localhost-cert.pem&#39;</span>)
 </span></span><span style=display:flex><span>};
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// create http2 secure server listener
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>listener</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Http2</span>.<span style=color:#a6e22e>createSecureServer</span>(<span style=color:#a6e22e>serverOptions</span>);
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>listener</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>Http2</span>.<span style=color:#a6e22e>createSecureServer</span>(<span style=color:#a6e22e>serverOptions</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// create a connection object with listener and other options
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connection</span>({
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>listener</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>port</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;8000&#39;</span>
 </span></span><span style=display:flex><span>});
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// define routes
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>route</span>([{
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>method</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;GET&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>path</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;/ping&#39;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span><span style=color:#f92672>:</span> (<span style=color:#a6e22e>request</span>, <span style=color:#a6e22e>reply</span>) =&gt; {
@@ -60,7 +60,7 @@ touch http1Server.js
 </span></span><span style=display:flex><span>}]);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>// start server
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>start</span>(<span style=color:#a6e22e>err</span> =&gt; {
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>err</span>) <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>error</span>(<span style=color:#a6e22e>err</span>)
 </span></span><span style=display:flex><span>  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`Started </span><span style=color:#e6db74>${</span><span style=color:#a6e22e>server</span>.<span style=color:#a6e22e>connections</span>.<span style=color:#a6e22e>length</span><span style=color:#e6db74>}</span><span style=color:#e6db74> connections`</span>)
 </span></span><span style=display:flex><span>});

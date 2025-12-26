@@ -62,15 +62,15 @@ no。</p></li><li><p>设置访问密码</p><div class=highlight><pre tabindex=0 
 </span></span></code></pre></div></li></ol><h3 id=通过-docker-安装>通过 docker 安装</h3><p>在Docker中运行Redis容器，并设置密码保护和持久化存储的配置</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>REDIS_PASSWORD<span style=color:#f92672>=</span><span style=color:#ae81ff>123456</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>docker run <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --restart always <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --privileged<span style=color:#f92672>=</span>true <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --name redis <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -v /etc/localtime://etc/localtime <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -p 6379:6379 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  redis:7 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --requirepass $REDIS_PASSWORD <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --appendonly yes
+</span></span></span><span style=display:flex><span>  -d <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --restart always <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --privileged<span style=color:#f92672>=</span>true <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --name redis <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -v /etc/localtime://etc/localtime <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -p 6379:6379 <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  redis:7 <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --requirepass $REDIS_PASSWORD <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --appendonly yes
 </span></span></code></pre></div><p>参数说明：</p><ul><li><code>REDIS_PASSWORD=123456</code>：设置Redis的密码为123456。可以根据需要更改密码。</li><li><code>docker run</code>：运行Docker容器命令。</li><li><code>-d</code>：以后台模式运行容器。</li><li><code>--restart always</code>：设置容器在启动时自动重启。</li><li><code>--privileged=true</code>：授予容器特权，以便在容器内部执行特权操作。</li><li><code>--name redis</code>：指定容器的名称为redis。</li><li><code>-v /etc/localtime://etc/localtime</code>：将主机的时区设置映射到容器内部，以确保时间同步。</li><li><code>-p 6379:6379</code>：将主机的6379端口映射到容器的6379端口，以便可以通过主机IP和端口访问Redis。</li><li><code>redis:7</code>：指定要运行的Redis镜像版本为7。</li><li><code>--requirepass $REDIS_PASSWORD</code>：设置Redis的密码为之前定义的REDIS_PASSWORD变量的值。</li><li><code>--appendonly yes</code>：开启Redis的AOF（Append-Only File）持久化模式，将写操作追加到文件中，以保证数据持久化。</li></ul><h3 id=通过-docker-compose-安装>通过 docker-compose 安装</h3><p>使用Docker
 Compose配置Redis单机容器，https://github.com/chensoul/learn-docker/blob/main/docker-compose/redis/docker-compose.redis.yml</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#39;3.0&#39;</span>
 </span></span><span style=display:flex><span>

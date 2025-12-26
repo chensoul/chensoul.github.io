@@ -11,14 +11,14 @@
 </span></span></code></pre></div><p>解压文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>unzip tengine-master.zip
 </span></span></code></pre></div><p>进入目录，执行：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd tengine-master
 </span></span><span style=display:flex><span>./configure --prefix<span style=color:#f92672>=</span>/usr/local/Tengine --dso-path<span style=color:#f92672>=</span>/usr/local/Tengine/modules --with-http_realip_module --with-http_gzip_static_module <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--with-http_stub_status_module --with-http_concat_module <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--with-http_lua_module  --http-proxy-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/proxy_temp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--http-fastcgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/fastcgi_temp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--http-uwsgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/uwsgi_temp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--http-scgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/cgi_temp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--http-client-body-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/client_body_temp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--http-log-path<span style=color:#f92672>=</span>/var/log/Tengine/access.log <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>--error-log-path<span style=color:#f92672>=</span>/var/log/Tengine/error.log
+</span></span></span><span style=display:flex><span>--with-http_stub_status_module --with-http_concat_module <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--with-http_lua_module  --http-proxy-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/proxy_temp <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--http-fastcgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/fastcgi_temp <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--http-uwsgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/uwsgi_temp <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--http-scgi-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/cgi_temp <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--http-client-body-temp-path<span style=color:#f92672>=</span>/var/tmp/Tengine/client_body_temp <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--http-log-path<span style=color:#f92672>=</span>/var/log/Tengine/access.log <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>--error-log-path<span style=color:#f92672>=</span>/var/log/Tengine/error.log
 </span></span></code></pre></div><p>再执行：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>make <span style=color:#f92672>&amp;&amp;</span> make install
 </span></span></code></pre></div><p>验证安装成功:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ /usr/local/Tengine/sbin/nginx
 </span></span><span style=display:flex><span>/usr/local/Tengine/sbin/nginx: error <span style=color:#66d9ef>while</span> loading shared libraries: 
@@ -43,7 +43,7 @@ touch /usr/local/Tengine/lua/ImageResizer.lua
 </span></span><span style=display:flex><span>os.execute(command);
 </span></span><span style=display:flex><span>ngx.exec(ngx.var.request_uri);
 </span></span></code></pre></div><p>修改 /usr/local/Tengine/conf/nginx.conf：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=display:flex><span><span style=color:#66d9ef>user</span>  <span style=color:#e6db74>root</span>;  <span style=color:#75715e># 裁剪图片需要root权限
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>worker_processes</span>  <span style=color:#ae81ff>1</span>;
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>worker_processes</span>  <span style=color:#ae81ff>1</span>;
 </span></span><span style=display:flex><span><span style=color:#66d9ef>events</span> {
 </span></span><span style=display:flex><span>    <span style=color:#f92672>worker_connections</span>  <span style=color:#ae81ff>1024</span>;
 </span></span><span style=display:flex><span>}
@@ -52,34 +52,34 @@ touch /usr/local/Tengine/lua/ImageResizer.lua
 </span></span><span style=display:flex><span>    <span style=color:#f92672>default_type</span>  <span style=color:#e6db74>application/octet-stream</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>sendfile</span>        <span style=color:#66d9ef>on</span>;
 </span></span><span style=display:flex><span>    <span style=color:#75715e>#tcp_nopush     on;
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#f92672>keepalive_timeout</span>  <span style=color:#ae81ff>65</span>;
+</span></span></span><span style=display:flex><span>    <span style=color:#f92672>keepalive_timeout</span>  <span style=color:#ae81ff>65</span>;
 </span></span><span style=display:flex><span>    <span style=color:#f92672>server</span> {
 </span></span><span style=display:flex><span>        <span style=color:#f92672>listen</span>       <span style=color:#ae81ff>80</span>;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>server_name</span>  <span style=color:#e6db74>img.javachen.space</span>;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>root</span> <span style=color:#e6db74>/data/image/upload</span>;
 </span></span><span style=display:flex><span>        <span style=color:#f92672>location</span> <span style=color:#e6db74>/</span> {
 </span></span><span style=display:flex><span>             <span style=color:#f92672>root</span> <span style=color:#e6db74>/data/image/upload</span>; <span style=color:#75715e># 站点根目录
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             <span style=color:#f92672>expires</span> <span style=color:#e6db74>1h</span>;    <span style=color:#75715e># 缓存时间
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>max-age=3600</span>; <span style=color:#75715e># 缓存时间
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>             <span style=color:#f92672>access_log</span>   <span style=color:#e6db74>/var/log/Tengine/host_access.log</span>;
+</span></span></span><span style=display:flex><span>             <span style=color:#f92672>expires</span> <span style=color:#e6db74>1h</span>;    <span style=color:#75715e># 缓存时间
+</span></span></span><span style=display:flex><span>             <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>max-age=3600</span>; <span style=color:#75715e># 缓存时间
+</span></span></span><span style=display:flex><span>             <span style=color:#f92672>access_log</span>   <span style=color:#e6db74>/var/log/Tengine/host_access.log</span>;
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>        <span style=color:#75715e>#如果 url 格式如：xxxx.gif_数字x数字.gif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#f92672>location</span> ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>^(.+\.(jpg|jpeg|gif|png))_(\d+)x(\d+)\.(jpg|jpeg|gif|png)</span>$ {
+</span></span></span><span style=display:flex><span>        <span style=color:#f92672>location</span> ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>^(.+\.(jpg|jpeg|gif|png))_(\d+)x(\d+)\.(jpg|jpeg|gif|png)</span>$ {
 </span></span><span style=display:flex><span>           <span style=color:#f92672>root</span> <span style=color:#e6db74>/data/image/upload</span>;    
 </span></span><span style=display:flex><span>           <span style=color:#f92672>if</span> <span style=color:#e6db74>(!-f</span> $request_filename<span style=color:#e6db74>)</span> { <span style=color:#75715e>#如果文件不存在时才需要裁剪
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#75715e>#此HTTP Header无实际意义，用于测试
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>add_header</span> <span style=color:#e6db74>X-Powered-By</span> <span style=color:#e6db74>&#39;Lua</span> <span style=color:#e6db74>GraphicsMagick&#39;</span>;  
+</span></span></span><span style=display:flex><span>              <span style=color:#75715e>#此HTTP Header无实际意义，用于测试
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>add_header</span> <span style=color:#e6db74>X-Powered-By</span> <span style=color:#e6db74>&#39;Lua</span> <span style=color:#e6db74>GraphicsMagick&#39;</span>;  
 </span></span><span style=display:flex><span>              <span style=color:#75715e>#此 HTTP Header无实际意义，用于测试
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>add_header</span> <span style=color:#e6db74>file-path</span> $request_filename;  
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>add_header</span> <span style=color:#e6db74>file-path</span> $request_filename;  
 </span></span><span style=display:flex><span>              <span style=color:#75715e>#在编写外部 Lua脚本时，设置为off Nginx不会缓存 
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>lua_code_cache</span> <span style=color:#66d9ef>on</span>;  <span style=color:#f92672>Lua，方便调试</span>
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>lua_code_cache</span> <span style=color:#66d9ef>on</span>;  <span style=color:#f92672>Lua，方便调试</span>
 </span></span><span style=display:flex><span>              <span style=color:#75715e>#设置原始图片路径，如：/document_root/1.gif
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#e6db74>set</span> $request_filepath <span style=color:#e6db74>/data/image/upload</span>$1;  
+</span></span></span><span style=display:flex><span>              <span style=color:#e6db74>set</span> $request_filepath <span style=color:#e6db74>/data/image/upload</span>$1;  
 </span></span><span style=display:flex><span>              <span style=color:#f92672>set</span> $width $3;     <span style=color:#75715e># 设置裁剪/缩放的宽度
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>set</span> $height $4;    <span style=color:#75715e># 设置裁剪/缩放的高度
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>set</span> $ext $5;      <span style=color:#75715e># 图片文件格式后缀
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#75715e>#加载外部 Lua 文件
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>              <span style=color:#f92672>content_by_lua_file</span> <span style=color:#e6db74>/usr/local/Tengine/lua/ImageResizer.lua</span>;  
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>set</span> $height $4;    <span style=color:#75715e># 设置裁剪/缩放的高度
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>set</span> $ext $5;      <span style=color:#75715e># 图片文件格式后缀
+</span></span></span><span style=display:flex><span>              <span style=color:#75715e>#加载外部 Lua 文件
+</span></span></span><span style=display:flex><span>              <span style=color:#f92672>content_by_lua_file</span> <span style=color:#e6db74>/usr/local/Tengine/lua/ImageResizer.lua</span>;  
 </span></span><span style=display:flex><span>            }
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>        <span style=color:#f92672>error_page</span>   <span style=color:#ae81ff>500</span> <span style=color:#ae81ff>502</span> <span style=color:#ae81ff>503</span> <span style=color:#ae81ff>504</span>  <span style=color:#e6db74>/50x.html</span>;

@@ -189,8 +189,8 @@ DatabaseTool --&gt; MySQL[MySQL Database]
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>让我们看看实际的使用效果：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>curl -X POST http://localhost:8080/api/query <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;query&#34;: &#34;统计每个部门的员工数量&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;query&#34;: &#34;统计每个部门的员工数量&#34;}&#39;</span>
 </span></span></code></pre></div><p><strong>返回结果</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;success&#34;</span>: <span style=color:#66d9ef>true</span>,
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;sql&#34;</span>: <span style=color:#e6db74>&#34;SELECT department, COUNT(*) as count FROM employees GROUP BY department&#34;</span>,
@@ -198,7 +198,7 @@ DatabaseTool --&gt; MySQL[MySQL Database]
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;count&#34;</span>: <span style=color:#ae81ff>1</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>看到没？AI 不仅生成了正确的 SQL，还直接返回了查询结果！这就是 Text2SQL 的魅力。</p><h3 id=前端界面展示>前端界面展示</h3><p>我设计了一个简洁美观的 Web 界面，让用户能够直观地体验 Text2SQL 功能：</p><p><img src=https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-01.png alt="Spring AI Text2SQL 直接模式界面展示 - 自然语言数据库查询系统前端界面，包含中文查询输入框、示例查询模板、SQL生成结果展示和数据库结构查看功能" loading=lazy decoding=async class=content-image></p><p><strong>主要功能</strong>：</p><ul><li><strong>自然语言输入</strong>：用户可以直接用中文描述查询需求</li><li><strong>示例查询</strong>：提供常用的查询模板，点击即可使用</li><li><strong>实时结果展示</strong>：显示生成的 SQL 和查询结果</li><li><strong>数据库结构查看</strong>：可以查看完整的数据库结构信息</li></ul><p><strong>界面特色</strong>：</p><ul><li>使用 Bootstrap 5 构建，响应式设计</li><li>渐变色背景，视觉效果现代</li><li>代码高亮显示，SQL 语句清晰可读</li><li>表格结果展示，数据一目了然</li></ul><p><strong>示例数据表结构</strong>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- 员工表数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> employees (name, department, <span style=color:#66d9ef>position</span>, salary, hire_date, email) <span style=color:#66d9ef>VALUES</span>
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> employees (name, department, <span style=color:#66d9ef>position</span>, salary, hire_date, email) <span style=color:#66d9ef>VALUES</span>
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;张三&#39;</span>, <span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#e6db74>&#39;高级工程师&#39;</span>, <span style=color:#ae81ff>15000</span>, <span style=color:#e6db74>&#39;2022-01-15&#39;</span>, <span style=color:#e6db74>&#39;zhangsan@company.com&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;李四&#39;</span>, <span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#e6db74>&#39;工程师&#39;</span>, <span style=color:#ae81ff>12000</span>, <span style=color:#e6db74>&#39;2022-03-20&#39;</span>, <span style=color:#e6db74>&#39;lisi@company.com&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;王五&#39;</span>, <span style=color:#e6db74>&#39;销售部&#39;</span>, <span style=color:#e6db74>&#39;销售经理&#39;</span>, <span style=color:#ae81ff>18000</span>, <span style=color:#e6db74>&#39;2021-11-10&#39;</span>, <span style=color:#e6db74>&#39;wangwu@company.com&#39;</span>),
@@ -209,7 +209,7 @@ DatabaseTool --&gt; MySQL[MySQL Database]
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;吴十&#39;</span>, <span style=color:#e6db74>&#39;市场部&#39;</span>, <span style=color:#e6db74>&#39;市场专员&#39;</span>, <span style=color:#ae81ff>11000</span>, <span style=color:#e6db74>&#39;2023-01-10&#39;</span>, <span style=color:#e6db74>&#39;wushi@company.com&#39;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- 项目表数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> projects (name, description, start_date, end_date, status, budget) <span style=color:#66d9ef>VALUES</span>
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> projects (name, description, start_date, end_date, status, budget) <span style=color:#66d9ef>VALUES</span>
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;电商平台重构&#39;</span>, <span style=color:#e6db74>&#39;重构现有电商平台，提升性能和用户体验&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>, <span style=color:#e6db74>&#39;2023-06-30&#39;</span>, <span style=color:#e6db74>&#39;进行中&#39;</span>, <span style=color:#ae81ff>500000</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;移动端应用开发&#39;</span>, <span style=color:#e6db74>&#39;开发公司移动端应用&#39;</span>, <span style=color:#e6db74>&#39;2023-03-01&#39;</span>, <span style=color:#e6db74>&#39;2023-08-31&#39;</span>, <span style=color:#e6db74>&#39;进行中&#39;</span>, <span style=color:#ae81ff>300000</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;数据分析系统&#39;</span>, <span style=color:#e6db74>&#39;构建企业数据分析平台&#39;</span>, <span style=color:#e6db74>&#39;2022-10-01&#39;</span>, <span style=color:#e6db74>&#39;2023-02-28&#39;</span>, <span style=color:#e6db74>&#39;已完成&#39;</span>, <span style=color:#ae81ff>200000</span>),
@@ -217,7 +217,7 @@ DatabaseTool --&gt; MySQL[MySQL Database]
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;财务系统优化&#39;</span>, <span style=color:#e6db74>&#39;优化财务系统性能&#39;</span>, <span style=color:#e6db74>&#39;2022-12-01&#39;</span>, <span style=color:#e6db74>&#39;2023-01-31&#39;</span>, <span style=color:#e6db74>&#39;已完成&#39;</span>, <span style=color:#ae81ff>80000</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- 项目成员关系表数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> project_members (project_id, employee_id, <span style=color:#66d9ef>role</span>, join_date) <span style=color:#66d9ef>VALUES</span>
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> project_members (project_id, employee_id, <span style=color:#66d9ef>role</span>, join_date) <span style=color:#66d9ef>VALUES</span>
 </span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#39;开发负责人&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#e6db74>&#39;开发工程师&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>7</span>, <span style=color:#e6db74>&#39;技术架构师&#39;</span>, <span style=color:#e6db74>&#39;2023-01-01&#39;</span>),
@@ -230,7 +230,7 @@ DatabaseTool --&gt; MySQL[MySQL Database]
 </span></span><span style=display:flex><span>(<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#e6db74>&#39;项目经理&#39;</span>, <span style=color:#e6db74>&#39;2022-12-01&#39;</span>);
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>-- 部门表数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> departments (name, manager_id, budget, <span style=color:#66d9ef>location</span>) <span style=color:#66d9ef>VALUES</span>
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>INSERT</span> <span style=color:#66d9ef>IGNORE</span> <span style=color:#66d9ef>INTO</span> departments (name, manager_id, budget, <span style=color:#66d9ef>location</span>) <span style=color:#66d9ef>VALUES</span>
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;技术部&#39;</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>2000000</span>, <span style=color:#e6db74>&#39;北京&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;销售部&#39;</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>1500000</span>, <span style=color:#e6db74>&#39;上海&#39;</span>),
 </span></span><span style=display:flex><span>(<span style=color:#e6db74>&#39;人事部&#39;</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>800000</span>, <span style=color:#e6db74>&#39;北京&#39;</span>),
@@ -448,20 +448,20 @@ G --&gt; E[Step 5 SQL执行]
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=font-weight:700>**SQL智能注释**</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>1. **查询目的**: 查询公司中工资最高的员工信息，用于识别薪酬最高的员工
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>2. **字段说明**:
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - id: 员工唯一标识符，用于精确识别员工
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - name: 员工姓名，便于人力资源识别具体人员
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - department: 所属部门，分析高薪员工分布情况
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - position: 职位信息，了解高薪对应的岗位级别
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - salary: 工资数额，核心查询字段
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - hire_date: 入职日期，分析高薪与入职时间的关系
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - email: 联系方式，便于后续沟通
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>3. **表关联**: 单表查询，直接从employees表中获取数据，无需表关联
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>4. **条件筛选**: 无特定筛选条件，查询全公司所有员工
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>5. **分组聚合**: 无需分组统计，直接查询单个最高薪员工
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>6. **排序逻辑**: 按salary字段降序排列(DESC)，确保工资最高的员工排在第一位
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>7. **性能优化**: 使用LIMIT 1限制结果数量，避免返回不必要的数据，提高查询效率
-</span></span></span><span style=display:flex><span><span style=font-style:italic></span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>8. **业务价值**: 该查询结果有助于人力资源部门了解公司薪酬结构，识别关键人才，为薪酬调整和人才保留策略提供数据支持
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>2. **字段说明**:
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - id: 员工唯一标识符，用于精确识别员工
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - name: 员工姓名，便于人力资源识别具体人员
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - department: 所属部门，分析高薪员工分布情况
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - position: 职位信息，了解高薪对应的岗位级别
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - salary: 工资数额，核心查询字段
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - hire_date: 入职日期，分析高薪与入职时间的关系
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>   - email: 联系方式，便于后续沟通
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>3. **表关联**: 单表查询，直接从employees表中获取数据，无需表关联
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>4. **条件筛选**: 无特定筛选条件，查询全公司所有员工
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>5. **分组聚合**: 无需分组统计，直接查询单个最高薪员工
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>6. **排序逻辑**: 按salary字段降序排列(DESC)，确保工资最高的员工排在第一位
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>7. **性能优化**: 使用LIMIT 1限制结果数量，避免返回不必要的数据，提高查询效率
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>&gt; </span><span style=font-style:italic>8. **业务价值**: 该查询结果有助于人力资源部门了解公司薪酬结构，识别关键人才，为薪酬调整和人才保留策略提供数据支持
 </span></span></span></code></pre></div><p><strong>步骤 5：SQL执行</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>执行成功，找到 1 条记录
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>| id | name | department | position | salary | hire_date | email |

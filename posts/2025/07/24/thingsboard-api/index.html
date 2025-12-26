@@ -158,13 +158,13 @@
 </span></span><span style=display:flex><span>Payload: <span style=color:#f92672>{</span><span style=color:#e6db74>&#34;status&#34;</span>: <span style=color:#e6db74>&#34;SUCCESS&#34;</span>, <span style=color:#e6db74>&#34;data&#34;</span>: <span style=color:#f92672>{</span>...<span style=color:#f92672>}}</span>
 </span></span></code></pre></div><h2 id=6-接口设计特点>6. 接口设计特点</h2><h3 id=61-统一认证>6.1 统一认证</h3><ul><li><strong>JWT Token</strong>: REST API和WebSocket使用JWT Token认证</li><li><strong>设备Token</strong>: MQTT、CoAP、HTTP设备接口使用设备Token认证</li><li><strong>Token刷新</strong>: 支持Token自动刷新机制</li></ul><h3 id=62-数据格式>6.2 数据格式</h3><ul><li><strong>JSON格式</strong>: 所有接口使用JSON作为数据交换格式</li><li><strong>时间戳</strong>: 使用毫秒级时间戳</li><li><strong>错误码</strong>: 统一的错误码和错误信息格式</li></ul><h3 id=63-版本控制>6.3 版本控制</h3><ul><li><strong>URL版本</strong>: 使用 <code>/api/v1/</code> 进行版本控制</li><li><strong>向后兼容</strong>: 新版本保持对旧版本的兼容性</li><li><strong>版本弃用</strong>: 提供版本弃用通知和迁移指南</li></ul><h3 id=64-权限控制>6.4 权限控制</h3><ul><li><strong>租户隔离</strong>: 多租户数据隔离</li><li><strong>角色权限</strong>: 基于角色的权限控制</li><li><strong>资源权限</strong>: 细粒度资源权限控制</li></ul><h2 id=7-最佳实践>7. 最佳实践</h2><h3 id=71-设备连接>7.1 设备连接</h3><ul><li>使用设备Token进行设备认证</li><li>实现断线重连机制</li><li>支持心跳保活</li></ul><h3 id=72-数据上报>7.2 数据上报</h3><ul><li>批量上报减少网络开销</li><li>使用压缩减少数据传输量</li><li>实现数据缓存和重传机制</li></ul><h3 id=73-命令下发>7.3 命令下发</h3><ul><li>使用唯一命令ID</li><li>实现命令超时处理</li><li>支持命令状态跟踪</li></ul><h3 id=74-错误处理>7.4 错误处理</h3><ul><li>统一的错误码定义</li><li>详细的错误信息</li><li>错误重试机制</li></ul><h2 id=8-接口测试>8. 接口测试</h2><h3 id=81-测试环境准备>8.1 测试环境准备</h3><h4 id=811-thingsboard环境搭建>8.1.1 ThingsBoard环境搭建</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 使用Docker快速搭建ThingsBoard环境</span>
 </span></span><span style=display:flex><span>docker run -it -p 9090:9090 -p 1883:1883 -p 5683:5683/udp <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --name thingsboard <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --restart always <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  thingsboard/tb-postgres
+</span></span></span><span style=display:flex><span>  --name thingsboard <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  --restart always <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  thingsboard/tb-postgres
 </span></span></code></pre></div><h4 id=812-测试工具准备>8.1.2 测试工具准备</h4><ul><li><strong>Postman</strong>: REST API测试</li><li><strong>MQTT.fx</strong>: MQTT协议测试</li><li><strong>WebSocket客户端</strong>: WebSocket测试</li><li><strong>CoAP客户端</strong>: CoAP协议测试</li><li><strong>curl</strong>: 命令行HTTP测试</li></ul><h3 id=82-rest-api测试>8.2 REST API测试</h3><h4 id=821-认证测试>8.2.1 认证测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 用户登录获取Token</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:9090/api/auth/login <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;username&#34;: &#34;tenant@thingsboard.org&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;password&#34;: &#34;tenant&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  }&#39;</span> | jq
@@ -177,9 +177,9 @@
 </span></span><span style=display:flex><span><span style=color:#f92672>}</span>
 </span></span></code></pre></div><h4 id=822-设备管理测试>8.2.2 设备管理测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 创建设备</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:9090/api/device <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;name&#34;: &#34;Test Device&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;type&#34;: &#34;default&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;additionalInfo&#34;: {
@@ -189,25 +189,25 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 查询设备</span>
 </span></span><span style=display:flex><span>curl -X GET http://localhost:9090/api/device/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 更新设备</span>
 </span></span><span style=display:flex><span>curl -X PUT http://localhost:9090/api/device/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;name&#34;: &#34;Updated Test Device&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;type&#34;: &#34;default&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  }&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 删除设备</span>
 </span></span><span style=display:flex><span>curl -X DELETE http://localhost:9090/api/device/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
 </span></span></code></pre></div><h4 id=823-设备预注册测试>8.2.3 设备预注册测试</h4><h5 id=8231-设备预注册api>8.2.3.1 设备预注册API</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 设备预注册（创建设备并获取访问令牌）</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:9090/api/device <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;name&#34;: &#34;PreRegisteredDevice_001&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;type&#34;: &#34;default&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;additionalInfo&#34;: {
@@ -220,13 +220,13 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 获取设备访问令牌</span>
 </span></span><span style=display:flex><span>curl -X GET http://localhost:9090/api/device/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span>/credentials <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 更新设备访问令牌</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:9090/api/device/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span>/credentials <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;credentialsType&#34;: &#34;ACCESS_TOKEN&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;credentialsId&#34;: &#34;NEW_DEVICE_TOKEN_001&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  }&#39;</span>
@@ -604,7 +604,7 @@
 </span></span><span style=display:flex><span>    <span style=color:#75715e># 清理测试设备（可选）</span>
 </span></span><span style=display:flex><span>    <span style=color:#75715e># tester.cleanup_devices(devices)</span>
 </span></span></code></pre></div><h5 id=8233-shell脚本版本>8.2.3.3 Shell脚本版本</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e># ThingsBoard设备预注册测试脚本</span>
+</span></span></span><span style=display:flex><span><span style=color:#75715e># ThingsBoard设备预注册测试脚本</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 配置参数</span>
 </span></span><span style=display:flex><span>THINGSBOARD_HOST<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;localhost&#34;</span>
@@ -640,9 +640,9 @@
 </span></span><span style=display:flex><span>    log_info <span style=color:#e6db74>&#34;创建设备: </span>$device_name<span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    response<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>curl -s -X POST <span style=color:#e6db74>&#34;http://</span>$THINGSBOARD_HOST<span style=color:#e6db74>:</span>$THINGSBOARD_PORT<span style=color:#e6db74>/api/device&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -H <span style=color:#e6db74>&#34;X-Authorization: Bearer </span>$USER_TOKEN<span style=color:#e6db74>&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -d <span style=color:#e6db74>&#34;{
+</span></span></span><span style=display:flex><span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>        -H <span style=color:#e6db74>&#34;X-Authorization: Bearer </span>$USER_TOKEN<span style=color:#e6db74>&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>        -d <span style=color:#e6db74>&#34;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;name\&#34;: \&#34;</span>$device_name<span style=color:#e6db74>\&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;type\&#34;: \&#34;</span>$device_type<span style=color:#e6db74>\&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;additionalInfo\&#34;: {
@@ -680,9 +680,9 @@
 </span></span><span style=display:flex><span>    token<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;DEVICE_TOKEN_</span><span style=color:#e6db74>${</span>device_name<span style=color:#e6db74>}</span><span style=color:#e6db74>_</span><span style=color:#66d9ef>$(</span>date +%s<span style=color:#66d9ef>)</span><span style=color:#e6db74>_</span><span style=color:#66d9ef>$(</span>openssl rand -hex 4<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    response<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>curl -s -X POST <span style=color:#e6db74>&#34;http://</span>$THINGSBOARD_HOST<span style=color:#e6db74>:</span>$THINGSBOARD_PORT<span style=color:#e6db74>/api/device/</span>$device_id<span style=color:#e6db74>/credentials&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -H <span style=color:#e6db74>&#34;X-Authorization: Bearer </span>$USER_TOKEN<span style=color:#e6db74>&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -d <span style=color:#e6db74>&#34;{
+</span></span></span><span style=display:flex><span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>        -H <span style=color:#e6db74>&#34;X-Authorization: Bearer </span>$USER_TOKEN<span style=color:#e6db74>&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>        -d <span style=color:#e6db74>&#34;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;credentialsType\&#34;: \&#34;ACCESS_TOKEN\&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;credentialsId\&#34;: \&#34;</span>$token<span style=color:#e6db74>\&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>        }&#34;</span><span style=color:#66d9ef>)</span>
@@ -705,8 +705,8 @@
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    <span style=color:#75715e># 测试HTTP连接</span>
 </span></span><span style=display:flex><span>    response<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>curl -s -X POST <span style=color:#e6db74>&#34;http://</span>$THINGSBOARD_HOST<span style=color:#e6db74>:8080/api/v1/</span>$device_token<span style=color:#e6db74>/telemetry&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>        -d <span style=color:#e6db74>&#34;{
+</span></span></span><span style=display:flex><span>        -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>        -d <span style=color:#e6db74>&#34;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;test\&#34;: \&#34;connection_test\&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>            \&#34;timestamp\&#34;: </span><span style=color:#66d9ef>$(</span>date +%s<span style=color:#66d9ef>)</span><span style=color:#e6db74>000
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>        }&#34;</span><span style=color:#66d9ef>)</span>
@@ -766,9 +766,9 @@
 </span></span><span style=display:flex><span>main <span style=color:#e6db74>&#34;</span>$@<span style=color:#e6db74>&#34;</span>
 </span></span></code></pre></div><h4 id=823-遥测数据测试>8.2.3 遥测数据测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 上报遥测数据</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:9090/api/plugins/telemetry/DEVICE/<span style=color:#f92672>{</span>deviceId<span style=color:#f92672>}</span>/values/timeseries <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;temperature&#34;: 25.5,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;humidity&#34;: 60.2,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;pressure&#34;: 1013.25
@@ -776,7 +776,7 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 查询遥测数据</span>
 </span></span><span style=display:flex><span>curl -X GET <span style=color:#e6db74>&#34;http://localhost:9090/api/plugins/telemetry/DEVICE/{deviceId}/values/timeseries?keys=temperature,humidity&amp;startTs=1640995200000&amp;endTs=1641081600000&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;X-Authorization: Bearer YOUR_TOKEN&#34;</span>
 </span></span></code></pre></div><h4 id=824-postman测试集合>8.2.4 Postman测试集合</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;info&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;ThingsBoard API Tests&#34;</span>,
@@ -911,12 +911,12 @@
 </span></span><span style=display:flex><span>client<span style=color:#f92672>.</span>loop_forever()
 </span></span></code></pre></div><h4 id=832-命令下发测试>8.3.2 命令下发测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 使用mosquitto_pub发送命令</span>
 </span></span><span style=display:flex><span>mosquitto_pub -h localhost -p <span style=color:#ae81ff>1883</span> -u <span style=color:#e6db74>&#34;YOUR_DEVICE_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -t <span style=color:#e6db74>&#34;v1/devices/me/commands/request/1&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -m <span style=color:#e6db74>&#39;{&#34;method&#34;: &#34;setTemperature&#34;, &#34;params&#34;: {&#34;temperature&#34;: 26.0}}&#39;</span>
+</span></span></span><span style=display:flex><span>  -t <span style=color:#e6db74>&#34;v1/devices/me/commands/request/1&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -m <span style=color:#e6db74>&#39;{&#34;method&#34;: &#34;setTemperature&#34;, &#34;params&#34;: {&#34;temperature&#34;: 26.0}}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 监听命令响应</span>
 </span></span><span style=display:flex><span>mosquitto_sub -h localhost -p <span style=color:#ae81ff>1883</span> -u <span style=color:#e6db74>&#34;YOUR_DEVICE_TOKEN&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -t <span style=color:#e6db74>&#34;v1/devices/me/commands/response/+&#34;</span>
+</span></span></span><span style=display:flex><span>  -t <span style=color:#e6db74>&#34;v1/devices/me/commands/response/+&#34;</span>
 </span></span></code></pre></div><h3 id=84-websocket测试>8.4 WebSocket测试</h3><h4 id=841-javascript-websocket客户端>8.4.1 JavaScript WebSocket客户端</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
 </span></span><span style=display:flex><span>&lt;<span style=color:#f92672>html</span>&gt;
 </span></span><span style=display:flex><span>&lt;<span style=color:#f92672>head</span>&gt;
@@ -934,11 +934,11 @@
 </span></span><span style=display:flex><span>            document.<span style=color:#a6e22e>getElementById</span>(<span style=color:#e6db74>&#39;messages&#39;</span>).<span style=color:#a6e22e>innerHTML</span> <span style=color:#f92672>+=</span> <span style=color:#e6db74>&#39;&lt;p&gt;Connected to ThingsBoard&lt;/p&gt;&#39;</span>;
 </span></span><span style=display:flex><span>            
 </span></span><span style=display:flex><span>            <span style=color:#75715e>// 订阅设备数据
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>subscribeMessage</span> <span style=color:#f92672>=</span> {
+</span></span></span><span style=display:flex><span>            <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>subscribeMessage</span> <span style=color:#f92672>=</span> {
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>deviceId</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;device_001&#39;</span>,
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>keys</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#39;temperature&#39;</span>, <span style=color:#e6db74>&#39;humidity&#39;</span>],
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>startTs</span><span style=color:#f92672>:</span> Date.<span style=color:#a6e22e>now</span>() <span style=color:#f92672>-</span> <span style=color:#ae81ff>3600000</span>, <span style=color:#75715e>// 1小时前
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#a6e22e>endTs</span><span style=color:#f92672>:</span> Date.<span style=color:#a6e22e>now</span>(),
+</span></span></span><span style=display:flex><span>                <span style=color:#a6e22e>endTs</span><span style=color:#f92672>:</span> Date.<span style=color:#a6e22e>now</span>(),
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>interval</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>1000</span>,
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>limit</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>100</span>,
 </span></span><span style=display:flex><span>                <span style=color:#a6e22e>agg</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;AVG&#39;</span>
@@ -1013,19 +1013,19 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 上报遥测数据</span>
 </span></span><span style=display:flex><span>coap-client -m POST <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -e <span style=color:#e6db74>&#39;{&#34;temperature&#34;: 25.5, &#34;humidity&#34;: 60.2}&#39;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/telemetry
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -e <span style=color:#e6db74>&#39;{&#34;temperature&#34;: 25.5, &#34;humidity&#34;: 60.2}&#39;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/telemetry
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 上报属性数据</span>
 </span></span><span style=display:flex><span>coap-client -m POST <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -e <span style=color:#e6db74>&#39;{&#34;firmware_version&#34;: &#34;1.0.0&#34;}&#39;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/attributes
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -e <span style=color:#e6db74>&#39;{&#34;firmware_version&#34;: &#34;1.0.0&#34;}&#39;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/attributes
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 获取属性</span>
 </span></span><span style=display:flex><span>coap-client -m GET <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/attributes
+</span></span></span><span style=display:flex><span>  coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/attributes
 </span></span></code></pre></div><h4 id=852-python-coap客户端>8.5.2 Python CoAP客户端</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> asyncio
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> aiocoap <span style=color:#f92672>import</span> Context, Message
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> json
@@ -1064,8 +1064,8 @@
 </span></span><span style=display:flex><span>asyncio<span style=color:#f92672>.</span>run(test_coap())
 </span></span></code></pre></div><h3 id=86-http设备接口测试>8.6 HTTP设备接口测试</h3><h4 id=861-设备数据上报测试>8.6.1 设备数据上报测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 上报遥测数据</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/v1/YOUR_DEVICE_TOKEN/telemetry&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;temperature&#34;: 25.5,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;humidity&#34;: 60.2,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;pressure&#34;: 1013.25
@@ -1073,8 +1073,8 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 上报属性</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/v1/YOUR_DEVICE_TOKEN/attributes&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;firmware_version&#34;: &#34;1.0.0&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;device_model&#34;: &#34;TestDevice&#34;
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>  }&#39;</span>
@@ -1086,8 +1086,8 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 响应命令</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/v1/YOUR_DEVICE_TOKEN/commands/1&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;status&#34;: &#34;SUCCESS&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;data&#34;: {
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>      &#34;result&#34;: &#34;Temperature set to 26.0&#34;

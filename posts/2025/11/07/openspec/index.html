@@ -46,20 +46,20 @@
 </span></span></code></pre></div><p>Cursor 会分析你的项目并生成类似这样的内容：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span># Project Context
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Tech Stack
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> **Backend**: Node.js 18, Express.js
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> **Backend**: Node.js 18, Express.js
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> **Database**: PostgreSQL 14
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> **Frontend**: React 18, TypeScript
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> **Authentication**: JWT, bcrypt
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> **Testing**: Jest, Supertest
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Architecture Patterns
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> RESTful API design
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> RESTful API design
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> MVC pattern
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Repository pattern for data access
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Middleware-based request processing
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Coding Conventions
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> Use TypeScript for type safety
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Use TypeScript for type safety
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Follow Airbnb JavaScript style guide
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Use async/await for asynchronous operations
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Comprehensive error handling with custom error classes
@@ -79,102 +79,102 @@
 </span></span></code></pre></div><p><strong>生成的 <code>proposal.md</code> 示例：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span># Proposal: Add Two-Factor Authentication
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Problem Statement
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Currently, user accounts are protected only by passwords. If a password is 
+</span></span></span><span style=display:flex><span>Currently, user accounts are protected only by passwords. If a password is 
 </span></span><span style=display:flex><span>compromised, attackers can gain full access to user accounts. We need an 
 </span></span><span style=display:flex><span>additional security layer to protect sensitive user data.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Proposed Solution
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Implement TOTP-based two-factor authentication that:
+</span></span></span><span style=display:flex><span>Implement TOTP-based two-factor authentication that:
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Allows users to enable/disable 2FA on their accounts
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Generates QR codes for authenticator app setup
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Validates 6-digit TOTP codes during login
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Provides backup codes for account recovery
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Benefits
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> Enhanced account security
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Enhanced account security
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Compliance with security standards
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> User trust and confidence
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Protection against password breaches
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Scope
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> Backend API for 2FA setup and verification
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Backend API for 2FA setup and verification
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Database schema for storing 2FA secrets
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Frontend UI for 2FA enrollment and login
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Recovery code generation and validation
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## Out of Scope
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> SMS-based 2FA (future enhancement)
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> SMS-based 2FA (future enhancement)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Hardware token support
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> Admin-enforced 2FA policies
 </span></span></code></pre></div><p><strong>生成的 <code>tasks.md</code> 示例：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span># Implementation Tasks
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 1. Database Schema
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 1.1 Add 2FA fields to users table
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 1.1 Add 2FA fields to users table
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 1.2 Create migration scripts
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 1.3 Add indexes for performance
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 2. Backend - 2FA Setup
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 2.1 Create endpoint to generate 2FA secret
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 2.1 Create endpoint to generate 2FA secret
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 2.2 Generate QR code for authenticator apps
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 2.3 Create endpoint to verify and enable 2FA
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 2.4 Generate backup recovery codes
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 3. Backend - Login Flow
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 3.1 Modify login endpoint to check 2FA status
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 3.1 Modify login endpoint to check 2FA status
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 3.2 Create 2FA verification endpoint
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 3.3 Implement backup code validation
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 3.4 Add rate limiting for failed attempts
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 4. Frontend - 2FA Setup
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 4.1 Create 2FA settings page
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 4.1 Create 2FA settings page
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 4.2 Display QR code for scanning
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 4.3 Add verification code input
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 4.4 Show backup codes after setup
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 5. Frontend - Login Flow
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 5.1 Add 2FA code input to login page
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 5.1 Add 2FA code input to login page
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 5.2 Handle 2FA verification errors
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 5.3 Add &#34;use backup code&#34; option
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## 6. Testing &amp; Documentation
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>- [ ]</span> 6.1 Write unit tests
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 6.1 Write unit tests
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 6.2 Write integration tests
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 6.3 Update API documentation
 </span></span><span style=display:flex><span><span style=color:#66d9ef>- [ ]</span> 6.4 Create user guide
 </span></span></code></pre></div><p><strong>生成的规范增量 <code>specs/auth/spec.md</code>：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span># Delta for Authentication Service
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>## ADDED Requirements
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### Requirement: Two-Factor Authentication Setup
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>The system SHALL allow users to enable TOTP-based two-factor authentication.
+</span></span></span><span style=display:flex><span>The system SHALL allow users to enable TOTP-based two-factor authentication.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Generate 2FA secret
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN a logged-in user without 2FA enabled
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN a logged-in user without 2FA enabled
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN they request to enable 2FA
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN a unique secret key is generated
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> AND a QR code is provided for authenticator apps
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Verify and enable 2FA
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN a user has generated a 2FA secret
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN a user has generated a 2FA secret
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN they submit a valid TOTP code
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN 2FA is enabled on their account
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> AND 10 backup recovery codes are generated
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### Requirement: Two-Factor Authentication Login
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>The system SHALL require 2FA verification for users who have enabled it.
+</span></span></span><span style=display:flex><span>The system SHALL require 2FA verification for users who have enabled it.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Login with 2FA enabled
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN a user with 2FA enabled
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN a user with 2FA enabled
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN they submit valid username and password
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN they are prompted for a 2FA code
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Valid 2FA code
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN a user is at the 2FA verification step
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN a user is at the 2FA verification step
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN they submit a valid TOTP code
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN they are logged in successfully
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Use backup code
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN a user cannot access their authenticator app
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN a user cannot access their authenticator app
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN they use a valid backup code
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN they are logged in successfully
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> AND the backup code is marked as used
@@ -190,13 +190,13 @@
 </span></span><span style=display:flex><span><span style=color:#e6db74>&#34;请添加安全要求：2FA 密钥必须使用 AES-256 加密存储，
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>并且添加审计日志记录所有 2FA 相关操作&#34;</span>
 </span></span></code></pre></div><p>Cursor 会更新规范增量：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span><span style=color:#75715e>### Requirement: Secure Storage
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>The system SHALL securely store 2FA secrets using AES-256 encryption.
+</span></span></span><span style=display:flex><span>The system SHALL securely store 2FA secrets using AES-256 encryption.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>### Requirement: Audit Logging
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>The system SHALL log all 2FA-related security events.
+</span></span></span><span style=display:flex><span>The system SHALL log all 2FA-related security events.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e>#### Scenario: Log 2FA events
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>-</span> GIVEN any 2FA operation occurs
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> GIVEN any 2FA operation occurs
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> WHEN the operation completes
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> THEN an audit log entry is created
 </span></span><span style=display:flex><span><span style=color:#66d9ef>-</span> AND includes timestamp, user ID, action, and result
@@ -206,7 +206,7 @@
 </span></span><span style=display:flex><span>或使用斜杠命令：
 </span></span><span style=display:flex><span>/openspec:apply add-2fa
 </span></span></code></pre></div><p>Cursor 会按任务清单顺序实现功能。以下是生成的代码示例：</p><p><strong>1. 数据库迁移（Task 1.1-1.2）：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#75715e>-- migrations/add_2fa_support.sql
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>ALTER</span> <span style=color:#66d9ef>TABLE</span> users 
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>ALTER</span> <span style=color:#66d9ef>TABLE</span> users 
 </span></span><span style=display:flex><span><span style=color:#66d9ef>ADD</span> <span style=color:#66d9ef>COLUMN</span> two_factor_secret VARCHAR(<span style=color:#ae81ff>255</span>),
 </span></span><span style=display:flex><span><span style=color:#66d9ef>ADD</span> <span style=color:#66d9ef>COLUMN</span> two_factor_enabled BOOLEAN <span style=color:#66d9ef>DEFAULT</span> <span style=color:#66d9ef>FALSE</span>,
 </span></span><span style=display:flex><span><span style=color:#66d9ef>ADD</span> <span style=color:#66d9ef>COLUMN</span> backup_codes TEXT,
@@ -224,7 +224,7 @@
 </span></span><span style=display:flex><span>    created_at <span style=color:#66d9ef>TIMESTAMP</span> <span style=color:#66d9ef>DEFAULT</span> <span style=color:#66d9ef>CURRENT_TIMESTAMP</span>
 </span></span><span style=display:flex><span>);
 </span></span></code></pre></div><p><strong>2. 后端服务（Task 2.1-2.4）：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// services/twoFactorService.js
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>speakeasy</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;speakeasy&#39;</span>);
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>speakeasy</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;speakeasy&#39;</span>);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>QRCode</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;qrcode&#39;</span>);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>crypto</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;crypto&#39;</span>);
 </span></span><span style=display:flex><span>
@@ -274,7 +274,7 @@
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><strong>3. API 路由（Task 3.1-3.4）：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// routes/auth.js
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>express</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;express&#39;</span>);
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>express</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;express&#39;</span>);
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>router</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>express</span>.<span style=color:#a6e22e>Router</span>();
 </span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>twoFactorService</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;../services/twoFactorService&#39;</span>);
 </span></span><span style=display:flex><span>
@@ -313,7 +313,7 @@
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>});
 </span></span></code></pre></div><p><strong>4. 前端组件（Task 4.1-4.4）：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=display:flex><span><span style=color:#75715e>// components/TwoFactorSetup.jsx
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>React</span>, { <span style=color:#a6e22e>useState</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;react&#39;</span>;
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>React</span>, { <span style=color:#a6e22e>useState</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;react&#39;</span>;
 </span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>QRCodeSVG</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;qrcode.react&#39;</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>TwoFactorSetup</span>() {

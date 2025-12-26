@@ -344,7 +344,7 @@
 </span></span><span style=display:flex><span><span style=color:#75715e># This is a comment - 只支持行注释</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>user.message</span><span style=color:#f92672>=</span><span style=color:#e6db74>Hello World</span>
 </span></span></code></pre></div><p><strong>对比现代格式的优势：</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span><span style=color:#75715e>// JSON格式 - 支持嵌套结构
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>{
+</span></span></span><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;user&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;profile&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Name&#34;</span>,
@@ -357,7 +357,7 @@
 </span></span><span style=display:flex><span>  },
 </span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;welcome&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#f92672>&#34;chinese&#34;</span>: <span style=color:#e6db74>&#34;欢迎&#34;</span>  <span style=color:#75715e>// 直接支持Unicode
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  }
+</span></span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h5 id=522-动态更新限制>5.2.2 动态更新限制</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// ResourceBundleMessageSource的限制</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ResourceBundleMessageSource</span> {

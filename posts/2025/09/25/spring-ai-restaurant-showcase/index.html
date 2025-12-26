@@ -249,8 +249,8 @@
 </span></span><span style=display:flex><span>mvn spring-boot:run -Dspring-boot.run.arguments<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;--spring.profiles.active=dmr&#34;</span>
 </span></span></code></pre></div><h2 id=测试-api>测试 API</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 推荐餐厅</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/restaurants/recommend <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;location&#34;: &#34;北京市&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;cuisine&#34;: &#34;中餐&#34;,
 </span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;priceRange&#34;: &#34;中等价位&#34;,
@@ -262,18 +262,18 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 生成菜品</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/restaurants/dishes/generate&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;中餐&#34;, &#34;count&#34;: 3}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;中餐&#34;, &#34;count&#34;: 3}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 获取建议</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/restaurants/advice&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;query&#34;: &#34;适合情侣约会的餐厅&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;query&#34;: &#34;适合情侣约会的餐厅&#34;}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 多语言聊天</span>
 </span></span><span style=display:flex><span>curl -X POST <span style=color:#e6db74>&#34;http://localhost:8080/api/restaurants/chat&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;推荐一家好吃的川菜馆&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;推荐一家好吃的川菜馆&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
 </span></span></code></pre></div><h2 id=核心技术特性>核心技术特性</h2><h3 id=1-多轮对话支持>1. 多轮对话支持</h3><p>多轮对话是智能应用的核心特性，Spring AI 提供了开箱即用的解决方案：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@Configuration</span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ChatConfig</span> {
 </span></span><span style=display:flex><span>
@@ -310,13 +310,13 @@
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>现在，让我们进行最终测试。应用重启后，我们可以调用生成餐厅列表的端点。然后，我们将调用 <code>GET /api/restaurants/{id}/details</code> 端点来仅显示具有指定 ID 的单个餐厅。最后，我们可以重复调用 <code>POST /api/restaurants/recommend</code> 端点来验证它是否返回相同的列表。</p><h4 id=多轮对话测试>多轮对话测试</h4><p>让我们测试多轮对话功能：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 第一轮对话：询问川菜馆推荐</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/restaurants/chat <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;我想在北京找一家川菜馆&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;我想在北京找一家川菜馆&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 第二轮对话：询问价格（AI 能记住之前的推荐）</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/restaurants/chat <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;刚才推荐的餐厅中，哪家最便宜？&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;message&#34;: &#34;刚才推荐的餐厅中，哪家最便宜？&#34;, &#34;language&#34;: &#34;zh&#34;}&#39;</span>
 </span></span></code></pre></div><p><strong>测试结果</strong>：AI 能够记住之前的对话内容，提供连贯的回复，准确回答关于之前推荐餐厅的问题。</p><h4 id=多轮对话实现原理>多轮对话实现原理</h4><ol><li><strong>自动记忆管理</strong>：<code>MessageChatMemoryAdvisor</code> 自动管理对话历史</li><li><strong>内存存储</strong>：使用 <code>MessageWindowChatMemory</code> + <code>InMemoryChatMemoryRepository</code></li><li><strong>透明集成</strong>：通过 <code>ChatClient</code> 的 <code>defaultAdvisors</code> 配置</li><li><strong>上下文保持</strong>：每次对话都会包含完整的对话历史</li></ol><h3 id=2-结构化输出支持>2. 结构化输出支持</h3><p>Spring AI 提供了多种结构化输出方式，满足不同的开发需求：</p><h4 id=1-直接-entity-方法最简单>1. 直接 .entity() 方法（最简单）</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#a6e22e>@PostMapping</span>(<span style=color:#e6db74>&#34;/restaurant/direct-entity&#34;</span>)
 </span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> ResponseEntity<span style=color:#f92672>&lt;</span>Restaurant<span style=color:#f92672>&gt;</span> <span style=color:#a6e22e>getRestaurantDirectEntity</span>(<span style=color:#a6e22e>@RequestBody</span> Map<span style=color:#f92672>&lt;</span>String, Object<span style=color:#f92672>&gt;</span> request) {
 </span></span><span style=display:flex><span>    String cuisine <span style=color:#f92672>=</span> (String) request.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;cuisine&#34;</span>);
@@ -428,18 +428,18 @@
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><h4 id=结构化输出方式对比>结构化输出方式对比</h4><table><thead><tr><th>输出方式</th><th>代码简洁度</th><th>类型安全</th><th>灵活性</th><th>推荐场景</th></tr></thead><tbody><tr><td><code>.entity()</code></td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>简单对象</td></tr><tr><td><code>ParameterizedTypeReference</code></td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>复杂泛型</td></tr><tr><td><code>BeanOutputConverter</code></td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>自定义转换</td></tr><tr><td><code>MapOutputConverter</code></td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>动态结构</td></tr><tr><td><code>ListOutputConverter</code></td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐⭐</td><td>简单列表</td></tr></tbody></table><h4 id=结构化输出测试>结构化输出测试</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 测试直接 .entity() 方法</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/structured/restaurant/direct-entity <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 测试 ParameterizedTypeReference</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/structured/restaurants/type-ref <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 测试 BeanOutputConverter</span>
 </span></span><span style=display:flex><span>curl -X POST http://localhost:8080/api/structured/restaurant/bean-converter <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
+</span></span></span><span style=display:flex><span>  -H <span style=color:#e6db74>&#34;Content-Type: application/json&#34;</span> <span style=color:#ae81ff>\
+</span></span></span><span style=display:flex><span>  -d <span style=color:#e6db74>&#39;{&#34;cuisine&#34;: &#34;川菜&#34;}&#39;</span>
 </span></span></code></pre></div><p><strong>测试结果</strong>：所有结构化输出方式都能正确工作，返回符合预期格式的数据。</p><h2 id=功能扩展>功能扩展</h2><p>基于对当前项目的分析，以下是本项目<strong>未涉及</strong>但 Spring AI 框架支持的强大功能：</p><h3 id=-核心功能扩展>🚀 核心功能扩展</h3><h4 id=1-流式响应-streaming>1. <strong>流式响应 (Streaming)</strong></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>// 当前项目：同步调用</span>
 </span></span><span style=display:flex><span>List<span style=color:#f92672>&lt;</span>Restaurant<span style=color:#f92672>&gt;</span> restaurants <span style=color:#f92672>=</span> chatClient.<span style=color:#a6e22e>prompt</span>()
 </span></span><span style=display:flex><span>    .<span style=color:#a6e22e>user</span>(<span style=color:#e6db74>&#34;推荐餐厅&#34;</span>)
