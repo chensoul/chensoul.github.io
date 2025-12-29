@@ -7,7 +7,6 @@ lastmod: 2025-09-30 00:00:00 +0000 UTC
 publishdate: 2025-09-30 00:00:00 +0000 UTC
 slug: spring-ai-text2sql-showcase
 tags: [spring-ai text2sql]
-thumbnail: https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-01.png
 title: Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南
 ---
 
