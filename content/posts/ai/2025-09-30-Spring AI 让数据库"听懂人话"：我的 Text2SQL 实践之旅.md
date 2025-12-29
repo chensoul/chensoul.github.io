@@ -6,7 +6,6 @@ keywords: "Spring AI, Text2SQL, 自然语言查询, NL2SQL, Spring Boot, DeepSee
 tags: ['spring-ai', 'text2sql']
 categories: ["ai"]
 date: 2025-09-30
-thumbnail: https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-01.png
 ---
 
 "能不能让数据库直接听懂中文问题，然后自动生成 SQL？" 这个想法在我脑海中盘旋了很久。最近终于用 **Spring AI** 实现了这个功能，从最初的简单实现到后来的 **MCP 工具集成**，再到**分步骤查询模式**，整个过程充满了惊喜和踩坑。今天就来分享一下我的 **Text2SQL** 实践心得。
