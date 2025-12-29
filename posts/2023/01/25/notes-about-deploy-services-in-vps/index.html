@@ -746,8 +746,8 @@
 </span></span><span style=display:flex><span>crontab -e
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 添加以下任务：</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># SSL 证书自动续期（每天上午9点08分）</span>
-</span></span><span style=display:flex><span><span style=color:#ae81ff>8</span> <span style=color:#ae81ff>9</span> * * * <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span>/acme.sh --cron --home <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span> &gt; /dev/null
+</span></span><span style=display:flex><span><span style=color:#75715e># SSL 证书自动续期（每天1点58分）</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>58</span> <span style=color:#ae81ff>1</span> * * * <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span>/acme.sh --cron --home <span style=color:#e6db74>&#34;/root/.acme.sh&#34;</span> &gt; /dev/null
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#75715e># 时钟同步（每20分钟）</span>
 </span></span><span style=display:flex><span>*/20 * * * * /usr/sbin/ntpdate pool.ntp.org &gt; /dev/null 2&gt;&amp;<span style=color:#ae81ff>1</span>
