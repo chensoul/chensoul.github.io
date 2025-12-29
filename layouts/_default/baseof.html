@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ .Site.Language.Lang }}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ block "title" . }}{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Params.subtitle }}{{ end }}</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="{{ if .IsHome }}{{ .Site.Params.description }}{{ else }}{{ .Params.Description }}{{ end }}">
+	<meta property="og:title" content="{{ .Title | default .Site.Title }}">
+	<meta property="og:description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+	<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+	<meta property="og:url" content="{{ .Permalink }}">
+	<meta property="og:site_name" content="{{ .Site.Title }}">
+	<meta property="og:image" content="{{ with .Params.thumbnail }}{{ . }}{{ else }}{{ .Site.Params.ogImage }}{{ end }}">
+	{{ template "_internal/schema.html" . }}
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="{{ .Title | default .Site.Title }}">
+	<meta name="twitter:description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+	<meta name="twitter:image" content="{{ with .Params.thumbnail }}{{ . }}{{ else }}{{ .Site.Params.ogImage }}{{ end }}">
+
+	{{- /* Preload critical resources */ -}}
+	{{- with .Site.Params.logo -}}
+	<link rel="preload" href="{{ . | relURL }}" as="image" type="image/svg+xml">
+	{{- end -}}
+	{{ $style := resources.Get "css/style.css" | resources.ExecuteAsTemplate "css/style.css" . -}}
+	<link rel="preload" href="{{ $style.RelPermalink }}" as="style">
+	{{- /* Prefetch next page for faster navigation */ -}}
+	{{- if .IsHome -}}
+	<link rel="prefetch" href="{{ "/posts/" | relURL }}">
+	{{- end -}}
+
+	<link rel="stylesheet" href="{{ $style.RelPermalink }}">
+
+	{{- with .OutputFormats.Get "rss" }}
+	{{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
+	{{- end }}
+
+	{{- /* Favicon: Optimized loading with SVG first, then fallback to ICO */ -}}
+	{{- if .Site.Params.logo -}}
+	<link rel="icon" type="image/svg+xml" href="{{ .Site.Params.logo | relURL }}">
+	{{- end -}}
+	<link rel="alternate icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
+	{{- /* Apple Touch Icon for iOS */ -}}
+	{{- if .Site.Params.avatar -}}
+	<link rel="apple-touch-icon" href="{{ .Site.Params.avatar | relURL }}">
+	{{- end -}}
+	{{- $server := "" }}
+	{{- if gt (int (index (split hugo.Version ".") 1)) "120" }}
+		{{ $server = hugo.IsServer }}
+	{{- else }}
+		{{ $server = .Site.IsServer }}
+	{{- end -}}
+	{{- if not $server }}
+		{{- /* Google Analytics: Use Hugo's internal template (already optimized) */ -}}
+		{{ template "_internal/google_analytics.html" . }}
+	{{- end }}
+</head>
+<body class="body">
+	<div class="container container--outer">
+		{{ block "header" . }}{{ partial "header.html" . }}{{ end }}
+		<div class="wrapper flex">
+			<div class="primary">
+			{{ block "main" . }}
+				{{ with .Content }}
+				<div class="content main__content clearfix">
+					{{ . }}
+				</div>
+				{{ end }}
+			{{ end }}
+			</div>
+			{{- if .IsHome }}
+			{{ block "sidebar" . }}{{ partial "sidebar.html" . }}{{ end }}
+			{{- else if eq .Kind "page" }}
+			{{ block "sidebar" . }}{{ end }}
+			{{- end }}
+		</div>
+		{{ block "footer" . }}{{ partial "footer.html" . }}{{ end }}
+	</div>
+
+	<script>
+		'use strict';
+		// Menu toggle
+		(function iifeMenu(document, window, undefined) {
+			var menuBtn = document.querySelector('.menu__btn');
+			var	menu = document.querySelector('.menu__list');
+			function toggleMenu() {
+				menu.classList.toggle('menu__list--active');
+				menu.classList.toggle('menu__list--transition');
+				this.classList.toggle('menu__btn--active');
+				this.setAttribute(
+					'aria-expanded',
+					this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+				);
+			}
+			function removeMenuTransition() {
+				this.classList.remove('menu__list--transition');
+			}
+			if (menuBtn && menu) {
+				menuBtn.addEventListener('click', toggleMenu, false);
+				menu.addEventListener('transitionend', removeMenuTransition, false);
+			}
+		}(document, window));
+
+		// Lazy load images on scroll
+		if ('IntersectionObserver' in window) {
+			var imageObserver = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						var img = entry.target;
+						if (img.dataset.src) {
+							img.src = img.dataset.src;
+							img.removeAttribute('data-src');
+						}
+						imageObserver.unobserve(img);
+					}
+				});
+			}, {
+				rootMargin: '50px 0px',
+				threshold: 0.01
+			});
+
+			document.addEventListener('DOMContentLoaded', function() {
+				document.querySelectorAll('img[data-src]').forEach(function(img) {
+					imageObserver.observe(img);
+				});
+			});
+		}
+	</script>
+</body>
+</html>
