@@ -77,7 +77,7 @@ title: 如何设计一个短网址服务
   
     - 设计图
   
-      ![image-20231117101338021](../../../static/images/designing-a-url-shortening-service-01.webp)
+      ![image-20231117101338021](../../../images/designing-a-url-shortening-service-01.webp)
   
   - Application Programming Interfaces (APIs) API 设计
   

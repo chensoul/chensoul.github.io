@@ -10,7 +10,7 @@ title: 周报-20｜自动生成每日早报、周末团建
 
 ## 前言
 
-![weekly-review-20-00](../../../static/images/weekly-review-20-00.webp)
+![weekly-review-20-00](../../../images/weekly-review-20-00.webp)
 
 <center><i>乐农湖畔生态园</i></center>
 
@@ -24,17 +24,17 @@ title: 周报-20｜自动生成每日早报、周末团建
 
 最近在朋友圈看到这样一个早报，就在想能否通过代码自动抓取新闻并生成这样一个早报图片？
 
-![](../../../static/images/weekly-review-20-04.webp)
+![](../../../images/weekly-review-20-04.webp)
 
 于是，在网上找到一篇文章：[前后端均基于 vercel 的每日早报项目](https://icodeq.com/2022/5fe2010403bb/)
 
 参考源代码，做了一些修改，代码见：[fetch_news.py](https://github.com/chensoul/chensoul/blob/main/fetch_news.py)。修改后的逻辑是将抓取的新闻发送到 memos，例如：[https://memos.chensoul.cc/m/349](https://memos.chensoul.cc/m/349) 。可以在 github action 设置每天早上 7 点自动发送到 memos，然后再通过 n8n 同步到 『[ChenSoul Share](https://t.me/ichensoul)』Telegram 频道。
 
-![](../../../static/images/weekly-review-20-01.webp)
+![](../../../images/weekly-review-20-01.webp)
 
 在 memos 中导出的图片如下：
 
-![](../../../static/images/weekly-review-20-05.webp)
+![](../../../images/weekly-review-20-05.webp)
 
 如果能够通过 python 自动生成图片，那就更好了。记录一下，待以后实现。
 
@@ -42,9 +42,9 @@ title: 周报-20｜自动生成每日早报、周末团建
 
 公司团建选择在周六，而且还是 520 这一天，真是会挑日子。很多人请假，最后只有 13 人参加团建，其中有 8 人是我们开发组的 🤣。挑两张照片发到这里～
 
-![weekly-review-20-03](../../../static/images/weekly-review-20-03.webp)
+![weekly-review-20-03](../../../images/weekly-review-20-03.webp)
 
-![weekly-review-20-02](../../../static/images/weekly-review-20-02.webp)
+![weekly-review-20-02](../../../images/weekly-review-20-02.webp)
 
 ## 理财
 
@@ -62,7 +62,7 @@ title: 周报-20｜自动生成每日早报、周末团建
 
 本周跑步 36 公里，最长跑步距离为 10 公里。明细数据如下：
 
-![weekly-review-20-08](../../../static/images/weekly-review-20-08.webp)
+![weekly-review-20-08](../../../images/weekly-review-20-08.webp)
 
 我跑过了一些地方，希望随着时间推移，地图点亮的地方越来越多。2 年里我跑过 2 个省份 2 个城市。更多跑步数据在[跑步](https://run.chensoul.cc/)主页。
 
@@ -70,7 +70,7 @@ title: 周报-20｜自动生成每日早报、周末团建
 
 #### 博客
 
-![weekly-review-20-07](../../../static/images/weekly-review-20-07.webp)
+![weekly-review-20-07](../../../images/weekly-review-20-07.webp)
 
 本周完成五篇博客：
 

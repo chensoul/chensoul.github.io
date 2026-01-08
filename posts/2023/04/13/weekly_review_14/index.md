@@ -10,7 +10,7 @@ title: 周报-14｜如何学习一门编程语言
 
 ## 前言
 
-![weekl-review-14-01](../../../static/images/weekl-review-14-01.webp)
+![weekl-review-14-01](../../../images/weekl-review-14-01.webp)
 
 本篇是对 `2023-04-03` 到 `2023-04-09` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
@@ -22,7 +22,7 @@ title: 周报-14｜如何学习一门编程语言
 
 完成了每天一万步的计划，并且共跑步 5 次，一共 18.6 公里，平均配速 7 分钟 4 9 秒，每天跳绳 500+。
 
-![](../../../static/images/weekl-review-14-03.webp)
+![](../../../images/weekl-review-14-03.webp)
 
 ## 关于记账
 
@@ -95,7 +95,7 @@ title: 周报-14｜如何学习一门编程语言
 
 因为对 [Tauri](https://tauri.app/) 这个 GUI 框架挺感兴趣，所以我开始学习 Rust 了，目前在参考 https://rustwiki.org/ 上的 [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example/) 和 《Rust 权威指南》 学习 Rust。
 
-![](../../../static/images/weekl-review-14-02.webp)
+![](../../../images/weekl-review-14-02.webp)
 
 ## 好物分享
 

@@ -32,13 +32,13 @@ title: [译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予aut
 
 在浏览器上，导航到“ http://127.0.0.1:8081/private-data ”。这将带我们进入客户端应用程序的登录页面。
 
-![img](../../../static/images/oauth2-with-spring-part-3-01.webp)
+![img](../../../images/oauth2-with-spring-part-3-01.webp)
 
 由于我们对社交登录感兴趣，因此不要在此登录页面中输入您的用户名和密码，而是单击**oidc-client**。它将带您进入授权服务器的登录页面。
 
 在下面的屏幕中输入“ user”作为用户名，输入“ secret”作为密码，然后单击“登录”。
 
-![img](../../../static/images/oauth2-with-spring-part-3-02.webp)
+![img](../../../images/oauth2-with-spring-part-3-02.webp)
 
 这将带您进入同意页面。请注意同意页面的以下 URL：
 
@@ -53,7 +53,7 @@ title: [译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予aut
 
 
 
-![img](../../../static/images/oauth2-with-spring-part-3-03.webp)
+![img](../../../images/oauth2-with-spring-part-3-03.webp)
 
 现在，从上面的页面提供您想要允许客户端应用程序的同意。
 
@@ -61,7 +61,7 @@ title: [译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予aut
 
 
 
-![img](../../../static/images/oauth2-with-spring-part-3-04.webp)
+![img](../../../images/oauth2-with-spring-part-3-04.webp)
 
 现在让我们深入研究代码。
 
@@ -338,7 +338,7 @@ public class SocialLoginClientApplication {
 
 
 
-![img](../../../static/images/oauth2-with-spring-part-3-05.webp)
+![img](../../../images/oauth2-with-spring-part-3-05.webp)
 
 感谢您的耐心阅读。在[下一篇文章](/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/)中，我们将尝试了解如何在客户端应用程序中使用 Google 作为授权服务器。
 

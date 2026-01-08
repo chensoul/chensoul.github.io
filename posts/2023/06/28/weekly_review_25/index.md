@@ -18,7 +18,7 @@ title: 周报-25｜端午安康
 
 ## 读书
 
-![](../../../static/images/weekly-review-25-03.webp)
+![](../../../images/weekly-review-25-03.webp)
 
 本周阅读时长 15 分钟，主要是阅读《Java 高并发核心编程：多线程、锁、JVM、JUC、高并发设计模式》。
 

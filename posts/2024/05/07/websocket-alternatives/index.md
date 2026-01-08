@@ -20,7 +20,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/websockets.webp)
+![img](../../../images/websockets.webp)
 
 了解更多：
 
@@ -55,7 +55,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/server_sent_events_how_it_works.webp)
+![img](../../../images/server_sent_events_how_it_works.webp)
 
 **服务器发送事件的优点**
 
@@ -81,7 +81,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/http-long-polling.webp)
+![img](../../../images/http-long-polling.webp)
 
 **长轮询的优点**
 
@@ -111,7 +111,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/mqtt-overview_2x.webp)
+![img](../../../images/mqtt-overview_2x.webp)
 
 **MQTT 优势**
 
@@ -129,7 +129,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/mqtt-over-websocket-overview.webp)
+![img](../../../images/mqtt-over-websocket-overview.webp)
 
 [查看 MQTT 与 WebSocket 的比较](https://ably.com/topic/mqtt-vs-websocket)
 
@@ -141,7 +141,7 @@ title: [译]2024年最好的WebSocket替代品
 
 
 
-![img](../../../static/images/webrtc-logo-vert-retro.webp)
+![img](../../../images/webrtc-logo-vert-retro.webp)
 
 **WebRTC优势**
 
@@ -161,7 +161,7 @@ WebRTC 主要设计用于流式传输音频和视频内容（通过 UDP），在
 
 
 
-![img](../../../static/images/signaling-overview-webrtc-websockets_2x.webp)
+![img](../../../images/signaling-overview-webrtc-websockets_2x.webp)
 
 [了解 WebRTC 与 WebSocket 的比较](https://ably.com/topic/webrtc-vs-websocket)
 

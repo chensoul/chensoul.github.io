@@ -20,7 +20,7 @@ title: 周报-7｜练车、博客优化、注册ChatGPT账号
 
 一天下来，总共开车有五个多小时，感觉开车好累。作为新手，开车的过程中要全神贯注，铭记开车最重要的是慢这一原则，速度不敢过快。
 
-![weekly-review-06](../../../static/images/weekly-review-07-06.webp)
+![weekly-review-06](../../../images/weekly-review-07-06.webp)
 
 回顾这一天的练车过程，发现自己存在以下问题：
 
@@ -39,7 +39,7 @@ title: 周报-7｜练车、博客优化、注册ChatGPT账号
 
 基于以上表现，接下来一周还是坐地铁上班。目前来说还是更喜欢坐地铁上班，可以看视频听音频，可以查看 RSS 订阅文章，可以写周报，可以闭目养神。
 
-![weekly-review-07](../../../static/images/weekly-review-07-07.webp)
+![weekly-review-07](../../../images/weekly-review-07-07.webp)
 
 老婆给我买的实习期贴牌到了，后面司机看到这么可爱的牌子，估计以为是个妹子在开车吧，应该会喇叭下留情了吧 😄。
 
@@ -98,7 +98,7 @@ body {
 
 以上优化完成之后，在 [PageSpeed Insights](https://pagespeed.web.dev/) 网站上对博客首页加载速度进行了测速。移动端测试结果为 93 分，如下图：
 
-![weekly-review-07-01](../../../static/images/weekly-review-07-01.webp)
+![weekly-review-07-01](../../../images/weekly-review-07-01.webp)
 
 影响评分的原因在于：
 
@@ -107,7 +107,7 @@ body {
 
 桌面端测试结果评分为 99 分：
 
-![weekly-review-07-02](../../../static/images/weekly-review-07-02.webp)
+![weekly-review-07-02](../../../images/weekly-review-07-02.webp)
 
 另外，试了一下使用 chatgpt 来给出网站优化建议，回答如下：
 

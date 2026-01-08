@@ -23,7 +23,7 @@ title: [译]数据库扩展策略速成课程
 
 在这篇文章中，我们将详细介绍最流行的数据库扩展策略，讨论它们的优点和权衡。
 
-![img](../../../static/images/a-crash-course-in-database-scaling-01.webp)
+![img](../../../images/a-crash-course-in-database-scaling-01.webp)
 
 
 
@@ -37,7 +37,7 @@ title: [译]数据库扩展策略速成课程
 
 索引本身是数据的一个子集，以针对高效查询进行优化的方式组织。
 
-![img](../../../static/images/a-crash-course-in-database-scaling-02.webp)
+![img](../../../images/a-crash-course-in-database-scaling-02.webp)
 
 
 
@@ -49,7 +49,7 @@ title: [译]数据库扩展策略速成课程
 
 请参阅下图中的“电子邮件”列的示例索引：
 
-![img](../../../static/images/a-crash-course-in-database-scaling-03.webp)
+![img](../../../images/a-crash-course-in-database-scaling-03.webp)
 
 
 
@@ -84,7 +84,7 @@ title: [译]数据库扩展策略速成课程
 
 请参见下图，其中显示了存储每个产品类别的总收入的物化视图。
 
-![img](../../../static/images/a-crash-course-in-database-scaling-04.webp)
+![img](../../../images/a-crash-course-in-database-scaling-04.webp)
 
 
 
@@ -123,7 +123,7 @@ title: [译]数据库扩展策略速成课程
 
 下图显示了在“订单”表上应用非规范化的示例：
 
-![img](../../../static/images/a-crash-course-in-database-scaling-05.webp)
+![img](../../../images/a-crash-course-in-database-scaling-05.webp)
 
 
 
@@ -157,7 +157,7 @@ title: [译]数据库扩展策略速成课程
 - 向服务器添加更多 RAM 以增加内存容量，从而改善缓存。
 - 升级到更快的存储设备，例如固态硬盘 (SSD)。
 
-![img](../../../static/images/a-crash-course-in-database-scaling-06.webp)
+![img](../../../images/a-crash-course-in-database-scaling-06.webp)
 
 
 
@@ -200,7 +200,7 @@ title: [译]数据库扩展策略速成课程
 
 下图展示了数据库的缓存过程：
 
-![img](../../../static/images/a-crash-course-in-database-scaling-07.webp)
+![img](../../../images/a-crash-course-in-database-scaling-07.webp)
 
 
 
@@ -245,7 +245,7 @@ title: [译]数据库扩展策略速成课程
 
 下图显示了典型的领导者-追随者复制设置：
 
-![img](../../../static/images/a-crash-course-in-database-scaling-08.webp)
+![img](../../../images/a-crash-course-in-database-scaling-08.webp)
 
 
 
@@ -273,7 +273,7 @@ title: [译]数据库扩展策略速成课程
 
 在分片数据库架构中，数据根据特定的分片键分布在多个分片中。分片键的选择至关重要，因为它决定了如何将数据分配到不同的分片中。
 
-![img](../../../static/images/a-crash-course-in-database-scaling-09.webp)
+![img](../../../images/a-crash-course-in-database-scaling-09.webp)
 
 
 

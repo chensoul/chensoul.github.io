@@ -16,7 +16,7 @@ title: [译]JMS 2.0 中的新增功能
 
 这个API被称为Java消息服务（JMS）。
 
-![img](../../../static/images/jms2.webp)
+![img](../../../images/jms2.webp)
 
 
 
