@@ -28,7 +28,7 @@ Similarly, computers are uniquely identified by IP addresses—for example, `104
 
 > 同样，计算机由 IP 地址唯一标识，例如， `104.18.2.119` 是一个 IP 地址。我们使用 IP 地址来访问计算机上托管的网站。由于人类无法轻易记住 IP 地址来访问域名（例如域名 eduducative.io），因此我们需要一个类似电话簿的存储库来维护域名到 IP 地址的所有映射。在本章中，我们将了解 DNS 如何充当互联网的电话簿。
 
-![](../../../static/images/educative-dns-06.webp)
+![](../../../images/educative-dns-06.webp)
 
 ## What is DNS? 
 
@@ -42,7 +42,7 @@ The slides below show the high-level flow of the working of DNS:
 
 > 下面的幻灯片显示了 DNS 工作的高级流程：
 
-![educative-dns-07](../../../static/images/educative-dns-07.webp)
+![educative-dns-07](../../../images/educative-dns-07.webp)
 
 The entire operation is performed very quickly. Therefore, the end user experiences minimum delay. We’ll also see how browsers save some of the frequently used mappings for later use in the next lesson.
 
@@ -139,7 +139,7 @@ There are mainly four types of servers in the DNS hierarchy:
 
    > 权威名称服务器：这些是组织的 DNS 名称服务器，提供 Web 或应用程序服务器的 IP 地址。
 
-![image-20231117165436915](../../../static/images/educative-dns-01.webp)
+![image-20231117165436915](../../../images/educative-dns-01.webp)
 
 > **Question** 
 >
@@ -179,7 +179,7 @@ In the following illustration (on the left), DNS query resolution is iterative f
 
 > 在下图中（左），从本地/ISP服务器的角度来看，DNS查询解析是迭代的：
 
-![educative-dns-02](../../../static/images/educative-dns-02.webp)
+![educative-dns-02](../../../images/educative-dns-02.webp)
 
 **Note:** Typically, an iterative query is preferred to reduce query load on DNS infrastructure.
 
@@ -201,7 +201,7 @@ The slideshow below demonstrates the power of caching in the DNS:
 
 > 下面的幻灯片展示了 DNS 中缓存的强大功能：
 
-![educative-dns-03](../../../static/images/educative-dns-03.webp)
+![educative-dns-03](../../../images/educative-dns-03.webp)
 
 **Note:** Even if there is no cache available to resolve a user’s query and it’s imperative to visit the DNS infrastructure, caching can still be beneficial. The local server or ISP DNS resolver can cache the IP addresses of TLD servers or authoritative servers and avoid requesting the root-level server.
 
@@ -320,9 +320,9 @@ The following slide deck highlights some important aspects of `nslookup` and `di
 
 > 以下幻灯片重点介绍了 `nslookup` 和 `dig` 输出的一些重要方面。
 
-![educative-dns-04](../../../static/images/educative-dns-04.webp)
+![educative-dns-04](../../../images/educative-dns-04.webp)
 
-![educative-dns-05](../../../static/images/educative-dns-05.webp)
+![educative-dns-05](../../../images/educative-dns-05.webp)
 
 Let’s go through the meaning of the output:
 

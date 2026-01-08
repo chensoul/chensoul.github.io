@@ -8,7 +8,7 @@ tags: ['weekly-report']
 
 ## 前言
 
-![weekly-review-19-00](../../../static/images/weekly-review-19-00.webp)
+![weekly-review-19-00](../../../images/weekly-review-19-00.webp)
 
 本篇是对 `2023-05-08` 到 `2023-05-14` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
@@ -22,9 +22,9 @@ tags: ['weekly-report']
 
 ## 武功山看日出
 
-![weekly-review-19-01](../../../static/images/weekly-review-19-01.webp)
+![weekly-review-19-01](../../../images/weekly-review-19-01.webp)
 
-![weekly-review-19-02](../../../static/images/weekly-review-19-02.webp)
+![weekly-review-19-02](../../../images/weekly-review-19-02.webp)
 
 ## 理财
 
@@ -44,15 +44,15 @@ tags: ['weekly-report']
 
 本周跑步 56 公里，最长跑步距离为 13 公里。
 
-![weekly-review-19-05](../../../static/images/weekly-review-19-05.webp)
+![weekly-review-19-05](../../../images/weekly-review-19-05.webp)
 
 明细数据如下：
 
-![weekly-review-19-04](../../../static/images/weekly-review-19-04.webp)
+![weekly-review-19-04](../../../images/weekly-review-19-04.webp)
 
 周末出去旅游，路过长沙，在长沙跑了两天，累计跑了 6 公里。这样，我的[跑步数据](https://run.chensoul.cc/) 从 `2 年里我跑过 1 个省份 1 个城市` 变成了` 2 年里我跑过 2 个省份 2 个城市`。
 
-![.](../../../static/images/weekly-review-19-03.webp)
+![.](../../../images/weekly-review-19-03.webp)
 
 ## 工作
 
@@ -79,7 +79,7 @@ tags: ['weekly-report']
 
 **2、学习 python 编程的 11 个建议**
 
-![weekly-review-19-06](../../../static/images/weekly-review-19-06.webp)
+![weekly-review-19-06](../../../images/weekly-review-19-06.webp)
 
 原文：[11 Beginner Tips for Learning Python Programming](https://realpython.com/python-beginner-tips/)，总结出以下 11 条新手编程建议：
 
@@ -97,7 +97,7 @@ tags: ['weekly-report']
 
   **3、Pyhton 播客：** [Ep 01. 新人到底需要什么](https://pythonhunter.org/episodes/1)
 
-![weekly-review-19-07](../../../static/images/weekly-review-19-07.webp)
+![weekly-review-19-07](../../../images/weekly-review-19-07.webp)
 
 播客中提到的内容：
 
@@ -125,7 +125,7 @@ tags: ['weekly-report']
 
 #### Python Tips
 
-![weekly-review-19-08](../../../static/images/weekly-review-19-08.webp)
+![weekly-review-19-08](../../../images/weekly-review-19-08.webp)
 
 本周订阅了 [**Real Python**](https://realpython.com/) 的 Python Tricks，收到两封邮件，分享如下：
 

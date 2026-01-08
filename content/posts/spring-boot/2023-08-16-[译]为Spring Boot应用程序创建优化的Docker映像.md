@@ -99,7 +99,7 @@ dive usersignup:v1
 
 以下是运行 Dive 命令的部分输出：
 
-![dive screenshot](../../../static/images/spring-boot-docker-01.webp)
+![dive screenshot](../../../images/spring-boot-docker-01.webp)
 
 正如我们所看到的，应用层构成了图像大小的重要组成部分。作为优化的一部分，我们的目标是在以下部分中减小该层的大小。
 
@@ -107,7 +107,7 @@ dive usersignup:v1
 
 Buildpacks 是各种平台即服务 (PAAS) 产品使用的通用术语，用于从源代码构建容器映像。它由 Heroku 于 2011 年发起，此后已被 Cloud Foundry、Google App Engine、Gitlab、Knative 等采用。
 
-![dive screenshot](../../../static/images/spring-boot-docker-02.webp)
+![dive screenshot](../../../images/spring-boot-docker-02.webp)
 
 ### 云原生 Buildpack 的优势
 
@@ -222,7 +222,7 @@ Spring Boot 使用“fat JAR”作为其默认打包格式。当我们检查 fat
 
 在应用程序更新和容器调度期间，仅拉取应用程序的薄层，如下图所示：
 
-![dive screenshot](../../../static/images/spring-boot-docker-03.webp)
+![dive screenshot](../../../images/spring-boot-docker-03.webp)
 
 让我们在接下来的部分中了解如何为 Spring Boot 应用程序构建这些优化的映像。
 
@@ -252,7 +252,7 @@ mvn spring-boot:build-image
 
 如果我们运行 Dive 来查看生成图像中的各层，我们可以看到应用程序层（以红色圈出）在千字节范围内比我们使用 fat JAR 格式获得的要小得多：
 
-![dive screenshot](../../../static/images/spring-boot-docker-04.webp)
+![dive screenshot](../../../images/spring-boot-docker-04.webp)
 
 ## 使用 Docker 为 Spring Boot 应用程序构建优化的容器映像
 
@@ -371,7 +371,7 @@ dive userssignup:v1
 
 正如我们在输出中看到的，包含应用程序的层现在只有 11 kB，依赖项缓存在单独的层中。
 
-![dive screenshot](../../../static/images/spring-boot-docker-05.webp)
+![dive screenshot](../../../images/spring-boot-docker-05.webp)
 
 ### 提取不同层中的内部依赖关系
 

@@ -84,7 +84,7 @@ MicroProfile Config是MicroProfile的一个重要特性，它提供了一种解�
 
 MicroProfile Config允许从不同的位置和不同的格式获取配置数据，如系统属性、系统环境变量、.properties、.xml和数据源等，这些配置位置被称为ConfigSources。
 
-![Separating configuration from code in microservices](../../../static/images/ordinalPriorities.svg)
+![Separating configuration from code in microservices](../../../images/ordinalPriorities.svg)
 
 它提供了一种方式，可以从许多不同的ConfigSources聚合配置，并呈现这些配置的单一、统一的视图。MicroProfile Config提供了两种获取配置属性的方式：编程方式和通过上下文和依赖注入（CDI）。
 

@@ -8,7 +8,7 @@ tags: ['weekly-report']
 
 ## 前言
 
-![weekly-review-10-00](../../../static/images/weekly-review-10-00.webp)
+![weekly-review-10-00](../../../images/weekly-review-10-00.webp)
 
 本篇是对 `2023-03-06` 到 `2023-03-12` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
@@ -18,11 +18,11 @@ tags: ['weekly-report']
 
 周六从汉口开车去白沙洲湖北财税职业学院，全程 20 公里，回来的时候不小心把路边的面包车擦碰了一下。于是一脸懵的经历了一次保险定损维修。
 
-![weekly-review-10-07](../../../static/images/weekly-review-10-07.webp)
+![weekly-review-10-07](../../../images/weekly-review-10-07.webp)
 
 周六开始使用 格志 APP 写日志，选择它来记录日志的原因是它支持批量导出 mardkown、pdf、图片等。唯一有个小遗憾的是，这个应用没有图床，导出的 markdown 文件里面图片的链接不是 http 协议。
 
-![](../../../static/images/weekly-review-10-08.webp)
+![](../../../images/weekly-review-10-08.webp)
 
 周日去新荣龙湖天耀天街售房部看了一下房子。107 平三室两厅两卫，单价 2 万 5 带精装修，公积金贷款 90 万，商业贷款 30 年，每个月房贷 6000。目前来说，买不起这里的房子，但是，作为一个买房目标还是可以的，加油！
 
@@ -48,15 +48,15 @@ tags: ['weekly-report']
 
 登录 [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) 控制台，选择左侧导航栏的 Access 菜单，进入 Tunnels 配置，点击 Create a tunnel 创建一个 Tunnel，输入 Tunnel 隧道名称
 
-![weekly-review-10-01](../../../static/images/weekly-review-10-01.webp)
+![weekly-review-10-01](../../../images/weekly-review-10-01.webp)
 
 选择服务器的操作系统和平台架构：
 
-![weekly-review-10-02](../../../static/images/weekly-review-10-02.webp)
+![weekly-review-10-02](../../../images/weekly-review-10-02.webp)
 
 可以看到安装命令：
 
-![weekly-review-10-03](../../../static/images/weekly-review-10-03.webp)
+![weekly-review-10-03](../../../images/weekly-review-10-03.webp)
 
 复制左边命令粘贴到 SSH 会话里安装 Cloudflared（注意保护 Refresh Token 不要泄漏）
 
@@ -75,11 +75,11 @@ sudo cloudflared service install eyJhIjoiMmUxOTgwYTBlZjQzZjU3YjkyMGVhMjhjZGY5ZDM
 
 ### 3、在 Cloudflare Tunnel 添加 hostname
 
-![weekly-review-10-04](../../../static/images/weekly-review-10-04.webp)
+![weekly-review-10-04](../../../images/weekly-review-10-04.webp)
 
 如果需要对 ssh 服务开启代理，请参考：[Connect with SSH through Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/use_cases/ssh/)。
 
-![weekly-review-10-05](../../../static/images/weekly-review-10-05.webp)
+![weekly-review-10-05](../../../images/weekly-review-10-05.webp)
 
 关键步骤是：
 
@@ -155,7 +155,7 @@ async headers() {
 
 chatgpt 回答如下：
 
-![](../../../static/images/weekly-review-10-06.webp)
+![](../../../images/weekly-review-10-06.webp)
 
 **总结：**
 

@@ -24,7 +24,7 @@ tags: ['spring-boot','security','jwt']
 
 您要做的是保护所有资源，以便当客户端调用 REST API 时，客户端将收到 401（未经授权），这意味着客户端请求尚未完成，因为它缺少所请求资源的有效身份验证凭据。
 
-![Application Architecture: 401 Unauthorized](../../../static/images/app-arch-401.webp)
+![Application Architecture: 401 Unauthorized](../../../images/app-arch-401.webp)
 
 ### JSON 网络令牌 (JWT)
 
@@ -42,11 +42,11 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 
 您将引入一个新的身份验证控制器，客户端可以使用其身份验证凭据（用户名 + 密码）向该控制器发出请求，并且当成功通过身份验证时，服务将返回 JWT。
 
-![Application Architecture: JSON Web Token (JWT)](../../../static/images/app-arch-jwt.webp)
+![Application Architecture: JSON Web Token (JWT)](../../../images/app-arch-jwt.webp)
 
 然后，客户端将存储 JWT，并且每个后续请求将通过 Authorization 标头传递它。当服务器应用程序收到带有 JWT 的请求时，它将验证它是否是有效令牌，如果是，则允许请求继续。
 
-![Application Architecture: Request with JSON Web Token (JWT)](../../../static/images/app-arch-with-jwt-200.webp)
+![Application Architecture: Request with JSON Web Token (JWT)](../../../images/app-arch-with-jwt-200.webp)
 
 ## 入门
 
@@ -56,7 +56,7 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 - oAuth2 Resource Server oAuth2
 - Spring Configuration Processor
 
-![Spring Initializer](../../../static/images/start-spring-io.webp)
+![Spring Initializer](../../../images/start-spring-io.webp)
 
 这将在您的 `pom.xml` 中生成以下依赖项
 
@@ -96,7 +96,7 @@ public class HomeController {
 }
 ```
 
-![Spring Security Login](../../../static/images/please-sign-in.webp)
+![Spring Security Login](../../../images/please-sign-in.webp)
 
 ## SPRING 安全配置
 
@@ -147,7 +147,7 @@ public InMemoryUserDetailsManager users() {
 
 配置新用户后，您应该能够重新启动应用程序并访问 http://localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用 `dvega` + `password` 登录。
 
-![Spring Security HTTP Basic](../../../static/images/http-basic-auth.webp)
+![Spring Security HTTP Basic](../../../images/http-basic-auth.webp)
 
 ## OAUTH 2.0 资源服务器
 
@@ -313,7 +313,7 @@ JwtDecoder jwtDecoder() {
 
 您已准备好密钥并定义了解码器，这是一种破译 JWT 的方法。如果您还记得之前的架构图，用户将需要使用用户名和密码登录。如果他们通过身份验证，您将生成一个新的 JSON Web 令牌并将其在响应中发回。
 
-![Application Architecture: JSON Web Token (JWT)](../../../static/images/app-arch-jwt-02.webp)
+![Application Architecture: JSON Web Token (JWT)](../../../images/app-arch-jwt-02.webp)
 
 为此，您首先需要创建一个 `JwtEncoder` 类型的 bean，并且可以在 `SecurityConfig` 中执行此操作。编码器将用于将我们之前了解的签名编码为令牌，并使用我们的私钥对其进行签名。
 
@@ -395,11 +395,11 @@ public class AuthController {
 
 测试这一点的一个简单方法是使用 Postman 等工具。如果您向令牌端点创建新的 POST 请求，您可以从“授权”选项卡中选择“基本身份验证”并输入您的凭据。如果一切正常，您将在响应中返回生成的 JWT。
 
-![Postman Basic Auth](../../../static/images/postman-basic-auth.webp)
+![Postman Basic Auth](../../../images/postman-basic-auth.webp)
 
 复制 JWT 并为 http://localhost:8080 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
 
-![Postman with JWT Response](../../../static/images/postman-with-jwt-response.webp)
+![Postman with JWT Response](../../../images/postman-with-jwt-response.webp)
 
 **命令行**
 
@@ -411,7 +411,7 @@ http POST :8080/token --auth dvega:password -v
 
 `-v` 参数将打印请求和响应
 
-![Httpie with Authorization](../../../static/images/httpie-auth.webp)
+![Httpie with Authorization](../../../images/httpie-auth.webp)
 
 响应将包含生成的 JWT 令牌。如果您在没有授权标头或没有正确令牌的情况下向根路径发出请求，您将收到 401（拒绝）响应。但是，如果您以正确的格式包含 Authorization 标头，您将获得从 `HomeController` 中的 home 方法返回的字符串。
 
@@ -419,7 +419,7 @@ http POST :8080/token --auth dvega:password -v
 http :8080 'Authorization: Bearer JWT_TOKEN_HERE'
 ```
 
-![Httpie Response Success](../../../static/images/httpie-success.webp)
+![Httpie Response Success](../../../images/httpie-success.webp)
 
 ### 自动化测试
 

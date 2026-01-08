@@ -288,7 +288,7 @@ We would need two tables: one for storing information about the URL mappings, an
 
 > 我们需要两张表：一张用于存储有关 URL 映射的信息，一张用于创建短链接的用户数据。
 
-![tinyurl-1](../../../static/images/tinyurl-1-0727878.webp)
+![tinyurl-1](../../../images/tinyurl-1-0727878.webp)
 
 **What kind of database should we use?** Since we anticipate storing billions of rows, and we don’t need to use relationships between objects – a NoSQL key-value store like DynamoDB, Cassandra or Riak is a better choice. A NoSQL choice would also be easier to scale. Please see SQL vs NoSQL for more details.
 
@@ -346,7 +346,7 @@ Another solution could be to append user id (which should be unique) to the inpu
 
 > 另一种解决方案是将用户 ID（应该是唯一的）附加到输入 URL。但是，如果用户尚未登录，我们将不得不要求用户选择唯一性密钥。即使在此之后，如果出现冲突，我们也必须继续生成密钥，直到获得唯一的密钥。
 
-![tinyurl-2](../../../static/images/tinyurl-2-0727878.webp)
+![tinyurl-2](../../../images/tinyurl-2-0727878.webp)
 
 **b. Generating keys offline**
 
@@ -394,7 +394,7 @@ KGS also has to make sure not to give the same key to multiple servers. For that
 
 > 我们应该对自定义别名施加大小限制吗？我们的服务支持自定义别名。用户可以选择他们喜欢的任何“键”，但提供自定义别名不是强制性的。然而，对自定义别名施加大小限制以确保我们拥有一致的 URL 数据库是合理的（并且通常是可取的）。假设用户可以为每个客户密钥指定最多 16 个字符（如上面的数据库架构所示）。
 
-![tinyurl-3](../../../static/images/tinyurl-3-0727878.webp)
+![tinyurl-3](../../../images/tinyurl-3-0727878.webp)
 
 High level system design for URL shortening
 
@@ -452,7 +452,7 @@ To further increase the efficiency, we can replicate our caching servers to dist
 
 > 如何更新每个缓存副本？每当出现缓存未命中时，我们的服务器就会访问后端数据库。每当发生这种情况时，我们都可以更新缓存并将新条目传递给所有缓存副本。每个副本都可以通过添加新条目来更新其缓存。如果副本已经具有该条目，则可以简单地忽略它。
 
-![tinyurl-4](../../../static/images/tinyurl-4-0727878.webp)
+![tinyurl-4](../../../images/tinyurl-4-0727878.webp)
 
 ## 9. Load Balancer (LB) 
 
@@ -519,7 +519,7 @@ If we chose to actively search for expired links to remove them, it would put a 
   > 我们是否应该删除一段时间内（例如六个月）未访问过的链接？这可能会很棘手。由于存储变得越来越便宜，我们可以决定永远保留链接。
 
 
-![tinyurl-5](../../../static/images/tinyurl-5-0727878.webp)
+![tinyurl-5](../../../images/tinyurl-5-0727878.webp)
 
 Detailed component design for URL shortening
 

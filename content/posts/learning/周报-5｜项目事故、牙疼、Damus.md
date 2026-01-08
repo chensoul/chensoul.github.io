@@ -24,7 +24,7 @@ tags: ['weekly-report']
 
 参考 【[每天进步一点点（二）-哔哩哔哩](https://b23.tv/2HCODuM)】 在项目里添加代码对 controller 方法请求参数、返回结果、执行时间的记录。视频中讲的很清楚，这里就不贴代码了。
 
-![spring-aop-customizable-trace-interceptor](../../../static/images/spring-aop-customizable-trace-interceptor.webp)
+![spring-aop-customizable-trace-interceptor](../../../images/spring-aop-customizable-trace-interceptor.webp)
 
 - 该方法，可以对 controller 的所有方法（不管是 get 还是 post 或其他方法），都记录日志。如果想排除 get 方法（一个项目里查询比修改请求大很多），需要添加代码进行过滤。
 
@@ -53,7 +53,7 @@ tags: ['weekly-report']
 
 最近 Damus 很火，我也去注册了一个账号，为此还重新下载了狐狸 🦊 钱包。随即，干脆也注册了 Mastodon 账号和 Crossbell 账号。
 
-![damus-profile](../../../static/images/damus-profile.webp)
+![damus-profile](../../../images/damus-profile.webp)
 
 - 我的 Damus 账号 npub1dav96pmjv58n60eqz7ctmhvsd7t2yljvzevf6uckmchz6zamx2wq0k7dm5
 
@@ -61,7 +61,7 @@ tags: ['weekly-report']
 
 - 我的 crossbell 账号 chensoul@crossbell
 
-![xsync-profile](../../../static/images/xsync-profile.webp)
+![xsync-profile](../../../images/xsync-profile.webp)
 
 ## 好物分享
 

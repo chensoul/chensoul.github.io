@@ -18,7 +18,7 @@ tags: ['spring-boot','oauth2']
 
 ## 怎么运行的
 
-![img](../../../static/images/oauth2-with-spring-part-5-01.webp)
+![img](../../../images/oauth2-with-spring-part-5-01.webp)
 
 Spring Boot OAuth2 与 PKCE
 
@@ -28,7 +28,7 @@ Spring Boot OAuth2 与 PKCE
 
 对于此演示，我们有 3 台服务器。
 
-![img](../../../static/images/oauth2-with-spring-part-5-02.webp)
+![img](../../../images/oauth2-with-spring-part-5-02.webp)
 
 1. 授权服务器：在端口 9001 上运行。
 2. 资源服务器：在端口8090上运行。
@@ -442,7 +442,7 @@ logging:
 
 现在，我们在浏览器中输入**(1)** [http://localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是](http://localhost:8080/hello)http://localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。
 
-![img](../../../static/images/oauth2-with-spring-part-5-03.webp)
+![img](../../../images/oauth2-with-spring-part-5-03.webp)
 
 网络响应
 
@@ -458,7 +458,7 @@ logging:
 
 现在，让我们提供正确的用户凭证并观察。
 
-![img](../../../static/images/oauth2-with-spring-part-5-04.webp)
+![img](../../../images/oauth2-with-spring-part-5-04.webp)
 
 提供登录凭证后
 
@@ -472,13 +472,13 @@ logging:
 
 现在，让我们提供一些同意并继续。就我的情况而言，我将提供所有同意并提交。
 
-![img](../../../static/images/oauth2-with-spring-part-5-05.webp)
+![img](../../../images/oauth2-with-spring-part-5-05.webp)
 
 长话短说，成功登录后，它会将我们重定向到客户端应用程序的 /login/oauth2/code/oidc-client 端点，并附带授权码参数。使用此代码，我们可以请求 /oauth2/token 端点来获取访问令牌。
 
 现在我们可以再次向 /hello 端点发出请求并查看其是否正常工作。
 
-![img](../../../static/images/oauth2-with-spring-part-5-06.webp)
+![img](../../../images/oauth2-with-spring-part-5-06.webp)
 
 来自 /hello 端点的响应
 
@@ -486,13 +486,13 @@ logging:
 
 **从IETF网站提供的以下OAuth2 for Browser based Apps**草案中我们可以看到，对于PKCE，它不必在授权服务器中颁发访问令牌。
 
-![img](../../../static/images/oauth2-with-spring-part-5-07.webp)
+![img](../../../images/oauth2-with-spring-part-5-07.webp)
 
 以下是草案的链接：[draft-ietf-oauth-browser-based-apps-10](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
 
 如果我们仍然想获取令牌，在我的客户端应用程序中，我提供了一个端点[127.0.0.1:8080/private-data](http://127.0.0.1:8080/private-data)，我们可以通过它获取令牌。
 
-![img](../../../static/images/oauth2-with-spring-part-5-08.webp)
+![img](../../../images/oauth2-with-spring-part-5-08.webp)
 
 完整的源代码可以在[这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到
 

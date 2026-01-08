@@ -238,7 +238,7 @@ prefixed with #.
 
 最后来看下生成的 release drafter：
 
-![day-review-20240104-02](../../../static/images/day-review-20240104-02.webp)
+![day-review-20240104-02](../../../images/day-review-20240104-02.webp)
 
 ## 利用GitHub Actions自动构建项目的docker镜像并发布到DockerHub
 
@@ -308,7 +308,7 @@ jobs:
 
 Wakatime记录的今日编码时间统计：
 
-![day-review-20240104-01](../../../static/images/day-review-20240104-01.webp)
+![day-review-20240104-01](../../../images/day-review-20240104-01.webp)
 
 ## 参考文章
 

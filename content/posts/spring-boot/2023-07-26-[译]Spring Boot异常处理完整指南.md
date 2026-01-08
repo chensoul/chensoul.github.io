@@ -516,7 +516,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 如果我们还没有构建自己的异常处理程序，请看下面的流程图，它跟踪了 Spring 异常处理的过程：
 
-![Spring Exception Handling Flow](../../../static/images/spring-boot-exception-handling-01.webp)
+![Spring Exception Handling Flow](../../../images/spring-boot-exception-handling-01.webp)
 
 ## 结论
 

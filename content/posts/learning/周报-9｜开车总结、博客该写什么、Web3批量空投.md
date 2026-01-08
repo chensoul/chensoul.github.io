@@ -8,7 +8,7 @@ tags: ['weekly-report']
 
 ## 前言
 
-![将军山](../../../static/images/weekly-review-09-07.webp)
+![将军山](../../../images/weekly-review-09-07.webp)
 
 本篇是对 `2023-02-27` 到 `2023-03-05` 这周生活的记录与思考。首发在我的个人 [博客](https://blog.chensoul.cc/)，你可以移步了解更多或者给我留言。
 
@@ -24,7 +24,7 @@ tags: ['weekly-report']
 
 周末两天，继续练车，从汉口到阳逻，再到新洲，最后去新洲的将军山爬山、去道观河看风景。算下来，最近这三个周末六天时间，我一共开了 800 多公里了。目前，暂时没有收到违规通知，但还是存在很多不足的地方。
 
-![weekly-review-09-08](../../../static/images/weekly-review-09-08.webp)
+![weekly-review-09-08](../../../images/weekly-review-09-08.webp)
 
 ## 开车总结
 
@@ -52,7 +52,7 @@ tags: ['weekly-report']
 
 1、**使用 [chrome 沉浸式翻译插件](https://chrome.google.com/webstore/detail/immersive-translate/bpoadfkcbjbfhfodiogcnhhhpibjhbnh) 翻译这篇文章：**
 
-![weekly-review-01](../../../static/images/weekly-review-09-01.webp)
+![weekly-review-01](../../../images/weekly-review-09-01.webp)
 
 总结来说，博客可以写两部分内容：
 
@@ -63,7 +63,7 @@ tags: ['weekly-report']
 
 请 chatgpt 翻译这篇文章 https://simonwillison.net/2022/Nov/6/what-to-blog-about/ 为中文，得到的结果如下：
 
-![weekly-review-02](../../../static/images/weekly-review-09-02.webp)
+![weekly-review-02](../../../images/weekly-review-09-02.webp)
 
 标题：该写什么博客？
 
@@ -113,23 +113,23 @@ tags: ['weekly-report']
 
 在 BSC 网络上使用 Node.js 编程语言批量创建账户并保存为 CSV 文件的完整代码，不使用 csv-writer 库
 
-![weekly-review-03](../../../static/images/weekly-review-09-03.webp)
+![weekly-review-03](../../../images/weekly-review-09-03.webp)
 
 ### 2、批量转账
 
 在 BSC 网络上使用 Node.js 编程语言从一个账号批量转 0.0125bnb 到前面创建的多个账号，输出完整的可以运行的代码
 
-![weekly-review-05](../../../static/images/weekly-review-09-05.webp)
+![weekly-review-05](../../../images/weekly-review-09-05.webp)
 
 ### 3、批量导入账号到 metamask 钱包
 
 通过编程实现在 BSC 网络 批量导入账号到浏览器的 metamask 钱包
 
-![weekly-review-04](../../../static/images/weekly-review-09-04.webp)
+![weekly-review-04](../../../images/weekly-review-09-04.webp)
 
 下一步，就是测试上面代码，实现全流程代码托管。
 
-![weekly-review-09-06](../../../static/images/weekly-review-09-06.webp)
+![weekly-review-09-06](../../../images/weekly-review-09-06.webp)
 
 ## 好物分享
 

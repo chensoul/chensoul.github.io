@@ -142,7 +142,7 @@ For Twitter, at a high-level, we will need multiple application servers to serve
 
 
 
-![20231116_image-20231116072253280](../../../static/images/sdi-a-step-by-step-guide-01.webp)
+![20231116_image-20231116072253280](../../../images/sdi-a-step-by-step-guide-01.webp)
 
 
 

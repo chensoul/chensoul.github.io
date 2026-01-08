@@ -30,7 +30,7 @@ RMI（Remote Method Invocation）是Java语言提供的一种远程调用机制�
 
 ### 架构
 
-![img](../../../static/images/rmi-architecture-01.webp)
+![img](../../../images/rmi-architecture-01.webp)
 
 RMI架构包括以下几个核心组件：
 
@@ -40,7 +40,7 @@ RMI架构包括以下几个核心组件：
 4. Stub（存根）和Skeleton（骨架）：Stub和Skeleton是RMI的关键组件，用于在客户端和服务器之间进行通信。Stub是客户端的代理，它负责将客户端的方法调用转发到远程对象。Skeleton是服务器端的代理，它负责接收客户端的方法调用并将其转发给实际的远程对象。
 5. RMI协议（RMI Protocol）：RMI协议定义了客户端和服务器之间的通信协议，包括请求、响应、参数传递和序列化等细节。RMI协议使用Java序列化来对对象进行编码和解码，以实现对象在网络上的传输。
 
-![img](../../../static/images/rmi-architecture-02.webp)
+![img](../../../images/rmi-architecture-02.webp)
 
 RMI架构的基本工作流程如下：
 
