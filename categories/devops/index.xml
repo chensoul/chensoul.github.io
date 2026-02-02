@@ -7,7 +7,7 @@
 &lt;p&gt;Git是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。&lt;/p&gt;</description></item><item><title>Git使用</title><link>https://blog.chensoul.cc/posts/2024/07/15/git/</link><pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/15/git/</guid><description>&lt;h2 id="部署git-服务"&gt;部署Git 服务&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;创建git仓库&lt;/strong&gt;&lt;/p&gt;</description></item><item><title>Docker安装和配置</title><link>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</link><pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/07/09/install-docker/</guid><description>&lt;h1 id="centos7安装docker"&gt;Centos7安装Docker&lt;/h1&gt;
 &lt;h2 id="配置宿主机网卡转发"&gt;配置宿主机网卡转发&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 配置网卡转发，看值是否为1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 配置网卡转发，看值是否为1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sysctl -a |grep -w net.ipv4.ip_forward
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;net.ipv4.ip_forward = &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
@@ -19,7 +19,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EOF
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sysctl -p /etc/sysctl.d/docker.conf
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="yum安装配置docker"&gt;Yum安装配置docker&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 下载阿里源repo文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-powershell" data-lang="powershell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## 下载阿里源repo文件&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sudo yum install -y yum-utils
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sudo yum-config-manager --add-repo http&lt;span style="color:#960050;background-color:#1e0010"&gt;:&lt;/span&gt;//mirrors.aliyun.com/repo/Centos-&lt;span style="color:#ae81ff"&gt;7&lt;/span&gt;.repo
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sudo yum-config-manager --add-repo http&lt;span style="color:#960050;background-color:#1e0010"&gt;:&lt;/span&gt;//mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -46,7 +46,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ps aux |grep docker
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;安装 Compose plugin：&lt;/p&gt;</description></item><item><title>Gitlab安装和部署-使用Docker</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-gitlab/</guid><description>&lt;h2 id="安装-gitlab"&gt;安装 Gitlab&lt;/h2&gt;
 &lt;p&gt;安装 gitlab-ce 版本，当前最新版本为 17.2.0&lt;/p&gt;</description></item><item><title>Jenkins安装和部署-使用Docker</title><link>https://blog.chensoul.cc/posts/2024/06/26/install-jenkins/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/install-jenkins/</guid><description>&lt;h2 id="使用-docker-安装"&gt;使用 Docker 安装&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name jenkins_data
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name jenkins_data
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一次启动 Jenkins 时，Docker 日志将包含如下消息：&lt;/p&gt;</description></item><item><title>Tengine动态裁剪图片</title><link>https://blog.chensoul.cc/posts/2024/06/26/tengine/</link><pubDate>Wed, 26 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/26/tengine/</guid><description>&lt;h2 id="软件列表"&gt;软件列表&lt;/h2&gt;
@@ -59,14 +59,14 @@
 &lt;h2 id="安装lua"&gt;安装Lua&lt;/h2&gt;
 &lt;p&gt;先安装依赖：&lt;/p&gt;</description></item><item><title>搭建本地 Maven 仓库 Artifactory 开源版</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-artifactory-oss/</guid><description>&lt;h2 id="安装-artifactory"&gt;安装 Artifactory&lt;/h2&gt;
 &lt;p&gt;官方下载安装地址：&lt;a href="https://jfrog.com/community/download-artifactory-oss/" target="_blank"&gt;https://jfrog.com/community/download-artifactory-oss/&lt;/a&gt; ，支持三种安装方式：&lt;/p&gt;</description></item><item><title>搭建本地Maven仓库Nexus</title><link>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</link><pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate><guid>https://blog.chensoul.cc/posts/2024/06/25/install-nexus/</guid><description>&lt;h2 id="使用-docker-安装"&gt;使用 Docker 安装&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name nexus_data
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker volume create --name nexus_data
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ docker run -d -p 8081:8081--name nexus -v nexus_data://nexus-data sonatype/nexus3
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;8081 是 Nexus UI 端口&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="使用-docker-compose-安装"&gt;使用 Docker Compose 安装&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;services&lt;/span&gt;:
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;services&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;nexus&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;image&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;sonatype/nexus3&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;platform&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;linux/amd64&lt;/span&gt;

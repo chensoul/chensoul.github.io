@@ -53,7 +53,7 @@ TokenStore。&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;提示 &lt;code&gt;Rollup failed to resolve import &amp;quot;@vue/shared&amp;quot;&lt;/code&gt;，原因：这个错误是由于无法解析到 &lt;code&gt;@vue/shared&lt;/code&gt;
 这个包导致的。@vue/shared 是 Vue 内部使用的一个共享工具库。解决方案：将 @vue/shared 添加到项目的依赖中。
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm install --save @vue/shared
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm install --save @vue/shared
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;Controller 的方法上添加注解判断是否有权限，例子：
 &lt;code&gt;@PreAuthorize(&amp;quot;hasAuthority('manage_user_authority') or #oauth2.hasScope('manage_user_authority')&amp;quot;)&lt;/code&gt;&lt;/li&gt;
