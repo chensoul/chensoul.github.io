@@ -24,7 +24,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
   description = "专注于 Java 企业级开发与 AI 应用实践的技术博客。涵盖 Spring AI、RAG 检索增强生成、微服务架构、云原生 Kubernetes、DevOps 等核心技术。分享 Spring Boot、Spring Cloud、Spring Security、OAuth2、分布式系统设计等实战经验。"
   authorbox = true
   authorIntro = "我是 chensoul，是一名 Java 程序员，目前居住在中国武汉。我喜欢[编程](https://github.com/chensoul)、[跑步](https://run.chensoul.cc/)。我创建这个网站编写[文章](/posts)是为了记录我学习新知识的历程，并与大家分享。欢迎订阅我的 [RSS](/index.xml) 源、加入我的 [Tg 频道](https://t.me/ichensoul)、给我发送[邮件](mailto:ichensoul@gmail.com)，或了解更多[关于我](/about/)的信息。"
-  toc = true
+  toc = false
 
 [params.remark42]
   enabled = false
@@ -38,21 +38,29 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 [menu]
   [[menu.main]]
-    name = "首页"
+    name = "Home"
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "分类"
+    name = "Categories"
     url = "/categories/"
     weight = 2
    [[menu.main]]
-      name = "标签"
-      url = "/tags/"
-      weight = 3
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
   [[menu.main]]
-      name = "关于"
-      url = "/about/"
-      weight = 4
+    name = "Links"
+    url = "/links/"
+    weight = 4
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 5
+  [[menu.main]]
+    name = "RSS"
+    url = "/index.xml"
+    weight = 10
 
 [outputs]
   page = ["HTML", "Markdown"]
