@@ -25,6 +25,7 @@ toc: false
 - [Get better at programming by learning how things work](https://jvns.ca/blog/learn-how-things-work/)
 - [Learn In Public](https://www.swyx.io/learn-in-public/)
 - [Software Engineering - The Soft Parts](https://addyosmani.com/blog/software-engineering-soft-parts/) 
+- [How do I upskill myself, and what tools & techniques do I use?](https://www.youtube.com/watch?v=oOAaGvpQTCo)
 
 ## 书籍
 
