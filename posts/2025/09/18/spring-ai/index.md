@@ -5,420 +5,168 @@ lastmod: 2025-09-18 00:00:00 +0000 UTC
 publishdate: 2025-09-18 00:00:00 +0000 UTC
 slug: spring-ai
 tags: [spring-ai]
-title: Spring AI 介绍
+title: Spring AI 和 Open AI 入门指南
 ---
 
-Spring AI 是 Spring 团队推出的开源项目，当前版本为 1.1.0。它是一个专门为 AI 工程设计的应用程序框架，旨在将 Spring 生态系统的设计原则（如可移植性和模块化设计）应用到 AI 领域，并推广使用 POJO 作为应用程序的构建块。
+本文将探讨以下内容：
 
-**核心目标**：解决 AI 集成的基本挑战 - **连接企业数据和 API 与 AI 模型**。
+- Spring AI 简介。
+- 使用 Spring AI 与 OpenAI 进行交互。
 
 <!--more-->
 
-## 核心特性
+> **示例代码库**
+>
+> 您可以在 [GitHub 仓库](https://github.com/chensoul/spring-ai-samples/tree/main/01-chat-openai) 中找到本文的示例代码。
 
-### 1. 统一的 AI 模型 API
-- **跨提供商可移植性**：提供统一的接口，支持多个 AI 提供商
-- **多种模型类型**：
-  - Chat Completion（聊天补全）
-  - Embedding（嵌入）
-  - Text to Image（文本生成图像）
-  - Audio Transcription（音频转录）
-  - Text to Speech（文本转语音）
-  - Moderation（内容审核）
-- **同步和流式 API**：同时支持同步和异步流式处理
-- **结构化输出**：将 AI 模型输出映射到 POJO
+## OpenAI 和 SpringAI 简介
 
-### 2. 向量存储 API
-- **多数据库支持**：支持 14 种向量数据库
-  - Apache Cassandra
-  - Azure Vector Search
-  - Chroma
-  - Milvus
-  - MongoDB Atlas
-  - Neo4j
-  - Oracle
-  - PostgreSQL/PGVector
-  - PineCone
-  - Qdrant
-  - Redis
-  - Weaviate
-- **元数据过滤**：提供类似 SQL 的元数据过滤 API
-- **检索增强生成（RAG）**：为 RAG 模式提供完整支持
+ChatGPT 由 OpenAI 发布，一经推出便风靡全球。它是首个能够根据提示生成类似人类回答的语言模型。此后，OpenAI 又发布了其他几个模型，包括 DALL-E，它可以根据文本提示生成图像。
 
-### 3. 工具调用 API
-- **方法标注**：使用 `@Tool` 注解标记可调用的方法
-- **函数式支持**：支持 `java.util.Function` 对象
-- **客户端工具集成**：允许 AI 模型调用客户端工具和函数
-- **实时信息访问**：获取必要的实时信息
+[Spring AI](https://spring.io/projects/spring-ai)是一个 Java 库，它提供了一个简单易用的接口来与 LLM 模型进行交互。Spring AI 提供更高级别的抽象，用于与各种 LLM 进行交互，例如 **OpenAI**、**Azure OpenAI**、**Hugging Face**、**Google Vertex**、**Ollama**、**Amazon Bedrock**等。
 
-### 4. 高级 API 特性
-- **ChatClient API**：类似 WebClient 和 RestClient 的流式 API
-- **Advisors API**：封装常见的生成式 AI 模式，转换发送到语言模型的数据
-- **对话记忆**：支持聊天对话记忆和上下文管理
-- **RAG 支持**：完整的检索增强生成实现
+在本文中，我们将探讨如何使用 Spring AI 与 Open AI 进行交互。
 
-### 5. Spring Boot 集成
-- **自动配置**：为 AI 模型和向量存储提供自动配置
-- **Starter 支持**：简化依赖管理和配置
-- **配置属性**：通过 `application.yml` 进行配置
-- **Spring Initializr**：使用 [start.spring.io](https://start.spring.io) 选择模型或向量存储
+首先，我们需要在 OpenAI 创建一个帐户并获取 API 密钥。
 
-### 6. 数据工程与可观测性
-- **ETL 框架**：文档注入 ETL 框架，支持数据工程
-- **可观测性**：提供 AI 相关操作的洞察和监控
-- **模型评估**：评估生成内容的工具，防止幻觉响应
+- 前往[OpenAI 平台](https://platform.openai.com/)并创建一个帐户。
+- 在控制面板中，点击左侧导航菜单中的**“API 密钥” ，创建一个新的 API 密钥。**
 
-## 支持的 AI 提供商
-
-Spring AI 支持众多主流 AI 提供商：
-
-- **OpenAI**：GPT 系列模型
-- **Microsoft**：Azure OpenAI 服务
-- **Amazon**：Bedrock 服务
-- **Google**：Vertex AI
-- **Anthropic**：Claude 系列
-- **Ollama**：本地模型部署
-- **其他**：Hugging Face、Cohere 等
-
-## 快速开始
-
-### 1. Maven 配置
-
-#### 方式一：使用 Spring Initializr
-访问 [start.spring.io](https://start.spring.io)，选择：
-- Spring Boot 版本：3.5。7
-- 依赖：Spring AI OpenAI
-
-#### 方式二：手动添加依赖
-
-**父 POM 配置**：
-```xml
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.7</version>
-    <relativePath/>
-</parent>
-
-<properties>
-    <!-- Spring AI 版本，建议使用最新稳定版 -->
-    <spring-ai.version>1.1.0</spring-ai.version>
-</properties>
-
-<dependencyManagement>
-    <dependencies>
-        <!-- Spring AI BOM，统一管理所有 Spring AI 相关依赖版本 -->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-bom</artifactId>
-            <version>${spring-ai.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-**常用 Spring AI 依赖**：
-
-```xml
-<!-- OpenAI 支持 - 提供与 OpenAI API 的集成 -->
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-starter-model-openai</artifactId>
-</dependency>
-
-<!-- Ollama 支持 - 提供与 Ollama API 的集成 -->
-<dependency>
-  	<groupId>org.springframework.ai</groupId>
-  	<artifactId>spring-ai-starter-model-ollama</artifactId>
-</dependency>
-
-<!-- Anthropic 支持 - 提供与 Anthropic API 的集成 -->
-<dependency>
-  	<groupId>org.springframework.ai</groupId>
-  	<artifactId>spring-ai-starter-model-anthropic</artifactId>
-</dependency>
-
-<!-- PostgreSQL 向量存储支持 - 用于 RAG 应用 -->
-<dependency>
-  	<groupId>org.springframework.ai</groupId>
-  	<artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
-</dependency>
-
-<!-- Redis 向量存储支持 - 轻量级向量存储方案 -->
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-starter-vector-store-redis</artifactId>
-</dependency>
-
-<!-- PDF 文档读取器 - 用于文档处理 -->
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-pdf-document-reader</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-tika-document-reader</artifactId>
-</dependency>
-```
-
-### 2. 配置文件详解
-
-application.yml 配置（推荐）
-
-```yaml
-spring:
-  ai:
-    # OpenAI 配置
-    openai:
-      # API 密钥，建议通过环境变量设置
-      api-key: ${OPENAI_API_KEY:your-api-key-here}
-      # 基础 URL，默认使用 OpenAI 官方 API
-      base-url: ${OPENAI_BASE_URL:https://api.openai.com}
-      # 聊天模型配置
-      chat:
-        options:
-          # 使用的模型名称，如 gpt-4, gpt-3.5-turbo
-          model: gpt-4
-          # 温度参数，控制输出的随机性 (0.0-2.0)
-          temperature: 0.7
-          # 最大生成 token 数
-          max-tokens: 1000
-          # 是否流式输出
-          stream: false
-          # 停止词列表
-          stop: []
-      # 嵌入模型配置
-      embedding:
-        options:
-          # 嵌入模型名称
-          model: text-embedding-ada-002
-          # 嵌入维度
-          dimensions: 1536
-      # 图像生成配置
-      image:
-        options:
-          # 图像模型名称
-          model: dall-e-3
-          # 图像尺寸
-          size: 1024x1024
-          # 图像质量
-          quality: standard
-          # 生成数量
-          n: 1
-    # 向量存储配置
-    vectorstore:
-      # PostgreSQL 向量存储配置
-      pgvector:
-        # 索引类型：HNSW（分层导航小世界图）或 IVFFlat
-        index-type: HNSW
-        # 距离计算方式：COSINE_DISTANCE, EUCLIDEAN_DISTANCE, NEGATIVE_INNER_PRODUCT
-        distance-type: COSINE_DISTANCE
-        # 向量维度，必须与嵌入模型维度一致
-        dimensions: 1536
-        # 是否使用现有表
-        use-existing-index: false
-        # 索引参数
-        index-options:
-          # HNSW 参数
-          m: 16
-          ef_construction: 64
-      # Redis 向量存储配置
-      redis:
-        # Redis 连接配置
-        host: localhost
-        port: 6379
-        password: ${REDIS_PASSWORD:}
-        database: 0
-        # 向量存储键前缀
-        key-prefix: "spring-ai:"
-        # 向量维度
-        dimensions: 1536
-        # 距离计算方式
-        distance-type: COSINE_DISTANCE
-    # 文档处理配置
-    document:
-      # PDF 处理配置
-      pdf:
-        # 是否提取元数据
-        extract-metadata: true
-        # 是否提取图像
-        extract-images: false
-        # 页面范围
-        page-range: "1-"
-```
-
-### 3. 环境变量配置
-
-**推荐的环境变量设置**：
+获取 API 密钥后，将该`OPENAI_API_KEY`API 密钥设置到环境变量中。
 
 ```bash
-# OpenAI API 配置
-export OPENAI_API_KEY="your-actual-api-key-here"
-export OPENAI_BASE_URL="https://api.openai.com"
-
-# Redis 配置（如果使用 Redis 向量存储）
-export REDIS_PASSWORD="your-redis-password"
-
-# 数据库配置（如果使用 PostgreSQL 向量存储）
-export SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/vectordb"
-export SPRING_DATASOURCE_USERNAME="postgres"
-export SPRING_DATASOURCE_PASSWORD="your-db-password"
+export OPENAI_API_KEY=<your-api-key>
 ```
 
-### 4. 编写代码
+## 创建 Spring AI 项目
 
-**基础聊天功能**：
+让我们使用 Spring Initializr 创建一个新的 Spring Boot Maven 项目。
+
+- 前往 [Spring Initializr](https://start.spring.io/)
+- 选择 **Web** 和 **OpenAI** starters
+
+## 使用 ChatClient 与 OpenAI 进行交互
+
+Spring AI 提供**ChatClient**抽象，用于与不同类型的 LLM 进行交互，而无需与实际的 LLM 模型耦合。
+
+例如，我们可以使用**ChatClient**与 OpenAI 进行交互，如下所示：
+
 ```java
 @RestController
-@RequestMapping("/api/ai")
-public class ChatController {
-    
+@RequestMapping("/")
+class ChatController {
     private final ChatClient chatClient;
-    
-    public ChatController(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
-    }
-    
-    @PostMapping("/chat")
-    public ResponseEntity<String> chat(@RequestBody ChatRequest request) {
-        try {
-            String response = chatClient.prompt(request.getMessage()).call().content();
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("AI 服务暂时不可用");
-        }
-    }
-    
-    // 流式聊天
-    @PostMapping("/chat/stream")
-    public ResponseEntity<StreamingResponseBody> chatStream(@RequestBody ChatRequest request) {
-        return ResponseEntity.ok()
-            .contentType(MediaType.TEXT_PLAIN)
-            .body(outputStream -> {
-                chatClient.prompt(request.getMessage())
-                    .stream()
-                    .content()
-                    .forEach(content -> {
-                        try {
-                            outputStream.write(content.getBytes());
-                            outputStream.flush();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-            });
-    }
-}
 
-// 请求 DTO
-public class ChatRequest {
-    private String message;
-    
-    // getter 和 setter
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    ChatController(ChatClient.Builder builder) {
+        this.chatClient = builder
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+
+    @PostMapping("/api/chat")
+    Output chat(@RequestBody @Valid Input input) {
+        String response = chatClient.prompt(input.prompt()).call().content();
+        return new Output(response);
+    }
+
+    record Input(@NotBlank String prompt) {}
+    record Output(String content) {}
+
 }
 ```
 
-**命令行运行示例**：
-```java
-@SpringBootApplication
-public class SpringAiDemoApplication {
-    
-    public static void main(String[] args) {
-        SpringApplication.run(SpringAiDemoApplication.class, args);
-    }
-    
-    @Bean
-    public CommandLineRunner runner(ChatClient.Builder builder) {
-        return args -> {
-            ChatClient chatClient = builder.build();
-            String response = chatClient.prompt("Tell me a joke").call().content();
-            System.out.println("AI Response: " + response);
-        };
-    }
-}
+上述代码中没有与 OpenAI 耦合。
+
+我们可以通过在**application.properties**文件中提供 API 密钥和其他参数来配置**ChatClient**以使用 OpenAI 。
+
+```properties
+spring.application.name=01-chat-openai
+
+#spring.ai.openai.base-url=https://api.openai.com
+spring.ai.openai.api-key=${OPENAI_API_KEY}
+spring.ai.openai.chat.options.model=gpt-5
+# From 0 to 1.
+# higher number -> more creative and random
+# lower number -> more deterministic
+# gpt-5 supports temperature=1 only
+spring.ai.openai.chat.options.temperature=1
+
+logging.level.org.springframework.ai.chat.client.advisor=DEBUG
 ```
 
-### 5. 运行应用
+现在我们可以运行应用程序并测试聊天 API 了。
 
 ```bash
-# 使用 Maven 运行
-./mvnw spring-boot:run
+curl -s -X POST http://localhost:8080/api/chat -H "Content-Type: application/json" -d '{"prompt":"What is Spring Boot?"}'
 
-# 或者先编译再运行
-./mvnw clean package
-java -jar target/your-app.jar
-
-# 使用环境变量运行
-OPENAI_API_KEY=your-key ./mvnw spring-boot:run
+{"content":"**Spring Boot** is an open-source Java-based framework that simplifies the creation of **standalone, production-grade Spring applications** with minimal configuration. It's built on top of the Spring Framework but removes much of its complexity."}%
 ```
 
-## 典型应用场景
+## 使用 OpenAI 兼容模型
 
-### 1. 智能客服系统
-```java
-@RestController
-public class ChatController {
-    
-    @Autowired
-    private ChatClient chatClient;
-    
-    @PostMapping("/chat")
-    public String chat(@RequestBody String message) {
-        return chatClient.prompt(message).call().content();
-    }
-}
+许多 AI 服务商提供了与 OpenAI API 兼容的接口。Spring AI 的 `spring-ai-starter-model-openai` 通过配置 **base-url**、**api-key** 以及可选的 **chat.completions-path** 和 **model**，即可无缝切换到这些兼容服务，无需修改任何 Java 代码。
+
+本示例中通过 **Spring Profile** 预置了多套配置，启动时指定 profile 即可切换模型：
+
+| Profile        | 服务商           | 环境变量           | 说明                         |
+|----------------|------------------|--------------------|------------------------------|
+| （默认）       | OpenAI           | `OPENAI_API_KEY`   | 官方 OpenAI                  |
+| `deepseek`     | DeepSeek         | `DEEPSEEK_API_KEY` | DeepSeek 推理/对话模型       |
+| `openrouter`   | OpenRouter       | `OPENROUTER_API_KEY` | 聚合多种开源/商业模型       |
+| `groq`         | Groq             | `GROQ_API_KEY`     | 高速推理，如 Llama           |
+| `gemini`       | Google Gemini    | `GEMINI_API_KEY`   | Gemini 的 OpenAI 兼容端点    |
+| `dmr`          | Docker Model Runner | 无               | 本地 DMR 引擎（如 SmolLM）   |
+
+**示例：使用 DeepSeek**
+
+1. 在 [DeepSeek 开放平台](https://platform.deepseek.com/) 获取 API Key，并设置环境变量：
+
+```bash
+export DEEPSEEK_API_KEY=<your-deepseek-api-key>
 ```
 
-### 2. 文档问答系统（RAG）
-- 使用嵌入模型对文档进行向量化
-- 实现语义搜索和问答功能
-- 支持多轮对话和上下文记忆
+2. 使用 `deepseek` profile 启动应用：
 
-### 3. 智能代码助手
-- 结合代码嵌入进行语义搜索
-- 提供代码补全和建议
-- 支持多种编程语言
-
-### 4. 内容生成
-- 自动摘要生成
-- 文本翻译和润色
-- 创意内容创作
-
-## 技术优势
-
-### 1. Spring 生态集成
-- 与 Spring Boot、Spring Security 等无缝集成
-- 遵循 Spring 的设计理念和最佳实践
-- 支持依赖注入和 AOP
-
-### 2. 配置简化
-```yaml
-spring:
-  ai:
-    openai:
-      api-key: ${OPENAI_API_KEY}
-      chat:
-        options:
-          model: gpt-4
-          temperature: 0.7
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=deepseek
 ```
 
-### 3. 类型安全
-- 强类型 API 设计
-- 编译时错误检查
-- 更好的 IDE 支持
+3. 调用方式与默认 OpenAI 完全一致：
 
-### 4. 可扩展性
-- 插件化架构
-- 自定义模型支持
-- 灵活的配置选项
+```bash
+curl -s -X POST http://localhost:8080/api/chat -H "Content-Type: application/json" -d '{"prompt":"What is Spring Boot?"}'
+```
 
+**配置示例（DeepSeek）**
 
+只需在 `application-deepseek.properties` 中指定兼容的 base-url 和 model，其余与 OpenAI 配置方式相同：
+
+```properties
+## DeepSeek ##
+spring.ai.openai.base-url=https://api.deepseek.com
+spring.ai.openai.api-key=${DEEPSEEK_API_KEY}
+spring.ai.openai.chat.options.model=deepseek-reasoner
+```
+
+**路径与模型可调**
+
+若某服务的聊天完成接口路径不是默认的 `/v1/chat/completions`，可通过 `spring.ai.openai.chat.completions-path` 覆盖。例如 Groq 与 Gemini 的配置：
+
+```properties
+# Groq
+spring.ai.openai.base-url=https://api.groq.com
+spring.ai.openai.chat.completions-path=/openai/v1/chat/completions
+spring.ai.openai.api-key=${GROQ_API_KEY}
+spring.ai.openai.chat.options.model=llama-3.3-70b-versatile
+
+# Google Gemini OpenAI 兼容模式
+spring.ai.openai.base-url=https://generativelanguage.googleapis.com
+spring.ai.openai.chat.completions-path=/v1beta/openai/chat/completions
+spring.ai.openai.api-key=${GEMINI_API_KEY}
+spring.ai.openai.chat.options.model=gemini-2.0-flash
+```
+
+这样，同一套 ChatController 与 ChatClient 代码即可在不同 OpenAI 兼容模型之间切换，只需更换 profile 和对应的环境变量。
 
 ## 总结
 
