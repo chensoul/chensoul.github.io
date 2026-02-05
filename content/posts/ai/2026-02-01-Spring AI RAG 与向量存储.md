@@ -1,17 +1,18 @@
----
+                                     ---
 title: "Spring AI RAG 与向量存储"
 date: "2026-02-01"
 slug: spring-ai-rag-vector-store
 categories: ["ai"]
 tags: ['spring-ai', 'rag', 'redis']
+
 ---
 
 Spring 官方文档在《[Retrieval Augmented Generation](https://docs.spring.io/spring-ai/reference/api/retrieval-augmented-generation.html)》中，把 RAG 拆成三步：**摄取（Ingestion）→ 检索（Retrieval）→ 生成（Generation）**。本文是这套流程的完整落地版本：用 Markdown 文档喂入 Redis 向量库，依靠 `QuestionAnswerAdvisor` 在每次提问前检索上下文，再交给本地部署的 Ollama 生成答案。本文重新梳理模块结构、关键实现与运行方式，方便你快速对齐代码与文档。
 
 <!--more-->
 
-> **示例代码库**  
-> 
+> **示例代码库**
+>
 > 您可以在 [GitHub 仓库](https://github.com/chensoul/spring-ai-samples/tree/main/08-rag-vector-store) 中找到本文的示例代码。
 
 
@@ -193,29 +194,85 @@ curl "http://localhost:8080/api/search?query=微服务"
 
 1. **启动 Redis**  
    模块目录已提供 Compose 文件：
+
    ```bash
    cd 08-rag-vector-store
    docker compose up -d    # redis/redis-stack:7.2.0-v18
    ```
+
    Spring Boot 会自动发现 `org.springframework.boot.service-connection=redis` 标签并注入连接信息。
 
-2. **运行应用**  
+2. **运行应用**
+
    ```bash
    ../mvnw spring-boot:run
    ```
 
-3. **体验 RAG**  
-   - 打开 `http://localhost:8080/` 。
-   - 问：“请总结一下作者的职业经历？” 可以看到回答里引用了 `about.md` 的具体条目。
-   - 再问：“他在职业生涯中学到的最重要的教训是什么？” 模型会引用 `career.md` 的编号列表继续回答。
+3. **体验 RAG**
 
-4. **可选 API**  
-   - `/api/embedding`、`/api/embedding/similarity`：观察向量与相似度。
-   - `/api/search`、`/api/search/filter`、`/api/search/multi`：基础检索与过滤。
-   - `/api/search/two-stage`、`/api/search/rerank`：扩展检索与重排序。
-   - `/api/search/rerank/explain`：BM25 解释与分数分解。
-   - `/api/augment/context`：上下文增强 query。
-   - `/api/query/translate`、`/api/query/rewrite`、`/api/query/compress`、`/api/query/expand`：查询变换链路。
+    - 打开 `http://localhost:8080/` 。
+    - 问：“Summarize the author’s career experience.” 可以看到回答里引用了 `about.md` 的具体条目。
+    - 再问：“What is the most important lesson from the career notes?” 模型会引用 `career.md` 的编号列表继续回答。
+
+4. **可选 API**
+
+    - `/api/embedding`、`/api/embedding/similarity`：观察向量与相似度。
+    - `/api/search`、`/api/search/filter`、`/api/search/multi`：基础检索与过滤。
+    - `/api/search/two-stage`、`/api/search/rerank`：扩展检索与重排序。
+    - `/api/search/rerank/explain`：BM25 解释与分数分解。
+    - `/api/augment/context`：上下文增强 query。
+    - `/api/query/translate`、`/api/query/rewrite`、`/api/query/compress`、`/api/query/expand`：查询变换链路。
+
+## 测试脚本（bash）
+
+一行命令一个测试，默认服务地址为 `http://localhost:8080`：
+
+```bash
+# 生成文本向量
+curl -s "http://localhost:8080/api/embedding?message=vector%20test"
+
+# 计算文本相似度
+curl -s "http://localhost:8080/api/embedding/similarity?text1=vector&text2=embedding"
+
+# 基础向量检索
+curl -s "http://localhost:8080/api/search?query=career"
+
+# 启用高亮的向量检索
+curl -s "http://localhost:8080/api/search?query=career&highlight=true"
+
+# 按单一来源过滤
+curl -s "http://localhost:8080/api/search/filter?query=career&source=about"
+
+# 多来源与 ID 前缀过滤
+curl -s "http://localhost:8080/api/search/filter?query=career&sources=about,career&idPrefix=about-"
+
+# 多路检索合并
+curl -s "http://localhost:8080/api/search/multi?query=career"
+
+# 两阶段检索与重排序
+curl -s "http://localhost:8080/api/search/two-stage?query=career"
+
+# 融合重排序
+curl -s "http://localhost:8080/api/search/rerank?query=career"
+
+# 重排序解释
+curl -s "http://localhost:8080/api/search/rerank/explain?query=career"
+
+# 上下文增强
+curl -s "http://localhost:8080/api/augment/context?query=career"
+
+# 查询翻译
+curl -s "http://localhost:8080/api/query/translate?query=Summarize%20the%20career%20notes&target=english"
+
+# 查询改写
+curl -s "http://localhost:8080/api/query/rewrite?query=career%20notes"
+
+# 查询压缩
+curl -s "http://localhost:8080/api/query/compress?query=career%20notes&history=We%20just%20discussed%20the%20author%27s%20background"
+
+# 查询扩展
+curl -s "http://localhost:8080/api/query/expand?query=career%20notes&n=3"
+```
 
 ## 小结
 
