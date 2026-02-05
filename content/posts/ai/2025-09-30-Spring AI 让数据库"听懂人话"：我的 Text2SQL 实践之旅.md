@@ -27,7 +27,7 @@ date: 2025-09-30
 - **Spring 生态**：与现有 **Spring Boot** 项目无缝集成，支持**依赖注入**和**自动配置**
 
 **核心技术栈** ：
-- **Spring Boot 3.5.7** + **Spring AI 1.1.0**（企业级 Java 框架）
+- **Spring Boot 3.5.7*9 + **Spring AI 1.1.2**（企业级 Java 框架）
 - **MySQL 9** (Docker容器化部署)
 - **DeepSeek Chat API**（国产大语言模型）
 - **Bootstrap 5** + **Thymeleaf**（响应式前端框架）
@@ -1350,5 +1350,5 @@ public class SqlUtils {
 
 ---
 
-*本文基于 Spring AI 1.1.0 版本编写，[项目代码已开源](https://github.com/chensoul/spring-ai-text2sql-showcase)，欢迎 Star 和 Fork！*
+*本文基于 Spring AI 1.1.2 版本编写，[项目代码已开源](https://github.com/chensoul/spring-ai-text2sql-showcase)，欢迎 Star 和 Fork！*
 
