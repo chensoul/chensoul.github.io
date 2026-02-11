@@ -9,19 +9,19 @@ tags: ['spring-ai', 'sse']
 在 《[Spring AI 对话记忆](/posts/2026/02/04/spring-ai-chat-memory/) 》中我们用 **MessageChatMemoryAdvisor + JDBC** 实现了多轮对话记忆。本文基于同一套记忆能力，升级为 **Server-Sent Events (SSE)** 流式输出，并配上自定义前端让 DeepSeek 的回复实时逐字出现。
 <!--more-->
 
-> **示例代码库**  
-> 
-> 您可以在 [GitHub 仓库](https://github.com/chensoul/spring-ai-samples/tree/main/07-chat-memory-sse) 中找到本文的示例代码。
+## 源代码
+
+如果您想自己尝试，可以查看我的源代码。为此，您必须克隆我的示例  [GitHub 仓库](https://github.com/chensoul/spring-ai-chat-memory-samples) 。然后，您只需按照我的说明操作即可。
 
 ## 为什么需要“记忆 + 流式输出”
 
-- **对话记忆**：同 06-chat-memory 一样，按 `conversationId` 持久化历史消息，保证模型能“记住”你是谁。
+- **对话记忆**：同 chat-memory 一样，按 `conversationId` 持久化历史消息，保证模型能“记住”你是谁。
 - **SSE 流式体验**：相比一次性返回，SSE 可以将大模型的逐字输出直接推送到浏览器，显著缩短“首字延迟”。
 - **前端友好**：自定义 UI 自动渲染 Markdown/HTML，列表、表格、代码块都能即时排版。
 
 ## 核心依赖
 
-除了 06-chat-memory 已有的依赖外，这个模块额外引入了 WebFlux：
+除了 chat-memory 已有的依赖外，这个模块额外引入了 WebFlux：
 
 ```xml
 <dependency>
@@ -31,7 +31,7 @@ tags: ['spring-ai', 'sse']
 ```
 
 - **spring-boot-starter-webflux**：提供 `Flux`、`SseEmitter`、反压处理等能力，便于把 Spring AI 的流式内容通过 SSE 推到前端。
-- 其余依赖（OpenAI/DeepSeek、JDBC Chat Memory、PostgreSQL、docker-compose）与 06-chat-memory 保持一致。
+- 其余依赖（OpenAI/DeepSeek、JDBC Chat Memory、PostgreSQL、docker-compose）与 chat-memory 保持一致。
 
 ## 后端：ChatClient + SSE
 
@@ -68,12 +68,12 @@ ResponseEntity<SseEmitter> chatStream(@RequestBody @Valid Input input,
 
 关键点：
 
-1. **Shared ChatClient**：构造时同 06-chat-memory 一样注册 `MessageChatMemoryAdvisor`，保证多轮记忆。
+1. **Shared ChatClient**：构造时同 chat-memory 一样注册 `MessageChatMemoryAdvisor`，保证多轮记忆。
 2. **Flux + stream()**：`chatClient.prompt().stream().content()` 返回 `Flux<String>`，每个元素是一小段模型输出。
 3. **SseEmitter**：将 Flux 订阅结果逐段写入 SSE 事件，前端即刻收到。
 4. **Cookie 会话**：若请求没有 `X-CONV-ID`，就生成新 UUID，写入返回头，浏览器自动持久化，确保后续请求沿用同一会话存储。
 
-普通接口 `/api/chat` 则与 06-chat-memory 基本一致，可在调试或 Postman 调用时使用。
+普通接口 `/api/chat` 则与 chat-memory 基本一致，可在调试或 Postman 调用时使用。
 
 ## 前端：实时 Markdown 渲染
 
@@ -174,5 +174,5 @@ spring.ai.chat.memory.repository.jdbc.initialize-schema=always
 - **SSE 流式**：`Flux<String>` + `SseEmitter`，无需额外消息队列即可把 Spring AI 的 `stream()` 推到浏览器。
 - **UI 强化**：前端处理 Markdown/HTML、代码块、表格、列表，真正做到“所见即所得”的 AI 对话体验。
 
-想要一个既能“记住你”又能“实时输出”的聊天机器人？在 06-chat-memory 的基础上加上这套 SSE 流就够了。
+想要一个既能“记住你”又能“实时输出”的聊天机器人？在 chat-memory 的基础上加上这套 SSE 流就够了。
 

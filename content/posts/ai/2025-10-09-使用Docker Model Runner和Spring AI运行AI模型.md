@@ -10,6 +10,8 @@ keywords: ['Docker Model Runner', 'Spring AI', 'RAG', '向量搜索', '本地AI�
 
 你是否担心将敏感数据发送到云端AI服务？是否希望完全掌控AI模型的使用，而不受API限制和费用困扰？今天我们来探索一个全新的解决方案——**使用Docker Model Runner和Spring AI在本地环境中运行AI模型**。
 
+<!--more-->
+
 通过**Docker Model Runner**和**Spring AI框架**的结合，我们可以构建一个既安全又高效的**本地AI应用平台**。这种方式不仅保护了数据隐私，还让我们能够深入了解**AI模型的工作原理**，实现真正的**企业级AI应用开发**。
 
 > **核心价值**: 本文详细介绍如何使用Docker Model Runner部署本地AI模型，结合Spring AI框架实现RAG（检索增强生成）功能，构建完整的向量搜索和AI聊天系统。

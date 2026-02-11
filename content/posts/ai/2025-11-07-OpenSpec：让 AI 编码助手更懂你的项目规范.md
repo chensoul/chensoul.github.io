@@ -10,6 +10,8 @@ keywords: ['OpenSpec', 'AI 编码助手', '规范驱动开发']
 
 本文深入介绍 OpenSpec 规范驱动开发工具，展示如何让 AI 编码助手（如 Cursor、Claude、Copilot）按照项目规范生成高质量代码。通过完整的双因素认证实战案例，详细演示从提案创建、规范编写到代码实现的全流程，帮助开发者和团队提升代码一致性、开发效率和文档质量。
 
+<!--more-->
+
 ## 什么是 OpenSpec？
 
 [OpenSpec](https://github.com/Fission-AI/OpenSpec) 是一个专为 AI 编码助手设计的规范驱动开发工具。它解决了一个关键问题：**如何让 AI 助手按照项目规范生成代码，而不是凭空想象**。
