@@ -5,96 +5,179 @@ lastmod: 2025-09-18 00:00:00 +0000 UTC
 publishdate: 2025-09-18 00:00:00 +0000 UTC
 slug: spring-ai
 tags: [spring-ai]
-title: Spring AI 和 Open AI 入门指南
+title: Spring AI 和聊天模型入门
 ---
 
-本文将探讨以下内容：
-
-- Spring AI 简介。
-- 使用 Spring AI 与 OpenAI 进行交互。
+本文将教你如何使用 Spring AI 项目构建基于不同聊天模型的应用程序。Spring AI 聊天模型提供了简单易用的接口，方便我们与这些模型进行交互。本示例默认使用 OpenAI，并通过 Maven Profile 切换 Anthropic 与 Ollama，同时通过 Spring Profile 支持多种 OpenAI 兼容模型。
 
 <!--more-->
 
-> **示例代码库**
->
-> 您可以在 [GitHub 仓库](https://github.com/chensoul/spring-ai-samples/tree/main/01-chat-openai) 中找到本文的示例代码。
+## 源代码
 
-## OpenAI 和 SpringAI 简介
+如果您想自己尝试，可以查看我的源代码。为此，您必须克隆我的示例 GitHub [仓库](https://github.com/chensoul/spring-ai-chat-model-samples)。然后，您只需按照我的说明操作即可。
 
-ChatGPT 由 OpenAI 发布，一经推出便风靡全球。它是首个能够根据提示生成类似人类回答的语言模型。此后，OpenAI 又发布了其他几个模型，包括 DALL-E，它可以根据文本提示生成图像。
+## 依赖
 
-[Spring AI](https://spring.io/projects/spring-ai)是一个 Java 库，它提供了一个简单易用的接口来与 LLM 模型进行交互。Spring AI 提供更高级别的抽象，用于与各种 LLM 进行交互，例如 **OpenAI**、**Azure OpenAI**、**Hugging Face**、**Google Vertex**、**Ollama**、**Amazon Bedrock**等。
+首先，我们先添加 Spring AI 的依赖，当前版本为 `1.1.2`。
 
-在本文中，我们将探讨如何使用 Spring AI 与 Open AI 进行交互。
+```xml
+    <properties>
+		<java.version>21</java.version>
+		<spring-ai.version>1.1.2</spring-ai.version>
+	</properties>
 
-首先，我们需要在 OpenAI 创建一个帐户并获取 API 密钥。
-
-- 前往[OpenAI 平台](https://platform.openai.com/)并创建一个帐户。
-- 在控制面板中，点击左侧导航菜单中的**“API 密钥” ，创建一个新的 API 密钥。**
-
-获取 API 密钥后，将该`OPENAI_API_KEY`API 密钥设置到环境变量中。
-
-```bash
-export OPENAI_API_KEY=<your-api-key>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${spring-ai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 ```
 
-## 创建 Spring AI 项目
+由于我们的示例应用程序公开了一些 REST 端点，因此我们需要包含 Spring Boot Web Starter。我们还可以包含 Spring Boot Test Starter 来创建一些 JUnit 测试。Spring AI 模块包含在 Maven profiles 部分中。默认情况下应用程序启用 openai Profile，并引入 `spring-ai-starter-model-openai`；如需切换到 Anthropic 或 Ollama，请使用 `-Panthropic` 或 `-Pollama` 激活对应 Profile。以下是完整的依赖项列表。
 
-让我们使用 Spring Initializr 创建一个新的 Spring Boot Maven 项目。
+```xml
+<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
-- 前往 [Spring Initializr](https://start.spring.io/)
-- 选择 **Web** 和 **OpenAI** starters
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
-## 使用 ChatClient 与 OpenAI 进行交互
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-Spring AI 提供**ChatClient**抽象，用于与不同类型的 LLM 进行交互，而无需与实际的 LLM 模型耦合。
+	<profiles>
+		<profile>
+			<id>openai</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.ai</groupId>
+					<artifactId>spring-ai-starter-model-openai</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>anthropic</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.ai</groupId>
+					<artifactId>spring-ai-starter-model-anthropic</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>ollama</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.ai</groupId>
+					<artifactId>spring-ai-starter-model-ollama</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+```
 
-例如，我们可以使用**ChatClient**与 OpenAI 进行交互，如下所示：
+## 连接到模型提供商
+
+### 配置 OpenAI
+
+在开始编写源代码之前，我们需要准备聊天模型工具。首先，我们来使用 OpenAI。我们需要在 [OpenAI 平台](https://platform.openai.com/) 注册账号。登录后，访问 [API 密钥页面](https://platform.openai.com/api-keys) 生成 API 令牌。设置令牌名称后，点击“创建密钥”按钮。创建完成后，请务必复制该密钥。
+
+生成的令牌值应保存为环境变量。我们的示例 Spring Boot 应用程序从该 `OPENAI_API_KEY` 变量读取其值。
+
+```bash
+export OPENAI_API_KEY=<YOUR_TOKEN_VALUE>
+```
+
+### 配置 Anthropic
+
+在 Anthropic 控制台创建 API Key，并将其保存为环境变量：
+
+```bash
+export ANTHROPIC_API_KEY=<YOUR_TOKEN_VALUE>
+```
+
+### 运行和配置 Ollama
+
+与 OpenAI 或 Anthropic 不同，Ollama 旨在允许直接在工作站上运行大型语言模型 (LLM)。这意味着我们无需连接到远程 API 即可访问它。首先，我们必须从以下页面下载适用于我们操作系统的 Ollama 二进制文件。安装完成后，我们可以使用命令行界面 (CLI) 与之交互。接着选择要运行的模型。可用模型的完整列表可以在[这里](https://ollama.com/library)找到。这里，我们选择 qwen3:8b。
+
+```bash
+brew install ollama
+
+ollama run qwen3:8b
+```
+
+### 配置 Spring Boot 属性
+
+Ollama 通过端口公开 localhost，无需 API 令牌。选择模型后 llama3.2，我们需要相应地修改 Spring Boot 应用程序属性。
+
+application.properties
+
+```properties
+spring.ai.openai.api-key=${OPENAI_API_KEY}
+spring.ai.openai.chat.options.model=gpt-5
+spring.ai.openai.chat.options.temperature=1
+
+spring.ai.anthropic.api-key = ${ANTHROPIC_API_KEY}
+spring.ai.anthropic.chat.options.model = claude-sonnet-4-5
+
+spring.ai.ollama.chat.options.model = qwen3:8b
+
+logging.level.org.springframework.ai.chat.client.advisor=DEBUG
+```
+
+当启用 anthropic 或 ollama 的 Maven Profile 时，对应的配置会生效。
+
+## Spring AI 聊天模型 API
+
+Spring AI 提供 **ChatClient** 抽象，用于与不同类型的 LLM 进行交互，而无需与实际的模型供应商耦合。示例中通过 `ChatClient.Builder` 构建客户端，并在控制器中调用 `prompt(...).call()` 获取响应内容。
+
+例如，在本项目中可以通过 `ChatClientController` 暴露一个最小可用的聊天接口。示例代码如下：
 
 ```java
 @RestController
-@RequestMapping("/")
-class ChatController {
+@RequestMapping("/api/chat")
+class ChatClientController {
     private final ChatClient chatClient;
 
-    ChatController(ChatClient.Builder builder) {
+    ChatClientController(ChatClient.Builder builder) {
         this.chatClient = builder
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 
-    @PostMapping("/api/chat")
+    @PostMapping
     Output chat(@RequestBody @Valid Input input) {
         String response = chatClient.prompt(input.prompt()).call().content();
         return new Output(response);
     }
-
-    record Input(@NotBlank String prompt) {}
-    record Output(String content) {}
-
 }
 ```
 
-上述代码中没有与 OpenAI 耦合。
+假设您已将 OpenAI 令牌导出到 `OPENAI_API_KEY` 环境变量，则可以使用以下命令运行应用程序：
 
-我们可以通过在**application.properties**文件中提供 API 密钥和其他参数来配置**ChatClient**以使用 OpenAI 。
-
-```properties
-spring.application.name=01-chat-openai
-
-#spring.ai.openai.base-url=https://api.openai.com
-spring.ai.openai.api-key=${OPENAI_API_KEY}
-spring.ai.openai.chat.options.model=gpt-5
-# From 0 to 1.
-# higher number -> more creative and random
-# lower number -> more deterministic
-# gpt-5 supports temperature=1 only
-spring.ai.openai.chat.options.temperature=1
-
-logging.level.org.springframework.ai.chat.client.advisor=DEBUG
+```bash
+mvn spring-boot:run
 ```
 
-现在我们可以运行应用程序并测试聊天 API 了。
+然后，可以测试聊天 API：
 
 ```bash
 curl -s -X POST http://localhost:8080/api/chat -H "Content-Type: application/json" -d '{"prompt":"What is Spring Boot?"}'
@@ -102,76 +185,60 @@ curl -s -X POST http://localhost:8080/api/chat -H "Content-Type: application/jso
 {"content":"**Spring Boot** is an open-source Java-based framework that simplifies the creation of **standalone, production-grade Spring applications** with minimal configuration. It's built on top of the Spring Framework but removes much of its complexity."}%
 ```
 
+## 使用其他 AI 提供商
+
+本项目默认使用 OpenAI AI 提供商启动应用，也可以通过 Maven Profile 使用其他的 AI 提供商，例如：
+
+**使用 Anthropic：**
+
+```bash 
+export ANTHROPIC_API_KEY=<your-anthropic-api-key>
+mvn spring-boot:run -Panthropic
+```
+
+**使用 Ollama：**
+
+```bash 
+mvn spring-boot:run -Pollama
+```
+
 ## 使用 OpenAI 兼容模型
 
-许多 AI 服务商提供了与 OpenAI API 兼容的接口。Spring AI 的 `spring-ai-starter-model-openai` 通过配置 **base-url**、**api-key** 以及可选的 **chat.completions-path** 和 **model**，即可无缝切换到这些兼容服务，无需修改任何 Java 代码。
+许多 AI 服务商提供与 OpenAI API 兼容的接口。Spring AI 的 OpenAI Starter 通过配置 **base-url**、**api-key** 以及可选的 **chat.completions-path** 和 **model**，即可无缝切换到这些兼容服务，无需修改任何 Java 代码。
 
-本示例中通过 **Spring Profile** 预置了多套配置，启动时指定 profile 即可切换模型：
+本示例通过 **Spring Profile** 预置了多套 OpenAI 兼容配置，启动时指定 profile 即可切换模型：
 
-| Profile        | 服务商           | 环境变量           | 说明                         |
-|----------------|------------------|--------------------|------------------------------|
-| （默认）       | OpenAI           | `OPENAI_API_KEY`   | 官方 OpenAI                  |
-| `deepseek`     | DeepSeek         | `DEEPSEEK_API_KEY` | DeepSeek 推理/对话模型       |
-| `openrouter`   | OpenRouter       | `OPENROUTER_API_KEY` | 聚合多种开源/商业模型       |
-| `groq`         | Groq             | `GROQ_API_KEY`     | 高速推理，如 Llama           |
-| `gemini`       | Google Gemini    | `GEMINI_API_KEY`   | Gemini 的 OpenAI 兼容端点    |
-| `dmr`          | Docker Model Runner | 无               | 本地 DMR 引擎（如 SmolLM）   |
+| Profile      | 服务商                 | 环境变量                 | 说明                   |
+|--------------|---------------------|----------------------|----------------------|
+| （默认）         | OpenAI              | `OPENAI_API_KEY`     | 官方 OpenAI            |
+| `deepseek`   | DeepSeek            | `DEEPSEEK_API_KEY`   | DeepSeek 推理/对话模型     |
+| `openrouter` | OpenRouter          | `OPENROUTER_API_KEY` | 聚合多种开源/商业模型          |
+| `groq`       | Groq                | `GROQ_API_KEY`       | 高速推理，如 Llama         |
+| `gemini`     | Google Gemini       | `GEMINI_API_KEY`     | Gemini 的 OpenAI 兼容端点 |
+| `qwen`       | 阿里云 Qwen           | `DASHSCOPE_API_KEY`  | 通义千问 OpenAI 兼容模式     |
+| `zhipu`      | 智谱 GLM            | `ZHIPU_API_KEY`      | BigModel OpenAI 兼容接口 |
+| `doubao`     | 火山引擎 豆包          | `VOLC_ACCESS_KEY`    | Ark OpenAI 兼容接口      |
+| `dmr`        | Docker Model Runner | 无                    | 本地 DMR 引擎（如 SmolLM）  |
 
-**示例：使用 DeepSeek**
+**示例：**
 
-1. 在 [DeepSeek 开放平台](https://platform.deepseek.com/) 获取 API Key，并设置环境变量：
+**使用 DeepSeek 模型启动应用**
 
 ```bash
 export DEEPSEEK_API_KEY=<your-deepseek-api-key>
-```
-
-2. 使用 `deepseek` profile 启动应用：
-
-```bash
 mvn spring-boot:run -Dspring-boot.run.profiles=deepseek
 ```
 
-3. 调用方式与默认 OpenAI 完全一致：
+**使用 qwen 模型启动应用**
 
 ```bash
-curl -s -X POST http://localhost:8080/api/chat -H "Content-Type: application/json" -d '{"prompt":"What is Spring Boot?"}'
+export DASHSCOPE_API_KEY=<your-dashscope-api-key>
+mvn spring-boot:run -Dspring-boot.run.profiles=qwen
 ```
 
-**配置示例（DeepSeek）**
-
-只需在 `application-deepseek.properties` 中指定兼容的 base-url 和 model，其余与 OpenAI 配置方式相同：
-
-```properties
-## DeepSeek ##
-spring.ai.openai.base-url=https://api.deepseek.com
-spring.ai.openai.api-key=${DEEPSEEK_API_KEY}
-spring.ai.openai.chat.options.model=deepseek-reasoner
-```
-
-**路径与模型可调**
-
-若某服务的聊天完成接口路径不是默认的 `/v1/chat/completions`，可通过 `spring.ai.openai.chat.completions-path` 覆盖。例如 Groq 与 Gemini 的配置：
-
-```properties
-# Groq
-spring.ai.openai.base-url=https://api.groq.com
-spring.ai.openai.chat.completions-path=/openai/v1/chat/completions
-spring.ai.openai.api-key=${GROQ_API_KEY}
-spring.ai.openai.chat.options.model=llama-3.3-70b-versatile
-
-# Google Gemini OpenAI 兼容模式
-spring.ai.openai.base-url=https://generativelanguage.googleapis.com
-spring.ai.openai.chat.completions-path=/v1beta/openai/chat/completions
-spring.ai.openai.api-key=${GEMINI_API_KEY}
-spring.ai.openai.chat.options.model=gemini-2.0-flash
-```
-
-这样，同一套 ChatController 与 ChatClient 代码即可在不同 OpenAI 兼容模型之间切换，只需更换 profile 和对应的环境变量。
+这样，同一套 `ChatClientController` 代码即可在不同 OpenAI 兼容模型之间切换，只需更换 profile 和对应的环境变量。本仓库已在 `resources` 目录中提供了多份配置文件，可作为实际落地参考。
 
 ## 总结
 
-Spring AI 为 Java 开发者提供了一个强大、灵活且易于集成的 AI 解决方案。它让您能够在熟悉的 Spring 生态系统中快速构建现代化的 AI 驱动应用程序，特别适合实现"基于文档的问答"和"与文档对话"等常见用例。
-
-
-
+这个例子并没有什么特别之处，只是展示了 Spring AI Chat Models API 的一些基本功能。我们快速回顾了提示、结构化输出、聊天记录和内置顾问等功能。我们还切换了一些常用的 AI Chat Models API 提供商。敬请期待更多相关文章。如果您想继续阅读我博客上的 AI 系列文章，请点击[这里](/categories/ai/)。
 
