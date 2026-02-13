@@ -26,11 +26,10 @@ ignoreLogs = ['warning-goldmark-raw-html']
   authorIntro = "我是 chensoul，是一名 Java 程序员，目前居住在中国武汉。我喜欢[编程](https://github.com/chensoul)、[跑步](https://run.chensoul.cc/)。我创建这个网站编写[文章](/posts)是为了记录我学习新知识的历程，并与大家分享。欢迎订阅我的 [RSS](/index.xml) 源、加入我的 [Tg 频道](https://t.me/ichensoul)、给我发送[邮件](mailto:ichensoul@gmail.com)，或了解更多[关于我](/about/)的信息。"
   toc = false
 
-[params.remark42]
-  enabled = false
-  host = "https://comment.chensoul.cc"
-  site = "remark"
-  locale = "zh"
+[params.artalk]
+  enabled = true
+  host = "https://artalk.chensoul.cc"
+  site = "Chensoul Blog"
 
 [taxonomies]
   tag = "tags"
