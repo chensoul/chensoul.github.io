@@ -313,8 +313,6 @@ curl -X POST http://localhost:8080/api/query \
 
 我设计了一个简洁美观的 Web 界面，让用户能够直观地体验 Text2SQL 功能：
 
-![Spring AI Text2SQL 直接模式界面展示 - 自然语言数据库查询系统前端界面，包含中文查询输入框、示例查询模板、SQL生成结果展示和数据库结构查看功能](https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-01.png)
-
 **主要功能**：
 - **自然语言输入**：用户可以直接用中文描述查询需求
 - **示例查询**：提供常用的查询模板，点击即可使用
@@ -735,8 +733,6 @@ LIMIT 1
 ### 分步骤查询的前端界面
 
 启动应用之后，访问 http://localhost:8080/step 即可访问分步骤查询的前端界面： 
-
-![Spring AI Text2SQL 分步骤查询模式界面 - 多步推理过程展示界面，包含问题改写、数据表选取、信息推理、SQL生成和执行结果的完整AI推理链路](https://csmos.oss-cn-beijing.aliyuncs.com/spring-ai-text2sql-showcase-02.png)
 
 ## 第四版：智能业务规则推理，让AI更懂业务
 

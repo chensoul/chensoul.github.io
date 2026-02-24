@@ -5,6 +5,23 @@
     @apply !text-sm !leading-relaxed prose-headings:!mb-3 prose-p:!my-3 prose-p:!text-foreground prose-a:underline-offset-6 prose-blockquote:!border-l-accent/50 prose-blockquote:opacity-70 prose-strong:!text-foreground prose-code:rounded prose-code:bg-muted/75 prose-code:p-0.5 prose-code:!font-normal prose-code:!text-foreground prose-code:before:!content-none prose-code:after:!content-none prose-ol:!text-foreground prose-ul:overflow-x-clip prose-ul:!text-foreground prose-li:marker:!text-accent prose-table:text-foreground prose-th:border prose-th:border-border prose-th:!text-accent prose-td:border prose-td:border-border prose-img:mx-auto prose-hr:!my-0 prose-hr:!border-border;
   }
 
+  /* 标题颜色：覆盖 typography 插件，统一使用 --heading（深色主题由 global.css 的 --tw-prose-headings 接管） */
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: var(--heading) !important;
+  }
+
+  /* 深色主题下 h4/h5/h6 略淡，层级更清晰 */
+  html[data-theme="dark"] .prose h4,
+  html[data-theme="dark"] .prose h5,
+  html[data-theme="dark"] .prose h6 {
+    color: var(--heading-muted) !important;
+  }
+
   /* inline code */
   .prose :not(pre) > code {
     @apply !break-words !whitespace-pre-wrap;

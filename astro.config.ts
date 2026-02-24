@@ -19,7 +19,6 @@ import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import compressor from "astro-compressor";
 import { minify } from "@zokki/astro-minify";
-import photosuite from "photosuite";
 
 // Import custom theme
 const themeJsoncString = fs.readFileSync(
@@ -42,7 +41,7 @@ const expressiveCodeOption: AstroExpressiveCodeOptions = {
     wrap: true,
     showLineNumbers: false,
     overridesByLang: {
-      "bash,cmd,powershell,ps,sh,shell,zsh,gradle": { frame: "none" },
+      "bash,cmd,powershell,ps,sh,shell,zsh,gradle,java": { frame: "none" },
     },
   },
   styleOverrides: {
@@ -99,11 +98,6 @@ const sitemapOption: SitemapOptions = {
 export default defineConfig({
   site: SITE.website,
   integrations: [
-    photosuite({
-      scope: "#article",
-      imageBase: "https://cos.lhasa.icu/dist/images/",
-      fileDir: true,
-    }),
     expressiveCode(expressiveCodeOption),
     mdx(),
     sitemap(sitemapOption),

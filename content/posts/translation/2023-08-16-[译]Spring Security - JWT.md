@@ -49,7 +49,7 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret);
 
 如果我们输入标头、有效负载和签名，我们会得到一个令牌，如下所示。
 
-```basic
+```txt
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I
 kpvaG4gRG9lIiwiYWRtaW4iOmZhbHNlfQ.gWDlJdpCTIHVYKkJSfAVNUn0ZkAjMxskDDm-5Fhe
 WJ7xXgW8k5CllcGk4C9qPrfa1GdqfBrbX_1x1E39JY8BYLobAfAg1fs_Ky8Z7U1oCl6HL63yJq_

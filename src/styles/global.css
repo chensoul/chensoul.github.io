@@ -27,6 +27,8 @@ html[data-theme="light"] {
   --posts-list-time-color: #969696;
   --skeleton: #e5e7eb;
   --error: #b91c1c;
+  --heading: var(--foreground);
+  --heading-muted: var(--foreground);
 }
 
 html[data-theme="dark"] {
@@ -45,6 +47,9 @@ html[data-theme="dark"] {
   --posts-list-time-color: #8b8b8b;
   --skeleton: #374151;
   --error: #f87171;
+  /* 深色主题下标题颜色：更亮以提升可读性 */
+  --heading: #f0f4f8;
+  --heading-muted: #e2e8f0;
 }
 
 @theme inline {
@@ -55,6 +60,16 @@ html[data-theme="dark"] {
   --color-border: var(--border);
   --color-skeleton: var(--skeleton);
   --color-error: var(--error);
+}
+
+/* 深色主题：覆盖 typography 插件的标题颜色变量，使 .prose 内 h1–h6 使用浅色 */
+html[data-theme="dark"] .prose {
+  --tw-prose-headings: var(--heading);
+}
+
+/* 深色主题：文章页主标题（.prose 外的 h1，在 section.text-center 内）也使用标题色 */
+html[data-theme="dark"] section.text-center h1 {
+  color: var(--heading);
 }
 
 @layer base {
