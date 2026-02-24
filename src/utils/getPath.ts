@@ -6,14 +6,14 @@
  * 核心逻辑：
  * - 支持文章存放在子目录中的情况（如 content/posts/tech/article.md）
  * - 自动排除以下划线开头的目录（私有文件）
- * - 将路径中的每个段落转换为 slug 格式
+ * - 将路径中的每个段落转换为 slug 格式（仅目录段，文章 slug 不做转换）
  * - 支持是否包含 /posts 前缀
  * - 如果提供了日期，生成包含年/月/日的路径格式：/posts/YYYY/MM/DD/slug
  *
  * 依赖关系：
  * - 被所有需要生成文章链接的地方调用
  * - 依赖 content.config.ts 中的 BLOG_PATH 常量
- * - 依赖 slugifyStr 进行路径 slug 转换
+ * - 文章 slug 直接使用文件名解析结果，不经过 slugify，避免如 langchain4j 被改为 langchain-4-j
  */
 
 import { BLOG_PATH } from "@/content.config";
@@ -80,10 +80,8 @@ export function getPath(
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const dd = String(d.getDate()).padStart(2, "0");
 
-    // 对 slug 进行 slugify 处理
-    const slugifiedSlug = slugifyStr(slug);
-
-    return [basePath, yyyy, mm, dd, slugifiedSlug].join("/");
+    // slug 不做 slugify，保持文件名中的原始形式（如 getting-started-with-langchain4j）
+    return [basePath, yyyy, mm, dd, slug].join("/");
   }
 
   // 原有的逻辑：处理文件路径，提取目录结构
@@ -95,14 +93,10 @@ export function getPath(
     .slice(0, -1) // 移除最后一段（文件名），只保留目录结构
     .map(segment => slugifyStr(segment)); // 将每一段转换为 slug 格式
 
-  // 对 slug 进行 slugify 处理
-  const slugifiedSlug = slugifyStr(slug);
-
-  // 如果没有子目录，直接返回基础路径 + slug
+  // slug 不做 slugify，保持文件名中的原始形式
   if (!pathSegments || pathSegments.length < 1) {
-    return [basePath, slugifiedSlug].join("/");
+    return [basePath, slug].join("/");
   }
 
-  // 如果有子目录，返回完整路径：/posts/parent-dir/child-dir/slug
-  return [basePath, ...pathSegments, slugifiedSlug].join("/");
+  return [basePath, ...pathSegments, slug].join("/");
 }
