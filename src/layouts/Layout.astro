@@ -43,6 +43,7 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
  * @property toc - 是否启用目录
  * @property math - 是否启用数学公式
  * @property comments - 是否启用评论
+ * @property mermaid - 是否启用 Mermaid 图表（仅文章启用时才加载脚本并渲染）
  */
 export interface Props {
   title?: string;
@@ -56,6 +57,7 @@ export interface Props {
   toc?: boolean;
   math?: boolean;
   comments?: boolean;
+  mermaid?: boolean;
 }
 
 // 解构属性，设置默认值
@@ -71,6 +73,7 @@ const {
   scrollSmooth = false,
   toc = false,
   math = false,
+  mermaid = false,
 } = Astro.props;
 
 const fullDescription = description;
@@ -236,10 +239,8 @@ const structuredData = {
     <BackButton />
     <!-- 返回顶部按钮 -->
     <BackToTop />
-  </body>
-</html>
 
-<script is:inline>
+    <script is:inline>
   window.__artalkConfig = {
     server: "https://artalk.chensoul.cc",
     site: "ChenSoul Blog",
@@ -271,7 +272,7 @@ const structuredData = {
       statPageKeyAttr: "data-page-key",
     });
   }
-</script>
+    </script>
 
 <style>
   /* 全局样式重置 */

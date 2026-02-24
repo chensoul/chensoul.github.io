@@ -555,7 +555,7 @@ public class MockAiCodeGenerator implements AiCodeGenerator {
 
 **推荐的模块化结构：**
 
-```gradle
+```groovy
 dependencies {
     // Annotation Processor
     annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
@@ -577,7 +577,7 @@ tasks.withType(JavaCompile) {
 
 **如果使用单一模块：**
 
-```gradle
+```groovy
 dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
     // 单一模块时，使用同一个 artifact
@@ -669,7 +669,7 @@ public class Vibesafe4jAutoConfiguration {
 
 ### Gradle 插件示例
 
-```gradle
+```groovy
 // build.gradle
 plugins {
     id 'java'

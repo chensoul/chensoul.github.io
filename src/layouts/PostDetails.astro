@@ -59,6 +59,7 @@ const {
   toc,
   math,
   comments,
+  mermaid,
 } = post.data;
 
 // 渲染文章内容
@@ -83,6 +84,7 @@ const layoutProps = {
   toc,
   math,
   comments,
+  mermaid: mermaid ?? false,
 };
 
 /* ========== Prev/Next Posts ========== */
@@ -185,6 +187,8 @@ const nextPost =
     <!-- 评论容器 -->
     <div id="Comments"></div>
   </main>
+
+  <!-- Mermaid 由 astro-mermaid 集成在页面中按需注入并渲染 pre.mermaid -->
 
   <!-- 侧边栏：显示文章目录 -->
   <aside

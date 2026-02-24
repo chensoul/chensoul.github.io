@@ -170,6 +170,14 @@ const blog = defineCollection({
        */
       math: z.boolean().default(false),
 
+      /**
+       * 是否启用 Mermaid 图表渲染
+       *
+       * 默认为 false
+       * 设为 true 后会在该文章页加载 Mermaid 并渲染 ```mermaid 代码块
+       */
+      mermaid: z.boolean().default(false),
+
       // ========== SEO 和元数据 ==========
       /**
        * 规范链接（Canonical URL）

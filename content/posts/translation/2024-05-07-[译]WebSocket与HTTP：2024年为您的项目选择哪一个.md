@@ -173,7 +173,7 @@ HTTP 通常由 Web 浏览器无缝处理（例如，当您加载此页面时）�
 
 为了将这个想法变为现实，下面是一个使用 JavaScript 和内置[WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)运行 WebSocket 的示例：
 
-```Javascript
+```javascript
 / Create WebSocket connection.
 const socket = new WebSocket("ws://localhost:8080");
 

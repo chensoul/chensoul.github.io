@@ -11,6 +11,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeRewrite, { type RehypeRewriteOptions } from "rehype-rewrite";
 import rehypeWrapAll from "rehype-wrap-all";
 import rehypeExternalLinks from "rehype-external-links";
+import mermaid from "astro-mermaid";
 import expressiveCode, {
   ExpressiveCodeTheme,
   type AstroExpressiveCodeOptions,
@@ -98,6 +99,13 @@ const sitemapOption: SitemapOptions = {
 export default defineConfig({
   site: SITE.website,
   integrations: [
+    mermaid({
+      theme: "default",
+      autoTheme: true,
+      mermaidConfig: {
+        securityLevel: "loose"
+      },
+    }),
     expressiveCode(expressiveCodeOption),
     mdx(),
     sitemap(sitemapOption),

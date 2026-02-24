@@ -5,6 +5,7 @@ description: "深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数�
 tags: ['spring-ai', 'text2sql']
 categories: [ "techlog" ]
 date: 2025-09-30
+mermaid: true
 ---
 
 "能不能让数据库直接听懂中文问题，然后自动生成 SQL？" 这个想法在我脑海中盘旋了很久。最近终于用 **Spring AI** 实现了这个功能，从最初的简单实现到后来的 **MCP 工具集成**，再到**分步骤查询模式**，整个过程充满了惊喜和踩坑。今天就来分享一下我的 **Text2SQL** 实践心得。
@@ -26,7 +27,7 @@ date: 2025-09-30
 - **Spring 生态**：与现有 **Spring Boot** 项目无缝集成，支持**依赖注入**和**自动配置**
 
 **核心技术栈** ：
-- **Spring Boot 3.5.7*9 + **Spring AI 1.1.2**（企业级 Java 框架）
+- **Spring Boot 3.5.9** + **Spring AI 1.1.2**（企业级 Java 框架）
 - **MySQL 9** (Docker容器化部署)
 - **DeepSeek Chat API**（国产大语言模型）
 - **Bootstrap 5** + **Thymeleaf**（响应式前端框架）
@@ -69,13 +70,13 @@ mvn clean spring-boot:run
 
 ### 系统架构图
 ```mermaid
-flowchart LR
-User[Browser UI] --> Controller[REST Controller]
-Controller --> Service[DirectText2SqlService]
-Service --> ChatClient[Spring AI ChatClient]
-Service --> DatabaseTool[JdbcTemplate Tool]
-ChatClient --> DeepSeek[DeepSeek Chat API]
-DatabaseTool --> MySQL[MySQL Database]
+flowchart TD
+  User["Browser UI"] --> Controller["REST Controller"]
+  Controller --> Service["DirectText2SqlService"]
+  Service --> ChatClient["Spring AI ChatClient"]
+  Service --> DatabaseTool["JdbcTemplate Tool"]
+  ChatClient --> DeepSeek["DeepSeek Chat API"]
+  DatabaseTool --> MySQL["MySQL Database"]
 ```
 
 ### 核心代码实现
@@ -399,11 +400,11 @@ INSERT IGNORE INTO departments (name, manager_id, budget, location) VALUES
 ```mermaid
 sequenceDiagram
     participant User as 用户
-    participant Controller as REST Controller
-    participant Service as MCP Text2SQL Service
-    participant AI as AI 模型
+    participant Controller as REST控制器
+    participant Service as MCP Text2SQL服务
+    participant AI as AI模型
     participant Tool as 数据库工具
-    participant DB as MySQL 数据库
+    participant DB as MySQL数据库
 
     User->>Controller: 发送自然语言查询
     Controller->>Service: 处理查询请求
@@ -600,10 +601,10 @@ public class McpText2SqlService implements Text2SqlService {
 
 ```mermaid
 flowchart TD
-Q[Step 1 问题改写] --> T[Step 2 数据表选取]
-T --> I[Step 3 信息推理]
-I --> G[Step 4 SQL生成]
-G --> E[Step 5 SQL执行]
+Q["Step 1 问题改写"] --> T["Step 2 数据表选取"]
+T --> I["Step 3 信息推理"]
+I --> G["Step 4 SQL生成"]
+G --> E["Step 5 SQL执行"]
 ```
 
 ### 每一步都在做什么？
@@ -756,7 +757,7 @@ LIMIT 1
 第四版引入了 `BusinessRuleService`，提供五大核心推理能力：
 
 #### 1. 业务术语解释
-```java
+```txt
 // 业务术语映射
 BUSINESS_TERMS.put("员工", "employees表中的员工记录");
 BUSINESS_TERMS.put("工资", "salary字段，使用decimal(10,2)类型存储");
@@ -770,7 +771,7 @@ SYNONYMS.put("收入", "工资");
 
 #### 2. 时间推理引擎
 
-```java
+```txt
 // 支持多种时间表达式
 "近两年" → "时间范围: 2022-01-01 至 2024-12-31"
 "过去6个月" → "时间范围: 2024-06-01 至 2024-12-31"
@@ -779,7 +780,7 @@ SYNONYMS.put("收入", "工资");
 
 #### 3. 聚合规则推理
 
-```java
+```txt
 // 根据指标类型推荐聚合函数
 "工资总数" → "建议使用SUM聚合函数"
 "员工人数" → "建议使用COUNT聚合函数"
@@ -788,7 +789,7 @@ SYNONYMS.put("收入", "工资");
 
 #### 4. 表关联规则
 
-```java
+```txt
 // 智能识别表关联关系
 employees + project_members → "通过employee_id字段关联"
 projects + project_members → "通过project_id字段关联"
@@ -796,7 +797,7 @@ projects + project_members → "通过project_id字段关联"
 
 #### 5. 字段需求推理
 
-```java
+```txt
 // 根据查询内容推断需要的字段
 "查询员工姓名" → "需要name字段"
 "按部门统计" → "需要department字段"

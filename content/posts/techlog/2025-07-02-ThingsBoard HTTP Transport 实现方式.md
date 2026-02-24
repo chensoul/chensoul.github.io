@@ -4,6 +4,7 @@ date: 2025-07-02
 slug: thingsboard-http-transport
 categories: [ "techlog" ]
 tags: ['thingsboard']
+mermaid: true
 ---
 
 本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP

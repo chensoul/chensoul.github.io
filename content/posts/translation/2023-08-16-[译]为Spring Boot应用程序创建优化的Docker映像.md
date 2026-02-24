@@ -377,7 +377,7 @@ dive userssignup:v1
 
 我们可以通过在单独的层中提取任何自定义依赖项来进一步减小应用程序层的大小，而不是通过在名为 `layers.idx` 的 `yml` 类似文件中声明它们来将它们与应用程序一起打包：
 
-```layers.idx
+```yaml
 - "dependencies":
   - "BOOT-INF/lib/"
 - "spring-boot-loader":

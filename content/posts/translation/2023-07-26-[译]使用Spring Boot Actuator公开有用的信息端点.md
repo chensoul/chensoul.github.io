@@ -194,7 +194,7 @@ build.version=0.0.1-SNAPSHOT
 
 添加构建信息的最简单方法是使用插件 DSL。在 `build.gradle` 文件中，我们需要添加以下块：
 
-```gradle
+```groovy
 springBoot {
   buildInfo()
 }
@@ -202,7 +202,7 @@ springBoot {
 
 如果我们现在同步 Gradle 项目，我们可以看到一个新任务 `bootBuildInfo` 可供使用。运行该任务将生成带有构建信息的类似 `build/resources/main/META-INF/build-info.properties` 文件（源自项目）。使用 DSL，我们可以自定义现有值或添加新属性：
 
-```gradle
+```groovy
 springBoot {
   buildInfo {
     properties {
@@ -232,7 +232,7 @@ springBoot {
 
 我们可以通过将其值设置为 `null` 来从生成的构建信息中排除任何默认属性。例如：
 
-```gradle
+```groovy
 properties {
   group = null
 }
@@ -370,7 +370,7 @@ git.total.commit.count=2
 
 在 `build.gradle` 中，我们将添加 `gradle-git-properties` 插件：
 
-```gradle
+```groovy
 plugins {
   id 'com.gorylenko.gradle-git-properties' version '2.4.0'
 }
@@ -392,7 +392,7 @@ plugins {
 
 该插件也提供了多种使用属性 `gitProperties` 配置输出的方法。例如，我们通过添加以下内容来限制要出现的键：
 
-```gradle
+```groovy
 gitProperties {
   keys = ['git.commit.id']
 }

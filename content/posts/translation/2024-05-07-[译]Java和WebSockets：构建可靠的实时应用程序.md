@@ -22,7 +22,7 @@ Java是一种流行的编程语言和计算语言。它是 Android 智能手机�
 
 为此，您可以使用[nv-websocket-client](https://github.com/TakahikoKawasaki/nv-websocket-client)等开源库，其中包含一些附加功能，例如代理支持。这是使用 nv-websocket-client 创建 WebSocket 实例的方法：
 
-```Java
+```java
 / Create a WebSocket. The scheme part can be one of the following:
 / 'ws', 'wss', 'http' and 'https' (case-insensitive). The user info
 / part, if any, is interpreted as expected. If a raw socket failed
@@ -32,7 +32,7 @@ WebSocket ws = new WebSocketFactory().createSocket("ws://localhost/endpoint");
 
 创建 WebSocket 实例后，下一步是注册侦听器以接收 WebSocket 事件：
 
-```Java
+```java
 / Register a listener to receive WebSocket events.
 ws.addListener(new WebSocketAdapter() {
     @Override
@@ -45,7 +45,7 @@ ws.addListener(new WebSocketAdapter() {
 
 最后，这是连接到服务器并监视连接事件的方式：
 
-```Java
+```java
 try
 {
     / Connect to the server and perform an opening handshake.
@@ -73,7 +73,7 @@ catch (WebSocketException e)
 
 在[Ably](https://www.ably.com/)，我们有一个在 WebSocket 之上使用的 pub/sub 协议。它允许您使用一组更高级别的功能通过 WebSocket 进行通信。为了证明它是多么简单，下面是如何将数据发布到 Ably 的示例：
 
-```Java
+```java
 AblyRealtime ably = new AblyRealtime("ABLY_API_KEY");
 Channel channel = ably.channels.get("test");
 
@@ -83,7 +83,7 @@ channel.publish("greeting", "hello");
 
 以下是客户端连接到 Ably 来使用数据的方式：
 
-```Java
+```java
 AblyRealtime ably = new AblyRealtime("ABLY_API_KEY");
 Channel channel = ably.channels.get("test");
 

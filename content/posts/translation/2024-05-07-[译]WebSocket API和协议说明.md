@@ -82,7 +82,7 @@ WebSocket 提供低延迟通信功能，适用于各种类型的实时用例。�
 
 下面是客户端发出的启动开场握手 `GET` 的请求的基本示例：
 
-```HTML
+```html
 GET wss://example.com:8181/ HTTP/1.1
 Host: localhost: 8181
 Connection: Upgrade
@@ -93,7 +93,7 @@ Sec-WebSocket-Key: zy6Dy9mSAIM7GJZNf9rI1A==
 
 服务器必须返回响应 `HTTP 101 Switching Protocols` 代码才能成功建立 WebSocket 连接：
 
-```HTML
+```html
 HTTP/1.1 101 Switching Protocols
 Connection: Upgrade
 Sec-WebSocket-Accept: EDJa7WCAQQzMCYNJM42Syuo9SqQ=
@@ -121,7 +121,7 @@ Upgrade: websocket
 
 首先，我们有 `Sec-WebSocket-Key` ，它由客户端传递给服务器，并包含一个 16 字节、base64 编码的一次性随机值（nonce）。其目的是帮助确保服务器不接受来自非 WebSocket 客户端（例如 HTTP 客户端）的连接，这些客户端被滥用（或配置错误）以将数据发送到毫无戒心的 WebSocket 服务器。下面是一个示例 `Sec-WebSocket-Key` ：
 
-```HTML
+```html
 Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
 ```
 
@@ -129,7 +129,7 @@ Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
 
 根据上面提供的 `Sec-WebSocket-Key` 示例，下面是服务器返回的 `Sec-WebSocket-Accept` 标头：
 
-```HTML
+```html
 Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
 
@@ -137,13 +137,13 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 
 浏览器（以及大多数 WebSocket 库）中的 WebSocket API 会自动为您处理开场握手。您所要做的就是实例化 `WebSocket` 对象，该对象将自动尝试打开与服务器的连接：
 
-```Javascript
+```javascript
 const socket = new WebSocket('wss://example.org');
 ```
 
 建立 WebSocket 连接时会引发 `open` 事件。它表示客户端和服务器之间的打开握手成功，现在可以使用 WebSocket 连接来发送和接收数据。下面是一个示例（请注意， `open` 该事件是通过 `onopen` 属性处理的）：
 
-```Javascript
+```javascript
 / Create WebSocket connection
 const socket = new WebSocket('wss://example.org');
 
@@ -170,13 +170,13 @@ WebSocket 帧采用二进制语法，包含多条信息，如下图所示：
 
 以下是单帧消息的样子：
 
-```HTML
+```html
 0x81 0x05 0x48 0x65 0x6c 0x6c 0x6f (contains "Hello")
 ```
 
 相比之下，对于碎片化，相同的消息将如下所示：
 
-```HTML
+```html
 0x01 0x03 0x48 0x65 0x6c (contains "Hel")
 0x80 0x02 0x6c 0x6f (contains "lo")
 ```
@@ -206,7 +206,7 @@ WebSocket 帧采用二进制语法，包含多条信息，如下图所示：
 
 在服务器端，在进一步处理之前，必须取消屏蔽从客户端接收的帧。下面是一个示例，说明如何做到这一点：
 
-```Javascript
+```javascript
 var unmask = function(mask, buffer) {
    var payload = new Buffer(buffer.length);
    for (var i=0; i<buffer.length; i++) {
@@ -231,7 +231,7 @@ WebSocket 编程遵循异步、事件驱动的编程模型。只要 WebSocket �
 
 下面是如何处理 `message` 事件的示例（使用属性 `onmessage` ）：
 
-```Javascript
+```javascript
 socket.onmessage = function(msg) {
    if(msg.data instanceof ArrayBuffer) {
       processArrayBuffer(msg.data);
@@ -243,7 +243,7 @@ socket.onmessage = function(msg) {
 
 要通过 WebSocket API 发送消息，您必须使用该 `send()` 方法，如下所示：
 
-```Javascript
+```javascript
 socket.onopen = function(e) {
    socket.send(JSON.stringify({'msg': 'payload'}));
 }
@@ -251,7 +251,7 @@ socket.onopen = function(e) {
 
 上面的示例代码演示如何发送文本（字符串）消息。但是，除了字符串之外，您还可以发送二进制数据（ `Blob` 或 `ArrayBuffer` ）：
 
-```Javascript
+```javascript
 var buffer = new ArrayBuffer(128);
 socket.send(buffer);
 
@@ -303,7 +303,7 @@ socket.send(blob);
 
 下面是调用 `close()` 该方法的最基本示例：
 
-```Javascript
+```javascript
 socket.close();
 ```
 
@@ -314,12 +314,12 @@ socket.close();
 
 下面是使用两个可选参数调用 `close()` 方法的示例：
 
-```Javascript
+```javascript
 socket.close(1003, "Unsupported data type!");
 当 WebSocket 连接关闭时，将触发一个 `close` 事件。以下是侦听 `close` 事件的方式：
 ```
 
-```Javascript
+```javascript
 socket.onclose = function(e) {
    console.log("Connection closed", e);
 };

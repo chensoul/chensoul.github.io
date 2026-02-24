@@ -44,7 +44,7 @@ Apache Kafka 是目前最强大的异步消息传递技术之一。 Kafka 由 Ja
 
 在 Ably，我们的许多客户都通过我们[面向互联网的 pub/sub 实时消息服务](https://ably.com/pub-sub-messaging)[传输 Kafka](https://ably.com/solutions/extend-kafka-to-the-edge)消息。为了演示它是多么简单，下面是如何从 Kafka 消费数据并将其发布到 Ably 的示例： 
 
-```Javascript
+```javascript
 const kafka = require('kafka-node');
 const Ably = require('ably');
 
@@ -67,7 +67,7 @@ consumer.on('message', function (message) {
 
 以下是客户端连接到 Ably 来使用数据的方式：
 
-```Javascript
+```javascript
 const Ably = require('ably');
 const ably = new Ably.Realtime({{ABLY_KEY}});
 const channel = ably.channels.get('kafka-example');
@@ -129,7 +129,7 @@ Kafka 不用于最后一英里交付的主要原因之一与安全性和可用�
 
 现在假设您想要直接连接到 CTtransit GTFS-realtime，将数据流式传输到向最终用户提供实时公交车更新（例如车辆位置或路线变更）的应用程序。每次有更新时（即使仅针对一辆公交车），CTtransit 发送的消息可能如下所示：
 
-```JSON
+```json
 [
    {
       "id":"1430",
@@ -176,7 +176,7 @@ Kafka 不用于最后一英里交付的主要原因之一与安全性和可用�
 
 正如您所看到的，有效负载巨大并且覆盖了多条总线。然而，大多数时候，最终用户只对接收其中一辆总线的更新感兴趣。因此，针对他们的相关消息如下所示：
 
-```JSON
+```json
 {
    "id":"1430",
    "vehicle":{
@@ -200,7 +200,7 @@ Kafka 不用于最后一英里交付的主要原因之一与安全性和可用�
 
 让我们更进一步——客户端可能希望只接收车辆的新纬度和经度值，因此上面的有效负载在发送到客户端设备之前将转换为以下内容：
 
-```JSON
+```json
 {
    "id":"1430",
    "lat":41.75381851196289,
