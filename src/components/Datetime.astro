@@ -34,7 +34,12 @@ export interface Props {
   format?: "relative" | "absolute";
 }
 
-const { pubDatetime, modDatetime, class: className = "", format = "relative" } = Astro.props;
+const {
+  pubDatetime,
+  modDatetime,
+  class: className = "",
+  format = "relative",
+} = Astro.props;
 
 // 解析日期对象
 const pub = new Date(pubDatetime);
@@ -79,7 +84,8 @@ function formatAbsoluteTime(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-const displayTime = format === "absolute" ? formatAbsoluteTime(latest) : relativeTime;
+const displayTime =
+  format === "absolute" ? formatAbsoluteTime(latest) : relativeTime;
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>

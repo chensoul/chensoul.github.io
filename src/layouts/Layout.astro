@@ -73,7 +73,7 @@ const {
   scrollSmooth = false,
   toc = false,
   math = false,
-  mermaid = false,
+  mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;
 
 const fullDescription = description;
@@ -241,65 +241,67 @@ const structuredData = {
     <BackToTop />
 
     <script is:inline>
-  window.__artalkConfig = {
-    server: "https://artalk.chensoul.cc",
-    site: "ChenSoul Blog",
-  };
-  document.addEventListener("astro:after-swap", tryLoad);
-  document.addEventListener("DOMContentLoaded", tryLoad);
-  /**
-   * 加载 Artalk 评论数统计组件
-   *
-   * 功能：
-   * 1. 查找所有 .artalk-comment-count 元素
-   * 2. 调用 Artalk.loadCountWidget 加载评论数
-   * 3. 使用 data-page-key 属性标识每篇文章
-   */
-  function tryLoad() {
-    const els = document.querySelectorAll(".artalk-comment-count");
-    if (
-      !els.length ||
-      typeof window === "undefined" ||
-      typeof window.Artalk === "undefined"
-    )
-      return;
-    const cfg = window.__artalkConfig || {};
-    if (!cfg.server || !cfg.site) return;
-    window.Artalk.loadCountWidget({
-      server: cfg.server,
-      site: cfg.site,
-      countEl: ".artalk-comment-count",
-      statPageKeyAttr: "data-page-key",
-    });
-  }
+      window.__artalkConfig = {
+        server: "https://artalk.chensoul.cc",
+        site: "ChenSoul Blog",
+      };
+      document.addEventListener("astro:after-swap", tryLoad);
+      document.addEventListener("DOMContentLoaded", tryLoad);
+      /**
+       * 加载 Artalk 评论数统计组件
+       *
+       * 功能：
+       * 1. 查找所有 .artalk-comment-count 元素
+       * 2. 调用 Artalk.loadCountWidget 加载评论数
+       * 3. 使用 data-page-key 属性标识每篇文章
+       */
+      function tryLoad() {
+        const els = document.querySelectorAll(".artalk-comment-count");
+        if (
+          !els.length ||
+          typeof window === "undefined" ||
+          typeof window.Artalk === "undefined"
+        )
+          return;
+        const cfg = window.__artalkConfig || {};
+        if (!cfg.server || !cfg.site) return;
+        window.Artalk.loadCountWidget({
+          server: cfg.server,
+          site: cfg.site,
+          countEl: ".artalk-comment-count",
+          statPageKeyAttr: "data-page-key",
+        });
+      }
     </script>
 
-<style>
-  /* 全局样式重置 */
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .site-outer-bg {
-    background-color: var(--page-background);
-  }
+    <style>
+      /* 全局样式重置 */
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .site-outer-bg {
+        background-color: var(--page-background);
+      }
 
-  /* Frame inline padding as CSS variable for image bleed calculations */
-  #site-frame {
-    --frame-pad-inline: 0.75rem;
-  }
-  @media (min-width: 960px) {
-    #site-frame {
-      --frame-pad-inline: 2rem;
-    }
-  }
+      /* Frame inline padding as CSS variable for image bleed calculations */
+      #site-frame {
+        --frame-pad-inline: 0.75rem;
+      }
+      @media (min-width: 960px) {
+        #site-frame {
+          --frame-pad-inline: 2rem;
+        }
+      }
 
-  /* 移动端背景色处理 */
-  @media (max-width: 639px) {
-    .site-outer-bg {
-      background-color: var(--color-background);
-    }
-  }
-</style>
+      /* 移动端背景色处理 */
+      @media (max-width: 639px) {
+        .site-outer-bg {
+          background-color: var(--color-background);
+        }
+      }
+    </style>
+  </body>
+</html>

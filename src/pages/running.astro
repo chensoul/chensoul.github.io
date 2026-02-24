@@ -104,7 +104,7 @@ const dateMap = new Map<
   string,
   { distance: number; duration: string; runs: (typeof data.runs)[0][] }
 >();
-data.runs.forEach((run) => {
+data.runs.forEach(run => {
   const dateStr = run.date.split(" ")[0];
   const existing = dateMap.get(dateStr);
   if (!existing) {
@@ -153,8 +153,7 @@ for (let w = 0; w < totalWeeks; w++) {
     currentDate.setUTCDate(calendarStart.getUTCDate() + idx);
     const dateStr = currentDate.toISOString().split("T")[0];
     const dayData = dateMap.get(dateStr);
-    const isInRange =
-      currentDate >= startOfRange && currentDate <= endOfRange;
+    const isInRange = currentDate >= startOfRange && currentDate <= endOfRange;
     const intensity = getIntensity(dayData?.distance ?? 0);
     const title = dayData
       ? `${dateStr}: ${dayData.distance.toFixed(1)}km, ${dayData.duration}`
@@ -182,229 +181,325 @@ for (let m = 0; m < 12; m++) {
   <main id="main-content">
     <div class="running-page mx-auto max-w-4xl px-4 pt-2 pb-6">
       <article class="mt-0">
-        {!data?.stats ? (
-          <p class="text-[var(--foreground)]">暂无数据。可将 Garmin/Strava 等导出的数据放入 <code class="rounded bg-[var(--muted)] px-1">src/data/running.json</code>。</p>
-        ) : (
-          <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
-            跑步统计
-          </h2>
-          <div>
-            {periodStats && Object.keys(periodStats).length > 0 && (
-              <div class="period-stats-section">
-                <div class="period-stats-card rounded-lg border border-[var(--border)] bg-[var(--background)] overflow-hidden">
-                  <div class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4" id="periodTabNav">
-                    {(["week", "month", "year", "total"] as const).map(
-                      (period) => {
-                        const pStats = periodStats[period];
-                        if (!pStats) return null;
-                        const isActive = period === "week";
-                        return (
-                          <button
-                            type="button"
-                            class:list={[
-                              "period-tab-btn border-b-2 py-3.5 px-5 text-sm font-medium transition-colors",
-                              isActive
-                                ? "border-[var(--accent)] text-[var(--accent)]"
-                                : "border-transparent text-[var(--foreground)]/70 hover:text-[var(--foreground)]",
-                            ]}
-                            data-period={period}
-                          >
-                            {periodLabels[period]}
-                          </button>
-                        );
-                      }
-                    )}
-                  </div>
-                  <div class="period-tab-content p-5">
-                    {(["week", "month", "year", "total"] as const).map(
-                      (period) => {
-                        const pStats = periodStats[period];
-                        if (!pStats) return null;
-                        const isActive = period === "week";
-                        return (
-                          <div
-                            class:list={[
-                              "period-panel",
-                              !isActive && "hidden",
-                            ]}
-                            data-panel={period}
-                          >
-                            <div class="period-panel-header mb-5 flex justify-between border-b border-[var(--border)] pb-3">
-                              <span class="text-sm font-semibold text-[var(--foreground)]">
-                                {periodLabels[period]}数据统计
-                              </span>
-                              <span class="text-xs text-[var(--foreground)]/70">
-                                共计跑步 {pStats.total_activities} 次
-                              </span>
-                            </div>
-                            <div class="period-panel-grid grid grid-cols-3 gap-x-2 gap-y-5">
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.avg_vdot?.toFixed(1) ?? "--"}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">当前跑力</span>
-                              </div>
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.total_distance.toFixed(0)}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">距离(公里)</span>
-                              </div>
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.avg_pace}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">平均配速</span>
-                              </div>
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.total_training_load > 0 ? pStats.total_training_load.toFixed(0) : "--"}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">训练负荷</span>
-                              </div>
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.total_duration_hours.toFixed(1)}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">总时长(小时)</span>
-                              </div>
-                              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                  {pStats.avg_heart_rate ?? "--"}
-                                </span>
-                                <span class="text-xs text-[var(--foreground)]/70">平均心率</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      }
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div class="contribution-graph my-4 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-2">
-              <div class="month-labels relative mb-1 h-4">
-                {months.map((m) => (
-                  <span
-                    class="month-label absolute text-[10px] text-[var(--foreground)]"
-                    style={`left: ${(m.weekIndex / weeks.length) * 100}%`}
-                  >
-                    {m.label}
-                  </span>
-                ))}
-              </div>
-              <div class="weeks flex gap-0.5">
-                {weeks.map((week) => (
-                  <div class="week flex flex-1 flex-col gap-0.5">
-                    {week.days.map((day) => (
+        {
+          !data?.stats ? (
+            <p class="text-[var(--foreground)]">
+              暂无数据。可将 Garmin/Strava 等导出的数据放入{" "}
+              <code class="rounded bg-[var(--muted)] px-1">
+                src/data/running.json
+              </code>
+              。
+            </p>
+          ) : (
+            <>
+              <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
+                跑步统计
+              </h2>
+              <div>
+                {periodStats && Object.keys(periodStats).length > 0 && (
+                  <div class="period-stats-section">
+                    <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)]">
                       <div
-                        class:list={[
-                          "day aspect-square w-full rounded-sm transition-transform",
-                          !day.isInRange && "out-of-range",
-                          day.intensity === 1 && "intensity-1",
-                          day.intensity === 2 && "intensity-2",
-                          day.intensity === 3 && "intensity-3",
-                          day.intensity === 4 && "intensity-4",
-                          day.intensity === 5 && "intensity-5",
-                        ]}
-                        title={day.title}
-                      />
+                        class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4"
+                        id="periodTabNav"
+                      >
+                        {(["week", "month", "year", "total"] as const).map(
+                          period => {
+                            const pStats = periodStats[period];
+                            if (!pStats) return null;
+                            const isActive = period === "week";
+                            return (
+                              <button
+                                type="button"
+                                class:list={[
+                                  "period-tab-btn border-b-2 px-5 py-3.5 text-sm font-medium transition-colors",
+                                  isActive
+                                    ? "border-[var(--accent)] text-[var(--accent)]"
+                                    : "border-transparent text-[var(--foreground)]/70 hover:text-[var(--foreground)]",
+                                ]}
+                                data-period={period}
+                              >
+                                {periodLabels[period]}
+                              </button>
+                            );
+                          }
+                        )}
+                      </div>
+                      <div class="period-tab-content p-5">
+                        {(["week", "month", "year", "total"] as const).map(
+                          period => {
+                            const pStats = periodStats[period];
+                            if (!pStats) return null;
+                            const isActive = period === "week";
+                            return (
+                              <div
+                                class:list={[
+                                  "period-panel",
+                                  !isActive && "hidden",
+                                ]}
+                                data-panel={period}
+                              >
+                                <div class="period-panel-header mb-5 flex justify-between border-b border-[var(--border)] pb-3">
+                                  <span class="text-sm font-semibold text-[var(--foreground)]">
+                                    {periodLabels[period]}数据统计
+                                  </span>
+                                  <span class="text-xs text-[var(--foreground)]/70">
+                                    共计跑步 {pStats.total_activities} 次
+                                  </span>
+                                </div>
+                                <div class="period-panel-grid grid grid-cols-3 gap-x-2 gap-y-5">
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.avg_vdot?.toFixed(1) ?? "--"}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      当前跑力
+                                    </span>
+                                  </div>
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.total_distance.toFixed(0)}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      距离(公里)
+                                    </span>
+                                  </div>
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.avg_pace}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      平均配速
+                                    </span>
+                                  </div>
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.total_training_load > 0
+                                        ? pStats.total_training_load.toFixed(0)
+                                        : "--"}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      训练负荷
+                                    </span>
+                                  </div>
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.total_duration_hours.toFixed(1)}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      总时长(小时)
+                                    </span>
+                                  </div>
+                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                                      {pStats.avg_heart_rate ?? "--"}
+                                    </span>
+                                    <span class="text-xs text-[var(--foreground)]/70">
+                                      平均心率
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div class="contribution-graph my-4 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-2">
+                  <div class="month-labels relative mb-1 h-4">
+                    {months.map(m => (
+                      <span
+                        class="month-label absolute text-[10px] text-[var(--foreground)]"
+                        style={`left: ${(m.weekIndex / weeks.length) * 100}%`}
+                      >
+                        {m.label}
+                      </span>
                     ))}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
-              最近活动
-            </h2>
-            <div
-              class="run-list flex flex-col gap-3"
-              id="runList"
-              data-all-runs={JSON.stringify(allRuns)}
-              data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
-              data-hr-zone-colors={JSON.stringify(hrZoneColors)}
-            >
-              {recentRuns.map((run, index) => (
-                <div
-                  class="run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md"
-                  data-run-index={index}
-                  data-run={JSON.stringify(run)}
-                >
-                  <div class="run-main flex flex-1 flex-col gap-1.5">
-                    <div class="run-header flex flex-wrap items-center gap-2.5">
-                      <time class="run-date text-sm font-medium text-[var(--foreground)]">
-                        {run.date.split(" ")[0]}
-                      </time>
-                      {run.hr_zone != null && run.hr_zone > 0 && (
-                        <span
-                          class:list={[
-                            "hr-zone-badge hr-zone-tag inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold",
-                            `zone-${run.hr_zone}`,
-                          ]}
-                        >
-                          {hrZoneLabels[run.hr_zone]}
-                        </span>
-                      )}
-                    </div>
-                    <span class="run-type text-[13px] text-[var(--foreground)]/80">
-                      {run.activity_type || "室外跑步"}
-                      {run.workout_name && (
-                        <span class="workout-name"> · {run.workout_name}</span>
-                      )}
-                    </span>
-                  </div>
-                  <div class="run-stats mt-3 flex gap-5">
-                    <div class="stat flex flex-col gap-0.5">
-                      <span class="stat-value text-base font-semibold text-[var(--foreground)]">{run.distance.toFixed(1)}</span>
-                      <span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">km</span>
-                    </div>
-                    <div class="stat flex flex-col gap-0.5">
-                      <span class="stat-value text-base font-semibold text-[var(--foreground)]">{formatDuration(run.duration)}</span>
-                      <span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">时长</span>
-                    </div>
-                    <div class="stat flex flex-col gap-0.5">
-                      <span class="stat-value text-base font-semibold text-[var(--foreground)]">{run.pace}</span>
-                      <span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">配速</span>
-                    </div>
-                    <div class="stat vdot-stat flex flex-col gap-0.5">
-                      <span class="stat-value text-base font-semibold">{run.vdot ?? "-"}</span>
-                      <span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">VDOT</span>
-                    </div>
-                    {run.training_load != null && run.training_load > 0 && (
-                      <div class="stat load-stat flex flex-col gap-0.5">
-                        <span class="stat-value text-base font-semibold">{run.training_load}</span>
-                        <span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">负荷</span>
+                  <div class="weeks flex gap-0.5">
+                    {weeks.map(week => (
+                      <div class="week flex flex-1 flex-col gap-0.5">
+                        {week.days.map(day => (
+                          <div
+                            class:list={[
+                              "day aspect-square w-full rounded-sm transition-transform",
+                              !day.isInRange && "out-of-range",
+                              day.intensity === 1 && "intensity-1",
+                              day.intensity === 2 && "intensity-2",
+                              day.intensity === 3 && "intensity-3",
+                              day.intensity === 4 && "intensity-4",
+                              day.intensity === 5 && "intensity-5",
+                            ]}
+                            title={day.title}
+                          />
+                        ))}
                       </div>
-                    )}
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-            {hasMoreRuns && (
-              <button
-                type="button"
-                class="load-more-btn mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 py-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--background)] hover:text-[var(--accent)]"
-                id="loadMoreBtn"
-              >
-                <span>更多</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            )}
-          </div>
-        )}
+
+                <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
+                  最近活动
+                </h2>
+                <div
+                  class="run-list flex flex-col gap-3"
+                  id="runList"
+                  data-all-runs={JSON.stringify(allRuns)}
+                  data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
+                  data-hr-zone-colors={JSON.stringify(hrZoneColors)}
+                >
+                  {recentRuns.map((run, index) => (
+                    <div
+                      class="run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md"
+                      data-run-index={index}
+                      data-run={JSON.stringify(run)}
+                    >
+                      <div class="run-main flex flex-1 flex-col gap-1.5">
+                        <div class="run-header flex flex-wrap items-center gap-2.5">
+                          <time class="run-date text-sm font-medium text-[var(--foreground)]">
+                            {run.date.split(" ")[0]}
+                          </time>
+                          {run.hr_zone != null && run.hr_zone > 0 && (
+                            <span
+                              class:list={[
+                                "hr-zone-badge hr-zone-tag inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold",
+                                `zone-${run.hr_zone}`,
+                              ]}
+                            >
+                              {hrZoneLabels[run.hr_zone]}
+                            </span>
+                          )}
+                        </div>
+                        <span class="run-type text-[13px] text-[var(--foreground)]/80">
+                          {run.activity_type || "室外跑步"}
+                          {run.workout_name && (
+                            <span class="workout-name">
+                              {" "}
+                              · {run.workout_name}
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                      <div class="run-stats mt-3 flex gap-5">
+                        <div class="stat flex flex-col gap-0.5">
+                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
+                            {run.distance.toFixed(1)}
+                          </span>
+                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                            km
+                          </span>
+                        </div>
+                        <div class="stat flex flex-col gap-0.5">
+                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
+                            {formatDuration(run.duration)}
+                          </span>
+                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                            时长
+                          </span>
+                        </div>
+                        <div class="stat flex flex-col gap-0.5">
+                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
+                            {run.pace}
+                          </span>
+                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                            配速
+                          </span>
+                        </div>
+                        <div class="stat vdot-stat flex flex-col gap-0.5">
+                          <span class="stat-value text-base font-semibold">
+                            {run.vdot ?? "-"}
+                          </span>
+                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                            VDOT
+                          </span>
+                        </div>
+                        {run.training_load != null && run.training_load > 0 && (
+                          <div class="stat load-stat flex flex-col gap-0.5">
+                            <span class="stat-value text-base font-semibold">
+                              {run.training_load}
+                            </span>
+                            <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                              负荷
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {hasMoreRuns && (
+                  <button
+                    type="button"
+                    class="load-more-btn mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 py-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--background)] hover:text-[var(--accent)]"
+                    id="loadMoreBtn"
+                  >
+                    <span>更多</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </>
+          )
+        }
       </article>
 
       <!-- 跑步详情弹窗 -->
-      <div class="run-detail-modal fixed inset-0 z-[1000] hidden items-center justify-center p-4" id="runDetailModal">
-        <div class="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm" id="modalOverlay"></div>
-        <div class="modal-content relative max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-xl" id="modalContent">
-          <button type="button" class="modal-close absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 text-[var(--foreground)] transition-colors hover:bg-[var(--border)]" id="modalClose" aria-label="关闭">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div
+        class="run-detail-modal fixed inset-0 z-[1000] hidden items-center justify-center p-4"
+        id="runDetailModal"
+      >
+        <div
+          class="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm"
+          id="modalOverlay"
+        >
+        </div>
+        <div
+          class="modal-content relative max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-xl"
+          id="modalContent"
+        >
+          <button
+            type="button"
+            class="modal-close absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
+            id="modalClose"
+            aria-label="关闭"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><line x1="18" y1="6" x2="6" y2="18"></line><line
+                x1="6"
+                y1="6"
+                x2="18"
+                y2="18"></line></svg
+            >
           </button>
-          <div class="modal-body max-h-[90vh] overflow-y-auto p-6" id="modalBody"></div>
+          <div
+            class="modal-body max-h-[90vh] overflow-y-auto p-6"
+            id="modalBody"
+          >
+          </div>
         </div>
       </div>
     </div>
@@ -574,8 +669,14 @@ for (let m = 0; m < 12; m++) {
   }
 
   @keyframes running-fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .contribution-graph {
@@ -644,7 +745,9 @@ for (let m = 0; m < 12; m++) {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.1s ease, visibility 0.1s ease;
+    transition:
+      opacity 0.1s ease,
+      visibility 0.1s ease;
     pointer-events: none;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     color: var(--heading, var(--foreground));
@@ -660,18 +763,40 @@ for (let m = 0; m < 12; m++) {
     background: transparent;
   }
 
-  .contribution-graph .day.intensity-1 { background: #bfdbfe; }
-  .contribution-graph .day.intensity-2 { background: #93c5fd; }
-  .contribution-graph .day.intensity-3 { background: #60a5fa; }
-  .contribution-graph .day.intensity-4 { background: #3b82f6; }
-  .contribution-graph .day.intensity-5 { background: #1d4ed8; }
+  .contribution-graph .day.intensity-1 {
+    background: #bfdbfe;
+  }
+  .contribution-graph .day.intensity-2 {
+    background: #93c5fd;
+  }
+  .contribution-graph .day.intensity-3 {
+    background: #60a5fa;
+  }
+  .contribution-graph .day.intensity-4 {
+    background: #3b82f6;
+  }
+  .contribution-graph .day.intensity-5 {
+    background: #1d4ed8;
+  }
 
-  html[data-theme="dark"] .contribution-graph .day { background: color-mix(in srgb, var(--muted) 50%, transparent); }
-  html[data-theme="dark"] .contribution-graph .day.intensity-1 { background: #1e3a5f; }
-  html[data-theme="dark"] .contribution-graph .day.intensity-2 { background: #1e40af; }
-  html[data-theme="dark"] .contribution-graph .day.intensity-3 { background: #2563eb; }
-  html[data-theme="dark"] .contribution-graph .day.intensity-4 { background: #3b82f6; }
-  html[data-theme="dark"] .contribution-graph .day.intensity-5 { background: #60a5fa; }
+  html[data-theme="dark"] .contribution-graph .day {
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
+  }
+  html[data-theme="dark"] .contribution-graph .day.intensity-1 {
+    background: #1e3a5f;
+  }
+  html[data-theme="dark"] .contribution-graph .day.intensity-2 {
+    background: #1e40af;
+  }
+  html[data-theme="dark"] .contribution-graph .day.intensity-3 {
+    background: #2563eb;
+  }
+  html[data-theme="dark"] .contribution-graph .day.intensity-4 {
+    background: #3b82f6;
+  }
+  html[data-theme="dark"] .contribution-graph .day.intensity-5 {
+    background: #60a5fa;
+  }
 
   .run-list {
     display: flex;
@@ -773,8 +898,14 @@ for (let m = 0; m < 12; m++) {
   }
 
   /* 与参考站一致：VDOT 紫色、负荷蓝色 */
-  .run-card .vdot-stat .stat-value { color: #8b5cf6; font-weight: 700; }
-  .run-card .load-stat .stat-value { color: #3b82f6; font-weight: 700; }
+  .run-card .vdot-stat .stat-value {
+    color: #8b5cf6;
+    font-weight: 700;
+  }
+  .run-card .load-stat .stat-value {
+    color: #3b82f6;
+    font-weight: 700;
+  }
 
   .hr-zone-badge {
     display: inline-flex;
@@ -846,8 +977,14 @@ for (let m = 0; m < 12; m++) {
   }
 
   @keyframes running-modalSlideIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
   .run-detail-modal .modal-close {
@@ -898,7 +1035,10 @@ for (let m = 0; m < 12; m++) {
     flex-wrap: wrap;
   }
 
-  .detail-date { font-size: 0.875rem; color: var(--foreground); }
+  .detail-date {
+    font-size: 0.875rem;
+    color: var(--foreground);
+  }
 
   .detail-type {
     font-size: 0.75rem;
@@ -972,10 +1112,21 @@ for (let m = 0; m < 12; m++) {
     font-weight: 500;
     display: inline-block;
   }
-  .segment-pace-tag.pace-fast { background: #22c55e20; color: #22c55e; }
-  .segment-pace-tag.pace-medium { background: #3b82f620; color: #3b82f6; }
-  .segment-pace-tag.pace-slow { background: #f9731620; color: #f97316; }
-  .detail-section { margin-top: 1.5rem; }
+  .segment-pace-tag.pace-fast {
+    background: #22c55e20;
+    color: #22c55e;
+  }
+  .segment-pace-tag.pace-medium {
+    background: #3b82f620;
+    color: #3b82f6;
+  }
+  .segment-pace-tag.pace-slow {
+    background: #f9731620;
+    color: #f97316;
+  }
+  .detail-section {
+    margin-top: 1.5rem;
+  }
 
   .section-subtitle {
     font-size: 0.9375rem;
@@ -1014,7 +1165,9 @@ for (let m = 0; m < 12; m++) {
     letter-spacing: 0.025em;
   }
 
-  .detail-section tr:last-child td { border-bottom: none; }
+  .detail-section tr:last-child td {
+    border-bottom: none;
+  }
   .detail-section tbody tr:hover {
     background: color-mix(in srgb, var(--muted) 30%, transparent);
   }
@@ -1040,9 +1193,15 @@ for (let m = 0; m < 12; m++) {
     transition: width 0.3s ease;
   }
 
-  .pace-bar-fill.fast { background: linear-gradient(90deg, #22c55e, #16a34a); }
-  .pace-bar-fill.medium { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
-  .pace-bar-fill.slow { background: linear-gradient(90deg, #fb923c, #f97316); }
+  .pace-bar-fill.fast {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+  }
+  .pace-bar-fill.medium {
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+  }
+  .pace-bar-fill.slow {
+    background: linear-gradient(90deg, #fb923c, #f97316);
+  }
 
   .pace-bar span {
     position: relative;
@@ -1060,46 +1219,140 @@ for (let m = 0; m < 12; m++) {
     font-weight: 500;
     display: inline-block;
   }
-  .hr-zone-tag.zone-1, .pace-tag.zone-1 { background: #4ade8020; color: #4ade80; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-  .hr-zone-tag.zone-2, .pace-tag.zone-2 { background: #60a5fa20; color: #60a5fa; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-  .hr-zone-tag.zone-3, .pace-tag.zone-3 { background: #fbbf2420; color: #fbbf24; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-  .hr-zone-tag.zone-4, .pace-tag.zone-4 { background: #fb923c20; color: #fb923c; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-  .hr-zone-tag.zone-5, .pace-tag.zone-5 { background: #f8717120; color: #f87171; padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+  .hr-zone-tag.zone-1,
+  .pace-tag.zone-1 {
+    background: #4ade8020;
+    color: #4ade80;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .hr-zone-tag.zone-2,
+  .pace-tag.zone-2 {
+    background: #60a5fa20;
+    color: #60a5fa;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .hr-zone-tag.zone-3,
+  .pace-tag.zone-3 {
+    background: #fbbf2420;
+    color: #fbbf24;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .hr-zone-tag.zone-4,
+  .pace-tag.zone-4 {
+    background: #fb923c20;
+    color: #fb923c;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .hr-zone-tag.zone-5,
+  .pace-tag.zone-5 {
+    background: #f8717120;
+    color: #f87171;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
 
   @media (max-width: 640px) {
-    .period-tab-nav { padding: 0 0.75rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .period-tab-btn { padding: 0.75rem 1rem; font-size: 0.8125rem; }
-    .period-tab-content { padding: 1rem; }
-    .period-panel-grid { gap: 1rem 0.25rem; }
-    .period-panel-stat { padding: 0.375rem; }
-    .period-panel-value { font-size: 1.125rem; }
-    .period-panel-label { font-size: 0.6875rem; }
+    .period-tab-nav {
+      padding: 0 0.75rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .period-tab-btn {
+      padding: 0.75rem 1rem;
+      font-size: 0.8125rem;
+    }
+    .period-tab-content {
+      padding: 1rem;
+    }
+    .period-panel-grid {
+      gap: 1rem 0.25rem;
+    }
+    .period-panel-stat {
+      padding: 0.375rem;
+    }
+    .period-panel-value {
+      font-size: 1.125rem;
+    }
+    .period-panel-label {
+      font-size: 0.6875rem;
+    }
   }
 
   @media (max-width: 768px) {
-    .running-page h1 { font-size: 1.75rem; }
+    .running-page h1 {
+      font-size: 1.75rem;
+    }
     .run-card {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.75rem;
       padding: 1rem;
     }
-    .run-stats { width: 100%; justify-content: flex-start; gap: 1.5rem; }
-    .run-card .stat { min-width: auto; flex: none; }
-    .run-detail-modal .modal-content { max-height: 95vh; margin: 0.5rem; }
-    .run-detail-modal .modal-body { padding: 1rem; }
-    .detail-stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-    .detail-stat-item { padding: 0.5rem; font-size: 0.75rem; }
-    .detail-stat-label, .detail-stat-value { font-size: 0.75rem; }
-    .detail-title { font-size: 1.125rem; padding-right: 2.5rem; }
+    .run-stats {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+    .run-card .stat {
+      min-width: auto;
+      flex: none;
+    }
+    .run-detail-modal .modal-content {
+      max-height: 95vh;
+      margin: 0.5rem;
+    }
+    .run-detail-modal .modal-body {
+      padding: 1rem;
+    }
+    .detail-stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+    .detail-stat-item {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+    }
+    .detail-stat-label,
+    .detail-stat-value {
+      font-size: 0.75rem;
+    }
+    .detail-title {
+      font-size: 1.125rem;
+      padding-right: 2.5rem;
+    }
   }
 
   @media (max-width: 480px) {
-    .run-stats { gap: 1.25rem; }
-    .run-card .stat-value { font-size: 0.9375rem; }
-    .run-card .stat-label { font-size: 0.625rem; }
-    .detail-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-    .detail-stat-item { padding: 0.5rem; }
+    .run-stats {
+      gap: 1.25rem;
+    }
+    .run-card .stat-value {
+      font-size: 0.9375rem;
+    }
+    .run-card .stat-label {
+      font-size: 0.625rem;
+    }
+    .detail-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+    .detail-stat-item {
+      padding: 0.5rem;
+    }
   }
 </style>
 
@@ -1107,18 +1360,21 @@ for (let m = 0; m < 12; m++) {
   document.addEventListener("DOMContentLoaded", () => {
     const tabNav = document.getElementById("periodTabNav");
     if (tabNav) {
-      tabNav.addEventListener("click", (e) => {
+      tabNav.addEventListener("click", e => {
         const target = (e.target as HTMLElement | null) ?? null;
         const btn = target?.closest?.(".period-tab-btn") as HTMLElement | null;
         if (!btn?.dataset?.period) return;
         const period = btn.dataset.period;
-        document.querySelectorAll(".period-tab-btn").forEach((b) => {
+        document.querySelectorAll(".period-tab-btn").forEach(b => {
           b.classList.remove("border-[var(--accent)]", "text-[var(--accent)]");
           b.classList.add("border-transparent", "text-[var(--foreground)]/70");
         });
         btn.classList.add("border-[var(--accent)]", "text-[var(--accent)]");
-        btn.classList.remove("border-transparent", "text-[var(--foreground)]/70");
-        document.querySelectorAll(".period-panel").forEach((panel) => {
+        btn.classList.remove(
+          "border-transparent",
+          "text-[var(--foreground)]/70"
+        );
+        document.querySelectorAll(".period-panel").forEach(panel => {
           const el = panel as HTMLElement;
           el.classList.add("hidden");
           if (el.dataset?.panel === period) el.classList.remove("hidden");
@@ -1137,7 +1393,6 @@ for (let m = 0; m < 12; m++) {
 
     const allRuns = JSON.parse(runList.dataset.allRuns || "[]");
     const hrZoneLabelsData = JSON.parse(runList.dataset.hrZoneLabels || "{}");
-    const hrZoneColorsData = JSON.parse(runList.dataset.hrZoneColors || "{}");
     let isExpanded = false;
 
     function fmtDuration(d: string) {
@@ -1170,47 +1425,135 @@ for (let m = 0; m < 12; m++) {
       avg_power?: number;
       max_power?: number;
       route?: string;
-      segments?: Array<{ km?: number; pace?: string; gap?: string; heart_rate?: number; hr_zone?: number; cadence?: number; avg_cadence?: number }>;
-      laps?: Array<{ distance?: number; pace?: string; cadence?: number; power?: number; heart_rate?: number; hr_zone?: number }>;
+      segments?: Array<{
+        km?: number;
+        pace?: string;
+        gap?: string;
+        heart_rate?: number;
+        hr_zone?: number;
+        cadence?: number;
+        avg_cadence?: number;
+      }>;
+      laps?: Array<{
+        distance?: number;
+        pace?: string;
+        cadence?: number;
+        power?: number;
+        heart_rate?: number;
+        hr_zone?: number;
+      }>;
     };
 
     const detailIcons: Record<string, string> = {
-      distance: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-      duration: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+      distance:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+      duration:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
       pace: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-      heartRate: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-      cadence: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v12"/><path d="M2 18h20"/></svg>',
-      stride: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18l-6-16-4 8-4-8-6 16z"/></svg>',
-      power: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
-      calories: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-4 8-7.5 8-12a8 8 0 0 0-16 0c0 4.5 4 8 8 12z"/><path d="M12 8v4"/><path d="M10 10h4"/></svg>',
-      elevation: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+      heartRate:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+      cadence:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v12"/><path d="M2 18h20"/></svg>',
+      stride:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18l-6-16-4 8-4-8-6 16z"/></svg>',
+      power:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
+      calories:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-4 8-7.5 8-12a8 8 0 0 0-16 0c0 4.5 4 8 8 12z"/><path d="M12 8v4"/><path d="M10 10h4"/></svg>',
+      elevation:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
       vdot: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>',
       load: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
-      location: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+      location:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
     };
 
     function openModal(run: RunDetail) {
       if (!modal || !modalBody) return;
       const zone = run.hr_zone ?? 0;
-      const hrBadge = zone > 0
-        ? `<span class="detail-hr-zone hr-zone-tag zone-${zone} rounded px-2 py-0.5 text-xs font-semibold">${hrZoneLabelsData[zone]}</span>`
-        : "";
+      const hrBadge =
+        zone > 0
+          ? `<span class="detail-hr-zone hr-zone-tag zone-${zone} rounded px-2 py-0.5 text-xs font-semibold">${hrZoneLabelsData[zone]}</span>`
+          : "";
 
       /* 指标顺序与参考图一致：距离、移动时间、总时间、配速、平均心率、最大心率、步幅、平均功率、最大功率、热量、爬升、训练负荷 */
-      const detailStats: Array<{ icon: string; label: string; value: string }> = [
-        { icon: detailIcons.distance, label: "距离", value: `${run.distance.toFixed(2)} km` },
-        { icon: detailIcons.duration, label: "移动时间", value: fmtDuration(run.duration) },
-        { icon: detailIcons.duration, label: "总时间", value: fmtDuration(run.total_duration ?? run.duration) },
-        { icon: detailIcons.pace, label: "配速", value: `${run.pace} /km` },
-        { icon: detailIcons.heartRate, label: "平均心率", value: (run.heart_rate != null && run.heart_rate > 0) ? `${Math.round(run.heart_rate)} bpm` : "-" },
-        { icon: detailIcons.heartRate, label: "最大心率", value: (run.max_heart_rate != null && run.max_heart_rate > 0) ? `${Math.round(run.max_heart_rate)} bpm` : "-" },
-        { icon: detailIcons.stride, label: "步幅", value: (run.stride_length != null && run.stride_length > 0) ? `${run.stride_length.toFixed(2)} m` : "-" },
-        { icon: detailIcons.power, label: "平均功率", value: `${Math.round(run.avg_power ?? 0)} w` },
-        { icon: detailIcons.power, label: "最大功率", value: `${Math.round(run.max_power ?? 0)} w` },
-        { icon: detailIcons.calories, label: "热量消耗", value: (run.calories != null && run.calories > 0) ? `${Math.round(run.calories)} kcal` : "-" },
-        { icon: detailIcons.elevation, label: "累计爬升", value: (run.elevation_gain != null && run.elevation_gain > 0) ? `${Math.round(run.elevation_gain)} m` : "-" },
-        { icon: detailIcons.load, label: "训练负荷", value: (run.training_load != null && run.training_load > 0) ? String(run.training_load) : "-" },
-      ];
+      const detailStats: Array<{ icon: string; label: string; value: string }> =
+        [
+          {
+            icon: detailIcons.distance,
+            label: "距离",
+            value: `${run.distance.toFixed(2)} km`,
+          },
+          {
+            icon: detailIcons.duration,
+            label: "移动时间",
+            value: fmtDuration(run.duration),
+          },
+          {
+            icon: detailIcons.duration,
+            label: "总时间",
+            value: fmtDuration(run.total_duration ?? run.duration),
+          },
+          { icon: detailIcons.pace, label: "配速", value: `${run.pace} /km` },
+          {
+            icon: detailIcons.heartRate,
+            label: "平均心率",
+            value:
+              run.heart_rate != null && run.heart_rate > 0
+                ? `${Math.round(run.heart_rate)} bpm`
+                : "-",
+          },
+          {
+            icon: detailIcons.heartRate,
+            label: "最大心率",
+            value:
+              run.max_heart_rate != null && run.max_heart_rate > 0
+                ? `${Math.round(run.max_heart_rate)} bpm`
+                : "-",
+          },
+          {
+            icon: detailIcons.stride,
+            label: "步幅",
+            value:
+              run.stride_length != null && run.stride_length > 0
+                ? `${run.stride_length.toFixed(2)} m`
+                : "-",
+          },
+          {
+            icon: detailIcons.power,
+            label: "平均功率",
+            value: `${Math.round(run.avg_power ?? 0)} w`,
+          },
+          {
+            icon: detailIcons.power,
+            label: "最大功率",
+            value: `${Math.round(run.max_power ?? 0)} w`,
+          },
+          {
+            icon: detailIcons.calories,
+            label: "热量消耗",
+            value:
+              run.calories != null && run.calories > 0
+                ? `${Math.round(run.calories)} kcal`
+                : "-",
+          },
+          {
+            icon: detailIcons.elevation,
+            label: "累计爬升",
+            value:
+              run.elevation_gain != null && run.elevation_gain > 0
+                ? `${Math.round(run.elevation_gain)} m`
+                : "-",
+          },
+          {
+            icon: detailIcons.load,
+            label: "训练负荷",
+            value:
+              run.training_load != null && run.training_load > 0
+                ? String(run.training_load)
+                : "-",
+          },
+        ];
 
       let segmentsHtml = "";
       if (run.segments && run.segments.length > 0) {
@@ -1221,33 +1564,54 @@ for (let m = 0; m < 12; m++) {
           const sec = m ? parseInt(m[1], 10) * 60 + parseInt(m[2], 10) : 360;
           return sec < 345 ? "fast" : sec < 375 ? "medium" : "slow";
         };
-        const rows = segs!.map((seg, idx) => {
-          const z = seg?.hr_zone != null ? (hrZoneLabelsData[seg.hr_zone]?.split(" ")[0] ?? "") : "";
-          const paceClass = getPaceClass(seg?.pace);
-          const paceCell = seg?.pace
-            ? (paceClass ? `<span class="segment-pace-tag pace-${paceClass}">${seg.pace}</span>` : `<span class="segment-pace-tag">${seg.pace}</span>`)
-            : "-";
-          const hasHr = seg?.heart_rate != null && seg?.heart_rate !== "" && Number(seg.heart_rate) > 0;
-          const hrCell = hasHr
-            ? (seg?.hr_zone != null && seg.hr_zone > 0
+        const rows = segs!
+          .map((seg, idx) => {
+            const z =
+              seg?.hr_zone != null
+                ? (hrZoneLabelsData[seg.hr_zone]?.split(" ")[0] ?? "")
+                : "";
+            const paceClass = getPaceClass(seg?.pace);
+            const paceCell = seg?.pace
+              ? paceClass
+                ? `<span class="segment-pace-tag pace-${paceClass}">${seg.pace}</span>`
+                : `<span class="segment-pace-tag">${seg.pace}</span>`
+              : "-";
+            const hasHr = seg?.heart_rate != null && Number(seg.heart_rate) > 0;
+            const hrCell = hasHr
+              ? seg?.hr_zone != null && seg.hr_zone > 0
                 ? `<span class="hr-zone-tag zone-${seg.hr_zone}">${seg.heart_rate} ${z}</span>`
-                : `<span class="hr-zone-tag">${seg.heart_rate}</span>`)
-            : "-";
-          const segCadence = seg?.cadence ?? (seg as { avg_cadence?: number }).avg_cadence;
-          const cadenceNum = typeof segCadence === "number" ? segCadence : (typeof segCadence === "string" ? parseFloat(segCadence) : NaN);
-          const cadenceCell = Number.isFinite(cadenceNum) && cadenceNum >= 0 ? Math.round(cadenceNum) : "-";
-          return `<tr class="border-b border-[var(--border)] hover:bg-[var(--muted)]/20"><td class="p-2">${seg?.km ?? idx + 1}</td><td class="p-2 text-xs">${paceCell}</td><td class="p-2">${seg?.gap ?? seg?.pace ?? "-"}</td><td class="p-2">${cadenceCell}</td><td class="p-2 text-xs">${hrCell}</td></tr>`;
-        }).join("");
+                : `<span class="hr-zone-tag">${seg.heart_rate}</span>`
+              : "-";
+            const segCadence =
+              seg?.cadence ?? (seg as { avg_cadence?: number }).avg_cadence;
+            const cadenceNum =
+              typeof segCadence === "number"
+                ? segCadence
+                : typeof segCadence === "string"
+                  ? parseFloat(segCadence)
+                  : NaN;
+            const cadenceCell =
+              Number.isFinite(cadenceNum) && cadenceNum >= 0
+                ? Math.round(cadenceNum)
+                : "-";
+            return `<tr class="border-b border-[var(--border)] hover:bg-[var(--muted)]/20"><td class="p-2">${seg?.km ?? idx + 1}</td><td class="p-2 text-xs">${paceCell}</td><td class="p-2">${seg?.gap ?? seg?.pace ?? "-"}</td><td class="p-2">${cadenceCell}</td><td class="p-2 text-xs">${hrCell}</td></tr>`;
+          })
+          .join("");
         segmentsHtml = `<div class="detail-section mt-6"><h4 class="section-subtitle mb-3 text-[0.9375rem] font-semibold text-[var(--foreground)]">分段数据</h4><div class="segments-table-wrapper overflow-x-auto rounded-lg border border-[var(--border)]"><table class="segments-table w-full border-collapse text-[13px]"><thead><tr class="border-b border-[var(--border)] bg-[var(--muted)]/30"><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">公里</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">配速</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">GAP</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">步频</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">心率</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
       }
 
       let lapsHtml = "";
       if (run.laps && run.laps.length > 0) {
         const laps = run.laps as NonNullable<RunDetail["laps"]>;
-        const rows = laps!.map((lap, idx) => {
-          const z = lap?.hr_zone != null ? (hrZoneLabelsData[lap.hr_zone]?.split(" ")[0] ?? "") : "";
-          return `<tr class="border-b border-[var(--border)] hover:bg-[var(--muted)]/20"><td class="p-2">${idx + 1}</td><td class="p-2">${lap?.distance != null ? lap.distance.toFixed(2) : "-"}</td><td class="p-2">${lap?.pace ?? "-"}</td><td class="p-2">${lap?.cadence ?? "-"}</td><td class="p-2">${lap?.power ?? "-"}</td><td class="p-2 text-xs">${lap?.heart_rate ?? "-"} ${z}</td></tr>`;
-        }).join("");
+        const rows = laps!
+          .map((lap, idx) => {
+            const z =
+              lap?.hr_zone != null
+                ? (hrZoneLabelsData[lap.hr_zone]?.split(" ")[0] ?? "")
+                : "";
+            return `<tr class="border-b border-[var(--border)] hover:bg-[var(--muted)]/20"><td class="p-2">${idx + 1}</td><td class="p-2">${lap?.distance != null ? lap.distance.toFixed(2) : "-"}</td><td class="p-2">${lap?.pace ?? "-"}</td><td class="p-2">${lap?.cadence ?? "-"}</td><td class="p-2">${lap?.power ?? "-"}</td><td class="p-2 text-xs">${lap?.heart_rate ?? "-"} ${z}</td></tr>`;
+          })
+          .join("");
         lapsHtml = `<div class="detail-section mt-6"><h4 class="section-subtitle mb-3 text-[0.9375rem] font-semibold text-[var(--foreground)]">记圈数据</h4><div class="overflow-x-auto rounded-lg border border-[var(--border)]"><table class="w-full border-collapse text-[13px]"><thead><tr class="border-b border-[var(--border)] bg-[var(--muted)]/30"><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">圈</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">距离(km)</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">配速</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">步频</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">功率</th><th class="p-2 text-left text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">心率</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
       }
 
@@ -1258,11 +1622,11 @@ for (let m = 0; m < 12; m++) {
             <span class="detail-date text-[var(--foreground)]">${run.date}</span>
             ${hrBadge}
             <span class="detail-type rounded border border-[var(--border)] bg-[var(--muted)]/30 px-2 py-0.5 text-xs text-[var(--foreground)]">${run.activity_type || "室外跑步"}</span>
-            ${(run.route && run.route.trim()) ? `<span class="detail-route flex items-center gap-1.5 text-xs text-[var(--foreground)]/80"><span class="detail-route-icon inline-flex h-4 w-4 flex-shrink-0 items-center justify-center text-[#3b82f6]">${detailIcons.location}</span>${run.route.trim()}</span>` : ""}
+            ${run.route && run.route.trim() ? `<span class="detail-route flex items-center gap-1.5 text-xs text-[var(--foreground)]/80"><span class="detail-route-icon inline-flex h-4 w-4 flex-shrink-0 items-center justify-center text-[#3b82f6]">${detailIcons.location}</span>${run.route.trim()}</span>` : ""}
           </div>
         </div>
         <div class="detail-stats-grid mt-6 grid grid-cols-3 gap-3">
-          ${detailStats.map((s) => `<div class="detail-stat-item flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 px-3 py-2.5 text-[13px]"><span class="detail-stat-icon flex h-4 w-4 flex-shrink-0 items-center justify-center">${s.icon}</span><span class="detail-stat-label text-[var(--foreground)]/70">${s.label}</span><span class="detail-stat-value font-semibold text-[var(--foreground)]">${s.value}</span></div>`).join("")}
+          ${detailStats.map(s => `<div class="detail-stat-item flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 px-3 py-2.5 text-[13px]"><span class="detail-stat-icon flex h-4 w-4 flex-shrink-0 items-center justify-center">${s.icon}</span><span class="detail-stat-label text-[var(--foreground)]/70">${s.label}</span><span class="detail-stat-value font-semibold text-[var(--foreground)]">${s.value}</span></div>`).join("")}
         </div>
         ${segmentsHtml}
         ${lapsHtml}
@@ -1279,7 +1643,7 @@ for (let m = 0; m < 12; m++) {
       document.body.style.overflow = "";
     }
 
-    runList.addEventListener("click", (e) => {
+    runList.addEventListener("click", e => {
       const card = (e.target as HTMLElement).closest(".run-card");
       if (!card) return;
       const runJson = card.getAttribute("data-run");
@@ -1292,22 +1656,42 @@ for (let m = 0; m < 12; m++) {
 
     modalClose?.addEventListener("click", closeModal);
     modalOverlay?.addEventListener("click", closeModal);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeModal();
+    });
 
     if (!loadMoreBtn) return;
 
     loadMoreBtn.addEventListener("click", () => {
       if (!isExpanded) {
-        allRuns.slice(10).forEach((run: { date: string; distance: number; duration: string; pace: string; hr_zone?: number; activity_type?: string; workout_name?: string; vdot?: number; training_load?: number }, idx: number) => {
-          const card = document.createElement("div");
-          card.className = "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
-          card.dataset.runIndex = String(10 + idx);
-          card.dataset.run = JSON.stringify(run);
-          const zone = run.hr_zone ?? 0;
-          const hrBadge = zone > 0
-            ? `<span class="hr-zone-badge hr-zone-tag zone-${zone} inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold">${hrZoneLabelsData[zone]}</span>`
-            : "";
-          card.innerHTML = `
+        allRuns
+          .slice(10)
+          .forEach(
+            (
+              run: {
+                date: string;
+                distance: number;
+                duration: string;
+                pace: string;
+                hr_zone?: number;
+                activity_type?: string;
+                workout_name?: string;
+                vdot?: number;
+                training_load?: number;
+              },
+              idx: number
+            ) => {
+              const card = document.createElement("div");
+              card.className =
+                "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
+              card.dataset.runIndex = String(10 + idx);
+              card.dataset.run = JSON.stringify(run);
+              const zone = run.hr_zone ?? 0;
+              const hrBadge =
+                zone > 0
+                  ? `<span class="hr-zone-badge hr-zone-tag zone-${zone} inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold">${hrZoneLabelsData[zone]}</span>`
+                  : "";
+              card.innerHTML = `
             <div class="run-main flex flex-1 flex-col gap-1.5">
               <div class="run-header flex flex-wrap items-center gap-2.5">
                 <time class="run-date text-sm font-medium text-[var(--foreground)]">${run.date.split(" ")[0]}</time>
@@ -1323,13 +1707,18 @@ for (let m = 0; m < 12; m++) {
               ${(run.training_load ?? 0) > 0 ? `<div class="stat load-stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold">${run.training_load ?? 0}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">负荷</span></div>` : ""}
             </div>
           `;
-          runList.appendChild(card);
-        });
-        loadMoreBtn.innerHTML = '<span>收起</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg)"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+              runList.appendChild(card);
+            }
+          );
+        loadMoreBtn.innerHTML =
+          '<span>收起</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg)"><polyline points="6 9 12 15 18 9"></polyline></svg>';
         isExpanded = true;
       } else {
-        runList.querySelectorAll(".run-card").forEach((card, i) => { if (i >= 10) card.remove(); });
-        loadMoreBtn.innerHTML = '<span>更多</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+        runList.querySelectorAll(".run-card").forEach((card, i) => {
+          if (i >= 10) card.remove();
+        });
+        loadMoreBtn.innerHTML =
+          '<span>更多</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
         isExpanded = false;
         runList.scrollIntoView({ behavior: "smooth", block: "start" });
       }

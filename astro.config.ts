@@ -103,7 +103,7 @@ export default defineConfig({
       theme: "default",
       autoTheme: true,
       mermaidConfig: {
-        securityLevel: "loose"
+        securityLevel: "loose",
       },
     }),
     expressiveCode(expressiveCodeOption),
