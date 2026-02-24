@@ -37,11 +37,11 @@ frontmatterStr.split("\n").forEach(line => {
   }
 });
 
-// 使用 markdown-it 渲染 markdown
+// 使用 markdown-it 渲染 markdown（不启用 typographer，避免链接 URL 中的英文逗号被替换为中文逗号）
 const md = new MarkdownIt({
   html: true, // 允许 HTML
   linkify: true, // 自动转换 URL 为链接
-  typographer: true, // 启用一些语言中性的替换 + 引号美化
+  typographer: false, // 关闭标点替换，保证链接里的英文逗号不变
 });
 const htmlContent = md.render(content);
 ---

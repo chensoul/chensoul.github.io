@@ -110,6 +110,14 @@ const en = {
   },
 
   /**
+   * Running 页配置
+   */
+  running: {
+    title: "Running",
+    desc: "Running stats and recent activities.",
+  },
+
+  /**
    * 搜索页配置
    */
   search: {
@@ -274,6 +282,10 @@ const zhCN: typeof en = {
   links: {
     title: "链接",
     desc: "我收藏的工具和网站。",
+  },
+  running: {
+    title: "跑步",
+    desc: "跑步统计与最近活动。",
   },
   search: {
     title: "搜索",

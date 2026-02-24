@@ -83,6 +83,7 @@ else if (isActive("/about")) mobileTitle = _t.about.title;
 else if (isActive("/archives")) mobileTitle = _t.archives.title;
 else if (isActive("/search")) mobileTitle = _t.search.title;
 else if (isActive("/links")) mobileTitle = _t.links.title;
+else if (isActive("/running")) mobileTitle = _t.running.title;
 ---
 
 <header>
@@ -217,6 +218,11 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
       <li>
         <a href="/links" class:list={{ "active-nav": isActive("/links") }}>
           {_t.links.title}
+        </a>
+      </li>
+      <li>
+        <a href="/running" class:list={{ "active-nav": isActive("/running") }}>
+          {_t.running.title}
         </a>
       </li>
       <li>

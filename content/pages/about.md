@@ -19,7 +19,8 @@ comments: false
 
 ## 更新
 
-- 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题，并做了一些修改。
+- 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
+- 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加 Running 页面。
 
 ## LICENSE
 
