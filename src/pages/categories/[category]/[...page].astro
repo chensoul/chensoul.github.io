@@ -160,6 +160,7 @@ const { page, categoryName } = Astro.props;
             itemClass="category-post-item"
             hidden={i >= SITE.postPerIndex}
             showCommentCount={i < SITE.postPerIndex}
+            dateFormat="absolute"
           />
         ))
       }

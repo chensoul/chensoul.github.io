@@ -371,6 +371,7 @@ let __relativeObserver = null;
 function __updateRelativeTimes() {
   const nodes = document.querySelectorAll("time[datetime]");
   nodes.forEach(el => {
+    if (el.getAttribute("data-date-format") === "absolute") return;
     const dt = el.getAttribute("datetime");
     if (!dt) return;
     const date = new Date(dt);

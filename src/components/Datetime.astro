@@ -23,6 +23,7 @@
  * @property timezone - 时区（可选）
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间（可选）
+ * @property format - 显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
  */
 export interface Props {
   class?: string;
@@ -30,9 +31,10 @@ export interface Props {
   timezone: string | undefined;
   pubDatetime: string | Date;
   modDatetime: string | Date | undefined | null;
+  format?: "relative" | "absolute";
 }
 
-const { pubDatetime, modDatetime, class: className = "" } = Astro.props;
+const { pubDatetime, modDatetime, class: className = "", format = "relative" } = Astro.props;
 
 // 解析日期对象
 const pub = new Date(pubDatetime);
@@ -68,12 +70,26 @@ function formatRelativeTime(date: Date): string {
 }
 
 const relativeTime = formatRelativeTime(latest);
+
+// 绝对时间格式：YYYY-MM-DD
+function formatAbsoluteTime(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+const displayTime = format === "absolute" ? formatAbsoluteTime(latest) : relativeTime;
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>
   <span class:list={["text-sm", { "sm:text-xs": true }]}>
-    <time class="text-[var(--posts-list-time-color)]" datetime={iso}
-      >{relativeTime}</time
+    <time
+      class="text-[var(--posts-list-time-color)]"
+      datetime={iso}
+      data-date-format={format}
     >
+      {displayTime}
+    </time>
   </span>
 </div>

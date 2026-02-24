@@ -80,7 +80,7 @@ const { page, tagName } = Astro.props;
     </p>
     <!-- 文章列表 -->
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(data => <Card {...data} dateFormat="absolute" />)}
     </ul>
   </Main>
 

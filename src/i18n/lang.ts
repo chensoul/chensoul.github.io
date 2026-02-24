@@ -246,27 +246,27 @@ const en = {
 const zhCN: typeof en = {
   archives: {
     title: "归档",
-    desc: "所有日志。",
+    desc: "所有文章。",
   },
   posts: {
-    title: "日志",
-    desc: "我发过的所有日志。",
+    title: "文章",
+    desc: "我发过的所有文章。",
   },
   tags: {
     title: "标签",
-    desc: "日志中使用的所有标签。",
+    desc: "文章中使用的所有标签。",
   },
   tag: {
     title: "标签：",
-    desc: (tag: string) => `所有带有标签「${tag}」的日志。`,
+    desc: (tag: string) => `所有带有标签「${tag}」的文章。`,
   },
   categories: {
     title: "分类",
-    desc: "所有日志的分类。",
+    desc: "所有文章的分类。",
   },
   category: {
     title: "分类：",
-    desc: (category: string) => `所有属于分类「${category}」的日志。`,
+    desc: (category: string) => `所有属于分类「${category}」的文章。`,
   },
   about: {
     title: "关于",
@@ -277,7 +277,7 @@ const zhCN: typeof en = {
   },
   search: {
     title: "搜索",
-    desc: "搜索日志 ...",
+    desc: "搜索文章 ...",
   },
   notFoundPage: {
     title: "你似乎来到了没有知识存在的荒原",
@@ -314,7 +314,7 @@ const zhCN: typeof en = {
     themeBtn: "切换深色模式",
     light: "浅色",
     dark: "深色",
-    allPosts: "所有日志",
+    allPosts: "所有文章",
     featuredPosts: "Set Top",
     recentPosts: "New",
     more: "更多",
@@ -330,34 +330,34 @@ const zhCN: typeof en = {
 const zhHant: typeof en = {
   archives: {
     title: "歸檔",
-    desc: "所有日志。",
+    desc: "所有文章。",
   },
   posts: {
-    title: "日志",
-    desc: "我發過的所有日志。",
+    title: "文章",
+    desc: "我發過的所有文章。",
   },
   tags: {
     title: "標籤",
-    desc: "日志中使用的所有標籤。",
+    desc: "文章中使用的所有標籤。",
   },
   tag: {
     title: "標籤：",
-    desc: (tag: string) => `所有帶有標籤「${tag}」的日志。`,
+    desc: (tag: string) => `所有帶有標籤「${tag}」的文章。`,
   },
   categories: {
     title: "分類",
-    desc: "所有日志的分類。",
+    desc: "所有文章的分類。",
   },
   category: {
     title: "分類：",
-    desc: (category: string) => `所有屬於分類「${category}」的日志。`,
+    desc: (category: string) => `所有屬於分類「${category}」的文章。`,
   },
   about: {
     title: "關於",
   },
   search: {
     title: "搜尋",
-    desc: "搜尋日志 ...",
+    desc: "搜尋文章 ...",
   },
   notFoundPage: {
     title: "頁面不存在",
@@ -389,9 +389,9 @@ const zhHant: typeof en = {
   common: {
     backToTop: "回到頂部",
     themeBtn: "切換深色模式",
-    allPosts: "所有日志",
-    featuredPosts: "精選日志",
-    recentPosts: "最新日志",
+    allPosts: "所有文章",
+    featuredPosts: "精選文章",
+    recentPosts: "最新文章",
   },
 };
 */

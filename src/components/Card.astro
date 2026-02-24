@@ -34,12 +34,14 @@ import { SITE } from "@/config";
  * @property itemClass - 额外的 CSS 类名
  * @property hidden - 是否隐藏此卡片
  * @property showCommentCount - 是否显示评论数
+ * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
  */
 export interface Props extends CollectionEntry<"blog"> {
   variant?: "h2" | "h3";
   itemClass?: string;
   hidden?: boolean;
   showCommentCount?: boolean;
+  dateFormat?: "relative" | "absolute";
 }
 
 const {
@@ -50,6 +52,7 @@ const {
   itemClass,
   hidden = false,
   showCommentCount,
+  dateFormat = "relative",
 } = Astro.props;
 
 // 解构文章元数据
@@ -146,6 +149,7 @@ const coverSrc = buildCoverSrc();
               pubDatetime={date}
               modDatetime={updated}
               {timezone}
+              format={dateFormat}
               class="opacity-80"
             />
           </div>
