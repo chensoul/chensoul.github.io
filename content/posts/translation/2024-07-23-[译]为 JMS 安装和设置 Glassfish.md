@@ -76,7 +76,7 @@ tags: ['jms']
 - 在你的 IDE（Eclipse、STS 或 IntelliJ）中创建一个 maven 项目`<packaging>jar</packaging>`
 - 打开`pom.xml`并设置正确的 Java 版本。我在这个项目中使用 JDK 8。
 
-```XML
+```xml
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -88,7 +88,7 @@ tags: ['jms']
 
 - 添加与 Glassfish 服务器通信所需的依赖项。基本上，您需要添加 3 个依赖项`gf-client`，`imqjmsra`和`javax.jms-api`。还将添加`junit-jupitor-api`用于运行`@Test`代码的依赖项。       
 
-```XML
+```xml
 <dependencies>
     <dependency>
         <groupId>org.glassfish.main.appclient</groupId>
