@@ -58,7 +58,7 @@ export interface BlogMetrics {
  */
 export async function getBlogMetrics(): Promise<BlogMetrics> {
   // 博客创建日期：2018年8月31日
-  const startDate = new Date('2018-08-31');
+  const startDate = new Date("2018-08-31");
   // 当前日期和时间
   const currentDate = new Date();
 
@@ -117,6 +117,6 @@ export async function getBlogMetrics(): Promise<BlogMetrics> {
     runningDays,
     totalPosts,
     totalWords,
-    totalWordsInWan
+    totalWordsInWan,
   };
 }

@@ -136,10 +136,7 @@ const { page, categoryName } = Astro.props;
 
 <Layout>
   <Header />
-  <Main
-    pageTitle=""
-    pageDesc={_t.category.desc(categoryName)}
-  >
+  <Main pageTitle="" pageDesc={_t.category.desc(categoryName)}>
     <p class="mb-4 text-base font-semibold">
       分类：{categoryName}
     </p>
@@ -168,7 +165,12 @@ const { page, categoryName } = Astro.props;
       }
     </ul>
     {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-    <div id="category-posts-sentinel" data-init={SITE.postPerIndex} data-chunk={SITE.postPerPage}></div>
+    <div
+      id="category-posts-sentinel"
+      data-init={SITE.postPerIndex}
+      data-chunk={SITE.postPerPage}
+    >
+    </div>
   </Main>
   <Footer noMarginTop={true} />
 </Layout>
@@ -190,19 +192,23 @@ const { page, categoryName } = Astro.props;
    * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
    * - astro:page-load: Astro 页面加载完成后触发
    */
-  function boot(){
+  function boot() {
     window.setupLazyList({
-      sentinelId: 'category-posts-sentinel',
-      itemSelector: '.category-post-item',
+      sentinelId: "category-posts-sentinel",
+      itemSelector: ".category-post-item",
       artalk: {
         enabled: true,
-        anchorSelector: 'a[href]',
-        wrapperSelector: '.relative.block.pr-12',
-      }
+        anchorSelector: "a[href]",
+        wrapperSelector: ".relative.block.pr-12",
+      },
     });
   }
 
   // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
-  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
-  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener("astro:after-swap", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
+  document.addEventListener("astro:page-load", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
 </script>

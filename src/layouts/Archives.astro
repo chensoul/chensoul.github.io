@@ -59,7 +59,7 @@ const { page } = Astro.props;
 const groupedByYear = getPostsByGroupCondition(
   page.data,
   // 提取年份的回调函数：返回文章日期的年份部分
-  (item) => new Date(item.data.updated ?? item.data.date).getFullYear()
+  item => new Date(item.data.updated ?? item.data.date).getFullYear()
 );
 
 /**
@@ -71,7 +71,7 @@ const groupedByYear = getPostsByGroupCondition(
  * 3. 降序排序（b - a），使最新的年份排在最前面
  */
 const years = Object.keys(groupedByYear)
-  .map((y) => Number(y))
+  .map(y => Number(y))
   .sort((a, b) => b - a);
 ---
 
@@ -87,9 +87,11 @@ const years = Object.keys(groupedByYear)
        * - 索引大于等于该值的年份添加 hidden 类，由懒加载脚本控制显示
        */
       years.map((year, i) => (
-        <section class={`archives-year mb-8 ${i >= SITE.archivesPerIndex ? 'hidden' : ''}`}>
+        <section
+          class={`archives-year mb-8 ${i >= SITE.archivesPerIndex ? "hidden" : ""}`}
+        >
           {/* 年份标题：显示年份和该年份的文章数量 */}
-          <h2 class="text-base mb-1">
+          <h2 class="mb-1 text-base">
             {year} ({groupedByYear[year].length})
           </h2>
           <ul class="mt-1 space-y-1">
@@ -114,13 +116,16 @@ const years = Object.keys(groupedByYear)
                 return (
                   <li class="flex items-center gap-2 leading-6">
                     {/* 日期显示：固定宽度，右对齐，等官认数字体 */}
-                    <span class="w-14 text-right tabular-nums text-sm opacity-80">
+                    <span class="w-14 text-right text-sm tabular-nums opacity-80">
                       {dateText}
                     </span>
                     {/* 分隔符：指向右侧的箭头符号 */}
                     <span class="opacity-80">»</span>
                     {/* 文章标题链接：flex-1 占满剩余空间，truncate 超长省略 */}
-                    <a href={getPath(id, filePath, true, data.date)} class="flex-1 text-sm text-accent hover:underline truncate">
+                    <a
+                      href={getPath(id, filePath, true, data.date)}
+                      class="flex-1 truncate text-sm text-accent hover:underline"
+                    >
                       {data.title}
                     </a>
                   </li>
@@ -132,7 +137,12 @@ const years = Object.keys(groupedByYear)
       ))
     }
     {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-    <div id="archives-sentinel" data-init={SITE.archivesPerIndex} data-chunk={SITE.archivesPerPage}></div>
+    <div
+      id="archives-sentinel"
+      data-init={SITE.archivesPerIndex}
+      data-chunk={SITE.archivesPerPage}
+    >
+    </div>
   </Main>
   <Footer noMarginTop={true} />
 </Layout>
@@ -151,14 +161,18 @@ const years = Object.keys(groupedByYear)
    * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
    * - astro:page-load: Astro 页面加载完成后触发
    */
-  function boot(){
+  function boot() {
     window.setupLazyList({
-      sentinelId: 'archives-sentinel',
-      itemSelector: '.archives-year',
-      artalk: { enabled: false }
+      sentinelId: "archives-sentinel",
+      itemSelector: ".archives-year",
+      artalk: { enabled: false },
     });
   }
   // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
-  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
-  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener("astro:after-swap", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
+  document.addEventListener("astro:page-load", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
 </script>

@@ -42,16 +42,18 @@ export interface Props extends CollectionEntry<"blog"> {
   showCommentCount?: boolean;
 }
 
-const { variant = "h2", data, id, filePath, itemClass, hidden = false, showCommentCount } = Astro.props;
+const {
+  variant = "h2",
+  data,
+  id,
+  filePath,
+  itemClass,
+  hidden = false,
+  showCommentCount,
+} = Astro.props;
 
 // 解构文章元数据
-const {
-  title,
-  date,
-  updated,
-  timezone,
-  image,
-} = data;
+const { title, date, updated, timezone, image } = data;
 
 // 标题容器样式（处理溢出省略）
 const headerProps = {
@@ -61,12 +63,16 @@ const headerProps = {
 // 链接样式（包含 View Transition 名称）
 const linkProps = {
   style: { viewTransitionName: slugifyStr(title) },
-  class: "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
+  class:
+    "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
 };
 
 // 获取评论数显示配置（优先使用组件 props，其次使用全局配置）
 const { showCommentCount: defaultShowCommentCount } = SITE.displayOptions;
-const displayCommentCount = typeof showCommentCount === "boolean" ? showCommentCount : defaultShowCommentCount;
+const displayCommentCount =
+  typeof showCommentCount === "boolean"
+    ? showCommentCount
+    : defaultShowCommentCount;
 
 /**
  * 构建封面图 URL
@@ -95,40 +101,46 @@ const buildCoverSrc = (): string | undefined => {
 const coverSrc = buildCoverSrc();
 ---
 
-<li class={`mb-4 ${itemClass ?? ''} ${hidden ? 'hidden' : ''}`}>
+<li class={`mb-4 ${itemClass ?? ""} ${hidden ? "hidden" : ""}`}>
   <div class="relative block pr-12">
     <div class="flex items-center gap-3">
       <!-- 封面图 -->
-      {coverSrc && (
-        <img
-          src={coverSrc}
-          alt={title}
-          loading={SITE.imageConfig.loading.lazy ? "lazy" : "eager"}
-          class="w-[50px] h-[50px] object-cover rounded-md shrink-0"
-        />
-      )}
+      {
+        coverSrc && (
+          <img
+            src={coverSrc}
+            alt={title}
+            loading={SITE.imageConfig.loading.lazy ? "lazy" : "eager"}
+            class="h-[50px] w-[50px] shrink-0 rounded-md object-cover"
+          />
+        )
+      }
       <!-- 文章信息区 -->
       <div class="min-w-0 flex-1">
         <!-- 文章标题 -->
-        <div
-          class="text-lg font-medium text-accent underline-offset-4 min-w-0"
-        >
+        <div class="min-w-0 text-lg font-medium text-accent underline-offset-4">
           {
             // 根据 variant 选择标题级别
             variant === "h2" ? (
               <h2 {...headerProps}>
-                <a href={getPath(id, filePath, true, date)} {...linkProps}>{title}</a>
+                <a href={getPath(id, filePath, true, date)} {...linkProps}>
+                  {title}
+                </a>
               </h2>
             ) : (
               <h3 {...headerProps}>
-                <a href={getPath(id, filePath, true, date)} {...linkProps}>{title}</a>
+                <a href={getPath(id, filePath, true, date)} {...linkProps}>
+                  {title}
+                </a>
               </h3>
             )
           }
         </div>
 
         <!-- 发布/更新时间 -->
-        <div class="mt-1 flex flex-row flex-nowrap items-center space-x-2 whitespace-nowrap">
+        <div
+          class="mt-1 flex flex-row flex-nowrap items-center space-x-2 whitespace-nowrap"
+        >
           <div class="mr-1 flex items-center space-x-0.5">
             <Datetime
               pubDatetime={date}
@@ -144,7 +156,7 @@ const coverSrc = buildCoverSrc();
     {
       displayCommentCount && (
         <span
-          class="artalk-comment-count absolute right-0 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full text-xs font-medium shadow-sm"
+          class="artalk-comment-count absolute top-1/2 right-0 inline-flex -translate-y-1/2 items-center justify-center rounded-full text-xs font-medium shadow-sm"
           style="width:30px;height:16px;background-color:var(--comment-badge-bg);color:var(--color-background)"
           data-page-key={getPath(id, filePath, true, date)}
         />

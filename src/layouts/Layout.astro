@@ -180,13 +180,22 @@ const structuredData = {
     <script is:inline src="/toggle-theme.js"></script>
 
     <!-- Artalk 评论系统资源 -->
-    <link href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css" rel="stylesheet" />
-    <script is:inline src="https://unpkg.com/artalk@2.9.1/dist/Artalk.js" defer></script>
+    <link
+      href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
+      rel="stylesheet"
+    />
+    <script is:inline src="https://unpkg.com/artalk@2.9.1/dist/Artalk.js" defer
+    ></script>
 
     <!-- Umami 网站分析（仅生产环境） -->
     {
       import.meta.env.PROD && (
-        <script is:inline src="https://umami.chensoul.cc/random-string.js" data-website-id="2311be4b-ebe4-4a94-9c69-b2e841584d0d" defer></script>
+        <script
+          is:inline
+          src="https://umami.chensoul.cc/random-string.js"
+          data-website-id="2311be4b-ebe4-4a94-9c69-b2e841584d0d"
+          defer
+        />
       )
     }
 
@@ -218,7 +227,7 @@ const structuredData = {
     <!-- 站点框架容器 -->
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:bg-[var(--color-background)] sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)] sm:px-8 sm:pt-4"
+      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:bg-[var(--color-background)] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
     >
       <!-- 插槽：子布局内容 -->
       <slot />
@@ -231,29 +240,37 @@ const structuredData = {
 </html>
 
 <script is:inline>
-window.__artalkConfig = { server: 'https://artalk.chensoul.cc', site: 'ChenSoul Blog' };
-document.addEventListener('astro:after-swap', tryLoad);
-document.addEventListener('DOMContentLoaded', tryLoad);
-/**
- * 加载 Artalk 评论数统计组件
- *
- * 功能：
- * 1. 查找所有 .artalk-comment-count 元素
- * 2. 调用 Artalk.loadCountWidget 加载评论数
- * 3. 使用 data-page-key 属性标识每篇文章
- */
-function tryLoad() {
-  const els = document.querySelectorAll('.artalk-comment-count');
-  if (!els.length || typeof window === 'undefined' || typeof window.Artalk === 'undefined') return;
-  const cfg = window.__artalkConfig || {};
-  if (!cfg.server || !cfg.site) return;
-  window.Artalk.loadCountWidget({
-    server: cfg.server,
-    site: cfg.site,
-    countEl: '.artalk-comment-count',
-    statPageKeyAttr: 'data-page-key',
-  });
-}
+  window.__artalkConfig = {
+    server: "https://artalk.chensoul.cc",
+    site: "ChenSoul Blog",
+  };
+  document.addEventListener("astro:after-swap", tryLoad);
+  document.addEventListener("DOMContentLoaded", tryLoad);
+  /**
+   * 加载 Artalk 评论数统计组件
+   *
+   * 功能：
+   * 1. 查找所有 .artalk-comment-count 元素
+   * 2. 调用 Artalk.loadCountWidget 加载评论数
+   * 3. 使用 data-page-key 属性标识每篇文章
+   */
+  function tryLoad() {
+    const els = document.querySelectorAll(".artalk-comment-count");
+    if (
+      !els.length ||
+      typeof window === "undefined" ||
+      typeof window.Artalk === "undefined"
+    )
+      return;
+    const cfg = window.__artalkConfig || {};
+    if (!cfg.server || !cfg.site) return;
+    window.Artalk.loadCountWidget({
+      server: cfg.server,
+      site: cfg.site,
+      countEl: ".artalk-comment-count",
+      statPageKeyAttr: "data-page-key",
+    });
+  }
 </script>
 
 <style>

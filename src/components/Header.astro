@@ -34,7 +34,8 @@ const { pathname } = Astro.url;
 // 规范化路径：移除 index.html 和 .html 后缀
 const rawPath = pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
 // 移除末尾斜杠（根路径除外）
-const currentPath = rawPath.endsWith("/") && rawPath !== "/" ? rawPath.slice(0, -1) : rawPath;
+const currentPath =
+  rawPath.endsWith("/") && rawPath !== "/" ? rawPath.slice(0, -1) : rawPath;
 
 /**
  * 判断导航链接是否处于激活状态
@@ -66,7 +67,8 @@ interface Props {
   leadingTitleTransition?: string;
 }
 
-const { leadingTitle, hideSiteTitle, leadingTitleTransition } = Astro.props as Props;
+const { leadingTitle, hideSiteTitle, leadingTitleTransition } =
+  Astro.props as Props;
 
 /**
  * 移动端标题动态显示
@@ -94,10 +96,7 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
   </a>
 
   <!-- 移动端导航遮罩层 -->
-  <div
-    id="mobile-nav-overlay"
-    class="mobile-nav-overlay sm:!hidden"
-  ></div>
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay sm:!hidden"></div>
 
   <!-- 导航容器 -->
   <div
@@ -107,26 +106,35 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
     <!-- 顶部导航栏：站点标题 + RSS + 菜单按钮 -->
     <div
       id="top-nav-wrap"
-      class="relative flex w-full items-center sm:items-baseline justify-between bg-background pb-2"
+      class="relative flex w-full items-center justify-between bg-background pb-2 sm:items-baseline"
     >
       <!-- 左侧：站点标题 + RSS 图标 -->
       <div class="flex items-baseline gap-1">
         <!-- 站点标题链接 -->
         <a
           href="/"
-          class="text-sm leading-6 max-w-[28ch] overflow-hidden text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
+          class="max-w-[28ch] overflow-hidden text-sm leading-6 text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
         >
           <!-- 前导标题（如分类名） -->
-          {leadingTitle && (
-            <span class="mr-2 font-medium" transition:name={leadingTitleTransition}>{leadingTitle}</span>
-          )}
+          {
+            leadingTitle && (
+              <span
+                class="mr-2 font-medium"
+                transition:name={leadingTitleTransition}
+              >
+                {leadingTitle}
+              </span>
+            )
+          }
           <!-- 站点标题 -->
-          {!hideSiteTitle && (
-            <>
-              <span class="sm:hidden">{mobileTitle}</span>
-              <span class="text-base hidden sm:inline">{SITE.title}</span>
-            </>
-          )}
+          {
+            !hideSiteTitle && (
+              <>
+                <span class="sm:hidden">{mobileTitle}</span>
+                <span class="hidden text-base sm:inline">{SITE.title}</span>
+              </>
+            )
+          }
         </a>
         <!-- RSS 订阅链接 -->
         <a
@@ -152,7 +160,7 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
       >
         <button
           id="menu-btn"
-          class="focus-outline self-end p-2 sm:hidden relative z-[60]"
+          class="focus-outline relative z-[60] self-end p-2 sm:hidden"
           aria-label="Open Menu"
           aria-expanded="false"
           aria-controls="menu-items"
@@ -175,10 +183,10 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
         "hidden", // 移动端默认隐藏
         "my-2 flex flex-wrap gap-2",
         "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
-        "[&>li>a]:text-[var(--nav-link)] [&>li>a]:text-sm",
+        "[&>li>a]:text-sm [&>li>a]:text-[var(--nav-link)]",
         "sm:flex sm:gap-x-5 sm:gap-y-0", // 桌面端横向展开
         // 移动端全屏居中垂直排列
-        "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:gap-1 max-sm:my-0 max-sm:mx-0",
+        "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:mx-0 max-sm:my-0 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:gap-1",
       ]}
     >
       {
@@ -202,34 +210,22 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
         </a>
       </li>
       <li>
-        <a
-          href="/tags"
-          class:list={{ "active-nav": isActive("/tags") }}
-        >
+        <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
           {_t.tags.title}
         </a>
       </li>
       <li>
-        <a
-          href="/links"
-          class:list={{ "active-nav": isActive("/links") }}
-        >
+        <a href="/links" class:list={{ "active-nav": isActive("/links") }}>
           {_t.links.title}
         </a>
       </li>
       <li>
-        <a
-          href="/about"
-          class:list={{ "active-nav": isActive("/about") }}
-        >
+        <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
           {_t.about.title}
         </a>
       </li>
       <li>
-        <a
-          href="/search"
-          class:list={{ "active-nav": isActive("/search") }}
-        >
+        <a href="/search" class:list={{ "active-nav": isActive("/search") }}>
           {_t.search.title}
         </a>
       </li>
@@ -238,13 +234,17 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
           <li class="flex items-center">
             <button
               id="theme-btn"
-              class="text-sm focus-outline block px-4 py-3 sm:px-0 sm:py-1 hover:text-accent text-[var(--nav-link)] font-medium"
+              class="focus-outline block px-4 py-3 text-sm font-medium text-[var(--nav-link)] hover:text-accent sm:px-0 sm:py-1"
               title={_t.common.themeBtn}
               aria-label="auto"
               aria-live="polite"
             >
-              <span class="transition-all dark:hidden whitespace-nowrap">{_t.common.dark}</span>
-              <span class="transition-all hidden dark:inline whitespace-nowrap">{_t.common.light}</span>
+              <span class="whitespace-nowrap transition-all dark:hidden">
+                {_t.common.dark}
+              </span>
+              <span class="hidden whitespace-nowrap transition-all dark:inline">
+                {_t.common.light}
+              </span>
             </button>
           </li>
         )
@@ -266,7 +266,9 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
    */
   function toggleNav() {
     const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items") as HTMLElement | null;
+    const menuItems = document.querySelector(
+      "#menu-items"
+    ) as HTMLElement | null;
     const menuIcon = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
     const overlay = document.querySelector("#mobile-nav-overlay");
@@ -308,7 +310,7 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
     overlay.addEventListener("click", closeMenu);
 
     // 点击导航菜单空白区域关闭（点击 ul 本身而非子元素）
-    menuItems.addEventListener("click", (e) => {
+    menuItems.addEventListener("click", e => {
       if (e.target === menuItems) {
         closeMenu();
       }
@@ -340,7 +342,9 @@ else if (isActive("/links")) mobileTitle = _t.links.title;
     /* 动画：与页面切换动画时长一致 */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition:
+      opacity 0.8s ease,
+      visibility 0.8s ease;
   }
 
   .mobile-nav-overlay.active {

@@ -32,11 +32,7 @@ export interface Props {
   modDatetime: string | Date | undefined | null;
 }
 
-const {
-  pubDatetime,
-  modDatetime,
-  class: className = "",
-} = Astro.props;
+const { pubDatetime, modDatetime, class: className = "" } = Astro.props;
 
 // 解析日期对象
 const pub = new Date(pubDatetime);
@@ -76,6 +72,8 @@ const relativeTime = formatRelativeTime(latest);
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>
   <span class:list={["text-sm", { "sm:text-xs": true }]}>
-    <time class="text-[var(--posts-list-time-color)]" datetime={iso}>{relativeTime}</time>
+    <time class="text-[var(--posts-list-time-color)]" datetime={iso}
+      >{relativeTime}</time
+    >
   </span>
 </div>

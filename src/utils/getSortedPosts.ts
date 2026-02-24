@@ -31,17 +31,19 @@ import postFilter from "./postFilter";
  * @returns 过滤并排序后的文章数组
  */
 const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
-  return posts
-    // 步骤1：过滤掉草稿和未到发布时间的文章
-    .filter(postFilter)
-    // 步骤2：按时间降序排序
-    .sort(
-      (a, b) =>
-        // 获取文章B的时间（更新时间或发布时间），转换为秒级时间戳
-        Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
-        // 获取文章A的时间（更新时间或发布时间），转换为秒级时间戳
-        Math.floor(new Date(a.data.updated ?? a.data.date).getTime() / 1000)
-    );
+  return (
+    posts
+      // 步骤1：过滤掉草稿和未到发布时间的文章
+      .filter(postFilter)
+      // 步骤2：按时间降序排序
+      .sort(
+        (a, b) =>
+          // 获取文章B的时间（更新时间或发布时间），转换为秒级时间戳
+          Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
+          // 获取文章A的时间（更新时间或发布时间），转换为秒级时间戳
+          Math.floor(new Date(a.data.updated ?? a.data.date).getTime() / 1000)
+      )
+  );
 };
 
 export default getSortedPosts;

@@ -93,7 +93,7 @@
           // 清理残留的DOM元素（侧边栏、弹窗等）
           document
             .querySelectorAll(".atk-sidebar, .atk-layer-wrap, .atk-layer")
-            .forEach((el) => el.remove());
+            .forEach(el => el.remove());
           window.artalkInstance = null;
           console.log("Artalk 实例已销毁");
         } catch (err) {
@@ -184,8 +184,8 @@
       }
 
       // 创建新的观察器
-      window._artalkThemeObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
+      window._artalkThemeObserver = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
           if (
             mutation.type === "attributes" &&
             mutation.attributeName === "data-theme"
@@ -208,8 +208,8 @@
       // 额外监听主题按钮变化（作为备选方案）
       const themeBtn = document.querySelector("#theme-btn");
       if (themeBtn && !window._artalkBtnObserver) {
-        window._artalkBtnObserver = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
+        window._artalkBtnObserver = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
             if (mutation.attributeName === "aria-label") {
               console.log("检测到主题按钮变化");
               setTimeout(() => {

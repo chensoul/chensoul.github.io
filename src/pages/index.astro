@@ -52,10 +52,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             </h2>
             <ul>
               {featuredPosts.map(data => (
-                <Card
-                  variant="h3"
-                  {...data}
-                />
+                <Card variant="h3" {...data} />
               ))}
             </ul>
           </section>
@@ -74,12 +71,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             {recentPosts.map(
               (data, index) =>
                 // 只显示前 N 篇文章（由 SITE.postPerIndex 控制）
-                index < SITE.postPerIndex && (
-                  <Card
-                    variant="h3"
-                    {...data}
-                  />
-                )
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
             )}
           </ul>
         </section>

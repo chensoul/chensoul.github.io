@@ -100,7 +100,7 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     photosuite({
-      scope: '#article',
+      scope: "#article",
       imageBase: "https://cos.lhasa.icu/dist/images/",
       fileDir: true,
     }),

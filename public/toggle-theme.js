@@ -8,7 +8,7 @@ const primaryColorScheme = "";
 
 // 自动切换时间配置 (24小时制)
 const DARK_START_HOUR = 14; // 晚上 14 点开始
-const DARK_END_HOUR = 7;    // 早上 7 点结束
+const DARK_END_HOUR = 7; // 早上 7 点结束
 
 // 调试模式配置
 const DEBUG_THEME = false;
@@ -16,16 +16,28 @@ const DEBUG_THEME = false;
 const __memoryStore = new Map();
 
 function safeGet(key) {
-  try { return localStorage.getItem(key); } catch { return __memoryStore.get(key) ?? null; }
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return __memoryStore.get(key) ?? null;
+  }
 }
 function safeSet(key, value) {
-  try { localStorage.setItem(key, value); } catch { __memoryStore.set(key, value); }
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    __memoryStore.set(key, value);
+  }
 }
 function safeRemove(key) {
-  try { localStorage.removeItem(key); } catch { __memoryStore.delete(key); }
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    __memoryStore.delete(key);
+  }
 }
 function normalizeTheme(v) {
-  return v === "dark" ? "dark" : (v === "light" ? "light" : null);
+  return v === "dark" ? "dark" : v === "light" ? "light" : null;
 }
 // =======================================================================
 
@@ -44,9 +56,9 @@ function handleThemeError(error, context) {
   }
 }
 
-let autoThemeTimer = null;        // 自动主题检查定时器
-let systemThemeListener = null;   // 系统主题变化监听器
-let systemThemeMql = null;        // 重要 BUG 修复：缓存同一 MediaQueryList 实例
+let autoThemeTimer = null; // 自动主题检查定时器
+let systemThemeListener = null; // 系统主题变化监听器
+let systemThemeMql = null; // 重要 BUG 修复：缓存同一 MediaQueryList 实例
 
 function getCurrentThemeFromStorage() {
   return normalizeTheme(safeGet("theme"));
@@ -63,7 +75,9 @@ function getUserSetThemeDate() {
 function shouldUseDarkThemeByTime() {
   try {
     const now = new Date();
-    const shanghaiTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
+    const shanghaiTime = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" })
+    );
     const hour = shanghaiTime.getHours();
     return hour >= DARK_START_HOUR || hour < DARK_END_HOUR;
   } catch (error) {
@@ -77,16 +91,26 @@ function shouldUseDarkThemeByTime() {
 function getTodayDateString() {
   try {
     const now = new Date();
-    const shanghaiTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
-    return shanghaiTime.getFullYear() + '-' +
-      String(shanghaiTime.getMonth() + 1).padStart(2, '0') + '-' +
-      String(shanghaiTime.getDate()).padStart(2, '0');
+    const shanghaiTime = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" })
+    );
+    return (
+      shanghaiTime.getFullYear() +
+      "-" +
+      String(shanghaiTime.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(shanghaiTime.getDate()).padStart(2, "0")
+    );
   } catch (error) {
     console.warn("时区转换失败，使用本地时间:", error);
     const today = new Date();
-    return today.getFullYear() + '-' +
-      String(today.getMonth() + 1).padStart(2, '0') + '-' +
-      String(today.getDate()).padStart(2, '0');
+    return (
+      today.getFullYear() +
+      "-" +
+      String(today.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(today.getDate()).padStart(2, "0")
+    );
   }
 }
 
@@ -114,7 +138,7 @@ function getPreferTheme() {
       currentTheme,
       isValidToday: isUserPreferenceValidToday(),
       shouldUseDark: shouldUseDarkThemeByTime(),
-      primaryScheme: primaryColorScheme
+      primaryScheme: primaryColorScheme,
     });
 
     if (isUserPreferenceValidToday() && currentTheme) {
@@ -132,7 +156,9 @@ function getPreferTheme() {
       return primaryColorScheme;
     }
 
-    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const systemDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const systemTheme = systemDark ? "dark" : "light";
     debugLog("使用系统偏好:", systemTheme);
     return systemTheme;
@@ -151,7 +177,10 @@ function setPreference(userManualSet = false) {
       safeSet("userSetTheme", "true");
       safeSet("userSetThemeDate", getTodayDateString());
       console.log(`用户手动设置主题为: ${themeValue}，当天有效`);
-      debugLog("用户手动设置主题", { theme: themeValue, date: getTodayDateString() });
+      debugLog("用户手动设置主题", {
+        theme: themeValue,
+        date: getTodayDateString(),
+      });
     } else {
       debugLog("自动设置主题", { theme: themeValue });
     }
@@ -242,7 +271,7 @@ window.onload = () => {
       // 检查 View Transitions 支持和减弱动画设置
       if (
         !document.startViewTransition ||
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
         themeValue = themeValue === "light" ? "dark" : "light";
         setPreference(true);
@@ -258,12 +287,12 @@ window.onload = () => {
 
       transition.ready.then(() => {
         const clipPath = [
-          'inset(0 0 100% 0)', // 从上往下，初始状态底部被完全裁剪
-          'inset(0 0 0 0)',    // 结束状态完全显示
+          "inset(0 0 100% 0)", // 从上往下，初始状态底部被完全裁剪
+          "inset(0 0 0 0)", // 结束状态完全显示
         ];
 
         // 注入临时样式以禁用默认动画
-        const style = document.createElement('style');
+        const style = document.createElement("style");
         style.innerHTML = `
           ::view-transition-old(root),
           ::view-transition-new(root) {
@@ -340,9 +369,9 @@ let __relativeTimer = null;
 let __relativeObserver = null;
 
 function __updateRelativeTimes() {
-  const nodes = document.querySelectorAll('time[datetime]');
+  const nodes = document.querySelectorAll("time[datetime]");
   nodes.forEach(el => {
-    const dt = el.getAttribute('datetime');
+    const dt = el.getAttribute("datetime");
     if (!dt) return;
     const date = new Date(dt);
     if (isNaN(date.getTime())) return;
@@ -351,17 +380,18 @@ function __updateRelativeTimes() {
 }
 
 function __setupRelativeObserver() {
-  if (typeof MutationObserver === 'undefined') return;
+  if (typeof MutationObserver === "undefined") return;
   if (__relativeObserver) __relativeObserver.disconnect();
   __relativeObserver = new MutationObserver(mutations => {
     let shouldUpdate = false;
     for (const m of mutations) {
-      if (m.type === 'childList') {
+      if (m.type === "childList") {
         m.addedNodes.forEach(node => {
           if (node.nodeType === 1) {
-            const el = /** @type {Element} */(node);
-            if (el.matches && el.matches('time[datetime]')) shouldUpdate = true;
-            if (el.querySelector && el.querySelector('time[datetime]')) shouldUpdate = true;
+            const el = /** @type {Element} */ (node);
+            if (el.matches && el.matches("time[datetime]")) shouldUpdate = true;
+            if (el.querySelector && el.querySelector("time[datetime]"))
+              shouldUpdate = true;
           }
         });
       }
@@ -382,6 +412,6 @@ function setupRelativeTime() {
   __setupRelativeObserver();
 }
 
-document.addEventListener('DOMContentLoaded', setupRelativeTime);
-document.addEventListener('astro:page-load', setupRelativeTime);
-document.addEventListener('astro:after-swap', setupRelativeTime);
+document.addEventListener("DOMContentLoaded", setupRelativeTime);
+document.addEventListener("astro:page-load", setupRelativeTime);
+document.addEventListener("astro:after-swap", setupRelativeTime);

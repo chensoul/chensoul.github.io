@@ -105,14 +105,16 @@ const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
 
 const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
-  currentPostIndex < allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
+  currentPostIndex < allPosts.length - 1
+    ? allPosts[currentPostIndex + 1]
+    : null;
 ---
 
 <Layout {...layoutProps}>
   <Header />
 
   <!-- 文章标题与发布日期（不在 main 内） -->
-  <section class="mt-4 mb-2 text-center mx-auto w-full max-w-4xl">
+  <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
     <h1 class="text-2xl font-semibold">{title}</h1>
     <p class="mt-1 text-sm text-accent/80">{publishDisplayDate}</p>
   </section>
@@ -149,14 +151,14 @@ const nextPost =
     <hr class="my-6" />
 
     <!-- Previous/Next Post Buttons -->
-    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2 my-6">
+    <div
+      data-pagefind-ignore
+      class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2"
+    >
       <!-- 上一篇 -->
       {
         prevPost && (
-          <a
-            href={prevPost.path}
-            class="flex w-full gap-1 hover:opacity-75"
-          >
+          <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
             <IconChevronLeft class="inline-block flex-none" />
             <div>
               <div class="text-sm text-accent/85">{prevPost.title}</div>
@@ -185,7 +187,10 @@ const nextPost =
   </main>
 
   <!-- 侧边栏：显示文章目录 -->
-  <aside id="sidebar" class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}>
+  <aside
+    id="sidebar"
+    class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
+  >
     {
       toc && (
         <>
@@ -239,8 +244,7 @@ const nextPost =
       initTocbot();
     } else {
       const script = document.createElement("script");
-      script.src =
-        "/tocbot/tocbot.min.js";
+      script.src = "/tocbot/tocbot.min.js";
       script.crossOrigin = "anonymous";
       script.referrerPolicy = "no-referrer";
       script.onload = initTocbot;

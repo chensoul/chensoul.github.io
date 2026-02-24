@@ -46,7 +46,9 @@ let categories = getUniqueCategories(posts);
  */
 const categoryLatestPost = new Map<string, string>();
 categories.forEach(({ categoryName }) => {
-  const latestPost = sortedPosts.find(post => post.data.categories.includes(categoryName));
+  const latestPost = sortedPosts.find(post =>
+    post.data.categories.includes(categoryName)
+  );
   if (latestPost) {
     categoryLatestPost.set(categoryName, latestPost.data.title);
   }
@@ -57,38 +59,48 @@ categories.forEach(({ categoryName }) => {
   <Header />
   <Main pageTitle="" pageDesc={_t.categories.desc}>
     <section class="space-y-6">
-      <!-- 分类网格列表 -->
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1" aria-label="分类列表">
+      <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2" aria-label="分类列表">
         {
           categories.map(({ category, categoryName, count }, i) => (
-            <li class={`categories-item ${i >= SITE.postPerIndex ? 'hidden' : ''}`}>
-              <a href={`/categories/${category}`} aria-label={`查看 ${categoryName} 分类`} class="group block overflow-hidden relative">
-                <!-- 封面图容器（16:9 比例） -->
-                <div class="w-full overflow-hidden" style="aspect-ratio: 16 / 9;">
-                  {
-                    (getCategoryImageUrl(category) || getCategoryImageUrl(categoryName)) ? (
-                      <img
-                        src={getCategoryImageUrl(category) || getCategoryImageUrl(categoryName)}
-                        alt={`${categoryName} 封面图`}
-                        loading="lazy"
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      // 无封面图时显示占位背景
-                      <div class="w-full h-full bg-foreground/20" />
-                    )
-                  }
+            <li
+              class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}
+            >
+              <a
+                href={`/categories/${category}`}
+                aria-label={`查看 ${categoryName} 分类`}
+                class="group relative block overflow-hidden"
+              >
+                <div
+                  class="w-full overflow-hidden"
+                  style="aspect-ratio: 16 / 9;"
+                >
+                  {getCategoryImageUrl(category) ||
+                  getCategoryImageUrl(categoryName) ? (
+                    <img
+                      src={
+                        getCategoryImageUrl(category) ||
+                        getCategoryImageUrl(categoryName)
+                      }
+                      alt={`${categoryName} 封面图`}
+                      loading="lazy"
+                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    // 无封面图时显示占位背景
+                    <div class="h-full w-full bg-foreground/20" />
+                  )}
                 </div>
                 {/* 渐变遮罩 */}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 {/* 文字内容 */}
-                <div class="absolute bottom-0 left-0 right-0 p-4">
-                  <!-- 分类名称和文章数量 -->
-                  <span class="text-xs text-white/80 block mb-1" style={`view-transition-name: ${category}`}>
+                <div class="absolute right-0 bottom-0 left-0 p-4">
+                  <span
+                    class="mb-1 block text-xs text-white/80"
+                    style={`view-transition-name: ${category}`}
+                  >
                     {categoryName}（{count}篇）
                   </span>
-                  <!-- 最新文章标题 -->
-                  <h3 class="text-sm text-white leading-tight line-clamp-1">
+                  <h3 class="line-clamp-1 text-sm leading-tight text-white">
                     {categoryLatestPost.get(categoryName) || categoryName}
                   </h3>
                 </div>
@@ -97,8 +109,12 @@ categories.forEach(({ categoryName }) => {
           ))
         }
       </ul>
-      <!-- 懒加载哨兵元素 -->
-      <div id="categories-sentinel" data-init={SITE.postPerIndex} data-chunk={SITE.postPerPage}></div>
+      <div
+        id="categories-sentinel"
+        data-init={SITE.postPerIndex}
+        data-chunk={SITE.postPerPage}
+      >
+      </div>
     </section>
   </Main>
   <Footer />
@@ -106,15 +122,19 @@ categories.forEach(({ categoryName }) => {
 
 <script is:inline src="/lazy-list.js"></script>
 <script is:inline>
-  function boot(){
+  function boot() {
     window.setupLazyList({
-      sentinelId: 'categories-sentinel',
-      itemSelector: '.categories-item',
-      artalk: { enabled: false }
+      sentinelId: "categories-sentinel",
+      itemSelector: ".categories-item",
+      artalk: { enabled: false },
     });
   }
   // View Transitions 导航后启动
-  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener("astro:after-swap", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
   // 初始加载时启动
-  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener("astro:page-load", () => {
+    if (typeof window.setupLazyList === "function") boot();
+  });
 </script>

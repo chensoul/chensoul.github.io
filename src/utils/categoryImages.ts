@@ -30,16 +30,16 @@ export type CategoryImageMap = Record<string, string>;
  * 图片存储在腾讯云 COS CDN 上
  */
 export const CATEGORY_IMAGE_URLS: CategoryImageMap = {
-  "技术": "https://cos.lhasa.icu/dist/images/categories/3ca.jpg",
-  "生活": "https://cos.lhasa.icu/dist/images/categories/c7a.jpg",
-  "骑行": "https://cos.lhasa.icu/dist/images/categories/008.jpg",
-  "摄影": "https://cos.lhasa.icu/dist/images/categories/d50.jpg",
-  "徒步": "https://cos.lhasa.icu/dist/images/categories/4e7.jpg",
-  "跑步": "https://cos.lhasa.icu/dist/images/categories/e08.jpg",
-  "阅读": "https://cos.lhasa.icu/dist/images/categories/f70.jpg",
-  "野钓": "https://cos.lhasa.icu/dist/images/categories/8f5.jpg",
-  "年报": "https://cos.lhasa.icu/dist/images/categories/afb.jpg",
-  "创业": "https://cos.lhasa.icu/dist/images/categories/a20.jpg",
+  技术: "https://cos.lhasa.icu/dist/images/categories/3ca.jpg",
+  生活: "https://cos.lhasa.icu/dist/images/categories/c7a.jpg",
+  骑行: "https://cos.lhasa.icu/dist/images/categories/008.jpg",
+  摄影: "https://cos.lhasa.icu/dist/images/categories/d50.jpg",
+  徒步: "https://cos.lhasa.icu/dist/images/categories/4e7.jpg",
+  跑步: "https://cos.lhasa.icu/dist/images/categories/e08.jpg",
+  阅读: "https://cos.lhasa.icu/dist/images/categories/f70.jpg",
+  野钓: "https://cos.lhasa.icu/dist/images/categories/8f5.jpg",
+  年报: "https://cos.lhasa.icu/dist/images/categories/afb.jpg",
+  创业: "https://cos.lhasa.icu/dist/images/categories/a20.jpg",
 };
 
 /**

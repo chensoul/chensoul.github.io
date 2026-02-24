@@ -43,7 +43,7 @@ const iso = latest.toISOString();
     class="flex flex-col space-x-4 rounded-md p-2 hover:bg-foreground/5 sm:flex-row"
   >
     <!-- 日期 -->
-    <time class="mr-4 text-accent/80 w-24" datetime={iso}></time>
+    <time class="mr-4 w-24 text-accent/80" datetime={iso}></time>
     <!-- 标题（溢出省略） -->
     <span class="truncate overflow-hidden whitespace-nowrap">
       {title}

@@ -161,9 +161,9 @@ const getDescription = (markdownContent: string): string => {
    * 3. 重新拼接成字符串
    */
   const lines = markdownContent
-    .split(/\r?\n/)  // 兼容 Unix (\n) 和 Windows (\r\n) 换行符
-    .slice(0, SITE.genDescriptionMaxLines);  // 只取前 N 行
-  const processedContent = lines.join("");  // 拼接回字符串（不带换行符）
+    .split(/\r?\n/) // 兼容 Unix (\n) 和 Windows (\r\n) 换行符
+    .slice(0, SITE.genDescriptionMaxLines); // 只取前 N 行
+  const processedContent = lines.join(""); // 拼接回字符串（不带换行符）
 
   /**
    * 步骤2：查找 more 标签
@@ -186,8 +186,8 @@ const getDescription = (markdownContent: string): string => {
    * - 符合文本摘要的常见展示方式
    */
   let short = moreTagMatch
-    ? moreTagMatch[1]  // 使用 more 标签之前的内容
-    : processedContent.substring(0, SITE.genDescriptionCount) + " ...";  // 截取前 N 个字符
+    ? moreTagMatch[1] // 使用 more 标签之前的内容
+    : processedContent.substring(0, SITE.genDescriptionCount) + " ..."; // 截取前 N 个字符
 
   /**
    * 步骤4：移除 Markdown 语法

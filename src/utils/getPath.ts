@@ -63,10 +63,10 @@ export function getPath(
   // ID 可能包含目录，如 "tech/article"，需要提取最后一段（文件名）
   const blogId = id.split("/");
   const fileName = blogId.length > 0 ? blogId.slice(-1)[0] : id;
-  
+
   // 从文件名中提取 slug（去掉 .md 或 .mdx 扩展名）
   let slug = fileName.replace(/\.(md|mdx)$/, "");
-  
+
   // 如果文件名以日期格式开头（YYYY-MM-DD-），去掉日期前缀
   const datePrefixMatch = slug.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/);
   if (datePrefixMatch) {
@@ -79,10 +79,10 @@ export function getPath(
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const dd = String(d.getDate()).padStart(2, "0");
-    
+
     // 对 slug 进行 slugify 处理
     const slugifiedSlug = slugifyStr(slug);
-    
+
     return [basePath, yyyy, mm, dd, slugifiedSlug].join("/");
   }
 

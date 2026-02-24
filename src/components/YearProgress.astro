@@ -16,29 +16,38 @@
  * - 被 Header.astro 导入，在导航栏下方显示
  * - 使用 CSS 变量 --year-progress-fill 控制颜色
  */
-
 ---
-<div id="year-progress" class="group relative mx-auto w-full max-w-4xl mb-5 sm:mb-0">
+
+<div
+  id="year-progress"
+  class="group relative mx-auto mb-5 w-full max-w-4xl sm:mb-0"
+>
   <!-- 进度条背景 -->
   <div class="h-[3px] w-full rounded bg-border/70" aria-hidden="true">
     <!-- 进度条填充（宽度由 JS 动态设置） -->
-    <div id="year-progress-fill" class="h-[3px] w-0 rounded" style="background-color: var(--year-progress-fill)"></div>
+    <div
+      id="year-progress-fill"
+      class="h-[3px] w-0 rounded"
+      style="background-color: var(--year-progress-fill)"
+    >
+    </div>
   </div>
   <!-- 标签遮罩（用于隐藏进度条） -->
   <span
     id="year-progress-cover"
-    class="absolute left-0 top-1/2 -translate-y-1/2 h-[3px] rounded bg-background pointer-events-none opacity-0 transition-opacity duration-[1000ms] ease-out z-10"
+    class="pointer-events-none absolute top-1/2 left-0 z-10 h-[3px] -translate-y-1/2 rounded bg-background opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <!-- 百分比标签 -->
   <span
     id="year-progress-label"
-    class="absolute left-0 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs text-accent/70 opacity-0 transition-opacity duration-[1000ms] ease-out pointer-events-none z-20"
+    class="pointer-events-none absolute top-1/2 left-0 z-20 -translate-y-1/2 text-xs whitespace-nowrap text-accent/70 opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <!-- 点击弹窗（剩余天数） -->
   <div
     id="year-progress-popup"
-    class="absolute left-0 top-0 -translate-y-[calc(100%+8px)] whitespace-nowrap text-xs bg-background text-foreground border border-border rounded px-2 py-1 shadow opacity-0 transition-opacity duration-[1000ms] ease-out pointer-events-none z-30"
-  ></div>
+    class="pointer-events-none absolute top-0 left-0 z-30 -translate-y-[calc(100%+8px)] rounded border border-border bg-background px-2 py-1 text-xs whitespace-nowrap text-foreground opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
+  >
+  </div>
 </div>
 
 <script is:inline>
@@ -58,22 +67,22 @@
     // 获取 DOM 元素
     function getElements() {
       return {
-        container: document.getElementById('year-progress'),
-        fill: document.getElementById('year-progress-fill'),
-        label: document.getElementById('year-progress-label'),
-        cover: document.getElementById('year-progress-cover'),
-        popup: document.getElementById('year-progress-popup'),
+        container: document.getElementById("year-progress"),
+        fill: document.getElementById("year-progress-fill"),
+        label: document.getElementById("year-progress-label"),
+        cover: document.getElementById("year-progress-cover"),
+        popup: document.getElementById("year-progress-popup"),
       };
     }
 
     // 显示/隐藏元素
     function show(el) {
       if (!el) return;
-      el.classList.add('duration-300', 'opacity-100');
+      el.classList.add("duration-300", "opacity-100");
     }
     function hide(el) {
       if (!el) return;
-      el.classList.remove('duration-300', 'opacity-100');
+      el.classList.remove("duration-300", "opacity-100");
     }
 
     // 定位标签和弹窗
@@ -82,18 +91,18 @@
       const lw = els.label.getBoundingClientRect().width || 0;
       const pw = els.popup.getBoundingClientRect().width || 0;
       const gap = 3;
-      els.label.style.left = Math.min(cw * progress + gap, cw - lw) + 'px';
+      els.label.style.left = Math.min(cw * progress + gap, cw - lw) + "px";
       els.cover.style.left = els.label.style.left;
-      els.cover.style.width = lw + 'px';
-      els.popup.style.left = Math.min(cw * progress + gap, cw - pw) + 'px';
+      els.cover.style.width = lw + "px";
+      els.popup.style.left = Math.min(cw * progress + gap, cw - pw) + "px";
     }
 
     // 设置进度（无动画）
     function setProgress(els, progress) {
-      const text = (progress * 100).toFixed(1) + '%';
+      const text = (progress * 100).toFixed(1) + "%";
       els.fill.style.width = text;
       els.label.textContent = text;
-      els.container.setAttribute('title', text);
+      els.container.setAttribute("title", text);
       positionLabel(els, progress);
     }
 
@@ -103,8 +112,8 @@
       function step(ts) {
         const t = Math.min(1, (ts - startTs) / ANIMATION_DURATION);
         const current = target * t;
-        els.fill.style.width = (current * 100).toFixed(3) + '%';
-        els.label.textContent = (current * 100).toFixed(1) + '%';
+        els.fill.style.width = (current * 100).toFixed(3) + "%";
+        els.label.textContent = (current * 100).toFixed(1) + "%";
         positionLabel(els, current);
         if (t < 1) {
           requestAnimationFrame(step);
@@ -121,14 +130,14 @@
       if (els.container.dataset.bound) return;
       let hoverTimer = null;
 
-      els.container.addEventListener('mouseenter', () => {
+      els.container.addEventListener("mouseenter", () => {
         if (hoverTimer) clearTimeout(hoverTimer);
         show(els.label);
         show(els.cover);
         positionLabel(els, getProgress());
       });
 
-      els.container.addEventListener('mouseleave', () => {
+      els.container.addEventListener("mouseleave", () => {
         if (hoverTimer) clearTimeout(hoverTimer);
         hoverTimer = setTimeout(() => {
           hide(els.label);
@@ -136,7 +145,7 @@
         }, HOVER_HIDE_DELAY);
       });
 
-      els.container.addEventListener('click', () => {
+      els.container.addEventListener("click", () => {
         const now = new Date();
         const end = new Date(now.getFullYear() + 1, 0, 1);
         const daysLeft = Math.ceil((end - now) / 86400000);
@@ -144,16 +153,20 @@
         show(els.popup);
         positionLabel(els, getProgress());
         if (window.__ypHideTimer) clearTimeout(window.__ypHideTimer);
-        window.__ypHideTimer = setTimeout(() => hide(els.popup), LABEL_HIDE_DELAY);
+        window.__ypHideTimer = setTimeout(
+          () => hide(els.popup),
+          LABEL_HIDE_DELAY
+        );
       });
 
-      els.container.dataset.bound = '1';
+      els.container.dataset.bound = "1";
     }
 
     // 初始化（带动画）
     function init() {
       const els = getElements();
-      if (!els.container || !els.fill || !els.label || !els.cover || !els.popup) return;
+      if (!els.container || !els.fill || !els.label || !els.cover || !els.popup)
+        return;
 
       const target = calcProgress();
       let currentProgress = 0;
@@ -173,7 +186,10 @@
       const updateProgress = () => {
         const startTs = performance.now();
         const interval = setInterval(() => {
-          const t = Math.min(1, (performance.now() - startTs) / ANIMATION_DURATION);
+          const t = Math.min(
+            1,
+            (performance.now() - startTs) / ANIMATION_DURATION
+          );
           currentProgress = target * t;
           if (t >= 1) clearInterval(interval);
         }, 16);
@@ -186,7 +202,8 @@
     // 页面切换时更新（无动画）
     function update() {
       const els = getElements();
-      if (!els.container || !els.fill || !els.label || !els.cover || !els.popup) return;
+      if (!els.container || !els.fill || !els.label || !els.cover || !els.popup)
+        return;
 
       const target = calcProgress();
       setProgress(els, target);
@@ -195,6 +212,6 @@
 
     // 首次加载执行动画，页面切换不执行动画
     init();
-    document.addEventListener('astro:after-swap', update);
+    document.addEventListener("astro:after-swap", update);
   })();
 </script>

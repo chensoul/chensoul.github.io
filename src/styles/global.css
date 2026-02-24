@@ -189,7 +189,7 @@ html[data-theme="dark"] {
 
 /* WebKit (Chrome, Edge, Safari, Opera) */
 *::-webkit-scrollbar {
-  width: 3px;   /* from 6px → 3px: extremely thin */
+  width: 3px; /* from 6px → 3px: extremely thin */
   height: 3px;
 }
 
@@ -218,15 +218,15 @@ html[data-theme="dark"] {
 /* 细滚动条 WebKit */
 .expressive-code pre::-webkit-scrollbar {
   width: 3px !important;
-  height: 3px!important;
+  height: 3px !important;
 }
 .expressive-code pre::-webkit-scrollbar-thumb {
-  border-radius: 3px!important;
+  border-radius: 3px !important;
 }
 
 /* Firefox */
 .expressive-code pre {
-  scrollbar-width: thin!important;
+  scrollbar-width: thin !important;
 }
 
 /* 自定义 View Transitions 动画时长 */
