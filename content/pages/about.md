@@ -8,6 +8,8 @@ toc: false
 comments: false
 ---
 
+> 更新时间：2026-02-24
+
 ## 关于
 
 > 健康，爱情和使命，按照这个顺序，其它的都不重要。
@@ -15,9 +17,9 @@ comments: false
 
 我是 ChenSoul，一个来自中国武汉的开发者，喜欢编程、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
-## 博客历史
+## 更新
 
-- 2026-02-24 » 从 hugo 迁移到 astro 构建博客，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题，并做了一些修改。
+- 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题，并做了一些修改。
 
 ## LICENSE
 

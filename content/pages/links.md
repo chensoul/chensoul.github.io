@@ -8,6 +8,8 @@ toc: false
 comments: false
 ---
 
+> 更新时间：2026-02-24
+ 
 本页面收集了一些我觉得有趣的博客、播客、书籍等资源链接，方便我无聊的时候时不时地看看。我觉得其他人可能也会感兴趣。
 
 ## 文章
@@ -21,6 +23,16 @@ comments: false
 ## 书籍
 
 从 2026 年开始，记录每周阅读的书籍。
+
+## 博客
+
+- [SivaLabs](https://www.sivalabs.in/blog/) Java、Spring Boot、微服务、云计算和DevOps教程
+- [Piotr's TechBlog](https://piotrminkowski.com/) Java, Spring, Kotlin, microservices, Kubernetes, containers
+- [Frost's Blog](https://frostming.com) 一名 Python 开发工程师，坐标深圳
+- [游钓四方](https://blog.lhasa.icu/)
+- [拾月](https://www.skyue.com/) PC互联网遗民
+- [Yiran's Blog](https://zdyxry.github.io/)
+
 
 ## 工具
 
