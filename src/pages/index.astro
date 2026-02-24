@@ -1,0 +1,113 @@
+---
+/**
+ * 站点首页
+ *
+ * @fileoverview 显示精选文章和最新文章
+ *
+ * 核心逻辑：
+ * 1. 获取所有文章并排序（使用 getSortedPosts）
+ * 2. 分离精选文章（featured=true）和普通文章
+ * 3. 精选文章优先显示，然后显示最新文章
+ * 4. 首页只显示前 N 篇（由 SITE.postPerIndex 控制）
+ * 5. 底部提供"查看所有文章"链接
+ *
+ * 依赖关系：
+ * - 被根路径 "/" 访问
+ * - 使用 Card 组件显示文章卡片
+ * - 使用 getSortedPosts 进行排序
+ */
+
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+
+// 获取所有文章
+const posts = await getCollection("blog");
+
+// 按时间排序
+const sortedPosts = getSortedPosts(posts);
+
+// 分离精选文章和普通文章
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" data-layout="index">
+    <!-- 精选文章区域 -->
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured">
+            <h2 class="text-2xl font-semibold tracking-wide">
+              {/* 标题可通过 slot 或 props 自定义 */}
+            </h2>
+            <ul>
+              {featuredPosts.map(data => (
+                <Card
+                  variant="h3"
+                  {...data}
+                />
+              ))}
+            </ul>
+          </section>
+        </>
+      )
+    }
+
+    <!-- 最新文章区域 -->
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts">
+          <h2 class="text-2xl font-semibold tracking-wide">
+            {/* 标题可通过 slot 或 props 自定义 */}
+          </h2>
+          <ul>
+            {recentPosts.map(
+              (data, index) =>
+                // 只显示前 N 篇文章（由 SITE.postPerIndex 控制）
+                index < SITE.postPerIndex && (
+                  <Card
+                    variant="h3"
+                    {...data}
+                  />
+                )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <!-- 查看所有文章按钮 -->
+    <div class="text-center">
+      <LinkButton href="/posts">
+        {_t.common.allPosts}
+        <IconArrowRight class="inline-block" />
+      </LinkButton>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  /**
+   * 存储首页 URL 到 sessionStorage
+   *
+   * 当用户从首页点击文章后，返回按钮会带回首页
+   */
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>

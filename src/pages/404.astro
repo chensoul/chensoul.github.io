@@ -1,0 +1,83 @@
+---
+/**
+ * 404 错误页
+ *
+ * @fileoverview 显示当用户访问不存在的页面时
+ *
+ * 核心逻辑：
+ * 1. 显示 404 提示信息
+ * 2. 鼠标悬停时显示动画图片（从静态图切换到 GIF）
+ * 3. 提供返回首页的按钮
+ *
+ * 依赖关系：
+ * - 当路由匹配失败时自动显示
+ * - 使用 i18n/lang.ts 获取文案和图片 URL
+ */
+
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+---
+
+<Layout title={`404 Not Found | ${SITE.title}`}>
+  <Header />
+  <main
+    id="main-content"
+    class="mx-auto w-full max-w-app px-4 pb-12"
+  >
+    <div class="mb-14 flex flex-col items-center justify-center">
+      <!-- 图片容器：包含静态图和动画图 -->
+      <div id="image-container" class="relative w-[350px] h-[350px]">
+        <!-- 静态图片（默认显示） -->
+        <img
+          id="static-image"
+          src={_t.notFoundPage.staticImages}
+          alt="404 Not Found"
+          class="w-full h-full object-contain absolute top-0 left-0 z-10"
+        />
+        <!-- 动画图片（鼠标悬停时显示） -->
+        <img
+          id="animated-image"
+          src={_t.notFoundPage.images}
+          alt="404 Not Found"
+          class="w-full h-full object-contain absolute top-0 left-0 hidden"
+        />
+      </div>
+      <!-- 错误提示文本 -->
+      <p class="mt-4 text-2xl sm:text-3xl">{_t.notFoundPage.title}</p>
+      <!-- 返回首页按钮 -->
+      <LinkButton
+        href="/"
+        class="my-6 text-lg decoration-dashed underline-offset-8"
+      >
+        Go back home
+      </LinkButton>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("image-container");
+    const staticImage = document.getElementById("static-image");
+    const animatedImage = document.getElementById("animated-image");
+
+    if (!container || !staticImage || !animatedImage) return;
+
+    // 鼠标悬停时显示动画
+    container.addEventListener("mouseenter", () => {
+      staticImage.style.display = "none";
+      animatedImage.classList.remove("hidden");
+    });
+
+    // 鼠标离开时显示静态图片
+    container.addEventListener("mouseleave", () => {
+      staticImage.style.display = "block";
+      animatedImage.classList.add("hidden");
+    });
+  });
+</script>

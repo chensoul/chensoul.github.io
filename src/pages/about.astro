@@ -1,0 +1,53 @@
+---
+/**
+ * 关于页
+ * 
+ * 从 content/pages 目录读取 _about.md，使用 AboutLayout 布局
+ */
+import fs from "node:fs";
+import path from "node:path";
+import AboutLayout from "@/layouts/AboutLayout.astro";
+import { fileURLToPath } from "node:url";
+import MarkdownIt from "markdown-it";
+
+// 读取 about.md 文件
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const filePath = path.join(__dirname, "../../content/pages/about.md");
+const fileContent = fs.readFileSync(filePath, "utf-8");
+
+// 解析 frontmatter
+const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+if (!frontmatterMatch) {
+  return Astro.redirect("/404");
+}
+
+const frontmatterStr = frontmatterMatch[1];
+const content = frontmatterMatch[2];
+
+// 解析 frontmatter 为对象
+const frontmatter: Record<string, string> = {};
+frontmatterStr.split("\n").forEach((line) => {
+  const match = line.match(/^(\w+):\s*(.+)$/);
+  if (match) {
+    const key = match[1];
+    let value = match[2].trim();
+    // 移除引号
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    frontmatter[key] = value;
+  }
+});
+
+// 使用 markdown-it 渲染 markdown
+const md = new MarkdownIt({
+  html: true, // 允许 HTML
+  linkify: true, // 自动转换 URL 为链接
+  typographer: true, // 启用一些语言中性的替换 + 引号美化
+});
+const htmlContent = md.render(content);
+---
+
+<AboutLayout frontmatter={{ title: frontmatter.title || "关于" }}>
+  <Fragment set:html={htmlContent} />
+</AboutLayout>

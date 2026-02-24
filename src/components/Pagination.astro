@@ -1,0 +1,67 @@
+---
+/**
+ * 分页组件
+ *
+ * @fileoverview 显示分页导航，用于多页内容的翻页
+ *
+ * 核心逻辑：
+ * 1. 只在总页数 > 1 时显示
+ * 2. 显示当前页/总页数
+ * 3. 上一页/下一页按钮在没有页数时禁用
+ * 4. 支持禁用 View Transitions（通过 reload 属性）
+ *
+ * 依赖关系：
+ * - 被首页、归档页、分类页、标签页等分页列表使用
+ * - 依赖 LinkButton.astro 生成导航按钮
+ * - 依赖 i18n/lang.ts 获取按钮文本
+ */
+
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import LinkButton from "./LinkButton.astro";
+import { _t } from "@/i18n/lang";
+
+/**
+ * 组件属性接口
+ *
+ * @property page - Astro 的分页对象，包含当前页、总页数、上一页/下一页 URL
+ * @property disableTransition - 是否禁用 View Transitions 动画
+ */
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+  disableTransition?: boolean;
+}
+
+const { page, disableTransition = false } = Astro.props;
+---
+
+{
+  // 只在总页数 > 1 时显示分页
+  page.lastPage > 1 && (
+    <nav class="mt-auto flex justify-center" aria-label="Pagination">
+      <LinkButton
+        disabled={!page.url.prev}
+        href={page.url.prev as string}
+        class:list={["mr-4 select-none", { "opacity-50": !page.url.prev }]}
+        reload={disableTransition}
+        ariaLabel="Previous"
+      >
+        <IconArrowLeft class="inline-block" />
+        {_t.pagination.previous}
+      </LinkButton>
+      {page.currentPage} / {page.lastPage}
+      <LinkButton
+        disabled={!page.url.next}
+        href={page.url.next as string}
+        class:list={["ml-4 select-none", { "opacity-50": !page.url.next }]}
+        reload={disableTransition}
+        ariaLabel="Next"
+      >
+        {_t.pagination.next}
+        <IconArrowRight class="inline-block" />
+      </LinkButton>
+    </nav>
+  )
+}

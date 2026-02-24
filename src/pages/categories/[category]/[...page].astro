@@ -1,0 +1,208 @@
+---
+/**
+ * 分类页路由
+ *
+ * @fileoverview 为每个分类生成独立的文章列表页面
+ *
+ * 文件用途：
+ * - 作为博客分类目录的入口，为每个分类创建独立的文章列表页面
+ * - 用户可以按分类浏览文章，如技术、生活、阅读等
+ * - 支持每个分类的懒加载，优化大量文章时的性能
+ * - 集成评论计数功能，显示首屏文章的评论数量
+ *
+ * 核心逻辑：
+ * 1. 在构建时遍历所有分类，为每个分类生成独立的路由
+ * 2. 筛选属于该分类的文章：
+ *    - 使用 getUniqueCategories 提取所有唯一的分类
+ *    - 对每个分类，筛选出包含该分类名称的文章
+ *    - 使用 getSortedPosts 进行排序（过滤草稿和未到发布时间的文章）
+ * 3. 使用 Astro 的 paginate API 为每个分类生成分页路由
+ * 4. pageSize 设置为全部文章数量，实际分页由懒加载处理
+ * 5. 首屏文章显示评论数，懒加载的文章也显示评论数
+ *
+ * 路由格式：
+ * - /categories/tech - 技术分类第1页
+ * - /categories/tech/2 - 技术分类第2页
+ * - /categories/life - 生活分类第1页
+ * - /categories/reading - 阅读分类第1页
+ *
+ * 依赖关系：
+ * - 依赖 getUniqueCategories 工具函数提取所有唯一分类
+ * - 依赖 getSortedPosts 进行文章排序和过滤
+ * - 依赖 Card 组件渲染文章卡片
+ * - 依赖 /lazy-list.js 脚本实现懒加载和评论数加载
+ * - 使用 SITE 配置中的 postPerIndex 和 postPerPage 控制显示策略
+ */
+
+import { getCollection } from "astro:content";
+import type { GetStaticPathsOptions } from "astro";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import getUniqueCategories from "@/utils/getUniqueCategories";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+
+/**
+ * 生成分类页的静态路径
+ *
+ * 处理流程：
+ * 1. 获取所有博客文章（包括草稿，由 getSortedPosts 过滤）
+ * 2. 使用 getUniqueCategories 提取所有唯一的分类
+ *    - 返回分类的 URL 友好名称（slug）
+ *    - 返回分类的显示名称（中文）
+ * 3. 对每个分类：
+ *    a. 筛选属于该分类的文章（文章的 categories 数组包含分类名称）
+ *    b. 使用 getSortedPosts 进行排序和过滤
+ *    c. 使用 paginate 生成分页路由
+ *    d. 将分类显示名称作为 props 传递给组件
+ *
+ * 为什么使用 flatMap：
+ * - paginate 为每个分类返回一个路由数组
+ * - flatMap 将所有分类的路由数组展平为一维数组
+ * - 最终返回符合 Astro 要求的静态路径格式
+ *
+ * @param paginate - Astro 提供的分页函数
+ * @returns 静态路径数组，每个路径包含 params、props 和分页数据
+ */
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  // 获取所有博客文章（不过滤，由后续的 getSortedPosts 处理）
+  const posts = await getCollection("blog");
+
+  /**
+   * 提取所有唯一的分类
+   *
+   * 返回结构：
+   * - category: 分类的 URL 友好名称（如 "tech", "life"）
+   * - categoryName: 分类的显示名称（如 "技术", "生活"）
+   */
+  const categories = getUniqueCategories(posts);
+
+  /**
+   * 为每个分类生成路由
+   *
+   * flatMap 的作用：
+   * - 对每个分类调用 paginate，返回一个路由数组
+   * - 将多个分类的路由数组展平为一个总数组
+   *
+   * 返回格式示例：
+   * [
+   *   { params: { category: "tech" }, props: { categoryName: "技术" }, ...paginateData },
+   *   { params: { category: "life" }, props: { categoryName: "生活" }, ...paginateData },
+   *   ...
+   * ]
+   */
+  return categories.flatMap(({ category, categoryName }) => {
+    /**
+     * 筛选并排序属于该分类的文章
+     *
+     * 筛选条件：
+     * - 文章的 categories 数组包含当前分类的显示名称（categoryName）
+     * - 注意：文章中存储的是分类的显示名称，而非 slug
+     *
+     * 排序规则：
+     * - getSortedPosts 会过滤草稿和未到发布时间的文章
+     * - 按更新时间（或发布时间）降序排序
+     */
+    const categoryPosts = getSortedPosts(
+      posts.filter(post => post.data.categories.includes(categoryName))
+    );
+
+    /**
+     * 为该分类生成分页路由
+     *
+     * 参数说明：
+     * - categoryPosts: 该分类的所有文章
+     * - params.category: URL 参数（分类的 slug）
+     * - props.categoryName: 传递给组件的分类显示名称
+     * - pageSize: 每页的文章数量
+     *   - 设置为全部文章数量，实际分页由懒加载处理
+     *   - 这样可以确保只生成一个路由，减少构建时间
+     */
+    return paginate(categoryPosts, {
+      params: { category },
+      props: { categoryName },
+      pageSize: categoryPosts.length,
+    });
+  });
+}
+
+// 从 Astro.props 中解构获取分页数据和分类显示名称
+const { page, categoryName } = Astro.props;
+---
+
+<Layout>
+  <Header />
+  <Main
+    pageTitle=""
+    pageDesc={_t.category.desc(categoryName)}
+  >
+    <p class="mb-4 text-base font-semibold">
+      分类：{categoryName}
+    </p>
+    <ul class="category-posts-list">
+      {
+        /**
+         * 渲染分类文章列表
+         *
+         * 懒加载逻辑：
+         * - 索引小于 SITE.postPerIndex 的文章直接显示
+         * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
+         *
+         * 评论计数逻辑：
+         * - showCommentCount 控制是否显示评论数
+         * - 这里设置为 i < SITE.postPerIndex，表示首屏文章显示评论数
+         * - 懒加载的文章也支持评论数（通过 artalk 配置）
+         */
+        page.data.map((data, i) => (
+          <Card
+            {...data}
+            itemClass="category-post-item"
+            hidden={i >= SITE.postPerIndex}
+            showCommentCount={i < SITE.postPerIndex}
+          />
+        ))
+      }
+    </ul>
+    {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
+    <div id="category-posts-sentinel" data-init={SITE.postPerIndex} data-chunk={SITE.postPerPage}></div>
+  </Main>
+  <Footer noMarginTop={true} />
+</Layout>
+
+<script is:inline src="/lazy-list.js"></script>
+<script is:inline>
+  /**
+   * 初始化分类页懒加载
+   *
+   * 配置说明：
+   * - sentinelId: 哨兵元素的 ID，用于检测滚动位置
+   * - itemSelector: 需要懒加载的文章卡片选择器
+   * - artalk: 评论系统配置
+   *   - enabled: true（启用评论数加载）
+   *   - anchorSelector: 评论数的锚点选择器（文章链接）
+   *   - wrapperSelector: 评论数的容器选择器
+   *
+   * 事件监听：
+   * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
+   * - astro:page-load: Astro 页面加载完成后触发
+   */
+  function boot(){
+    window.setupLazyList({
+      sentinelId: 'category-posts-sentinel',
+      itemSelector: '.category-post-item',
+      artalk: {
+        enabled: true,
+        anchorSelector: 'a[href]',
+        wrapperSelector: '.relative.block.pr-12',
+      }
+    });
+  }
+
+  // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
+  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+</script>

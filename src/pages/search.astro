@@ -1,0 +1,240 @@
+---
+/**
+ * 搜索页
+ *
+ * @fileoverview 全站搜索功能，使用 Pagefind 实现
+ *
+ * 核心逻辑：
+ * 1. 使用 Pagefind 提供全文搜索
+ * 2. 搜索关键词存储在 URL 参数 `q` 中
+ * 3. 从 URL 读取关键词并自动触发搜索
+ * 4. 存储搜索 URL 到 sessionStorage（返回按钮使用）
+ *
+ * Pagefind 配置：
+ * - showSubResults: true - 显示嵌套结果
+ * - showImages: false - 不显示缩略图
+ * - processResult: 移除 URL 中的 .html 后缀
+ *
+ * 开发模式提示：
+ * - 开发环境需要先构建项目才能使用搜索
+ * - 显示警告信息提示运行 pnpm run build
+ *
+ * 依赖关系：
+ * - 被 /search 路径访问
+ * - 使用 @pagefind/default-ui 包
+ * - 需要运行 pnpm run build 生成搜索索引
+ */
+
+import "@pagefind/default-ui/css/ui.css";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+
+// 返回 URL 配置
+const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
+---
+
+<Layout title={`${_t.search.title} | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="" pageDesc={_t.search.desc}>
+    <!-- Pagefind 搜索容器 -->
+    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
+  </Main>
+  <Footer />
+</Layout>
+
+<script>
+  /**
+   * 初始化搜索功能
+   *
+   * 功能：
+   * 1. 加载 PagefindUI 库
+   * 2. 配置搜索选项
+   * 3. 从 URL 读取搜索关键词
+   * 4. 自动触发搜索
+   */
+  function initSearch() {
+    const pageFindSearch: HTMLElement | null =
+      document.querySelector("#pagefind-search");
+
+    if (!pageFindSearch) return;
+
+    const params = new URLSearchParams(window.location.search);
+
+    // 使用 requestIdleCallback 优化加载时机
+    const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
+
+    onIdle(async () => {
+      // @ts-expect-error — Missing types for @pagefind/default-ui package.
+      const { PagefindUI } = await import("@pagefind/default-ui");
+
+      // 开发模式警告
+      if (import.meta.env.DEV) {
+        pageFindSearch.innerHTML = `
+            <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
+              <p><strong>DEV mode Warning! </strong>You need to build the project at least once to see the search results during development.</p>
+              <code class="block bg-black text-white px-2 py-1 rounded">pnpm run build</code>
+            </div>
+          `;
+      }
+
+      // 初始化 Pagefind UI
+      const search = new PagefindUI({
+        element: "#pagefind-search",
+        showSubResults: true,
+        showImages: false,
+        // 移除 URL 中的 .html 后缀
+        processResult: function (result: any) {
+          const cleanUrl = (url: string) =>
+            url
+              .replace(/\.html$/, "")
+              .replace(/\.html[?#]/, (match: string) => match.substring(5)); // Explicitly handle end of string or query/hash
+
+          result.url = cleanUrl(result.url);
+
+          // 处理嵌套结果 (Sub-results)
+          if (result.sub_results && Array.isArray(result.sub_results)) {
+            result.sub_results.forEach((sub: any) => {
+              sub.url = cleanUrl(sub.url);
+            });
+          }
+
+          return result;
+        },
+        // 处理搜索关键词：更新 URL 和存储返回 URL
+        processTerm: function (term: string) {
+          // 避免重复包含
+          const trimmed = term.trim();
+          if (!trimmed) return term;
+
+          // 更新 URL 参数（存储原始关键词）
+          params.set("q", term);
+          history.replaceState(history.state, "", "?" + params.toString());
+
+          // 存储搜索 URL 到 sessionStorage（返回按钮使用）
+          const backUrl = pageFindSearch?.dataset?.backurl;
+          sessionStorage.setItem("backUrl", backUrl + "?" + params.toString());
+
+          // 强制全字匹配（Exact Match）
+          // 如果用户没有使用引号，自动添加引号
+          if (!trimmed.startsWith('"') || !trimmed.endsWith('"')) {
+            return `"${trimmed}"`;
+          }
+          return term;
+        },
+      });
+
+      // 如果 URL 中有搜索参数，触发搜索
+      const query = params.get("q");
+      if (query) {
+        search.triggerSearch(query);
+      }
+
+      // 搜索输入清空时，移除 URL 参数
+      const searchInput = document.querySelector(".pagefind-ui__search-input");
+      const clearButton = document.querySelector(".pagefind-ui__search-clear");
+      searchInput?.addEventListener("input", resetSearchParam);
+      clearButton?.addEventListener("click", resetSearchParam);
+
+      function resetSearchParam(e: Event) {
+        if ((e.target as HTMLInputElement)?.value.trim() === "") {
+          history.replaceState(history.state, "", window.location.pathname);
+        }
+      }
+    });
+  }
+
+  // View Transitions 导航后重新初始化
+  document.addEventListener("astro:after-swap", () => {
+    const pagefindSearch = document.querySelector("#pagefind-search");
+
+    // 如果搜索框已存在，跳过初始化
+    if (pagefindSearch && pagefindSearch.querySelector("form")) return;
+
+    initSearch();
+  });
+  // 初始加载时初始化
+  initSearch();
+</script>
+
+<!-- Pagefind UI 样式覆盖 -->
+<style is:global>
+  #pagefind-search {
+    /* 字体 */
+    --pagefind-ui-font: var(--font-mono);
+    /* 文字颜色 */
+    --pagefind-ui-text: var(--foreground);
+    /* 背景颜色 */
+    --pagefind-ui-background: var(--background);
+    /* 边框颜色 */
+    --pagefind-ui-border: var(--border);
+    /* 主色调 */
+    --pagefind-ui-primary: var(--accent);
+    /* 标签背景 */
+    --pagefind-ui-tag: var(--background);
+    /* 圆角 */
+    --pagefind-ui-border-radius: 0.375rem;
+    /* 边框宽度 */
+    --pagefind-ui-border-width: 1px;
+    /* 图片圆角 */
+    --pagefind-ui-image-border-radius: 8px;
+    /* 图片宽高比 */
+    --pagefind-ui-image-box-ratio: 3 / 2;
+
+    /* 搜索图标背景 */
+    form::before {
+      background-color: var(--foreground);
+    }
+
+    /* 搜索输入框 */
+    input {
+      font-weight: 400;
+      border: 1px solid var(--border);
+    }
+
+    input:focus-visible {
+      outline: 1px solid var(--accent);
+    }
+
+    /* 结果标题链接 */
+    .pagefind-ui__result-title a {
+      color: var(--accent);
+      outline-offset: 1px;
+      outline-color: var(--accent);
+      font-size: 0.875rem;
+    }
+
+    /* 标题/摘录字体规范化 */
+    .pagefind-ui__result-title,
+    .pagefind-ui__result-title a,
+    .pagefind-ui__result-excerpt,
+    .pagefind-ui__message {
+      font-weight: 400;
+    }
+
+    /* 焦点样式 */
+    .pagefind-ui__result-title a:focus-visible,
+    .pagefind-ui__search-clear:focus-visible {
+      text-decoration-line: none;
+      outline-width: 2px;
+    }
+
+    /* 列表项垂直间距 */
+    .pagefind-ui__result {
+      padding: 15px 0 !important;
+    }
+
+    /* 移除最后一项的边框 */
+    .pagefind-ui__result:last-of-type {
+      border-bottom: 0;
+    }
+
+    /* 嵌套结果的链接符号 */
+    .pagefind-ui__result-nested .pagefind-ui__result-link:before {
+      font-family: system-ui;
+    }
+  }
+</style>

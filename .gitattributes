@@ -1,0 +1,17 @@
+# Set the default EOL for all text files to LF
+* text=auto eol=lf
+
+# Explicitly set EOL for Windows-specific files to CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.bmp binary
+*.wasm binary

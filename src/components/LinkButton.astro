@@ -1,0 +1,79 @@
+---
+/**
+ * 通用链接按钮组件
+ *
+ * @fileoverview 将内容包装为链接或禁用状态
+ *
+ * 核心逻辑：
+ * 1. 根据 disabled 属性渲染 <a> 或 <span>
+ * 2. 禁用状态：使用 span 并设置 aria-disabled
+ * 3. 外部链接：自动添加 target="_blank" 和 rel
+ * 4. 支持 View Transitions 控制（通过 reload 属性）
+ *
+ * 依赖关系：
+ * - 被多个组件复用（Pagination、BackButton 等）
+ * - 用于生成一致的导航链接样式
+ */
+
+/**
+ * 组件属性接口
+ *
+ * @property id - 元素 ID
+ * @property href - 链接地址
+ * @property class - 额外的 CSS 类名
+ * @property ariaLabel - ARIA 标签（无障碍访问）
+ * @property title - 鼠标悬停提示
+ * @property disabled - 是否禁用
+ * @property external - 是否外部链接（新窗口打开）
+ * @property reload - 是否禁用 View Transitions
+ */
+export interface Props {
+  id?: string;
+  href: string;
+  class?: string;
+  ariaLabel?: string;
+  title?: string;
+  disabled?: boolean;
+  external?: boolean;
+  reload?: boolean;
+}
+
+const {
+  id,
+  href,
+  class: className = "",
+  ariaLabel,
+  title,
+  disabled = false,
+  external = false,
+  reload = false,
+} = Astro.props;
+---
+
+{
+  disabled ? (
+    // 禁用状态：使用 span
+    <span
+      id={id}
+      class:list={["group inline-block", className]}
+      title={title}
+      aria-disabled={disabled}
+    >
+      <slot />
+    </span>
+  ) : (
+    // 正常状态：使用 a
+    <a
+      id={id}
+      {href}
+      class:list={["group inline-block hover:text-accent", className]}
+      aria-label={ariaLabel}
+      title={title}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      data-astro-reload={reload ? "" : undefined}
+    >
+      <slot />
+    </a>
+  )
+}

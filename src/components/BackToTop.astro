@@ -1,0 +1,157 @@
+---
+/**
+ * 返回顶部按钮组件
+ *
+ * @fileoverview 固定在右下角的返回顶部按钮，滚动时显示
+ *
+ * 核心逻辑：
+ * 1. 滚动满足条件时显示（滚动比例或滚动距离）
+ * 2. 点击后平滑滚动到顶部
+ * 3. 移动端点击时同时关闭侧边栏（如果存在）
+ * 4. 使用 data 属性传递配置参数
+ *
+ * 显示条件（满足任一即可）：
+ * - 滚动比例 >= showAfterRatio（默认 0.1 = 10%）
+ * - 滚动距离 >= minScrollTopPx（默认 300px）
+ * - 页面溢出高度 >= minOverflowPx（默认 200px）
+ *
+ * 依赖关系：
+ * - 被 Layout.astro 导入，全局显示
+ * - 依赖 config.ts 获取显示配置
+ */
+
+import IconChevronUp from "@/assets/icons/IconChevronUp.svg";
+import { SITE } from "@/config";
+
+/**
+ * 组件属性接口
+ *
+ * @property class - 额外的 CSS 类名
+ */
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<button
+  id="back-to-top"
+  aria-label="Back To Top"
+  class={`fixed bottom-6 md:bottom-8 z-50 focus-outline w-10 h-10 whitespace-nowrap rounded-md bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border border-white/50 dark:border-gray-700/50 text-gray-700 dark:text-gray-200 shadow-sm hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-110 hover:shadow-lg hover:opacity-100 transition-all duration-300 ease-out translate-y-8 opacity-0 pointer-events-none text-xs sm:text-sm flex items-center justify-center gap-1 ${className || ""}`}
+  data-mobile-width={SITE.backToTop.mobileBreakpoint}
+  data-show-after-ratio={SITE.backToTop.showAfterRatio}
+  data-min-overflow={SITE.backToTop.minOverflowPx}
+  data-min-scroll-top={SITE.backToTop.minScrollTopPx}
+>
+  <IconChevronUp class="h-4 w-4" />
+</button>
+
+<script is:inline data-astro-rerun type="module">
+  // 从 data 属性读取配置
+  const el = document.getElementById("back-to-top");
+  const mobileWidth = Number(el?.dataset.mobileWidth);
+  const showAfterRatio = Number(el?.dataset.showAfterRatio);
+  const minOverflow = Number(el?.dataset.minOverflow);
+  const minScrollTop = Number(el?.dataset.minScrollTop);
+  const isMobileDevice = () => window.innerWidth < mobileWidth;
+
+  /**
+   * 更新按钮位置，使其紧贴 site-frame 容器右边缘
+   */
+  function updatePosition() {
+    const btn = document.getElementById("back-to-top");
+    const frame = document.getElementById("site-frame");
+    if (!btn || !frame) return;
+
+    const frameRect = frame.getBoundingClientRect();
+    const rightOffset = window.innerWidth - frameRect.right;
+    const btnWidth = btn.offsetWidth;
+
+    // 检查容器右侧空间是否足够放下按钮
+    if (rightOffset < btnWidth + 32) {
+      // 空间不够，固定在右侧
+      btn.style.right = "1rem";
+    } else {
+      // 空间够，放在容器外部，距离容器边缘 16px
+      btn.style.right = `${rightOffset - btnWidth - 16}px`;
+    }
+  }
+
+  /**
+   * 更新按钮显示状态
+   *
+   * 显示条件：
+   * 1. 页面溢出高度 >= 最小溢出值
+   * 2. 且（滚动比例 >= 阈值 或 滚动距离 >= 最小距离）
+   */
+  function updateVisibility() {
+    const el = document.getElementById("back-to-top");
+    if (!el) return;
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
+    const overflow = doc.scrollHeight - doc.clientHeight;
+    const hasEnoughOverflow = overflow >= minOverflow;
+    const ratio = overflow > 0 ? scrollTop / overflow : 0;
+    const show =
+      hasEnoughOverflow &&
+      (ratio >= showAfterRatio || scrollTop >= minScrollTop);
+    const wasVisible = !el.classList.contains("opacity-0");
+    if (show) {
+      el.classList.remove("translate-y-8", "opacity-0", "pointer-events-none");
+      el.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+    } else {
+      el.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
+      el.classList.remove(
+        "translate-y-0",
+        "opacity-100",
+        "pointer-events-auto"
+      );
+    }
+    // 通知 BackButton 位置变化
+    if (show !== wasVisible) {
+      window.dispatchEvent(
+        new CustomEvent("backToTopVisibilityChange", {
+          detail: { visible: show },
+        })
+      );
+    }
+  }
+
+  // 监听滚动事件
+  window.addEventListener("scroll", updateVisibility, { passive: true });
+  // 监听窗口大小变化，更新按钮位置
+  window.addEventListener("resize", updatePosition, { passive: true });
+  // View Transitions 页面加载后更新
+  document.addEventListener("astro:page-load", () => {
+    updateVisibility();
+    updatePosition();
+  });
+  document.addEventListener("astro:after-swap", () => {
+    updateVisibility();
+    updatePosition();
+  });
+  // 初始化
+  updateVisibility();
+  updatePosition();
+
+  /**
+   * 点击处理
+   *
+   * 1. 滚动到页面顶部
+   * 2. 移动端：关闭侧边栏（如果存在）
+   */
+  document.getElementById("back-to-top")?.addEventListener("click", () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+    // 移动端：关闭侧边栏
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    if (isMobileDevice() && sidebar && backdrop) {
+      sidebar.classList.remove("mobile-open");
+      backdrop.classList.remove("opacity-100");
+      backdrop.classList.add("pointer-events-none");
+    }
+  });
+</script>

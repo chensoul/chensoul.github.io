@@ -1,0 +1,81 @@
+---
+/**
+ * 日期时间组件
+ *
+ * @fileoverview 显示文章的发布/更新时间
+ *
+ * 核心逻辑：
+ * 1. 自动选择最新时间（更新时间或发布时间）
+ * 2. 生成 ISO 格式 datetime 属性（SEO 优化）
+ * 3. 生成中文格式的 title 提示文本
+ * 4. 时间内容由客户端 JS 渲染（支持时区转换）
+ *
+ * 依赖关系：
+ * - 被 Card.astro、ListItem.astro 等组件使用
+ * - 用于显示文章列表和详情页的时间信息
+ */
+
+/**
+ * 组件属性接口
+ *
+ * @property class - 额外的 CSS 类名
+ * @property size - 尺寸：sm（小）或 lg（大）
+ * @property timezone - 时区（可选）
+ * @property pubDatetime - 发布时间
+ * @property modDatetime - 更新时间（可选）
+ */
+export interface Props {
+  class?: string;
+  size?: "sm" | "lg";
+  timezone: string | undefined;
+  pubDatetime: string | Date;
+  modDatetime: string | Date | undefined | null;
+}
+
+const {
+  pubDatetime,
+  modDatetime,
+  class: className = "",
+} = Astro.props;
+
+// 解析日期对象
+const pub = new Date(pubDatetime);
+const mod = modDatetime ? new Date(modDatetime) : null;
+// 选择最新时间（优先使用更新时间）
+const latest = mod && mod.getTime() > pub.getTime() ? mod : pub;
+// ISO 格式（用于 datetime 属性）
+const iso = latest.toISOString();
+// 中文格式（用于 title 提示）
+const title = pub.toLocaleString("zh-CN");
+
+// 计算相对时间（构建时计算，客户端 JS 会更新为最新）
+function formatRelativeTime(date: Date): string {
+  const now = Date.now();
+  let diff = Math.floor((now - date.getTime()) / 1000);
+  if (diff < 0) diff = 0;
+  if (diff < 60) return "几秒前";
+  const m = Math.floor(diff / 60);
+  if (m < 2) return "1 分钟前";
+  if (m < 60) return `${m} 分钟前`;
+  const h = Math.floor(m / 60);
+  if (h < 2) return "1 小时前";
+  if (h < 24) return `${h} 小时前`;
+  const d = Math.floor(h / 24);
+  if (d < 2) return "1 天前";
+  if (d < 30) return `${d} 天前`;
+  const mo = Math.floor(d / 30);
+  if (mo < 2) return "1 个月前";
+  if (mo < 12) return `${mo} 个月前`;
+  const y = Math.floor(d / 365);
+  if (y < 2) return "1 年前";
+  return `${y} 年前`;
+}
+
+const relativeTime = formatRelativeTime(latest);
+---
+
+<div class:list={["flex items-end space-x-1", className]} title={title}>
+  <span class:list={["text-sm", { "sm:text-xs": true }]}>
+    <time class="text-[var(--posts-list-time-color)]" datetime={iso}>{relativeTime}</time>
+  </span>
+</div>

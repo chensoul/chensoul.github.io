@@ -1,0 +1,44 @@
+---
+/**
+ * 归档页路由
+ *
+ * @fileoverview 生成归档页的分页路由
+ *
+ * 核心逻辑：
+ * 1. 使用 Astro 的 paginate API 生成归档页路由
+ * 2. 按年份分组显示文章
+ * 3. 实际分页由懒加载处理（pageSize 设为全部）
+ *
+ * 路由格式：
+ * - /archives - 第1页
+ * - /archives/2 - 第2页
+ * - ...
+ *
+ * 依赖关系：
+ * - 被 /archives/[...page].astro 路由使用
+ * - 使用 Archives 布局渲染页面
+ */
+
+import Archives from "@/layouts/Archives.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import getSortedPosts from "@/utils/getSortedPosts";
+
+/**
+ * 生成静态路径
+ *
+ * 使用 Astro 的 paginate API 生成分页路由
+ */
+export const getStaticPaths = (async ({ paginate }) => {
+  // 获取所有非草稿文章
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const sortedPosts = getSortedPosts(posts);
+  // 生成分页路由（pageSize 设为全部，实际分页由懒加载处理）
+  return paginate(sortedPosts, { pageSize: sortedPosts.length });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<!-- 使用 Archives 布局渲染归档页 -->
+<Archives {page} />

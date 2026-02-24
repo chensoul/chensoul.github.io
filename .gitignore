@@ -1,51 +1,28 @@
+# build output
+dist/
 
-_theme_packages/*
+# generated types
+.astro/
 
-Thumbs.db
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
 .DS_Store
 
-!.gitkeep
-
-.rbenv-version
-.rvmrc
-*.lock
-
-*.log
-node_modules
-package-lock.json
-
-.hugo_build.lock
-
-.idea 
-
-public
-
-db.json
-
-/resources
-
-static/_pagefind
-
-.Archive/
-.markeditor/
-!.metion/
-.metion/*
-!.metion/*_sort.config
-.markdown/
-.sync/
+# jetbrains setting folder
 .idea/
-.DS_STORE
-Thumbs.db*
-/.posts_info.json
-/posts_info.json
-/.git_settings.json
-/git_settings.json
-/.ios_file_manager_status*.json
-/.farbox_token.*
-/.farbox_auto_sync.*
-/__wechat.json
-/*.sqlite3
-.db/
 
-.env
-venv_test
+# pagefind
+
+public/pagefind

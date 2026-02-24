@@ -1,0 +1,154 @@
+---
+/**
+ * 文章卡片组件
+ *
+ * @fileoverview 显示单篇文章的缩略信息，用于文章列表页
+ *
+ * 核心逻辑：
+ * 1. 支持两种标题级别：h2（主列表）或 h3（次要列表）
+ * 2. 自动处理封面图 URL（支持相对路径和绝对路径）
+ * 3. 显示发布/更新时间
+ * 4. 可选显示评论数（Artalk）
+ * 5. 支持 View Transitions 动画
+ * 6. 支持隐藏卡片（用于筛选功能）
+ *
+ * 依赖关系：
+ * - 被首页、归档页、分类页、标签页等列表页面使用
+ * - 依赖 Datetime.astro 显示日期
+ * - 依赖 getPath 工具生成文章链接
+ * - 依赖 config.ts 获取图片加载配置
+ */
+
+import { slugifyStr } from "@/utils/slugify";
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import Datetime from "./Datetime.astro";
+import { SITE } from "@/config";
+
+/**
+ * 组件属性接口
+ *
+ * 扩展自 CollectionEntry<"blog">，包含文章的所有元数据
+ *
+ * @property variant - 标题级别（h2 或 h3）
+ * @property itemClass - 额外的 CSS 类名
+ * @property hidden - 是否隐藏此卡片
+ * @property showCommentCount - 是否显示评论数
+ */
+export interface Props extends CollectionEntry<"blog"> {
+  variant?: "h2" | "h3";
+  itemClass?: string;
+  hidden?: boolean;
+  showCommentCount?: boolean;
+}
+
+const { variant = "h2", data, id, filePath, itemClass, hidden = false, showCommentCount } = Astro.props;
+
+// 解构文章元数据
+const {
+  title,
+  date,
+  updated,
+  timezone,
+  image,
+} = data;
+
+// 标题容器样式（处理溢出省略）
+const headerProps = {
+  class: "truncate overflow-hidden whitespace-nowrap min-w-0",
+};
+
+// 链接样式（包含 View Transition 名称）
+const linkProps = {
+  style: { viewTransitionName: slugifyStr(title) },
+  class: "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
+};
+
+// 获取评论数显示配置（优先使用组件 props，其次使用全局配置）
+const { showCommentCount: defaultShowCommentCount } = SITE.displayOptions;
+const displayCommentCount = typeof showCommentCount === "boolean" ? showCommentCount : defaultShowCommentCount;
+
+/**
+ * 构建封面图 URL
+ *
+ * 处理逻辑：
+ * 1. 如果为空，返回 undefined
+ * 2. 如果是绝对路径（http/https 开头），直接使用
+ * 3. 如果包含 CDN 域名，直接使用
+ * 4. 否则拼接：CDN URL / 文章 slug / 图片文件名
+ *
+ * @returns 完整的图片 URL 或 undefined
+ */
+const buildCoverSrc = (): string | undefined => {
+  const src = typeof image === "string" ? image.trim() : "";
+  if (!src) return undefined;
+  // 绝对路径
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  // CDN 路径
+  if (src.includes("cos.lhasa.icu")) return src;
+  // 相对路径：拼接 CDN URL
+  //const segments = id.split("/").filter(Boolean);
+  //const slug = segments.length ? segments[segments.length - 1] : "";
+  return `${SITE.imageConfig.imagesUrl}${src}`;
+};
+
+const coverSrc = buildCoverSrc();
+---
+
+<li class={`mb-4 ${itemClass ?? ''} ${hidden ? 'hidden' : ''}`}>
+  <div class="relative block pr-12">
+    <div class="flex items-center gap-3">
+      <!-- 封面图 -->
+      {coverSrc && (
+        <img
+          src={coverSrc}
+          alt={title}
+          loading={SITE.imageConfig.loading.lazy ? "lazy" : "eager"}
+          class="w-[50px] h-[50px] object-cover rounded-md shrink-0"
+        />
+      )}
+      <!-- 文章信息区 -->
+      <div class="min-w-0 flex-1">
+        <!-- 文章标题 -->
+        <div
+          class="text-lg font-medium text-accent underline-offset-4 min-w-0"
+        >
+          {
+            // 根据 variant 选择标题级别
+            variant === "h2" ? (
+              <h2 {...headerProps}>
+                <a href={getPath(id, filePath, true, date)} {...linkProps}>{title}</a>
+              </h2>
+            ) : (
+              <h3 {...headerProps}>
+                <a href={getPath(id, filePath, true, date)} {...linkProps}>{title}</a>
+              </h3>
+            )
+          }
+        </div>
+
+        <!-- 发布/更新时间 -->
+        <div class="mt-1 flex flex-row flex-nowrap items-center space-x-2 whitespace-nowrap">
+          <div class="mr-1 flex items-center space-x-0.5">
+            <Datetime
+              pubDatetime={date}
+              modDatetime={updated}
+              {timezone}
+              class="opacity-80"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 评论数徽章 -->
+    {
+      displayCommentCount && (
+        <span
+          class="artalk-comment-count absolute right-0 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full text-xs font-medium shadow-sm"
+          style="width:30px;height:16px;background-color:var(--comment-badge-bg);color:var(--color-background)"
+          data-page-key={getPath(id, filePath, true, date)}
+        />
+      )
+    }
+  </div>
+</li>
