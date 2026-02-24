@@ -1357,7 +1357,11 @@ for (let m = 0; m < 12; m++) {
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initRunningPage() {
+    const runList = document.getElementById("runList");
+    if (!runList || runList.dataset.runningInited === "true") return;
+    runList.dataset.runningInited = "true";
+
     const tabNav = document.getElementById("periodTabNav");
     if (tabNav) {
       tabNav.addEventListener("click", e => {
@@ -1383,13 +1387,10 @@ for (let m = 0; m < 12; m++) {
     }
 
     const loadMoreBtn = document.getElementById("loadMoreBtn");
-    const runList = document.getElementById("runList");
     const modal = document.getElementById("runDetailModal");
     const modalBody = document.getElementById("modalBody");
     const modalClose = document.getElementById("modalClose");
     const modalOverlay = document.getElementById("modalOverlay");
-
-    if (!runList) return;
 
     const allRuns = JSON.parse(runList.dataset.allRuns || "[]");
     const hrZoneLabelsData = JSON.parse(runList.dataset.hrZoneLabels || "{}");
@@ -1723,5 +1724,13 @@ for (let m = 0; m < 12; m++) {
         runList.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
-  });
+  }
+
+  // View Transitions 下导航到跑步页时需在 astro:page-load 后初始化
+  document.addEventListener("astro:page-load", initRunningPage);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initRunningPage);
+  } else {
+    initRunningPage();
+  }
 </script>
