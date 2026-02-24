@@ -143,7 +143,7 @@ wss://realtime.ably.com/?key=MY_API_KEY&format=json&heartbeats=true&v=1.1&lib=js
 
 
 
-![img](../../../images/jwt-diagram-v1.1_2x.webp)
+![img](/images/jwt-diagram-v1.1_2x.webp)
 
 1. 客户端向授权服务器发送授权请求。
 2. 授权服务器向客户端返回访问令牌。

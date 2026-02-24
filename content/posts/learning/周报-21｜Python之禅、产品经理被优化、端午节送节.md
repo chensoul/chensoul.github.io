@@ -8,7 +8,7 @@ tags: ['weekly-report']
 
 ## 前言
 
-![weekly-review-21-00](../../../images/weekly-review-21-00.webp)
+![weekly-review-21-00](/images/weekly-review-21-00.webp)
 
 <p>
   <center><i>公司价值观</i></center>
@@ -26,7 +26,7 @@ tags: ['weekly-report']
 
 这是最近的一个 PyTricks：在 python REPL 里面输入 `import this` 会输出 `The Zen of Python, by Tim Peters`：
 
-![weekly-review-21-03](../../../images/weekly-review-21-03.webp)
+![weekly-review-21-03](/images/weekly-review-21-03.webp)
 
 英文：
 
@@ -170,15 +170,15 @@ Python 之禅是一组编写 Python 语言程序的指导原则，由著名 Pyth
 
 本周跑步 39 公里，最长跑步距离为 6 公里。
 
-![weekly-review-21-05](../../../images/weekly-review-21-05.webp)
+![weekly-review-21-05](/images/weekly-review-21-05.webp)
 
 明细数据如下：
 
-![weekly-review-21-06](../../../images/weekly-review-21-06.webp)
+![weekly-review-21-06](/images/weekly-review-21-06.webp)
 
 5 月份即将结束，目前这个月跑了 24 天，累计 178 公里，比 4 月的 125 公里多了 53 公里。再跑个 12 公里，这个月跑步里程就可以达到 190 公里了，给自己加油！最长连续跑步时间为 7 天，每次都是到了周末就中断了，有点遗憾。回过头来想想，跑步是一个长期的事情，比起跑的远，更重要的是跑的久。争取每天都跑，不管跑几公里，只要坚持下去就是成功。
 
-![weekly-review-21-04](../../../images/weekly-review-21-04.webp)
+![weekly-review-21-04](/images/weekly-review-21-04.webp)
 
 ## 工作
 
@@ -195,7 +195,7 @@ Python 之禅是一组编写 Python 语言程序的指导原则，由著名 Pyth
 - [《Effective Java 3》笔记 14：考虑实现 Comparable 接口](/posts/2023/05/26/consider-implementing-comparable/)
 - [Java 设计模式：Active Object](/posts/2023/05/26/java-design-patterns-active-object/)
 
-![weekly-review-21-07](../../../images/weekly-review-21-07.webp)
+![weekly-review-21-07](/images/weekly-review-21-07.webp)
 
 至此，《Effective Java 3》第三章学习完了。第三章介绍了 Java 中对象的创建和销毁，其中第三章讲述了所有对象通用的方法，主要内容如下：
 

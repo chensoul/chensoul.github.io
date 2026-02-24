@@ -18,7 +18,7 @@ tags: ['kafka', 'rabbitmq']
 
 ## 比较消息代理：您应该寻找什么？
 
-![img](../../../images/comparing-message-brokers-what-should-you-look-for.webp)
+![img](/images/comparing-message-brokers-what-should-you-look-for.webp)
 
 消息代理是一个广泛的类别。虽然我们正在考虑的三个选项中的每一个都在更大系统中的组件之间移动数据，但在它们之间做出决定取决于它们*如何*做到这一点。
 

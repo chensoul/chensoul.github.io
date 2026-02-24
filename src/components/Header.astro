@@ -1,0 +1,382 @@
+---
+/**
+ * 站点页眉组件
+ *
+ * @fileoverview 网站顶部导航栏，包含站点标题、主导航菜单、主题切换等
+ *
+ * 核心逻辑：
+ * 1. 响应式导航：移动端使用汉堡菜单，桌面端横向展开
+ * 2. 路径激活检测：高亮当前页面所在的导航项
+ * 3. 移动端标题动态显示：根据当前页面显示对应标题
+ * 4. 下拉菜单："更多"选项包含归档、搜索等次要导航
+ * 5. 主题切换：浅色/深色模式切换按钮
+ * 6. View Transitions：支持页面切换动画
+ *
+ * 依赖关系：
+ * - 被 Layout.astro 导入，在每个页面顶部显示
+ * - 依赖 config.ts 获取站点配置
+ * - 依赖 i18n/lang.ts 获取国际化文本
+ * - 依赖 YearProgress.astro 显示年度进度条
+ */
+
+import IconX from "@/assets/icons/IconX.svg";
+// import IconMoon from "@/assets/icons/IconMoon.svg";
+// import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
+import IconRss from "@/assets/icons/IconRss.svg";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+import YearProgress from "./YearProgress.astro";
+
+// 获取当前路径，用于判断激活状态
+const { pathname } = Astro.url;
+
+// 规范化路径：移除 index.html 和 .html 后缀
+const rawPath = pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+// 移除末尾斜杠（根路径除外）
+const currentPath = rawPath.endsWith("/") && rawPath !== "/" ? rawPath.slice(0, -1) : rawPath;
+
+/**
+ * 判断导航链接是否处于激活状态
+ *
+ * 激活规则：
+ * 1. 路径完全匹配
+ * 2. 或路径的第一段匹配（处理 /posts/page/2 这种情况）
+ *
+ * @param path - 要检测的路径
+ * @returns 是否激活
+ */
+const isActive = (path: string) => {
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+
+/**
+ * 组件属性接口
+ *
+ * @property leadingTitle - 标题前的额外文字（如分类名）
+ * @property hideSiteTitle - 是否隐藏站点标题
+ * @property leadingTitleTransition - View Transition 名称
+ */
+interface Props {
+  leadingTitle?: string;
+  hideSiteTitle?: boolean;
+  leadingTitleTransition?: string;
+}
+
+const { leadingTitle, hideSiteTitle, leadingTitleTransition } = Astro.props as Props;
+
+/**
+ * 移动端标题动态显示
+ *
+ * 根据当前页面显示对应标题，增强移动端导航体验
+ */
+let mobileTitle: string = SITE.title;
+if (isActive("/posts")) mobileTitle = _t.posts.title;
+else if (isActive("/categories")) mobileTitle = _t.categories.title;
+else if (isActive("/tags")) mobileTitle = _t.tags.title;
+else if (isActive("/about")) mobileTitle = _t.about.title;
+else if (isActive("/archives")) mobileTitle = _t.archives.title;
+else if (isActive("/search")) mobileTitle = _t.search.title;
+else if (isActive("/links")) mobileTitle = _t.links.title;
+---
+
+<header>
+  <!-- 无障碍访问：跳转到主内容 -->
+  <a
+    id="skip-to-content"
+    href="#main-content"
+    class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
+  >
+    Skip to content
+  </a>
+
+  <!-- 移动端导航遮罩层 -->
+  <div
+    id="mobile-nav-overlay"
+    class="mobile-nav-overlay sm:!hidden"
+  ></div>
+
+  <!-- 导航容器 -->
+  <div
+    id="nav-container"
+    class="mx-auto flex max-w-4xl flex-col items-center justify-between sm:flex-row"
+  >
+    <!-- 顶部导航栏：站点标题 + RSS + 菜单按钮 -->
+    <div
+      id="top-nav-wrap"
+      class="relative flex w-full items-center sm:items-baseline justify-between bg-background pb-2"
+    >
+      <!-- 左侧：站点标题 + RSS 图标 -->
+      <div class="flex items-baseline gap-1">
+        <!-- 站点标题链接 -->
+        <a
+          href="/"
+          class="text-sm leading-6 max-w-[28ch] overflow-hidden text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
+        >
+          <!-- 前导标题（如分类名） -->
+          {leadingTitle && (
+            <span class="mr-2 font-medium" transition:name={leadingTitleTransition}>{leadingTitle}</span>
+          )}
+          <!-- 站点标题 -->
+          {!hideSiteTitle && (
+            <>
+              <span class="sm:hidden">{mobileTitle}</span>
+              <span class="text-base hidden sm:inline">{SITE.title}</span>
+            </>
+          )}
+        </a>
+        <!-- RSS 订阅链接 -->
+        <a
+          target="_blank"
+          href="/rss.xml"
+          class="inline-block"
+          aria-label="rss feed"
+          title="RSS Feed"
+        >
+          <IconRss
+            width={13}
+            height={13}
+            class="inline-block stroke-accent stroke-3"
+          />
+          <span class="sr-only">RSS Feed</span>
+        </a>
+      </div>
+
+      <!-- 移动端菜单按钮 -->
+      <nav
+        id="nav-menu"
+        class="flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+      >
+        <button
+          id="menu-btn"
+          class="focus-outline self-end p-2 sm:hidden relative z-[60]"
+          aria-label="Open Menu"
+          aria-expanded="false"
+          aria-controls="menu-items"
+        >
+          <IconX id="close-icon" class="hidden" />
+          <IconMenuDeep id="menu-icon" />
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 年度进度条 -->
+  <YearProgress />
+
+  <!-- 主导航菜单 -->
+  <nav aria-label="Primary" class="mx-auto w-full max-w-4xl sm:relative">
+    <ul
+      id="menu-items"
+      class:list={[
+        "hidden", // 移动端默认隐藏
+        "my-2 flex flex-wrap gap-2",
+        "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
+        "[&>li>a]:text-[var(--nav-link)] [&>li>a]:text-sm",
+        "sm:flex sm:gap-x-5 sm:gap-y-0", // 桌面端横向展开
+        // 移动端全屏居中垂直排列
+        "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:gap-1 max-sm:my-0 max-sm:mx-0",
+      ]}
+    >
+      {
+        SITE.showArchives && (
+          <li>
+            <a
+              href="/archives"
+              class:list={{ "active-nav": isActive("/archives") }}
+            >
+              {_t.archives.title}
+            </a>
+          </li>
+        )
+      }
+      <li>
+        <a
+          href="/categories"
+          class:list={{ "active-nav": isActive("/categories") }}
+        >
+          {_t.categories.title}
+        </a>
+      </li>
+      <li>
+        <a
+          href="/tags"
+          class:list={{ "active-nav": isActive("/tags") }}
+        >
+          {_t.tags.title}
+        </a>
+      </li>
+      <li>
+        <a
+          href="/links"
+          class:list={{ "active-nav": isActive("/links") }}
+        >
+          {_t.links.title}
+        </a>
+      </li>
+      <li>
+        <a
+          href="/about"
+          class:list={{ "active-nav": isActive("/about") }}
+        >
+          {_t.about.title}
+        </a>
+      </li>
+      <li>
+        <a
+          href="/search"
+          class:list={{ "active-nav": isActive("/search") }}
+        >
+          {_t.search.title}
+        </a>
+      </li>
+      {
+        SITE.lightAndDarkMode && (
+          <li class="flex items-center">
+            <button
+              id="theme-btn"
+              class="text-sm focus-outline block px-4 py-3 sm:px-0 sm:py-1 hover:text-accent text-[var(--nav-link)] font-medium"
+              title={_t.common.themeBtn}
+              aria-label="auto"
+              aria-live="polite"
+            >
+              <span class="transition-all dark:hidden whitespace-nowrap">{_t.common.dark}</span>
+              <span class="transition-all hidden dark:inline whitespace-nowrap">{_t.common.light}</span>
+            </button>
+          </li>
+        )
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  /**
+   * 移动端菜单切换功能
+   *
+   * 功能：
+   * 1. 点击菜单按钮切换显示/隐藏菜单项
+   * 2. 切换图标状态（菜单/关闭）
+   * 3. 更新 ARIA 属性以支持无障碍访问
+   * 4. 显示/隐藏磨砂玻璃遮罩层（带动画）
+   * 5. 点击空白区域或导航项关闭菜单
+   */
+  function toggleNav() {
+    const menuBtn = document.querySelector("#menu-btn");
+    const menuItems = document.querySelector("#menu-items") as HTMLElement | null;
+    const menuIcon = document.querySelector("#menu-icon");
+    const closeIcon = document.querySelector("#close-icon");
+    const overlay = document.querySelector("#mobile-nav-overlay");
+
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon || !overlay) return;
+
+    // 关闭菜单的函数
+    const closeMenu = () => {
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open Menu");
+      menuItems.classList.add("hidden");
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
+      overlay.classList.remove("active");
+      document.body.style.overflow = "";
+    };
+
+    // 打开菜单的函数
+    const openMenu = () => {
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close Menu");
+      menuItems.classList.remove("hidden");
+      menuIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    };
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // 点击遮罩层关闭菜单
+    overlay.addEventListener("click", closeMenu);
+
+    // 点击导航菜单空白区域关闭（点击 ul 本身而非子元素）
+    menuItems.addEventListener("click", (e) => {
+      if (e.target === menuItems) {
+        closeMenu();
+      }
+    });
+
+    // 点击导航链接后关闭菜单
+    menuItems.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", closeMenu);
+    });
+  }
+
+  // 初始化菜单功能
+  toggleNav();
+
+  // View Transitions 导航后重新绑定事件
+  document.addEventListener("astro:after-swap", toggleNav);
+</script>
+
+<!-- 样式：下拉菜单动画 + 移动端导航 -->
+<style>
+  /* 移动端磨砂玻璃遮罩层 */
+  .mobile-nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* 动画：与页面切换动画时长一致 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  .mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* 横向展开下拉菜单 - 从左向右 */
+  .dropdown-menu {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .dropdown-container:hover .dropdown-menu {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* 当悬停下拉菜单时，移除"更多"的激活颜色 */
+  .dropdown-container:hover .dropdown-trigger.active-nav {
+    color: var(--nav-link) !important;
+  }
+
+  /* 移动端禁用 clip-path 动画 */
+  @media (max-width: 640px) {
+    .dropdown-menu {
+      clip-path: none;
+    }
+
+    /* 移动端菜单导航文字颜色固定为深色模式配色 */
+    #menu-items a,
+    #menu-items button {
+      color: #d19a66 !important;
+    }
+
+    /* 移动端菜单激活状态颜色 */
+    #menu-items a.active-nav {
+      color: #eaedf3 !important;
+    }
+  }
+</style>

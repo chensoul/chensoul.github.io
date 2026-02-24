@@ -12,11 +12,11 @@ tags: ['oauth2', 'thingsboard']
 
 <!--more-->
 
-![create-oauth2-client-in-thingsboard](../../../images/create-oauth2-client-in-thingsboard.webp)
+![create-oauth2-client-in-thingsboard](/images/create-oauth2-client-in-thingsboard.webp)
 
 然后，创建一个域：
 
-![create-domain-in-thingsboard](../../../images/create-domain-in-thingsboard.webp)
+![create-domain-in-thingsboard](/images/create-domain-in-thingsboard.webp)
 
 域名的名称可以是 ip 加端口，也可以是域名，如果是名称，需要做好 DNS 解析。
 
@@ -28,7 +28,7 @@ tags: ['oauth2', 'thingsboard']
 
 注销登录之后，在登录页面可以看到 使用 Github 登录的按钮。
 
-![login-github-page-in-thingsboard](../../../images/login-github-page-in-thingsboard.webp)
+![login-github-page-in-thingsboard](/images/login-github-page-in-thingsboard.webp)
 
 ## 源码实现
 

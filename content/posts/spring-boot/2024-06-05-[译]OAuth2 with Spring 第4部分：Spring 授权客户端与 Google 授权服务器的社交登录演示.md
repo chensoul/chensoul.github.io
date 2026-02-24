@@ -12,7 +12,7 @@ tags: ['spring-boot','oauth2']
 
 在[之前的文章](/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/)中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。
 
-![oauth2-with-spring-part-4-01](../../../images/oauth2-with-spring-part-4-01.webp)
+![oauth2-with-spring-part-4-01](/images/oauth2-with-spring-part-4-01.webp)
 
 为了实现这一点，我们需要将我们的授权客户端应用程序注册为 Google 授权服务器中的客户端，并使用客户端应用程序中的客户端凭据以及可用范围。
 
@@ -22,25 +22,25 @@ tags: ['spring-boot','oauth2']
 
 打开浏览器并转到[https://console.developers.google.com/](https://console.developers.google.com/)。您将看到如图 1 所示的屏幕。
 
-![oauth2-with-spring-part-4-02](../../../images/oauth2-with-spring-part-4-02.webp)
+![oauth2-with-spring-part-4-02](/images/oauth2-with-spring-part-4-02.webp)
 
 从这里，选择下拉菜单以选择一个项目（1.1）。它将显示一个像上面一样的弹出窗口。从弹出窗口中，单击**“新建项目”**按钮（1.2）。由于我已经创建了我的应用程序并将我的应用程序命名为google-auth-server-demo（1.3），所以我不会再创建新的应用程序了*。*
 
 创建应用程序后，从上面的屏幕中选择您的应用程序，您将看到仪表板。从左侧导航中，单击**API 和服务**和页面。由于我们目前对列表中的任何 Google 服务都不感兴趣，我们可以单击左侧导航中的**凭据 (2.1) 。但如果您有兴趣从客户端应用程序中使用任何 Google 服务，您可能会发现**[这篇文章](https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)很有趣，[我在其中演示了如何访问 Google Drive 数据](https://medium.com/@mainul35/access-google-drive-data-with-spring-boot-58caeb2885e0)。
 
-![oauth2-with-spring-part-4-02](../../../images/oauth2-with-spring-part-4-03.webp)
+![oauth2-with-spring-part-4-02](/images/oauth2-with-spring-part-4-03.webp)
 
 图 2
 
 它将带我们进入以下页面。
 
-![img](../../../images/oauth2-with-spring-part-4-04.webp)
+![img](/images/oauth2-with-spring-part-4-04.webp)
 
 图 3
 
 从这里，我们可以创建新的凭证 (3.1)。由于我们已经创建了凭证 (3.2)，我们可以编辑它 (3.3) 以查看我们如何配置它。
 
-![img](../../../images/oauth2-with-spring-part-4-05.webp)
+![img](/images/oauth2-with-spring-part-4-05.webp)
 
 图 4
 
@@ -68,19 +68,19 @@ spring:
 
 要进入同意屏幕，我们需要单击左侧导航栏中的**Oauth 同意屏幕（5.1）。**
 
-![img](../../../images/oauth2-with-spring-part-4-06.webp)
+![img](/images/oauth2-with-spring-part-4-06.webp)
 
 图 5
 
 我已经创建了同意屏幕，所以让我们通过编辑应用程序看看我做了什么（5.2）
 
-![img](../../../images/oauth2-with-spring-part-4-07.webp)
+![img](/images/oauth2-with-spring-part-4-07.webp)
 
 图 6
 
 此屏幕已在屏幕右侧详细记录（6.1）。遵循这些准则并保存以继续执行步骤 2：范围（6.2）
 
-![img](../../../images/oauth2-with-spring-part-4-08.webp)
+![img](/images/oauth2-with-spring-part-4-08.webp)
 
 图 7
 
@@ -88,7 +88,7 @@ spring:
 
 当我们从此范围步骤单击**“保存并继续”**按钮时，我们可以从客户端应用程序添加一些测试用户来测试。
 
-![img](../../../images/oauth2-with-spring-part-4-09.webp)
+![img](/images/oauth2-with-spring-part-4-09.webp)
 
 图 8
 
@@ -118,25 +118,25 @@ spring:
 
 我们还需要更新我们的服务代码以适应 Google 授权服务器 (9.1) 的范围。
 
-![img](../../../images/oauth2-with-spring-part-4-10.webp)
+![img](/images/oauth2-with-spring-part-4-10.webp)
 
 图 9
 
 现在让我们测试一下我们的应用程序。让我们访问http://localhost:8081/private-data，它将带我们进入登录页面 (10.1)。从这里选择 Google 作为授权服务器 (10.2)。
 
-![img](../../../images/oauth2-with-spring-part-4-11.webp)
+![img](/images/oauth2-with-spring-part-4-11.webp)
 
 图 10
 
 我们将被重定向到 Google 帐户选择页面。由于我们仅允许 2 个帐户用于测试目的，因此我们将选择其中一个帐户 (11.1)。
 
-![img](../../../images/oauth2-with-spring-part-4-12.webp)
+![img](/images/oauth2-with-spring-part-4-12.webp)
 
 图 11
 
 现在，一旦我们选择了正确的帐户，谷歌就会将我们重定向到我们的授权客户端应用程序的重定向 URI，并且我们将能够看到我们的私人数据（图 12），因为这是对我们服务器的已保存请求。
 
-![img](../../../images/oauth2-with-spring-part-4-13.webp)
+![img](/images/oauth2-with-spring-part-4-13.webp)
 
 图 12
 

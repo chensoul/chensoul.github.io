@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@import "./fonts.css";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --font-sans: "Noto Sans SC", "Noto Sans", "Fallback Sans", sans-serif;
+  --font-mono: "Roboto Mono", "Noto Sans SC", monospace;
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+}
+
+:root,
+html[data-theme="light"] {
+  --background: #fdfdfd;
+  --page-background: #bfd8e3;
+  --foreground: #282728;
+  --accent: #4a8bbd;
+  --muted: #e6e6e6;
+  --border: #e5e9f0;
+  --strong-font-weight: 700; /* Compensating visual weight */
+  --nav-link: #2ea9df;
+  --nav-link-active: #000000;
+  --comment-badge-bg: #96d7f5;
+  --toc-top-text-color: #ffffff;
+  --year-progress-fill: var(--page-background);
+  --posts-list-time-color: #969696;
+  --skeleton: #e5e7eb;
+  --error: #b91c1c;
+}
+
+html[data-theme="dark"] {
+  --background: #23272e;
+  --page-background: #282c34;
+  --foreground: #eaedf3;
+  --accent: #d19a66;
+  --muted: #343f60bf;
+  --border: #4d4844;
+  --strong-font-weight: 800;
+  --nav-link: var(--foreground);
+  --nav-link-active: var(--accent);
+  --comment-badge-bg: var(--color-accent);
+  --toc-top-text-color: var(--foreground);
+  --year-progress-fill: var(--accent);
+  --posts-list-time-color: #8b8b8b;
+  --skeleton: #374151;
+  --error: #f87171;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-skeleton: var(--skeleton);
+  --color-error: var(--error);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-muted) 80%,
+        var(--color-foreground) 20%
+      )
+      transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
+    font-family: var(--font-sans), var(--font-emoji);
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section,
+  footer {
+    @apply mx-auto max-w-4xl;
+  }
+}
+
+.active-nav {
+  color: var(--nav-link-active) !important;
+}
+
+@layer utilities {
+  #sidebar {
+    @apply fixed z-40 transform overflow-y-auto bg-background text-sm;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 1023px) {
+    #sidebar {
+      @apply fixed top-0 right-0 bottom-0 left-auto flex h-full max-h-none w-4/5 max-w-70 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
+    }
+
+    #sidebar.mobile-open {
+      @apply translate-x-0;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1300px) {
+    #sidebar {
+      @apply top-36 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-none bg-transparent p-0 shadow-none;
+    }
+
+    /* When there's no TOC, position the sidebar lower */
+    #sidebar.no-toc {
+      @apply top-150;
+    }
+
+    /* xl breakpoint */
+    @media (min-width: 1280px) {
+      #sidebar {
+        @apply w-53;
+      }
+    }
+  }
+
+  /* tocbot */
+  .toc-list-item {
+    @apply truncate overflow-hidden whitespace-nowrap;
+    color: var(--toc-top-text-color);
+  }
+  .toc-link {
+    color: var(--toc-top-text-color);
+  }
+  .toc-link.is-active-link {
+    @apply !text-accent;
+  }
+  .toc-link::before {
+    @apply !hidden;
+    content: "";
+  }
+
+  @media (max-width: 1023px) {
+    .toc-list-item {
+      @apply my-4;
+    }
+  }
+
+  /* rehype-autolink-headings */
+  .icon-link::before {
+    @apply ml-1 inline-block text-accent !no-underline opacity-0 transition-opacity duration-200;
+    content: "#";
+  }
+
+  /* Back-to-Top text color in sidebar */
+  #sidebar #back-to-top svg {
+    color: var(--toc-top-text-color);
+  }
+
+  #sidebar #back-to-top span {
+    color: var(--toc-top-text-color);
+  }
+
+  h1:hover .icon-link::before,
+  h2:hover .icon-link::before,
+  h3:hover .icon-link::before,
+  h4:hover .icon-link::before,
+  h5:hover .icon-link::before,
+  h6:hover .icon-link::before {
+    @apply opacity-100;
+  }
+
+  /* Code blocks */
+  .expressive-code {
+    @apply mt-2 mb-4;
+  }
+}
+
+/* ===== Ultra-thin scrollbar enhancement (no color change) ===== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin; /* thinner than default */
+}
+
+/* WebKit (Chrome, Edge, Safari, Opera) */
+*::-webkit-scrollbar {
+  width: 3px;   /* from 6px → 3px: extremely thin */
+  height: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-clip: padding-box;
+  border: 1px solid transparent; /* smaller border for narrow bar */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Optional: touch devices slightly wider for usability */
+@media (pointer: coarse) {
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* 细滚动条 WebKit */
+.expressive-code pre::-webkit-scrollbar {
+  width: 3px !important;
+  height: 3px!important;
+}
+.expressive-code pre::-webkit-scrollbar-thumb {
+  border-radius: 3px!important;
+}
+
+/* Firefox */
+.expressive-code pre {
+  scrollbar-width: thin!important;
+}
+
+/* 自定义 View Transitions 动画时长 */
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 800ms;
+}

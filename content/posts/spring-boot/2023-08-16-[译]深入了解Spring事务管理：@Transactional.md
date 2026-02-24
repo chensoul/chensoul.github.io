@@ -257,7 +257,7 @@ Spring 无法真正重写您的 Java 类，就像我上面所做的那样，以�
 
 让我们看看这张图中代理的作用：
 
-![document1](../../../images/spring-transaction-management-01.webp)
+![document1](/images/spring-transaction-management-01.webp)
 
 从该图中可以看出，代理有一项工作。
 
@@ -338,7 +338,7 @@ public class DataSourceTransactionManager implements PlatformTransactionManager 
 
 考虑到这一点，让我们从上面扩展我们的图片：
 
-![document2](../../../images/spring-transaction-management-02.webp)
+![document2](/images/spring-transaction-management-02.webp)
 
 总结一下：
 
@@ -509,7 +509,7 @@ public class UserService {
 
 我们用一张图来看看：
 
-![document3](../../../images/spring-transaction-management-03.webp)
+![document3](/images/spring-transaction-management-03.webp)
 
 您可以使用一些技巧（例如自注入）来绕过此限制。但主要的要点是：始终牢记代理事务边界。
 
@@ -607,7 +607,7 @@ public class UserService {
 
 与往常一样，图片可能更容易理解（但请注意，代理和实际服务之间的流程仅在概念上正确且过于简单）。
 
-![document4](../../../images/spring-transaction-management-04.webp)
+![document4](/images/spring-transaction-management-04.webp)
 
 简而言之，就是如何集成 Spring 和 Hibernate。
 

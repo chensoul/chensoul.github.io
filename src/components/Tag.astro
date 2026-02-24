@@ -1,0 +1,52 @@
+---
+/**
+ * 标签组件
+ *
+ * @fileoverview 显示单个标签，支持两种尺寸
+ *
+ * 核心逻辑：
+ * 1. 两种尺寸：sm（小）和 lg（大）
+ * 2. 可选显示标签使用次数
+ * 3. 圆角胶囊样式
+ * 4. 支持 View Transitions 动画
+ * 5. 悬停效果：向上移动
+ *
+ * 依赖关系：
+ * - 被标签云页面、文章详情页使用
+ * - 传递标签的 slug（用于 URL）和原始名称（用于显示）
+ */
+
+/**
+ * 组件属性接口
+ *
+ * @property tag - 标签的 slug（用于 URL）
+ * @property tagName - 标签的原始名称（用于显示）
+ * @property count - 使用该标签的文章数量（可选）
+ * @property size - 尺寸：sm（小）或 lg（大）
+ */
+export interface Props {
+  tag: string;
+  tagName: string;
+  count?: number;
+  size?: "sm" | "lg";
+}
+
+const { tag, tagName, count, size = "sm" } = Astro.props;
+---
+
+<li class={`inline-block ${size === "sm" ? "my-2 mr-2" : "my-3 mr-2"}`}>
+  <a
+    href={`/tags/${tag}`}
+    transition:name={tag}
+    class={`${size === "sm" ? "text-sm" : "text-lg"} group hover:text-accent relative opacity-80 hover:-top-0.5 focus-visible:p-1`}
+  >
+    <!-- 标签胶囊 -->
+    <div class="rounded-full bg-foreground/10 px-3 py-0">
+      <span>
+        {tagName}
+      </span>
+      <!-- 文章数量 -->
+      {count && <span class="font-bold text-accent italic">{count}</span>}
+    </div>
+  </a>
+</li>

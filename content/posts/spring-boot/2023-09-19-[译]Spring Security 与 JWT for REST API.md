@@ -1,7 +1,7 @@
 ---
 title: "[译]Spring Security 与 JWT for REST API"
 date: 2023-09-19
-slug: spring-security-tutorial
+slug: spring-security-jwt-for-rest-api
 categories: ["spring-boot"]
 tags: ['spring-boot','security','jwt']
 ---
@@ -99,7 +99,7 @@ spring.security.user.password=Test12345_
 
 下图展示了流程并显示了如何处理身份验证请求：
 
-![Spring Security Architecture](../../../images/spring-security-tutorial-01.webp)
+![Spring Security Architecture](/images/spring-security-tutorial-01.webp)
 
 现在，让我们将此图分解为多个组件并分别讨论每个组件。
 

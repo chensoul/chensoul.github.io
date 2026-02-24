@@ -1,0 +1,86 @@
+---
+/**
+ * 主内容区布局组件
+ *
+ * @fileoverview 包装页面主要内容区，被各个页面使用
+ *
+ * 核心逻辑：
+ * 1. 提供统一的内容区容器（max-w-3xl）
+ * 2. 支持 pageTitle 和 pageDesc 属性
+ * 3. 通过 data-backUrl 属性存储返回路径
+ * 4. 配合 BackButton 组件实现返回功能
+ *
+ * 依赖关系：
+ * - 被 Archives.astro 使用
+ * - 被各个页面直接导入
+ * - 配合 Layout.astro 使用
+ */
+
+// import Breadcrumb from "@/components/Breadcrumb.astro";
+import { SITE } from "@/config";
+
+/**
+ * 字符串标题属性类型
+ */
+interface StringTitleProp {
+  pageTitle: string;
+  pageDesc?: string;
+}
+
+/**
+ * 数组标题属性类型（支持 View Transitions）
+ */
+interface ArrayTitleProp {
+  pageTitle: [string, string];
+  titleTransition: string;
+  pageDesc?: string;
+}
+
+/**
+ * 组件属性类型：两种标题类型之一
+ */
+export type Props = StringTitleProp | ArrayTitleProp;
+
+const { props } = Astro;
+
+/**
+ * 返回 URL 配置
+ *
+ * 如果 showBackButton 启用，使用当前路径
+ * 否则使用根路径 "/"
+ */
+const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
+---
+
+<!-- <Breadcrumb /> -->
+<main
+  data-backUrl={backUrl}
+  id="main-content"
+  class="mx-auto w-full max-w-4xl pb-4"
+>
+
+  <!-- 页面描述（条件显示） -->
+  {SITE.showPageDesc && <p class="mt-2 mb-6 italic">{props.pageDesc}</p>}
+
+  <!-- 插槽：页面内容 -->
+  <slot />
+</main>
+
+<script>
+  /**
+   * 存储返回 URL 到 sessionStorage
+   *
+   * 使用场景：
+   * - 用户在列表页（如搜索结果）
+   * - 点击进入文章详情页
+   * - 点击返回按钮回到列表页
+   */
+  document.addEventListener("astro:page-load", () => {
+    const mainContent: HTMLElement | null =
+      document.querySelector("#main-content");
+    const backUrl = mainContent?.dataset?.backurl;
+    if (backUrl) {
+      sessionStorage.setItem("backUrl", backUrl);
+    }
+  });
+</script>

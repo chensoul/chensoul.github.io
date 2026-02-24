@@ -1,0 +1,255 @@
+---
+/**
+ * 文章详情页布局
+ *
+ * @fileoverview 单篇文章的完整页面布局
+ *
+ * 核心逻辑：
+ * 1. 渲染文章内容（使用 render() API）
+ * 2. 生成上一篇/下一篇导航链接
+ * 3. 条件加载：
+ *    - TOC 目录（toc 属性）
+ *    - KaTeX 数学公式（math 属性）
+ *    - Artalk 评论（comments 属性）
+ * 4. View Transitions：标题使用 viewTransitionName
+ * 5. 侧边栏：显示文章目录（桌面端）
+ *
+ * 依赖关系：
+ * - 被 /posts/[...slug]/index.astro 页面使用
+ * - 继承 Layout.astro
+ * - 导入 Header、Footer、Tag 等组件
+ */
+
+import { _t } from "@/i18n/lang";
+import { render, type CollectionEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Tag from "@/components/Tag.astro";
+import Artalk from "@/components/Artalk.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { getPath } from "@/utils/getPath";
+import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import IconTag from "@/assets/icons/IconTag.svg";
+import { SITE } from "@/config";
+import "photosuite/dist/photosuite.css";
+
+/**
+ * 组件属性接口
+ *
+ * @property post - 当前文章对象
+ * @property posts - 所有文章数组（用于上一篇/下一篇导航）
+ */
+export interface Props {
+  post: CollectionEntry<"blog">;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { post, posts } = Astro.props;
+
+// 解构文章元数据
+const {
+  title,
+  author,
+  canonicalURL,
+  date,
+  updated,
+  tags,
+  toc,
+  math,
+  comments,
+} = post.data;
+
+// 渲染文章内容
+const { Content } = await render(post);
+
+const publishDisplayDate = (() => {
+  const d = new Date(date);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+})();
+
+// 传递给 Layout 的属性
+const layoutProps = {
+  title: SITE.title,
+  author,
+  pubDatetime: date,
+  modDatetime: updated,
+  canonicalURL,
+  scrollSmooth: true,
+  toc,
+  math,
+  comments,
+};
+
+/* ========== Prev/Next Posts ========== */
+
+/**
+ * 生成上一篇/下一篇导航
+ *
+ * 逻辑：
+ * 1. 提取所有文章的路径、标题和日期
+ * 2. 找到当前文章的索引
+ * 3. 获取上一篇（索引-1）和下一篇（索引+1）
+ */
+const allPosts = posts.map(({ data: { title, date }, id, filePath }) => ({
+  path: getPath(id, filePath, true, date),
+  title,
+}));
+
+const currentPostPath = getPath(post.id, post.filePath, true, post.data.date);
+const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
+
+const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
+const nextPost =
+  currentPostIndex < allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
+---
+
+<Layout {...layoutProps}>
+  <Header />
+
+  <!-- 文章标题与发布日期（不在 main 内） -->
+  <section class="mt-4 mb-2 text-center mx-auto w-full max-w-4xl">
+    <h1 class="text-2xl font-semibold">{title}</h1>
+    <p class="mt-1 text-sm text-accent/80">{publishDisplayDate}</p>
+  </section>
+
+  <!-- 主内容区 -->
+  <main
+    id="main-content"
+    class="mx-auto w-full max-w-4xl pb-8"
+    data-pagefind-body
+  >
+    <!-- 文章内容 -->
+    <article
+      id="article"
+      class="js-toc-content mx-auto prose mt-4 mb-12 max-w-4xl"
+    >
+      <Content />
+    </article>
+
+    <!-- 标签列表 -->
+    <ul class="my-1 flex flex-col flex-wrap space-y-2 md:flex-row md:space-y-0">
+      {
+        tags.length > 0 && (
+          <li class="flex items-center space-x-0.5">
+            <IconTag class="mt-0.5 h-4 w-4" />
+            <ul>
+              {tags.map((tag: string) => (
+                <Tag tag={slugifyStr(tag)} tagName={tag} />
+              ))}
+            </ul>
+          </li>
+        )
+      }
+    </ul>
+    <hr class="my-6" />
+
+    <!-- Previous/Next Post Buttons -->
+    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2 my-6">
+      <!-- 上一篇 -->
+      {
+        prevPost && (
+          <a
+            href={prevPost.path}
+            class="flex w-full gap-1 hover:opacity-75"
+          >
+            <IconChevronLeft class="inline-block flex-none" />
+            <div>
+              <div class="text-sm text-accent/85">{prevPost.title}</div>
+            </div>
+          </a>
+        )
+      }
+      <!-- 下一篇 -->
+      {
+        nextPost && (
+          <a
+            href={nextPost.path}
+            class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
+          >
+            <div>
+              <div class="text-sm text-accent/85">{nextPost.title}</div>
+            </div>
+            <IconChevronRight class="inline-block flex-none" />
+          </a>
+        )
+      }
+    </div>
+
+    <!-- 评论容器 -->
+    <div id="Comments"></div>
+  </main>
+
+  <!-- 侧边栏：显示文章目录 -->
+  <aside id="sidebar" class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}>
+    {
+      toc && (
+        <>
+          <div id="toc-container" class="js-toc" />
+        </>
+      )
+    }
+    <div
+      class="flex flex-col items-start space-y-0 truncate overflow-hidden whitespace-nowrap opacity-80"
+    >
+    </div>
+  </aside>
+  <Footer />
+</Layout>
+
+<!-- Artalk 评论系统 -->
+<Artalk />
+
+<script is:inline data-astro-rerun type="module">
+  /* Tocbot */
+  (function () {
+    // 如果未启用 TOC，直接返回
+    if (!document.getElementById("toc-container")) {
+      return;
+    }
+
+    const scrollSmoothOffset = 0;
+
+    /**
+     * 初始化 Tocbot
+     *
+     * 配置：
+     * - tocSelector: 目录容器
+     * - contentSelector: 文章内容容器
+     * - headingSelector: 扫描的标题级别（h2, h3, h4）
+     * - scrollSmoothDuration: 平滑滚动持续时间
+     */
+    function initTocbot() {
+      window.tocbot.init({
+        tocSelector: ".js-toc",
+        contentSelector: ".js-toc-content",
+        headingSelector: "h2, h3, h4",
+        hasInnerContainers: true,
+        scrollSmoothDuration: 300,
+        scrollSmoothOffset,
+      });
+    }
+
+    // 加载 Tocbot 库
+    if (window.tocbot) {
+      initTocbot();
+    } else {
+      const script = document.createElement("script");
+      script.src =
+        "/tocbot/tocbot.min.js";
+      script.crossOrigin = "anonymous";
+      script.referrerPolicy = "no-referrer";
+      script.onload = initTocbot;
+      document.body.appendChild(script);
+    }
+  })();
+
+  // Astro View Transitions: 滚动到页面顶部
+  document.addEventListener("astro:after-swap", () => {
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+  });
+</script>

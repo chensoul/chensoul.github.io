@@ -34,7 +34,7 @@ tags: ['websocket','rest']
 
 
 
-![img](../../../images/client-server-communication-over-rest.webp)
+![img](/images/client-server-communication-over-rest.webp)
 
 让我们快速了解一下 REST 与其他方法的区别。
 
@@ -56,7 +56,7 @@ REST 适用于短暂、无状态的通信，而 WebSocket 则提供持续、低�
 
 
 
-![img](../../../images/websockets.webp)
+![img](/images/websockets.webp)
 
 
 

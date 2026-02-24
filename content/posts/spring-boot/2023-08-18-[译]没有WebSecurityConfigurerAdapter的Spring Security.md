@@ -6,7 +6,7 @@ categories: ["spring-boot"]
 tags: ['spring-boot', 'security']
 ---
 
-![WebSecurityConfigurerAdapter Deprecated](../../../images/WebSecurityConfigurerAdapter-Deprecated-1.webp)
+![WebSecurityConfigurerAdapter Deprecated](/images/WebSecurityConfigurerAdapter-Deprecated-1.webp)
 
 在 Spring Security 模块的上下文中，WebSecurityConfigurerAdapter 是一个抽象类，根据 [Spring 官方网站](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter) 2022 年 2 月 21 日发布的公告，该类已从 Spring Security 5.7.0-M2 中弃用。它通常用于扩展 configure() 方法由自定义配置子类实现。因此，它鼓励用户转向基于组件的安全配置。为了支持对这种新配置设计的更改，我们将讨论常见用例列表和未来建议的替代方案。因此，我们将讨论没有 WebSecurityConfigurerAdapter 的 Spring Security 用例的实现。
 

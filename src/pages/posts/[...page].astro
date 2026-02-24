@@ -1,0 +1,186 @@
+---
+/**
+ * 文章列表页路由
+ *
+ * @fileoverview 生成全部文章的列表页面
+ *
+ * 文件用途：
+ * - 作为博客文章目录的入口，展示所有已发布的文章
+ * - 与首页不同，这里显示所有文章（不受首页限制）
+ * - 与分类页不同，这里不进行分类筛选，显示全部文章
+ * - 支持懒加载，优化大量文章时的页面性能
+ * - 集成评论计数功能，显示每篇文章的评论数量
+ *
+ * 核心逻辑：
+ * 1. 在构建时获取所有非草稿文章
+ * 2. 使用 getSortedPosts 进行排序（过滤草稿和未到发布时间的文章）
+ * 3. 使用 Astro 的 paginate API 生成分页路由
+ * 4. pageSize 设置为全部文章数量，实际分页由懒加载处理
+ *    - 这样可以确保只生成一个路由，减少构建时间
+ *    - 滚动加载由前端的 lazy-list.js 处理
+ * 5. 首屏文章显示评论数，懒加载的文章也显示评论数
+ *
+ * 路由格式：
+ * - /posts - 第1页（所有文章）
+ * - /posts/2 - 第2页（如果需要传统的分页）
+ *
+ * 注意事项：
+ * - 实际使用中，pageSize 设为全部文章数量，所以只生成一个路由
+ * - 传统分页（/posts/2, /posts/3）理论上存在，但实际不会被访问
+ * - 所有分页逻辑由前端的懒加载处理
+ *
+ * 依赖关系：
+ * - 依赖 getSortedPosts 进行文章排序和过滤
+ * - 依赖 Card 组件渲染文章卡片
+ * - 依赖 /lazy-list.js 脚本实现懒加载和评论数加载
+ * - 使用 SITE 配置中的 postPerIndex 和 postPerPage 控制显示策略
+ */
+
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+
+/**
+ * 生成文章列表页的静态路径
+ *
+ * 处理流程：
+ * 1. 获取所有博客文章，过滤掉草稿（draft: true）
+ * 2. 使用 getSortedPosts 进行排序和进一步过滤
+ *    - 过滤草稿（双重保险）
+ *    - 过滤未到发布时间的文章
+ *    - 按更新时间（或发布时间）降序排序
+ * 3. 使用 paginate 生成分页路由
+ *    - pageSize 设置为全部文章数量
+ *    - 实际分页由前端的懒加载处理
+ *
+ * 为什么 pageSize 设置为全部文章数量：
+ * - 减少构建时生成的路由数量
+ * - 避免生成大量不会被访问的分页路由
+ * - 所有分页逻辑由前端懒加载处理
+ * - 只生成一个路由（/posts），提升构建速度
+ *
+ * @param paginate - Astro 提供的分页函数
+ * @returns 静态路径数组，包含分页数据
+ */
+export const getStaticPaths = (async ({ paginate }) => {
+  // 获取所有非草稿文章
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+  /**
+   * 对文章进行排序和过滤
+   *
+   * getSortedPosts 的处理：
+   * 1. 再次过滤草稿（确保万无一失）
+   * 2. 过滤未到发布时间的文章（publishDate > 当前日期）
+   * 3. 按更新时间（或发布时间）降序排序（最新的在前）
+   */
+  const sortedPosts = getSortedPosts(posts);
+
+  /**
+   * 生成分页路由
+   *
+   * 参数说明：
+   * - sortedPosts: 所有已发布的文章
+   * - pageSize: 每页的文章数量
+   *   - 设置为全部文章数量，只生成一个路由
+   *   - 实际分页由前端懒加载处理
+   *
+   * 返回格式：
+   * [
+   *   { params: { page: "1" } | undefined, props: { page: PageObject } }
+   * ]
+   */
+  return paginate(sortedPosts, { pageSize: sortedPosts.length });
+}) satisfies GetStaticPaths;
+
+// 从 Astro.props 中解构获取分页数据
+const { page } = Astro.props;
+---
+
+<Layout title={`${_t.posts.title} | ${SITE.title}`}>
+  {/**
+   * 文章列表页头部配置
+   *
+   * 与首页的区别：
+   * - 首页有 leadingTitle，文章列表页使用默认的站点标题
+   * - 首页可能有限制显示的文章数量，文章列表页显示全部
+   */}
+  <Header />
+  <Main
+    pageTitle=""
+    pageDesc={_t.posts.desc}
+  >
+    <ul class="posts-list">
+      {
+        /**
+         * 渲染文章列表
+         *
+         * 懒加载逻辑：
+         * - 索引小于 SITE.postPerIndex 的文章直接显示
+         * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
+         *
+         * 评论计数逻辑：
+         * - showCommentCount 控制是否显示评论数
+         * - 这里设置为 i < SITE.postPerIndex，表示首屏文章显示评论数
+         * - 懒加载的文章也支持评论数（通过 artalk 配置）
+         *
+         * 数据来源：
+         * - page.data 是当前分页的文章数组
+         * - 由于 pageSize 设置为全部，这里包含所有文章
+         */
+        page.data.map((data, i) => (
+          <Card
+            {...data}
+            itemClass="posts-item"
+            hidden={i >= SITE.postPerIndex}
+            showCommentCount={i < SITE.postPerIndex}
+          />
+        ))
+      }
+    </ul>
+    {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
+    <div id="posts-sentinel" data-init={SITE.postPerIndex} data-chunk={SITE.postPerPage}></div>
+  </Main>
+  <Footer noMarginTop={true} />
+</Layout>
+
+<script is:inline src="/lazy-list.js"></script>
+<script is:inline>
+  /**
+   * 初始化文章列表页懒加载
+   *
+   * 配置说明：
+   * - sentinelId: 哨兵元素的 ID，用于检测滚动位置
+   * - itemSelector: 需要懒加载的文章卡片选择器
+   * - artalk: 评论系统配置
+   *   - enabled: true（启用评论数加载）
+   *   - anchorSelector: 评论数的锚点选择器（文章链接）
+   *   - wrapperSelector: 评论数的容器选择器
+   *
+   * 事件监听：
+   * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
+   * - astro:page-load: Astro 页面加载完成后触发
+   */
+  function boot(){
+    window.setupLazyList({
+      sentinelId: 'posts-sentinel',
+      itemSelector: '.posts-item',
+      artalk: {
+        enabled: true,
+        anchorSelector: 'a[href]',
+        wrapperSelector: '.relative.block.pr-12',
+      }
+    });
+  }
+
+  // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
+  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+</script>

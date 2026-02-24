@@ -36,7 +36,7 @@ OAuth2 定义了 4 个角色：
 
 下图说明了角色流程：
 
-![img](../../../images/oauth-2-centralized-authorization-01.webp)
+![img](/images/oauth-2-centralized-authorization-01.webp)
 
 ## 授权类型
 
@@ -111,13 +111,13 @@ INSERT INTO credentials_authorities VALUES (3, 2);
 
 对于演示，基于 Spring Boot 开发了 RESTful 应用程序并公开以下端点：
 
-![img](../../../images/oauth-2-centralized-authorization-02.webp)
+![img](/images/oauth-2-centralized-authorization-02.webp)
 
 ### Spring 安全配置
 
 我们必须提供 [UserDetailsService](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/core/userdetails/UserDetailsService.html) 接口的实现，以便获取用户凭据和权限，如下所示
 
-![img](../../../images/oauth-2-centralized-authorization-03.webp)
+![img](/images/oauth-2-centralized-authorization-03.webp)
 
 为了向应用程序提供安全性，我们将使用 [@EnableWebSecurity](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/apidocs/org/springframework/security/config/annotation/web/configuration/EnableWebSecurity.html) 注解和 WebSecurityConfigurerAdapter
 
@@ -232,11 +232,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 成功配置运行授权服务器后，您将获得登录页面来管理授权服务器
 
-![img](../../../images/oauth-2-centralized-authorization-04.webp)
+![img](/images/oauth-2-centralized-authorization-04.webp)
 
 使用 oauth_admin/user 作为用户名/密码访问 Oauth2 仪表板，您可以在其中创建服务器客户端
 
-![img](../../../images/oauth-2-centralized-authorization-05.webp)
+![img](/images/oauth-2-centralized-authorization-05.webp)
 
 ## 资源服务器
 
@@ -304,4 +304,4 @@ Got token for curl client as : 3be01519–0cab-4049-b87d-617c48bda502
 - http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/
 - https://github.com/FrontierPsychiatrist/spring-oauth-example
 
-原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https://akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4) [Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md](../../../../../work/ads/Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md) 
+原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https://akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4) [Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md](/../../work/ads/Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md) 

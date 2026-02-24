@@ -16,11 +16,11 @@ tags: ['weekly-report','vps']
 
 基于 [pseudoyu](https://www.pseudoyu.com/) 的博客和主题定制博客，发现并修复了 bug，还做了一些改进，并在他的 github 提交 [issue](https://github.com/pseudoyu/pseudoyu/issues/2) 和 merge request。
 
-![](../../../images/github-issue-build-aboutme-py.webp)
+![](/images/github-issue-build-aboutme-py.webp)
 
 接着在他博客主页留言，几个来回下来，收获不少。一是解决了我提出的问题，二是给我分享了一个搬瓦工的 the plan 优惠码。这时候去看了下我原来的 vps 刚好还有一天要到期，就立即花了 92 美元（原价是 99 美元）购买了一台 2G 内存托管在香港的服务器。
 
-![vps-main-controlls](../../../images/vps-main-controlls.webp)
+![vps-main-controlls](/images/vps-main-controlls.webp)
 
 缘分就是这么奇妙，如果我不主动和这个博主联系，就不会知道搬瓦工还有这个优惠，就不会帮助我解决了博客定制过程中遇到的疑惑。
 
@@ -43,7 +43,7 @@ tags: ['weekly-report','vps']
 - uptime-kuma：一个开源免费的监控工具
 - rsshub：一个开源、简单易用、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-![vps-docker-service](../../../images/vps-docker-service.webp)
+![vps-docker-service](/images/vps-docker-service.webp)
 
 通过 Docker 部署这些服务非常简单，主要是需要注意的一点是：将这些服务部署到同一个网路，这样各个服务之间可以互相通信。比如：很多服务都需要依赖数据库 postgresql，可以使用 docker-compose 来编排服务。安装部署过程参考：[我的 VPS 服务部署记录](/posts/2023/01/25/notes-about-deploy-services-in-vps/)
 

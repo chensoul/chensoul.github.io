@@ -166,7 +166,7 @@ spring.ai.chat.memory.repository.jdbc.initialize-schema=always
    ```
 6. **查看数据库**。可以看到数据库里面创建一个 `spring_ai_chat_memory` 表：
 
-   ![spring-ai-chat-memory-postgres-table]( ../../../images/spring-ai-chat-memory-postgres-table.webp)
+   ![spring-ai-chat-memory-postgres-table]( /images/spring-ai-chat-memory-postgres-table.webp)
 
 ## 小结
 

@@ -43,7 +43,7 @@ mvn k8s:build
 
 在通常的 Spring Boot 歌舞之后，您可以列出图像：
 
-![列出的图像](../../../images/docker-images.webp)
+![列出的图像](/images/docker-images.webp)
 
 您可以自定义图像。例如，您可能希望通过配置`from`pom 中的元素来选择插件使用的默认图像以外的基础图像：
 
@@ -130,7 +130,7 @@ mvn install k8s:build k8s:resource k8s:apply
 
 您可以检查部署是否成功：
 
-![成功部署检查](../../../images/kubectl-pod.webp)
+![成功部署检查](/images/kubectl-pod.webp)
 
 为了提供从集群外部的访问，我们将服务类型更改为 NodePort：
 

@@ -5,7 +5,6 @@ date: 2025-10-09
 slug: docker-model-runner-spring-ai-local-ai-application
 categories: ["ai"]
 tags: ['spring-ai', 'docker-model-runner', 'rag', 'pgvector', 'gemma']
-keywords: ['Docker Model Runner', 'Spring AI', 'RAG', '向量搜索', '本地AI部署', 'pgvector', 'Gemma模型', 'AI应用开发', 'Spring Boot AI']
 ---
 
 你是否担心将敏感数据发送到云端AI服务？是否希望完全掌控AI模型的使用，而不受API限制和费用困扰？今天我们来探索一个全新的解决方案——**使用Docker Model Runner和Spring AI在本地环境中运行AI模型**。

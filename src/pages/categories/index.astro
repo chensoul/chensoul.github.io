@@ -1,0 +1,120 @@
+---
+/**
+ * 分类索引页
+ *
+ * @fileoverview 显示所有分类及其文章数量
+ *
+ * 核心逻辑：
+ * 1. 获取所有分类（使用 getUniqueCategories）
+ * 2. 获取每个分类的最新文章标题（用于显示）
+ * 3. 显示分类封面图、名称、文章数量
+ * 4. 支持懒加载分页（使用 /lazy-list.js）
+ * 5. 悬停效果：图片放大
+ *
+ * 视觉设计：
+ * - 卡片式布局（移动端单列，桌面端双列）
+ * - 16:9 宽高比的封面图
+ * - 渐变遮罩 + 文字叠加
+ *
+ * 依赖关系：
+ * - 被 /categories 路径访问
+ * - 使用 getCategoryImageUrl 获取封面图
+ */
+
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import getUniqueCategories from "@/utils/getUniqueCategories";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+import { _t } from "@/i18n/lang";
+import { getCategoryImageUrl } from "@/utils/categoryImages";
+
+// 获取所有文章并排序
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+
+// 获取所有分类
+let categories = getUniqueCategories(posts);
+
+/**
+ * 获取每个分类的最新文章标题
+ *
+ * 用于在分类卡片上显示该分类的最新文章标题
+ */
+const categoryLatestPost = new Map<string, string>();
+categories.forEach(({ categoryName }) => {
+  const latestPost = sortedPosts.find(post => post.data.categories.includes(categoryName));
+  if (latestPost) {
+    categoryLatestPost.set(categoryName, latestPost.data.title);
+  }
+});
+---
+
+<Layout title={`${_t.categories.title} | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="" pageDesc={_t.categories.desc}>
+    <section class="space-y-6">
+      <!-- 分类网格列表 -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1" aria-label="分类列表">
+        {
+          categories.map(({ category, categoryName, count }, i) => (
+            <li class={`categories-item ${i >= SITE.postPerIndex ? 'hidden' : ''}`}>
+              <a href={`/categories/${category}`} aria-label={`查看 ${categoryName} 分类`} class="group block overflow-hidden relative">
+                <!-- 封面图容器（16:9 比例） -->
+                <div class="w-full overflow-hidden" style="aspect-ratio: 16 / 9;">
+                  {
+                    (getCategoryImageUrl(category) || getCategoryImageUrl(categoryName)) ? (
+                      <img
+                        src={getCategoryImageUrl(category) || getCategoryImageUrl(categoryName)}
+                        alt={`${categoryName} 封面图`}
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      // 无封面图时显示占位背景
+                      <div class="w-full h-full bg-foreground/20" />
+                    )
+                  }
+                </div>
+                {/* 渐变遮罩 */}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                {/* 文字内容 */}
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                  <!-- 分类名称和文章数量 -->
+                  <span class="text-xs text-white/80 block mb-1" style={`view-transition-name: ${category}`}>
+                    {categoryName}（{count}篇）
+                  </span>
+                  <!-- 最新文章标题 -->
+                  <h3 class="text-sm text-white leading-tight line-clamp-1">
+                    {categoryLatestPost.get(categoryName) || categoryName}
+                  </h3>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <!-- 懒加载哨兵元素 -->
+      <div id="categories-sentinel" data-init={SITE.postPerIndex} data-chunk={SITE.postPerPage}></div>
+    </section>
+  </Main>
+  <Footer />
+</Layout>
+
+<script is:inline src="/lazy-list.js"></script>
+<script is:inline>
+  function boot(){
+    window.setupLazyList({
+      sentinelId: 'categories-sentinel',
+      itemSelector: '.categories-item',
+      artalk: { enabled: false }
+    });
+  }
+  // View Transitions 导航后启动
+  document.addEventListener('astro:after-swap', () => { if (typeof window.setupLazyList === 'function') boot(); });
+  // 初始加载时启动
+  document.addEventListener('astro:page-load', () => { if (typeof window.setupLazyList === 'function') boot(); });
+</script>

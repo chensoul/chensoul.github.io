@@ -1,0 +1,65 @@
+---
+/**
+ * 文章详情页路由
+ *
+ * @fileoverview 为每篇文章生成独立的详情页
+ *
+ * 核心逻辑：
+ * 1. 使用 getStaticPaths 为每篇文章生成路由
+ * 2. 使用 getPath 生成 URL 友好的 slug
+ * 3. 将文章和所有文章列表传递给 PostDetails 布局
+ * 4. PostDetails 负责渲染文章内容、导航、评论等
+ *
+ * 路由生成规则：
+ * - content/posts/2026-02-09-spring-ai.md (date: 2026-02-09) → /posts/2026/02/09/spring-ai
+ * - content/posts/tech/deep-dive.md (无日期) → /posts/tech/deep-dive
+ * - 以下划线开头的文件被排除（草稿）
+ *
+ * 依赖关系：
+ * - 被 /posts/[...slug]/index.astro 路由使用
+ * - 使用 PostDetails 布局渲染页面
+ * - 使用 getPath 生成文章 URL
+ */
+
+import { type CollectionEntry, getCollection } from "astro:content";
+import PostDetails from "@/layouts/PostDetails.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { getPath } from "@/utils/getPath";
+
+/**
+ * 组件属性接口
+ *
+ * @property post - 当前文章对象
+ */
+export interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+/**
+ * 生成静态路径
+ *
+ * 为每篇非草稿文章生成独立的详情页路由
+ */
+export async function getStaticPaths() {
+  // 获取所有非草稿文章
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+  // 为每篇文章生成路由
+  const postResult = posts.map(post => ({
+    // 使用 getPath 生成 URL 友好的 slug（不带 /posts 前缀，包含日期）
+    params: { slug: getPath(post.id, post.filePath, false, post.data.date) },
+    props: { post },
+  }));
+
+  return postResult;
+}
+
+const { post } = Astro.props;
+
+// 获取所有文章并排序（用于上一篇/下一篇导航）
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+---
+
+<!-- 使用 PostDetails 布局渲染文章 -->
+<PostDetails post={post} posts={sortedPosts} />

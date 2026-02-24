@@ -1,7 +1,7 @@
 ---
 title: "[译]Spring Security 和 JWT 入门"
 date: 2024-10-15
-slug: spring-security-jwt
+slug: spring-security-jwt-guard
 categories: ["spring-boot"]
 tags: ['spring-boot','security','jwt']
 ---
@@ -83,7 +83,7 @@ JWT（JSON Web Token）是一种在双方之间传递 JSON 消息的安全方式
 
 为了创建签名，我们对标头进行编码，对有效负载进行编码，并使用密钥通过标头中指定的算法对元素进行签名。 **生成的令牌将具有三个以点分隔的 Base64 URL 字符串。JWT** 的图示如下所示：
 
-![设置](../../../images/spring-security-jwt-01.webp)
+![设置](/images/spring-security-jwt-01.webp)
 
 签名的目的是验证消息在传输过程中没有被更改。由于它们也使用密钥签名，因此可以验证 JWT 的发送者是否是其声称的那个人。
 
@@ -179,7 +179,7 @@ lc3RBcHBsaWNhdGlvbiIsImlhdCI6MTcxMTY2MTA1MiwiZXhwIjoxNzExNjYxNjUyfQ.
 
 让我们尝试使用在线[JWT 解码器](https://jwt.is/)解码该 JWT ：
 
-![设置](../../../images/spring-security-jwt-02.webp)
+![设置](/images/spring-security-jwt-02.webp)
 
 如果我们仔细查看标头，我们会看到`alg:none`。这是因为我们没有指定要使用的任何算法。正如我们之前看到的，建议我们使用算法来生成签名。
 
@@ -212,7 +212,7 @@ pj9AvbLtwITqBYazDnaTibCLecM-cQ5RAYw2YYtkyeA
 
 解码此 JWT 可得到：
 
-![设置](../../../images/spring-security-jwt-03.webp)
+![设置](/images/spring-security-jwt-03.webp)
 
 ### 解析 JWT 令牌
 
@@ -310,7 +310,7 @@ mvnw clean verify spring-boot:run (for Windows)
 
 该应用程序有一个 REST 端点`/library/books/all`，用于获取数据库中存储的所有书籍。如果我们通过 Postman 进行此 GET 调用，则会收到`401 UnAuthorized`错误：
 
-![设置](../../../images/spring-security-jwt-04.webp)
+![设置](/images/spring-security-jwt-04.webp)
 
 这是因为，我们在pom.xml中添加的依赖项会自动为所有创建的端点引入基本身份验证。spring-boot-starter-security 由于我们没有在 Postman 中指定任何凭据，因此我们收到`UnAuthorized`错误。就本文而言，我们需要用基于 JWT 的身份验证替换基本身份验证。我们知道 Spring 通过触发处理每个请求的身份验证和授权的过滤器链来为我们的端点提供安全性。[`UsernamePasswordAuthenticationFilter`](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.html)负责验证每个请求的凭据。为了覆盖此过滤器，让我们创建一个`Filter`名为的新过滤器`JwtFilter`。此过滤器将扩展`OncePerRequestFilter`类，因为我们希望每个请求仅调用一次过滤器：
 
@@ -616,7 +616,7 @@ public class TokenResponse {
 
 现在创建了 API，让我们启动应用程序并尝试使用 Postman 访问端点。我们看到`401 Unauthorized`以下错误：
 
-![设置](../../../images/spring-security-jwt-05.webp)
+![设置](/images/spring-security-jwt-05.webp)
 
 原因和我们之前遇到的一样。Spring Security 默认保护所有端点。我们需要一种方法来仅排除令牌端点的保护。此外，在启动日志中我们可以看到，虽然我们已经定义`JwtFilter`并且我们期望此过滤器覆盖`UsernamePasswordAuthenticationFilter`，但我们没有看到此过滤器连接到安全链中，如下所示：
 
@@ -700,13 +700,13 @@ org.springframework.security.web.access.intercept.
 
 我们看到`JwtFilter`被链接起来，这表明基本身份验证现在已被基于令牌的身份验证所覆盖。现在，让我们再次尝试访问端点`/token/create`。我们看到端点现在能够成功返回生成的令牌：
 
-![设置](../../../images/spring-security-jwt-06.webp)
+![设置](/images/spring-security-jwt-06.webp)
 
 ### 保护图书馆应用程序端点
 
 现在，我们能够成功创建令牌，我们需要将此令牌传递给我们的库应用程序以成功调用`/library/books/all`。让我们添加一个带有生成的令牌值`Authorization`的类型的标头`Bearer Token`并触发请求。我们现在可以看到 200 OK 响应，如下所示：
 
-![设置](../../../images/spring-security-jwt-07.webp)
+![设置](/images/spring-security-jwt-07.webp)
 
 ### 使用 JWT 处理异常
 
@@ -770,7 +770,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 `401 Unauthorized`通过这些更改，我们现在可以看到包含以下异常的异常消息：
 
-![设置](../../../images/spring-security-jwt-08.webp)
+![设置](/images/spring-security-jwt-08.webp)
 
 但是，需要注意的是，`JwtFilter`只有通过 Spring Security 过滤器链保护的端点才会调用 。在我们的例子中，端点是`/library/books/all`。由于我们已经从 Spring Security 中排除了令牌端点`/token/create`，因此下面的异常处理`JwtAuthenticationEntryPoint`将不适用于此处。对于这种情况，我们将使用 Spring 的全局异常处理程序来处理异常。
 
@@ -788,7 +788,7 @@ public class GlobalExceptionHandler {
 
 `401 Unauthorized`通过此异常处理，由于凭证不良而导致的异常现在将通过错误处理：
 
-![设置](../../../images/spring-security-jwt-09.webp)
+![设置](/images/spring-security-jwt-09.webp)
 
 ## Swagger 文档
 
@@ -860,7 +860,7 @@ springdoc:
 
 让我们尝试运行该应用程序并在上述 URL 处加载 Swagger 页面。当我们尝试访问端点时，我们会看到以下内容：
 
-![设置](../../../images/spring-security-jwt-10.webp)
+![设置](/images/spring-security-jwt-10.webp)
 
 **这是因为应用程序中的所有端点都自动受到保护。我们需要一种方法来明确排除 swagger 端点不受保护。** 我们可以通过在类中添加`WebSecurityCustomizer`bean 并排除 swagger 端点来实现这一点`SecurityConfiguration`。
 
@@ -878,15 +878,15 @@ springdoc:
 
 现在，当我们运行应用程序时，swagger 页面将按如下方式加载：
 
-![设置](../../../images/spring-security-jwt-11.webp)
+![设置](/images/spring-security-jwt-11.webp)
 
 由于我们只有一个安全方案，因此我们将 JWT 令牌添加到`Authorize`swagger 页面顶部的按钮中：
 
-![设置](../../../images/spring-security-jwt-12.webp)
+![设置](/images/spring-security-jwt-12.webp)
 
 设置了承载令牌后，让我们尝试访问`/library/books/all`端点：
 
-![设置](../../../images/spring-security-jwt-13.webp)
+![设置](/images/spring-security-jwt-13.webp)
 
 这样，我们就成功地为我们的应用程序配置了 swagger 端点。
 
