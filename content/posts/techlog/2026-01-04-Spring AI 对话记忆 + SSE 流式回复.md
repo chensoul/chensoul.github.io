@@ -2,7 +2,7 @@
 title: "Spring AI 对话记忆 + SSE 流式回复"
 date: 2026-01-04
 slug: spring-ai-chat-memory-sse
-categories: ["ai"]
+categories: [ "techlog" ]
 tags: ['spring-ai', 'sse']
 ---
 

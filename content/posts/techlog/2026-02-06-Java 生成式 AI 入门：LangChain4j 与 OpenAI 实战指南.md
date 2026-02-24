@@ -2,7 +2,7 @@
 title: "Java 生成式 AI 入门：LangChain4j 与 OpenAI 实战指南"
 date: 2026-02-06
 slug: getting-started-with-langchain4j
-categories: ["ai"]
+categories: [ "techlog" ]
 tags: ['langchain4j', 'ai', 'openai']
 ---
 

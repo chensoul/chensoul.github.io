@@ -2,7 +2,7 @@
 title: "All things about OAuth"
 date: 2024-06-06
 slug: all-things-about-oauth
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['oauth2']
 ---
 

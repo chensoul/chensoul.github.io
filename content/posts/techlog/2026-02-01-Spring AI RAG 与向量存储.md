@@ -2,7 +2,7 @@
 title: "Spring AI RAG 与向量存储"
 date: 2026-02-01
 slug: spring-ai-rag-vector-store
-categories: ["ai"]
+categories: [ "techlog" ]
 tags: ['spring-ai', 'rag', 'redis']
 ---
 

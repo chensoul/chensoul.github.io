@@ -3,7 +3,7 @@ title: "使用Docker Model Runner和Spring AI运行AI模型"
 description: "学习如何使用Docker Model Runner和Spring AI构建本地AI应用，实现RAG功能、向量搜索和模型本地化部署。包含完整代码示例和最佳实践。"
 date: 2025-10-09
 slug: docker-model-runner-spring-ai-local-ai-application
-categories: ["ai"]
+categories: [ "techlog" ]
 tags: ['spring-ai', 'docker-model-runner', 'rag', 'pgvector', 'gemma']
 ---
 

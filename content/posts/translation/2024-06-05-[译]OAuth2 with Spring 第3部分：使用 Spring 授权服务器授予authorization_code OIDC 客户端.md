@@ -2,7 +2,7 @@
 title: "[译]OAuth2 with Spring 第3部分：使用Spring授权服务器授予authorization_code OIDC客户端"
 date: 2024-06-05
 slug: oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot','oauth2']
 ---
 

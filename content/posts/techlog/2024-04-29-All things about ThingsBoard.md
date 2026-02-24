@@ -2,7 +2,7 @@
 title: "All things about ThingsBoard"
 date: 2024-04-29
 slug: all-things-about-thingsboard
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['thingsboard']
 ---
 

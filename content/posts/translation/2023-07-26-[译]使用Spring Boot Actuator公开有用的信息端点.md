@@ -2,7 +2,7 @@
 title: "[译]使用Spring Boot Actuator公开有用的信息端点"
 date: 2023-07-26
 slug: spring-boot-info-endpoint
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot']
 ---
 

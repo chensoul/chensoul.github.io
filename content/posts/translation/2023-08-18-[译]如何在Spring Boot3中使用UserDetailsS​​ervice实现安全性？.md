@@ -2,7 +2,7 @@
 title: "[译]如何在Spring Boot3中使用UserDetailsService实现安全性？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot3-using-userdetailsservice
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot', 'security']
 ---
 

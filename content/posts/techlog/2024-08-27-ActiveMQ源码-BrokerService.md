@@ -2,7 +2,7 @@
 title: "ActiveMQ源码-BrokerService和PersistenceAdapter"
 date: 2024-08-27
 slug: activemq-source-code-broker-service
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['activemq']
 ---
 

@@ -3,7 +3,7 @@ title: "K8s安装Cert Manager"
 date: 2024-05-10
 slug: install-cert-manager
 tags: ['kubernetes']
-categories: ["cloud-native"]
+categories: [ "techlog" ]
 ---
 
 cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。

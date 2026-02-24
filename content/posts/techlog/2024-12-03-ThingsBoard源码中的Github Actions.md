@@ -2,7 +2,7 @@
 title: "ThingsBoard源码中的Github Actions"
 date: 2024-12-03
 slug: github-actions-in-thingsboard
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['thingsboard', 'github']
 ---
 

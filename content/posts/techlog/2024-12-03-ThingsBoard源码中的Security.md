@@ -2,7 +2,7 @@
 title: "ThingsBoard源码中的Security"
 date: 2024-12-03
 slug: security-in-thingsboard
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['security', 'thingsboard']
 ---
 

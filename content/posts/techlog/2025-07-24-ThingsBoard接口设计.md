@@ -2,7 +2,7 @@
 title: "ThingsBoard接口设计"
 date: 2025-07-24
 slug: thingsboard-api
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['docker','thingsboard']
 ---
 

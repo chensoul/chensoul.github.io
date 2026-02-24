@@ -2,7 +2,7 @@
 title: "Github Action 发布 Jar 到 Maven 中央仓库"
 date: 2024-08-01
 slug: publishing-a-jar-to-maven-repository-with-github-action
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['github','maven']
 ---
 

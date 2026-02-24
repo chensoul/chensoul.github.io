@@ -2,7 +2,7 @@
 title: "将 Maven 站点发布到 GitHub Pages"
 date: 2024-07-18
 slug: publishing-a-maven-site-to-github-pages
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['maven', 'github']
 ---
 

@@ -2,7 +2,7 @@
 title: "[译]Spring Security 和 JWT 入门"
 date: 2024-10-15
 slug: spring-security-jwt-guard
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot','security','jwt']
 ---
 

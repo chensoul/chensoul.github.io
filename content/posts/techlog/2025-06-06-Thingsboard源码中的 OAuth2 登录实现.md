@@ -2,7 +2,7 @@
 title: "Thingsboard源码中的OAuth2登录实现"
 date: 2025-06-06
 slug: oauth2-client-login-in-thingsboard
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['oauth2', 'thingsboard']
 ---
 

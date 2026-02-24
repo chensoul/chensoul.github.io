@@ -2,7 +2,7 @@
 title: "All things about MicroProfile"
 date: 2023-12-14
 slug: all-things-about-microprofile
-categories: ["java"]
+categories: [ "techlog" ]
 tags: ['microprofile']
 ---
 

@@ -2,7 +2,7 @@
 title: "[译]Spring Security 面试问题"
 date: 2023-10-12
 slug: spring-security-interview-questions
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot','security','jwt']
 ---
 

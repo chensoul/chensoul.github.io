@@ -3,7 +3,7 @@ title: "Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践�
 slug: spring-ai-text2sql-showcase
 description: "深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"
 tags: ['spring-ai', 'text2sql']
-categories: ["ai"]
+categories: [ "techlog" ]
 date: 2025-09-30
 ---
 

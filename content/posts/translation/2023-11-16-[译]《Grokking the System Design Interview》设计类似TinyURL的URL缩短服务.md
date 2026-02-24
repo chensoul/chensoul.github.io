@@ -2,7 +2,7 @@
 title: "[译]《Grokking the System Design Interview》设计类似 TinyURL 的 URL 缩短服务"
 date: 2023-11-16
 slug: designing-a-url-shortening-service
-categories: ["architecture"]
+categories: [ "translation" ]
 tags: ['architecture']
 
 ---

@@ -2,7 +2,7 @@
 title: "[译]使用@Async进行Spring Security上下文传播"
 date: 2023-08-25
 slug: spring-security-async-principal-propagation
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot']
 ---
 

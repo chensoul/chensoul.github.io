@@ -2,7 +2,7 @@
 title: "[译]Spring Boot项目如何实现Security？"
 date: 2023-08-18
 slug: how-to-implement-security-in-spring-boot-project
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot', 'security']
 ---
 

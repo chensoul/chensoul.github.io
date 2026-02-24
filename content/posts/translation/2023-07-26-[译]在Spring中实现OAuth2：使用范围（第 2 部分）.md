@@ -2,7 +2,7 @@
 title: "[译]在 Spring 中实现 OAuth2：使用范围（第 2 部分）"
 date: 2023-07-26
 slug: using-oauth2-in-spring-scopes
-categories: ["spring-boot"]
+categories: [ "translation" ]
 tags: ['spring-boot', 'oauth2']
 ---
 
