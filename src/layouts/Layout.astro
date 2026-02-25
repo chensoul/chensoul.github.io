@@ -101,47 +101,18 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!-- 首帧前设置 data-theme，避免白/黑闪（与 toggle-theme.js 逻辑一致） -->
+    <!-- 参考 astro-paper：首字节内联脚本设置 data-theme，防止闪白 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
-      (function () {
-        if (!lightAndDarkMode) return;
-        var DARK_START = 19, DARK_END = 7;
-        function get(key) {
-          try { return localStorage.getItem(key); } catch (e) { return null; }
-        }
-        function norm(v) { return v === "dark" ? "dark" : v === "light" ? "light" : null; }
-        function todayStr() {
-          try {
-            var t = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
-            return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
-          } catch (e) {
-            var d = new Date();
-            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-          }
-        }
-        function darkByTime() {
-          try {
-            var h = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
-            return h >= DARK_START || h < DARK_END;
-          } catch (e) {
-            return new Date().getHours() >= DARK_START || new Date().getHours() < DARK_END;
-          }
-        }
-        var theme = "light";
-        try {
-          var cur = norm(get("theme"));
-          var userSet = get("userSetTheme") === "true";
-          var setDate = get("userSetThemeDate");
-          if (userSet && setDate === todayStr() && cur) { theme = cur; }
-          else if (darkByTime()) { theme = "dark"; }
-          else if (cur) { theme = cur; }
-          else if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) { theme = "dark"; }
-        } catch (e) {}
-        document.documentElement.setAttribute("data-theme", theme);
+      (function(){
+        if(!lightAndDarkMode){document.documentElement.setAttribute("data-theme","light");return;}
+        var cur=localStorage.getItem("theme");
+        var theme=(cur==="dark"||cur==="light")?cur:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+        document.documentElement.setAttribute("data-theme",theme);
+        window.theme={themeValue:theme};
       })();
     </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     <!-- 基础 meta 标签 -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
@@ -221,7 +192,9 @@ const structuredData = {
     <!-- View transitions: https://docs.astro.build/en/guides/view-transitions/ -->
     <ClientRouter />
 
-    <script is:inline src="/toggle-theme.js"></script>
+    <script>
+      import "@/scripts/theme";
+    </script>
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
     <slot name="head" />

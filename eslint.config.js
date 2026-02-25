@@ -28,7 +28,6 @@ export default [
       ".astro",
       "public/pagefind/**",
       "public/tocbot/**",
-      "public/toggle-theme.js",
     ],
   },
 ];
