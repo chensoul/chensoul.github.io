@@ -119,7 +119,7 @@
           requestAnimationFrame(step);
         } else {
           setProgress(els, target);
-          onComplete && onComplete();
+          onComplete?.();
         }
       }
       requestAnimationFrame(step);

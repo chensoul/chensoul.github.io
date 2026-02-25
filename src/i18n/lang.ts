@@ -27,7 +27,7 @@ import type dayjs from "dayjs";
  *
  * 包含所有页面和组件的英文文本
  */
-const en = {
+const _en = {
   // ---------- 页面配置 ----------
   /**
    * 归档页配置
@@ -251,7 +251,7 @@ const en = {
  *
  * 类型与 en 保持一致，确保所有字段完整
  */
-const zhCN: typeof en = {
+const zhCN: typeof _en = {
   archives: {
     title: "归档",
     desc: "所有文章。",
@@ -339,7 +339,7 @@ const zhCN: typeof en = {
 
 // 繁體中文
 /*
-const zhHant: typeof en = {
+const zhHant: typeof _en = {
   archives: {
     title: "歸檔",
     desc: "所有文章。",
@@ -410,7 +410,7 @@ const zhHant: typeof en = {
 
 // 日本語 (machine translation)
 /*
-const ja: typeof en = {
+const ja: typeof _en = {
   archives: {
     title: "アーカイブ",
     desc: "投稿したすべての記事。",
@@ -482,7 +482,7 @@ const ja: typeof en = {
 // cspell:disable
 // Español (machine translation)
 /*
-const es: typeof en = {
+const es: typeof _en = {
   archives: {
     title: "Archivos",
     desc: "Todos los artículos que he publicado.",

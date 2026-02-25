@@ -1652,7 +1652,9 @@ for (let m = 0; m < 12; m++) {
       if (runJson) {
         try {
           openModal(JSON.parse(runJson) as RunDetail);
-        } catch (_) {}
+        } catch {
+          // ignore invalid run JSON
+        }
       }
     });
 

@@ -87,7 +87,7 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         showSubResults: true,
         showImages: false,
         // 移除 URL 中的 .html 后缀
-        processResult: function (result: any) {
+        processResult: function (result: { url: string; sub_results?: Array<{ url: string }> }) {
           const cleanUrl = (url: string) =>
             url
               .replace(/\.html$/, "")
@@ -97,7 +97,7 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 
           // 处理嵌套结果 (Sub-results)
           if (result.sub_results && Array.isArray(result.sub_results)) {
-            result.sub_results.forEach((sub: any) => {
+            result.sub_results.forEach((sub: { url: string }) => {
               sub.url = cleanUrl(sub.url);
             });
           }

@@ -13,6 +13,11 @@ export default [
       },
     },
   },
-  { rules: { "no-console": "error" } },
-  { ignores: ["dist/**", ".astro", "public/pagefind/**"] },
+  {
+    rules: {
+      "no-console": "error",
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    },
+  },
+  { ignores: ["dist/**", ".astro", "public/pagefind/**", "public/tocbot/**", "public/toggle-theme.js"] },
 ];

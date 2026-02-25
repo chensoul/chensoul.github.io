@@ -88,7 +88,7 @@ export async function getBlogMetrics(): Promise<BlogMetrics> {
    * - 使用经验值：按每篇文章 1500 字估算
    * - 这个值基于中文博客文章的平均长度经验
    */
-  let totalWords = posts.length * 1500;
+  const totalWords = posts.length * 1500;
 
   /**
    * 将总字数转换为"万"单位
