@@ -104,26 +104,7 @@ const structuredData = {
     <!-- 基础 meta 标签 -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- 首帧前默认深色背景（静态，不依赖脚本），避免刷新时闪白；脚本再按 localStorage 覆盖为浅色 -->
-    <style is:inline>
-      html { background-color: #302e2c !important; }
-      body { background-color: #383634 !important; }
-    </style>
-    <script is:inline>
-      (function () {
-        try {
-          var t = localStorage.getItem("theme");
-          if (t === "light") {
-            document.documentElement.setAttribute("data-theme", "light");
-            var s = document.createElement("style");
-            s.textContent = "html { background-color: #f9f8f6 !important; } body { background-color: #ebe8e4 !important; }";
-            document.head.appendChild(s);
-          } else {
-            if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
-          }
-        } catch (_) {}
-      })();
-    </script>
+    <script is:inline src="/toggle-theme.js"></script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     {
@@ -204,9 +185,6 @@ const structuredData = {
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
     <slot name="head" />
-
-    <!-- 主题切换完整脚本（defer 不阻塞首屏） -->
-    <script is:inline src="/toggle-theme.js" defer></script>
 
   </head>
   <body class="site-outer-bg">

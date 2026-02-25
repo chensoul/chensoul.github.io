@@ -3,6 +3,22 @@
 // 2. 支持用户手动设置主题（当天有效，次日重新启用自动切换）
 // 3. 支持系统主题偏好检测
 // 4. 完整的错误处理和调试功能
+// 5. 首帧前同步主题（本脚本在 head 内同步加载时立即执行），避免刷新/切换时闪白
+
+(function applyThemeBeforeFirstPaint() {
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+      var s = document.createElement("style");
+      s.textContent =
+        "html { background-color: #f9f8f6 !important; } body { background-color: #ebe8e4 !important; }";
+      document.head.appendChild(s);
+    } else if (t === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  } catch (_) {}
+})();
 
 const primaryColorScheme = "";
 
