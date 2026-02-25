@@ -30,6 +30,7 @@ function applyThemeBackgroundStyle(theme) {
       document.documentElement.setAttribute("data-theme", "dark");
       applyThemeBackgroundStyle("dark");
     }
+    // 无存储时由下方 getPreferTheme() + reflectPreference() 设置，可能有一帧默认样式
   } catch (_) {}
 })();
 
@@ -372,7 +373,34 @@ window.onload = () => {
       s.id = THEME_BG_STYLE_ID;
       s.textContent = "html, body { background-color: " + bg + " !important; }";
       newDoc.head.appendChild(s);
+      if (theme === "dark") {
+        var fs = newDoc.createElement("style");
+        fs.id = "theme-frame-bg";
+        fs.textContent =
+          "html[data-theme=\"dark\"] #site-frame { background-color: " +
+          THEME_BG_DARK +
+          " !important; }";
+        newDoc.head.appendChild(fs);
+      }
     }
+
+    // 交换前先刷新当前文档的 body 背景样式，避免交换后 body 闪白
+    applyThemeBackgroundStyle(theme || "light");
+
+    // 暗色下在交换前为当前文档注入 #site-frame 深色背景，避免交换后中间区域闪白
+    var frameStyleId = "theme-frame-bg";
+    var frameEl = document.getElementById(frameStyleId);
+    if (!frameEl) {
+      frameEl = document.createElement("style");
+      frameEl.id = frameStyleId;
+      document.head.appendChild(frameEl);
+    }
+    frameEl.textContent =
+      theme === "dark"
+        ? "html[data-theme=\"dark\"] #site-frame { background-color: " +
+          THEME_BG_DARK +
+          " !important; }"
+        : "";
 
     const bgColor = document
       .querySelector("meta[name='theme-color']")
