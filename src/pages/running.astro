@@ -758,6 +758,10 @@ for (let m = 0; m < 12; m++) {
     visibility: visible;
   }
 
+  html[data-theme="dark"] .contribution-graph .day::after {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
   .contribution-graph .day.out-of-range {
     background: transparent;
   }
@@ -821,6 +825,14 @@ for (let m = 0; m < 12; m++) {
     border-color: var(--accent);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transform: translateY(-1px);
+  }
+
+  html[data-theme="dark"] .run-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  html[data-theme="dark"] .run-card:hover,
+  html[data-theme="dark"] .run-card:focus-visible {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   }
 
   .run-card:hover .run-date,
@@ -980,6 +992,10 @@ for (let m = 0; m < 12; m++) {
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     animation: running-modalSlideIn 0.3s ease;
+  }
+
+  html[data-theme="dark"] .run-detail-modal .modal-content {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
 
   @keyframes running-modalSlideIn {
@@ -1219,6 +1235,7 @@ for (let m = 0; m < 12; m++) {
     font-weight: 600;
     font-size: 0.8125rem;
     font-variant-numeric: tabular-nums;
+    color: var(--foreground);
   }
 
   /* 心率/配速区间：与参考站一致，整块（数值+区间）同一背景色 */

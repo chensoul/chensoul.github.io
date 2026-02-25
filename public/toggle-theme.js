@@ -1,38 +1,8 @@
-// 主题切换系
+// 主题切换系（与 astro-lhasa 方案一致：仅 data-theme + CSS 变量，无首帧注入）
 // 1. 支持基于时间的自动主题切换（夜间自动切换到深色主题）
 // 2. 支持用户手动设置主题（当天有效，次日重新启用自动切换）
 // 3. 支持系统主题偏好检测
 // 4. 完整的错误处理和调试功能
-// 5. 首帧前同步主题（本脚本在 head 内同步加载时立即执行），避免刷新/切换时闪白
-
-var THEME_BG_STYLE_ID = "theme-bg-inline";
-var THEME_BG_LIGHT = "#f9f8f6";
-var THEME_BG_DARK = "#302e2c";
-
-function applyThemeBackgroundStyle(theme) {
-  var el = document.getElementById(THEME_BG_STYLE_ID);
-  if (!el) {
-    el = document.createElement("style");
-    el.id = THEME_BG_STYLE_ID;
-    document.head.appendChild(el);
-  }
-  var bg = theme === "dark" ? THEME_BG_DARK : THEME_BG_LIGHT;
-  el.textContent = "html, body { background-color: " + bg + " !important; }";
-}
-
-(function applyThemeBeforeFirstPaint() {
-  try {
-    var t = localStorage.getItem("theme");
-    if (t === "light") {
-      document.documentElement.setAttribute("data-theme", "light");
-      applyThemeBackgroundStyle("light");
-    } else if (t === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-      applyThemeBackgroundStyle("dark");
-    }
-    // 无存储时由下方 getPreferTheme() + reflectPreference() 设置，可能有一帧默认样式
-  } catch (_) {}
-})();
 
 const primaryColorScheme = "";
 
@@ -221,7 +191,6 @@ function setPreference(userManualSet = false) {
 
 function reflectPreference() {
   document.firstElementChild.setAttribute("data-theme", themeValue);
-  applyThemeBackgroundStyle(themeValue);
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
   const body = document.body;
   if (body) {
@@ -360,28 +329,10 @@ window.onload = () => {
   document.addEventListener("astro:after-swap", setThemeFeature);
 
   document.addEventListener("astro:before-swap", event => {
-    const currentHtml = document.documentElement;
-    const newDoc = event.newDocument;
-    const newHtml = newDoc.documentElement;
-
-    // 同步主题到新文档，避免 View Transitions 交换后 html 属性被新文档覆盖导致闪白
-    const theme = currentHtml.getAttribute("data-theme");
-    if (theme) {
-      newHtml.setAttribute("data-theme", theme);
-      var bg = theme === "dark" ? THEME_BG_DARK : THEME_BG_LIGHT;
-      var s = newDoc.createElement("style");
-      s.id = THEME_BG_STYLE_ID;
-      s.textContent = "html, body { background-color: " + bg + " !important; }";
-      newDoc.head.appendChild(s);
-    }
-
-    // 交换前先刷新当前文档的 body 背景样式，避免交换后 body 闪白
-    applyThemeBackgroundStyle(theme || "light");
-
     const bgColor = document
       .querySelector("meta[name='theme-color']")
       ?.getAttribute("content");
-    newDoc
+    event.newDocument
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   });

@@ -5,6 +5,15 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /*
+ * 主题方案：单一开关 + CSS 变量
+ * - 切换方式：仅在 <html> 上设置 data-theme="light" | "dark"（由 toggle-theme.js 负责）。
+ * - 所有与主题相关的样式必须使用下方变量或 Tailwind 语义类，禁止在组件里写死色值。
+ *
+ * Tailwind 语义类（随主题自动变化）：
+ *   text-foreground / text-accent / text-muted、bg-background / bg-muted、
+ *   border-border、outline-accent、ring-accent、divide-border、
+ *   prose 内的 a（accent）、hr（border）、blockquote、code 等均已用变量。
+ *
  * 全站颜色：仅在此处定义色值（跑步页除外），其余由变量派生。
  * 核心 9 色：background / page-background / foreground / accent / muted / border /
  *            text-muted / skeleton / error。
