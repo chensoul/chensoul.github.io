@@ -228,18 +228,3 @@ html[data-theme="light"] .expressive-code {
     margin: 0.3rem !important;
   }
 }
-
-/* View Transitions */
-::view-transition-group(root) {
-  background: var(--page-background);
-}
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation-duration: 800ms;
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: 0.01ms;
-  }
-}
