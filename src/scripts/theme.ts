@@ -65,16 +65,10 @@ function reflectPreference(): void {
   }
 }
 
-// Update the global theme API (inline script may have created window.theme with only themeValue)
+// Update the global theme API
 if (window.theme) {
-  if (window.theme.themeValue !== undefined) themeValue = window.theme.themeValue;
-  window.theme.themeValue = themeValue;
   window.theme.setPreference = setPreference;
   window.theme.reflectPreference = reflectPreference;
-  window.theme.getTheme = () => themeValue;
-  window.theme.setTheme = (val: string) => {
-    themeValue = val;
-  };
 } else {
   window.theme = {
     themeValue,
@@ -108,29 +102,16 @@ setThemeFeature();
 // Runs on view transitions navigation
 document.addEventListener("astro:after-swap", setThemeFeature);
 
-// Theme background colors (must match variables.css) for instant apply before CSS
-const THEME_BG = { dark: "#302e2c", light: "#f9f8f6" } as const;
-
-// Before swap: apply theme and background to new document to avoid white flash in dark mode
+// Set theme-color value before page transition
+// to avoid navigation bar color flickering in Android dark mode
 document.addEventListener("astro:before-swap", event => {
   const astroEvent = event;
-  const newDoc = astroEvent.newDocument;
-
-  // 1) Sync theme to new document's <html> and <body> so first paint is never white
-  const theme =
-    document.documentElement.getAttribute("data-theme") ||
-    (localStorage.getItem(THEME) === DARK ? DARK : LIGHT);
-  const bg = THEME_BG[theme === DARK ? "dark" : "light"];
-  newDoc.documentElement.setAttribute("data-theme", theme);
-  newDoc.documentElement.style.backgroundColor = bg;
-  if (newDoc.body) newDoc.body.style.backgroundColor = bg;
-
-  // 2) Preserve theme-color meta for Android nav bar
   const bgColor = document
     .querySelector("meta[name='theme-color']")
     ?.getAttribute("content");
+
   if (bgColor) {
-    newDoc
+    astroEvent.newDocument
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
@@ -144,5 +125,3 @@ window
     window.theme?.setTheme(themeValue);
     setPreference();
   });
-
-export {};
