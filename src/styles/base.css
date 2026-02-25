@@ -62,6 +62,7 @@ html[data-theme="light"] .expressive-code {
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
+    background-color: var(--background);
   }
   body {
     @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
@@ -186,39 +187,6 @@ html[data-theme="light"] .expressive-code {
   }
 }
 
-/* 滚动条 */
-* {
-  scrollbar-width: thin;
-}
-*::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-}
-*::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  background-clip: padding-box;
-  border: 1px solid transparent;
-}
-*::-webkit-scrollbar-track,
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
-@media (pointer: coarse) {
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-}
-.expressive-code pre::-webkit-scrollbar {
-  width: 3px !important;
-  height: 3px !important;
-}
-.expressive-code pre::-webkit-scrollbar-thumb {
-  border-radius: 3px !important;
-}
-.expressive-code pre {
-  scrollbar-width: thin !important;
-}
 @media (max-width: 640px) {
   .expressive-code .copy button {
     width: 1.75rem !important;

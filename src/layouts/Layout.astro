@@ -111,10 +111,13 @@ const structuredData = {
     <!-- 参考 astro-paper：首字节内联脚本设置 data-theme，防止闪白 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function(){
-        if(!lightAndDarkMode){document.documentElement.setAttribute("data-theme","light");return;}
-        var cur=localStorage.getItem("theme");
-        var theme=(cur==="dark"||cur==="light")?cur:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+        var theme="light";
+        if(lightAndDarkMode){
+          var cur=localStorage.getItem("theme");
+          theme=(cur==="dark"||cur==="light")?cur:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+        }
         document.documentElement.setAttribute("data-theme",theme);
+        document.documentElement.style.backgroundColor=theme==="dark"?"#302e2c":"#f9f8f6";
         window.theme={themeValue:theme};
       })();
     </script>
