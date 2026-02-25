@@ -1,0 +1,245 @@
+/**
+ * 字体 + 主题 + 基础层 + 工具 + 滚动条 + View Transitions
+ * 原 fonts.css、themes.css 已合并于此
+ */
+/* ========== 字体 ========== */
+@import "@fontsource/noto-sans-sc/400.css";
+@import "@fontsource/noto-sans-sc/700.css";
+@import "@fontsource/noto-sans-sc/800.css";
+@import "@fontsource/noto-sans/400.css";
+@import "@fontsource/noto-sans/400-italic.css";
+@import "@fontsource/noto-sans/700.css";
+@import "@fontsource/roboto-mono/400.css";
+@import "@fontsource/roboto-mono/400-italic.css";
+@import "@fontsource/roboto-mono/600.css";
+@font-face {
+  font-family: "Fallback Sans";
+  src:
+    local("Microsoft YaHei"), local("PingFang SC"), local("Hiragino Sans GB"),
+    local("Noto Sans CJK SC"), local("Source Han Sans SC"),
+    local("WenQuanYi Micro Hei");
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+/* ========== 主题（Tailwind @theme + 组件覆盖） ========== */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-skeleton: var(--skeleton);
+  --color-error: var(--error);
+}
+html[data-theme="dark"] .prose {
+  --tw-prose-headings: var(--foreground);
+}
+html[data-theme="dark"] section.text-center h1 {
+  color: var(--foreground);
+}
+html[data-theme="light"] .expressive-code {
+  --ec-codeBg: var(--page-background);
+  --ec-frm-edBg: var(--page-background);
+  --ec-frm-edActTabBg: var(--page-background);
+  --ec-frm-trmBg: var(--page-background);
+}
+
+/* ========== 基础层 ========== */
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-muted) 80%,
+        var(--color-foreground) 20%
+      )
+      transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
+    font-family: var(--font-sans), var(--font-emoji);
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section,
+  footer {
+    @apply mx-auto max-w-4xl;
+  }
+
+  main#main-content {
+    @apply mt-8;
+  }
+}
+
+.active-nav {
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+@layer utilities {
+  #sidebar {
+    @apply fixed z-40 transform overflow-y-auto bg-background text-sm;
+  }
+
+  @media (max-width: 1023px) {
+    #sidebar {
+      @apply fixed top-0 right-0 bottom-0 left-auto flex h-full max-h-none w-4/5 max-w-70 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
+    }
+
+    #sidebar.mobile-open {
+      @apply translate-x-0;
+    }
+  }
+
+  @media (min-width: 1300px) {
+    /* TOC 在 site-frame 外，固定于视口右侧 */
+    #sidebar {
+      position: fixed;
+      top: 6rem;
+      right: 4.5rem;
+      background-color: var(--background);
+      @apply z-40 m-0 max-h-[calc(100vh-8rem)] w-40 translate-x-0 rounded-lg p-4 shadow-none;
+    }
+
+    #sidebar.no-toc {
+      @apply top-150;
+    }
+
+    html[data-theme="dark"] #sidebar {
+      background-color: transparent;
+    }
+
+    @media (min-width: 1280px) {
+      #sidebar {
+        @apply w-56;
+      }
+    }
+  }
+
+  .toc-list-item {
+    @apply truncate overflow-hidden whitespace-nowrap;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+  }
+  .toc-list-item:last-child {
+    margin-bottom: 0;
+  }
+  .toc-link {
+    color: var(--foreground);
+    display: block;
+    padding: 0.125rem 0;
+    line-height: 1.4;
+  }
+  .toc-link.is-active-link {
+    @apply !text-accent;
+  }
+  .toc-link::before {
+    @apply !hidden;
+    content: "";
+  }
+
+  @media (max-width: 1023px) {
+    .toc-list-item {
+      @apply my-4;
+    }
+  }
+
+  .icon-link::before {
+    @apply ml-1 inline-block text-accent !no-underline opacity-0 transition-opacity duration-200;
+    content: "#";
+  }
+
+  #sidebar #back-to-top svg,
+  #sidebar #back-to-top span {
+    color: var(--foreground);
+  }
+
+  h1:hover .icon-link::before,
+  h2:hover .icon-link::before,
+  h3:hover .icon-link::before,
+  h4:hover .icon-link::before,
+  h5:hover .icon-link::before,
+  h6:hover .icon-link::before {
+    @apply opacity-100;
+  }
+
+  .expressive-code {
+    @apply mt-2 mb-4;
+  }
+
+  html[data-theme="light"] .expressive-code pre {
+    background-color: var(--border) !important;
+  }
+}
+
+/* 滚动条 */
+* {
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+@media (pointer: coarse) {
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+.expressive-code pre::-webkit-scrollbar {
+  width: 3px !important;
+  height: 3px !important;
+}
+.expressive-code pre::-webkit-scrollbar-thumb {
+  border-radius: 3px !important;
+}
+.expressive-code pre {
+  scrollbar-width: thin !important;
+}
+@media (max-width: 640px) {
+  .expressive-code .copy button {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+  .expressive-code .copy button:after {
+    margin: 0.3rem !important;
+  }
+}
+
+/* View Transitions */
+::view-transition-group(root) {
+  background: var(--page-background);
+}
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 800ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+  }
+}
