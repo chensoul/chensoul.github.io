@@ -1,58 +1,18 @@
-/**
- * 全站变量：字体、间距、动画、断点、颜色（统一在此定义）
- * 颜色按浅色/深色主题分组，@theme 与组件覆盖在 base.css
- */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-:root {
-  /* 字体 */
-  --font-sans: "Noto Sans SC", "Noto Sans", "Fallback Sans", sans-serif;
-  --font-mono: "Roboto Mono", "Noto Sans SC", monospace;
-  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
-
-  /* 间距 */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 4rem;
-
-  /* 动画时长 */
-  --transition-fast: 150ms;
-  --transition-normal: 300ms;
-  --transition-slow: 500ms;
-
-  /* 断点（供 JS 或容器查询使用，媒体查询仍用数值） */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-}
-
-/* ========== 颜色（浅色主题 / 默认） ========== */
 :root,
 html[data-theme="light"] {
   --background: #f9f8f6;
   --foreground: #282728;
   --accent: #2563eb;
-  --skeleton: #e5e7eb;
-  --page-background: color-mix(in srgb, var(--background) 92%, var(--foreground));
-  --text-muted: color-mix(in srgb, var(--foreground) 55%, var(--background));
-  --muted: var(--skeleton);
-  --border: var(--skeleton);
-  --error: #b91c1c;
-  --strong-font-weight: 700;
+  --muted: #e5e7eb;
+  --border: #e5e7eb;
 }
 
-/* ========== 颜色（深色主题） ========== */
 html[data-theme="dark"] {
   --background: #302e2c;
   --foreground: #eaedf3;
   --accent: #d19a66;
-  --skeleton: #374151;
-  --page-background: color-mix(in srgb, var(--background) 92%, var(--foreground));
-  --text-muted: color-mix(in srgb, var(--foreground) 65%, var(--background));
-  --muted: #3d3836bf;
-  --border: var(--skeleton);
-  --error: #f87171;
-  --strong-font-weight: 800;
+  --muted: #374151;
+  --border: #374151;
 }

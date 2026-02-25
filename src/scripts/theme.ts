@@ -1,14 +1,11 @@
-// Extend Window for theme API (set by inline script and this module)
-declare global {
-  interface Window {
-    theme?: {
-      themeValue: string;
-      setPreference: () => void;
-      reflectPreference: () => void;
-      getTheme: () => string;
-      setTheme: (val: string) => void;
-    };
-  }
+interface Window {
+theme?: {
+  themeValue: string;
+  setPreference: () => void;
+  reflectPreference: () => void;
+  getTheme: () => string;
+  setTheme: (val: string) => void;
+};
 }
 
 // Constants
