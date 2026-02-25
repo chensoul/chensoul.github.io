@@ -4,6 +4,12 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/*
+ * 全站颜色：仅在此处定义色值（跑步页除外），其余由变量派生。
+ * 核心 9 色：background / page-background / foreground / accent / muted / border /
+ *            text-muted / skeleton / error。
+ * 派生：nav-link、nav-link-active、toc-top-text-color、year-progress-fill、heading、heading-muted。
+ */
 :root {
   --font-sans: "Noto Sans SC", "Noto Sans", "Fallback Sans", sans-serif;
   --font-mono: "Roboto Mono", "Noto Sans SC", monospace;
@@ -12,42 +18,42 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --page-background: #bfd8e3;
+  --background: #f9f8f6;
+  --page-background: #ebe8e4;
   --foreground: #282728;
-  --accent: #4a8bbd;
+  --accent: #2563eb;
   --muted: #e6e6e6;
   --border: #e5e9f0;
-  --strong-font-weight: 700; /* Compensating visual weight */
-  --nav-link: #2ea9df;
-  --nav-link-active: #000000;
-  --comment-badge-bg: #96d7f5;
-  --toc-top-text-color: #ffffff;
-  --year-progress-fill: var(--page-background);
-  --posts-list-time-color: #6b6b6b; /* 与浅色背景对比 ≥4.5:1，满足 WCAG AA */
+  --text-muted: #6b6b6b;
   --skeleton: #e5e7eb;
   --error: #b91c1c;
+  --strong-font-weight: 700;
+  /* 由核心色派生：导航默认黑色，当前项为主色蓝，悬停可保持或过渡到蓝 */
+  --nav-link: var(--foreground);
+  --nav-link-active: var(--accent);
+  --toc-top-text-color: var(--foreground);
+  --toc-sidebar-bg: #f0eeeb;
+  --year-progress-fill: var(--accent);
   --heading: var(--foreground);
   --heading-muted: var(--foreground);
 }
 
 html[data-theme="dark"] {
-  --background: #23272e;
-  --page-background: #282c34;
+  --background: #302e2c;
+  --page-background: #383634;
   --foreground: #eaedf3;
   --accent: #d19a66;
-  --muted: #343f60bf;
-  --border: #4d4844;
+  --muted: #3d3836bf;
+  --border: #524d4a;
+  --text-muted: #9ca3af;
+  --skeleton: #374151;
+  --error: #f87171;
   --strong-font-weight: 800;
   --nav-link: var(--foreground);
   --nav-link-active: var(--accent);
-  --comment-badge-bg: var(--color-accent);
   --toc-top-text-color: var(--foreground);
+  --toc-sidebar-bg: transparent;
   --year-progress-fill: var(--accent);
-  --posts-list-time-color: #9ca3af; /* 与深色背景对比 ≥4.5:1 */
-  --skeleton: #374151;
-  --error: #f87171;
-  /* 深色主题下标题颜色：更亮以提升可读性 */
   --heading: #f0f4f8;
   --heading-muted: #e2e8f0;
 }
@@ -57,6 +63,7 @@ html[data-theme="dark"] {
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
+  --color-text-muted: var(--text-muted);
   --color-border: var(--border);
   --color-skeleton: var(--skeleton);
   --color-error: var(--error);
@@ -70,6 +77,14 @@ html[data-theme="dark"] .prose {
 /* 深色主题：文章页主标题（.prose 外的 h1，在 section.text-center 内）也使用标题色 */
 html[data-theme="dark"] section.text-center h1 {
   color: var(--heading);
+}
+
+/* Light theme: darker code block background for better contrast */
+html[data-theme="light"] .expressive-code {
+  --ec-codeBg: #ded6cc;
+  --ec-frm-edBg: #ded6cc;
+  --ec-frm-edActTabBg: #ded6cc;
+  --ec-frm-trmBg: #ded6cc;
 }
 
 @layer base {
@@ -102,10 +117,16 @@ html[data-theme="dark"] section.text-center h1 {
   footer {
     @apply mx-auto max-w-4xl;
   }
+
+  /* 导航与主体内容之间留白 */
+  main#main-content {
+    @apply mt-8;
+  }
 }
 
 .active-nav {
   color: var(--nav-link-active) !important;
+  font-weight: 600;
 }
 
 @layer utilities {
@@ -127,7 +148,8 @@ html[data-theme="dark"] section.text-center h1 {
   /* Desktop styles */
   @media (min-width: 1300px) {
     #sidebar {
-      @apply top-36 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-none bg-transparent p-0 shadow-none;
+      background-color: var(--toc-sidebar-bg);
+      @apply top-36 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-lg p-4 shadow-none;
     }
 
     /* When there's no TOC, position the sidebar lower */
@@ -147,9 +169,16 @@ html[data-theme="dark"] section.text-center h1 {
   .toc-list-item {
     @apply truncate overflow-hidden whitespace-nowrap;
     color: var(--toc-top-text-color);
+    margin-bottom: 0.5rem;
+  }
+  .toc-list-item:last-child {
+    margin-bottom: 0;
   }
   .toc-link {
     color: var(--toc-top-text-color);
+    display: block;
+    padding: 0.125rem 0;
+    line-height: 1.4;
   }
   .toc-link.is-active-link {
     @apply !text-accent;
@@ -192,6 +221,11 @@ html[data-theme="dark"] section.text-center h1 {
   /* Code blocks */
   .expressive-code {
     @apply mt-2 mb-4;
+  }
+
+  /* 浅色主题：代码块 pre 背景固定为 #eef0f5，与正文区分 */
+  html[data-theme="light"] .expressive-code pre {
+    background-color: #eef0f5 !important;
   }
 }
 

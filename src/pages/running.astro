@@ -86,6 +86,7 @@ const hrZoneLabels: Record<number, string> = {
   5: "Z5 最大",
 };
 
+/** 心率区间颜色（与 :root --running-zone-* 一致，供 JS 注入 data 属性） */
 const hrZoneColors: Record<number, string> = {
   0: "var(--foreground)",
   1: "#4ade80",
@@ -183,7 +184,7 @@ for (let m = 0; m < 12; m++) {
 <Layout title={`${title} | ${SITE.title}`} description={description}>
   <Header />
   <main id="main-content">
-    <div class="running-page mx-auto max-w-4xl px-4 pt-2 pb-6">
+    <div class="running-page mx-auto max-w-4xl px-4 pt-2 pb-6 max-sm:px-3">
       <article class="mt-0">
         {
           !data?.stats ? (
@@ -265,7 +266,7 @@ for (let m = 0; m < 12; m++) {
                                       {pStats.total_distance}
                                     </span>
                                     <span class="text-xs text-[var(--foreground)]/70">
-                                      距离(公里)
+                                      公里
                                     </span>
                                   </div>
                                   <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
@@ -393,7 +394,7 @@ for (let m = 0; m < 12; m++) {
                             {run.distance}
                           </span>
                           <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            距离（km）
+                            公里
                           </span>
                         </div>
                         <div class="stat flex flex-col gap-0.5">
@@ -512,10 +513,38 @@ for (let m = 0; m < 12; m++) {
 </Layout>
 
 <style is:global>
-  /* Running 页样式：字体与背景随主题变量 --foreground / --muted / --accent / --heading */
+  /* Running 页专用色板（与主题协调，全页仅在此处定义色值） */
+  :root {
+    --running-zone-1: #4ade80;
+    --running-zone-2: #60a5fa;
+    --running-zone-3: #fbbf24;
+    --running-zone-4: #fb923c;
+    --running-zone-5: #f87171;
+    --running-accent-blue: #3b82f6;
+    --running-vdot: #8b5cf6;
+    --running-pace-fast: #22c55e;
+    --running-pace-fast-dark: #16a34a;
+    --running-pace-medium: #60a5fa;
+    --running-pace-medium-dark: #3b82f6;
+    --running-pace-slow: #fb923c;
+    --running-pace-slow-dark: #f97316;
+    --running-contrib-light-1: #bfdbfe;
+    --running-contrib-light-2: #93c5fd;
+    --running-contrib-light-3: #60a5fa;
+    --running-contrib-light-4: #3b82f6;
+    --running-contrib-light-5: #1d4ed8;
+    --running-contrib-dark-1: #1e3a5f;
+    --running-contrib-dark-2: #1e40af;
+    --running-contrib-dark-3: #2563eb;
+    --running-contrib-dark-4: #3b82f6;
+    --running-contrib-dark-5: #60a5fa;
+  }
+
   .running-page {
     max-width: 900px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .running-page .page-header {
@@ -768,38 +797,38 @@ for (let m = 0; m < 12; m++) {
   }
 
   .contribution-graph .day.intensity-1 {
-    background: #bfdbfe;
+    background: var(--running-contrib-light-1);
   }
   .contribution-graph .day.intensity-2 {
-    background: #93c5fd;
+    background: var(--running-contrib-light-2);
   }
   .contribution-graph .day.intensity-3 {
-    background: #60a5fa;
+    background: var(--running-contrib-light-3);
   }
   .contribution-graph .day.intensity-4 {
-    background: #3b82f6;
+    background: var(--running-contrib-light-4);
   }
   .contribution-graph .day.intensity-5 {
-    background: #1d4ed8;
+    background: var(--running-contrib-light-5);
   }
 
   html[data-theme="dark"] .contribution-graph .day {
     background: color-mix(in srgb, var(--muted) 50%, transparent);
   }
   html[data-theme="dark"] .contribution-graph .day.intensity-1 {
-    background: #1e3a5f;
+    background: var(--running-contrib-dark-1);
   }
   html[data-theme="dark"] .contribution-graph .day.intensity-2 {
-    background: #1e40af;
+    background: var(--running-contrib-dark-2);
   }
   html[data-theme="dark"] .contribution-graph .day.intensity-3 {
-    background: #2563eb;
+    background: var(--running-contrib-dark-3);
   }
   html[data-theme="dark"] .contribution-graph .day.intensity-4 {
-    background: #3b82f6;
+    background: var(--running-contrib-dark-4);
   }
   html[data-theme="dark"] .contribution-graph .day.intensity-5 {
-    background: #60a5fa;
+    background: var(--running-contrib-dark-5);
   }
 
   .run-list {
@@ -866,7 +895,7 @@ for (let m = 0; m < 12; m++) {
   }
 
   .workout-name {
-    color: #3b82f6;
+    color: var(--running-accent-blue);
     font-weight: 500;
   }
 
@@ -901,13 +930,12 @@ for (let m = 0; m < 12; m++) {
     letter-spacing: 0.025em;
   }
 
-  /* 与参考站一致：VDOT 紫色、负荷蓝色 */
   .run-card .vdot-stat .stat-value {
-    color: #8b5cf6;
+    color: var(--running-vdot);
     font-weight: 700;
   }
   .run-card .load-stat .stat-value {
-    color: #3b82f6;
+    color: var(--running-accent-blue);
     font-weight: 700;
   }
 
@@ -1081,7 +1109,7 @@ for (let m = 0; m < 12; m++) {
   .detail-stat-icon {
     width: 16px;
     height: 16px;
-    color: #3b82f6;
+    color: var(--running-accent-blue);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -1091,6 +1119,10 @@ for (let m = 0; m < 12; m++) {
   .detail-stat-icon svg {
     width: 100%;
     height: 100%;
+  }
+
+  .detail-route-icon {
+    color: var(--running-accent-blue);
   }
 
   .detail-stat-label {
@@ -1117,16 +1149,16 @@ for (let m = 0; m < 12; m++) {
     display: inline-block;
   }
   .segment-pace-tag.pace-fast {
-    background: #22c55e20;
-    color: #22c55e;
+    background: color-mix(in srgb, var(--running-pace-fast) 12%, transparent);
+    color: var(--running-pace-fast);
   }
   .segment-pace-tag.pace-medium {
-    background: #3b82f620;
-    color: #3b82f6;
+    background: color-mix(in srgb, var(--running-accent-blue) 12%, transparent);
+    color: var(--running-accent-blue);
   }
   .segment-pace-tag.pace-slow {
-    background: #f9731620;
-    color: #f97316;
+    background: color-mix(in srgb, var(--running-pace-slow-dark) 12%, transparent);
+    color: var(--running-pace-slow-dark);
   }
   .detail-section {
     margin-top: 1.5rem;
@@ -1198,13 +1230,13 @@ for (let m = 0; m < 12; m++) {
   }
 
   .pace-bar-fill.fast {
-    background: linear-gradient(90deg, #22c55e, #16a34a);
+    background: linear-gradient(90deg, var(--running-pace-fast), var(--running-pace-fast-dark));
   }
   .pace-bar-fill.medium {
-    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    background: linear-gradient(90deg, var(--running-pace-medium), var(--running-pace-medium-dark));
   }
   .pace-bar-fill.slow {
-    background: linear-gradient(90deg, #fb923c, #f97316);
+    background: linear-gradient(90deg, var(--running-pace-slow), var(--running-pace-slow-dark));
   }
 
   .pace-bar span {
@@ -1225,8 +1257,8 @@ for (let m = 0; m < 12; m++) {
   }
   .hr-zone-tag.zone-1,
   .pace-tag.zone-1 {
-    background: #4ade8020;
-    color: #4ade80;
+    background: color-mix(in srgb, var(--running-zone-1) 12%, transparent);
+    color: var(--running-zone-1);
     padding: 0.125rem 0.375rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -1234,8 +1266,8 @@ for (let m = 0; m < 12; m++) {
   }
   .hr-zone-tag.zone-2,
   .pace-tag.zone-2 {
-    background: #60a5fa20;
-    color: #60a5fa;
+    background: color-mix(in srgb, var(--running-zone-2) 12%, transparent);
+    color: var(--running-zone-2);
     padding: 0.125rem 0.375rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -1243,8 +1275,8 @@ for (let m = 0; m < 12; m++) {
   }
   .hr-zone-tag.zone-3,
   .pace-tag.zone-3 {
-    background: #fbbf2420;
-    color: #fbbf24;
+    background: color-mix(in srgb, var(--running-zone-3) 12%, transparent);
+    color: var(--running-zone-3);
     padding: 0.125rem 0.375rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -1252,8 +1284,8 @@ for (let m = 0; m < 12; m++) {
   }
   .hr-zone-tag.zone-4,
   .pace-tag.zone-4 {
-    background: #fb923c20;
-    color: #fb923c;
+    background: color-mix(in srgb, var(--running-zone-4) 12%, transparent);
+    color: var(--running-zone-4);
     padding: 0.125rem 0.375rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -1261,8 +1293,8 @@ for (let m = 0; m < 12; m++) {
   }
   .hr-zone-tag.zone-5,
   .pace-tag.zone-5 {
-    background: #f8717120;
-    color: #f87171;
+    background: color-mix(in srgb, var(--running-zone-5) 12%, transparent);
+    color: var(--running-zone-5);
     padding: 0.125rem 0.375rem;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -1270,29 +1302,67 @@ for (let m = 0; m < 12; m++) {
   }
 
   @media (max-width: 640px) {
+    .running-page {
+      width: 100%;
+      max-width: 100%;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      padding-top: 0.5rem;
+      padding-bottom: 1.5rem;
+    }
+    .running-page .running-section-title {
+      margin-top: 1rem;
+      margin-bottom: 0.375rem;
+    }
+    .running-page .contribution-graph + .running-section-title {
+      margin-top: 1rem;
+    }
+    .period-stats-section {
+      margin-bottom: 0.75rem;
+    }
     .period-tab-nav {
-      padding: 0 0.75rem;
+      padding: 0 0.5rem;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
     .period-tab-btn {
-      padding: 0.75rem 1rem;
+      padding: 0.5rem 0.75rem;
       font-size: 0.8125rem;
     }
     .period-tab-content {
-      padding: 1rem;
+      padding: 0.75rem;
+    }
+    .period-panel-header {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
     }
     .period-panel-grid {
-      gap: 1rem 0.25rem;
+      gap: 0.5rem 0.25rem;
     }
     .period-panel-stat {
-      padding: 0.375rem;
+      padding: 0.25rem;
     }
     .period-panel-value {
       font-size: 1.125rem;
     }
     .period-panel-label {
       font-size: 0.6875rem;
+    }
+    .contribution-graph {
+      margin: 0.75rem 0;
+      padding: 0.375rem;
+    }
+    .run-list {
+      gap: 0.5rem;
+    }
+    .run-card {
+      padding: 0.75rem 1rem;
+    }
+    .run-stats {
+      gap: 0.75rem;
+    }
+    .run-card .stat {
+      min-width: 0;
     }
   }
 
@@ -1341,14 +1411,28 @@ for (let m = 0; m < 12; m++) {
   }
 
   @media (max-width: 480px) {
+    .running-page {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
     .run-stats {
-      gap: 1.25rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .run-card .stat {
+      min-width: 2.5rem;
     }
     .run-card .stat-value {
       font-size: 0.9375rem;
     }
     .run-card .stat-label {
       font-size: 0.625rem;
+    }
+    .run-main {
+      gap: 0.25rem;
+    }
+    .run-header {
+      gap: 0.5rem;
     }
     .detail-stats-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -1650,7 +1734,7 @@ for (let m = 0; m < 12; m++) {
             <span class="detail-date text-[var(--foreground)]">${run.date}</span>
             ${hrBadge}
             <span class="detail-type rounded border border-[var(--border)] bg-[var(--muted)]/30 px-2 py-0.5 text-xs text-[var(--foreground)]">${run.activity_type || "户外跑步"}</span>
-            ${run.route && run.route.trim() ? `<span class="detail-route flex items-center gap-1.5 text-xs text-[var(--foreground)]/80"><span class="detail-route-icon inline-flex h-4 w-4 flex-shrink-0 items-center justify-center text-[#3b82f6]">${detailIcons.location}</span>${run.route.trim()}</span>` : ""}
+            ${run.route && run.route.trim() ? `<span class="detail-route flex items-center gap-1.5 text-xs text-[var(--foreground)]/80"><span class="detail-route-icon inline-flex h-4 w-4 flex-shrink-0 items-center justify-center">${detailIcons.location}</span>${run.route.trim()}</span>` : ""}
           </div>
         </div>
         <div class="detail-stats-grid mt-6 grid grid-cols-3 gap-3">

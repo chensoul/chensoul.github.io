@@ -9,7 +9,7 @@
  * 2. 路径激活检测：高亮当前页面所在的导航项
  * 3. 移动端标题动态显示：根据当前页面显示对应标题
  * 4. 下拉菜单："更多"选项包含归档、搜索等次要导航
- * 5. 主题切换：浅色/深色模式切换按钮
+ * 5. 主题切换：RSS 右侧图标按钮（日月图标切换浅色/深色）
  * 6. View Transitions：支持页面切换动画
  *
  * 依赖关系：
@@ -20,8 +20,8 @@
  */
 
 import IconX from "@/assets/icons/IconX.svg";
-// import IconMoon from "@/assets/icons/IconMoon.svg";
-// import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconRss from "@/assets/icons/IconRss.svg";
 import { SITE } from "@/config";
@@ -109,8 +109,8 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
       id="top-nav-wrap"
       class="relative flex w-full items-center justify-between bg-background pb-2 sm:items-baseline"
     >
-      <!-- 左侧：站点标题 + RSS 图标 -->
-      <div class="flex items-baseline gap-1">
+      <!-- 左侧：站点标题 + RSS 与主题图标（同尺寸、水平对齐） -->
+      <div class="flex items-center gap-1">
         <!-- 站点标题链接 -->
         <a
           href="/"
@@ -137,22 +137,48 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
             )
           }
         </a>
-        <!-- RSS 订阅链接（min 44×44px 触控区域，满足 Lighthouse 无障碍） -->
-        <a
-          href="/rss.xml"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center p-2"
-          aria-label="rss feed"
-          title="RSS Feed"
-        >
-          <IconRss
-            width={13}
-            height={13}
-            class="inline-block stroke-accent stroke-3"
-          />
-          <span class="sr-only">RSS Feed</span>
-        </a>
+        <!-- RSS 与主题图标：统一尺寸 16×16、44px 触控区、水平对齐 -->
+        <span class="-mx-1 flex items-center">
+          <a
+            href="/rss.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-11 min-w-[44px] items-center justify-center p-2 pr-1"
+            aria-label="rss feed"
+            title="RSS Feed"
+          >
+            <IconRss
+              width={16}
+              height={16}
+              class="inline-block stroke-accent stroke-3"
+            />
+            <span class="sr-only">RSS Feed</span>
+          </a>
+          {
+            SITE.lightAndDarkMode && (
+              <button
+                id="theme-btn"
+                type="button"
+                class="focus-outline inline-flex h-11 min-w-[44px] items-center justify-center p-2 pl-1"
+                title={_t.common.themeBtn}
+                aria-label="auto"
+                aria-live="polite"
+              >
+                <IconMoon
+                  width={16}
+                  height={16}
+                  class="inline-block stroke-accent stroke-3 dark:hidden"
+                />
+                <IconSunHigh
+                  width={16}
+                  height={16}
+                  class="hidden stroke-accent stroke-3 dark:inline-block"
+                />
+                <span class="sr-only">{_t.common.themeBtn}</span>
+              </button>
+            )
+          }
+        </span>
       </div>
 
       <!-- 移动端菜单按钮 -->
@@ -236,26 +262,6 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
           {_t.search.title}
         </a>
       </li>
-      {
-        SITE.lightAndDarkMode && (
-          <li class="flex items-center">
-            <button
-              id="theme-btn"
-              class="focus-outline block px-4 py-3 text-sm font-medium text-[var(--nav-link)] hover:text-accent sm:px-0 sm:py-1"
-              title={_t.common.themeBtn}
-              aria-label="auto"
-              aria-live="polite"
-            >
-              <span class="whitespace-nowrap transition-all dark:hidden">
-                {_t.common.dark}
-              </span>
-              <span class="hidden whitespace-nowrap transition-all dark:inline">
-                {_t.common.light}
-              </span>
-            </button>
-          </li>
-        )
-      }
     </ul>
   </nav>
 </header>
@@ -338,14 +344,12 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
 
 <!-- 样式：下拉菜单动画 + 移动端导航 -->
 <style>
-  /* 移动端磨砂玻璃遮罩层 */
+  /* 移动端菜单展开时的背景层（浅色主题为浅白，深色主题随主题色） */
   .mobile-nav-overlay {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--background);
     /* 动画：与页面切换动画时长一致 */
     opacity: 0;
     visibility: hidden;
@@ -379,15 +383,15 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
       clip-path: none;
     }
 
-    /* 移动端菜单导航文字颜色固定为深色模式配色 */
+    /* 移动端菜单：与桌面端一致，默认前景色，当前项为主色 */
     #menu-items a,
     #menu-items button {
-      color: #d19a66 !important;
+      color: var(--nav-link) !important;
     }
 
-    /* 移动端菜单激活状态颜色 */
-    #menu-items a.active-nav {
-      color: #eaedf3 !important;
+    #menu-items a.active-nav,
+    #menu-items a:hover {
+      color: var(--nav-link-active) !important;
     }
   }
 </style>

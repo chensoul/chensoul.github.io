@@ -162,6 +162,7 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
+      include: ["@pagefind/default-ui"],
       exclude: ["@resvg/resvg-js"],
     },
   },
