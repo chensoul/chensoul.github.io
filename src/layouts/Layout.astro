@@ -108,16 +108,6 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 参考 astro-paper：首字节内联脚本设置 data-theme，防止闪白 -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
-      (function(){
-        if(!lightAndDarkMode){document.documentElement.setAttribute("data-theme","light");return;}
-        var cur=localStorage.getItem("theme");
-        var theme=(cur==="dark"||cur==="light")?cur:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
-        document.documentElement.setAttribute("data-theme",theme);
-        window.theme={themeValue:theme};
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <!-- 基础 meta 标签 -->
@@ -199,13 +189,38 @@ const structuredData = {
     <!-- View transitions: https://docs.astro.build/en/guides/view-transitions/ -->
     <ClientRouter />
 
-    <script>
-      import "@/scripts/theme";
-    </script>
-
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
     <slot name="head" />
 
+    <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
+    <script is:inline>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script>
   </head>
   <body class="site-outer-bg">
     <!-- 站点框架容器 -->
@@ -222,6 +237,10 @@ const structuredData = {
     <BackButton />
     <!-- 返回顶部按钮 -->
     <BackToTop />
+
+    <!-- Load full theme logic -->
+    <script src="../scripts/theme.ts"></script>
+
 
     <!-- Umami 分析：首屏加载后再注入，减少对 LCP 的影响 -->
     {
