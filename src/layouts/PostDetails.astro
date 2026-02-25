@@ -139,14 +139,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       />
     </noscript>
   )}
-  {comments && (
-    <script
-      slot="head"
-      is:inline
-      src="https://unpkg.com/artalk@2.9.1/dist/Artalk.js"
-      defer
-    />
-  )}
   <!-- TOC 样式（仅文章详情且启用目录时加载） -->
   {toc && (
     <link

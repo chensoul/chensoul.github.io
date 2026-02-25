@@ -75,14 +75,6 @@ const rehypeRewriteOption: RehypeRewriteOptions = {
       };
       return;
     }
-    // 链接：统一在新标签页打开（文章与页面正文内）
-    if (node.tagName === "a") {
-      node.properties = {
-        ...node.properties,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      };
-    }
   },
 };
 
@@ -110,10 +102,18 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     mermaid({
-      theme: "default",
+      theme: "base",
       autoTheme: true,
       mermaidConfig: {
         securityLevel: "loose",
+        themeVariables: {
+          primaryColor: "#8b7355",
+          primaryTextColor: "#282728",
+          primaryBorderColor: "#c4b5a0",
+          lineColor: "#6b5b4f",
+          secondaryColor: "#e8e4df",
+          tertiaryColor: "#f9f8f6",
+        },
       },
     }),
     expressiveCode(expressiveCodeOption),
@@ -173,7 +173,7 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
-      include: ["@pagefind/default-ui"],
+      include: ["@pagefind/default-ui", "mermaid"],
       exclude: ["@resvg/resvg-js"],
     },
   },

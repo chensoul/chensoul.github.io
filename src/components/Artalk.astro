@@ -22,7 +22,7 @@
  *
  * 依赖关系：
  * - 被文章详情页使用（当 comments=true 时）
- * - 需在页面中引入 Artalk 脚本库
+ * - 组件内动态加载 Artalk 脚本，确保在 onload 后再初始化
  * - 依赖主题按钮的 ID (#theme-btn)
  */
 ---
@@ -31,9 +31,12 @@
   /* eslint-disable no-console -- Artalk 调试与错误输出 */
   /**
    * Artalk 评论系统集成
-   * 包含初始化、主题同步、页面切换处理等功能
+   * 包含脚本动态加载、初始化、主题同步、页面切换处理等功能
    */
   (function () {
+    var ARTALK_SCRIPT_URL = "https://unpkg.com/artalk@2.9.1/dist/Artalk.js";
+    var ARTALK_CSS_URL = "https://unpkg.com/artalk@2.9.1/dist/Artalk.css";
+
     // 单例模式存储 Artalk 实例
     window.artalkInstance = window.artalkInstance || null;
 
@@ -45,6 +48,51 @@
       pageKey: window.location.pathname,
       vote: false,
     };
+
+    /**
+     * 确保 Artalk 样式已注入：若 head 中尚无该 CSS 则插入 link
+     */
+    function ensureArtalkCSS() {
+      var selector = 'link[href="' + ARTALK_CSS_URL + '"]';
+      if (document.querySelector(selector)) return;
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = ARTALK_CSS_URL;
+      document.head.appendChild(link);
+    }
+
+    /**
+     * 确保 Artalk 脚本已加载，完成后执行 callback
+     * 若已存在 window.Artalk 则直接回调；否则动态插入 script，在 onload 中回调
+     */
+    function loadArtalkScript(callback) {
+      if (typeof window.Artalk !== "undefined") {
+        callback();
+        return;
+      }
+      var existing = document.querySelector('script[src="' + ARTALK_SCRIPT_URL + '"]');
+      if (existing) {
+        if (typeof window.Artalk !== "undefined") {
+          callback();
+          return;
+        }
+        existing.addEventListener("load", function onLoad() {
+          existing.removeEventListener("load", onLoad);
+          callback();
+        });
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = ARTALK_SCRIPT_URL;
+      script.async = false;
+      script.onload = function () {
+        callback();
+      };
+      script.onerror = function () {
+        console.error("Artalk 脚本加载失败");
+      };
+      document.head.appendChild(script);
+    }
 
     /**
      * 获取当前主题状态
@@ -103,14 +151,13 @@
     }
 
     /**
-     * 初始化 Artalk 实例
+     * 初始化 Artalk 实例（调用前须已通过 loadArtalkScript 确保 window.Artalk 存在）
      *
      * 处理流程：
      * 1. 检查容器是否存在
      * 2. 检查是否已初始化（避免重复）
-     * 3. 获取当前主题
-     * 4. 创建并配置实例
-     * 5. 初始化后同步主题
+     * 3. 获取当前主题并创建实例
+     * 4. 初始化后同步主题
      */
     function initArtalk() {
       const container = document.getElementById("Comments");
@@ -119,15 +166,17 @@
         return;
       }
 
+      if (typeof window.Artalk === "undefined") {
+        console.error("Artalk初始化失败: Artalk 未定义");
+        return;
+      }
+
       // 如果容器已经包含Artalk实例，跳过初始化
       if (container.querySelector(".atk-app")) {
         return;
       }
 
-      // 获取当前主题
       const isDark = getCurrentTheme();
-
-      // 更新配置
       const config = {
         ...artalkConfig,
         pageKey: window.location.pathname,
@@ -135,11 +184,8 @@
       };
 
       try {
-        // 创建新实例
-        window.artalkInstance = Artalk.init(config);
-
-        // 初始化完成后同步主题（确保主题正确应用）
-        setTimeout(() => {
+        window.artalkInstance = window.Artalk.init(config);
+        setTimeout(function () {
           syncArtalkTheme();
         }, 100);
       } catch (err) {
@@ -223,22 +269,21 @@
      * 处理流程：
      * 1. 销毁旧实例
      * 2. 检查容器是否可见
-     * 3. 延迟初始化（等待 DOM 稳定）
-     * 4. 设置主题观察器
+     * 3. 动态加载 Artalk 脚本，在 onload 后再初始化并设置主题观察器
      */
     function handlePageLoad() {
-      // 先销毁旧实例
       destroyArtalk();
 
-      // 只有在文章页面才初始化完整的评论系统
       const container = document.getElementById("Comments");
-      if (container && container.offsetParent !== null) {
-        // 等待DOM稳定后初始化评论系统
-        setTimeout(() => {
+      if (!container || container.offsetParent === null) return;
+
+      ensureArtalkCSS();
+      loadArtalkScript(function () {
+        setTimeout(function () {
           initArtalk();
           setupThemeObserver();
-        }, 200);
-      }
+        }, 100);
+      });
     }
 
     /**
