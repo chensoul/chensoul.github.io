@@ -192,7 +192,7 @@ const structuredData = {
     <!-- 站点框架容器 -->
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
+      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:bg-[var(--color-background)] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
     >
       <!-- 插槽：子布局内容 -->
       <slot />
@@ -238,7 +238,6 @@ const structuredData = {
         width: 100%;
         height: 100%;
       }
-      /* 与 #site-frame 一致，避免内容区与两侧留白背景色不一致 */
       .site-outer-bg {
         background-color: var(--color-background);
       }
@@ -267,9 +266,6 @@ const structuredData = {
           box-sizing: border-box;
           padding-left: 0.75rem;
           padding-right: 0.75rem;
-        }
-        main#main-content {
-          background-color: var(--color-background);
         }
       }
     </style>

@@ -287,6 +287,17 @@ html[data-theme="light"] .expressive-code {
   scrollbar-width: thin !important;
 }
 
+/* 移动端：代码块拷贝按钮缩小（默认 2.5rem 在触屏下偏大） */
+@media (max-width: 640px) {
+  .expressive-code .copy button {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+  .expressive-code .copy button:after {
+    margin: 0.3rem !important;
+  }
+}
+
 /* View Transitions：过渡期间使用页面背景色，避免菜单/导航点击时闪白 */
 ::view-transition-group(root) {
   background: var(--page-background);

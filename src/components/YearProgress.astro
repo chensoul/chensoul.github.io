@@ -20,15 +20,14 @@
 
 <div
   id="year-progress"
-  class="group relative mx-auto mb-5 w-full max-w-4xl sm:mb-0"
+  class="year-progress group relative mx-auto mb-5 w-full max-w-4xl sm:mb-0"
 >
-  <!-- 进度条背景 -->
-  <div class="h-[3px] w-full rounded bg-border/70" aria-hidden="true">
-    <!-- 进度条填充（宽度由 JS 动态设置） -->
+  <!-- 进度条背景（使用主题变量，随 data-theme 切换） -->
+  <div class="year-progress-track h-[3px] w-full rounded" aria-hidden="true">
+    <!-- 进度条填充（宽度由 JS 动态设置，颜色由 CSS 变量控制以适配主题） -->
     <div
       id="year-progress-fill"
-      class="h-[3px] w-0 rounded"
-      style="background-color: var(--year-progress-fill)"
+      class="year-progress-fill h-[3px] w-0 rounded"
     >
     </div>
   </div>
@@ -49,6 +48,15 @@
   >
   </div>
 </div>
+
+<style is:global>
+  .year-progress-track {
+    background-color: color-mix(in srgb, var(--color-border) 70%, transparent);
+  }
+  .year-progress-fill {
+    background-color: var(--year-progress-fill);
+  }
+</style>
 
 <script is:inline>
   (function () {

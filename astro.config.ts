@@ -49,6 +49,9 @@ const expressiveCodeOption: AstroExpressiveCodeOptions = {
   styleOverrides: {
     codeFontFamily: "var(--font-mono), var(--font-emoji)",
     uiFontFamily: "var(--font-sans), var(--font-emoji)",
+    uiFontSize: "0.75rem",
+    uiPaddingBlock: "0.15rem",
+    uiPaddingInline: "0.4rem",
     borderWidth: "0",
     textMarkers: {
       backgroundOpacity: "33%",

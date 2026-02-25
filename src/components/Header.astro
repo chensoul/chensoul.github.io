@@ -7,7 +7,7 @@
  * 核心逻辑：
  * 1. 响应式导航：移动端使用汉堡菜单，桌面端横向展开
  * 2. 路径激活检测：高亮当前页面所在的导航项
- * 3. 标题统一显示网站名称；移动端增加面包屑导航（首页 / 当前页）
+ * 3. 标题：桌面端显示网站名称（可选前导如分类名）；移动端仅显示当前页面名称，不显示面包屑
  * 4. 下拉菜单："更多"选项包含归档、搜索等次要导航
  * 5. 主题切换：RSS 右侧图标按钮（日月图标切换浅色/深色）
  * 6. View Transitions：支持页面切换动画
@@ -85,22 +85,8 @@ function getCurrentPageTitle(): string {
   return SITE.title;
 }
 
-/**
- * 面包屑项：{ label, href? }，无 href 表示当前页
- */
-const breadcrumbItems: { label: string; href?: string }[] = (() => {
-  const homeLabel = _t.common.home;
-  if (currentPath === "/" || currentPath === "") return [{ label: homeLabel }];
-  const items: { label: string; href?: string }[] = [{ label: homeLabel, href: "/" }];
-  if (leadingTitle) {
-    if (isActive("/categories")) items.push({ label: _t.categories.title, href: "/categories" });
-    else if (isActive("/tags")) items.push({ label: _t.tags.title, href: "/tags" });
-    items.push({ label: leadingTitle });
-  } else {
-    items.push({ label: getCurrentPageTitle() });
-  }
-  return items;
-})();
+/** 移动端标题：当前页面名称（分类/标签页用 leadingTitle，其余用 getCurrentPageTitle） */
+const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 ---
 
 <header>
@@ -128,24 +114,33 @@ const breadcrumbItems: { label: string; href?: string }[] = (() => {
     >
       <!-- 左侧：站点标题 + RSS 与主题图标（同尺寸、水平对齐） -->
       <div class="flex items-center gap-1">
-        <!-- 站点标题链接 -->
+        <!-- 站点标题链接：移动端显示当前页面名称，桌面端显示网站名称 -->
         <a
           href="/"
           class="max-w-[28ch] overflow-hidden text-sm leading-6 text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
         >
-          <!-- 前导标题（如分类名） -->
+          <!-- 移动端：当前页面名称 -->
+          {!hideSiteTitle && (
+            <span class="text-base font-semibold max-sm:inline sm:hidden">
+              {mobileTitle}
+            </span>
+          )}
+          <!-- 桌面端：前导标题（如分类名）+ 网站名称 -->
           {
             leadingTitle && (
               <span
-                class="mr-2 font-medium"
+                class="mr-2 font-medium max-sm:hidden sm:inline"
                 transition:name={leadingTitleTransition}
               >
                 {leadingTitle}
               </span>
             )
           }
-          <!-- 站点标题（移动端与桌面端均显示网站名称，加粗） -->
-          {!hideSiteTitle && <span class="text-base font-semibold">{SITE.title}</span>}
+          {!hideSiteTitle && (
+            <span class="text-base font-semibold max-sm:hidden sm:inline">
+              {SITE.title}
+            </span>
+          )}
         </a>
         <!-- RSS 与主题图标：统一尺寸 16×16、44px 触控区、水平对齐、间距收紧 -->
         <span class="-mx-1 flex items-center">
@@ -213,34 +208,6 @@ const breadcrumbItems: { label: string; href?: string }[] = (() => {
   <!-- 年度进度条 -->
   <YearProgress />
 
-  <!-- 移动端面包屑（在年进度条下方） -->
-  <nav
-    aria-label="Breadcrumb"
-    class="mx-auto w-full max-w-4xl max-sm:mb-1 max-sm:flex max-sm:items-center max-sm:gap-1 max-sm:text-xs sm:hidden"
-  >
-    <ol class="flex flex-wrap items-center gap-1 text-[var(--text-muted)]">
-      {
-        breadcrumbItems.map((item, i) => (
-          <li class="flex items-center gap-1">
-            {i > 0 && <span class="select-none" aria-hidden="true">/</span>}
-            {item.href != null ? (
-              <a
-                href={item.href}
-                class="text-[var(--nav-link)] hover:text-accent underline-offset-2 hover:underline"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <span class="font-medium text-[var(--foreground)]" aria-current="page">
-                {item.label}
-              </span>
-            )}
-          </li>
-        ))
-      }
-    </ol>
-  </nav>
-
   <!-- 主导航菜单 -->
   <nav aria-label="Primary" class="mx-auto w-full max-w-4xl sm:relative">
     <ul
@@ -251,8 +218,8 @@ const breadcrumbItems: { label: string; href?: string }[] = (() => {
         "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
         "[&>li>a]:text-sm [&>li>a]:text-[var(--nav-link)]",
         "sm:flex sm:gap-x-5 sm:gap-y-0", // 桌面端横向展开
-        // 移动端全屏居中垂直排列
-        "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:mx-0 max-sm:my-0 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:gap-1",
+        // 移动端全屏靠上垂直排列，减少上方空白
+        "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:mx-0 max-sm:my-0 max-sm:flex-col max-sm:items-center max-sm:justify-start max-sm:pt-[14%] max-sm:gap-1",
       ]}
     >
       {
