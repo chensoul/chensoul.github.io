@@ -35,6 +35,18 @@
   --color-skeleton: var(--skeleton);
   --color-error: var(--error);
 }
+html[data-theme="dark"] .prose {
+  --tw-prose-headings: var(--foreground);
+}
+html[data-theme="dark"] section.text-center h1 {
+  color: var(--foreground);
+}
+html[data-theme="light"] .expressive-code {
+  --ec-codeBg: var(--page-background);
+  --ec-frm-edBg: var(--page-background);
+  --ec-frm-edActTabBg: var(--page-background);
+  --ec-frm-trmBg: var(--page-background);
+}
 
 /* ========== 基础层 ========== */
 @layer base {
@@ -155,8 +167,42 @@
   #sidebar #back-to-top span {
     color: var(--foreground);
   }
+
+  h1:hover .icon-link::before,
+  h2:hover .icon-link::before,
+  h3:hover .icon-link::before,
+  h4:hover .icon-link::before,
+  h5:hover .icon-link::before,
+  h6:hover .icon-link::before {
+    @apply opacity-100;
+  }
+
+  .expressive-code {
+    @apply mt-2 mb-4;
+  }
+
+  html[data-theme="light"] .expressive-code pre {
+    background-color: var(--border) !important;
+  }
 }
 
+/* 滚动条 */
+* {
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
 @media (pointer: coarse) {
   *::-webkit-scrollbar {
     width: 6px;
