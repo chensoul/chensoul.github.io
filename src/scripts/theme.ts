@@ -62,36 +62,38 @@ function reflectPreference(): void {
   }
 }
 
-// Update the global theme API (inline script may have created window.theme with only themeValue)
-if (window.theme) {
-  if (window.theme.themeValue !== undefined) themeValue = window.theme.themeValue;
-  window.theme.themeValue = themeValue;
-  window.theme.setPreference = setPreference;
-  window.theme.reflectPreference = reflectPreference;
-  window.theme.getTheme = () => themeValue;
-  window.theme.setTheme = (val: string) => {
-    themeValue = val;
-  };
-} else {
-  window.theme = {
-    themeValue,
-    setPreference,
-    reflectPreference,
-    getTheme: () => themeValue,
-    setTheme: (val: string) => {
+function ensureThemeAPI(): void {
+  if (window.theme) {
+    if (window.theme.themeValue !== undefined) themeValue = window.theme.themeValue;
+    window.theme.themeValue = themeValue;
+    window.theme.setPreference = setPreference;
+    window.theme.reflectPreference = reflectPreference;
+    window.theme.getTheme = () => themeValue;
+    window.theme.setTheme = (val: string) => {
       themeValue = val;
-    },
-  };
+    };
+  } else {
+    window.theme = {
+      themeValue,
+      setPreference,
+      reflectPreference,
+      getTheme: () => themeValue,
+      setTheme: (val: string) => {
+        themeValue = val;
+      },
+    };
+  }
 }
+
+ensureThemeAPI();
 
 // Ensure theme is reflected (in case body wasn't ready when inline script ran)
 reflectPreference();
 
 function setThemeFeature(): void {
-  // set on load so screen readers can get the latest value on the button
+  ensureThemeAPI(); // 每次 after-swap 或点击前确保 API 完整（防止被内联脚本覆盖）
   reflectPreference();
 
-  // now this script can find and listen for clicks on the control
   document.querySelector("#theme-btn")?.addEventListener("click", () => {
     themeValue = themeValue === LIGHT ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
@@ -124,6 +126,7 @@ document.addEventListener("astro:before-swap", event => {
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches: isDark }) => {
+    ensureThemeAPI();
     themeValue = isDark ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
     setPreference();
