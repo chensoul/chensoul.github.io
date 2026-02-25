@@ -39,6 +39,13 @@ export const SITE = {
   /** 站点标题，显示在浏览器标签和页眉 */
   title: "ChenSoul Blog",
 
+  /**
+   * 默认社交分享图（Open Graph / Twitter Card）
+   * 放在 public 下，如 "og.png"；留空则使用 "/og.png"
+   * 文章可覆盖为自定义图（见 PostDetails 传 ogImage）
+   */
+  ogImage: "og.png",
+
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,
 

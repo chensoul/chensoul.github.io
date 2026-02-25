@@ -66,7 +66,7 @@ const {
   author = SITE.author,
   profile = SITE.profile,
   description = SITE.desc,
-  // 移除 .html 扩展名，生成规范链接
+  ogImage: ogImageProp,
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
   pubDatetime,
   modDatetime,
@@ -75,6 +75,10 @@ const {
 } = Astro.props;
 
 const fullDescription = description;
+
+// 社交分享图：文章可传 ogImage 覆盖，否则用站点默认（参考 astro-paper）
+const ogImage = ogImageProp ?? (SITE.ogImage ? `/${SITE.ogImage}` : "/og.png");
+const socialImageURL = new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, Astro.url);
 
 /**
  * 结构化数据（JSON-LD）
