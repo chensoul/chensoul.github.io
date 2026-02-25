@@ -84,11 +84,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       )
     }
 
-    <!-- 查看所有文章按钮 -->
+    <!-- 查看所有文章：使用主题色边框与文字，与全站风格一致 -->
     <div class="text-center">
-      <LinkButton href="/archives">
+      <LinkButton
+        href="/archives"
+        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-[var(--color-accent)] no-underline transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+      >
         {_t.common.allPosts}
-        <IconArrowRight class="inline-block" />
+        <IconArrowRight class="inline-block size-4" />
       </LinkButton>
     </div>
   </main>

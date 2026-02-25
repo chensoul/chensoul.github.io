@@ -379,15 +379,14 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
       clip-path: none;
     }
 
-    /* 移动端菜单导航文字颜色固定为深色模式配色 */
+    /* 移动端菜单：使用主题变量 */
     #menu-items a,
     #menu-items button {
-      color: #d19a66 !important;
+      color: var(--accent) !important;
     }
 
-    /* 移动端菜单激活状态颜色 */
     #menu-items a.active-nav {
-      color: #eaedf3 !important;
+      color: var(--foreground) !important;
     }
   }
 </style>
