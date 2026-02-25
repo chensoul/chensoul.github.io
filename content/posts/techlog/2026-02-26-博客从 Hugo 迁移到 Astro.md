@@ -227,7 +227,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 
 总结一下，我的 [chensoul/astro-lhasa](https://github.com/chensoul/astro-lhasa) 主题，对原主题做了以下改动：
 
-- 移除 photosuite 依赖；删除领居、留言、日志等页面；收藏页面改为链接页面
+- 移除 photosuite 依赖；删除邻居、留言、日志等页面；收藏页面改为链接页面
 - 修改 css 样式，以适应宽屏（web 端，主体部分 960px）；修改文章主题色为蓝色；代码库支持自动换行；调整了导航菜单
 - RSS 仅保留最近 20 篇非草稿文章；仅输出摘要，不输出全文 HTML
 - 文章链接改为 `/posts/YYYY/MM/DD/slug` 格式
