@@ -145,11 +145,11 @@ html[data-theme="light"] .expressive-code {
     }
   }
 
-  /* Desktop styles */
+  /* Desktop styles：TOC 与正文间距缩小，侧栏加宽 */
   @media (min-width: 1300px) {
     #sidebar {
       background-color: var(--toc-sidebar-bg);
-      @apply top-36 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-lg p-4 shadow-none;
+      @apply top-36 right-6 m-2 max-h-[calc(100vh-12rem)] w-40 translate-x-0 rounded-lg p-4 shadow-none;
     }
 
     /* When there's no TOC, position the sidebar lower */
@@ -157,10 +157,10 @@ html[data-theme="light"] .expressive-code {
       @apply top-150;
     }
 
-    /* xl breakpoint */
+    /* xl breakpoint：TOC 再宽一点 */
     @media (min-width: 1280px) {
       #sidebar {
-        @apply w-53;
+        @apply w-56;
       }
     }
   }
