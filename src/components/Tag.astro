@@ -41,12 +41,12 @@ const { tag, tagName, count, size = "sm" } = Astro.props;
     class={`${size === "sm" ? "text-sm" : "text-lg"} group hover:text-accent relative opacity-80 hover:-top-0.5 focus-visible:p-1`}
   >
     <!-- 标签胶囊 -->
-    <div class="bg-foreground/10 rounded-full px-3 py-0">
+    <div class="rounded-full bg-foreground/10 px-3 py-0">
       <span>
         {tagName}
       </span>
       <!-- 文章数量 -->
-      {count && <span class="text-accent font-bold italic">{count}</span>}
+      {count && <span class="font-bold text-accent italic">{count}</span>}
     </div>
   </a>
 </li>
