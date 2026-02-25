@@ -323,9 +323,14 @@ async function initRunningPage(): Promise<void> {
   });
 }
 
-document.addEventListener("astro:page-load", () => initRunningPage());
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => initRunningPage());
-} else {
+function boot(): void {
   initRunningPage();
+}
+
+document.addEventListener("astro:page-load", boot);
+document.addEventListener("astro:after-swap", boot);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
 }
