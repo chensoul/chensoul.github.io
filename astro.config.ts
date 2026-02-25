@@ -109,14 +109,6 @@ export default defineConfig({
       autoTheme: true,
       mermaidConfig: {
         securityLevel: "loose",
-        themeVariables: {
-          primaryColor: "#8b7355",
-          primaryTextColor: "#282728",
-          primaryBorderColor: "#c4b5a0",
-          lineColor: "#6b5b4f",
-          secondaryColor: "#e8e4df",
-          tertiaryColor: "#f9f8f6",
-        },
       },
     }),
     expressiveCode(expressiveCodeOption),
@@ -180,7 +172,7 @@ export default defineConfig({
       exclude: ["@resvg/resvg-js"],
     },
   },
-  trailingSlash: "never",
+  trailingSlash: "ignore",
   build: {
     format: "file", // generate `page.html` instead of `page/index.html`
   },
