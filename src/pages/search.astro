@@ -1,30 +1,4 @@
 ---
-/**
- * 搜索页
- *
- * @fileoverview 全站搜索功能，使用 Pagefind 实现
- *
- * 核心逻辑：
- * 1. 使用 Pagefind 提供全文搜索
- * 2. 搜索关键词存储在 URL 参数 `q` 中
- * 3. 从 URL 读取关键词并自动触发搜索
- * 4. 存储搜索 URL 到 sessionStorage（返回按钮使用）
- *
- * Pagefind 配置：
- * - showSubResults: true - 显示嵌套结果
- * - showImages: false - 不显示缩略图
- * - processResult: 移除 URL 中的 .html 后缀
- *
- * 开发模式提示：
- * - 开发环境需要先构建项目才能使用搜索
- * - 显示警告信息提示运行 pnpm run build
- *
- * 依赖关系：
- * - 被 /search 路径访问
- * - 使用 @pagefind/default-ui 包
- * - 需要运行 pnpm run build 生成搜索索引
- */
-
 import "@pagefind/default-ui/css/ui.css";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -32,7 +6,6 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
-import searchStyles from "@/styles/search.css?raw";
 
 // 返回 URL 配置
 const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
@@ -47,8 +20,128 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
   <Footer />
 </Layout>
 
-<style is:global set:html={searchStyles} />
-
 <script>
-  import "@/scripts/initSearch";
+  function initSearch(): void {
+    const pageFindSearch = document.querySelector("#pagefind-search") as HTMLElement | null;
+    if (!pageFindSearch) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const onIdle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1));
+
+    onIdle(async () => {
+      // @ts-expect-error — Missing types for @pagefind/default-ui package.
+      const { PagefindUI } = await import("@pagefind/default-ui");
+
+      if (import.meta.env.DEV) {
+        pageFindSearch.innerHTML = `
+              <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
+                <p><strong>DEV mode Warning! </strong>You need to build the project at least once to see the search results during development.</p>
+                <code class="block bg-black text-white px-2 py-1 rounded">pnpm run build</code>
+              </div>
+            `;
+      }
+
+      const search = new PagefindUI({
+        element: "#pagefind-search",
+        showSubResults: true,
+        showImages: false,
+        processResult(result: { url: string; sub_results?: Array<{ url: string }> }) {
+          const cleanUrl = (url: string) =>
+            url
+              .replace(/\.html$/, "")
+              .replace(/\.html[?#]/, (match: string) => match.substring(5));
+          result.url = cleanUrl(result.url);
+          if (result.sub_results?.length) {
+            result.sub_results.forEach((sub) => {
+              sub.url = cleanUrl(sub.url);
+            });
+          }
+          return result;
+        },
+        processTerm(term: string) {
+          const trimmed = term.trim();
+          if (!trimmed) return term;
+          params.set("q", term);
+          history.replaceState(history.state, "", "?" + params.toString());
+          const backUrl = pageFindSearch?.dataset?.backurl;
+          sessionStorage.setItem("backUrl", (backUrl ?? "") + "?" + params.toString());
+          if (!trimmed.startsWith('"') || !trimmed.endsWith('"')) {
+            return `"${trimmed}"`;
+          }
+          return term;
+        },
+      });
+
+      const query = params.get("q");
+      if (query) search.triggerSearch(query);
+
+      const searchInput = document.querySelector(".pagefind-ui__search-input");
+      const clearButton = document.querySelector(".pagefind-ui__search-clear");
+      const resetSearchParam = (e: Event) => {
+        if ((e.target as HTMLInputElement)?.value.trim() === "") {
+          history.replaceState(history.state, "", window.location.pathname);
+        }
+      };
+      searchInput?.addEventListener("input", resetSearchParam);
+      clearButton?.addEventListener("click", resetSearchParam);
+    });
+  }
+
+  document.addEventListener("astro:after-swap", () => {
+    const pagefindSearch = document.querySelector("#pagefind-search");
+    if (pagefindSearch?.querySelector("form")) return;
+    initSearch();
+  });
+  initSearch();
 </script>
+
+<style is:global>
+  #pagefind-search {
+    --pagefind-ui-font: var(--font-app);
+    --pagefind-ui-text: var(--foreground);
+    --pagefind-ui-background: var(--background);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-tag: var(--background);
+    --pagefind-ui-border-radius: 0.375rem;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+
+    form::before {
+      background-color: var(--foreground);
+    }
+
+    input {
+      font-weight: 400;
+      border: 1px solid var(--border);
+    }
+
+    input:focus-visible {
+      outline: 1px solid var(--accent);
+    }
+
+    .pagefind-ui__result-title a {
+      color: var(--accent);
+      outline-offset: 1px;
+      outline-color: var(--accent);
+      text-decoration-style: dashed;
+      text-underline-offset: 4px;
+    }
+
+    .pagefind-ui__result-title a:focus-visible,
+    .pagefind-ui__search-clear:focus-visible {
+      text-decoration-line: none;
+      outline-width: 2px;
+      outline-style: dashed;
+    }
+
+    .pagefind-ui__result:last-of-type {
+      border-bottom: 0;
+    }
+
+    .pagefind-ui__result-nested .pagefind-ui__result-link:before {
+      font-family: system-ui;
+    }
+  }
+</style>
