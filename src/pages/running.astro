@@ -375,7 +375,7 @@ for (let m = 0; m < 12; m++) {
                           )}
                         </div>
                         <span class="run-type text-[13px] text-[var(--foreground)]/80">
-                          {run.activity_type || "室外跑步"}
+                          {run.activity_type || "户外跑步"}
                           {(run.route?.trim() || run.workout_name) && (
                             <span class="workout-name">
                               {" "}
@@ -1623,7 +1623,7 @@ for (let m = 0; m < 12; m++) {
           <div class="detail-meta mt-2 flex flex-wrap items-center gap-2 text-sm">
             <span class="detail-date text-[var(--foreground)]">${run.date}</span>
             ${hrBadge}
-            <span class="detail-type rounded border border-[var(--border)] bg-[var(--muted)]/30 px-2 py-0.5 text-xs text-[var(--foreground)]">${run.activity_type || "室外跑步"}</span>
+            <span class="detail-type rounded border border-[var(--border)] bg-[var(--muted)]/30 px-2 py-0.5 text-xs text-[var(--foreground)]">${run.activity_type || "户外跑步"}</span>
             ${run.route && run.route.trim() ? `<span class="detail-route flex items-center gap-1.5 text-xs text-[var(--foreground)]/80"><span class="detail-route-icon inline-flex h-4 w-4 flex-shrink-0 items-center justify-center text-[#3b82f6]">${detailIcons.location}</span>${run.route.trim()}</span>` : ""}
           </div>
         </div>
@@ -1700,7 +1700,7 @@ for (let m = 0; m < 12; m++) {
                 <time class="run-date text-sm font-medium text-[var(--foreground)]">${run.date.split(" ")[0]}</time>
                 ${hrBadge}
               </div>
-              <span class="run-type text-[13px] text-[var(--foreground)]/80">${run.activity_type || "室外跑步"}${(run.route && run.route.trim()) || run.workout_name ? ` <span class="workout-name">· ${(run.route && run.route.trim()) || run.workout_name || ""}</span>` : ""}</span>
+              <span class="run-type text-[13px] text-[var(--foreground)]/80">${run.activity_type || "户外跑步"}${(run.route && run.route.trim()) || run.workout_name ? ` <span class="workout-name">· ${(run.route && run.route.trim()) || run.workout_name || ""}</span>` : ""}</span>
             </div>
             <div class="run-stats mt-3 flex gap-5">
               <div class="stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold text-[var(--foreground)]">${run.distance}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">km</span></div>
