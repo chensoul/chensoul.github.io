@@ -44,12 +44,14 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
  * @property math - 是否启用数学公式
  * @property comments - 是否启用评论
  * @property mermaid - 是否启用 Mermaid 图表（仅文章启用时才加载脚本并渲染）
+ * @property ogImage - 社交分享图路径（相对 public），如 "og.png" 或文章封面；默认用 SITE.ogImage
  */
 export interface Props {
   title?: string;
   author?: string;
   profile?: string;
   description?: string;
+  ogImage?: string;
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
@@ -90,6 +92,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${title}`,
+  image: `${socialImageURL}`,
   datePublished: `${pubDatetime?.toISOString()}`,
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
   author: [

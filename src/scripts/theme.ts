@@ -3,15 +3,17 @@
  * @see https://github.com/satnaing/astro-paper/blob/main/src/scripts/theme.ts
  */
 
+export type ThemeAPI = {
+  themeValue: string;
+  setPreference?: () => void;
+  reflectPreference?: () => void;
+  getTheme?: () => string;
+  setTheme?: (val: string) => void;
+};
+
 declare global {
   interface Window {
-    theme?: {
-      themeValue: string;
-      setPreference?: () => void;
-      reflectPreference?: () => void;
-      getTheme?: () => string;
-      setTheme?: (val: string) => void;
-    };
+    theme?: ThemeAPI;
   }
 }
 
