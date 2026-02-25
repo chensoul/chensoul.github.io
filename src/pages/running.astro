@@ -157,7 +157,7 @@ for (let w = 0; w < totalWeeks; w++) {
     const isInRange = currentDate >= startOfRange && currentDate <= endOfRange;
     const intensity = getIntensity(dayData?.distance ?? 0);
     const title = dayData
-      ? `${dateStr}: ${dayData.distance.toFixed(1)}km, ${dayData.duration}`
+      ? `${dateStr}: ${dayData.distance}km, ${dayData.duration}`
       : dateStr;
     weekDays.push({ dateStr, isInRange, intensity, title });
   }
@@ -259,7 +259,7 @@ for (let m = 0; m < 12; m++) {
                                   </div>
                                   <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.total_distance.toFixed(0)}
+                                      {pStats.total_distance}
                                     </span>
                                     <span class="text-xs text-[var(--foreground)]/70">
                                       距离(公里)
@@ -387,7 +387,7 @@ for (let m = 0; m < 12; m++) {
                       <div class="run-stats mt-3 flex gap-5">
                         <div class="stat flex flex-col gap-0.5">
                           <span class="stat-value text-base font-semibold text-[var(--foreground)]">
-                            {run.distance.toFixed(1)}km
+                            {run.distance}km
                           </span>
                           <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
                             距离
@@ -1484,7 +1484,7 @@ for (let m = 0; m < 12; m++) {
           {
             icon: detailIcons.distance,
             label: "距离",
-            value: `${run.distance.toFixed(2)} km`,
+            value: `${run.distance} km`,
           },
           {
             icon: detailIcons.duration,
@@ -1703,7 +1703,7 @@ for (let m = 0; m < 12; m++) {
               <span class="run-type text-[13px] text-[var(--foreground)]/80">${run.activity_type || "室外跑步"}${(run.route && run.route.trim()) || run.workout_name ? ` <span class="workout-name">· ${(run.route && run.route.trim()) || run.workout_name || ""}</span>` : ""}</span>
             </div>
             <div class="run-stats mt-3 flex gap-5">
-              <div class="stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold text-[var(--foreground)]">${run.distance.toFixed(1)}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">km</span></div>
+              <div class="stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold text-[var(--foreground)]">${run.distance}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">km</span></div>
               <div class="stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold text-[var(--foreground)]">${fmtDuration(run.duration)}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">时长</span></div>
               <div class="stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold text-[var(--foreground)]">${run.pace}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">配速</span></div>
               <div class="stat vdot-stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold">${run.vdot ?? "-"}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">VDOT</span></div>
