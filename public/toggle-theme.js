@@ -345,11 +345,26 @@ window.onload = () => {
   document.addEventListener("astro:after-swap", setThemeFeature);
 
   document.addEventListener("astro:before-swap", event => {
+    const currentHtml = document.documentElement;
+    const newDoc = event.newDocument;
+    const newHtml = newDoc.documentElement;
+
+    // 同步主题到新文档，避免 View Transitions 交换后 html 属性被新文档覆盖导致闪白
+    const theme = currentHtml.getAttribute("data-theme");
+    if (theme) {
+      newHtml.setAttribute("data-theme", theme);
+      if (theme === "light") {
+        const s = newDoc.createElement("style");
+        s.textContent =
+          "html { background-color: #f9f8f6 !important; } body { background-color: #ebe8e4 !important; }";
+        newDoc.head.appendChild(s);
+      }
+    }
+
     const bgColor = document
       .querySelector("meta[name='theme-color']")
       ?.getAttribute("content");
-
-    event.newDocument
+    newDoc
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   });
