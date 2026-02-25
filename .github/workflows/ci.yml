@@ -9,6 +9,9 @@ on:
       - reopened
   workflow_dispatch:
   workflow_call:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
