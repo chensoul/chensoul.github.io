@@ -5,17 +5,30 @@
 // 4. 完整的错误处理和调试功能
 // 5. 首帧前同步主题（本脚本在 head 内同步加载时立即执行），避免刷新/切换时闪白
 
+var THEME_BG_STYLE_ID = "theme-bg-inline";
+var THEME_BG_LIGHT = "#f9f8f6";
+var THEME_BG_DARK = "#302e2c";
+
+function applyThemeBackgroundStyle(theme) {
+  var el = document.getElementById(THEME_BG_STYLE_ID);
+  if (!el) {
+    el = document.createElement("style");
+    el.id = THEME_BG_STYLE_ID;
+    document.head.appendChild(el);
+  }
+  var bg = theme === "dark" ? THEME_BG_DARK : THEME_BG_LIGHT;
+  el.textContent = "html, body { background-color: " + bg + " !important; }";
+}
+
 (function applyThemeBeforeFirstPaint() {
   try {
     var t = localStorage.getItem("theme");
     if (t === "light") {
       document.documentElement.setAttribute("data-theme", "light");
-      var s = document.createElement("style");
-      s.textContent =
-        "html { background-color: #f9f8f6 !important; } body { background-color: #ebe8e4 !important; }";
-      document.head.appendChild(s);
+      applyThemeBackgroundStyle("light");
     } else if (t === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
+      applyThemeBackgroundStyle("dark");
     }
   } catch (_) {}
 })();
@@ -207,6 +220,7 @@ function setPreference(userManualSet = false) {
 
 function reflectPreference() {
   document.firstElementChild.setAttribute("data-theme", themeValue);
+  applyThemeBackgroundStyle(themeValue);
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
   const body = document.body;
   if (body) {
@@ -353,12 +367,11 @@ window.onload = () => {
     const theme = currentHtml.getAttribute("data-theme");
     if (theme) {
       newHtml.setAttribute("data-theme", theme);
-      if (theme === "light") {
-        const s = newDoc.createElement("style");
-        s.textContent =
-          "html { background-color: #f9f8f6 !important; } body { background-color: #ebe8e4 !important; }";
-        newDoc.head.appendChild(s);
-      }
+      var bg = theme === "dark" ? THEME_BG_DARK : THEME_BG_LIGHT;
+      var s = newDoc.createElement("style");
+      s.id = THEME_BG_STYLE_ID;
+      s.textContent = "html, body { background-color: " + bg + " !important; }";
+      newDoc.head.appendChild(s);
     }
 
     const bgColor = document
