@@ -65,13 +65,22 @@ const expressiveCodeOption: AstroExpressiveCodeOptions = {
 // Rehype rewrite options, https://github.com/jaywcjlove/rehype-rewrite
 const rehypeRewriteOption: RehypeRewriteOptions = {
   rewrite: node => {
-    // Also look for Astro's Responsive Images
-    if (node.type === "element" && node.tagName === "img") {
+    if (node.type !== "element" || !node.properties) return;
+    // 图片：懒加载
+    if (node.tagName === "img") {
       node.properties = {
         ...node.properties,
         loading: "lazy",
         decoding: "async",
-        // fetchpriority: "auto",
+      };
+      return;
+    }
+    // 链接：统一在新标签页打开（文章与页面正文内）
+    if (node.tagName === "a") {
+      node.properties = {
+        ...node.properties,
+        target: "_blank",
+        rel: "noopener noreferrer",
       };
     }
   },
@@ -118,6 +127,8 @@ export default defineConfig({
       publicPath: SITE.website,
       external: true,
       mergeStylesheets: true,
+      // 禁用字体 preload，避免 "preloaded but not used within a few seconds" 警告
+      preloadFonts: false,
     }),
   ],
   markdown: {
