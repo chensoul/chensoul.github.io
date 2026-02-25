@@ -20,6 +20,11 @@
     color: var(--heading) !important;
   }
 
+  /* h2 上边距缩小 */
+  .prose h2 {
+    margin-top: 1.25em !important;
+  }
+
   /* 深色主题下 h4/h5/h6 略淡，层级更清晰 */
   html[data-theme="dark"] .prose h4,
   html[data-theme="dark"] .prose h5,

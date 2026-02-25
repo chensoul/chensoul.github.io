@@ -184,7 +184,10 @@ for (let m = 0; m < 12; m++) {
 <Layout title={`${title} | ${SITE.title}`} description={description}>
   <Header />
   <main id="main-content" class="running-main">
-    <div class="running-page mx-auto max-w-4xl px-4 pt-2 pb-6 max-sm:px-3">
+    <section
+      id="running"
+      class="running-page prose mx-auto max-w-4xl pt-0 pb-6 prose-img:mx-auto prose-img:block prose-img:w-full prose-img:max-w-full"
+    >
       <article class="mt-0">
         {
           !data?.stats ? (
@@ -197,9 +200,7 @@ for (let m = 0; m < 12; m++) {
             </p>
           ) : (
             <>
-              <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
-                跑步统计
-              </h2>
+              <h2>跑步统计</h2>
               <div>
                 {periodStats && Object.keys(periodStats).length > 0 && (
                   <div class="period-stats-section">
@@ -346,9 +347,7 @@ for (let m = 0; m < 12; m++) {
                   </div>
                 </div>
 
-                <h2 class="section-title running-section-title border-l-4 border-[var(--accent)] pl-3 text-lg font-semibold text-[var(--foreground)]">
-                  最近活动
-                </h2>
+                <h2>最近活动</h2>
                 <div
                   class="run-list flex flex-col gap-3"
                   id="runList"
@@ -507,7 +506,7 @@ for (let m = 0; m < 12; m++) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </main>
   <Footer />
 </Layout>
@@ -540,14 +539,12 @@ for (let m = 0; m < 12; m++) {
     --running-contrib-dark-5: #60a5fa;
   }
 
-  /* 跑步页 main 上边距缩小，使面包屑与「跑步统计」间距与关于页接近 */
+  /* 跑步页 main 无上边距，「跑步统计」紧接导航下方 */
   main#main-content.running-main {
-    margin-top: 1rem;
+    margin-top: 0;
   }
 
   .running-page {
-    max-width: 900px;
-    margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
   }
@@ -566,20 +563,11 @@ for (let m = 0; m < 12; m++) {
     text-wrap: balance;
   }
 
-  .running-page .section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 2rem 0 1rem 0;
-    color: var(--heading, var(--foreground));
-    padding-left: 0.75rem;
-    border-left: 3px solid var(--accent);
+  /* h2 由 article.prose 继承 typography，与关于页一致 */
+  .running-page .prose h2:first-of-type {
+    margin-top: 0;
   }
-
-  .running-page .running-section-title {
-    margin: 0 0 0.5rem 0;
-  }
-
-  .running-page .contribution-graph + .running-section-title {
+  .running-page .contribution-graph + h2 {
     margin-top: 1.25rem;
   }
 
@@ -1319,16 +1307,10 @@ for (let m = 0; m < 12; m++) {
     .running-page {
       width: 100%;
       max-width: 100%;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      padding-top: 0.5rem;
+      padding-top: 0;
       padding-bottom: 1.5rem;
     }
-    .running-page .running-section-title {
-      margin-top: 1rem;
-      margin-bottom: 0.375rem;
-    }
-    .running-page .contribution-graph + .running-section-title {
+    .running-page .contribution-graph + h2 {
       margin-top: 1rem;
     }
     .period-stats-section {
