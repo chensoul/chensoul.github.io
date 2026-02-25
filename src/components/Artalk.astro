@@ -96,7 +96,6 @@
             .querySelectorAll(".atk-sidebar, .atk-layer-wrap, .atk-layer")
             .forEach(el => el.remove());
           window.artalkInstance = null;
-          console.log("Artalk 实例已销毁");
         } catch (err) {
           console.error("销毁Artalk实例失败:", err);
         }
@@ -122,7 +121,6 @@
 
       // 如果容器已经包含Artalk实例，跳过初始化
       if (container.querySelector(".atk-app")) {
-        console.log("Artalk实例已存在，跳过初始化");
         return;
       }
 
@@ -139,11 +137,6 @@
       try {
         // 创建新实例
         window.artalkInstance = Artalk.init(config);
-        console.log(
-          `Artalk 初始化完成 - 页面: ${window.location.pathname}, 主题: ${
-            isDark ? "dark" : "light"
-          }`
-        );
 
         // 初始化完成后同步主题（确保主题正确应用）
         setTimeout(() => {
@@ -165,7 +158,6 @@
       const isDark = getCurrentTheme();
       try {
         window.artalkInstance.setDarkMode(isDark);
-        console.log(`Artalk主题已同步: ${isDark ? "dark" : "light"}`);
       } catch (err) {
         console.error("同步Artalk主题失败:", err);
       }
@@ -191,7 +183,6 @@
             mutation.type === "attributes" &&
             mutation.attributeName === "data-theme"
           ) {
-            console.log("检测到主题变化");
             // 延迟同步，确保DOM更新完成
             setTimeout(() => {
               syncArtalkTheme();
@@ -212,7 +203,6 @@
         window._artalkBtnObserver = new MutationObserver(mutations => {
           mutations.forEach(mutation => {
             if (mutation.attributeName === "aria-label") {
-              console.log("检测到主题按钮变化");
               setTimeout(() => {
                 syncArtalkTheme();
               }, 50);
@@ -237,8 +227,6 @@
      * 4. 设置主题观察器
      */
     function handlePageLoad() {
-      console.log("Artalk页面加载处理开始");
-
       // 先销毁旧实例
       destroyArtalk();
 
@@ -275,7 +263,6 @@
      * 2. 断开所有观察器
      */
     function handleBeforeSwap() {
-      console.log("Artalk页面切换前清理");
       destroyArtalk();
       cleanupObservers();
     }

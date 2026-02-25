@@ -123,7 +123,6 @@ function isUserPreferenceValidToday() {
   if (setDate !== today) {
     safeRemove("userSetTheme");
     safeRemove("userSetThemeDate");
-    console.log("用户主题设置已过期，重新启用自动切换");
     return false;
   }
 
@@ -176,7 +175,6 @@ function setPreference(userManualSet = false) {
     if (userManualSet) {
       safeSet("userSetTheme", "true");
       safeSet("userSetThemeDate", getTodayDateString());
-      console.log(`用户手动设置主题为: ${themeValue}，当天有效`);
       debugLog("用户手动设置主题", {
         theme: themeValue,
         date: getTodayDateString(),
