@@ -1,133 +1,99 @@
 ---
-/**
- * Running 页面
- *
- * 参考：https://zdyxry.github.io/running/
- * 数据：public/data/running.json（构建时读取，GitHub Action 定时同步）
- */
-import fs from "node:fs";
-import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import RunningPeriodStats from "@/components/running/RunningPeriodStats.astro";
-import RunningContributionGraph from "@/components/running/RunningContributionGraph.astro";
-import RunningRunCard from "@/components/running/RunningRunCard.astro";
-import RunningDetailModal from "@/components/running/RunningDetailModal.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
-import runningStyles from "@/styles/running.css?raw";
 
-type PeriodStat = {
-  total_activities: number;
-  total_distance: number;
-  total_duration_hours: number;
-  avg_pace: string;
-  avg_heart_rate?: number | null;
-  avg_vdot?: number | null;
-  total_training_load: number;
-};
-
-type RunningJson = {
-  runs: Array<{
-    date: string;
-    distance: number;
-    duration: string;
-    pace: string;
-    hr_zone?: number;
-    activity_type?: string;
-    workout_name?: string;
-    route?: string;
-    vdot?: number;
-    training_load?: number;
-    heart_rate?: number;
-    max_heart_rate?: number;
-    cadence?: number;
-    segments?: unknown[];
-    laps?: unknown[];
-  }>;
-  stats: { period_stats?: { week?: PeriodStat; month?: PeriodStat; year?: PeriodStat; total?: PeriodStat } } | null;
-};
-
-const runningPath = path.join(process.cwd(), "public", "data", "running.json");
-const raw = fs.existsSync(runningPath)
-  ? fs.readFileSync(runningPath, "utf-8")
-  : '{"runs":[],"stats":null}';
-const parsed = JSON.parse(raw) as RunningJson;
-const data: RunningJson =
-  parsed?.runs && Array.isArray(parsed.runs)
-    ? parsed
-    : { runs: [], stats: null };
+// 加载跑步数据
+import runningJson from '../data/running.json';
 
 const title = _t.running.title;
-const description = _t.running.desc;
+const description = '这里展示我的跑步记录统计与列表。';
 
+const data = runningJson;
 const recentRuns = data.runs.slice(0, 10);
+const allRuns = data.runs;
 const hasMoreRuns = data.runs.length > 10;
-const periodStats = data.stats?.period_stats ?? {};
-const periodLabels: Record<string, string> = {
-  week: "周",
-  month: "月",
-  year: "年",
-  total: "总",
-};
 
+// 转换时长格式："1小时16分钟" -> "1h16m", "41分钟" -> "41m"
 function formatDuration(duration: string): string {
   const hourMatch = duration.match(/(\d+)小时/);
   const minMatch = duration.match(/(\d+)分钟/);
   const hours = hourMatch ? parseInt(hourMatch[1]) : 0;
   const mins = minMatch ? parseInt(minMatch[1]) : 0;
-  if (hours > 0 && mins > 0) return `${hours}h${mins}m`;
-  if (hours > 0) return `${hours}h`;
-  return `${mins}m`;
+
+  if (hours > 0 && mins > 0) {
+    return `${hours}h${mins}m`;
+  } else if (hours > 0) {
+    return `${hours}h`;
+  } else {
+    return `${mins}m`;
+  }
 }
 
-const hrZoneLabels: Record<number, string> = {
-  0: "",
-  1: "Z1 恢复",
-  2: "Z2 有氧",
-  3: "Z3 节奏",
-  4: "Z4 阈值",
-  5: "Z5 最大",
-};
+// 将时长转换为分钟数
+function durationToMinutes(duration: string): number {
+  const hourMatch = duration.match(/(\d+)小时/);
+  const minMatch = duration.match(/(\d+)分钟/);
+  const hours = hourMatch ? parseInt(hourMatch[1]) : 0;
+  const mins = minMatch ? parseInt(minMatch[1]) : 0;
+  return hours * 60 + mins;
+}
 
-const hrZoneColors: Record<number, string> = {
-  0: "var(--foreground)",
-  1: "var(--running-zone-1)",
-  2: "var(--running-zone-2)",
-  3: "var(--running-zone-3)",
-  4: "var(--running-zone-4)",
-  5: "var(--running-zone-5)",
-};
+// 将分钟数转换为时长字符串
+function minutesToDuration(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hours > 0 && mins > 0) {
+    return `${hours}小时${mins}分钟`;
+  } else if (hours > 0) {
+    return `${hours}小时`;
+  } else {
+    return `${mins}分钟`;
+  }
+}
 
-// 日历：最近 12 个月
+// 准备日历数据 - 展示最近12个月，从每个月1号开始
 const today = new Date();
 const currentYear = today.getFullYear();
 const currentMonth = today.getMonth();
+
+// 计算起始日期：12个月前的1号（使用UTC避免时区问题）
 const startYear = currentMonth >= 11 ? currentYear : currentYear - 1;
 const startMonth = currentMonth >= 11 ? currentMonth - 11 : currentMonth + 1;
 const startOfRange = new Date(Date.UTC(startYear, startMonth, 1));
+
+// 计算结束日期：本月的最后一天
 const endOfRange = new Date(Date.UTC(currentYear, currentMonth + 1, 0));
 
-const dateMap = new Map<
-  string,
-  { distance: number; duration: string; runs: (typeof data.runs)[0][] }
->();
+// 生成日期映射 - 同一天的多条记录合并
+interface DaySummary {
+  distance: number;
+  duration: string;
+  runs: typeof data.runs;
+}
+
+const dateMap = new Map<string, DaySummary>();
 data.runs.forEach(run => {
-  const dateStr = run.date.split(" ")[0];
+  const dateStr = run.date.split(' ')[0];
   const existing = dateMap.get(dateStr);
   if (!existing) {
     dateMap.set(dateStr, {
       distance: run.distance,
       duration: run.duration,
-      runs: [run],
+      runs: [run]
     });
   } else {
-    existing.distance += run.distance;
+    // 合并同一天的记录
+    const totalDistance = existing.distance + run.distance;
+    const totalMinutes = durationToMinutes(existing.duration) + durationToMinutes(run.duration);
     existing.runs.push(run);
+    existing.distance = totalDistance;
+    existing.duration = minutesToDuration(totalMinutes);
   }
 });
 
+// 获取颜色强度
 function getIntensity(distance: number): number {
   if (!distance) return 0;
   if (distance < 3) return 1;
@@ -137,9 +103,10 @@ function getIntensity(distance: number): number {
   return 5;
 }
 
+// 生成日历网格数据 - 从起始月1号之前的周一开始（使用UTC）
 const calendarStart = new Date(startOfRange);
-const dow = calendarStart.getUTCDay();
-const daysToSubtract = dow === 0 ? 6 : dow - 1;
+const dayOfWeek = calendarStart.getUTCDay();
+const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 calendarStart.setUTCDate(calendarStart.getUTCDate() - daysToSubtract);
 
 interface DayData {
@@ -149,9 +116,13 @@ interface DayData {
   title: string;
 }
 
-const weeks: { days: DayData[] }[] = [];
-const totalDays =
-  Math.ceil((endOfRange.getTime() - calendarStart.getTime()) / 86400000) + 7;
+interface WeekData {
+  days: DayData[];
+}
+
+const weeks: WeekData[] = [];
+// 生成足够的周数来覆盖整个范围
+const totalDays = Math.ceil((endOfRange.getTime() - calendarStart.getTime()) / (1000 * 60 * 60 * 24)) + 7;
 const totalWeeks = Math.ceil(totalDays / 7);
 
 for (let w = 0; w < totalWeeks; w++) {
@@ -160,114 +131,1186 @@ for (let w = 0; w < totalWeeks; w++) {
     const idx = w * 7 + d;
     const currentDate = new Date(calendarStart);
     currentDate.setUTCDate(calendarStart.getUTCDate() + idx);
-    const dateStr = currentDate.toISOString().split("T")[0];
-    const dayData = dateMap.get(dateStr);
+    const dateStr = currentDate.toISOString().split('T')[0];
+    const run = dateMap.get(dateStr);
     const isInRange = currentDate >= startOfRange && currentDate <= endOfRange;
-    const intensity = getIntensity(dayData?.distance ?? 0);
-    const title = dayData
-      ? `${dateStr}: ${dayData.distance}km, ${dayData.duration}`
+    const intensity = getIntensity(run?.distance || 0);
+    const title = run
+      ? `${dateStr}: ${run.distance.toFixed(1)}km, ${run.duration}${run.runs.length > 1 ? ` (${run.runs.length}次)` : ''}`
       : dateStr;
-    weekDays.push({ dateStr, isInRange, intensity, title });
+
+    weekDays.push({
+      dateStr,
+      isInRange,
+      intensity,
+      title
+    });
   }
   weeks.push({ days: weekDays });
 }
 
+// 获取月份标签 - 每个月1号所在的周
 const months: { label: string; weekIndex: number }[] = [];
 for (let m = 0; m < 12; m++) {
   const monthDate = new Date(Date.UTC(startYear, startMonth + m, 1));
-  const daysSinceStart = Math.floor(
-    (monthDate.getTime() - calendarStart.getTime()) / 86400000
-  );
+  const monthLabel = `${monthDate.getUTCMonth() + 1}月`;
+
+  // 找到该月1号所在的周
+  const daysSinceStart = Math.floor((monthDate.getTime() - calendarStart.getTime()) / (1000 * 60 * 60 * 24));
   const weekIndex = Math.floor(daysSinceStart / 7);
+
   if (weekIndex >= 0 && weekIndex < weeks.length) {
-    months.push({ label: `${monthDate.getUTCMonth() + 1}月`, weekIndex });
+    months.push({ label: monthLabel, weekIndex });
   }
 }
+
+// 统计数据
+const stats = data.stats;
+
+// 周期统计数据
+const periodStats = stats.period_stats || {};
+const periodLabels: Record<string, string> = {
+  week: '周',
+  month: '月',
+  year: '年',
+  total: '总'
+};
+
+// 心率区间标签
+const hrZoneLabels: Record<number, string> = {
+  0: '',
+  1: 'Z1 恢复',
+  2: 'Z2 有氧',
+  3: 'Z3 节奏',
+  4: 'Z4 阈值',
+  5: 'Z5 最大'
+};
+
+// 心率区间颜色
+const hrZoneColors: Record<number, string> = {
+  0: 'var(--text-secondary)',
+  1: '#4ade80',  // 绿色 - 恢复
+  2: '#60a5fa',  // 蓝色 - 有氧
+  3: '#fbbf24',  // 黄色 - 节奏
+  4: '#fb923c',  // 橙色 - 阈值
+  5: '#f87171'   // 红色 - 最大
+};
 ---
 
 <Layout title={`${title} | ${SITE.title}`} description={description}>
   <Header />
-  <main id="main-content" class="running-main">
-    <section
-      id="running"
-      class="running-page prose mx-auto max-w-4xl pt-0 pb-6 prose-img:mx-auto prose-img:block prose-img:w-full prose-img:max-w-full"
-    >
-      <article class="mt-0">
-        {
-          !data?.stats ? (
-            <p class="text-[var(--foreground)]">
-              暂无数据。可将 Garmin/Strava 等导出的数据放入{" "}
-              <code class="rounded bg-[var(--muted)] px-1">
-                public/data/running.json
-              </code>
-              。
-            </p>
-          ) : (
-            <>
-              <h2>跑步统计</h2>
-              <div>
-                {periodStats && Object.keys(periodStats).length > 0 && (
-                  <RunningPeriodStats
-                    periodStats={periodStats}
-                    periodLabels={periodLabels}
-                  />
-                )}
+  <div class="running-page">
+    <article>
+      {
+        (!data || !data.stats) ? (
+          <p>暂无数据。</p>
+        ) : (
+          <div>
+            {/* 周期统计卡片 - Tab 切换 */}
+            {periodStats && Object.keys(periodStats).length > 0 && (
+              <div class="period-stats-section" id="periodStats">
+                <div class="period-stats-card">
+                  {/* Tab 导航 */}
+                  <div class="period-tab-nav" id="periodTabNav">
+                    {(['week', 'month', 'year', 'total'] as const).map((period) => {
+                      const pStats = periodStats[period];
+                      if (!pStats) return null;
+                      const isActive = period === 'week';
+                      return (
+                        <button
+                          class={`period-tab-btn ${isActive ? 'active' : ''}`}
+                          data-period={period}
+                        >
+                          {periodLabels[period]}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                <RunningContributionGraph weeks={weeks} months={months} />
-
-                <h2>最近活动</h2>
-                <div
-                  class="run-list flex flex-col gap-3"
-                  id="runList"
-                  data-running-json="/data/running.json"
-                  data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
-                  data-hr-zone-colors={JSON.stringify(hrZoneColors)}
-                >
-                  {recentRuns.map((run, index) => (
-                    <RunningRunCard
-                      run={run}
-                      index={index}
-                      hrZoneLabels={hrZoneLabels}
-                      durationFormatted={formatDuration(run.duration)}
-                    />
-                  ))}
+                  {/* Tab 内容 */}
+                  <div class="period-tab-content">
+                    {(['week', 'month', 'year', 'total'] as const).map((period) => {
+                      const pStats = periodStats[period];
+                      if (!pStats) return null;
+                      const isActive = period === 'week';
+                      return (
+                        <div
+                          class={`period-panel ${isActive ? 'active' : ''}`}
+                          data-panel={period}
+                        >
+                          <div class="period-panel-header">
+                            <span class="period-panel-title">{periodLabels[period]}数据统计</span>
+                            <span class="period-panel-count">共计跑步 {pStats.total_activities} 次</span>
+                          </div>
+                          <div class="period-panel-grid">
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.avg_vdot?.toFixed(1) ?? '--'}</span>
+                              <span class="period-panel-label">当前跑力</span>
+                            </div>
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.total_distance.toFixed(0)}</span>
+                              <span class="period-panel-label">距离(公里)</span>
+                            </div>
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.avg_pace}</span>
+                              <span class="period-panel-label">平均配速</span>
+                            </div>
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.total_training_load > 0 ? pStats.total_training_load.toFixed(0) : '--'}</span>
+                              <span class="period-panel-label">训练负荷</span>
+                            </div>
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.total_duration_hours.toFixed(1)}</span>
+                              <span class="period-panel-label">总时长(小时)</span>
+                            </div>
+                            <div class="period-panel-stat">
+                              <span class="period-panel-value">{pStats.avg_heart_rate ?? '--'}</span>
+                              <span class="period-panel-label">平均心率</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                {hasMoreRuns && (
-                  <button
-                    type="button"
-                    class="load-more-btn mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 py-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--background)] hover:text-[var(--accent)]"
-                    id="loadMoreBtn"
-                  >
-                    <span>更多</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </button>
-                )}
               </div>
-            </>
-          )
-        }
-      </article>
+            )}
 
-      <RunningDetailModal />
-    </section>
-  </main>
-  <Footer />
+
+            <div class="contribution-graph">
+              <div class="calendar-wrapper">
+                <div class="calendar">
+                  <div class="month-labels">
+                    {months.map(m => (
+                      <span class="month-label" style={`left: ${(m.weekIndex / weeks.length) * 100}%`}>{m.label}</span>
+                    ))}
+                  </div>
+                  <div class="weeks">
+                    {weeks.map(week => (
+                      <div class="week">
+                        {week.days.map(day => (
+                          <div
+                            class={`day ${day.isInRange ? '' : 'out-of-range'} intensity-${day.intensity}`}
+                            data-tooltip={day.title}
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="section-title">最近活动</h2>
+            <div class="run-list" id="runList" data-all-runs={JSON.stringify(allRuns)} data-hr-zone-labels={JSON.stringify(hrZoneLabels)} data-hr-zone-colors={JSON.stringify(hrZoneColors)}>
+              {recentRuns.map((run, index) => (
+                <div class="run-card" data-run-index={index} data-run={JSON.stringify(run)}>
+                  <div class="run-main">
+                    <div class="run-header">
+                      <time class="run-date">{run.date.split(' ')[0]}</time>
+                      {run.hr_zone > 0 && (
+                        <span
+                          class="hr-zone-badge"
+                          style={`background-color: ${hrZoneColors[run.hr_zone]}20; color: ${hrZoneColors[run.hr_zone]}; border: 1px solid ${hrZoneColors[run.hr_zone]}40;`}
+                        >
+                          {hrZoneLabels[run.hr_zone]}
+                        </span>
+                      )}
+                    </div>
+                    <span class="run-type">
+                      {run.activity_type || '室外跑步'}
+                      {run.workout_name && (
+                        <span class="workout-name"> · {run.workout_name}</span>
+                      )}
+                    </span>
+                  </div>
+                  <div class="run-stats">
+                    <div class="stat">
+                      <span class="stat-value">{run.distance.toFixed(1)}</span>
+                      <span class="stat-label">km</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-value">{formatDuration(run.duration)}</span>
+                      <span class="stat-label">时长</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-value">{run.pace}</span>
+                      <span class="stat-label">配速</span>
+                    </div>
+                    <div class="stat vdot-stat">
+                      <span class="stat-value">{run.vdot ?? '-'}</span>
+                      <span class="stat-label">VDOT</span>
+                    </div>
+                    {run.training_load > 0 && (
+                      <div class="stat load-stat">
+                        <span class="stat-value">{run.training_load}</span>
+                        <span class="stat-label">负荷</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {hasMoreRuns && (
+              <button class="load-more-btn" id="loadMoreBtn">
+                <span>更多</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            )}
+          </div>
+        )
+      }
+    </article>
+  </div>
+
+  <!-- 运动详情弹窗 -->
+  <div class="run-detail-modal" id="runDetailModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="modal-body" id="modalBody">
+        <!-- 动态内容 -->
+      </div>
+    </div>
+  </div>
 </Layout>
 
-<style is:global set:html={runningStyles} />
-
 <script>
-  import "@/scripts/initRunningPage";
+  import { initRunningPage } from "@/scripts/runningPage";
+  document.addEventListener("DOMContentLoaded", initRunningPage);
+  document.addEventListener("astro:page-load", initRunningPage);
+  document.addEventListener("astro:after-swap", initRunningPage);
+  if (document.readyState !== "loading") initRunningPage();
 </script>
+
+<style>
+  .running-page {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    color: var(--text-primary);
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* 周期统计卡片 - Tab 样式 */
+  .period-stats-section {
+    margin: 1.5rem 0;
+  }
+
+  .period-stats-card {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Tab 导航 */
+  .period-tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    background: var(--background-secondary);
+  }
+
+  .period-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.875rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .period-tab-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .period-tab-btn.active {
+    color: var(--accent);
+  }
+
+  .period-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  /* Tab 内容 */
+  .period-tab-content {
+    padding: 1.25rem;
+  }
+
+  .period-panel {
+    display: none;
+  }
+
+  .period-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .period-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .period-panel-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .period-panel-count {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .period-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem 0.5rem;
+    width: 100%;
+  }
+
+  .period-panel-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .period-panel-stat:hover {
+    background: var(--background-secondary);
+  }
+
+  .period-panel-stat:hover .period-panel-value {
+    color: var(--accent);
+  }
+
+  .period-panel-value {
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: var(--text-primary);
+  }
+
+  .period-panel-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .period-tab-nav {
+      padding: 0 0.75rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .period-tab-btn {
+      padding: 0.75rem 1rem;
+      font-size: 0.8125rem;
+    }
+
+    .period-tab-content {
+      padding: 1rem;
+    }
+
+    .period-panel-grid {
+      gap: 1rem 0.25rem;
+    }
+
+    .period-panel-stat {
+      padding: 0.375rem;
+    }
+
+    .period-panel-value {
+      font-size: 1.125rem;
+    }
+
+    .period-panel-label {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* 统计概览卡片 */
+  .stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .stat-card {
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .stat-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-card.vdot-card {
+    background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+
+  .stat-card.load-card {
+    background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .stat-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .stat-desc {
+    font-size: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  /* 心率区间标签 */
+  :global(.hr-zone-badge) {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 20px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* VDOT 和训练负荷统计样式 */
+  :global(.vdot-stat .stat-value) {
+    color: #8b5cf6;
+    font-weight: 700;
+  }
+
+  :global(.load-stat .stat-value) {
+    color: #3b82f6;
+    font-weight: 700;
+  }
+
+  /* 查看更多按钮 */
+  .load-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .load-more-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--background);
+  }
+
+  .load-more-btn svg {
+    transition: transform 0.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(.run-list) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  :global(.run-card) {
+    padding: 1rem 1.25rem;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  :global(.run-card:hover),
+  :global(.run-card:focus-visible) {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+
+  :global(.run-card:hover) :global(.run-date),
+  :global(.run-card:focus-visible) :global(.run-date) {
+    color: var(--accent);
+  }
+
+  :global(.run-main) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  :global(.run-header) {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+
+  :global(.run-date) {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.run-type) {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  :global(.workout-name) {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  :global(.run-stats) {
+    display: flex;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  :global(.stat) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-width: 52px;
+  }
+
+  :global(.stat-value) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: left;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  :global(.stat-label) {
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .contribution-graph {
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    width: 100%;
+  }
+
+  .calendar-wrapper {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .calendar {
+    flex: 1;
+    overflow-x: visible;
+  }
+
+  .month-labels {
+    position: relative;
+    height: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .month-label {
+    position: absolute;
+    font-size: 0.625rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .weeks {
+    display: flex;
+    gap: 2px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .week {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .day {
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: 2px;
+    background: var(--border);
+    transition: transform 0.1s ease;
+    position: relative;
+  }
+
+  .day:hover {
+    transform: scale(1.2);
+    outline: 1px solid var(--text-secondary);
+    z-index: 10;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .day {
+      transition: none;
+    }
+    .day:hover {
+      transform: none;
+    }
+  }
+
+  .day::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, visibility 0.1s ease;
+    pointer-events: none;
+    box-shadow: var(--box-shadow);
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .day:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .day.out-of-range {
+    background: transparent;
+  }
+
+  .day.intensity-1 { background: #bfdbfe; }
+  .day.intensity-2 { background: #93c5fd; }
+  .day.intensity-3 { background: #60a5fa; }
+  .day.intensity-4 { background: #3b82f6; }
+  .day.intensity-5 { background: #1d4ed8; }
+
+  :global([data-theme="dark"]) .day { background: var(--background-secondary); }
+  :global([data-theme="dark"]) .day.intensity-1 { background: #1e3a5f; }
+  :global([data-theme="dark"]) .day.intensity-2 { background: #1e40af; }
+  :global([data-theme="dark"]) .day.intensity-3 { background: #2563eb; }
+  :global([data-theme="dark"]) .day.intensity-4 { background: #3b82f6; }
+  :global([data-theme="dark"]) .day.intensity-5 { background: #60a5fa; }
+
+  /* 详情弹窗样式 - 使用 :global 因为内容是动态插入的 */
+  :global(.run-detail-modal) {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  :global(.run-detail-modal.active) {
+    display: flex;
+  }
+
+  :global(.modal-overlay) {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  :global(.modal-content) {
+    position: relative;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modalSlideIn 0.3s ease;
+  }
+
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  :global(.modal-close) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+
+  :global(.modal-close:hover) {
+    background: var(--border);
+    color: var(--text-primary);
+  }
+
+  :global(.modal-body) {
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+
+  :global(.detail-header) {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  :global(.detail-title) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  :global(.detail-meta) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  :global(.detail-date) {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+  }
+
+  :global(.detail-type) {
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+  }
+
+  :global(.detail-hr-zone) {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  :global(.detail-stats-grid) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  :global(.detail-stat-item) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.8125rem;
+  }
+
+  :global(.detail-stat-icon) {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  :global(.detail-stat-icon svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.detail-stat-label) {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  :global(.detail-stat-value) {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.detail-section) {
+    margin-top: 1.5rem;
+  }
+
+  :global(.section-subtitle) {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem 0;
+  }
+
+  :global(.segments-table-wrapper),
+  :global(.laps-table-wrapper) {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  :global(.segments-table),
+  :global(.laps-table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+  }
+
+  :global(.segments-table th),
+  :global(.segments-table td),
+  :global(.laps-table th),
+  :global(.laps-table td) {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  :global(.segments-table th),
+  :global(.laps-table th) {
+    background: var(--background-secondary);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  :global(.segments-table tr:last-child td),
+  :global(.laps-table tr:last-child td) {
+    border-bottom: none;
+  }
+
+  :global(.segments-table tr:hover),
+  :global(.laps-table tr:hover) {
+    background: var(--background-secondary);
+  }
+
+  :global(.pace-bar) {
+    position: relative;
+    height: 22px;
+    background: var(--background-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+
+  :global(.pace-bar-fill) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    opacity: 0.35;
+    transition: width 0.3s ease;
+  }
+
+  /* 根据配速显示不同颜色：快=绿色，中=蓝色，慢=橙色/红色 */
+  :global(.pace-bar-fill.fast) {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+  }
+
+  :global(.pace-bar-fill.medium) {
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+  }
+
+  :global(.pace-bar-fill.slow) {
+    background: linear-gradient(90deg, #fb923c, #f97316);
+  }
+
+  :global(.pace-bar span) {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.hr-zone-tag),
+  :global(.pace-tag) {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  :global(.hr-zone-tag.zone-1),
+  :global(.pace-tag.zone-1) {
+    background: #4ade8020;
+    color: #4ade80;
+  }
+
+  :global(.hr-zone-tag.zone-2),
+  :global(.pace-tag.zone-2) {
+    background: #60a5fa20;
+    color: #60a5fa;
+  }
+
+  :global(.hr-zone-tag.zone-3),
+  :global(.pace-tag.zone-3) {
+    background: #fbbf2420;
+    color: #fbbf24;
+  }
+
+  :global(.hr-zone-tag.zone-4),
+  :global(.pace-tag.zone-4) {
+    background: #fb923c20;
+    color: #fb923c;
+  }
+
+  :global(.hr-zone-tag.zone-5),
+  :global(.pace-tag.zone-5) {
+    background: #f8717120;
+    color: #f87171;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    .stats-overview {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-card {
+      padding: 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 1.1rem;
+    }
+
+    :global(.run-card) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+
+    :global(.run-stats) {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    :global(.stat) {
+      min-width: auto;
+      flex: none;
+    }
+
+    .day {
+      border-radius: 1px;
+    }
+
+    :global(.modal-content) {
+      max-height: 95vh;
+      margin: 0.5rem;
+    }
+
+    :global(.modal-body) {
+      padding: 1rem;
+    }
+
+    :global(.detail-stats-grid) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    :global(.detail-stat-item) {
+      padding: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    :global(.detail-stat-icon) {
+      width: 14px;
+      height: 14px;
+    }
+
+    :global(.detail-stat-label),
+    :global(.detail-stat-value) {
+      font-size: 0.75rem;
+    }
+
+    :global(.detail-title) {
+      font-size: 1.125rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-overview {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    :global(.run-stats) {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1.25rem;
+    }
+
+    :global(.stat-value) {
+      font-size: 0.9375rem;
+    }
+
+    :global(.stat-label) {
+      font-size: 0.625rem;
+    }
+
+    :global(.detail-stats-grid) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    :global(.detail-stat-item) {
+      padding: 0.5rem;
+    }
+  }
+</style>

@@ -207,16 +207,6 @@ const structuredData = {
     <script>
       import "@/scripts/theme";
     </script>
-    <script>
-      import { boot as runningBoot } from "@/scripts/running";
-      document.addEventListener("astro:page-load", runningBoot);
-      document.addEventListener("astro:after-swap", runningBoot);
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", runningBoot);
-      } else {
-        runningBoot();
-      }
-    </script>
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
     <slot name="head" />
