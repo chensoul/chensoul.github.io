@@ -62,12 +62,6 @@ export const SITE = {
    */
   postPerPage: 10,
 
-  /**
-   * 归档页翻页时每页显示的年份数量
-   * 用于 /archives/[page] 路由的分页
-   */
-  archivesPerPage: 3,
-
   // ========== 内容生成配置 ==========
   /**
    * 定时文章发布的时间容差（毫秒）
