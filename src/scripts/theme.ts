@@ -107,16 +107,27 @@ setThemeFeature();
 // Runs on view transitions navigation
 document.addEventListener("astro:after-swap", setThemeFeature);
 
-// Set theme-color value before page transition
-// to avoid navigation bar color flickering in Android dark mode
+// 与 variables.css 一致，用于 swap 前立即设置新文档背景，避免暗色下闪白
+const THEME_BG = { dark: "#302e2c", light: "#f9f8f6" } as const;
+
 document.addEventListener("astro:before-swap", event => {
   const astroEvent = event;
+  const newDoc = astroEvent.newDocument;
+
+  const theme =
+    document.documentElement.getAttribute("data-theme") ||
+    (localStorage.getItem(THEME) === DARK ? DARK : LIGHT);
+  const bg = THEME_BG[theme === DARK ? "dark" : "light"];
+
+  newDoc.documentElement.setAttribute("data-theme", theme);
+  newDoc.documentElement.style.backgroundColor = bg;
+  if (newDoc.body) newDoc.body.style.backgroundColor = bg;
+
   const bgColor = document
     .querySelector("meta[name='theme-color']")
     ?.getAttribute("content");
-
   if (bgColor) {
-    astroEvent.newDocument
+    newDoc
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
