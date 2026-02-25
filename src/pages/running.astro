@@ -3,19 +3,27 @@
  * Running 页面
  *
  * 参考：https://zdyxry.github.io/running/
- * 数据：src/data/running.json（可替换为从 Garmin/Strava 等导出的统计）
+ * 数据：public/data/running.json（构建时读取，GitHub Action 定时同步）
  */
+import fs from "node:fs";
+import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
 import { _t } from "@/i18n/lang";
 
-import runningData from "@/data/running.json";
+type PeriodStat = {
+  total_activities: number;
+  total_distance: number;
+  total_duration_hours: number;
+  avg_pace: string;
+  avg_heart_rate?: number | null;
+  avg_vdot?: number | null;
+  total_training_load: number;
+};
 
-const title = _t.running.title;
-const description = _t.running.desc;
-const data = runningData as {
+type RunningJson = {
   runs: Array<{
     date: string;
     distance: number;
@@ -33,28 +41,23 @@ const data = runningData as {
     segments?: unknown[];
     laps?: unknown[];
   }>;
-  stats: {
-    period_stats?: {
-      week?: PeriodStat;
-      month?: PeriodStat;
-      year?: PeriodStat;
-      total?: PeriodStat;
-    };
-  };
+  stats: { period_stats?: { week?: PeriodStat; month?: PeriodStat; year?: PeriodStat; total?: PeriodStat } } | null;
 };
 
-type PeriodStat = {
-  total_activities: number;
-  total_distance: number;
-  total_duration_hours: number;
-  avg_pace: string;
-  avg_heart_rate?: number | null;
-  avg_vdot?: number | null;
-  total_training_load: number;
-};
+const runningPath = path.join(process.cwd(), "public", "data", "running.json");
+const raw = fs.existsSync(runningPath)
+  ? fs.readFileSync(runningPath, "utf-8")
+  : '{"runs":[],"stats":null}';
+const parsed = JSON.parse(raw) as RunningJson;
+const data: RunningJson =
+  parsed?.runs && Array.isArray(parsed.runs)
+    ? parsed
+    : { runs: [], stats: null };
+
+const title = _t.running.title;
+const description = _t.running.desc;
 
 const recentRuns = data.runs.slice(0, 10);
-const allRuns = data.runs;
 const hasMoreRuns = data.runs.length > 10;
 const periodStats = data.stats?.period_stats ?? {};
 const periodLabels: Record<string, string> = {
@@ -187,7 +190,7 @@ for (let m = 0; m < 12; m++) {
             <p class="text-[var(--foreground)]">
               暂无数据。可将 Garmin/Strava 等导出的数据放入{" "}
               <code class="rounded bg-[var(--muted)] px-1">
-                src/data/running.json
+                public/data/running.json
               </code>
               。
             </p>
@@ -348,7 +351,7 @@ for (let m = 0; m < 12; m++) {
                 <div
                   class="run-list flex flex-col gap-3"
                   id="runList"
-                  data-all-runs={JSON.stringify(allRuns)}
+                  data-running-json="/data/running.json"
                   data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
                   data-hr-zone-colors={JSON.stringify(hrZoneColors)}
                 >
@@ -1358,7 +1361,7 @@ for (let m = 0; m < 12; m++) {
 </style>
 
 <script>
-  function initRunningPage() {
+  async function initRunningPage() {
     const runList = document.getElementById("runList");
     if (!runList || runList.dataset.runningInited === "true") return;
     runList.dataset.runningInited = "true";
@@ -1393,7 +1396,30 @@ for (let m = 0; m < 12; m++) {
     const modalClose = document.getElementById("modalClose");
     const modalOverlay = document.getElementById("modalOverlay");
 
-    const allRuns = JSON.parse(runList.dataset.allRuns || "[]");
+    type RunListItem = {
+      date: string;
+      distance: number;
+      duration: string;
+      pace: string;
+      hr_zone?: number;
+      activity_type?: string;
+      workout_name?: string;
+      route?: string;
+      vdot?: number;
+      training_load?: number;
+      [key: string]: unknown;
+    };
+    let allRuns: RunListItem[] = [];
+    try {
+      const url = runList.dataset.runningJson || "/data/running.json";
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = (await res.json()) as { runs?: RunListItem[] };
+        allRuns = data.runs || [];
+      }
+    } catch {
+      allRuns = [];
+    }
     const hrZoneLabelsData = JSON.parse(runList.dataset.hrZoneLabels || "{}");
     let isExpanded = false;
 

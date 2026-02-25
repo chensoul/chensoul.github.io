@@ -20,6 +20,7 @@ import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import compressor from "astro-compressor";
 import { minify } from "@zokki/astro-minify";
+import critters from "@critters-rs/astro";
 
 // Import custom theme
 const themeJsoncString = fs.readFileSync(
@@ -109,12 +110,15 @@ export default defineConfig({
     expressiveCode(expressiveCodeOption),
     mdx(),
     sitemap(sitemapOption),
-    minify(),
-    // minify({
-    //   // Re-enable CSS minification with error recovery to avoid parser crashes
-    //   css: { minify: true, errorRecovery: true },
-    // }),
+    minify({
+      css: { minify: true, errorRecovery: true },
+    }),
     compressor({ gzip: true, brotli: true }),
+    critters({
+      publicPath: SITE.website,
+      external: true,
+      mergeStylesheets: true,
+    }),
   ],
   markdown: {
     remarkPlugins: [remarkMath],
@@ -167,7 +171,7 @@ export default defineConfig({
   },
   compressHTML: true,
   prefetch: {
-    prefetchAll: true,
+    prefetchAll: false, // 仅预取 hover 链接，减少首屏请求与带宽
   },
   // image: {
   //   // Used for all Markdown images; not configurable per-image

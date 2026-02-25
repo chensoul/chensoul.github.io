@@ -51,8 +51,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
               {/* 标题可通过 slot 或 props 自定义 */}
             </h2>
             <ul>
-              {featuredPosts.map(data => (
-                <Card variant="h3" {...data} />
+              {featuredPosts.map((data, index) => (
+                <Card variant="h3" priority={index === 0} {...data} />
               ))}
             </ul>
           </section>
@@ -70,8 +70,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           <ul>
             {recentPosts.map(
               (data, index) =>
-                // 只显示前 N 篇文章（由 SITE.postPerIndex 控制）
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+                // 只显示前 N 篇文章（由 SITE.postPerIndex 控制）；首条为首屏 LCP 候选
+                index < SITE.postPerIndex && (
+                  <Card
+                    variant="h3"
+                    priority={featuredPosts.length === 0 && index === 0}
+                    {...data}
+                  />
+                )
             )}
           </ul>
         </section>

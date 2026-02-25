@@ -41,7 +41,7 @@ const { noMarginTop = false } = Astro.props;
       <!-- 自定义页脚链接（如统计页面） -->
       {
         SITE.customFooterLink.enabled && (
-          <a href={SITE.customFooterLink.url} target="_blank">
+          <a href={SITE.customFooterLink.url} target="_blank" rel="noopener noreferrer">
             {SITE.customFooterLink.text}
           </a>
         )
@@ -57,7 +57,7 @@ const { noMarginTop = false } = Astro.props;
       <!-- ICP 备案号（中国大陆特有） -->
       {
         SITE.icp && (
-          <a href="https://beian.miit.gov.cn/" target="_blank">
+          <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
             {_t.license.icp} {SITE.icp}
           </a>
         )

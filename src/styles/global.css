@@ -24,7 +24,7 @@ html[data-theme="light"] {
   --comment-badge-bg: #96d7f5;
   --toc-top-text-color: #ffffff;
   --year-progress-fill: var(--page-background);
-  --posts-list-time-color: #969696;
+  --posts-list-time-color: #6b6b6b; /* 与浅色背景对比 ≥4.5:1，满足 WCAG AA */
   --skeleton: #e5e7eb;
   --error: #b91c1c;
   --heading: var(--foreground);
@@ -44,7 +44,7 @@ html[data-theme="dark"] {
   --comment-badge-bg: var(--color-accent);
   --toc-top-text-color: var(--foreground);
   --year-progress-fill: var(--accent);
-  --posts-list-time-color: #8b8b8b;
+  --posts-list-time-color: #9ca3af; /* 与深色背景对比 ≥4.5:1 */
   --skeleton: #374151;
   --error: #f87171;
   /* 深色主题下标题颜色：更亮以提升可读性 */
@@ -248,4 +248,12 @@ html[data-theme="dark"] section.text-center h1 {
 ::view-transition-old(*),
 ::view-transition-new(*) {
   animation-duration: 800ms;
+}
+
+/* 尊重「减少动态效果」偏好，几乎禁用过渡动画 */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+  }
 }

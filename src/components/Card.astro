@@ -8,8 +8,7 @@
  * 1. 支持两种标题级别：h2（主列表）或 h3（次要列表）
  * 2. 自动处理封面图 URL（支持相对路径和绝对路径）
  * 3. 显示发布/更新时间
- * 4. 可选显示评论数（Artalk）
- * 5. 支持 View Transitions 动画
+ * 4. 支持 View Transitions 动画
  * 6. 支持隐藏卡片（用于筛选功能）
  *
  * 依赖关系：
@@ -33,15 +32,15 @@ import { SITE } from "@/config";
  * @property variant - 标题级别（h2 或 h3）
  * @property itemClass - 额外的 CSS 类名
  * @property hidden - 是否隐藏此卡片
- * @property showCommentCount - 是否显示评论数
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
+ * @property priority - 是否为 LCP 优先资源（首屏首图时设为 true，使用 fetchpriority="high"）
  */
 export interface Props extends CollectionEntry<"blog"> {
   variant?: "h2" | "h3";
   itemClass?: string;
   hidden?: boolean;
-  showCommentCount?: boolean;
   dateFormat?: "relative" | "absolute";
+  priority?: boolean;
 }
 
 const {
@@ -51,8 +50,8 @@ const {
   filePath,
   itemClass,
   hidden = false,
-  showCommentCount,
   dateFormat = "relative",
+  priority = false,
 } = Astro.props;
 
 // 解构文章元数据
@@ -69,13 +68,6 @@ const linkProps = {
   class:
     "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
 };
-
-// 获取评论数显示配置（优先使用组件 props，其次使用全局配置）
-const { showCommentCount: defaultShowCommentCount } = SITE.displayOptions;
-const displayCommentCount =
-  typeof showCommentCount === "boolean"
-    ? showCommentCount
-    : defaultShowCommentCount;
 
 /**
  * 构建封面图 URL
@@ -105,7 +97,7 @@ const coverSrc = buildCoverSrc();
 ---
 
 <li class={`mb-4 ${itemClass ?? ""} ${hidden ? "hidden" : ""}`}>
-  <div class="relative block pr-12">
+  <div class="relative block">
     <div class="flex items-center gap-3">
       <!-- 封面图 -->
       {
@@ -113,7 +105,9 @@ const coverSrc = buildCoverSrc();
           <img
             src={coverSrc}
             alt={title}
-            loading={SITE.imageConfig.loading.lazy ? "lazy" : "eager"}
+            loading={priority ? "eager" : SITE.imageConfig.loading.lazy ? "lazy" : "eager"}
+            fetchpriority={priority ? "high" : undefined}
+            decoding="async"
             class="h-[50px] w-[50px] shrink-0 rounded-md object-cover"
           />
         )
@@ -156,15 +150,5 @@ const coverSrc = buildCoverSrc();
         </div>
       </div>
     </div>
-    <!-- 评论数徽章 -->
-    {
-      displayCommentCount && (
-        <span
-          class="artalk-comment-count absolute top-1/2 right-0 inline-flex -translate-y-1/2 items-center justify-center rounded-full text-xs font-medium shadow-sm"
-          style="width:30px;height:16px;background-color:var(--comment-badge-bg);color:var(--color-background)"
-          data-page-key={getPath(id, filePath, true, date)}
-        />
-      )
-    }
   </div>
 </li>

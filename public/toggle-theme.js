@@ -7,7 +7,7 @@
 const primaryColorScheme = "";
 
 // 自动切换时间配置 (24小时制)
-const DARK_START_HOUR = 14; // 晚上 14 点开始
+const DARK_START_HOUR = 19; // 晚上 19 点开始
 const DARK_END_HOUR = 7; // 早上 7 点结束
 
 // 调试模式配置

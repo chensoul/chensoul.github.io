@@ -83,6 +83,7 @@ categories.forEach(({ categoryName }) => {
                       }
                       alt={`${categoryName} 封面图`}
                       loading="lazy"
+                      decoding="async"
                       class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
@@ -126,7 +127,6 @@ categories.forEach(({ categoryName }) => {
     window.setupLazyList({
       sentinelId: "categories-sentinel",
       itemSelector: ".categories-item",
-      artalk: { enabled: false },
     });
   }
   // View Transitions 导航后启动

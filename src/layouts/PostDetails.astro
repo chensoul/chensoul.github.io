@@ -32,7 +32,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
 import { SITE } from "@/config";
-import "photosuite/dist/photosuite.css";
 
 /**
  * 组件属性接口
@@ -109,9 +108,89 @@ const nextPost =
   currentPostIndex < allPosts.length - 1
     ? allPosts[currentPostIndex + 1]
     : null;
+
+/** 预加载样式转正样式用，避免 TS 把 onload 属性内容当代码解析 */
+const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
+  {comments && (
+    <link
+      slot="head"
+      rel="preconnect"
+      href="https://unpkg.com"
+      crossorigin
+    />
+  )}
+  {comments && (
+    <link
+      slot="head"
+      rel="preload"
+      href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
+      as="style"
+      onload={linkPreloadOnLoad}
+    />
+  )}
+  {comments && (
+    <noscript slot="head">
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
+      />
+    </noscript>
+  )}
+  {comments && (
+    <script
+      slot="head"
+      is:inline
+      src="https://unpkg.com/artalk@2.9.1/dist/Artalk.js"
+      defer
+    />
+  )}
+  <!-- TOC 样式（仅文章详情且启用目录时加载） -->
+  {toc && (
+    <link
+      slot="head"
+      rel="preload"
+      href="/tocbot/tocbot.min.css"
+      as="style"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      onload={linkPreloadOnLoad}
+    />
+  )}
+  {toc && (
+    <noscript slot="head">
+      <link
+        rel="stylesheet"
+        href="/tocbot/tocbot.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+  )}
+  <!-- KaTeX 数学公式样式（仅文章详情且启用公式时加载） -->
+  {math && (
+    <link
+      slot="head"
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+      as="style"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      onload={linkPreloadOnLoad}
+    />
+  )}
+  {math && (
+    <noscript slot="head">
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+  )}
   <Header />
 
   <!-- 文章标题与发布日期（不在 main 内） -->
@@ -186,8 +265,6 @@ const nextPost =
     <!-- 评论容器 -->
     <div id="Comments"></div>
   </main>
-
-  <!-- Mermaid 由 astro-mermaid 集成在页面中按需注入并渲染 pre.mermaid -->
 
   <!-- 侧边栏：显示文章目录 -->
   <aside

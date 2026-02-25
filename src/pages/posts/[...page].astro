@@ -125,11 +125,6 @@ const { page } = Astro.props;
          * - 索引小于 SITE.postPerIndex 的文章直接显示
          * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
          *
-         * 评论计数逻辑：
-         * - showCommentCount 控制是否显示评论数
-         * - 这里设置为 i < SITE.postPerIndex，表示首屏文章显示评论数
-         * - 懒加载的文章也支持评论数（通过 artalk 配置）
-         *
          * 数据来源：
          * - page.data 是当前分页的文章数组
          * - 由于 pageSize 设置为全部，这里包含所有文章
@@ -139,7 +134,6 @@ const { page } = Astro.props;
             {...data}
             itemClass="posts-item"
             hidden={i >= SITE.postPerIndex}
-            showCommentCount={i < SITE.postPerIndex}
           />
         ))
       }
@@ -163,11 +157,6 @@ const { page } = Astro.props;
    * 配置说明：
    * - sentinelId: 哨兵元素的 ID，用于检测滚动位置
    * - itemSelector: 需要懒加载的文章卡片选择器
-   * - artalk: 评论系统配置
-   *   - enabled: true（启用评论数加载）
-   *   - anchorSelector: 评论数的锚点选择器（文章链接）
-   *   - wrapperSelector: 评论数的容器选择器
-   *
    * 事件监听：
    * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
    * - astro:page-load: Astro 页面加载完成后触发
@@ -176,11 +165,6 @@ const { page } = Astro.props;
     window.setupLazyList({
       sentinelId: "posts-sentinel",
       itemSelector: ".posts-item",
-      artalk: {
-        enabled: true,
-        anchorSelector: "a[href]",
-        wrapperSelector: ".relative.block.pr-12",
-      },
     });
   }
 

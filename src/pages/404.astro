@@ -33,6 +33,8 @@ import { _t } from "@/i18n/lang";
           id="static-image"
           src={_t.notFoundPage.staticImages}
           alt="404 Not Found"
+          loading="eager"
+          decoding="async"
           class="absolute top-0 left-0 z-10 h-full w-full object-contain"
         />
         <!-- 动画图片（鼠标悬停时显示） -->
@@ -40,6 +42,8 @@ import { _t } from "@/i18n/lang";
           id="animated-image"
           src={_t.notFoundPage.images}
           alt="404 Not Found"
+          loading="lazy"
+          decoding="async"
           class="absolute top-0 left-0 hidden h-full w-full object-contain"
         />
       </div>

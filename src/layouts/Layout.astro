@@ -71,8 +71,6 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
-  toc = false,
-  math = false,
   mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;
 
@@ -179,52 +177,12 @@ const structuredData = {
     <!-- View transitions: https://docs.astro.build/en/guides/view-transitions/ -->
     <ClientRouter />
 
-    <!-- 主题切换脚本 -->
-    <script is:inline src="/toggle-theme.js"></script>
+    <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
+    <slot name="head" />
 
-    <!-- Artalk 评论系统资源 -->
-    <link
-      href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
-      rel="stylesheet"
-    />
-    <script is:inline src="https://unpkg.com/artalk@2.9.1/dist/Artalk.js" defer
-    ></script>
+    <!-- 主题切换完整脚本（defer 不阻塞首屏） -->
+    <script is:inline src="/toggle-theme.js" defer></script>
 
-    <!-- Umami 网站分析（仅生产环境） -->
-    {
-      import.meta.env.PROD && (
-        <script
-          is:inline
-          src="https://umami.chensoul.cc/random-string.js"
-          data-website-id="2311be4b-ebe4-4a94-9c69-b2e841584d0d"
-          defer
-        />
-      )
-    }
-
-    <!-- TOC 样式（条件加载） -->
-    {
-      toc && (
-        <link
-          rel="stylesheet"
-          href="/tocbot/tocbot.min.css"
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-        />
-      )
-    }
-
-    <!-- KaTeX 数学公式样式（条件加载） -->
-    {
-      math && (
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-        />
-      )
-    }
   </head>
   <body class="site-outer-bg">
     <!-- 站点框架容器 -->
@@ -240,39 +198,33 @@ const structuredData = {
     <!-- 返回顶部按钮 -->
     <BackToTop />
 
-    <script is:inline>
-      window.__artalkConfig = {
-        server: "https://artalk.chensoul.cc",
-        site: "ChenSoul Blog",
-      };
-      document.addEventListener("astro:after-swap", tryLoad);
-      document.addEventListener("DOMContentLoaded", tryLoad);
-      /**
-       * 加载 Artalk 评论数统计组件
-       *
-       * 功能：
-       * 1. 查找所有 .artalk-comment-count 元素
-       * 2. 调用 Artalk.loadCountWidget 加载评论数
-       * 3. 使用 data-page-key 属性标识每篇文章
-       */
-      function tryLoad() {
-        const els = document.querySelectorAll(".artalk-comment-count");
-        if (
-          !els.length ||
-          typeof window === "undefined" ||
-          typeof window.Artalk === "undefined"
-        )
-          return;
-        const cfg = window.__artalkConfig || {};
-        if (!cfg.server || !cfg.site) return;
-        window.Artalk.loadCountWidget({
-          server: cfg.server,
-          site: cfg.site,
-          countEl: ".artalk-comment-count",
-          statPageKeyAttr: "data-page-key",
-        });
-      }
-    </script>
+    <!-- Umami 分析：首屏加载后再注入，减少对 LCP 的影响 -->
+    {
+      import.meta.env.PROD && (
+        <script is:inline>
+          (function () {
+            const id = "2311be4b-ebe4-4a94-9c69-b2e841584d0d";
+            const src = "https://umami.chensoul.cc/random-string.js";
+            let done = false;
+            function load() {
+              if (done) return;
+              done = true;
+              const s = document.createElement("script");
+              s.src = src;
+              s.setAttribute("data-website-id", id);
+              s.defer = true;
+              document.head.appendChild(s);
+            }
+            const delay = 3000;
+            if (document.readyState === "complete") setTimeout(load, delay);
+            else window.addEventListener("load", () => setTimeout(load, delay));
+            ["click", "scroll", "keydown"].forEach((ev) =>
+              window.addEventListener(ev, load, { once: true, passive: true })
+            );
+          })();
+        </script>
+      )
+    }
 
     <style>
       /* 全局样式重置 */

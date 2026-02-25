@@ -137,11 +137,12 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
             )
           }
         </a>
-        <!-- RSS 订阅链接 -->
+        <!-- RSS 订阅链接（min 44×44px 触控区域，满足 Lighthouse 无障碍） -->
         <a
-          target="_blank"
           href="/rss.xml"
-          class="inline-block"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center p-2"
           aria-label="rss feed"
           title="RSS Feed"
         >
@@ -161,7 +162,7 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
       >
         <button
           id="menu-btn"
-          class="focus-outline relative z-[60] self-end p-2 sm:hidden"
+          class="focus-outline relative z-[60] self-end min-h-[44px] min-w-[44px] p-2 sm:hidden"
           aria-label="Open Menu"
           aria-expanded="false"
           aria-controls="menu-items"
