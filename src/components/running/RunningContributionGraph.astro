@@ -1,0 +1,50 @@
+---
+/**
+ * 跑步贡献图：最近 12 个月的热力日历
+ */
+interface DayData {
+  dateStr: string;
+  isInRange: boolean;
+  intensity: number;
+  title: string;
+}
+
+interface Props {
+  weeks: { days: DayData[] }[];
+  months: { label: string; weekIndex: number }[];
+}
+const { weeks, months } = Astro.props;
+---
+
+<div class="contribution-graph my-4 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-2">
+  <div class="month-labels relative mb-1 h-4">
+    {months.map((m) => (
+      <span
+        class="month-label absolute text-[10px] text-[var(--foreground)]"
+        style={`left: ${(m.weekIndex / weeks.length) * 100}%`}
+      >
+        {m.label}
+      </span>
+    ))}
+  </div>
+  <div class="weeks flex gap-0.5">
+    {weeks.map((week) => (
+      <div class="week flex flex-1 flex-col gap-0.5">
+        {week.days.map((day) => (
+          <div
+            class:list={[
+              "day aspect-square w-full rounded-sm transition-transform",
+              !day.isInRange && "out-of-range",
+              day.intensity === 1 && "intensity-1",
+              day.intensity === 2 && "intensity-2",
+              day.intensity === 3 && "intensity-3",
+              day.intensity === 4 && "intensity-4",
+              day.intensity === 5 && "intensity-5",
+            ]}
+            title={day.title}
+          />
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

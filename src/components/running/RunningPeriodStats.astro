@@ -1,0 +1,113 @@
+---
+/**
+ * 跑步周期统计：周/月/年/总 Tab 与统计网格
+ */
+export interface PeriodStat {
+  total_activities: number;
+  total_distance: number;
+  total_duration_hours: number;
+  avg_pace: string;
+  avg_heart_rate?: number | null;
+  avg_vdot?: number | null;
+  total_training_load: number;
+}
+
+interface Props {
+  periodStats: {
+    week?: PeriodStat;
+    month?: PeriodStat;
+    year?: PeriodStat;
+    total?: PeriodStat;
+  };
+  periodLabels?: Record<string, string>;
+}
+
+const { periodStats, periodLabels = { week: "周", month: "月", year: "年", total: "总" } } = Astro.props;
+const periods = ["week", "month", "year", "total"] as const;
+---
+
+<div class="period-stats-section">
+  <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)]">
+    <div class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4" id="periodTabNav">
+      {periods.map((period) => {
+        const pStats = periodStats[period];
+        if (!pStats) return null;
+        const isActive = period === "week";
+        return (
+          <button
+            type="button"
+            class:list={[
+              "period-tab-btn border-b-2 px-5 py-3.5 text-sm font-medium transition-colors",
+              isActive
+                ? "border-[var(--accent)] text-[var(--accent)]"
+                : "border-transparent text-[var(--foreground)]/70 hover:text-[var(--foreground)]",
+            ]}
+            data-period={period}
+          >
+            {periodLabels[period] ?? period}
+          </button>
+        );
+      })}
+    </div>
+    <div class="period-tab-content p-5">
+      {periods.map((period) => {
+        const pStats = periodStats[period];
+        if (!pStats) return null;
+        const isActive = period === "week";
+        return (
+          <div
+            class:list={["period-panel", !isActive && "hidden"]}
+            data-panel={period}
+          >
+            <div class="period-panel-header mb-5 flex justify-between border-b border-[var(--border)] pb-3">
+              <span class="text-sm font-semibold text-[var(--foreground)]">
+                {periodLabels[period] ?? period}数据统计
+              </span>
+              <span class="text-xs text-[var(--foreground)]/70">
+                共计跑步 {pStats.total_activities} 次
+              </span>
+            </div>
+            <div class="period-panel-grid grid grid-cols-3 gap-x-2 gap-y-5">
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.avg_vdot?.toFixed(1) ?? "--"}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">当前跑力</span>
+              </div>
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.total_distance}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">公里</span>
+              </div>
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.avg_pace}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">平均配速</span>
+              </div>
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.total_training_load > 0 ? pStats.total_training_load.toFixed(0) : "--"}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">训练负荷</span>
+              </div>
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.total_duration_hours.toFixed(1)}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">总时长(小时)</span>
+              </div>
+              <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
+                <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
+                  {pStats.avg_heart_rate ?? "--"}
+                </span>
+                <span class="text-xs text-[var(--foreground)]/70">平均心率</span>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>

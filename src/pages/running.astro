@@ -10,6 +10,10 @@ import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import RunningPeriodStats from "@/components/running/RunningPeriodStats.astro";
+import RunningContributionGraph from "@/components/running/RunningContributionGraph.astro";
+import RunningRunCard from "@/components/running/RunningRunCard.astro";
+import RunningDetailModal from "@/components/running/RunningDetailModal.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
 import runningStyles from "@/styles/running.css?raw";
@@ -87,7 +91,6 @@ const hrZoneLabels: Record<number, string> = {
   5: "Z5 最大",
 };
 
-/** 心率区间颜色（与 :root --running-zone-* 一致，供 JS 注入 data 属性） */
 const hrZoneColors: Record<number, string> = {
   0: "var(--foreground)",
   1: "var(--running-zone-1)",
@@ -204,149 +207,13 @@ for (let m = 0; m < 12; m++) {
               <h2>跑步统计</h2>
               <div>
                 {periodStats && Object.keys(periodStats).length > 0 && (
-                  <div class="period-stats-section">
-                    <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)]">
-                      <div
-                        class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4"
-                        id="periodTabNav"
-                      >
-                        {(["week", "month", "year", "total"] as const).map(
-                          period => {
-                            const pStats = periodStats[period];
-                            if (!pStats) return null;
-                            const isActive = period === "week";
-                            return (
-                              <button
-                                type="button"
-                                class:list={[
-                                  "period-tab-btn border-b-2 px-5 py-3.5 text-sm font-medium transition-colors",
-                                  isActive
-                                    ? "border-[var(--accent)] text-[var(--accent)]"
-                                    : "border-transparent text-[var(--foreground)]/70 hover:text-[var(--foreground)]",
-                                ]}
-                                data-period={period}
-                              >
-                                {periodLabels[period]}
-                              </button>
-                            );
-                          }
-                        )}
-                      </div>
-                      <div class="period-tab-content p-5">
-                        {(["week", "month", "year", "total"] as const).map(
-                          period => {
-                            const pStats = periodStats[period];
-                            if (!pStats) return null;
-                            const isActive = period === "week";
-                            return (
-                              <div
-                                class:list={[
-                                  "period-panel",
-                                  !isActive && "hidden",
-                                ]}
-                                data-panel={period}
-                              >
-                                <div class="period-panel-header mb-5 flex justify-between border-b border-[var(--border)] pb-3">
-                                  <span class="text-sm font-semibold text-[var(--foreground)]">
-                                    {periodLabels[period]}数据统计
-                                  </span>
-                                  <span class="text-xs text-[var(--foreground)]/70">
-                                    共计跑步 {pStats.total_activities} 次
-                                  </span>
-                                </div>
-                                <div class="period-panel-grid grid grid-cols-3 gap-x-2 gap-y-5">
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.avg_vdot?.toFixed(1) ?? "--"}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      当前跑力
-                                    </span>
-                                  </div>
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.total_distance}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      公里
-                                    </span>
-                                  </div>
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.avg_pace}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      平均配速
-                                    </span>
-                                  </div>
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.total_training_load > 0
-                                        ? pStats.total_training_load.toFixed(0)
-                                        : "--"}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      训练负荷
-                                    </span>
-                                  </div>
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.total_duration_hours.toFixed(1)}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      总时长(小时)
-                                    </span>
-                                  </div>
-                                  <div class="period-panel-stat flex flex-col items-center gap-1.5 rounded-lg p-2 text-center">
-                                    <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
-                                      {pStats.avg_heart_rate ?? "--"}
-                                    </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
-                                      平均心率
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          }
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                  <RunningPeriodStats
+                    periodStats={periodStats}
+                    periodLabels={periodLabels}
+                  />
                 )}
 
-                <div class="contribution-graph my-4 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-2">
-                  <div class="month-labels relative mb-1 h-4">
-                    {months.map(m => (
-                      <span
-                        class="month-label absolute text-[10px] text-[var(--foreground)]"
-                        style={`left: ${(m.weekIndex / weeks.length) * 100}%`}
-                      >
-                        {m.label}
-                      </span>
-                    ))}
-                  </div>
-                  <div class="weeks flex gap-0.5">
-                    {weeks.map(week => (
-                      <div class="week flex flex-1 flex-col gap-0.5">
-                        {week.days.map(day => (
-                          <div
-                            class:list={[
-                              "day aspect-square w-full rounded-sm transition-transform",
-                              !day.isInRange && "out-of-range",
-                              day.intensity === 1 && "intensity-1",
-                              day.intensity === 2 && "intensity-2",
-                              day.intensity === 3 && "intensity-3",
-                              day.intensity === 4 && "intensity-4",
-                              day.intensity === 5 && "intensity-5",
-                            ]}
-                            title={day.title}
-                          />
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <RunningContributionGraph weeks={weeks} months={months} />
 
                 <h2>最近活动</h2>
                 <div
@@ -357,82 +224,12 @@ for (let m = 0; m < 12; m++) {
                   data-hr-zone-colors={JSON.stringify(hrZoneColors)}
                 >
                   {recentRuns.map((run, index) => (
-                    <div
-                      class="run-card run-card cursor-pointer rounded-lg border border-[var(--border)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md"
-                      data-run-index={index}
-                      data-run={JSON.stringify(run)}
-                    >
-                      <div class="run-main flex flex-1 flex-col gap-1.5">
-                        <div class="run-header flex flex-wrap items-center gap-2.5">
-                          <time class="run-date text-sm font-medium text-[var(--foreground)]">
-                            {run.date.split(" ")[0]}
-                          </time>
-                          {run.hr_zone != null && run.hr_zone > 0 && (
-                            <span
-                              class:list={[
-                                "hr-zone-badge hr-zone-tag inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold",
-                                `zone-${run.hr_zone}`,
-                              ]}
-                            >
-                              {hrZoneLabels[run.hr_zone]}
-                            </span>
-                          )}
-                        </div>
-                        <span class="run-type text-[13px] text-[var(--foreground)]/80">
-                          {run.activity_type || "户外跑步"}
-                          {(run.route?.trim() || run.workout_name) && (
-                            <span class="workout-name">
-                              {" "}
-                              · {run.route?.trim() || run.workout_name}
-                            </span>
-                          )}
-                        </span>
-                      </div>
-                      <div class="run-stats flex gap-5">
-                        <div class="stat flex flex-col gap-0.5">
-                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
-                            {run.distance}
-                          </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            公里
-                          </span>
-                        </div>
-                        <div class="stat flex flex-col gap-0.5">
-                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
-                            {formatDuration(run.duration)}
-                          </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            时长
-                          </span>
-                        </div>
-                        <div class="stat flex flex-col gap-0.5">
-                          <span class="stat-value text-base font-semibold text-[var(--foreground)]">
-                            {run.pace}
-                          </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            配速
-                          </span>
-                        </div>
-                        <div class="stat vdot-stat flex flex-col gap-0.5">
-                          <span class="stat-value text-base font-semibold">
-                            {run.vdot ?? "-"}
-                          </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            VDOT
-                          </span>
-                        </div>
-                        {run.training_load != null && run.training_load > 0 && (
-                          <div class="stat load-stat flex flex-col gap-0.5">
-                            <span class="stat-value text-base font-semibold">
-                              {run.training_load}
-                            </span>
-                            <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                              负荷
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                    <RunningRunCard
+                      run={run}
+                      index={index}
+                      hrZoneLabels={hrZoneLabels}
+                      durationFormatted={formatDuration(run.duration)}
+                    />
                   ))}
                 </div>
                 {hasMoreRuns && (
@@ -463,50 +260,7 @@ for (let m = 0; m < 12; m++) {
         }
       </article>
 
-      <!-- 跑步详情弹窗 -->
-      <div
-        class="run-detail-modal fixed inset-0 z-[1000] hidden items-center justify-center p-4"
-        id="runDetailModal"
-      >
-        <div
-          class="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm"
-          id="modalOverlay"
-        >
-        </div>
-        <div
-          class="modal-content relative max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-xl"
-          id="modalContent"
-        >
-          <button
-            type="button"
-            class="modal-close absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
-            id="modalClose"
-            aria-label="关闭"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              ><line x1="18" y1="6" x2="6" y2="18"></line><line
-                x1="6"
-                y1="6"
-                x2="18"
-                y2="18"></line></svg
-            >
-          </button>
-          <div
-            class="modal-body max-h-[90vh] overflow-y-auto p-6"
-            id="modalBody"
-          >
-          </div>
-        </div>
-      </div>
+      <RunningDetailModal />
     </section>
   </main>
   <Footer />

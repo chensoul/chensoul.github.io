@@ -1,0 +1,42 @@
+---
+/**
+ * 跑步详情弹窗：壳子，内容由 initRunningPage 注入
+ */
+---
+
+<div
+  class="run-detail-modal fixed inset-0 z-[1000] hidden items-center justify-center p-4"
+  id="runDetailModal"
+>
+  <div
+    class="modal-overlay absolute inset-0 bg-black/50 backdrop-blur-sm"
+    id="modalOverlay"
+  />
+  <div
+    class="modal-content relative max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-xl"
+    id="modalContent"
+  >
+    <button
+      type="button"
+      class="modal-close absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
+      id="modalClose"
+      aria-label="关闭"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+    <div class="modal-body max-h-[90vh] overflow-y-auto p-6" id="modalBody" />
+  </div>
+</div>
