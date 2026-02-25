@@ -212,20 +212,16 @@ const structuredData = {
     <slot name="head" />
 
   </head>
-  <body class="site-outer-bg">
-    <!-- 站点框架容器 -->
+  <body>
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:bg-[var(--color-background)] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
+      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
     >
       <!-- 插槽：子布局内容 -->
       <slot />
     </div>
-    <!-- TOC 等侧边栏（在 site-frame 外，仅文章页传入） -->
     <slot name="sidebar" />
-    <!-- 返回按钮 -->
     <BackButton />
-    <!-- 返回顶部按钮 -->
     <BackToTop />
 
     <!-- Umami 分析：首屏加载后再注入，减少对 LCP 的影响 -->
@@ -255,45 +251,5 @@ const structuredData = {
         </script>
       )
     }
-
-    <style>
-      /* 全局样式重置 */
-      html,
-      body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-      }
-      .site-outer-bg {
-        background-color: var(--color-background);
-      }
-
-      /* Frame inline padding as CSS variable for image bleed calculations */
-      #site-frame {
-        --frame-pad-inline: 0.75rem;
-      }
-      @media (min-width: 960px) {
-        #site-frame {
-          --frame-pad-inline: 2rem;
-        }
-      }
-
-      /* 移动端：内容区填满宽度，避免右侧留白 */
-      @media (max-width: 639px) {
-        .site-outer-bg {
-          background-color: var(--color-background);
-        }
-        html, body {
-          overflow-x: hidden;
-        }
-        #site-frame {
-          width: 100%;
-          max-width: 100vw;
-          box-sizing: border-box;
-          padding-left: 0.75rem;
-          padding-right: 0.75rem;
-        }
-      }
-    </style>
   </body>
 </html>
