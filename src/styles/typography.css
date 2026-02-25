@@ -5,11 +5,6 @@
     @apply !text-sm !leading-relaxed prose-headings:!mb-3 prose-p:!text-foreground prose-a:underline-offset-6 prose-blockquote:!border-l-accent/50 prose-blockquote:opacity-70 prose-strong:!text-foreground prose-code:rounded prose-code:bg-muted/75 prose-code:p-0.5 prose-code:!font-normal prose-code:!text-foreground prose-code:before:!content-none prose-code:after:!content-none prose-ol:!text-foreground prose-ul:overflow-x-clip prose-ul:!text-foreground prose-li:marker:!text-accent prose-table:text-foreground prose-th:border prose-th:border-border prose-th:!text-accent prose-td:border prose-td:border-border prose-img:mx-auto prose-hr:!my-0 prose-hr:!border-border;
   }
 
-  /* 保留选择器，不覆盖 margin-block，让 typography 插件的段落间距生效 */
-  .prose :where(p):not(:where([class~="not-prose"] *)) {
-    /* margin-block: 0.75rem !important; */
-  }
-
   /* 标题颜色：覆盖 typography 插件，统一使用前景色 */
   .prose h1,
   .prose h2,
@@ -57,13 +52,6 @@
     content: "" !important;
   }
 
-  /* .prose h2#table-of-contents {
-    @apply mb-2;
-  } */
-  /* .prose h2#table-of-contents + p {
-    @apply hidden;
-  } */
-
   .prose details {
     @apply inline-block cursor-pointer text-foreground select-none;
   }
@@ -107,33 +95,4 @@
     height: auto;
     margin-inline: 0 !important;
   }
-
-  /* ===== Code Blocks & Syntax Highlighting ===== */
-  /* pre:has(code) {
-    @apply border border-border;
-  } */
-
-  /* .prose code,
-  .prose blockquote {
-    @apply break-words;
-  } */
-
-  /* add line breaks whenever necessary for codes under table */
-  /* .prose table code {
-    @apply break-all sm:break-normal;
-  } */
-
-  /* pre > code {
-    white-space: pre;
-  } */
-
-  /* Apply Dark Theme (if multi-theme specified) */
-  /* html[data-theme="dark"] pre:has(code),
-  html[data-theme="dark"] pre:has(code) span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-    font-style: var(--shiki-dark-font-style) !important;
-    font-weight: var(--shiki-dark-font-weight) !important;
-    text-decoration: var(--shiki-dark-text-decoration) !important;
-  } */
 }

@@ -12,10 +12,10 @@
  * 依赖关系：
  * - 被 Layout.astro 导入，在每个页面底部显示
  * - 依赖 config.ts 获取站点配置
- * - 依赖 i18n/lang.ts 获取国际化文本
+ * - 依赖 scripts/lang 获取国际化文本
  */
 
-import { _t } from "@/i18n/lang";
+import { _t } from "@/scripts/lang";
 import { SITE } from "@/config";
 
 /**

@@ -13,7 +13,7 @@
  * 依赖关系：
  * - 被首页、归档页、分类页、标签页等分页列表使用
  * - 依赖 LinkButton.astro 生成导航按钮
- * - 依赖 i18n/lang.ts 获取按钮文本
+ * - 依赖 scripts/lang 获取按钮文本
  */
 
 import type { Page } from "astro";
@@ -21,7 +21,7 @@ import type { CollectionEntry } from "astro:content";
 import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import LinkButton from "./LinkButton.astro";
-import { _t } from "@/i18n/lang";
+import { _t } from "@/scripts/lang";
 
 /**
  * 组件属性接口

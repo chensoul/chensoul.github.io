@@ -11,7 +11,7 @@
  *
  * 依赖关系：
  * - 当路由匹配失败时自动显示
- * - 使用 i18n/lang.ts 获取文案和图片 URL
+ * - 使用 scripts/lang 获取文案和图片 URL
  */
 
 import Layout from "@/layouts/Layout.astro";
@@ -19,7 +19,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
-import { _t } from "@/i18n/lang";
+import { _t } from "@/scripts/lang";
 ---
 
 <Layout title={`404 Not Found | ${SITE.title}`}>

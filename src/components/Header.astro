@@ -15,7 +15,7 @@
  * 依赖关系：
  * - 被 Layout.astro 导入，在每个页面顶部显示
  * - 依赖 config.ts 获取站点配置
- * - 依赖 i18n/lang.ts 获取国际化文本
+ * - 依赖 scripts/lang 获取国际化文本
  * - 依赖 YearProgress.astro 显示年度进度条
  */
 
@@ -25,7 +25,7 @@ import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconRss from "@/assets/icons/IconRss.svg";
 import { SITE } from "@/config";
-import { _t } from "@/i18n/lang";
+import { _t } from "@/scripts/lang";
 import YearProgress from "./YearProgress.astro";
 
 // 获取当前路径，用于判断激活状态
@@ -349,12 +349,12 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 
 <!-- 样式：下拉菜单动画 + 移动端导航 -->
 <style>
-  /* 移动端菜单展开时的背景层（浅色主题为浅白，深色主题随主题色） */
+  /* 移动端菜单展开时的背景层（与主题一致，避免暗色下闪白） */
   .mobile-nav-overlay {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: var(--background);
+    background-color: var(--background);
     /* 动画：与页面切换动画时长一致 */
     opacity: 0;
     visibility: hidden;
@@ -366,6 +366,13 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
   .mobile-nav-overlay.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* 移动端全屏菜单面板：显式背景，避免透过看到底层闪白 */
+  @media (max-width: 640px) {
+    #menu-items {
+      background-color: var(--background);
+    }
   }
 
   /* 横向展开下拉菜单 - 从左向右 */
