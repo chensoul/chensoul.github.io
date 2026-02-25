@@ -377,7 +377,7 @@ window.onload = () => {
         var fs = newDoc.createElement("style");
         fs.id = "theme-frame-bg";
         fs.textContent =
-          "html[data-theme=\"dark\"] #site-frame { background-color: " +
+          "html[data-theme=\"dark\"] #site-frame, html[data-theme=\"dark\"] #top-nav-wrap { background-color: " +
           THEME_BG_DARK +
           " !important; }";
         newDoc.head.appendChild(fs);
@@ -397,7 +397,7 @@ window.onload = () => {
     }
     frameEl.textContent =
       theme === "dark"
-        ? "html[data-theme=\"dark\"] #site-frame { background-color: " +
+        ? "html[data-theme=\"dark\"] #site-frame, html[data-theme=\"dark\"] #top-nav-wrap { background-color: " +
           THEME_BG_DARK +
           " !important; }"
         : "";
