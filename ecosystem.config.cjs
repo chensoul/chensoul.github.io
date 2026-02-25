@@ -4,7 +4,7 @@ module.exports = {
       name: "blog",
       cwd: __dirname,
       script: "pnpm",
-      args: "run preview -- --allowed-hosts=blog.lhasa.icu",
+      args: "run preview -- --allowed-hosts=blog.chensoul.cc",
       env: {
         NODE_ENV: "production",
       },

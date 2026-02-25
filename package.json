@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
-    "preview": "astro preview --host --allowed-hosts=blog.lhasa.icu",
+    "preview": "astro preview --host --allowed-hosts=blog.chensoul.cc",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",
