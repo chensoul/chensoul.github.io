@@ -56,12 +56,6 @@ export const SITE = {
   postPerPage: 10,
 
   /**
-   * 归档页首页显示的年份数量
-   * 由于归档按年分组，此值控制首页展示多少个年份
-   */
-  archivesPerIndex: 2,
-
-  /**
    * 归档页翻页时每页显示的年份数量
    * 用于 /archives/[page] 路由的分页
    */

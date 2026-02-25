@@ -6,23 +6,19 @@
  *
  * 文件用途：
  * - 作为归档页面的专用布局组件，负责将所有文章按年份分组展示
- * - 支持懒加载机制，优化大量文章时的页面性能
  * - 提供清晰的日期导航，方便用户快速定位到特定年份的文章
  *
  * 核心逻辑：
  * 1. 接收来自路由的分页数据（Page<CollectionEntry<"blog">>
  * 2. 按文章更新时间（或发布时间）的年份进行分组
  * 3. 年份降序排列（最新的年份在前），同一年内文章按日期排序
- * 4. 初始只显示部分年份（由 SITE.archivesPerIndex 控制），其余年份隐藏
- * 5. 通过滚动触发的懒加载逐步显示更多年份
- * 6. 每篇文章格式化为 "月-日 » 文章标题" 的列表项
+ * 4. 一次性显示所有年份的文章（按年分组）
+ * 5. 每篇文章格式化为 "月-日 » 文章标题" 的列表项
  *
  * 依赖关系：
  * - 被 /archives/[...page].astro 路由调用，接收其传来的 page 数据
  * - 依赖 getPostsByGroupCondition 工具函数进行年份分组
  * - 依赖 getPath 生成正确的文章链接
- * - 依赖 /lazy-list.js 脚本实现懒加载交互
- * - 使用 SITE 配置中的 archivesPerIndex 和 archivesPerPage 控制显示策略
  */
 
 import Layout from "@/layouts/Layout.astro";
@@ -80,16 +76,10 @@ const years = Object.keys(groupedByYear)
   <Main pageTitle="" pageDesc={_t.archives.desc}>
     {
       /**
-       * 渲染年份区块
-       *
-       * 懒加载逻辑：
-       * - 索引小于 SITE.archivesPerIndex 的年份直接显示
-       * - 索引大于等于该值的年份添加 hidden 类，由懒加载脚本控制显示
+       * 渲染年份区块（全部直接显示，不懒加载）
        */
-      years.map((year, i) => (
-        <section
-          class={`archives-year mb-8 ${i >= SITE.archivesPerIndex ? "hidden" : ""}`}
-        >
+      years.map(year => (
+        <section class="archives-year mb-8">
           {/* 年份标题：显示年份和该年份的文章数量 */}
           <h2 class="mb-1 text-base">
             {year} ({groupedByYear[year].length})
@@ -136,42 +126,6 @@ const years = Object.keys(groupedByYear)
         </section>
       ))
     }
-    {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-    <div
-      id="archives-sentinel"
-      data-init={SITE.archivesPerIndex}
-      data-chunk={SITE.archivesPerPage}
-    >
-    </div>
   </Main>
   <Footer noMarginTop={true} />
 </Layout>
-
-<script is:inline src="/lazy-list.js"></script>
-<script is:inline>
-  /**
-   * 初始化归档页懒加载
-   *
-   * 配置说明：
-   * - sentinelId: 哨兵元素的 ID，用于检测滚动位置
-   * - itemSelector: 需要懒加载的年份区块选择器
-   * - artalk.enabled: false（归档页不加载评论数）
-   *
-   * 事件监听：
-   * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
-   * - astro:page-load: Astro 页面加载完成后触发
-   */
-  function boot() {
-    window.setupLazyList({
-      sentinelId: "archives-sentinel",
-      itemSelector: ".archives-year",
-    });
-  }
-  // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
-  document.addEventListener("astro:after-swap", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
-  document.addEventListener("astro:page-load", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
-</script>
