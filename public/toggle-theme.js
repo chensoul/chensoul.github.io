@@ -329,12 +329,21 @@ window.onload = () => {
   document.addEventListener("astro:after-swap", setThemeFeature);
 
   document.addEventListener("astro:before-swap", event => {
+    // 1. 复制 data-theme 到新文档（关键：避免新页面短暂使用默认主题）
+    const theme = document.documentElement.getAttribute("data-theme");
+    if (theme) {
+      event.newDocument.documentElement.setAttribute("data-theme", theme);
+    }
+    
+    // 2. 复制 theme-color meta 标签
     const bgColor = document
       .querySelector("meta[name='theme-color']")
       ?.getAttribute("content");
-    event.newDocument
-      .querySelector("meta[name='theme-color']")
-      ?.setAttribute("content", bgColor);
+    if (bgColor) {
+      event.newDocument
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute("content", bgColor);
+    }
   });
 
   setupAutoTheme();
