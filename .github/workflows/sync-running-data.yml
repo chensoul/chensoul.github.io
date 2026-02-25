@@ -16,13 +16,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: download public/data/running.json
+      - name: download src/data/running.json
         run: |
-          mkdir -p public/data
-          curl -fsSL "https://raw.githubusercontent.com/chensoul/running_page/master/assets/running.json" -o public/data/running.json
+          curl -fsSL "https://raw.githubusercontent.com/chensoul/running_page/master/assets/running.json" -o src/data/running.json
 
       - name: commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/running.json || (git add public/data/running.json && git commit -m "chore: sync running.json from running_page" && git push)
+          git diff --quiet src/data/running.json || (git add src/data/running.json && git commit -m "chore: sync running.json from running_page" && git push)
