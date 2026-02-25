@@ -278,7 +278,10 @@ html[data-theme="light"] .expressive-code {
   scrollbar-width: thin !important;
 }
 
-/* 自定义 View Transitions 动画时长 */
+/* View Transitions：过渡期间使用页面背景色，避免菜单/导航点击时闪白 */
+::view-transition-group(root) {
+  background: var(--page-background);
+}
 ::view-transition-old(*),
 ::view-transition-new(*) {
   animation-duration: 800ms;
