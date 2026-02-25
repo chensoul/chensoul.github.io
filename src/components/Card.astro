@@ -121,7 +121,7 @@ const coverSrc = buildCoverSrc();
       <!-- 文章信息区 -->
       <div class="min-w-0 flex-1">
         <!-- 文章标题 -->
-        <div class="min-w-0 text-lg font-medium text-accent underline-offset-4">
+        <div class="text-accent min-w-0 text-lg font-medium underline-offset-4">
           {
             // 根据 variant 选择标题级别
             variant === "h2" ? (
@@ -160,7 +160,7 @@ const coverSrc = buildCoverSrc();
     {
       displayCommentCount && (
         <span
-          class="artalk-comment-count absolute top-1/2 right-0 inline-flex -translate-y-1/2 items-center justify-center rounded-full text-xs font-medium shadow-sm"
+          class="artalk-comment-count absolute right-0 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-full text-xs font-medium shadow-sm"
           style="width:30px;height:16px;background-color:var(--comment-badge-bg);color:var(--color-background)"
           data-page-key={getPath(id, filePath, true, date)}
         />

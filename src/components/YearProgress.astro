@@ -23,7 +23,7 @@
   class="group relative mx-auto mb-5 w-full max-w-4xl sm:mb-0"
 >
   <!-- 进度条背景 -->
-  <div class="h-[3px] w-full rounded bg-border/70" aria-hidden="true">
+  <div class="bg-border/70 h-[3px] w-full rounded" aria-hidden="true">
     <!-- 进度条填充（宽度由 JS 动态设置） -->
     <div
       id="year-progress-fill"
@@ -35,17 +35,17 @@
   <!-- 标签遮罩（用于隐藏进度条） -->
   <span
     id="year-progress-cover"
-    class="pointer-events-none absolute top-1/2 left-0 z-10 h-[3px] -translate-y-1/2 rounded bg-background opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="bg-background pointer-events-none absolute left-0 top-1/2 z-10 h-[3px] -translate-y-1/2 rounded opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <!-- 百分比标签 -->
   <span
     id="year-progress-label"
-    class="pointer-events-none absolute top-1/2 left-0 z-20 -translate-y-1/2 text-xs whitespace-nowrap text-accent/70 opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="text-accent/70 pointer-events-none absolute left-0 top-1/2 z-20 -translate-y-1/2 whitespace-nowrap text-xs opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <!-- 点击弹窗（剩余天数） -->
   <div
     id="year-progress-popup"
-    class="pointer-events-none absolute top-0 left-0 z-30 -translate-y-[calc(100%+8px)] rounded border border-border bg-background px-2 py-1 text-xs whitespace-nowrap text-foreground opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
+    class="border-border bg-background text-foreground pointer-events-none absolute left-0 top-0 z-30 -translate-y-[calc(100%+8px)] whitespace-nowrap rounded border px-2 py-1 text-xs opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
   >
   </div>
 </div>

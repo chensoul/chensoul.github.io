@@ -87,12 +87,12 @@ html[data-theme="dark"] section.text-center h1 {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
+    @apply bg-background text-foreground selection:bg-accent/75 selection:text-background flex min-h-svh flex-col font-sans;
     font-family: var(--font-sans), var(--font-emoji);
   }
   a,
   button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2;
+    @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -110,13 +110,13 @@ html[data-theme="dark"] section.text-center h1 {
 
 @layer utilities {
   #sidebar {
-    @apply fixed z-40 transform overflow-y-auto bg-background text-sm;
+    @apply bg-background fixed z-40 transform overflow-y-auto text-sm;
   }
 
   /* Mobile styles */
   @media (max-width: 1023px) {
     #sidebar {
-      @apply fixed top-0 right-0 bottom-0 left-auto flex h-full max-h-none w-4/5 max-w-70 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
+      @apply max-w-70 fixed bottom-0 left-auto right-0 top-0 flex h-full max-h-none w-4/5 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
     }
 
     #sidebar.mobile-open {
@@ -127,7 +127,7 @@ html[data-theme="dark"] section.text-center h1 {
   /* Desktop styles */
   @media (min-width: 1300px) {
     #sidebar {
-      @apply top-36 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-none bg-transparent p-0 shadow-none;
+      @apply right-10 top-36 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-none bg-transparent p-0 shadow-none;
     }
 
     /* When there's no TOC, position the sidebar lower */
@@ -145,7 +145,7 @@ html[data-theme="dark"] section.text-center h1 {
 
   /* tocbot */
   .toc-list-item {
-    @apply truncate overflow-hidden whitespace-nowrap;
+    @apply overflow-hidden truncate whitespace-nowrap;
     color: var(--toc-top-text-color);
   }
   .toc-link {
@@ -167,7 +167,7 @@ html[data-theme="dark"] section.text-center h1 {
 
   /* rehype-autolink-headings */
   .icon-link::before {
-    @apply ml-1 inline-block text-accent !no-underline opacity-0 transition-opacity duration-200;
+    @apply text-accent ml-1 inline-block !no-underline opacity-0 transition-opacity duration-200;
     content: "#";
   }
 
@@ -191,7 +191,7 @@ html[data-theme="dark"] section.text-center h1 {
 
   /* Code blocks */
   .expressive-code {
-    @apply mt-2 mb-4;
+    @apply mb-4 mt-2;
   }
 }
 

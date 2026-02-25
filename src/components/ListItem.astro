@@ -40,12 +40,12 @@ const iso = latest.toISOString();
 <li class="my-2">
   <a
     href={href}
-    class="flex flex-col space-x-4 rounded-md p-2 hover:bg-foreground/5 sm:flex-row"
+    class="hover:bg-foreground/5 flex flex-col space-x-4 rounded-md p-2 sm:flex-row"
   >
     <!-- 日期 -->
-    <time class="mr-4 w-24 text-accent/80" datetime={iso}></time>
+    <time class="text-accent/80 mr-4 w-24" datetime={iso}></time>
     <!-- 标题（溢出省略） -->
-    <span class="truncate overflow-hidden whitespace-nowrap">
+    <span class="overflow-hidden truncate whitespace-nowrap">
       {title}
     </span>
   </a>

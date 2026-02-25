@@ -59,7 +59,7 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
   class="mx-auto w-full max-w-4xl pb-4"
 >
   <!-- 页面描述（条件显示） -->
-  {SITE.showPageDesc && <p class="mt-2 mb-6 italic">{props.pageDesc}</p>}
+  {SITE.showPageDesc && <p class="mb-6 mt-2 italic">{props.pageDesc}</p>}
 
   <!-- 插槽：页面内容 -->
   <slot />

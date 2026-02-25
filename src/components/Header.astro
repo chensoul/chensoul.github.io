@@ -91,7 +91,7 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
   <a
     id="skip-to-content"
     href="#main-content"
-    class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
+    class="bg-background text-accent absolute -top-full left-16 z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4"
   >
     Skip to content
   </a>
@@ -107,14 +107,14 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
     <!-- 顶部导航栏：站点标题 + RSS + 菜单按钮 -->
     <div
       id="top-nav-wrap"
-      class="relative flex w-full items-center justify-between bg-background pb-2 sm:items-baseline"
+      class="bg-background relative flex w-full items-center justify-between pb-2 sm:items-baseline"
     >
       <!-- 左侧：站点标题 + RSS 图标 -->
       <div class="flex items-baseline gap-1">
         <!-- 站点标题链接 -->
         <a
           href="/"
-          class="max-w-[28ch] overflow-hidden text-sm leading-6 text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
+          class="max-w-[28ch] overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-6 sm:max-w-none sm:overflow-visible sm:text-clip"
         >
           <!-- 前导标题（如分类名） -->
           {
@@ -148,7 +148,7 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
           <IconRss
             width={13}
             height={13}
-            class="inline-block stroke-accent stroke-3"
+            class="stroke-accent stroke-3 inline-block"
           />
           <span class="sr-only">RSS Feed</span>
         </a>
@@ -183,7 +183,7 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
       class:list={[
         "hidden", // 移动端默认隐藏
         "my-2 flex flex-wrap gap-2",
-        "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
+        "[&>li>a]:hover:text-accent [&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
         "[&>li>a]:text-sm [&>li>a]:text-[var(--nav-link)]",
         "sm:flex sm:gap-x-5 sm:gap-y-0", // 桌面端横向展开
         // 移动端全屏居中垂直排列
@@ -240,7 +240,7 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
           <li class="flex items-center">
             <button
               id="theme-btn"
-              class="focus-outline block px-4 py-3 text-sm font-medium text-[var(--nav-link)] hover:text-accent sm:px-0 sm:py-1"
+              class="focus-outline hover:text-accent block px-4 py-3 text-sm font-medium text-[var(--nav-link)] sm:px-0 sm:py-1"
               title={_t.common.themeBtn}
               aria-label="auto"
               aria-live="polite"

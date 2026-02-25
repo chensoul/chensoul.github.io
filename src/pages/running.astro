@@ -180,7 +180,7 @@ for (let m = 0; m < 12; m++) {
 <Layout title={`${title} | ${SITE.title}`} description={description}>
   <Header />
   <main id="main-content">
-    <div class="running-page mx-auto max-w-4xl px-4 pt-2 pb-6">
+    <div class="running-page mx-auto max-w-4xl px-4 pb-6 pt-2">
       <article class="mt-0">
         {
           !data?.stats ? (
@@ -201,7 +201,7 @@ for (let m = 0; m < 12; m++) {
                   <div class="period-stats-section">
                     <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)]">
                       <div
-                        class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4"
+                        class="period-tab-nav bg-[var(--muted)]/30 flex border-b border-[var(--border)] px-4"
                         id="periodTabNav"
                       >
                         {(["week", "month", "year", "total"] as const).map(
@@ -216,7 +216,7 @@ for (let m = 0; m < 12; m++) {
                                   "period-tab-btn border-b-2 px-5 py-3.5 text-sm font-medium transition-colors",
                                   isActive
                                     ? "border-[var(--accent)] text-[var(--accent)]"
-                                    : "border-transparent text-[var(--foreground)]/70 hover:text-[var(--foreground)]",
+                                    : "text-[var(--foreground)]/70 border-transparent hover:text-[var(--foreground)]",
                                 ]}
                                 data-period={period}
                               >
@@ -244,7 +244,7 @@ for (let m = 0; m < 12; m++) {
                                   <span class="text-sm font-semibold text-[var(--foreground)]">
                                     {periodLabels[period]}数据统计
                                   </span>
-                                  <span class="text-xs text-[var(--foreground)]/70">
+                                  <span class="text-[var(--foreground)]/70 text-xs">
                                     共计跑步 {pStats.total_activities} 次
                                   </span>
                                 </div>
@@ -253,7 +253,7 @@ for (let m = 0; m < 12; m++) {
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
                                       {pStats.avg_vdot?.toFixed(1) ?? "--"}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       当前跑力
                                     </span>
                                   </div>
@@ -261,7 +261,7 @@ for (let m = 0; m < 12; m++) {
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
                                       {pStats.total_distance.toFixed(0)}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       距离(公里)
                                     </span>
                                   </div>
@@ -269,7 +269,7 @@ for (let m = 0; m < 12; m++) {
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
                                       {pStats.avg_pace}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       平均配速
                                     </span>
                                   </div>
@@ -279,7 +279,7 @@ for (let m = 0; m < 12; m++) {
                                         ? pStats.total_training_load.toFixed(0)
                                         : "--"}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       训练负荷
                                     </span>
                                   </div>
@@ -287,7 +287,7 @@ for (let m = 0; m < 12; m++) {
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
                                       {pStats.total_duration_hours.toFixed(1)}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       总时长(小时)
                                     </span>
                                   </div>
@@ -295,7 +295,7 @@ for (let m = 0; m < 12; m++) {
                                     <span class="text-[1.375rem] font-bold text-[var(--foreground)]">
                                       {pStats.avg_heart_rate ?? "--"}
                                     </span>
-                                    <span class="text-xs text-[var(--foreground)]/70">
+                                    <span class="text-[var(--foreground)]/70 text-xs">
                                       平均心率
                                     </span>
                                   </div>
@@ -309,7 +309,7 @@ for (let m = 0; m < 12; m++) {
                   </div>
                 )}
 
-                <div class="contribution-graph my-4 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-2">
+                <div class="contribution-graph bg-[var(--muted)]/20 my-4 rounded-lg border border-[var(--border)] p-2">
                   <div class="month-labels relative mb-1 h-4">
                     {months.map(m => (
                       <span
@@ -374,7 +374,7 @@ for (let m = 0; m < 12; m++) {
                             </span>
                           )}
                         </div>
-                        <span class="run-type text-[13px] text-[var(--foreground)]/80">
+                        <span class="run-type text-[var(--foreground)]/80 text-[13px]">
                           {run.activity_type || "室外跑步"}
                           {(run.route?.trim() || run.workout_name) && (
                             <span class="workout-name">
@@ -389,7 +389,7 @@ for (let m = 0; m < 12; m++) {
                           <span class="stat-value text-base font-semibold text-[var(--foreground)]">
                             {run.distance.toFixed(1)}km
                           </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                          <span class="stat-label text-[var(--foreground)]/70 text-[11px] uppercase tracking-wide">
                             距离
                           </span>
                         </div>
@@ -397,7 +397,7 @@ for (let m = 0; m < 12; m++) {
                           <span class="stat-value text-base font-semibold text-[var(--foreground)]">
                             {formatDuration(run.duration)}
                           </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                          <span class="stat-label text-[var(--foreground)]/70 text-[11px] uppercase tracking-wide">
                             时长
                           </span>
                         </div>
@@ -405,7 +405,7 @@ for (let m = 0; m < 12; m++) {
                           <span class="stat-value text-base font-semibold text-[var(--foreground)]">
                             {run.pace}
                           </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                          <span class="stat-label text-[var(--foreground)]/70 text-[11px] uppercase tracking-wide">
                             配速
                           </span>
                         </div>
@@ -413,7 +413,7 @@ for (let m = 0; m < 12; m++) {
                           <span class="stat-value text-base font-semibold">
                             {run.vdot ?? "-"}
                           </span>
-                          <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                          <span class="stat-label text-[var(--foreground)]/70 text-[11px] uppercase tracking-wide">
                             VDOT
                           </span>
                         </div>
@@ -422,7 +422,7 @@ for (let m = 0; m < 12; m++) {
                             <span class="stat-value text-base font-semibold">
                               {run.training_load}
                             </span>
-                            <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
+                            <span class="stat-label text-[var(--foreground)]/70 text-[11px] uppercase tracking-wide">
                               负荷
                             </span>
                           </div>
@@ -434,7 +434,7 @@ for (let m = 0; m < 12; m++) {
                 {hasMoreRuns && (
                   <button
                     type="button"
-                    class="load-more-btn mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 py-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--background)] hover:text-[var(--accent)]"
+                    class="load-more-btn bg-[var(--muted)]/30 mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] py-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--background)] hover:text-[var(--accent)]"
                     id="loadMoreBtn"
                   >
                     <span>更多</span>
@@ -475,7 +475,7 @@ for (let m = 0; m < 12; m++) {
         >
           <button
             type="button"
-            class="modal-close absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--muted)]/30 text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
+            class="modal-close bg-[var(--muted)]/30 absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--foreground)] transition-colors hover:bg-[var(--border)]"
             id="modalClose"
             aria-label="关闭"
           >

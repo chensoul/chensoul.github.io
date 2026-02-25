@@ -115,9 +115,9 @@ const nextPost =
   <Header />
 
   <!-- 文章标题与发布日期（不在 main 内） -->
-  <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
+  <section class="mx-auto mb-2 mt-4 w-full max-w-4xl text-center">
     <h1 class="text-2xl font-semibold">{title}</h1>
-    <p class="mt-1 text-sm text-accent/80">{publishDisplayDate}</p>
+    <p class="text-accent/80 mt-1 text-sm">{publishDisplayDate}</p>
   </section>
 
   <!-- 主内容区 -->
@@ -129,7 +129,7 @@ const nextPost =
     <!-- 文章内容 -->
     <article
       id="article"
-      class="js-toc-content mx-auto prose mt-4 mb-12 max-w-4xl"
+      class="js-toc-content prose mx-auto mb-12 mt-4 max-w-4xl"
     >
       <Content />
     </article>
@@ -162,7 +162,7 @@ const nextPost =
           <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
             <IconChevronLeft class="inline-block flex-none" />
             <div>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
+              <div class="text-accent/85 text-sm">{prevPost.title}</div>
             </div>
           </a>
         )
@@ -175,7 +175,7 @@ const nextPost =
             class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
           >
             <div>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
+              <div class="text-accent/85 text-sm">{nextPost.title}</div>
             </div>
             <IconChevronRight class="inline-block flex-none" />
           </a>
@@ -202,7 +202,7 @@ const nextPost =
       )
     }
     <div
-      class="flex flex-col items-start space-y-0 truncate overflow-hidden whitespace-nowrap opacity-80"
+      class="flex flex-col items-start space-y-0 overflow-hidden truncate whitespace-nowrap opacity-80"
     >
     </div>
   </aside>
