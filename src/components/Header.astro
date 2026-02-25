@@ -7,7 +7,7 @@
  * 核心逻辑：
  * 1. 响应式导航：移动端使用汉堡菜单，桌面端横向展开
  * 2. 路径激活检测：高亮当前页面所在的导航项
- * 3. 移动端标题动态显示：根据当前页面显示对应标题
+ * 3. 标题统一显示网站名称；移动端增加面包屑导航（首页 / 当前页）
  * 4. 下拉菜单："更多"选项包含归档、搜索等次要导航
  * 5. 主题切换：RSS 右侧图标按钮（日月图标切换浅色/深色）
  * 6. View Transitions：支持页面切换动画
@@ -71,19 +71,36 @@ const { leadingTitle, hideSiteTitle, leadingTitleTransition } =
   Astro.props as Props;
 
 /**
- * 移动端标题动态显示
- *
- * 根据当前页面显示对应标题，增强移动端导航体验
+ * 当前页标题（用于面包屑末项）
  */
-let mobileTitle: string = SITE.title;
-if (isActive("/posts")) mobileTitle = _t.posts.title;
-else if (isActive("/categories")) mobileTitle = _t.categories.title;
-else if (isActive("/tags")) mobileTitle = _t.tags.title;
-else if (isActive("/about")) mobileTitle = _t.about.title;
-else if (isActive("/archives")) mobileTitle = _t.archives.title;
-else if (isActive("/search")) mobileTitle = _t.search.title;
-else if (isActive("/links")) mobileTitle = _t.links.title;
-else if (isActive("/running")) mobileTitle = _t.running.title;
+function getCurrentPageTitle(): string {
+  if (isActive("/posts")) return _t.posts.title;
+  if (isActive("/categories")) return _t.categories.title;
+  if (isActive("/tags")) return _t.tags.title;
+  if (isActive("/about")) return _t.about.title;
+  if (isActive("/archives")) return _t.archives.title;
+  if (isActive("/search")) return _t.search.title;
+  if (isActive("/links")) return _t.links.title;
+  if (isActive("/running")) return _t.running.title;
+  return SITE.title;
+}
+
+/**
+ * 面包屑项：{ label, href? }，无 href 表示当前页
+ */
+const breadcrumbItems: { label: string; href?: string }[] = (() => {
+  const homeLabel = _t.common.home;
+  if (currentPath === "/" || currentPath === "") return [{ label: homeLabel }];
+  const items: { label: string; href?: string }[] = [{ label: homeLabel, href: "/" }];
+  if (leadingTitle) {
+    if (isActive("/categories")) items.push({ label: _t.categories.title, href: "/categories" });
+    else if (isActive("/tags")) items.push({ label: _t.tags.title, href: "/tags" });
+    items.push({ label: leadingTitle });
+  } else {
+    items.push({ label: getCurrentPageTitle() });
+  }
+  return items;
+})();
 ---
 
 <header>
@@ -127,15 +144,8 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
               </span>
             )
           }
-          <!-- 站点标题 -->
-          {
-            !hideSiteTitle && (
-              <>
-                <span class="sm:hidden">{mobileTitle}</span>
-                <span class="hidden text-base sm:inline">{SITE.title}</span>
-              </>
-            )
-          }
+          <!-- 站点标题（移动端与桌面端均显示网站名称，加粗） -->
+          {!hideSiteTitle && <span class="text-base font-semibold">{SITE.title}</span>}
         </a>
         <!-- RSS 与主题图标：统一尺寸 16×16、44px 触控区、水平对齐 -->
         <span class="-mx-1 flex items-center">
@@ -202,6 +212,34 @@ else if (isActive("/running")) mobileTitle = _t.running.title;
 
   <!-- 年度进度条 -->
   <YearProgress />
+
+  <!-- 移动端面包屑（在年进度条下方） -->
+  <nav
+    aria-label="Breadcrumb"
+    class="mx-auto w-full max-w-4xl max-sm:mb-1 max-sm:flex max-sm:items-center max-sm:gap-1 max-sm:text-xs sm:hidden"
+  >
+    <ol class="flex flex-wrap items-center gap-1 text-[var(--text-muted)]">
+      {
+        breadcrumbItems.map((item, i) => (
+          <li class="flex items-center gap-1">
+            {i > 0 && <span class="select-none" aria-hidden="true">/</span>}
+            {item.href != null ? (
+              <a
+                href={item.href}
+                class="text-[var(--nav-link)] hover:text-accent underline-offset-2 hover:underline"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <span class="font-medium text-[var(--foreground)]" aria-current="page">
+                {item.label}
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
 
   <!-- 主导航菜单 -->
   <nav aria-label="Primary" class="mx-auto w-full max-w-4xl sm:relative">

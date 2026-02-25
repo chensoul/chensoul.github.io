@@ -223,6 +223,8 @@ const _en = {
    * 全站通用文本配置
    */
   common: {
+    /** 首页（面包屑等） */
+    home: "Home",
     /** 返回顶部按钮文本 */
     backToTop: "Back to Top",
     /** 主题切换按钮的 title 属性 */
@@ -322,6 +324,7 @@ const zhCN: typeof _en = {
     icp: "",
   },
   common: {
+    home: "首页",
     backToTop: "回到顶部",
     themeBtn: "切换深色模式",
     light: "浅色",
