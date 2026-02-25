@@ -387,10 +387,10 @@ for (let m = 0; m < 12; m++) {
                       <div class="run-stats mt-3 flex gap-5">
                         <div class="stat flex flex-col gap-0.5">
                           <span class="stat-value text-base font-semibold text-[var(--foreground)]">
-                            {run.distance.toFixed(1)}
+                            {run.distance.toFixed(1)}km
                           </span>
                           <span class="stat-label text-[11px] tracking-wide text-[var(--foreground)]/70 uppercase">
-                            km
+                            距离
                           </span>
                         </div>
                         <div class="stat flex flex-col gap-0.5">
@@ -1668,34 +1668,32 @@ for (let m = 0; m < 12; m++) {
 
     loadMoreBtn.addEventListener("click", () => {
       if (!isExpanded) {
-        allRuns
-          .slice(10)
-          .forEach(
-            (
-              run: {
-                date: string;
-                distance: number;
-                duration: string;
-                pace: string;
-                hr_zone?: number;
-                activity_type?: string;
-                workout_name?: string;
-                vdot?: number;
-                training_load?: number;
-              },
-              idx: number
-            ) => {
-              const card = document.createElement("div");
-              card.className =
-                "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
-              card.dataset.runIndex = String(10 + idx);
-              card.dataset.run = JSON.stringify(run);
-              const zone = run.hr_zone ?? 0;
-              const hrBadge =
-                zone > 0
-                  ? `<span class="hr-zone-badge hr-zone-tag zone-${zone} inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold">${hrZoneLabelsData[zone]}</span>`
-                  : "";
-              card.innerHTML = `
+        allRuns.slice(10).forEach(
+          (
+            run: {
+              date: string;
+              distance: number;
+              duration: string;
+              pace: string;
+              hr_zone?: number;
+              activity_type?: string;
+              workout_name?: string;
+              vdot?: number;
+              training_load?: number;
+            },
+            idx: number
+          ) => {
+            const card = document.createElement("div");
+            card.className =
+              "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
+            card.dataset.runIndex = String(10 + idx);
+            card.dataset.run = JSON.stringify(run);
+            const zone = run.hr_zone ?? 0;
+            const hrBadge =
+              zone > 0
+                ? `<span class="hr-zone-badge hr-zone-tag zone-${zone} inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold">${hrZoneLabelsData[zone]}</span>`
+                : "";
+            card.innerHTML = `
             <div class="run-main flex flex-1 flex-col gap-1.5">
               <div class="run-header flex flex-wrap items-center gap-2.5">
                 <time class="run-date text-sm font-medium text-[var(--foreground)]">${run.date.split(" ")[0]}</time>
@@ -1711,9 +1709,9 @@ for (let m = 0; m < 12; m++) {
               ${(run.training_load ?? 0) > 0 ? `<div class="stat load-stat flex flex-col gap-0.5"><span class="stat-value text-base font-semibold">${run.training_load ?? 0}</span><span class="stat-label text-[11px] uppercase tracking-wide text-[var(--foreground)]/70">负荷</span></div>` : ""}
             </div>
           `;
-              runList.appendChild(card);
-            }
-          );
+            runList.appendChild(card);
+          }
+        );
         loadMoreBtn.innerHTML =
           '<span>收起</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg)"><polyline points="6 9 12 15 18 9"></polyline></svg>';
         isExpanded = true;

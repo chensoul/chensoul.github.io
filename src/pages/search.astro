@@ -87,7 +87,10 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         showSubResults: true,
         showImages: false,
         // 移除 URL 中的 .html 后缀
-        processResult: function (result: { url: string; sub_results?: Array<{ url: string }> }) {
+        processResult: function (result: {
+          url: string;
+          sub_results?: Array<{ url: string }>;
+        }) {
           const cleanUrl = (url: string) =>
             url
               .replace(/\.html$/, "")
