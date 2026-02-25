@@ -40,7 +40,6 @@ let tags = PostUtils.getUniqueTags(posts);
 <Layout title={`${_t.tags.title} | ${SITE.title}`}>
   <Header />
   <Main pageTitle="" pageDesc={_t.tags.desc}>
-    <!-- 标签列表 -->
     <ul>
       {
         tags.map(({ tag, tagName, count }) => (
