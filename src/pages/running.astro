@@ -539,11 +539,6 @@ for (let m = 0; m < 12; m++) {
     --running-contrib-dark-5: #60a5fa;
   }
 
-  /* 跑步页 main 无上边距，「跑步统计」紧接导航下方 */
-  main#main-content.running-main {
-    margin-top: 0;
-  }
-
   .running-page {
     width: 100%;
     box-sizing: border-box;
@@ -553,27 +548,6 @@ for (let m = 0; m < 12; m++) {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 2px solid var(--accent);
-  }
-
-  .running-page h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: var(--heading, var(--foreground));
-    font-weight: 600;
-    text-wrap: balance;
-  }
-
-  /* h2 由 article.prose 继承 typography，与关于页一致 */
-  .running-page .prose h2:first-of-type {
-    margin-top: 0;
-  }
-  .running-page .contribution-graph + h2 {
-    margin-top: 1.25rem;
-  }
-
-  .period-stats-section {
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
   }
 
   .period-stats-card {
