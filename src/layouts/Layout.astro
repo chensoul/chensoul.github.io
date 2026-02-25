@@ -101,9 +101,48 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 基础 meta 标签 -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <!-- 首帧前设置 data-theme，避免白/黑闪（与 toggle-theme.js 逻辑一致） -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+      (function () {
+        if (!lightAndDarkMode) return;
+        var DARK_START = 19, DARK_END = 7;
+        function get(key) {
+          try { return localStorage.getItem(key); } catch (e) { return null; }
+        }
+        function norm(v) { return v === "dark" ? "dark" : v === "light" ? "light" : null; }
+        function todayStr() {
+          try {
+            var t = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
+            return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+          } catch (e) {
+            var d = new Date();
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+          }
+        }
+        function darkByTime() {
+          try {
+            var h = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
+            return h >= DARK_START || h < DARK_END;
+          } catch (e) {
+            return new Date().getHours() >= DARK_START || new Date().getHours() < DARK_END;
+          }
+        }
+        var theme = "light";
+        try {
+          var cur = norm(get("theme"));
+          var userSet = get("userSetTheme") === "true";
+          var setDate = get("userSetThemeDate");
+          if (userSet && setDate === todayStr() && cur) { theme = cur; }
+          else if (darkByTime()) { theme = "dark"; }
+          else if (cur) { theme = cur; }
+          else if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) { theme = "dark"; }
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <!-- 基础 meta 标签 -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     {
@@ -197,6 +236,8 @@ const structuredData = {
       <!-- 插槽：子布局内容 -->
       <slot />
     </div>
+    <!-- TOC 等侧边栏（在 site-frame 外，仅文章页传入） -->
+    <slot name="sidebar" />
     <!-- 返回按钮 -->
     <BackButton />
     <!-- 返回顶部按钮 -->

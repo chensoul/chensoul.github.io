@@ -26,18 +26,17 @@ import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import getUniqueCategories from "@/utils/getUniqueCategories";
-import getSortedPosts from "@/utils/getSortedPosts";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 import { _t } from "@/i18n/lang";
 import { getCategoryImageUrl } from "@/utils/categoryImages";
 
 // 获取所有文章并排序
 const posts = await getCollection("blog");
-const sortedPosts = getSortedPosts(posts);
+const sortedPosts = PostUtils.sort(posts);
 
 // 获取所有分类
-let categories = getUniqueCategories(posts);
+let categories = PostUtils.getUniqueCategories(posts);
 
 /**
  * 获取每个分类的最新文章标题

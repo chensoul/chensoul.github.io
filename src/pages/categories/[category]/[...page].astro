@@ -41,8 +41,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
-import getUniqueCategories from "@/utils/getUniqueCategories";
-import getSortedPosts from "@/utils/getSortedPosts";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 import { _t } from "@/i18n/lang";
 
@@ -79,7 +78,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
    * - category: 分类的 URL 友好名称（如 "tech", "life"）
    * - categoryName: 分类的显示名称（如 "技术", "生活"）
    */
-  const categories = getUniqueCategories(posts);
+  const categories = PostUtils.getUniqueCategories(posts);
 
   /**
    * 为每个分类生成路由
@@ -107,7 +106,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
      * - getSortedPosts 会过滤草稿和未到发布时间的文章
      * - 按更新时间（或发布时间）降序排序
      */
-    const categoryPosts = getSortedPosts(
+    const categoryPosts = PostUtils.sort(
       posts.filter(post => post.data.categories.includes(categoryName))
     );
 

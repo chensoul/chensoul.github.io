@@ -1,7 +1,6 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
-import { getPath } from "@/utils/getPath";
-import getDescription from "@/utils/getDescription";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 /**
@@ -22,9 +21,9 @@ export async function GET() {
     trailingSlash: false,
     customData: `<language>zh-CN</language>`,
     items: sortedPosts.map(({ data, id, body, filePath }) => {
-      const description = getDescription(body ?? "");
+      const description = PostUtils.getDescription(body ?? "");
       return {
-        link: getPath(id, filePath, true, data.date),
+        link: PostUtils.getPath(id, filePath, true, data.date),
         title: data.title,
         description,
         categories: data.categories,

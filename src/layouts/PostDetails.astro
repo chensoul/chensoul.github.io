@@ -27,7 +27,7 @@ import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Artalk from "@/components/Artalk.astro";
 import { slugifyStr } from "@/utils/slugify";
-import { getPath } from "@/utils/getPath";
+import { PostUtils } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
@@ -96,11 +96,11 @@ const layoutProps = {
  * 3. 获取上一篇（索引-1）和下一篇（索引+1）
  */
 const allPosts = posts.map(({ data: { title, date }, id, filePath }) => ({
-  path: getPath(id, filePath, true, date),
+  path: PostUtils.getPath(id, filePath, true, date),
   title,
 }));
 
-const currentPostPath = getPath(post.id, post.filePath, true, post.data.date);
+const currentPostPath = PostUtils.getPath(post.id, post.filePath, true, post.data.date);
 const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
 
 const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
@@ -191,7 +191,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     <p class="mt-1 text-sm text-accent">{publishDisplayDate}</p>
   </section>
 
-  <!-- 主内容区 -->
+  <!-- 主内容区（TOC 在 main 外，大屏下与 main 同行） -->
   <main
     id="main-content"
     class="mx-auto w-full max-w-4xl pb-8"
@@ -258,9 +258,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     <div id="Comments"></div>
   </main>
 
-  <!-- 侧边栏：显示文章目录 -->
+  <Footer />
+  <!-- 侧边栏：TOC 在 site-frame 外，通过具名插槽渲染 -->
   <aside
     id="sidebar"
+    slot="sidebar"
     class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
   >
     {
@@ -275,57 +277,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     >
     </div>
   </aside>
-  <Footer />
 </Layout>
 
 <!-- Artalk 评论系统 -->
 <Artalk />
 
-<script is:inline data-astro-rerun type="module">
-  /* Tocbot */
-  (function () {
-    // 如果未启用 TOC，直接返回
-    if (!document.getElementById("toc-container")) {
-      return;
-    }
-
-    const scrollSmoothOffset = 0;
-
-    /**
-     * 初始化 Tocbot
-     *
-     * 配置：
-     * - tocSelector: 目录容器
-     * - contentSelector: 文章内容容器
-     * - headingSelector: 扫描的标题级别（h2, h3, h4）
-     * - scrollSmoothDuration: 平滑滚动持续时间
-     */
-    function initTocbot() {
-      window.tocbot.init({
-        tocSelector: ".js-toc",
-        contentSelector: ".js-toc-content",
-        headingSelector: "h2, h3, h4",
-        hasInnerContainers: true,
-        scrollSmoothDuration: 300,
-        scrollSmoothOffset,
-      });
-    }
-
-    // 加载 Tocbot 库
-    if (window.tocbot) {
-      initTocbot();
-    } else {
-      const script = document.createElement("script");
-      script.src = "/tocbot/tocbot.min.js";
-      script.crossOrigin = "anonymous";
-      script.referrerPolicy = "no-referrer";
-      script.onload = initTocbot;
-      document.body.appendChild(script);
-    }
-  })();
-
-  // Astro View Transitions: 滚动到页面顶部
-  document.addEventListener("astro:after-swap", () => {
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
-  });
+<script>
+  import "@/scripts/initTocbot";
 </script>

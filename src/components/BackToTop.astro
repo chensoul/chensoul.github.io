@@ -47,14 +47,31 @@ const { class: className } = Astro.props;
   <IconChevronUp class="h-4 w-4" />
 </button>
 
-<script is:inline data-astro-rerun type="module">
-  // 从 data 属性读取配置
-  const el = document.getElementById("back-to-top");
-  const mobileWidth = Number(el?.dataset.mobileWidth);
-  const showAfterRatio = Number(el?.dataset.showAfterRatio);
-  const minOverflow = Number(el?.dataset.minOverflow);
-  const minScrollTop = Number(el?.dataset.minScrollTop);
-  const isMobileDevice = () => window.innerWidth < mobileWidth;
+<script data-astro-rerun>
+  (function() {
+    // 从 data 属性读取配置
+    const el = document.getElementById("back-to-top");
+    const mobileWidth = Number(el?.dataset.mobileWidth);
+    const showAfterRatio = Number(el?.dataset.showAfterRatio);
+    const minOverflow = Number(el?.dataset.minOverflow);
+    const minScrollTop = Number(el?.dataset.minScrollTop);
+    const isMobileDevice = () => window.innerWidth < mobileWidth;
+
+    /**
+     * 防抖函数
+     */
+    function debounce(func, wait) {
+    let timeout = null;
+    return function executedFunction(...args) {
+      if (timeout !== null) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        func(...args);
+        timeout = null;
+      }, wait);
+    };
+  }
 
   /**
    * 更新按钮位置，使其紧贴 site-frame 容器右边缘
@@ -68,15 +85,15 @@ const { class: className } = Astro.props;
     const rightOffset = window.innerWidth - frameRect.right;
     const btnWidth = btn.offsetWidth;
 
-    // 检查容器右侧空间是否足够放下按钮
     if (rightOffset < btnWidth + 32) {
-      // 空间不够，固定在右侧
       btn.style.right = "1rem";
     } else {
-      // 空间够，放在容器外部，距离容器边缘 16px
       btn.style.right = `${rightOffset - btnWidth - 16}px`;
     }
   }
+
+  // 防抖优化：resize 事件使用防抖，避免频繁计算
+  const debouncedUpdatePosition = debounce(updatePosition, 150);
 
   /**
    * 更新按钮显示状态
@@ -120,8 +137,8 @@ const { class: className } = Astro.props;
 
   // 监听滚动事件
   window.addEventListener("scroll", updateVisibility, { passive: true });
-  // 监听窗口大小变化，更新按钮位置
-  window.addEventListener("resize", updatePosition, { passive: true });
+  // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
+  window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
   // View Transitions 页面加载后更新
   document.addEventListener("astro:page-load", () => {
     updateVisibility();
@@ -154,4 +171,5 @@ const { class: className } = Astro.props;
       backdrop.classList.add("pointer-events-none");
     }
   });
+  })();
 </script>

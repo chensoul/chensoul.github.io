@@ -10,14 +10,14 @@
     /* margin-block: 0.75rem !important; */
   }
 
-  /* 标题颜色：覆盖 typography 插件，统一使用 --heading（深色主题由 global.css 的 --tw-prose-headings 接管） */
+  /* 标题颜色：覆盖 typography 插件，统一使用前景色 */
   .prose h1,
   .prose h2,
   .prose h3,
   .prose h4,
   .prose h5,
   .prose h6 {
-    color: var(--heading) !important;
+    color: var(--foreground) !important;
   }
 
   /* h2 上边距缩小 */
@@ -29,7 +29,7 @@
   html[data-theme="dark"] .prose h4,
   html[data-theme="dark"] .prose h5,
   html[data-theme="dark"] .prose h6 {
-    color: var(--heading-muted) !important;
+    color: var(--foreground) !important;
   }
 
   /* inline code */

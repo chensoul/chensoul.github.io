@@ -22,7 +22,7 @@
 import Archives from "@/layouts/Archives.astro";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import getSortedPosts from "@/utils/getSortedPosts";
+import { PostUtils } from "@/utils/postUtils";
 
 /**
  * 生成静态路径
@@ -32,7 +32,7 @@ import getSortedPosts from "@/utils/getSortedPosts";
 export const getStaticPaths = (async ({ paginate }) => {
   // 获取所有非草稿文章
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  const sortedPosts = getSortedPosts(posts);
+  const sortedPosts = PostUtils.sort(posts);
   // 生成分页路由（pageSize 设为全部，实际分页由懒加载处理）
   return paginate(sortedPosts, { pageSize: sortedPosts.length });
 }) satisfies GetStaticPaths;

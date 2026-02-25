@@ -23,8 +23,7 @@
 
 import { type CollectionEntry, getCollection } from "astro:content";
 import PostDetails from "@/layouts/PostDetails.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-import { getPath } from "@/utils/getPath";
+import { PostUtils } from "@/utils/postUtils";
 
 /**
  * 组件属性接口
@@ -47,7 +46,7 @@ export async function getStaticPaths() {
   // 为每篇文章生成路由
   const postResult = posts.map(post => ({
     // 使用 getPath 生成 URL 友好的 slug（不带 /posts 前缀，包含日期）
-    params: { slug: getPath(post.id, post.filePath, false, post.data.date) },
+    params: { slug: PostUtils.getPath(post.id, post.filePath, false, post.data.date) },
     props: { post },
   }));
 
@@ -58,7 +57,7 @@ const { post } = Astro.props;
 
 // 获取所有文章并排序（用于上一篇/下一篇导航）
 const posts = await getCollection("blog");
-const sortedPosts = getSortedPosts(posts);
+const sortedPosts = PostUtils.sort(posts);
 ---
 
 <!-- 使用 PostDetails 布局渲染文章 -->

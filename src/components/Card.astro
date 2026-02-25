@@ -20,7 +20,7 @@
 
 import { slugifyStr } from "@/utils/slugify";
 import type { CollectionEntry } from "astro:content";
-import { getPath } from "@/utils/getPath";
+import { PostUtils } from "@/utils/postUtils";
 import Datetime from "./Datetime.astro";
 import { SITE } from "@/config";
 
@@ -120,13 +120,13 @@ const coverSrc = buildCoverSrc();
             // 根据 variant 选择标题级别
             variant === "h2" ? (
               <h2 {...headerProps}>
-                <a href={getPath(id, filePath, true, date)} {...linkProps}>
+                <a href={PostUtils.getPath(id, filePath, true, date)} {...linkProps}>
                   {title}
                 </a>
               </h2>
             ) : (
               <h3 {...headerProps}>
-                <a href={getPath(id, filePath, true, date)} {...linkProps}>
+                <a href={PostUtils.getPath(id, filePath, true, date)} {...linkProps}>
                   {title}
                 </a>
               </h3>

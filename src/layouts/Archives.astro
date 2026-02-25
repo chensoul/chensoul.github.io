@@ -28,8 +28,7 @@ import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
 import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
-import getPostsByGroupCondition from "@/utils/getPostsByGroupCondition";
-import { getPath } from "@/utils/getPath";
+import { PostUtils } from "@/utils/postUtils";
 import { _t } from "@/i18n/lang";
 
 /**
@@ -52,9 +51,8 @@ const { page } = Astro.props;
  * - 若无 updated，则使用 date 字段（发布时间）的年份
  * - 返回一个对象，键为年份字符串，值为该年份的文章数组
  */
-const groupedByYear = getPostsByGroupCondition(
+const groupedByYear = PostUtils.groupBy(
   page.data,
-  // 提取年份的回调函数：返回文章日期的年份部分
   item => new Date(item.data.updated ?? item.data.date).getFullYear()
 );
 
@@ -113,7 +111,7 @@ const years = Object.keys(groupedByYear)
                     <span class="opacity-80">»</span>
                     {/* 文章标题链接：flex-1 占满剩余空间，truncate 超长省略 */}
                     <a
-                      href={getPath(id, filePath, true, data.date)}
+                      href={PostUtils.getPath(id, filePath, true, data.date)}
                       class="flex-1 truncate text-sm text-accent hover:underline"
                     >
                       {data.title}

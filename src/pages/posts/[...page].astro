@@ -43,7 +43,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 import { _t } from "@/i18n/lang";
 
@@ -81,7 +81,7 @@ export const getStaticPaths = (async ({ paginate }) => {
    * 2. 过滤未到发布时间的文章（publishDate > 当前日期）
    * 3. 按更新时间（或发布时间）降序排序（最新的在前）
    */
-  const sortedPosts = getSortedPosts(posts);
+  const sortedPosts = PostUtils.sort(posts);
 
   /**
    * 生成分页路由

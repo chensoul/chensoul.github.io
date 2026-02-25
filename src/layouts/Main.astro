@@ -64,20 +64,5 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 </main>
 
 <script>
-  /**
-   * 存储返回 URL 到 sessionStorage
-   *
-   * 使用场景：
-   * - 用户在列表页（如搜索结果）
-   * - 点击进入文章详情页
-   * - 点击返回按钮回到列表页
-   */
-  document.addEventListener("astro:page-load", () => {
-    const mainContent: HTMLElement | null =
-      document.querySelector("#main-content");
-    const backUrl = mainContent?.dataset?.backurl;
-    if (backUrl) {
-      sessionStorage.setItem("backUrl", backUrl);
-    }
-  });
+  import "@/scripts/initBackUrl";
 </script>

@@ -32,11 +32,28 @@ import { SITE } from "@/config";
   )
 }
 
-<script is:inline data-astro-rerun type="module">
-  /**
-   * 判断当前页面是否需要显示返回按钮，并设置返回链接
-   */
-  function getBackInfo() {
+<script data-astro-rerun>
+  (function() {
+    /**
+     * 防抖函数
+     */
+    function debounce(func, wait) {
+      let timeout = null;
+      return function executedFunction(...args) {
+        if (timeout !== null) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+          func(...args);
+          timeout = null;
+        }, wait);
+      };
+    }
+
+    /**
+     * 判断当前页面是否需要显示返回按钮，并设置返回链接
+     */
+    function getBackInfo() {
     const path = window.location.pathname;
 
     // 文章页面 /posts/xxx
@@ -76,6 +93,9 @@ import { SITE } from "@/config";
       btn.style.right = `${rightOffset - btnWidth - 16}px`;
     }
   }
+
+  // 防抖优化：resize 事件使用防抖，避免频繁计算
+  const debouncedUpdatePosition = debounce(updatePosition, 150);
 
   /**
    * 更新返回按钮的显示状态和链接
@@ -123,11 +143,12 @@ import { SITE } from "@/config";
     updateVerticalPosition(e.detail.visible);
   });
 
-  // 监听窗口大小变化
-  window.addEventListener("resize", updatePosition, { passive: true });
+  // 监听窗口大小变化（使用防抖优化性能）
+  window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
   // View Transitions 页面加载后更新
   document.addEventListener("astro:page-load", updateBackButton);
   document.addEventListener("astro:after-swap", updateBackButton);
   // 初始化
   updateBackButton();
+  })();
 </script>

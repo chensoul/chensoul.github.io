@@ -34,8 +34,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
-import getUniqueTags from "@/utils/getUniqueTags";
-import getPostsByTag from "@/utils/getPostsByTag";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 import { _t } from "@/i18n/lang";
 
@@ -46,12 +45,12 @@ import { _t } from "@/i18n/lang";
  */
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getCollection("blog");
-  const tags = getUniqueTags(posts);
+  const tags = PostUtils.getUniqueTags(posts);
 
   // 为每个标签生成分页路由
   return tags.flatMap(({ tag, tagName }) => {
     // 获取包含该标签的所有文章
-    const tagPosts = getPostsByTag(posts, tag);
+    const tagPosts = PostUtils.getPostsByTag(posts, tag);
 
     return paginate(tagPosts, {
       params: { tag },
