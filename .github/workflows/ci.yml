@@ -8,6 +8,7 @@ on:
       - synchronize
       - reopened
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
