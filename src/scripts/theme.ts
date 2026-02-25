@@ -62,10 +62,16 @@ function reflectPreference(): void {
   }
 }
 
-// Update the global theme API
+// Update the global theme API (inline script may have created window.theme with only themeValue)
 if (window.theme) {
+  if (window.theme.themeValue !== undefined) themeValue = window.theme.themeValue;
+  window.theme.themeValue = themeValue;
   window.theme.setPreference = setPreference;
   window.theme.reflectPreference = reflectPreference;
+  window.theme.getTheme = () => themeValue;
+  window.theme.setTheme = (val: string) => {
+    themeValue = val;
+  };
 } else {
   window.theme = {
     themeValue,
