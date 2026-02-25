@@ -204,7 +204,7 @@ for (let m = 0; m < 12; m++) {
               <div>
                 {periodStats && Object.keys(periodStats).length > 0 && (
                   <div class="period-stats-section">
-                    <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)]">
+                    <div class="period-stats-card overflow-hidden rounded-lg border border-[var(--border)]">
                       <div
                         class="period-tab-nav flex border-b border-[var(--border)] bg-[var(--muted)]/30 px-4"
                         id="periodTabNav"
@@ -357,7 +357,7 @@ for (let m = 0; m < 12; m++) {
                 >
                   {recentRuns.map((run, index) => (
                     <div
-                      class="run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md"
+                      class="run-card run-card cursor-pointer rounded-lg border border-[var(--border)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md"
                       data-run-index={index}
                       data-run={JSON.stringify(run)}
                     >
@@ -551,7 +551,6 @@ for (let m = 0; m < 12; m++) {
   }
 
   .period-stats-card {
-    background: var(--background);
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
@@ -806,7 +805,6 @@ for (let m = 0; m < 12; m++) {
 
   .run-card {
     padding: 1rem 1.25rem;
-    background: var(--background);
     border: 1px solid var(--border);
     border-radius: 8px;
     display: flex;
@@ -1771,7 +1769,7 @@ for (let m = 0; m < 12; m++) {
           ) => {
             const card = document.createElement("div");
             card.className =
-              "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
+              "run-card run-card cursor-pointer rounded-lg border border-[var(--border)] p-4 shadow-sm transition-all hover:border-[var(--accent)] hover:shadow-md";
             card.dataset.runIndex = String(10 + idx);
             card.dataset.run = JSON.stringify(run);
             const zone = run.hr_zone ?? 0;
