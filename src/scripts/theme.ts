@@ -116,13 +116,14 @@ document.addEventListener("astro:before-swap", event => {
   const astroEvent = event;
   const newDoc = astroEvent.newDocument;
 
-  // 1) Sync theme to new document's <html> so CSS variables resolve correctly on first paint
+  // 1) Sync theme to new document's <html> and <body> so first paint is never white
   const theme =
     document.documentElement.getAttribute("data-theme") ||
     (localStorage.getItem(THEME) === DARK ? DARK : LIGHT);
+  const bg = THEME_BG[theme === DARK ? "dark" : "light"];
   newDoc.documentElement.setAttribute("data-theme", theme);
-  newDoc.documentElement.style.backgroundColor =
-    THEME_BG[theme === DARK ? "dark" : "light"];
+  newDoc.documentElement.style.backgroundColor = bg;
+  if (newDoc.body) newDoc.body.style.backgroundColor = bg;
 
   // 2) Preserve theme-color meta for Android nav bar
   const bgColor = document

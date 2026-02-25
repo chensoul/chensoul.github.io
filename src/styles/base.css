@@ -116,14 +116,6 @@ html[data-theme="light"] .expressive-code {
       @apply z-40 m-0 max-h-[calc(100vh-8rem)] w-40 translate-x-0 rounded-lg p-4 shadow-none;
     }
 
-    #sidebar.no-toc {
-      @apply top-150;
-    }
-
-    html[data-theme="dark"] #sidebar {
-      background-color: transparent;
-    }
-
     @media (min-width: 1280px) {
       #sidebar {
         @apply w-56;
@@ -153,46 +145,23 @@ html[data-theme="light"] .expressive-code {
     content: "";
   }
 
-  @media (max-width: 1023px) {
-    .toc-list-item {
-      @apply my-4;
-    }
-  }
-
-  .icon-link::before {
-    @apply ml-1 inline-block text-accent !no-underline opacity-0 transition-opacity duration-200;
-    content: "#";
-  }
-
   #sidebar #back-to-top svg,
   #sidebar #back-to-top span {
     color: var(--foreground);
   }
-
-  h1:hover .icon-link::before,
-  h2:hover .icon-link::before,
-  h3:hover .icon-link::before,
-  h4:hover .icon-link::before,
-  h5:hover .icon-link::before,
-  h6:hover .icon-link::before {
-    @apply opacity-100;
-  }
-
-  .expressive-code {
-    @apply mt-2 mb-4;
-  }
-
-  html[data-theme="light"] .expressive-code pre {
-    background-color: var(--border) !important;
-  }
 }
 
-@media (max-width: 640px) {
-  .expressive-code .copy button {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-  }
-  .expressive-code .copy button:after {
-    margin: 0.3rem !important;
+/* View Transitions: match root group background to theme to avoid white flash */
+::view-transition-group(root) {
+  background: var(--page-background);
+}
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 800ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
   }
 }
