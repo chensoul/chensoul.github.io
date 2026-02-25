@@ -11,6 +11,8 @@ title: "关于"
 
 ## 更新
 
+- 2021-09-09 » 注册 chensoul.com 域名，并使用 Hugo 主题构建博客
+- 202?-0?-0? » 将博客域名改为 blog.chensoul.cc 
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
 - 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面。
 
