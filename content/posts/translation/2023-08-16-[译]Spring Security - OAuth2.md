@@ -8,7 +8,7 @@ tags: ['spring-boot', 'security','oauth2']
 
 ## OAuth 2.0 基础知识
 
-![OAuth 2.0 Fundamentals](https://www.tutorialspoint.com/spring_security/images/oauth_2_fundamentals.webp)
+![OAuth 2.0 Fundamentals](oauth_2_fundamentals.webp)
 
 OAuth 2.0 由 IETF OAuth 工作组开发并于 2012 年 10 月发布。它作为一种开放授权协议，使第三方应用程序能够代表资源所有者对 HTTP 服务进行有限访问。它可以在不泄露用户身份或长期凭证的情况下做到这一点。第三方应用程序本身也可以代表其使用它。
 
@@ -37,13 +37,14 @@ OAuth 系统涉及五个关键角色。让我们把它们列出来 -
 - Cloud OAuth2
 - Spring Boot Devtools
 
-![Start Spring](https://www.tutorialspoint.com/spring_security/images/start_spring.jpg)![Project Metadata](https://www.tutorialspoint.com/spring_security/images/project_metadata.jpg)
+![Start Spring](start_spring.jpg)
+![Project Metadata](project_metadata.jpg)
 
 通过上面的配置，我们点击 Generate 按钮生成一个项目。该项目将以 zip 文件形式下载。我们将 zip 解压到一个文件夹中。然后我们可以在我们选择的 IDE 中打开该项目。我在这里使用 Spring Tools Suite，因为它针对 Spring 应用程序进行了优化。我们也可以根据需要使用 Eclipse 或 IntelliJ Idea。
 
 因此，我们在 STS 中打开项目，让依赖项被下载。然后我们可以在包资源管理器窗口中看到项目结构。它应该类似于下面的屏幕截图。
 
-![Project in STS](https://www.tutorialspoint.com/spring_security/images/project_in_sts.jpg)
+![Project in STS](project_in_sts.jpg)
 
 如果我们打开 pom.xml 文件，我们可以查看与项目相关的依赖项和其他详细信息。它应该看起来像这样。
 
@@ -164,9 +165,9 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-然后，我们添加 UserDetailsS​​ervice 的 bean 来检索用户详细信息以进行身份 ​​ 验证和授权。为了将其放入 Spring 上下文中，我们用 @Bean 对其进行注释。为了使本教程简单易懂，我们使用 InMemoryUserDetailsManager 实例。对于实际应用程序，我们可以使用其他实现，例如 JdbcUserDetailsManager 来连接到数据库等。为了能够在此示例中轻松创建用户，我们使用 UserDetailsManager 接口，该接口扩展了 UserDetailsS​​ervice 并具有 createUser()、updateUser() 等方法。然后，我们使用构建器类创建一个用户。我们现在给他一个用户名、密码和“读取”权限。然后，使用 createUser() 方法添加新创建的用户并返回 UserDetailsManager 实例，从而将其放入 Spring 上下文中。
+然后，我们添加 UserDetailsService 的 bean 来检索用户详细信息以进行身份  验证和授权。为了将其放入 Spring 上下文中，我们用 @Bean 对其进行注释。为了使本教程简单易懂，我们使用 InMemoryUserDetailsManager 实例。对于实际应用程序，我们可以使用其他实现，例如 JdbcUserDetailsManager 来连接到数据库等。为了能够在此示例中轻松创建用户，我们使用 UserDetailsManager 接口，该接口扩展了 UserDetailsService 并具有 createUser()、updateUser() 等方法。然后，我们使用构建器类创建一个用户。我们现在给他一个用户名、密码和“读取”权限。然后，使用 createUser() 方法添加新创建的用户并返回 UserDetailsManager 实例，从而将其放入 Spring 上下文中。
 
-为了能够使用我们定义的 UserDetailsS​​ervice，有必要在 Spring 上下文中提供一个 PasswordEncoder bean。再次强调，为了简单起见，我们现在使用 NoOpPasswordEncoder。 NoOpPasswordEncoder 不应该用于实际生产应用程序，因为它不安全。 NoOpPasswordEncoder 不会对密码进行编码，仅适用于开发或测试场景或概念证明。
+为了能够使用我们定义的 UserDetailsService，有必要在 Spring 上下文中提供一个 PasswordEncoder bean。再次强调，为了简单起见，我们现在使用 NoOpPasswordEncoder。 NoOpPasswordEncoder 不应该用于实际生产应用程序，因为它不安全。 NoOpPasswordEncoder 不会对密码进行编码，仅适用于开发或测试场景或概念证明。
 
 我们应该始终使用 Spring Security 提供的其他高度安全的选项，其中最流行的是 BCryptPasswordEncoder，我们将在后面的系列教程中使用它。为了将其放入 Spring 上下文中，我们使用 @Bean 注释该方法。
 
@@ -201,7 +202,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 我们将在 UserConfig 类中配置的 AuthenticationManager bean 自动装配为此处的依赖项，稍后我们将使用它。
 
-然后，我们重写 AuthorizationServerConfigurerAdapter 的两个 configure() 方法，以提供客户端详细信息服务的内存中实现。第一种方法使用 ClientDetailsS​​erviceConfigurer 作为参数，顾名思义，允许我们为授权服务器配置客户端。这些客户端代表能够使用该授权服务器功能的应用程序。由于这是学习 OAuth2 实现的基本应用程序，因此我们现在将保持简单并使用具有以下属性的内存中实现 -
+然后，我们重写 AuthorizationServerConfigurerAdapter 的两个 configure() 方法，以提供客户端详细信息服务的内存中实现。第一种方法使用 ClientDetailsServiceConfigurer 作为参数，顾名思义，允许我们为授权服务器配置客户端。这些客户端代表能够使用该授权服务器功能的应用程序。由于这是学习 OAuth2 实现的基本应用程序，因此我们现在将保持简单并使用具有以下属性的内存中实现 -
 
 - **clientId** − 客户端的 ID。必需的。
 - **secret** − 客户端密码，受信任的客户端所需
@@ -218,7 +219,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 **/oauth/token – 用于获取令牌。**
 
-![Obtaining the Token](https://www.tutorialspoint.com/spring_security/images/obtaining_the_token.jpg)
+![Obtaining the Token](obtaining_the_token.jpg)
 
 如果我们检查这里的邮递员快照，我们可以注意到一些事情。让我们在下面列出它们。
 
@@ -228,23 +229,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 让我们仔细看看查询参数和授权标头 -
 
-![Authorization Header](https://www.tutorialspoint.com/spring_security/images/authorization_header.jpg)
+![Authorization Header](authorization_header.jpg)
 
 查询参数
 
-![Client Credentials](https://www.tutorialspoint.com/spring_security/images/client_credentials.jpg)
+![Client Credentials](client_credentials.jpg)
 
 客户凭证
 
 如果一切正确，我们将能够在响应中看到生成的令牌以及 200 ok 状态。
 
-![Response](https://www.tutorialspoint.com/spring_security/images/response.jpg)
+![Response](response.jpg)
 
 响应
 
 我们可以通过输入错误的凭据或不输入凭据来测试我们的服务器，我们将收到一个错误，表明请求未经授权或凭据错误。
 
-![OAuth Authorization Server](https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server.jpg)
+![OAuth Authorization Server](oauth_authorization_server.jpg)
 
 这是我们的基本 oauth 授权服务器，它使用密码授予类型来生成并提供密码。
 
@@ -329,15 +330,15 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
 
 这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 http://localhost:8080/oauth/authorize?response_type=code&client_id=oauthclient2&scope=read 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。
 
-![OAuth Authorization Server Signin](https://www.tutorialspoint.com/spring_security/images/oauth_authorization_server_signin.jpg)
+![OAuth Authorization Server Signin](oauth_authorization_server_signin.jpg)
 
 这里，响应类型代码意味着授权服务器将返回一个访问代码，客户端将使用该访问代码进行登录。当我们使用用户凭据时，我们将被询问是否要授予客户端请求的权限，在类似的屏幕如下所示。
 
-![OAuth Approval](https://www.tutorialspoint.com/spring_security/images/oauth_approval.jpg)
+![OAuth Approval](oauth_approval.jpg)
 
 如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 http://locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为 Postman 中的客户端来登录授权服务器。
 
-![Postman Authorization](https://www.tutorialspoint.com/spring_security/images/postman_authorization.jpg)
+![Postman Authorization](postman_authorization.jpg)
 
 正如我们在这里所看到的，我们在 URL 中使用了从授权服务器收到的代码，并且 grant_type 作为授权代码，范围作为读取。我们充当客户端并提供应用程序中配置的客户端凭据。当我们发出这个请求时，我们会得到我们可以进一步使用的 access_token。
 

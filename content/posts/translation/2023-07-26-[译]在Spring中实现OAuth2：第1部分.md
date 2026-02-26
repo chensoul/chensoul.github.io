@@ -240,14 +240,14 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 
 要执行隐式授予，我们需要在浏览器中导航到以下地址：http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html
 
-![Login redirect](/images/login-spring.webp)
+![Login redirect](login-spring.webp)
 
 登录后，我们得到一个 OAuth 审批页面（spring 默认提供，但可以自定义）：
 
-![OAuth approval](/images/oauth-approval.webp)
+![OAuth approval](oauth-approval.webp)
 批准令牌的范围后，我们最终会重定向到我们的页面，在该页面中我们在 url 的哈希中找到令牌：
 
-![Implicit grant](/images/implicit_grant.webp)
+![Implicit grant](implicit_grant.webp)
 
 - 授权码授予：
 

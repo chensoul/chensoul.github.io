@@ -49,7 +49,7 @@ Spring Security 与其他框架和库无缝集成，以增强应用程序的安�
 
 当谈到 Spring Security 时，几个核心组件在为 Java 应用程序提供安全功能方面发挥着至关重要的作用。这些组件协同工作以确保强大的身份验证、授权和其他安全功能。
 
-![Spring-Security-Architechture](/images/Spring-Security-Architechture.svg)
+![Spring-Security-Architechture](Spring-Security-Architechture.svg)
 
 ### 2.1.委托过滤代理
 
@@ -73,7 +73,7 @@ Spring Security 中的一些重要安全过滤器包括：
 
 一旦请求到达`SecurityFilterChain`内注册的过滤器，相应的过滤器就会将请求委托给其他 bean 来执行相应的任务。例如，`AuthenticationProcessingFilter` 准备 `Authentication` 实例并将其委托给 `AuthenticationManager` 进行身份验证流程。
 
-![img](/images/Custom-Authentication-Flow-1024x551.webp)
+![img](Custom-Authentication-Flow-1024x551.webp)
 
 ### 2.4.认证管理器
 
@@ -95,7 +95,7 @@ Spring Security 中的一些重要安全过滤器包括：
 
 以下步骤演示了基于表单登录的身份验证，其中用户在请求中输入用户名/密码组合。
 
-![img](/images/Login-WorkFlow-1-1024x572.webp)
+![img](Login-WorkFlow-1-1024x572.webp)
 
 - 用户尝试访问受保护的资源或发起登录请求，该请求被 Spring Security 拦截，并将我们重定向到登录页面。
 - 身份验证过滤器 `UsernamePasswordAuthenticationFilter` 负责从请求中捕获用户的凭据（通常为每个对 /login 发出的请求调用 `UsernamePasswordAuthenticationFilter` ）。
@@ -132,7 +132,7 @@ public Authentication authenticate(Authentication authentication) throws Authent
 
 在较高的层面上，Spring Security 通过一个涉及多个组件协同工作的过程来处理用户授权。
 
-![img](/images/Auth-WorkFlow-1-1024x647.webp)
+![img](Auth-WorkFlow-1-1024x647.webp)
 
 以下是该过程的概述。
 
@@ -331,7 +331,7 @@ public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Except
 
 JWT（JSON Web Token）身份验证是一种流行的身份验证机制，它使用基于 JSON 的令牌在各方之间安全地传输身份验证和授权信息。它支持无状态身份验证，并且无需在服务器端存储会话。
 
-![img](/images/Jwt-Workflow-1024x448.webp)
+![img](Jwt-Workflow-1024x448.webp)
 
 要在 Spring Security 中实现 JWT 身份验证，我们可以按照以下步骤操作：
 
@@ -488,7 +488,7 @@ public class MyController {
 
 基于会话的身份验证是 Web 应用程序中管理用户身份验证的常用方法。它涉及使用会话和 cookie 来维护身份验证状态并识别经过身份验证的用户。
 
-![img](/images/session-based-auth-1024x545.webp)
+![img](session-based-auth-1024x545.webp)
 
 基于会话的身份验证的工作原理如下：
 

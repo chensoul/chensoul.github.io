@@ -6,7 +6,7 @@ categories: [ "translation" ]
 tags: ['javascript']
 ---
 
-![Images from Dinosaur Comics by Ryan North](/images/modern-javascript-explained-for-dinosaurs-01.webp)
+![Images from Dinosaur Comics by Ryan North](modern-javascript-explained-for-dinosaurs-01.webp)
 
 <center>图片来自Ryan North的Dinosaur Comics。</center>
 
@@ -55,7 +55,7 @@ moment().startOf("day").fromNow(); // 20 hours ago
 
 但这只是假设您在网站上包含 moment.js！在 [moment.js 主页](http://momentjs.com/) 上您会看到以下说明：
 
-![Install instructions for moment.js](/images/modern-javascript-explained-for-dinosaurs-02.webp)
+![Install instructions for moment.js](modern-javascript-explained-for-dinosaurs-02.webp)
 
 嗯，右侧的"安装"部分有很多内容。但是现在让我们忽略它 - 我们可以通过在同一目录中下载 `moment.min.js` 文件并将其包含在我们的 `index.html` 文件中来为我们的网站添加 moment.js。
 
@@ -163,7 +163,7 @@ $ npm install moment --save
 
 所以好消息是我们现在可以使用 npm 通过命令行下载和更新我们的包。不好的是，现在我们正在挖掘 `node_modules` 文件夹以查找每个包的位置，并手动将其包含在我们的 HTML 中。这很不方便，所以接下来我们将看看如何自动化该过程。
 
-![Dinosaur comic panel 2](/images/modern-javascript-explained-for-dinosaurs-03.webp)
+![Dinosaur comic panel 2](modern-javascript-explained-for-dinosaurs-03.webp)
 
 ### 使用 JavaScript 模块捆绑器（webpack)　
 
@@ -173,7 +173,7 @@ $ npm install moment --save
 
 2009 年，一个名为 CommonJS 的项目启动，目标是在浏览器之外为 JavaScript 指定一个生态系统。CommonJS 的很大一部分是它的模块规范，它最终允许 JavaScript 像大多数编程语言一样跨文件导入和导出代码，而无需诉诸全局变量。最著名的 CommonJS 模块实现是 node.js。
 
-![Node.js logo](/images/modern-javascript-explained-for-dinosaurs-04.webp)
+![Node.js logo](modern-javascript-explained-for-dinosaurs-04.webp)
 
 如前所述，node.js 是一个设计用于在服务器上运行的 JavaScript 运行时。下面是前面的示例使用 node.js 模块的样子。与其使用 HTML 脚本标记加载所有 `moment.min.js` ，不如直接将其加载到 JavaScript 文件中，如下所示：
 
@@ -272,7 +272,7 @@ $ ./node_modules/.bin/webpack
 
 总的来说，这可能看起来不多，但这个工作流程有一些巨大的优势。我们不再通过全局变量加载外部脚本。任何新的 JavaScript 库都将在 JavaScript 中使用 `require` 语句添加，而不是在 HTML 中添加新的 `<script>` 标签。拥有单个 JavaScript 捆绑包文件通常对性能更好。现在我们添加了构建步骤，我们可以将其他一些强大的功能添加到我们的开发工作流程中！
 
-![Dinosaur comic panels 3 and 4](/images/modern-javascript-explained-for-dinosaurs-05.webp)
+![Dinosaur comic panels 3 and 4](modern-javascript-explained-for-dinosaurs-05.webp)
 
 ### 为新的语言功能转译代码 （babel）
 
@@ -464,7 +464,7 @@ https://youtu.be/0RYETb9YVrk
 
 现代 JavaScript 在使用时肯定会令人沮丧，因为它继续快速变化和发展。但是，尽管有时看起来像是重新发明轮子，但 JavaScript 的快速发展有助于推动诸如热重载，实时 linting 和时间旅行调试等创新。作为一名开发人员，这是一个激动人心的时刻，我希望这些信息可以作为路线图，在您的旅程中为您提供帮助！
 
-![Dinosaur comic panel 5](/images/modern-javascript-explained-for-dinosaurs-06.webp)
+![Dinosaur comic panel 5](modern-javascript-explained-for-dinosaurs-06.webp)
 
 特别感谢[@ryanqnorth](https://twitter.com/ryanqnorth)的[恐龙漫画](http://www.qwantz.com/)，自 2003 年以来（恐龙统治网络）以来，它提供了一些最好的荒诞幽默。
 

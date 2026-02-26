@@ -1,0 +1,119 @@
+{
+  "name": "blog-to-tg",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://blog.chensoul.cc/rss.xml",
+        "options": {}
+      },
+      "id": "0edcfc74-7950-4481-9244-c44739b1903a",
+      "name": "RSS Feed Read",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        224,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "interval": 10,
+        "unit": "minutes"
+      },
+      "id": "ba77667d-274b-4cd6-a68b-c98f1cdbe67a",
+      "name": "Interval",
+      "type": "n8n-nodes-base.interval",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chatId": "@ichensoul",
+        "text": "=📝 {{$node[\"RSS Feed Read\"].json[\"title\"]}} #blog\n\n{{$node[\"RSS Feed Read\"].json[\"link\"]}}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "4f32b841-9526-4e6b-96e8-93f676f6cc78",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        640,
+        0
+      ],
+      "webhookId": "74f0c22a-8577-44ba-91fe-2c958a309c6d",
+      "typeVersion": 1,
+      "credentials": {
+        "telegramApi": {
+          "id": "vfE0gAVXnST0dvkQ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "/* only return new items */\nconst staticData = getWorkflowStaticData('global');\nconst lastItemId = staticData.lastItemId;\n\nconsole.log('lastItemId', lastItemId);\nconst firstItem = items[0];\nlet newItems = [];\n\nfunction getId(item) {\n  return item.json.guid;\n}\n\nif (lastItemId) {\n  for (const item of items) {\n    if (getId(item) === lastItemId) {\n      break;\n    }\n    newItems.push(item)\n  }\n} else {\n  newItems = [firstItem]\n}\n\nstaticData.lastItemId = getId(firstItem)\nreturn newItems.reverse()"
+      },
+      "id": "e9be3cc2-5315-453a-be95-84233b1b293d",
+      "name": "Function",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        432,
+        0
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Function": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interval": {
+      "main": [
+        [
+          {
+            "node": "RSS Feed Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Feed Read": {
+      "main": [
+        [
+          {
+            "node": "Function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "37ec517a-c8e1-480d-8e86-2348cd4ff5fd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1440893ebc0731b2d124ea9a691e5e8aae90202bcf159bfc5f523fb09a27ba88"
+  },
+  "id": "jmr7KV2RfQIsks7A",
+  "tags": []
+}

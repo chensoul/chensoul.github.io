@@ -26,7 +26,7 @@ tags: ['websocket', 'http']
 
 如果您正在寻找高级比较，以下是主要差异一目了然：
 
-![img](/images/http-vs-ws-table.webp)
+![img](http-vs-ws-table.webp)
 
 请继续阅读以详细了解这两种流行协议的比较。
 
@@ -44,7 +44,7 @@ tags: ['websocket', 'http']
 
 当您加载此页面时，您的浏览器会发出 HTTP 请求，服务器会使用您当前正在阅读的 HTML 文档来响应该请求。 
 
-![img](/images/http-vs-websockets-topic-example.webp)
+![img](http-vs-websockets-topic-example.webp)
 
 
 
@@ -54,7 +54,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 在底层，每个请求都会打开一个与服务器的短暂连接，然后关闭。
 
-![img](/images/http-request-response-cycle.webp)
+![img](http-request-response-cycle.webp)
 
 **HTTP 示例**
 
@@ -90,7 +90,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 这不仅浪费带宽和服务器资源，而且在最近的请求完成后不久更新就会中断 - 可能需要几秒钟才能发送下一个请求并且用户获得更新。一般来说，这种方法称为[HTTP 轮询](https://ably.com/topic/long-polling)，它既不高效也不实时！ 
 
-![img](/images/http-long-polling-20241105080917667.webp)
+![img](http-long-polling-20241105080917667.webp)
 
 
 相反，如果服务器能够在新信息可用时将数据推送到客户端，那就更好了，但这从根本上违背了请求-响应模式的原则。 
@@ -111,7 +111,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 使用 HTTP 流，服务器必须维护大量长期连接的状态，并且不能再被视为无状态。这给扩展 HTTP 流带来了新的挑战，并且还带来了单点故障。 
 
-![img](/images/server_sent_events_how_it_works-20241105080916892.webp)
+![img](server_sent_events_how_it_works-20241105080916892.webp)
 
 **HTTP 流式传输的缺点**
 
@@ -157,7 +157,7 @@ HTTP流是实现[实时更新的](https://ably.com/blog/building-realtime-update
 
 如果服务器响应“是”，则 HTTP 连接将升级为 WebSocket 连接 - 这称为打开握手。 
 
-![img](/images/websockets-for-virtual-events.webp)
+![img](websockets-for-virtual-events.webp)
 
 Websocket 连接/断开的顺序
 

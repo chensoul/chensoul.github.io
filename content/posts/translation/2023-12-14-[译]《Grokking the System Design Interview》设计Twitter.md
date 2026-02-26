@@ -191,7 +191,7 @@ At a high level, we need multiple application servers to serve all these request
 
 > 在较高层面上，我们需要多个应用程序服务器来服务所有这些请求，并在它们前面提供负载均衡器以进行流量分配。在后端，我们需要一个高效的数据库，能够存储所有新的推文，并且能够支持海量的读取。我们还需要一些文件存储来存储照片和视频。
 
-![image-20231116102412714](/images/designing-twitter-01.webp)
+![image-20231116102412714](designing-twitter-01.webp)
 
 Although our expected daily write load is 100 million and read load is 28 billion tweets. This means on average our system will receive around 1160 new tweets and 325K read requests per second. This traffic will be distributed unevenly throughout the day, though, at peak time we should expect at least a few thousand write requests and around 1M read requests per second. We should keep this in mind while designing the architecture of our system.
 
@@ -278,7 +278,7 @@ What could be the size of our TweetID? Let’s say our epoch time starts today, 
 
 86400 sec/day * 365 (days a year) * 50 (years) => 1.6B
 
-![image-20231116102448181](/images/designing-twitter-02.webp)
+![image-20231116102448181](designing-twitter-02.webp)
 
 We would need 31 bits to store this number. Since on average we are expecting 1150 new tweets per second, we can allocate 17 bits to store auto incremented sequence; this will make our TweetID 48 bits long. So, every second we can store (2^17 => 130K) new tweets. We can reset our auto incrementing sequence every second. For fault tolerance and better performance, we can have two database servers to generate auto-incrementing keys for us, one generating even numbered keys and the other generating odd numbered keys.
 
@@ -326,7 +326,7 @@ Our cache would be like a hash table where ‘key’ would be ‘OwnerID’ and 
 
 > 我们的缓存就像一个哈希表，其中“key”是“OwnerID”，“value”是一个双向链表，其中包含该用户在过去三天内的所有推文。由于我们希望首先检索最新的数据，因此我们始终可以在链表的头部插入新的推文，这意味着所有较旧的推文将位于链表的尾部附近。因此，我们可以从尾部删除推文，为新的推文腾出空间。
 
-![image-20231116102511054](/images/designing-twitter-03.webp)
+![image-20231116102511054](designing-twitter-03.webp)
 
 ## 9. Timeline Generation
 

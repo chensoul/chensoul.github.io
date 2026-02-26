@@ -16,7 +16,7 @@ tags: ['spring-boot']
 
 让我们从头开始构建一个 Spring Boot 应用程序，看看 spring 如何配置和提供安全性。让我们从 spring starter 创建一个应用程序并添加所需的最少依赖项。
 
-![settings](/images/spring-security-01.webp)
+![settings](spring-security-01.webp)
 
 生成项目后，我们将其导入到 IDE 中并将其配置为在端口 8083 上运行。
 
@@ -27,11 +27,11 @@ mvnw clean verify spring-boot:run (for Windows)
 
 在应用程序启动时，我们应该看到一个登录页面。
 
-![settings](/images/spring-security-02.webp)
+![settings](spring-security-02.webp)
 
 控制台日志打印作为默认安全配置的一部分随机生成的默认密码：
 
-![settings](/images/spring-security-03.webp)
+![settings](spring-security-03.webp)
 
 使用默认用户名 `user` 和默认密码（来自日志），我们应该能够登录该应用程序。我们可以在 `application.yml` 中覆盖这些默认值：
 
@@ -97,7 +97,7 @@ org.springframework.security.web.access.intercept.
 
 要了解 `FilterChain` 的工作原理，让我们看一下 [Spring Security 文档](https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-securityfilterchain)中的流程图
 
-![settings](/images/spring-security-04.webp)
+![settings](spring-security-04.webp)
 
 现在，让我们看看参与过滤器链的核心组件：
 
@@ -145,7 +145,7 @@ org.springframework.security.web.access.intercept.
 
 为了理解上面概述的步骤，让我们看一下 Spring Security 文档中定义的身份验证架构。
 
-![settings](/images/spring-security-05.webp)
+![settings](spring-security-05.webp)
 
 `ProviderManager` 是 `AuthenticationManager` 最常见的实现。如图所示， `ProviderManager` 将请求委托给已配置的 `AuthenticationProvider` 列表，每个列表都会被查询以查看是否可以执行身份验证。如果认证失败，返回 `ProviderNotFoundException` ，这是 `AuthenticationException` 的特殊类型，说明 `ProviderManager` 不支持 `Authentication`
 
@@ -494,15 +494,15 @@ auth:
 
 成功的回应:
 
-![settings](/images/spring-security-06.webp)
+![settings](spring-security-06.webp)
 
 未经授权的回应：
 
-![settings](/images/spring-security-07.webp)
+![settings](spring-security-07.webp)
 
 禁止的回应：
 
-![settings](/images/spring-security-08.webp)
+![settings](spring-security-08.webp)
 
 #### 3. 默认情况下保护的其他端点
 
@@ -519,11 +519,11 @@ auth:
 
 没有通过凭据时的错误响应：
 
-![settings](/images/spring-security-09.webp)
+![settings](spring-security-09.webp)
 
 成功的回应：
 
-![settings](/images/spring-security-10.webp)
+![settings](spring-security-10.webp)
 
 #### 4. 不安全的特定端点
 
@@ -543,7 +543,7 @@ auth:
 
 现在，我们应该能够在不传递凭据的情况下从邮递员到达端点：
 
-![settings](/images/spring-security-11.webp)
+![settings](spring-security-11.webp)
 
 #### 5. 添加自定义过滤器
 
@@ -790,11 +790,11 @@ public class BookController {
 
 1. 登录的用户名作为请求参数传递，并使用当前主体进行验证。对于成功的匹配，邮递员会返回有效的响应。
 
-![settings](/images/spring-security-12.webp)
+![settings](spring-security-12.webp)
 
 如果出现错误，我们会得到：
 
-![settings](/images/spring-security-13.webp)
+![settings](spring-security-13.webp)
 
 1. `@PreAuthorize("hasRole('ROLE_USER')")` : 仅当当前主体具有 USER 角色时，我们才会收到成功响应。
 

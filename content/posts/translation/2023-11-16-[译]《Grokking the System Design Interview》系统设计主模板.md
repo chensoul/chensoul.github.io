@@ -34,7 +34,7 @@ To simplify this process, the course offers a comprehensive system design templa
 Have a look at the following image to understand the major components that could be part of any system design and how these components interact with each other.
 查看下图，了解可能成为任何系统设计一部分的主要组件以及这些组件如何相互交互。
 
-![system-design-master-template-01](/images/system-design-master-template-01.webp)
+![system-design-master-template-01](system-design-master-template-01.webp)
 
 With this master template in mind, we will discuss the 18 essential system design concepts. Here is a brief description of each:
 
@@ -52,7 +52,7 @@ When you input a domain name into your web browser, the DNS is responsible for f
 
 > 当您在网络浏览器中输入域名时，DNS 负责查找关联的 IP 地址并将您的请求定向到适当的服务器。此过程首先是您的计算机向递归解析器发送查询，然后递归解析器搜索一系列 DNS 服务器，从根服务器开始，然后是顶级域 (TLD) 服务器，最后是权威名称服务器。一旦找到 IP 地址，递归解析器会将其返回到您的计算机，从而允许您的浏览器与目标服务器建立连接并访问所需的内容。
 
-![system-design-master-template-02](/images/system-design-master-template-02.webp)
+![system-design-master-template-02](system-design-master-template-02.webp)
 
 ## 2. Load Balancer 
 
@@ -76,7 +76,7 @@ Load balancers employ various algorithms to determine the distribution of incomi
   
   > IP 哈希：对客户端的 IP 地址进行哈希处理，结果值用于确定请求应定向到哪个服务器。此方法可确保特定客户端的请求一致路由到同一服务器，从而有助于维护会话持久性。
 
-![system-design-master-template-03](/images/system-design-master-template-03.webp)
+![system-design-master-template-03](system-design-master-template-03.webp)
 
 
 
@@ -108,7 +108,7 @@ The primary functions of an API Gateway encompass:
   
    > 请求和响应转换：API网关可以修改请求和响应，例如转换数据格式、添加或删除标头或更改查询参数，以确保客户端和服务之间的兼容性。
 
-![system-design-master-template-04](/images/system-design-master-template-04.webp)
+![system-design-master-template-04](system-design-master-template-04.webp)
 
 
 
@@ -133,7 +133,7 @@ A Content Delivery Network (CDN) is a distributed network of servers that store 
   
    > 为了确保内容保持最新，CDN 定期检查源服务器是否有更改并相应更新其缓存。
 
-![system-design-master-template-05](/images/system-design-master-template-05.webp)
+![system-design-master-template-05](system-design-master-template-05.webp)
 
 
 
@@ -149,7 +149,7 @@ On the other hand, a reverse proxy is a server that sits in front of one or more
 
 > 另一方面，反向代理是位于一个或多个 Web 服务器前面的服务器，充当 Web 服务器和互联网之间的中介。当客户端请求互联网上的资源时，请求首先发送到反向代理。然后，反向代理将请求转发到其中一台 Web 服务器，该服务器将响应返回给反向代理。最后，反向代理将响应返回给客户端。
 
-![system-design-master-template-06](/images/system-design-master-template-06.webp)
+![system-design-master-template-06](system-design-master-template-06.webp)
 
 ## 6. Caching 
 
@@ -159,7 +159,7 @@ Cache is a high-speed storage layer positioned between the application and the o
 
 > 缓存是位于应用程序和原始数据源（例如数据库、文件系统或远程 Web 服务）之间的高速存储层。当应用程序请求数据时，首先检查缓存。如果数据存在于缓存中，则将其返回给应用程序。如果在缓存中找不到数据，则会从原始来源检索该数据，将其存储在缓存中以供将来使用，然后返回给应用程序。在分布式系统中，缓存可以发生在多个位置，包括客户端、DNS、CDN、负载均衡器、API 网关、服务器、数据库等。
 
-![system-design-master-template-07](/images/system-design-master-template-07.webp)
+![system-design-master-template-07](system-design-master-template-07.webp)
 
 ## 7. Data Partitioning 
 
@@ -173,7 +173,7 @@ Conversely, **vertical partitioning** involves splitting the columns of a table 
 
 > 相反，垂直分区涉及将表的列拆分为单独的表。该技术旨在减少表中的列数并提高仅访问有限数量列的查询的性能。
 
-![system-design-master-template-08](/images/system-design-master-template-08.webp)
+![system-design-master-template-08](system-design-master-template-08.webp)
 
 ## 8. Database Replication 
 
@@ -261,7 +261,7 @@ NoSQL databases can be categorized into four main types:
   
    > 基于图：这些数据库旨在存储和查询具有复杂关系和互连结构的数据，例如社交网络或推荐系统。图数据库使用节点、边和属性来表示和存储数据，从而更容易执行复杂的遍历和基于关系的查询。基于图形的 NoSQL 数据库的示例包括 Neo4j 和 Amazon Neptune。
 
-![system-design-master-template-09](/images/system-design-master-template-09.webp)
+![system-design-master-template-09](system-design-master-template-09.webp)
 
 ## 12. Database Index 
 
@@ -286,7 +286,7 @@ Although indexes can significantly enhance query performance, they also involve 
   
   > 写入性能：当在表中插入、更新或删除数据时，相应的索引也必须更新，这可能会减慢写入操作。
 
-![system-design-master-template-10](/images/system-design-master-template-10.webp)
+![system-design-master-template-10](system-design-master-template-10.webp)
 
 ## 13. Distributed File Systems 
 

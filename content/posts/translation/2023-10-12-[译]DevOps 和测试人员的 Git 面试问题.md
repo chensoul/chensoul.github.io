@@ -18,15 +18,15 @@ tags: ['git']
 
 - 本地版本控制系统 (LVCS)：在 LVCS 中，版本控制数据库存储在本地计算机上。更改和修订在位于用户计算机上的本地存储库中进行跟踪。但此类系统缺乏协作功能，不利于团队开发。
 
-![img](/images/git-interview-questions-01.webp)
+![img](git-interview-questions-01.webp)
 
 - 集中版本控制系统 (CVCS)：在 CVCS 中，版本控制数据库存储在中央服务器上。用户可以从服务器检出文件、进行更改并将其提交回服务器。这允许多个用户在同一项目上进行协作，并提供对存储库的集中控制。然而，CVCS 的一个缺点是，如果中央服务器出现故障，协作者将无法执行某些操作，直到服务器恢复为止。
 
-![img](/images/git-interview-questions-02.webp)
+![img](git-interview-questions-02.webp)
 
 - 分布式版本控制系统 (DVCS)：在 DVCS 中，每个用户都有一个包含整个版本历史记录的本地存储库。这意味着每个用户都拥有项目存储库的完整副本，包括所有分支和修订。用户可以在本地存储库上独立工作，并与其他存储库同步更改。 DVCS 为分布式和分散式工作流程提供更好的支持，允许用户离线工作并更有效地协作。
 
-![img](/images/git-interview-questions-03.webp)
+![img](git-interview-questions-03.webp)
 
 ## 2. Git 中的 Origin 是什么？
 
@@ -72,7 +72,7 @@ Git 中的“暂存区域”也称为“索引”，是一个中间区域，在�
 
 当我们对项目文件进行更改时，Git 提供了一个两步过程来提交这些更改。暂存区域充当工作目录（进行修改的位置）和存储库（存储提交的位置 => .git 文件夹）之间的桥梁。
 
-![img](/images/git-interview-questions-04.webp)
+![img](git-interview-questions-04.webp)
 
 通过使用暂存区，我们可以将不相关的更改分离到多个提交中，或者有选择地包含特定修改而排除其他修改。它提供了一个在变更成为项目历史的一部分之前审查和完善我们的变更的机会。
 
@@ -379,7 +379,7 @@ git log
 git log --oneline
 ```
 
-![img](/images/git-interview-questions-05.webp)
+![img](git-interview-questions-05.webp)
 
 ### git reflog
 
@@ -390,7 +390,7 @@ git log --oneline
 git reflog
 ```
 
-![img](/images/git-interview-questions-06.webp)
+![img](git-interview-questions-06.webp)
 
 与 `git log` 不同，引用日志记录影响提交历史记录的分支移动和操作，即使不创建新的提交也是如此。它是恢复丢失的提交或可能被意外删除或移动的分支的宝贵工具，在发生错误或不可预见的事件时充当安全网。
 
@@ -423,11 +423,11 @@ git rebase -i HEAD~n
 
 将打开一个交互式文本编辑器，显示我们在上一步中指定的提交列表。每个提交前面都会有“pick”一词。
 
-![img](/images/git-interview-questions-07.webp)
+![img](git-interview-questions-07.webp)
 
 要压缩提交，请将除第一个提交之外的所有提交的“pick”更改为“squash”（或“s”）。将第一个提交保留为“pick”，因为它将是生成的提交消息。如果需要，您还可以通过移动文本编辑器中的行来重新排列提交的顺序。
 
-![img](/images/git-interview-questions-08.webp)
+![img](git-interview-questions-08.webp)
 
 - 保存并退出文本编辑器。
 - 将打开另一个文本编辑器，允许您修改提交消息。您可以合并压缩提交的提交消息或写入新消息。根据需要编辑消息，保存并退出编辑器。

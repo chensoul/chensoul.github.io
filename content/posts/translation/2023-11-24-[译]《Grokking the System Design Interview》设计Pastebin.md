@@ -286,7 +286,7 @@ At a high level, we need an application layer that will serve all the read and w
 
 > 在较高的层面上，我们需要一个应用程序层来服务所有的读写请求。应用层将与存储层通信以存储和检索数据。我们可以将存储层隔离，一个数据库存储与每个粘贴、用户等相关的元数据，而另一个数据库将粘贴内容存储在某些对象存储（如 Amazon S3）中。这种数据划分还允许我们单独缩放它们。
 
-![image-20231116090334771](/images/pastebin-01.webp)
+![image-20231116090334771](pastebin-01.webp)
 
 ## 8. Component Design 
 
@@ -334,7 +334,7 @@ We can divide our datastore layer into two:
 
    > 对象存储：我们可以将内容存储在对象存储中，例如 Amazon 的 S3。每当我们想要充分利用内容存储容量时，我们都可以通过添加更多服务器来轻松增加容量。
 
-![image-20231116090313481](/images/pastebin-02.webp)
+![image-20231116090313481](pastebin-02.webp)
 
 Detailed component design for Pastebin
 

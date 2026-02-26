@@ -133,7 +133,7 @@ At a high-level, we need to support two scenarios, one to upload photos and the 
 
 > 在高层，我们需要支持两种场景，一种是上传照片，另一种是查看/搜索照片。我们的服务需要一些对象存储服务器来存储照片，还需要一些数据库服务器来存储有关照片的元数据信息。
 
-![instagram-01](/images/instagram-01-0729143.webp)
+![instagram-01](instagram-01-0729143.webp)
 
 ## 6. Database Schema 
 
@@ -147,7 +147,7 @@ We need to store data about users, their uploaded photos, and people they follow
 
 > 我们需要存储有关用户、他们上传的照片以及他们关注的人的数据。照片表将存储与照片相关的所有数据；我们需要在 (PhotoID, CreationDate) 上有一个索引，因为我们需要首先获取最近的照片。
 
-![instagram-02](/images/instagram-02-0729143.webp)
+![instagram-02](instagram-02-0729143.webp)
 
 A straightforward approach for storing the above schema would be to use an RDBMS like MySQL since we require joins. But relational databases come with their challenges, especially when we need to scale them. For details, please take a look at SQL vs. NoSQL.
 
@@ -241,7 +241,7 @@ Separating photos’ read and write requests will also allow us to scale and opt
 
 > 分离照片的读取和写入请求还将使我们能够独立扩展和优化每个操作。
 
-![instagram-03](/images/instagram-03-0729143.webp)
+![instagram-03](instagram-03-0729143.webp)
 
 ## 9. Reliability and Redundancy 
 
@@ -263,7 +263,7 @@ Creating redundancy in a system can remove single points of failure and provide 
 
 > 在系统中创建冗余可以消除单点故障，并在危机中需要时提供备份或备用功能。例如，如果同一服务有两个实例在生产中运行，其中一个实例出现故障或性能下降，系统可以故障转移到正常副本。故障转移可以自动发生或需要手动干预。
 
-![instagram-04](/images/instagram-04-0729143.webp)
+![instagram-04](instagram-04-0729143.webp)
 
 ## 10. Data Sharding 
 

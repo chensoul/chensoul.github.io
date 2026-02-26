@@ -62,7 +62,7 @@ WebSocket 提供低延迟通信功能，适用于各种类型的实时用例。�
 - 让您的后端和前端保持实时同步。
 - 为城市交通和送餐应用添加实时位置跟踪功能。
 
-![img](/images/websocket-main-use-cases.webp)
+![img](websocket-main-use-cases.webp)
 
 ## WebSockets 是如何工作的？
 
@@ -72,7 +72,7 @@ WebSocket 提供低延迟通信功能，适用于各种类型的实时用例。�
 - 通过WebSocket进行数据传输。成功打开握手后，客户端和服务器可以通过持久 WebSocket 连接交换消息（帧）。WebSocket 消息可能包含字符串（纯文本）或二进制数据。[详细了解通过 WebSocket 传输数据](https://ably.com/topic/how-do-websockets-work#how-to-transmit-data-over-web-sockets)。
 - 关闭 WebSocket 连接。一旦持久的 WebSocket 连接达到其目的，它就可以终止;客户端和服务器都可以通过发送关闭消息来启动关闭握手。[阅读有关关闭 WebSocket 连接的详细信息](https://ably.com/topic/how-do-websockets-work#how-to-close-web-socket-connections)。
 
-![img](/images/websockets-02.webp)
+![img](websockets-02.webp)
 
 ### 如何建立 WebSocket 连接
 
@@ -162,7 +162,7 @@ socket.onopen = function(e) {
 
 WebSocket 帧采用二进制语法，包含多条信息，如下图所示：
 
-![img](/images/wss-ebook-websocket-frame.webp)
+![img](wss-ebook-websocket-frame.webp)
 
 **FIN钻头和碎片**
 
