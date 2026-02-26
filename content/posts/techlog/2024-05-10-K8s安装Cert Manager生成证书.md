@@ -1,6 +1,6 @@
 ---
 title: "K8s安装Cert Manager"
-date: 2024-05-10
+date: 2024-05-10 08:00:00+08:00
 slug: install-cert-manager
 tags: ['kubernetes']
 categories: [ "techlog" ]

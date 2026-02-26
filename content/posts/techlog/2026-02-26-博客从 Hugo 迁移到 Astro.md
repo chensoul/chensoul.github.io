@@ -1,11 +1,12 @@
 ---
 title: "博客从 Hugo 迁移到 Astro"
-date: 2026-02-26
+date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "techlog" ]
 tags: [ 'astro' ]
 toc: true
 comments: true
+image: https://cos.lhasa.icu/dist/images/2026-01-27-fotopro-x-aircross-3-lite/cover.svg
 ---
 
 最近将博客从 Hugo 迁移到了 Astro，并选择了 [astro-lhasa](https://github.com/achuanya/astro-lhasa)
@@ -126,7 +127,6 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 #### 2. Astro 与集成（`astro.config.ts`）
 
 - **图片与构建**：
-    - 移除 **photosuite** 集成（原用于 #article 内图片、EXIF、路径补全）。
     - 新增 **astro-mermaid**：支持 Mermaid 图表（`mermaid` frontmatter）。
     - 新增 **@critters-rs/astro**：关键 CSS 内联。
     - **minify**：启用 CSS minify 并开启 `errorRecovery: true`。
@@ -143,7 +143,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 
 #### 4. 依赖与脚本（`package.json`、`pnpm-lock.yaml`）
 
-- 依赖变更与上述集成一致（如 photosuite 移除，mermaid、critters 等加入）；`pnpm-lock.yaml` 有大量变更。
+- 依赖变更与上述集成一致（如 mermaid、critters 等加入）；`pnpm-lock.yaml` 有大量变更。
 
 ### 三、布局与组件
 
@@ -214,20 +214,11 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
   `assets/forrest-gump-quote.webp`；修改 favicon、apple-touch-icon、`_redirects`、`lazy-list.js`、`tocbot`、`toggle-theme.js`
   等。
 
-### 七、数量汇总
-
-| 类型     | 数量                                                                                  |
-|--------|-------------------------------------------------------------------------------------|
-| 修改文件   | 约 90+                                                                               |
-| 删除文件   | 约 120+（含全部上游 posts 与部分 .github/docs/public）                                         |
-| 新增文件   | 约 10+（about.astro、links.astro、running.astro、content/pages/*、public/data、_headers 等） |
-| 总 diff | 约 +16824 / -19494 行                                                                 |
-
 ## 总结
 
 总结一下，我的 [chensoul/astro-lhasa](https://github.com/chensoul/astro-lhasa) 主题，对原主题做了以下改动：
 
-- 移除 photosuite 依赖；删除邻居、留言、日志等页面；收藏页面改为链接页面
+- 删除邻居、留言、日志等页面；收藏页面改为链接页面
 - 修改 css 样式，以适应宽屏（web 端，主体部分 960px）；修改文章主题色为蓝色；代码库支持自动换行；调整了导航菜单
 - RSS 仅保留最近 20 篇非草稿文章；仅输出摘要，不输出全文 HTML
 - 文章链接改为 `/posts/YYYY/MM/DD/slug` 格式

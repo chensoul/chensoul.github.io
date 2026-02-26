@@ -1,7 +1,7 @@
 ---
 title: "OpenSpec：让 AI 编码助手更懂你的项目规范"
 description: "本文深入介绍 OpenSpec 规范驱动开发工具，展示如何让 AI 编码助手（如 Cursor、Claude、Copilot）按照项目规范生成高质量代码"
-date: 2025-11-07
+date: 2025-11-07 08:00:00+08:00
 slug: openspec
 categories: [ "techlog" ]
 tags: ['OpenSpec', 'Cursor', 'Spec-Kit']

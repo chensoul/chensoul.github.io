@@ -1,6 +1,6 @@
 ---
 title: "Gitlab安装和部署-使用Docker"
-date: 2024-06-26
+date: 2024-06-26 08:00:00+08:00
 slug: install-gitlab
 categories: [ "techlog" ]
 tags: ['docker', 'gitlab']

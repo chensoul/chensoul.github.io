@@ -1,6 +1,6 @@
 ---
 title: "Spring Boot异常处理思路"
-date: 2025-07-24
+date: 2025-07-24 08:00:00+08:00
 slug: spring-exception
 categories: [ "techlog" ]
 tags: ['spring-boot']

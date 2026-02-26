@@ -1,6 +1,6 @@
 ---
 title: "Thingsboard源码中的OAuth2登录实现"
-date: 2025-06-06
+date: 2025-06-06 08:00:00+08:00
 slug: oauth2-client-login-in-thingsboard
 categories: [ "techlog" ]
 tags: ['oauth2', 'thingsboard']

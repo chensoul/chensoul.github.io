@@ -74,12 +74,17 @@ const blog = defineCollection({
       /**
        * 文章发布日期
        *
-       * 必填字段，用于：
-       * - 文章列表按时间排序
-       * - 显示在文章元数据区
-       * - SEO 优化（发布时间元数据）
+       * 必填字段，支持格式：
+       * - date: 2026-02-26 08:00:00+08:00（推荐，带时区）
+       * - date: 2024-07-23（仅日期，会按 08:00:00+08:00 解析）
+       *
+       * 用于：文章列表排序、元数据区显示、SEO
        */
-      date: z.date(),
+      date: z
+        .union([z.date(), z.string()])
+        .transform((v) =>
+          v instanceof Date ? v : new Date(String(v).replace(" ", "T"))
+        ),
 
       /**
        * 文章最后更新日期
@@ -89,7 +94,14 @@ const blog = defineCollection({
        * - SEO（文章更新时间元数据）
        * - 判断文章是否为"最近更新"
        */
-      updated: z.date().optional().nullable(),
+      updated: z
+        .union([z.date(), z.string()])
+        .optional()
+        .nullable()
+        .transform((v) => {
+          if (v == null) return v;
+          return v instanceof Date ? v : new Date(String(v).replace(" ", "T"));
+        }),
 
       /**
        * 文章时区

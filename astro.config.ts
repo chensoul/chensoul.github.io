@@ -21,6 +21,7 @@ import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-s
 import compressor from "astro-compressor";
 import { minify } from "@zokki/astro-minify";
 import critters from "@critters-rs/astro";
+import photosuite from "photosuite";
 
 // Import custom theme
 const themeJsoncString = fs.readFileSync(
@@ -110,6 +111,13 @@ export default defineConfig({
       mermaidConfig: {
         securityLevel: "loose",
       },
+    }),
+    photosuite({
+      scope: '#article',
+      imageBase: "https://blog.chensoul.cc/images/",
+      exif: {
+          enabled: false
+        },
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),

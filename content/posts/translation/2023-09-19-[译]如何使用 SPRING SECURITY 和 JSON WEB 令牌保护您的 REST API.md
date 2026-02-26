@@ -1,6 +1,6 @@
 ---
 title: "[译]如何使用Spring Security和JWT保护您的REST API"
-date: 2023-09-19
+date: 2023-09-19 08:00:00+08:00
 slug: spring-security-jwt
 categories: [ "translation" ]
 tags: ['spring-boot','security','jwt']

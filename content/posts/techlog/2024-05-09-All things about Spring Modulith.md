@@ -1,6 +1,6 @@
 ---
 title: "All things about Spring Modulith"
-date: 2024-05-09
+date: 2024-05-09 08:00:00+08:00
 slug: all-things-about-spring-modulith
 categories: [ "techlog" ]
 tags: ['spring', 'modulith']

@@ -1,6 +1,6 @@
 ---
 title: "ThingsBoard的领域模型"
-date: 2024-05-07
+date: 2024-05-07 08:00:00+08:00
 slug: thingsboard-domain
 categories: [ "techlog" ]
 tags: ['thingsboard']

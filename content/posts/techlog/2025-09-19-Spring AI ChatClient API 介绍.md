@@ -1,6 +1,6 @@
 ---
 title: "Spring AI ChatClient API 介绍"
-date: 2025-09-19
+date: 2025-09-19 08:00:00+08:00
 slug: spring-ai-chat-client-api
 categories: [ "techlog" ]
 tags: ['spring-ai']

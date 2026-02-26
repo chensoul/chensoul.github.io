@@ -1,6 +1,6 @@
 ---
 title: "ThingsBoard HTTP Transport 实现方式"
-date: 2025-07-02
+date: 2025-07-02 08:00:00+08:00
 slug: thingsboard-http-transport
 categories: [ "techlog" ]
 tags: ['thingsboard']

@@ -1,6 +1,6 @@
 ---
 title: "[译]使用Spring进行REST的错误处理"
-date: 2023-08-25
+date: 2023-08-25 08:00:00+08:00
 slug: exception-handling-for-rest-with-spring
 categories: [ "translation" ]
 tags: ['spring-boot']

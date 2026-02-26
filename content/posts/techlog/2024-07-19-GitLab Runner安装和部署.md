@@ -1,6 +1,6 @@
 ---
 title: "GitLab Runner安装和部署"
-date: 2024-07-19
+date: 2024-07-19 08:00:00+08:00
 slug: gitlab-runner-install
 categories: [ "techlog" ]
 tags: ['gitlab']

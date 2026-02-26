@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Boot授权服务器 - 使用 Java 的资源服务器和客户端凭证示例"
-date: 2023-07-26
+date: 2023-07-26 08:00:00+08:00
 slug: spring-boot-authorization-server
 categories: [ "translation" ]
 tags: ['spring-boot', 'oauth2']

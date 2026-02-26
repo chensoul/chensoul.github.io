@@ -1,6 +1,6 @@
 ---
 title: "ThingsBoard源码中的Github Actions"
-date: 2024-12-03
+date: 2024-12-03 08:00:00+08:00
 slug: github-actions-in-thingsboard
 categories: [ "techlog" ]
 tags: ['thingsboard', 'github']

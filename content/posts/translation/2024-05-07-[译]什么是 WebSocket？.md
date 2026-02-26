@@ -1,6 +1,6 @@
 ---
 title: "[译]什么是WebSocket？"
-date: 2024-05-07
+date: 2024-05-07 08:00:00+08:00
 slug: websockets
 categories: [ "translation" ]
 tags: ['websocket']

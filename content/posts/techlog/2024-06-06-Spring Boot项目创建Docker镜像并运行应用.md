@@ -1,6 +1,6 @@
 ---
 title: "Spring Boot项目创建Docker镜像并运行应用"
-date: 2024-06-06
+date: 2024-06-06 11:00:00+08:00
 slug: spring-boot-docker-image
 categories: [ "techlog" ]
 tags: ['spring-boot','docker']

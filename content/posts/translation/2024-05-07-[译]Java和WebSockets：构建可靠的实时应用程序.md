@@ -1,6 +1,6 @@
 ---
 title: "[译]Java和WebSockets：构建可靠的实时应用程序"
-date: 2024-05-07
+date: 2024-05-07 08:00:00+08:00
 slug: websockets-java
 categories: [ "translation" ]
 tags: ['websocket']

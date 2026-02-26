@@ -1,6 +1,6 @@
 ---
 title: "ThingsBoard源码中的Security"
-date: 2024-12-03
+date: 2024-12-03 09:00:00+08:00
 slug: security-in-thingsboard
 categories: [ "techlog" ]
 tags: ['security', 'thingsboard']

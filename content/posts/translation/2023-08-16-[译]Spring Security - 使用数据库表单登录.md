@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Security - 使用数据库表单登录"
-date: 2023-08-16
+date: 2023-08-16 08:00:00+08:00
 slug: spring-security-form-login-with-database
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']

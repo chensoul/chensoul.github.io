@@ -1,6 +1,6 @@
 ---
 title: "Spring AI ToolCallbackProvider 实现类详解"
-date: 2025-11-14
+date: 2025-11-14 08:00:00+08:00
 slug: spring-ai-ToolCallbackProvider
 description: "深入解析 Spring AI ToolCallbackProvider 接口及其实现类：MethodToolCallbackProvider、SyncMcpToolCallbackProvider、AsyncMcpToolCallbackProvider、StaticToolCallbackProvider。学习工具调用的最佳实践、使用场景对比和配置示例。"
 categories: [ "techlog" ]

@@ -1,6 +1,6 @@
 ---
 title: "ThingsBoard接口设计"
-date: 2025-07-24
+date: 2025-07-24 09:00:00+08:00
 slug: thingsboard-api
 categories: [ "techlog" ]
 tags: ['docker','thingsboard']

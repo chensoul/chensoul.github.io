@@ -1,6 +1,6 @@
 ---
 title: "[译]OAuth2 with Spring 第4部分：Spring授权客户端与Google授权服务器的社交登录演示"
-date: 2024-06-05
+date: 2024-06-05 08:00:00+08:00
 slug: oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google
 categories: [ "translation" ]
 tags: ['spring-boot','oauth2']

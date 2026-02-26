@@ -1,6 +1,6 @@
 ---
 title: "使用 Docker 容器化并运行 Spring Boot 应用程序"
-date: 2024-07-09
+date: 2024-07-09 09:00:00+08:00
 slug: docker-for-spring-boot
 categories: [ "techlog" ]
 tags: ['docker', 'spring-boot']

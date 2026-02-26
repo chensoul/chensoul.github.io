@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》域名系统"
-date: 2023-11-17
+date: 2023-11-17 08:00:00+08:00
 slug: dns
 categories: [ "translation" ]
 tags: ['architecture']

@@ -1,6 +1,6 @@
 ---
 title: "Spring Security和OAuth2发展过程"
-date: 2023-08-15
+date: 2023-08-15 08:00:00+08:00
 slug: spring-security-oauth2-history
 categories: [ "techlog" ]
 tags: ['spring-boot', 'oauth2']

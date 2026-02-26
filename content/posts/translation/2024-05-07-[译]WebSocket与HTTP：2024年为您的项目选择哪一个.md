@@ -1,6 +1,6 @@
 ---
 title: "[译]WebSocket与HTTP：2024年为您的项目选择哪一个"
-date: 2024-05-07
+date: 2024-05-07 08:00:00+08:00
 slug: websockets-vs-http
 categories: [ "translation" ]
 tags: ['websocket', 'http']

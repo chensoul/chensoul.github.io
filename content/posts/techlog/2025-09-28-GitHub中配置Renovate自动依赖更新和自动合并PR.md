@@ -1,6 +1,6 @@
 ---
 title: "GitHub中配置Renovate自动依赖更新和自动合并PR"
-date: 2025-09-28
+date: 2025-09-28 08:00:00+08:00
 slug: config-renovate-in-github
 categories: [ "techlog" ]
 tags: ['github','renovate']

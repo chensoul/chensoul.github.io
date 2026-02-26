@@ -1,6 +1,6 @@
 ---
 title: "Spec-Kit 在 Cursor 中的安装和使用指南"
-date: 2025-09-29
+date: 2025-09-29 08:00:00+08:00
 slug: spec-kit-with-cursor
 categories: [ "techlog" ]
 tags: ['spring-ai', 'cursor', 'spec-kit']

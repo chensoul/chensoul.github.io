@@ -1,6 +1,6 @@
 ---
 title: "[译]Spring Events"
-date: 2023-08-25
+date: 2023-08-25 08:00:00+08:00
 slug: spring-events
 categories: [ "translation" ]
 tags: ['spring-boot']

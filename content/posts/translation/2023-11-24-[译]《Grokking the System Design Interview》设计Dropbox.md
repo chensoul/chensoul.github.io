@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Dropbox"
-date: 2023-11-24
+date: 2023-11-24 08:00:00+08:00
 slug: designing-dropbox
 categories: [ "translation" ]
 tags: ['architecture']

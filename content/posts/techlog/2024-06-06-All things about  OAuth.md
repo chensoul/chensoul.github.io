@@ -1,6 +1,6 @@
 ---
 title: "All things about OAuth"
-date: 2024-06-06
+date: 2024-06-06 08:00:00+08:00
 slug: all-things-about-oauth
 categories: [ "techlog" ]
 tags: ['oauth2']

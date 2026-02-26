@@ -1,6 +1,6 @@
 ---
 title: "[译]为恐龙解释现代JavaScript"
-date: 2023-06-19
+date: 2023-06-19 08:00:00+08:00
 slug: modern-javascript-explained-for-dinosaurs
 categories: [ "translation" ]
 tags: ['javascript']

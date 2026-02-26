@@ -1,6 +1,6 @@
 ---
 title: "[译]测试 Spring Boot 应用程序：最佳实践和框架"
-date: 2024-10-14
+date: 2024-10-14 08:00:00+08:00
 slug: testing-spring-boot-applications-best-practices-and-frameworks
 categories: [ "translation" ]
 tags: ['spring-boot']

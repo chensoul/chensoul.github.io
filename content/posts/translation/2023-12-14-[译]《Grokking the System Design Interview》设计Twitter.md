@@ -1,6 +1,6 @@
 ---
 title: "[译]《Grokking the System Design Interview》设计Twitter"
-date: 2023-12-14
+date: 2023-12-14 08:00:00+08:00
 slug: designing-twitter
 categories: [ "translation" ]
 tags: ['architecture']

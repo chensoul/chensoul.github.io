@@ -1,6 +1,6 @@
 ---
 title: "Gitlab安装和部署-使用yum源"
-date: 2024-07-15
+date: 2024-07-15 08:00:00+08:00
 slug: install-gitlab-using-yum
 categories: [ "techlog" ]
 tags: ['gitlab']

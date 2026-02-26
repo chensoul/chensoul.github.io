@@ -1,6 +1,6 @@
 ---
 title: "[译]OAuth2 with Spring 第5部分：使用PKCE保护您的Spring Boot应用程序以增强安全性"
-date: 2024-06-05
+date: 2024-06-05 08:00:00+08:00
 slug: oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security
 categories: [ "translation" ]
 tags: ['spring-boot','oauth2']
