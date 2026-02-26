@@ -116,7 +116,17 @@ export default defineConfig({
       scope: '#article',
       imageBase: "https://blog.chensoul.cc/images/",
       exif: {
-          enabled: false
+          enabled: true,
+          fields: [
+            'Model',            // Camera Model
+            'LensModel',        // Lens Model
+            'FocalLength',      // Focal Length
+            'FNumber',          // Aperture
+            'ExposureTime',     // Shutter Speed
+            'ISO',              // ISO
+            'DateTimeOriginal'  // Date Original
+          ],
+          separator: ' · '      // Separator
         },
     }),
     expressiveCode(expressiveCodeOption),
