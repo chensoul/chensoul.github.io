@@ -69,12 +69,6 @@ const linkProps = {
     "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
 };
 
-const CATEGORY_THUMBNAILS: Record<string, string> = {
-  techlog: "techlog.svg",
-  lifelog: "lifelog.svg",
-  translation: "translaion.svg", // 与 public 下文件名一致
-};
-
 /**
  * 构建封面图 URL
  *
@@ -91,9 +85,8 @@ const buildCoverSrc = (): string | undefined => {
   const src = typeof image === "string" ? image.trim() : "";
   if (!src) {
     const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
-    const filename =
-      (firstCategory && CATEGORY_THUMBNAILS[firstCategory]) || "blank.svg";
-    return `/thumbnails/${filename}`;
+    const filename = firstCategory || "blank";
+    return `/thumbnails/${filename}.svg`;
   }
   // 绝对路径
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
