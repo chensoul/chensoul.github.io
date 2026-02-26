@@ -125,7 +125,7 @@
   }
 }
 
-/* View Transitions: match root group background to theme to avoid white flash */
+/* View Transitions: match root group background to theme to avoid white flash
 ::view-transition-group(root) {
   background: color-mix(in srgb, var(--background) 92%, var(--foreground));
 }
@@ -139,6 +139,7 @@
     animation-duration: 0.01ms;
   }
 }
+*/
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */
