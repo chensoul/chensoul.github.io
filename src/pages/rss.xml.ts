@@ -12,7 +12,7 @@ export async function GET() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   const sortedPosts = posts
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    .slice(0, 20); // 只保留最近 20 篇文章
+    .slice(0, 10);
 
   return rss({
     title: SITE.title,
