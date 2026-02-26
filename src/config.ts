@@ -1,27 +1,3 @@
-/**
- * 站点核心配置文件
- *
- * @fileoverview 定义博客的全局配置项，包括站点信息、分页设置、功能开关等
- *
- * 核心逻辑：
- * - 使用 `as const` 确保配置对象为只读类型，防止运行时被意外修改
- * - 所有配置项按功能模块分组，便于维护和扩展
- *
- * 依赖关系：
- * - 被几乎所有组件、布局和页面导入使用
- * - 在构建时被 Astro 读取以生成静态页面
- * - 被 content.config.ts、工具函数等多个模块依赖
- */
-
-/**
- * 站点配置对象
- *
- * 包含博客的全局配置，每个配置项都有其特定用途：
- * - 基础信息：网站 URL、作者、标题等元数据
- * - 分页配置：控制不同列表页的分页大小
- * - 功能开关：控制评论、编辑按钮等功能的启用状态
- * - UI 配置：返回顶部按钮、图片组件等界面相关设置
- */
 export const SITE = {
   // ========== 基础信息 ==========
   /** 站点主域名 URL，用于生成绝对路径和 SEO */
@@ -29,9 +5,6 @@ export const SITE = {
 
   /** 作者名称，显示在文章元数据和页脚 */
   author: "chensoul",
-
-  /** 作者主页/个人资料链接 */
-  profile: "https://github.com/chensoul",
 
   /** 站点描述，用于 SEO 和页面 meta 标签 */
   desc: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
@@ -47,7 +20,7 @@ export const SITE = {
   ogImage: "og.png",
 
   /** 是否启用浅色/深色模式切换功能 */
-  lightAndDarkMode: false,
+  lightAndDarkMode: true,
 
   // ========== 分页配置 ==========
   /**
