@@ -26,6 +26,7 @@ import type { CollectionEntry } from "astro:content";
 import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
 import { slugifyStr, slugifyAll } from "./slugify";
+import { getDatePartsInTimezone } from "./dateUtils";
 import { tagMoreRegex, regexReplacers } from "./descriptionRegex";
 
 /**
@@ -320,10 +321,10 @@ export class PostUtils {
     }
 
     if (date) {
-      const d = new Date(date);
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
+      const { year: yyyy, month: mm, day: dd } = getDatePartsInTimezone(
+        new Date(date),
+        SITE.timezone
+      );
       return [basePath, yyyy, mm, dd, slug].join("/");
     }
 

@@ -9,11 +9,14 @@
  * 2. 生成 ISO 格式 datetime 属性（SEO 优化）
  * 3. 生成中文格式的 title 提示文本
  * 4. 时间内容由客户端 JS 渲染（支持时区转换）
+ * 5. 绝对日期按文章/站点时区格式化，避免 UTC 导致日差一天
  *
  * 依赖关系：
  * - 被 Card.astro 等组件使用
  * - 用于显示文章列表和详情页的时间信息
  */
+import { getDatePartsInTimezone } from "@/utils/dateUtils";
+import { SITE } from "@/config";
 
 /**
  * 组件属性接口
@@ -37,6 +40,7 @@ export interface Props {
 const {
   pubDatetime,
   modDatetime,
+  timezone,
   class: className = "",
   format = "relative",
 } = Astro.props;
@@ -76,16 +80,17 @@ function formatRelativeTime(date: Date): string {
 
 const relativeTime = formatRelativeTime(latest);
 
-// 绝对时间格式：YYYY-MM-DD
-function formatAbsoluteTime(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
+// 绝对时间格式：YYYY-MM-DD（按文章/站点时区，避免 UTC 导致日差一天）
+function formatAbsoluteTime(date: Date, tz: string | undefined): string {
+  const { year: y, month: m, day: d } = getDatePartsInTimezone(
+    date,
+    tz || SITE.timezone
+  );
   return `${y}-${m}-${d}`;
 }
 
 const displayTime =
-  format === "absolute" ? formatAbsoluteTime(latest) : relativeTime;
+  format === "absolute" ? formatAbsoluteTime(latest, timezone) : relativeTime;
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>

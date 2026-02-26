@@ -32,6 +32,7 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
 import { SITE } from "@/config";
+import { getDatePartsInTimezone } from "@/utils/dateUtils";
 import "photosuite/dist/photosuite.css";
 
 /**
@@ -54,6 +55,7 @@ const {
   canonicalURL,
   date,
   updated,
+  timezone,
   tags,
   toc,
   math,
@@ -64,13 +66,11 @@ const {
 // 渲染文章内容
 const { Content } = await render(post);
 
-const publishDisplayDate = (() => {
-  const d = new Date(date);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-})();
+const { year: pubY, month: pubM, day: pubD } = getDatePartsInTimezone(
+  new Date(date),
+  timezone || SITE.timezone
+);
+const publishDisplayDate = `${pubY}-${pubM}-${pubD}`;
 
 // 传递给 Layout 的属性
 const layoutProps = {
