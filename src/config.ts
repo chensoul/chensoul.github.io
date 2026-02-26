@@ -171,6 +171,24 @@ export const SITE = {
   },
 
   /**
+   * Artalk 评论
+   *
+   * server 留空则不初始化评论（不注入脚本）
+   */
+  artalk: {
+    /** 评论后端地址 */
+    server: "https://artalk.chensoul.cc",
+    /** 站点名称（Artalk 后台创建站点时填写） */
+    site: "ChenSoul Blog",
+    /** 静态资源：Artalk.js 脚本 URL */
+    scriptUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.js",
+    /** 静态资源：Artalk.css 样式 URL */
+    cssUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.css",
+    /** 是否显示点赞 */
+    vote: false,
+  },
+
+  /**
    * Umami 统计
    *
    * 生产环境且 websiteId、scriptUrl 均非空时才会注入脚本（首屏加载后再加载，减少对 LCP 影响）

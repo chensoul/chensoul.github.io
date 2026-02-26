@@ -7,46 +7,36 @@
  * 核心逻辑：
  * 1. 单例模式：确保全局只有一个 Artalk 实例
  * 2. 主题同步：监听主题变化，自动切换评论框深浅色模式
- * 3. 页面切换：
- *    - 切换前：销毁实例、清理观察器
- *    - 切换后：重新初始化
- * 4. 主题检测优先级：
- *    - html[data-theme] 属性
- *    - 主题按钮的 aria-label
- *    - 系统偏好设置
- *
- * 配置信息：
- * - 服务器：https://artalk.chensoul.cc
- * - 站点名：ChenSoul Blog
- * - pageKey：使用当前路径作为唯一标识
+ * 3. 页面切换：切换前销毁实例与观察器，切换后重新初始化
+ * 4. 配置来自 config.ts 的 SITE.artalk
  *
  * 依赖关系：
  * - 被文章详情页使用（当 comments=true 时）
- * - 组件内动态加载 Artalk 脚本，确保在 onload 后再初始化
  * - 依赖主题按钮的 ID (#theme-btn)
  */
+import { SITE } from "@/config";
 ---
 
-<script is:inline data-astro-rerun>
+<script is:inline data-astro-rerun define:vars={{ artalkScriptUrl: SITE.artalk.scriptUrl, artalkCssUrl: SITE.artalk.cssUrl, artalkServer: SITE.artalk.server, artalkSite: SITE.artalk.site, artalkVote: SITE.artalk.vote }}>
   /* eslint-disable no-console -- Artalk 调试与错误输出 */
   /**
    * Artalk 评论系统集成
    * 包含脚本动态加载、初始化、主题同步、页面切换处理等功能
    */
   (function () {
-    var ARTALK_SCRIPT_URL = "https://cos.chensoul.cc/dist/artalk/Artalk.js";
-    var ARTALK_CSS_URL = "https://cos.chensoul.cc/dist/artalk/Artalk.css";
+    if (!artalkServer) return;
 
-    // 单例模式存储 Artalk 实例
+    var ARTALK_SCRIPT_URL = artalkScriptUrl;
+    var ARTALK_CSS_URL = artalkCssUrl;
+
     window.artalkInstance = window.artalkInstance || null;
 
-    // 基本配置
     const artalkConfig = {
       el: "#Comments",
-      server: "https://artalk.chensoul.cc",
-      site: "ChenSoul Blog",
+      server: artalkServer,
+      site: artalkSite,
       pageKey: window.location.pathname,
-      vote: false,
+      vote: artalkVote,
     };
 
     /**
