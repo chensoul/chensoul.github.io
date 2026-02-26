@@ -40,6 +40,7 @@ const {
   pubDatetime,
   modDatetime,
   timezone,
+  size = "sm",
   class: className = "",
   format = "relative",
 } = Astro.props;
@@ -88,13 +89,11 @@ const displayTime =
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>
-  <span class:list={["text-sm", { "sm:text-xs": true }]}>
     <time
-      class="text-[var(--text-muted)]"
+    class:list={["text-sm", { "sm:text-base": size === "lg" }]}
       datetime={iso}
       data-date-format={format}
     >
       {displayTime}
     </time>
-  </span>
 </div>

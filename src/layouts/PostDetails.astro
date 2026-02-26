@@ -25,6 +25,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
+import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { PostUtils } from "@/utils/postUtils";
@@ -63,14 +64,6 @@ const {
 
 // 渲染文章内容
 const { Content } = await render(post);
-
-const publishDisplayDate = (() => {
-  const d = new Date(date);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-})();
 
 // 传递给 Layout 的属性
 const layoutProps = {
@@ -189,7 +182,14 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   <!-- 文章标题与发布日期（不在 main 内） -->
   <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
     <h1 class="text-2xl font-semibold">{title}</h1>
-    <p class="mt-1 text-sm text-accent">{publishDisplayDate}</p>
+    <Datetime
+      pubDatetime={date}
+      modDatetime={updated}
+      timezone={post.data.timezone}
+      format="absolute"
+      size="lg"
+      class="mt-1 flex justify-center text-sm text-accent"
+    />
   </section>
 
   <!-- 主内容区（TOC 在 main 外，大屏下与 main 同行） -->
