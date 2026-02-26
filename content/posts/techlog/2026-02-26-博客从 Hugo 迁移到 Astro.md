@@ -4,7 +4,7 @@ date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "techlog" ]
 tags: [ 'astro' ]
-image: https://cos.lhasa.icu/dist/images/2026-01-27-fotopro-x-aircross-3-lite/cover.svg
+image: /thumbnails/astro-logo.svg
 ---
 
 最近将博客从 Hugo 迁移到了 Astro，并选择了 [astro-lhasa](https://github.com/achuanya/astro-lhasa)

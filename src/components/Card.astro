@@ -55,7 +55,7 @@ const {
 } = Astro.props;
 
 // 解构文章元数据
-const { title, date, updated, timezone, image } = data;
+const { title, date, updated, timezone, image, categories } = data;
 
 // 标题容器样式（处理溢出省略）
 const headerProps = {
@@ -69,27 +69,36 @@ const linkProps = {
     "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
 };
 
+const CATEGORY_THUMBNAILS: Record<string, string> = {
+  techlog: "techlog.svg",
+  translation: "translaion.svg", // 与 public 下文件名一致
+};
+
 /**
  * 构建封面图 URL
  *
  * 处理逻辑：
- * 1. 如果为空，返回 undefined
+ * 1. 如果为空，返回 categories 对应的 SVG（/thumbnails/{category}.svg），无分类则 blank.svg
  * 2. 如果是绝对路径（http/https 开头），直接使用
- * 3. 如果包含 CDN 域名，直接使用
- * 4. 否则拼接：CDN URL / 文章 slug / 图片文件名
+ * 3. 如果以 /images 开头，使用当前网站的 host
+ * 4. 以 /thumbnails 开头：使用当前网站的 host
+ * 5. 否则拼接 CDN URL
  *
  * @returns 完整的图片 URL 或 undefined
  */
 const buildCoverSrc = (): string | undefined => {
   const src = typeof image === "string" ? image.trim() : "";
-  if (!src) return undefined;
+  if (!src) {
+    const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
+    const filename =
+      (firstCategory && CATEGORY_THUMBNAILS[firstCategory]) || "blank.svg";
+    return `/thumbnails/${filename}`;
+  }
   // 绝对路径
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
-  // CDN 路径
-  if (src.includes("cos.lhasa.icu")) return src;
-  // 相对路径：拼接 CDN URL
-  //const segments = id.split("/").filter(Boolean);
-  //const slug = segments.length ? segments[segments.length - 1] : "";
+  // 以 /images 或 /thumbnails 开头：使用当前网站的 host
+  if (src.startsWith("/images") || src.startsWith("/thumbnails")) return src;
+  // 其他相对路径：拼接 CDN URL
   return `${SITE.imageConfig.imagesUrl}${src}`;
 };
 
