@@ -27,7 +27,6 @@ export default [
       "dist/**",
       ".astro",
       "public/pagefind/**",
-      "public/tocbot/**",
     ],
   },
 ];
