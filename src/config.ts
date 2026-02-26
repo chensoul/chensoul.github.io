@@ -19,6 +19,13 @@ export const SITE = {
    */
   ogImage: "og.png",
 
+  /**
+   * Google Search Console 站点验证码
+   * 在 Search Console 添加资源时选择「HTML 标签」方式，将 content 值填在此处
+   * 留空则不输出 meta 标签
+   */
+  googleSiteVerification: "",
+
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,
 
@@ -161,6 +168,19 @@ export const SITE = {
     text: "Stats",
     /** 链接目标地址 */
     url: "https://stats.chensoul.cc/blog.chensoul.cc",
+  },
+
+  /**
+   * Umami 统计
+   *
+   * 生产环境且 websiteId、scriptUrl 均非空时才会注入脚本（首屏加载后再加载，减少对 LCP 影响）
+   * 留空则关闭统计
+   */
+  umami: {
+    /** 站点 ID（Umami 后台创建网站后获得） */
+    websiteId: "2311be4b-ebe4-4a94-9c69-b2e841584d0d",
+    /** 统计脚本 URL */
+    scriptUrl: "https://umami.chensoul.cc/random-string.js",
   },
 
   // ========== 图片组件配置 ==========

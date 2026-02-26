@@ -26,9 +26,6 @@ import "@/styles/global.css";
 import BackToTop from "@/components/BackToTop.astro";
 import BackButton from "@/components/BackButton.astro";
 
-// Google 站点验证码（环境变量）
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
-
 /**
  * 组件属性接口
  *
@@ -185,12 +182,12 @@ const structuredData = {
 
     <meta name="theme-color" content="" />
 
-    <!-- Google 站点验证（环境变量配置） -->
+    <!-- Google 站点验证（config.ts 中配置 googleSiteVerification） -->
     {
-      googleSiteVerification && (
+      SITE.googleSiteVerification && (
         <meta
           name="google-site-verification"
-          content={googleSiteVerification}
+          content={SITE.googleSiteVerification}
         />
       )
     }
@@ -219,20 +216,19 @@ const structuredData = {
     <BackButton />
     <BackToTop />
 
-    <!-- Umami 分析：首屏加载后再注入，减少对 LCP 的影响 -->
+    <!-- Umami 分析（config.ts 中配置 SITE.umami；首屏后再加载以减轻 LCP 影响） -->
     {
-      import.meta.env.PROD && (
-        <script is:inline>
+      import.meta.env.PROD && SITE.umami?.websiteId && SITE.umami?.scriptUrl && (
+        <script is:inline define:vars={{ websiteId: SITE.umami.websiteId, scriptUrl: SITE.umami.scriptUrl }}>
           (function () {
-            const id = "2311be4b-ebe4-4a94-9c69-b2e841584d0d";
-            const src = "https://umami.chensoul.cc/random-string.js";
+            if (!websiteId || !scriptUrl) return;
             let done = false;
             function load() {
               if (done) return;
               done = true;
               const s = document.createElement("script");
-              s.src = src;
-              s.setAttribute("data-website-id", id);
+              s.src = scriptUrl;
+              s.setAttribute("data-website-id", websiteId);
               s.defer = true;
               document.head.appendChild(s);
             }
