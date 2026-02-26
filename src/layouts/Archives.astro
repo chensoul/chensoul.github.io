@@ -93,14 +93,11 @@ const years = Object.keys(groupedByYear)
                * - filePath: 文章的文件路径，用于生成链接
                */
               groupedByYear[year].map(({ data, id, filePath }) => {
-                // 获取文章日期（优先使用更新时间）
                 const d = new Date(data.updated ?? data.date);
-                // 格式化月份：补零到两位数（01-12）
-                const mm = String(d.getMonth() + 1).padStart(2, "0");
-                // 格式化日期：补零到两位数（01-31）
-                const dd = String(d.getDate()).padStart(2, "0");
-                // 组合成 "MM-DD" 格式的日期字符串
-                const dateText = `${mm}-${dd}`;
+                const tz = data.timezone ?? SITE.timezone;
+                // 按时区取 YYYY-MM-DD，再截取 MM-DD 显示
+                const dateStr = PostUtils.getLocalDateString(d, tz);
+                const dateText = dateStr.slice(5);
                 return (
                   <li class="flex items-center gap-2 leading-6">
                     {/* 日期显示：固定宽度，右对齐，等官认数字体 */}
@@ -111,7 +108,7 @@ const years = Object.keys(groupedByYear)
                     <span class="opacity-80">»</span>
                     {/* 文章标题链接：flex-1 占满剩余空间，truncate 超长省略 */}
                     <a
-                      href={PostUtils.getPath(id, filePath, true, data.date)}
+                      href={PostUtils.getPath(id, filePath, true, data.date, data.timezone)}
                       class="flex-1 truncate text-sm text-accent hover:underline"
                     >
                       {data.title}

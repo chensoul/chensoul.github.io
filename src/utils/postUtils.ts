@@ -26,7 +26,6 @@ import type { CollectionEntry } from "astro:content";
 import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
 import { slugifyStr, slugifyAll } from "./slugify";
-import { getDatePartsInTimezone } from "./dateUtils";
 import { tagMoreRegex, regexReplacers } from "./descriptionRegex";
 
 /**
@@ -297,19 +296,46 @@ export class PostUtils {
   }
 
   /**
+   * 按指定时区将 Date 格式化为 YYYY-MM-DD
+   *
+   * 避免使用 UTC/本地 getDate() 导致 +08:00 等日期显示为前一天
+   *
+   * @param date - 日期对象
+   * @param timeZone - IANA 时区（如 Asia/Shanghai），默认 SITE.timezone
+   */
+  static getLocalDateString(
+    date: Date,
+    timeZone: string = SITE.timezone
+  ): string {
+    const f = new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const parts = f.formatToParts(date);
+    const y = parts.find(p => p.type === "year")!.value;
+    const m = parts.find(p => p.type === "month")!.value;
+    const d = parts.find(p => p.type === "day")!.value;
+    return `${y}-${m}-${d}`;
+  }
+
+  /**
    * 获取博客文章的 URL 路径
    *
    * @param id - 文章 ID（如 "content/posts/article.md"）
    * @param filePath - 文章完整文件路径（可选）
    * @param includeBase - 是否包含 `/posts` 前缀，默认 true
    * @param date - 发布日期（可选），提供则生成 /posts/YYYY/MM/DD/slug
+   * @param timeZone - 时区（可选），用于按该时区取日期，默认 SITE.timezone
    * @returns 文章的 URL 路径
    */
   static getPath(
     id: string,
     filePath: string | undefined,
     includeBase = true,
-    date?: Date
+    date?: Date,
+    timeZone?: string
   ): string {
     const basePath = includeBase ? "/posts" : "";
     const blogId = id.split("/");
@@ -321,10 +347,10 @@ export class PostUtils {
     }
 
     if (date) {
-      const { year: yyyy, month: mm, day: dd } = getDatePartsInTimezone(
+      const [yyyy, mm, dd] = PostUtils.getLocalDateString(
         new Date(date),
-        SITE.timezone
-      );
+        timeZone ?? SITE.timezone
+      ).split("-");
       return [basePath, yyyy, mm, dd, slug].join("/");
     }
 

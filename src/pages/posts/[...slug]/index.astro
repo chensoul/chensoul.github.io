@@ -46,7 +46,7 @@ export async function getStaticPaths() {
   // 为每篇文章生成路由
   const postResult = posts.map(post => ({
     // 使用 getPath 生成 URL 友好的 slug（不带 /posts 前缀，包含日期）
-    params: { slug: PostUtils.getPath(post.id, post.filePath, false, post.data.date) },
+    params: { slug: PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone) },
     props: { post },
   }));
 

@@ -32,7 +32,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
 import { SITE } from "@/config";
-import { getDatePartsInTimezone } from "@/utils/dateUtils";
 import "photosuite/dist/photosuite.css";
 
 /**
@@ -55,7 +54,6 @@ const {
   canonicalURL,
   date,
   updated,
-  timezone,
   tags,
   toc,
   math,
@@ -66,11 +64,13 @@ const {
 // 渲染文章内容
 const { Content } = await render(post);
 
-const { year: pubY, month: pubM, day: pubD } = getDatePartsInTimezone(
-  new Date(date),
-  timezone || SITE.timezone
-);
-const publishDisplayDate = `${pubY}-${pubM}-${pubD}`;
+const publishDisplayDate = (() => {
+  const d = new Date(date);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+})();
 
 // 传递给 Layout 的属性
 const layoutProps = {
@@ -96,12 +96,12 @@ const layoutProps = {
  * 2. 找到当前文章的索引
  * 3. 获取上一篇（索引-1）和下一篇（索引+1）
  */
-const allPosts = posts.map(({ data: { title, date }, id, filePath }) => ({
-  path: PostUtils.getPath(id, filePath, true, date),
+const allPosts = posts.map(({ data: { title, date, timezone }, id, filePath }) => ({
+  path: PostUtils.getPath(id, filePath, true, date, timezone),
   title,
 }));
 
-const currentPostPath = PostUtils.getPath(post.id, post.filePath, true, post.data.date);
+const currentPostPath = PostUtils.getPath(post.id, post.filePath, true, post.data.date, post.data.timezone);
 const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
 
 const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
