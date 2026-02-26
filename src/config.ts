@@ -197,49 +197,16 @@ export const SITE = {
    * 控制项目中所有图片的加载和显示
    */
   imageConfig: {
-    // --- 资源路径配置 ---
-    /**
-     * 图片资源 CDN 地址
-     *
-     * 用于生成图片的完整 URL
-     * 图片路径会拼接在此地址后
-     */
-    imagesUrl: "https://blog.chensoul.cc",
+    imagesUrl: "https://cos.chensoul.cc",
 
-    // --- 标签样式配置 ---
-    /**
-     * 图片标签样式配置
-     */
     tags: {
-      /**
-       * 默认标签样式
-       *
-       * 可选值：
-       * - "l": 大标签样式
-       * - "s": 小标签样式
-       * - false: 不显示标签
-       */
       defaultStyle: "l" as "l" | "s" | false,
     },
 
-    // --- 图片加载配置 ---
-    /**
-     * 图片加载行为配置
-     */
     loading: {
-      /**
-       * 是否启用懒加载
-       *
-       * true: 图片进入视口时才加载
-       * false: 页面加载时立即加载所有图片
-       */
       lazy: true,
 
-      /**
-       * 图片质量优化配置
-       */
       quality: {
-        /** 是否启用自动质量优化 */
         enabled: true,
       },
     },

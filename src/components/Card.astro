@@ -72,28 +72,24 @@ const linkProps = {
 /**
  * 构建封面图 URL
  *
- * 处理逻辑：
- * 1. 如果为空，返回 categories 对应的 SVG（/thumbnails/{category}.svg），无分类则 blank.svg
- * 2. 如果是绝对路径（http/https 开头），直接使用
- * 3. 如果以 /images 开头，使用当前网站的 host
- * 4. 以 /thumbnails 开头：使用当前网站的 host
- * 5. 否则拼接 CDN URL
+ * 1. image 为空：使用分类对应缩略图 /thumbnails/{category}.svg，无分类则 /thumbnails/blank.svg
+ * 2. 以 http:// 或 https:// 开头：原样返回（绝对地址）
+ * 3. 其他（含 /images、/thumbnails 及任意相对路径）：
+ *    - SITE.imageConfig.imagesUrl 不为空时：拼接 CDN 前缀后返回
+ *    - 为空时：直接返回 src，由浏览器按当前网站 host 解析
  *
- * @returns 完整的图片 URL 或 undefined
+ * @returns 用于 <img src> 的完整或相对 URL
  */
 const buildCoverSrc = (): string | undefined => {
-  const src = typeof image === "string" ? image.trim() : "";
+  let src = typeof image === "string" ? image.trim() : "";
   if (!src) {
     const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
     const filename = firstCategory || "blank";
-    return `/thumbnails/${filename}.svg`;
+    src = `/thumbnails/${filename}.svg`;
   }
-  // 绝对路径
   if (src.startsWith("http://") || src.startsWith("https://")) return src;
-  // 以 /images 或 /thumbnails 开头：使用当前网站的 host
-  if (src.startsWith("/images") || src.startsWith("/thumbnails")) return src;
-  // 其他相对路径：拼接 CDN URL
-  return `${SITE.imageConfig.imagesUrl}${src}`;
+  const base = (SITE.imageConfig.imagesUrl ?? "").trim();
+  return base ? `${base}${src}` : src;
 };
 
 const coverSrc = buildCoverSrc();

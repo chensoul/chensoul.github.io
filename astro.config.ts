@@ -114,7 +114,7 @@ export default defineConfig({
     }),
     photosuite({
       scope: '#article',
-      imageBase: "https://blog.chensoul.cc/images/",
+      imageBase: "https://cos.chensoul.cc/images",
       exif: {
           enabled: true,
           fields: [
