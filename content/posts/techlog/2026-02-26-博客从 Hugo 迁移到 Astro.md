@@ -197,7 +197,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - **getUniqueCategories.ts**：按 `categoryName` 字母序（zh-CN）排序；移除对 SITE 的依赖。
 - **getSortedPosts.ts**：有调整以配合新数据与路由。
 - **categoryImages.ts**：分类图片 URL 等有小幅修改。
-- **已删除**：`getBlogMetrics.ts`、`slugify.ts`（slug 逻辑并入 getPath 或别处）。
+- **已删除**：`getBlogMetrics.ts`。
 
 ### 六、删除的仓库级文件与内容
 
