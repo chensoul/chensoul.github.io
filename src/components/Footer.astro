@@ -27,6 +27,8 @@ export interface Props {
   noMarginTop?: boolean;
 }
 
+const currentYear = new Date().getFullYear();
+
 const { noMarginTop = false } = Astro.props;
 ---
 
@@ -36,27 +38,23 @@ const { noMarginTop = false } = Astro.props;
   >
     <!-- 版权信息区：自定义链接 + ICP 备案号 -->
     <div
-      class="mx-auto my-2 flex flex-col items-center text-[11px] whitespace-nowrap text-[var(--text-muted)] sm:flex-row"
+      class="mx-auto my-2 flex flex-col items-center text-[15px] whitespace-nowrap text-[var(--text-muted)] sm:flex-row"
     >
+      <span>Copyright &#169; {currentYear} All rights reserved.</span>
       <!-- 自定义页脚链接（如统计页面） -->
       {
         SITE.customFooterLink.enabled && (
+          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
           <a href={SITE.customFooterLink.url} target="_blank" rel="noopener noreferrer">
             {SITE.customFooterLink.text}
           </a>
         )
       }
 
-      <!-- 分隔符（当两个元素都存在时显示） -->
-      {
-        SITE.icp && SITE.customFooterLink.enabled && (
-          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-        )
-      }
-
       <!-- ICP 备案号（中国大陆特有） -->
       {
         SITE.icp && (
+          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
             {_t.license.icp} {SITE.icp}
           </a>
