@@ -4,8 +4,6 @@ date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "techlog" ]
 tags: [ 'astro' ]
-toc: true
-comments: true
 image: https://cos.lhasa.icu/dist/images/2026-01-27-fotopro-x-aircross-3-lite/cover.svg
 ---
 
