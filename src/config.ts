@@ -27,7 +27,7 @@ export const SITE = {
   googleSiteVerification: "",
 
   /** 是否启用浅色/深色模式切换功能 */
-  lightAndDarkMode: true,
+  lightAndDarkMode: false,
 
   // ========== 分页配置 ==========
   /**
