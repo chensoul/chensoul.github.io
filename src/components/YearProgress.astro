@@ -60,7 +60,7 @@
 
 <script>
   /**
-   * 年度进度条：计算全年进度、动画、悬停/点击交互，astro:after-swap 时无动画更新
+   * 年度进度条：计算全年进度、动画、悬停/点击交互
    */
 
   const ANIMATION_DURATION = 1200;
@@ -218,5 +218,6 @@
   }
 
   init();
-  document.addEventListener("astro:after-swap", update);
+  document.addEventListener("DOMContentLoaded", update);
+  window.addEventListener("load", update);
 </script>

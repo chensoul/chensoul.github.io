@@ -67,11 +67,11 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
   /**
    * 将 #main-content 的 data-backurl 存到 sessionStorage，供返回按钮使用
    */
-  document.addEventListener("astro:page-load", () => {
+  function saveBackUrl() {
     const mainContent = document.querySelector("#main-content") as HTMLElement | null;
     const backUrl = mainContent?.dataset?.backurl;
-    if (backUrl) {
-      sessionStorage.setItem("backUrl", backUrl);
-    }
-  });
+    if (backUrl) sessionStorage.setItem("backUrl", backUrl);
+  }
+  document.addEventListener("DOMContentLoaded", saveBackUrl);
+  window.addEventListener("load", saveBackUrl);
 </script>

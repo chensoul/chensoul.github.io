@@ -116,21 +116,16 @@ categories.forEach(({ categoryName }) => {
   </Main>
   <Footer />
 </Layout>
-<script is:inline src="https://cos.chensoul.cc/dist/lazy-list/lazy-list.js"></script>
+<script is:inline src="/lazy-list.js"></script>
 <script is:inline>
   function boot() {
+    if (typeof window.setupLazyList !== "function") return;
     window.setupLazyList({
       sentinelId: "categories-sentinel",
       itemSelector: ".categories-item",
     });
   }
-  // View Transitions 导航后启动
-  document.addEventListener("astro:after-swap", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
-  // 初始加载时启动
-  document.addEventListener("astro:page-load", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
+  document.addEventListener("DOMContentLoaded", boot);
+  window.addEventListener("load", boot);
 </script>
 

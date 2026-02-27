@@ -17,7 +17,7 @@ export const SITE = {
    * 在 Search Console 添加资源时选择「HTML 标签」方式，将 content 值填在此处
    * 留空则不输出 meta 标签
    */
-  googleSiteVerification: "",
+  googleSiteVerification: "702mzR8WJvXKVdS3ergTkQEIWAMuwniGMAIeE6wPRhc",
 
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,

@@ -104,11 +104,10 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
    *
    * 当用户从首页点击文章后，返回按钮会带回首页
    */
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-  });
+  function saveIndexBackUrl() {
+    const mainContent = document.querySelector("#main-content") as HTMLElement | null;
+    if (mainContent?.dataset?.layout) sessionStorage.setItem("backUrl", "/");
+  }
+  document.addEventListener("DOMContentLoaded", saveIndexBackUrl);
+  window.addEventListener("load", saveIndexBackUrl);
 </script>

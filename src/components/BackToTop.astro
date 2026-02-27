@@ -139,16 +139,14 @@ const { class: className } = Astro.props;
   window.addEventListener("scroll", updateVisibility, { passive: true });
   // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
   window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
-  // View Transitions 页面加载后更新
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     updateVisibility();
     updatePosition();
   });
-  document.addEventListener("astro:after-swap", () => {
+  window.addEventListener("load", () => {
     updateVisibility();
     updatePosition();
   });
-  // 初始化
   updateVisibility();
   updatePosition();
 

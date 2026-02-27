@@ -311,8 +311,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   tryLoadAndInitTocbot();
 
-  document.addEventListener("astro:after-swap", () => {
+  function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
     tryLoadAndInitTocbot();
-  });
+  }
+  document.addEventListener("DOMContentLoaded", onPageReady);
+  window.addEventListener("load", onPageReady);
 </script>

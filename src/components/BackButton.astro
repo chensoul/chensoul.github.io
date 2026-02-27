@@ -145,10 +145,8 @@ import { SITE } from "@/config";
 
   // 监听窗口大小变化（使用防抖优化性能）
   window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
-  // View Transitions 页面加载后更新
-  document.addEventListener("astro:page-load", updateBackButton);
-  document.addEventListener("astro:after-swap", updateBackButton);
-  // 初始化
+  document.addEventListener("DOMContentLoaded", updateBackButton);
+  window.addEventListener("load", updateBackButton);
   updateBackButton();
   })();
 </script>

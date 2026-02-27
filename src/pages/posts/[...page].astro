@@ -149,7 +149,7 @@ const { page } = Astro.props;
   <Footer noMarginTop={true} />
 </Layout>
 
-<script src="https://cos.chensoul.cc/dist/lazy-list/lazy-list.js"></script>
+<script is:inline src="/lazy-list.js"></script>
 <script is:inline>
   (function () {
     function boot() {
@@ -159,12 +159,7 @@ const { page } = Astro.props;
         itemSelector: ".posts-item",
       });
     }
-    document.addEventListener("astro:after-swap", boot);
-    document.addEventListener("astro:page-load", boot);
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", boot);
-    } else {
-      boot();
-    }
+    document.addEventListener("DOMContentLoaded", boot);
+    window.addEventListener("load", boot);
   })();
 </script>

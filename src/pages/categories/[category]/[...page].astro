@@ -169,30 +169,15 @@ const { page, categoryName } = Astro.props;
   <Footer noMarginTop={true} />
 </Layout>
 
-<script is:inline src="https://cos.chensoul.cc/dist/lazy-list/lazy-list.js"></script>
+<script is:inline src="/lazy-list.js"></script>
 <script is:inline>
-  /**
-   * 初始化分类页懒加载
-   *
-   * 配置说明：
-   * - sentinelId: 哨兵元素的 ID，用于检测滚动位置
-   * - itemSelector: 需要懒加载的文章卡片选择器
-   * 事件监听：
-   * - astro:after-swap: Astro 视图导航后触发（SPA 模式）
-   * - astro:page-load: Astro 页面加载完成后触发
-   */
   function boot() {
+    if (typeof window.setupLazyList !== "function") return;
     window.setupLazyList({
       sentinelId: "category-posts-sentinel",
       itemSelector: ".category-post-item",
     });
   }
-
-  // 确保在 Astro 页面切换和加载时都能正确初始化懒加载
-  document.addEventListener("astro:after-swap", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
-  document.addEventListener("astro:page-load", () => {
-    if (typeof window.setupLazyList === "function") boot();
-  });
+  document.addEventListener("DOMContentLoaded", boot);
+  window.addEventListener("load", boot);
 </script>

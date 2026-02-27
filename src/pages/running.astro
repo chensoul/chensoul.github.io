@@ -372,8 +372,7 @@ const hrZoneLabels: Record<number, string> = {
 <script>
   import { initRunningPage } from "@/scripts/runningPage";
   document.addEventListener("DOMContentLoaded", initRunningPage);
-  document.addEventListener("astro:page-load", initRunningPage);
-  document.addEventListener("astro:after-swap", initRunningPage);
+  window.addEventListener("load", initRunningPage);
   if (document.readyState !== "loading") initRunningPage();
 </script>
 

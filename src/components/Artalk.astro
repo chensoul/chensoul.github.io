@@ -308,16 +308,13 @@ import { SITE } from "@/config";
       if (window._artalkInitialized) return;
       window._artalkInitialized = true;
 
-      // 页面切换事件
-      document.addEventListener("astro:before-swap", handleBeforeSwap);
-      document.addEventListener("astro:after-swap", handlePageLoad);
-
-      // 初始加载
+      // 初始加载与整页刷新
       if (document.readyState === "complete") {
         handlePageLoad();
       } else {
         document.addEventListener("DOMContentLoaded", handlePageLoad);
       }
+      window.addEventListener("load", handlePageLoad);
     }
 
     // 启动Artalk
