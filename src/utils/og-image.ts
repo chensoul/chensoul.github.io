@@ -42,7 +42,8 @@ async function getAvatarDataUrl(): Promise<string | null> {
 
 /** 从本地 @fontsource/noto-sans-sc 读取字体，无需访问 Google（避免翻墙） */
 function bufferToArrayBuffer(buf: Buffer): ArrayBuffer {
-  return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+  const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+  return ab as ArrayBuffer;
 }
 
 let fontsPromise: Promise<{ regular: ArrayBuffer; bold: ArrayBuffer }> | null =

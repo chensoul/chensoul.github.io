@@ -130,19 +130,7 @@ export default defineConfig({
     photosuite({
       scope: '#article',
       imageBase: "https://cos.chensoul.cc/images",
-      exif: {
-          enabled: false,
-          fields: [
-            'Model',            // Camera Model
-            'LensModel',        // Lens Model
-            'FocalLength',      // Focal Length
-            'FNumber',          // Aperture
-            'ExposureTime',     // Shutter Speed
-            'ISO',              // ISO
-            'DateTimeOriginal'  // Date Original
-          ],
-          separator: ' · '      // Separator
-        },
+      exif: false, // 传 false 才不注册 EXIF 插件；传对象 { enabled: false } 仍会获取 EXIF
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),
