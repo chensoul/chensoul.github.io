@@ -132,21 +132,6 @@
   }
 }
 
-/* View Transitions: match root group background to theme to avoid white flash */
-::view-transition-group(root) {
-  background: var(--background-secondary);
-}
-::view-transition-old(*),
-::view-transition-new(*) {
-  animation-duration: 800ms;
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: 0.01ms;
-  }
-}
-
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */
 :target {

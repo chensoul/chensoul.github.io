@@ -7,12 +7,11 @@
  * 核心逻辑：
  * 1. SEO 优化：完整的 meta 标签、Open Graph、Twitter Cards
  * 2. Google 验证：支持 Google Search Console 验证
- * 3. View Transitions：启用 Astro 的页面切换动画
- * 4. 第三方集成：
+ * 3. 第三方集成：
  *    - Artalk 评论系统
  *    - Matomo 网站分析（仅生产环境）
  *    - Google Fonts 字体
- * 5. 条件加载：根据 toc、math 属性动态加载对应资源
+ * 4. 条件加载：根据 toc、math 属性动态加载对应资源
  *
  * 依赖关系：
  * - 被 Main.astro、PostDetails.astro 等所有布局继承
@@ -20,7 +19,6 @@
  * - 使用 config.ts 获取站点配置
  */
 
-import { ClientRouter } from "astro:transitions";
 import { SITE } from "@/config";
 import "@/styles/global.css";
 import BackToTop from "@/components/BackToTop.astro";
@@ -201,10 +199,7 @@ const structuredData = {
       )
     }
 
-    <!-- View transitions: https://docs.astro.build/en/guides/view-transitions/-->
-    <ClientRouter />
-
-    <!-- 主题切换：与参考站 zdyxry 一致，仅内联脚本，localStorage 不跟随系统偏好；含 theme-color、view transitions 同步 -->
+    <!-- 主题切换：与参考站 zdyxry 一致，仅内联脚本，localStorage 不跟随系统偏好；含 theme-color 同步 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function () {
         if (!lightAndDarkMode) return;
@@ -257,16 +252,6 @@ const structuredData = {
             setPreference();
           });
         }
-        function onBeforeSwap(e) {
-          const newDoc = e.newDocument;
-          const theme = document.documentElement.getAttribute("data-theme") || (localStorage.getItem(THEME_KEY) === DARK ? DARK : LIGHT);
-          newDoc.documentElement.setAttribute("data-theme", theme);
-          const curMeta = document.querySelector(themeColorMetaSel);
-          if (curMeta && curMeta.getAttribute("content")) {
-            const newMeta = newDoc.querySelector(themeColorMetaSel);
-            if (newMeta) newMeta.setAttribute("content", curMeta.getAttribute("content"));
-          }
-        }
         window._themeValue = window.theme && window.theme.themeValue != null ? window.theme.themeValue : getTheme();
         window.theme = window.theme || {};
         window.theme.themeValue = window._themeValue;
@@ -282,8 +267,6 @@ const structuredData = {
           }
         }
         runWhenReady();
-        document.addEventListener("astro:after-swap", setupThemeButton);
-        document.addEventListener("astro:before-swap", function (e) { onBeforeSwap(e); });
       })();
     </script>
 

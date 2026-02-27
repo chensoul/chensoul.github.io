@@ -15,6 +15,7 @@ title: "关于"
 - 202?-0?-0? » 将博客域名改为 blog.chensoul.cc 
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
 - 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面。
+- 2026-02-27 » 使用 [https://zdyxry.github.io/](https://zdyxry.github.io/) 的主题配色
 
 ## 知识共享协议
 
