@@ -44,7 +44,7 @@ const expressiveCodeOption: AstroExpressiveCodeOptions = {
     wrap: true,
     showLineNumbers: false,
     overridesByLang: {
-      "bash,cmd,powershell,ps,sh,shell,zsh,gradle,java": { frame: "none" },
+      "bash,cmd,powershell,ps,sh,shell,zsh": { frame: "none" },
     },
   },
   styleOverrides: {

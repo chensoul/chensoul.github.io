@@ -66,7 +66,7 @@ http
 - [Thymeleaf](https://www.thymeleaf.org/)
 - Spring Boot DevTools
 
-![Spring Initializr](https://www.tutorialspoint.com/spring_security/images/spring_initializr.webp)
+![Spring Initializr](spring_initializr-20260227141918265.jpg)
 
 Thymeleaf 是 Java 的模板引擎。它允许我们快速开发静态或动态网页以在浏览器中呈现。它具有极强的可扩展性，允许我们详细定义和自定义模板的处理。除此之外，我们还可以通过点击此链接了解有关 Thymeleaf 的更多信息。
 
@@ -202,7 +202,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 让我们看一下我们的配置类。
 
-- 首先，我们将使用 userDetailsS​​ervice() 方法创建 UserDetailsS​​ervice 类的 bean。我们将使用此 bean 来管理此应用程序的用户。在这里，为了简单起见，我们将使用 InMemoryUserDetailsManager 实例来创建用户。该用户以及我们给定的用户名和密码将包含一个简单的“读取”权限。
+- 首先，我们将使用 userDetailsService() 方法创建 UserDetailsService 类的 bean。我们将使用此 bean 来管理此应用程序的用户。在这里，为了简单起见，我们将使用 InMemoryUserDetailsManager 实例来创建用户。该用户以及我们给定的用户名和密码将包含一个简单的“读取”权限。
 - 现在，让我们看看我们的密码编码器。在本例中，我们将使用 BCryptPasswordEncoder 实例。因此，在创建用户时，我们使用 passwordEncoder 对我们的明文密码进行编码，如下所示
 
 ```java
@@ -326,13 +326,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 让我们将应用程序作为 Spring Boot 应用程序运行。当应用程序启动时，我们可以在浏览器上访问 http://localhost:8080。它应该要求我们提供用户名和密码。此外，我们还可以看到“记住我”复选框。
 
-![Sign In](https://www.tutorialspoint.com/spring_security/images/sign_in.webp)
+![Sign In](sign_in.jpg)
 
 ### 登录页面
 
 现在，如果我们提供在 WebSecurity 配置文件中配置的用户信息，我们将能够登录。此外，如果我们勾选“记住我”复选框，我们将能够在我们的 WebSecurity 配置文件中看到“记住我”cookie 浏览器的开发者工具部分。
 
-![Console Application](https://www.tutorialspoint.com/spring_security/images/console_application.webp)![Console Network](https://www.tutorialspoint.com/spring_security/images/console_network.webp)
+![Console Application](console_application.jpg)
+![Console Network](console_network.jpg)
 
 正如我们所看到的，cookie 是与我们的登录请求一起发送的。
 
