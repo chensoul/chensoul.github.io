@@ -104,28 +104,6 @@
     }
   }
 
-  .toc-list-item {
-    @apply truncate overflow-hidden whitespace-nowrap;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
-  .toc-list-item:last-child {
-    margin-bottom: 0;
-  }
-  .toc-link {
-    color: var(--text-primary);
-    display: block;
-    padding: 0.125rem 0;
-    line-height: 1.4;
-  }
-  .toc-link.is-active-link {
-    @apply !text-accent;
-  }
-  .toc-link::before {
-    @apply !hidden;
-    content: "";
-  }
-
   #sidebar #back-to-top svg,
   #sidebar #back-to-top span {
     color: var(--text-primary);

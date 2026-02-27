@@ -1,0 +1,121 @@
+---
+/**
+ * 文章目录（TOC）组件
+ *
+ * @fileoverview 基于 tocbot 在侧边栏渲染文章标题目录，包含样式与脚本
+ *
+ * 核心逻辑：
+ * 1. variant="head"：注入 tocbot 的 CSS（preload + noscript 回退）
+ * 2. variant="body"（默认）：渲染占位容器 .js-toc、自定义 TOC 样式、按需加载 tocbot 脚本并初始化
+ * 3. 使用处：在 Layout 的 head slot 放 <Toc enabled={toc} variant="head" slot="head" />，侧边栏放 <Toc enabled={toc} />
+ *
+ * 依赖关系：
+ * - 页面需提供 .js-toc-content 包裹正文（如文章详情布局）
+ */
+
+const TOCBOT_CSS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css";
+const TOCBOT_CSS_LOCAL = "/tocbot/tocbot.min.css";
+const TOCBOT_JS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
+
+/** 预加载样式转正样式用 */
+const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
+
+export interface Props {
+  /** 是否启用目录，为 false 时不渲染 */
+  enabled?: boolean;
+  /** head：注入 CSS；body：容器 + 样式 + 脚本（默认） */
+  variant?: "head" | "body";
+}
+
+const { enabled = true, variant = "body" } = Astro.props;
+---
+
+{variant === "head" && enabled && (
+  <>
+    <link
+      rel="preload"
+      href={TOCBOT_CSS_CDN}
+      as="style"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      onload={linkPreloadOnLoad}
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href={TOCBOT_CSS_LOCAL}
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+  </>
+)}
+
+{variant === "body" && enabled && (
+  <>
+    <div id="toc-container" class="js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
+    <style is:global>
+      .toc-list-item {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .toc-list-item:last-child {
+        margin-bottom: 0;
+      }
+      .toc-link {
+        color: var(--text-primary);
+        display: block;
+        padding: 0.125rem 0;
+        line-height: 1.4;
+      }
+      .toc-link.is-active-link {
+        color: var(--accent) !important;
+      }
+      .toc-link::before {
+        content: "";
+        display: none !important;
+      }
+    </style>
+    <script is:inline>
+      (function () {
+        function getTocbot() {
+          return typeof window !== "undefined" && window.tocbot;
+        }
+        function initTocbot() {
+          var tocbot = getTocbot();
+          if (!tocbot) return;
+          tocbot.init({
+            tocSelector: ".js-toc",
+            contentSelector: ".js-toc-content",
+            headingSelector: "h2, h3, h4",
+            hasInnerContainers: true,
+            scrollSmoothDuration: 300,
+            scrollSmoothOffset: 0,
+          });
+        }
+        function tryLoadAndInitTocbot() {
+          var container = document.getElementById("toc-container");
+          if (!container) return;
+          if (getTocbot()) {
+            initTocbot();
+          } else {
+            var src = container.getAttribute("data-tocbot-src");
+            if (!src) return;
+            var script = document.createElement("script");
+            script.src = src;
+            script.crossOrigin = "anonymous";
+            script.referrerPolicy = "no-referrer";
+            script.onload = initTocbot;
+            document.body.appendChild(script);
+          }
+        }
+        tryLoadAndInitTocbot();
+        document.addEventListener("DOMContentLoaded", tryLoadAndInitTocbot);
+        window.addEventListener("load", tryLoadAndInitTocbot);
+      })();
+    </script>
+  </>
+)}

@@ -25,6 +25,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
+import Toc from "@/components/Toc.astro";
 import Artalk from "@/components/Artalk.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { PostUtils } from "@/utils/postUtils";
@@ -111,28 +112,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  <!-- TOC 样式（仅文章详情且启用目录时加载） -->
-  {toc && (
-    <link
-      slot="head"
-      rel="preload"
-      href="https://cos.chensoul.cc/dist/tocbot/tocbot.min.css"
-      as="style"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      onload={linkPreloadOnLoad}
-    />
-  )}
-  {toc && (
-    <noscript slot="head">
-      <link
-        rel="stylesheet"
-        href="/tocbot/tocbot.min.css"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-      />
-    </noscript>
-  )}
+  <Toc enabled={toc} variant="head" slot="head" />
   <!-- KaTeX 数学公式样式（仅文章详情且启用公式时加载） -->
   {math && (
     <link
@@ -242,13 +222,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     slot="sidebar"
     class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
   >
-    {
-      toc && (
-        <>
-          <div id="toc-container" class="js-toc" />
-        </>
-      )
-    }
+    <Toc enabled={toc} />
     <div
       class="flex flex-col items-start space-y-0 truncate overflow-hidden whitespace-nowrap opacity-80"
     >
@@ -260,60 +234,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 <Artalk />
 
 <script>
-  /**
-   * 目录（TOC）初始化：加载 tocbot，绑定到 .js-toc / .js-toc-content
-   * View Transitions 后滚动到顶部，并在新页面有 TOC 时重新初始化
-   */
-  interface TocbotApi {
-    init(options: {
-      tocSelector: string;
-      contentSelector: string;
-      headingSelector: string;
-      hasInnerContainers: boolean;
-      scrollSmoothDuration: number;
-      scrollSmoothOffset: number;
-    }): void;
-  }
-
-  function getTocbot(): TocbotApi | undefined {
-    if (typeof window === "undefined") return undefined;
-    return (window as Window & { tocbot?: TocbotApi }).tocbot;
-  }
-
-  const SCROLL_SMOOTH_OFFSET = 0;
-
-  function initTocbot(): void {
-    const tocbot = getTocbot();
-    if (!tocbot) return;
-    tocbot.init({
-      tocSelector: ".js-toc",
-      contentSelector: ".js-toc-content",
-      headingSelector: "h2, h3, h4",
-      hasInnerContainers: true,
-      scrollSmoothDuration: 300,
-      scrollSmoothOffset: SCROLL_SMOOTH_OFFSET,
-    });
-  }
-
-  function tryLoadAndInitTocbot(): void {
-    if (!document.getElementById("toc-container")) return;
-    if (getTocbot()) {
-      initTocbot();
-    } else {
-      const script = document.createElement("script");
-      script.src = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
-      script.crossOrigin = "anonymous";
-      script.referrerPolicy = "no-referrer";
-      script.onload = initTocbot;
-      document.body.appendChild(script);
-    }
-  }
-
-  tryLoadAndInitTocbot();
-
+  /** 页面就绪时滚动到顶部（含 View Transitions 后） */
   function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
-    tryLoadAndInitTocbot();
   }
   document.addEventListener("DOMContentLoaded", onPageReady);
   window.addEventListener("load", onPageReady);

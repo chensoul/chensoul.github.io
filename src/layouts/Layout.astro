@@ -71,11 +71,14 @@ const {
 const fullDescription = description;
 
 // 社交分享图：仅文章页传 ogImage 时有图（PostDetails 传 og/.../slug.png），非文章页不输出 og:image
+// 必须使用站点主域名的绝对 URL，否则分享时爬虫无法正确拉取图片（Facebook/LinkedIn 等要求）
 const ogImage = ogImageProp ?? "";
 const hasOgImage = Boolean(ogImage);
+const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
 const socialImageURL = hasOgImage
-  ? new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, Astro.url)
+  ? new URL(ogImagePath, SITE.website.endsWith("/") ? SITE.website : `${SITE.website}/`)
   : null;
+const socialImageURLString = socialImageURL?.href ?? "";
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;
@@ -90,7 +93,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${title}`,
-  ...(hasOgImage && socialImageURL && { image: `${socialImageURL}` }),
+  ...(hasOgImage && socialImageURLString && { image: socialImageURLString }),
   datePublished: `${pubDatetime?.toISOString()}`,
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
   author: [
@@ -130,9 +133,10 @@ const structuredData = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={fullDescription} />
     <meta property="og:url" content={canonicalURL} />
-    {hasOgImage && socialImageURL && (
+    {hasOgImage && socialImageURLString && (
       <>
-        <meta property="og:image" content={socialImageURL} />
+        <meta property="og:image" content={socialImageURLString} />
+        <meta property="og:image:secure_url" content={socialImageURLString} />
         <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
         <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
         <meta property="og:image:alt" content={title} />
@@ -164,9 +168,9 @@ const structuredData = {
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={fullDescription} />
-    {hasOgImage && socialImageURL && (
+    {hasOgImage && socialImageURLString && (
       <>
-        <meta property="twitter:image" content={socialImageURL} />
+        <meta property="twitter:image" content={socialImageURLString} />
         <meta property="twitter:image:alt" content={title} />
       </>
     )}
