@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
 
@@ -186,18 +187,10 @@ const hrZoneLabels: Record<number, string> = {
   5: 'Z5 最大'
 };
 
-// 心率区间颜色
-const hrZoneColors: Record<number, string> = {
-  0: 'var(--text-secondary)',
-  1: '#4ade80',  // 绿色 - 恢复
-  2: '#60a5fa',  // 蓝色 - 有氧
-  3: '#fbbf24',  // 黄色 - 节奏
-  4: '#fb923c',  // 橙色 - 阈值
-  5: '#f87171'   // 红色 - 最大
-};
 ---
 
 <Layout title={`${title} | ${SITE.title}`} description={description}>
+  <div class="page-running">
   <Header />
   <div class="running-page">
     <article>
@@ -302,17 +295,14 @@ const hrZoneColors: Record<number, string> = {
             </div>
 
             <h2 class="section-title">最近活动</h2>
-            <div class="run-list" id="runList" data-all-runs={JSON.stringify(allRuns)} data-hr-zone-labels={JSON.stringify(hrZoneLabels)} data-hr-zone-colors={JSON.stringify(hrZoneColors)}>
+            <div class="run-list" id="runList" data-all-runs={JSON.stringify(allRuns)} data-hr-zone-labels={JSON.stringify(hrZoneLabels)}>
               {recentRuns.map((run, index) => (
                 <div class="run-card" data-run-index={index} data-run={JSON.stringify(run)}>
                   <div class="run-main">
                     <div class="run-header">
                       <time class="run-date">{run.date.split(' ')[0]}</time>
                       {run.hr_zone > 0 && (
-                        <span
-                          class="hr-zone-badge"
-                          style={`background-color: ${hrZoneColors[run.hr_zone]}20; color: ${hrZoneColors[run.hr_zone]}; border: 1px solid ${hrZoneColors[run.hr_zone]}40;`}
-                        >
+                        <span class={`hr-zone-badge zone-${run.hr_zone}`}>
                           {hrZoneLabels[run.hr_zone]}
                         </span>
                       )}
@@ -375,6 +365,8 @@ const hrZoneColors: Record<number, string> = {
       </div>
     </div>
   </div>
+  <Footer />
+  </div>
 </Layout>
 
 <script>
@@ -386,6 +378,45 @@ const hrZoneColors: Record<number, string> = {
 </script>
 
 <style>
+  /* 跑步页配色：参考 zdyxry.github.io/running/，仅在本页生效，随 data-theme 切换 */
+  :global(.page-running) {
+    --hr-zone-1: #4ade80;
+    --hr-zone-2: #60a5fa;
+    --hr-zone-3: #fbbf24;
+    --hr-zone-4: #fb923c;
+    --hr-zone-5: #f87171;
+    --intensity-1: #bfdbfe;
+    --intensity-2: #93c5fd;
+    --intensity-3: #60a5fa;
+    --intensity-4: #3b82f6;
+    --intensity-5: #1d4ed8;
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --vdot-stat-color: #8b5cf6;
+    --load-stat-color: #3b82f6;
+  }
+
+  :global(html[data-theme="dark"]) :global(.page-running) {
+    --hr-zone-1: #4ade80;
+    --hr-zone-2: #60a5fa;
+    --hr-zone-3: #fbbf24;
+    --hr-zone-4: #fb923c;
+    --hr-zone-5: #f87171;
+    --intensity-1: #1e3a5f;
+    --intensity-2: #1e40af;
+    --intensity-3: #2563eb;
+    --intensity-4: #3b82f6;
+    --intensity-5: #60a5fa;
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    --vdot-stat-color: #a78bfa;
+    --load-stat-color: var(--accent);
+  }
+
   .running-page {
     max-width: 900px;
     margin: 0 auto;
@@ -602,17 +633,17 @@ const hrZoneColors: Record<number, string> = {
   .stat-card:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
   }
 
   .stat-card.vdot-card {
-    background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(139, 92, 246, 0.1) 100%);
-    border-color: rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, var(--background-secondary) 0%, color-mix(in srgb, var(--vdot-stat-color) 10%, transparent) 100%);
+    border-color: color-mix(in srgb, var(--vdot-stat-color) 30%, transparent);
   }
 
   .stat-card.load-card {
-    background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(59, 130, 246, 0.1) 100%);
-    border-color: rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, var(--background-secondary) 0%, color-mix(in srgb, var(--load-stat-color) 10%, transparent) 100%);
+    border-color: color-mix(in srgb, var(--load-stat-color) 30%, transparent);
   }
 
   .stat-icon {
@@ -638,7 +669,7 @@ const hrZoneColors: Record<number, string> = {
     color: var(--text-primary);
   }
 
-  /* 心率区间标签 */
+  /* 心率区间标签 - 使用 var(--hr-zone-*) 以随主题切换 */
   :global(.hr-zone-badge) {
     display: inline-flex;
     align-items: center;
@@ -649,15 +680,40 @@ const hrZoneColors: Record<number, string> = {
     line-height: 1;
     white-space: nowrap;
   }
+  :global(.hr-zone-badge.zone-1) {
+    background: color-mix(in srgb, var(--hr-zone-1) 12%, transparent);
+    color: var(--hr-zone-1);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-1) 25%, transparent);
+  }
+  :global(.hr-zone-badge.zone-2) {
+    background: color-mix(in srgb, var(--hr-zone-2) 12%, transparent);
+    color: var(--hr-zone-2);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-2) 25%, transparent);
+  }
+  :global(.hr-zone-badge.zone-3) {
+    background: color-mix(in srgb, var(--hr-zone-3) 12%, transparent);
+    color: var(--hr-zone-3);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-3) 25%, transparent);
+  }
+  :global(.hr-zone-badge.zone-4) {
+    background: color-mix(in srgb, var(--hr-zone-4) 12%, transparent);
+    color: var(--hr-zone-4);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-4) 25%, transparent);
+  }
+  :global(.hr-zone-badge.zone-5) {
+    background: color-mix(in srgb, var(--hr-zone-5) 12%, transparent);
+    color: var(--hr-zone-5);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-5) 25%, transparent);
+  }
 
   /* VDOT 和训练负荷统计样式 */
   :global(.vdot-stat .stat-value) {
-    color: #8b5cf6;
+    color: var(--vdot-stat-color);
     font-weight: 700;
   }
 
   :global(.load-stat .stat-value) {
-    color: #3b82f6;
+    color: var(--load-stat-color);
     font-weight: 700;
   }
 
@@ -718,13 +774,13 @@ const hrZoneColors: Record<number, string> = {
     gap: 1rem;
     transition: all 0.2s ease;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-sm);
   }
 
   :global(.run-card:hover),
   :global(.run-card:focus-visible) {
     border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     transform: translateY(-1px);
   }
 
@@ -887,7 +943,7 @@ const hrZoneColors: Record<number, string> = {
     visibility: hidden;
     transition: opacity 0.1s ease, visibility 0.1s ease;
     pointer-events: none;
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--shadow-sm);
     color: var(--text-primary);
     margin-bottom: 4px;
   }
@@ -901,18 +957,11 @@ const hrZoneColors: Record<number, string> = {
     background: transparent;
   }
 
-  .day.intensity-1 { background: #bfdbfe; }
-  .day.intensity-2 { background: #93c5fd; }
-  .day.intensity-3 { background: #60a5fa; }
-  .day.intensity-4 { background: #3b82f6; }
-  .day.intensity-5 { background: #1d4ed8; }
-
-  :global([data-theme="dark"]) .day { background: var(--background-secondary); }
-  :global([data-theme="dark"]) .day.intensity-1 { background: #1e3a5f; }
-  :global([data-theme="dark"]) .day.intensity-2 { background: #1e40af; }
-  :global([data-theme="dark"]) .day.intensity-3 { background: #2563eb; }
-  :global([data-theme="dark"]) .day.intensity-4 { background: #3b82f6; }
-  :global([data-theme="dark"]) .day.intensity-5 { background: #60a5fa; }
+  .day.intensity-1 { background: var(--intensity-1); }
+  .day.intensity-2 { background: var(--intensity-2); }
+  .day.intensity-3 { background: var(--intensity-3); }
+  .day.intensity-4 { background: var(--intensity-4); }
+  .day.intensity-5 { background: var(--intensity-5); }
 
   /* 详情弹窗样式 - 使用 :global 因为内容是动态插入的 */
   :global(.run-detail-modal) {
@@ -932,7 +981,7 @@ const hrZoneColors: Record<number, string> = {
   :global(.modal-overlay) {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-bg);
     backdrop-filter: blur(4px);
   }
 
@@ -945,7 +994,7 @@ const hrZoneColors: Record<number, string> = {
     max-width: 640px;
     max-height: 90vh;
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-modal);
     animation: modalSlideIn 0.3s ease;
   }
 
@@ -1028,6 +1077,31 @@ const hrZoneColors: Record<number, string> = {
     font-weight: 600;
     padding: 0.125rem 0.5rem;
     border-radius: 4px;
+  }
+  :global(.detail-hr-zone.zone-1) {
+    background: color-mix(in srgb, var(--hr-zone-1) 12%, transparent);
+    color: var(--hr-zone-1);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-1) 25%, transparent);
+  }
+  :global(.detail-hr-zone.zone-2) {
+    background: color-mix(in srgb, var(--hr-zone-2) 12%, transparent);
+    color: var(--hr-zone-2);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-2) 25%, transparent);
+  }
+  :global(.detail-hr-zone.zone-3) {
+    background: color-mix(in srgb, var(--hr-zone-3) 12%, transparent);
+    color: var(--hr-zone-3);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-3) 25%, transparent);
+  }
+  :global(.detail-hr-zone.zone-4) {
+    background: color-mix(in srgb, var(--hr-zone-4) 12%, transparent);
+    color: var(--hr-zone-4);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-4) 25%, transparent);
+  }
+  :global(.detail-hr-zone.zone-5) {
+    background: color-mix(in srgb, var(--hr-zone-5) 12%, transparent);
+    color: var(--hr-zone-5);
+    border: 1px solid color-mix(in srgb, var(--hr-zone-5) 25%, transparent);
   }
 
   :global(.detail-stats-grid) {
@@ -1149,17 +1223,17 @@ const hrZoneColors: Record<number, string> = {
     transition: width 0.3s ease;
   }
 
-  /* 根据配速显示不同颜色：快=绿色，中=蓝色，慢=橙色/红色 */
+  /* 根据配速显示不同颜色：快=zone1，中=zone2，慢=zone4 */
   :global(.pace-bar-fill.fast) {
-    background: linear-gradient(90deg, #22c55e, #16a34a);
+    background: linear-gradient(90deg, var(--hr-zone-1), color-mix(in srgb, var(--hr-zone-1) 85%, black));
   }
 
   :global(.pace-bar-fill.medium) {
-    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    background: linear-gradient(90deg, var(--hr-zone-2), color-mix(in srgb, var(--hr-zone-2) 85%, black));
   }
 
   :global(.pace-bar-fill.slow) {
-    background: linear-gradient(90deg, #fb923c, #f97316);
+    background: linear-gradient(90deg, var(--hr-zone-4), color-mix(in srgb, var(--hr-zone-4) 85%, black));
   }
 
   :global(.pace-bar span) {
@@ -1181,32 +1255,32 @@ const hrZoneColors: Record<number, string> = {
 
   :global(.hr-zone-tag.zone-1),
   :global(.pace-tag.zone-1) {
-    background: #4ade8020;
-    color: #4ade80;
+    background: color-mix(in srgb, var(--hr-zone-1) 12%, transparent);
+    color: var(--hr-zone-1);
   }
 
   :global(.hr-zone-tag.zone-2),
   :global(.pace-tag.zone-2) {
-    background: #60a5fa20;
-    color: #60a5fa;
+    background: color-mix(in srgb, var(--hr-zone-2) 12%, transparent);
+    color: var(--hr-zone-2);
   }
 
   :global(.hr-zone-tag.zone-3),
   :global(.pace-tag.zone-3) {
-    background: #fbbf2420;
-    color: #fbbf24;
+    background: color-mix(in srgb, var(--hr-zone-3) 12%, transparent);
+    color: var(--hr-zone-3);
   }
 
   :global(.hr-zone-tag.zone-4),
   :global(.pace-tag.zone-4) {
-    background: #fb923c20;
-    color: #fb923c;
+    background: color-mix(in srgb, var(--hr-zone-4) 12%, transparent);
+    color: var(--hr-zone-4);
   }
 
   :global(.hr-zone-tag.zone-5),
   :global(.pace-tag.zone-5) {
-    background: #f8717120;
-    color: #f87171;
+    background: color-mix(in srgb, var(--hr-zone-5) 12%, transparent);
+    color: var(--hr-zone-5);
   }
 
   @media (max-width: 768px) {

@@ -43,15 +43,6 @@ const hrZoneLabels: HrZoneMap = {
   5: "Z5 最大",
 };
 
-const hrZoneColors: HrZoneMap = {
-  0: "var(--text-secondary)",
-  1: "#4ade80",
-  2: "#60a5fa",
-  3: "#fbbf24",
-  4: "#fb923c",
-  5: "#f87171",
-};
-
 function formatDuration(duration: string): string {
   const hourMatch = duration.match(/(\d+)小时/);
   const minMatch = duration.match(/(\d+)分钟/);
@@ -133,7 +124,7 @@ export function initRunningPage(): void {
           const z = run.hr_zone;
           const hrZoneBadge =
             z != null && z > 0
-              ? `<span class="hr-zone-badge" style="background-color: ${hrZoneColors[z]}20; color: ${hrZoneColors[z]}; border: 1px solid ${hrZoneColors[z]}40;">${hrZoneLabels[z]}</span>`
+              ? `<span class="hr-zone-badge zone-${z}">${hrZoneLabels[z]}</span>`
               : "";
           const vdotStat = `<div class="stat vdot-stat"><span class="stat-value">${run.vdot ?? "-"}</span><span class="stat-label">VDOT</span></div>`;
           const loadStat =
@@ -180,7 +171,7 @@ export function initRunningPage(): void {
     const hrZone = run.hr_zone;
     const hrZoneBadge =
       hrZone != null && hrZone > 0
-        ? `<span class="detail-hr-zone" style="background-color: ${hrZoneColors[hrZone]}20; color: ${hrZoneColors[hrZone]}; border: 1px solid ${hrZoneColors[hrZone]}40;">${hrZoneLabels[hrZone]}</span>`
+        ? `<span class="detail-hr-zone zone-${hrZone}">${hrZoneLabels[hrZone]}</span>`
         : "";
 
     const icons: Record<string, string> = {

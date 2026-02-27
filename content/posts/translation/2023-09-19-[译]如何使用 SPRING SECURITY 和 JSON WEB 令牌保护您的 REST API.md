@@ -156,7 +156,7 @@ public InMemoryUserDetailsManager users() {
 - JWT
 - Opaque Tokens
 
-在应用程序将其权限管理委托给[授权服务器](https://tools.ietf.org/html/rfc6749)（例如，Okta 或 [Spring 授权服务器](https://spring.io/projects/spring-authorization-server)）的情况下，这非常方便。资源服务器可以咨询该授权服务器来授权请求 ​​。
+在应用程序将其权限管理委托给[授权服务器](https://tools.ietf.org/html/rfc6749)（例如，Okta 或 [Spring 授权服务器](https://spring.io/projects/spring-authorization-server)）的情况下，这非常方便。资源服务器可以咨询该授权服务器来授权请求 。
 
 在本教程中，您将使用自签名 JWT，这将无需引入授权服务器。虽然这适用于本示例，但您的应用程序要求可能有所不同，因此什么时候不再接受使用自签名 JWT？我也向 Spring Security 团队提出了这个问题，并得到了一些非常好的答案。
 

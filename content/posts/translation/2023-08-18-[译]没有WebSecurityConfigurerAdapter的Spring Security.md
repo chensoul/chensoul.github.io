@@ -317,7 +317,7 @@ public class WebSecurityConfig {
 }
 ```
 
-在这里，在旧版本中我们注入 AuthenticationManagerBuilder，设置 userDetailsS​​ervice、passwordEncoder 并构建它。但是 AuthenticationManager 已经在这一步中创建了。它是按照我们想要的方式创建的（使用 userDetailsS​​ervice 和 passwordEncoder）。
+在这里，在旧版本中我们注入 AuthenticationManagerBuilder，设置 userDetailsService、passwordEncoder 并构建它。但是 AuthenticationManager 已经在这一步中创建了。它是按照我们想要的方式创建的（使用 userDetailsService 和 passwordEncoder）。
 
 ### 示例#4：使用 WebSecurityConfigurerAdapter
 

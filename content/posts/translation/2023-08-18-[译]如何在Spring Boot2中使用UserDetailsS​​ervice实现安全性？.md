@@ -8,19 +8,19 @@ tags: ['spring-boot', 'security']
 
 ![img](Thymeleaf_SpringSecurity-1.webp)
 
-继续上一篇[关于实现 Spring Security 的两种不同方法](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。
+继续上一篇[关于实现 Spring Security 的两种不同方法](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsService 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。
 
-然后，根据用户角色，我们将借助预定义的 UserDetailsS​​ervice 检查身份验证和授权功能。
+然后，根据用户角色，我们将借助预定义的 UserDetailsService 检查身份验证和授权功能。
 
-如果您正在寻找“如何在 Spring Boot 3 及以上版本中使用 UserDetailsS​​ervice 在 Spring Boot 中实现安全性？”，请访问有关[使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的单独文章。
+如果您正在寻找“如何在 Spring Boot 3 及以上版本中使用 UserDetailsService 在 Spring Boot 中实现安全性？”，请访问有关[使用 Spring Boot 3 的 Spring Security UserDetailsService](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的单独文章。
 
 为了说明这一点，我们将把一些角色发挥作用，并在整个过程中围绕它们进行发挥，以使其变得清晰。此外，我们将有一些页面并限制它们仅可由某些特定角色访问。同样重要的是，我们必须创建一个小型 MVC Web 应用程序，以使注册过程向用户开放。用户在注册时将输入自己的角色。然后我们可以在其之上实现安全功能。
 
-让我们开始相应的主题“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现安全性？”。
+让我们开始相应的主题“如何使用 UserDetailsService 在 Spring Boot 中实现安全性？”。
 
 ## 总体而言，您对这篇文章有何期望？
 
-1. Spring Security 上下文中的 UserDetailsS​​ervice 概念是什么？
+1. Spring Security 上下文中的 UserDetailsService 概念是什么？
 2. 实施 UserDetailsService 有什么好处？
 
 3. 如何使用 UserDetailsService 在 Spring Boot 中实现安全性？
@@ -37,9 +37,9 @@ tags: ['spring-boot', 'security']
 
 ## UserDetailsService 是做什么的？使用它有什么好处？
 
-UserDetailsS​​ervice 是 Spring 中 org.springframework.security.core.userdetails 包下的预定义接口。我们的实现类实现了这个接口并重写了它的 loadUserByUsername(String username) 方法。此方法返回 UserDetails，它又是一个接口。预定义的 User 类（org.springframework.security.core.userdetails.User）是 UserDetails 接口的实现。总之，在 loadUserByUsername(String username) 方法中，我们传递用户名，它返回我们预定义的 User 对象（org.springframework.security.core.userdetails.User）。
+UserDetailsService 是 Spring 中 org.springframework.security.core.userdetails 包下的预定义接口。我们的实现类实现了这个接口并重写了它的 loadUserByUsername(String username) 方法。此方法返回 UserDetails，它又是一个接口。预定义的 User 类（org.springframework.security.core.userdetails.User）是 UserDetails 接口的实现。总之，在 loadUserByUsername(String username) 方法中，我们传递用户名，它返回我们预定义的 User 对象（org.springframework.security.core.userdetails.User）。
 
-事实上，我们只向 UserDetailsS​​ervice 提供用户名和一些小的配置，并且我们将所有基于角色的安全功能作为框架的一部分实现。因此，我们在实施安全性方面节省了大量精力。
+事实上，我们只向 UserDetailsService 提供用户名和一些小的配置，并且我们将所有基于角色的安全功能作为框架的一部分实现。因此，我们在实施安全性方面节省了大量精力。
 
 ## 如何在我们的应用程序中实现 UserDetailsService 安全性？
 
@@ -226,7 +226,7 @@ public class SecurityConfig {
 
 ## 实现 UserDetailsService 的示例
 
-为了说明 UserDetailsS​​ervice 的实现，我们假设一个小公司的内部门户。在公司中，我们的员工扮演着各种角色，例如管理员、人力资源、经理，当然还有员工。此外，门户还具有基于角色的页面访问权限。甚至某些页面可供所有角色访问，而其他页面则仅限于某些特定角色。
+为了说明 UserDetailsService 的实现，我们假设一个小公司的内部门户。在公司中，我们的员工扮演着各种角色，例如管理员、人力资源、经理，当然还有员工。此外，门户还具有基于角色的页面访问权限。甚至某些页面可供所有角色访问，而其他页面则仅限于某些特定角色。
 
 同样重要的是，公司将有一个用户注册页面，即使没有登录，所有用户也必须可以访问该页面。现在让我们创建一个标准用户注册流程，如下所示。
 
@@ -354,7 +354,7 @@ public class AppConfig {
 
 ### 步骤#5：创建服务接口和服务实现类
 
-相应地创建服务接口和服务 Impl 类作为 IUserService.java 和 UserServiceImpl.java，如下所示。事实上，UserServiceImpl.java 中 loadUserByUsername(String email) 方法的实现是整个 UserDetailsS​​ervice 中最重要的部分。
+相应地创建服务接口和服务 Impl 类作为 IUserService.java 和 UserServiceImpl.java，如下所示。事实上，UserServiceImpl.java 中 loadUserByUsername(String email) 方法的实现是整个 UserDetailsService 中最重要的部分。
 
 IUserService.java
 
@@ -868,7 +868,7 @@ public class SecurityConfig {
 
 ## 概括
 
-在完成“如何使用 UserDetailsS​​ervice 在 Spring Boot 中实现安全性？”的所有理论和示例部分之后，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了实现安全功能的第三种方法。同样，我们将在接下来的文章中讨论更多安全方法，例如 REST 安全性。未来若有任何变化，我们将进行相应更新。
+在完成“如何使用 UserDetailsService 在 Spring Boot 中实现安全性？”的所有理论和示例部分之后，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了实现安全功能的第三种方法。同样，我们将在接下来的文章中讨论更多安全方法，例如 REST 安全性。未来若有任何变化，我们将进行相应更新。
 
 如果您想了解有关 Spring Security 的更多信息，请访问 spring.io 文档。另外，欢迎在评论区提出你的意见。
 

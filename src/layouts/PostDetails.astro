@@ -65,7 +65,10 @@ const {
 // 渲染文章内容
 const { Content } = await render(post);
 
-// 传递给 Layout 的属性
+// OG 图 slug（与 /og/[...slug].png.ts 路由一致，参考 zdyxry）
+const ogSlug = PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone);
+
+// 传递给 Layout 的属性（ogImage 使用动态生成的 /og/slug.png）
 const layoutProps = {
   title: SITE.title,
   author,
@@ -77,6 +80,7 @@ const layoutProps = {
   math,
   comments,
   mermaid: mermaid ?? false,
+  ogImage: `og/${ogSlug}.png`,
 };
 
 /* ========== Prev/Next Posts ========== */
@@ -108,31 +112,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  {comments && (
-    <link
-      slot="head"
-      rel="preconnect"
-      href="https://unpkg.com"
-      crossorigin
-    />
-  )}
-  {comments && (
-    <link
-      slot="head"
-      rel="preload"
-      href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
-      as="style"
-      onload={linkPreloadOnLoad}
-    />
-  )}
-  {comments && (
-    <noscript slot="head">
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/artalk@2.9.1/dist/Artalk.css"
-      />
-    </noscript>
-  )}
   <!-- TOC 样式（仅文章详情且启用目录时加载） -->
   {toc && (
     <link
@@ -286,7 +265,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
    * 目录（TOC）初始化：加载 tocbot，绑定到 .js-toc / .js-toc-content
    * View Transitions 后滚动到顶部，并在新页面有 TOC 时重新初始化
    */
-
   interface TocbotApi {
     init(options: {
       tocSelector: string;

@@ -798,7 +798,7 @@ public class BookController {
 
 1. `@PreAuthorize("hasRole('ROLE_USER')")` : 仅当当前主体具有 USER 角色时，我们才会收到成功响应。
 
-接下来，让我们在 Repository 类中使 ​​ 用 `@PostAuthorize` 。
+接下来，让我们在 Repository 类中使  用 `@PostAuthorize` 。
 
 ```java
 @Repository

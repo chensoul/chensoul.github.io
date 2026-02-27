@@ -4,7 +4,7 @@ export const SITE = {
   website: "https://blog.chensoul.cc",
 
   /** 作者名称，显示在文章元数据和页脚 */
-  author: "chensoul",
+  author: "ChenSoul",
 
   /** 站点描述，用于 SEO 和页面 meta 标签 */
   desc: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
@@ -27,7 +27,7 @@ export const SITE = {
   googleSiteVerification: "",
 
   /** 是否启用浅色/深色模式切换功能 */
-  lightAndDarkMode: false,
+  lightAndDarkMode: true,
 
   // ========== 分页配置 ==========
   /**

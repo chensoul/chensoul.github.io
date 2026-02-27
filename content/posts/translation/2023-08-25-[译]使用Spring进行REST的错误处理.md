@@ -139,7 +139,7 @@ public class RestResponseStatusExceptionResolver extends AbstractHandlerExceptio
 
 另一个重要的实现细节是我们返回一个 `ModelAndView`——这是响应的主体，它将允许我们对其进行必要的设置。
 
-这种方法是一种一致且易于配置的机制，用于 Spring REST 服务的错 ​​ 误处理。
+这种方法是一种一致且易于配置的机制，用于 Spring REST 服务的错  误处理。
 
 然而，它确实有局限性：它与低级 `HtttpServletResponse` 交互，并且适合使用 ModelAndView 的旧 MVC `模型`，因此仍有改进的空间。
 

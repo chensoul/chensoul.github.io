@@ -98,8 +98,8 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 <style is:global>
   #pagefind-search {
     --pagefind-ui-font: var(--font-app);
-    --pagefind-ui-text: var(--foreground);
-    --pagefind-ui-background: var(--background);
+    --pagefind-ui-text: var(--text-primary);
+    --pagefind-ui-background: var(--background-secondary);
     --pagefind-ui-border: var(--border);
     --pagefind-ui-primary: var(--accent);
     --pagefind-ui-tag: var(--background);
@@ -109,7 +109,7 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
     --pagefind-ui-image-box-ratio: 3 / 2;
 
     form::before {
-      background-color: var(--foreground);
+      background-color: var(--text-primary);
     }
 
     input {

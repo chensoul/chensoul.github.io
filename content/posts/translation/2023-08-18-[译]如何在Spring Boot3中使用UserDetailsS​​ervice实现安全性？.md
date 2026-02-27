@@ -10,11 +10,11 @@ tags: ['spring-boot', 'security']
 
 作为有关 Spring Security 的系列文章的继续，在本文中我们将学习“如何在 Spring Boot 3 中使用 UserDetailsService 实现 Spring Boot 中的安全性？”。经过前面的文章，我希望我们都非常熟悉安全性的基础知识，甚至 Spring Boot 应用程序中的安全性基础知识。 Spring Boot 3 发布后，我们将在这里实现“使用 Spring Boot 3 的 Spring Security UserDetailsService”。
 
-在本文中，我们将创建一个用户注册表单并将用户及其角色保存在数据库中。然后，根据用户角色，我们将借助预定义的 UserDetailsS​​ervice 检查身份验证和授权功能。
+在本文中，我们将创建一个用户注册表单并将用户及其角色保存在数据库中。然后，根据用户角色，我们将借助预定义的 UserDetailsService 检查身份验证和授权功能。
 
 ## 您对整篇文章有何期望？
 
-1. Spring Security 上下文中的 UserDetailsS​​ervice 概念是什么？
+1. Spring Security 上下文中的 UserDetailsService 概念是什么？
 2. 实施 UserDetailsService 有什么好处？
 
 3. 如何使用 Spring Boot 3 实现 Spring Security UserDetailsService？
@@ -30,7 +30,7 @@ tags: ['spring-boot', 'security']
 
 ## 示例中使用的软件/技术
 
-有时某些版本与其他版本冲突。因此，列出经过测试可以相互协作的组合。下面是经过测试的软件组合，用于使用 Spring Boot 3 开发 Spring Security UserDetailsS​​ervice。它也使实现完美无缺。
+有时某些版本与其他版本冲突。因此，列出经过测试可以相互协作的组合。下面是经过测试的软件组合，用于使用 Spring Boot 3 开发 Spring Security UserDetailsService。它也使实现完美无缺。
 
 1. [Spring Boot 3.0.0](https://javatechonline.com/new-features-in-spring-boot-3-and-spring-6/)
 2. JDK 17 or later
@@ -56,17 +56,17 @@ tags: ['spring-boot', 'security']
 
 ## UserDetailsService 是做什么的？使用它有什么好处？
 
-UserDetailsS​​ervice 是 Spring 框架在 org.springframework.security.core.userdetails 包下提供的预定义接口。为了使用 UserDetailsS​​ervice，我们的实现类实现了这个接口并重写了它的 loadUserByUsername(String username) 方法。该方法的返回类型是 UserDetails，它又是一个接口。预定义的 User 类（org.springframework.security.core.userdetails.User）是 UserDetails 接口的实现。此外，我们在 loadUserByUsername(String username) 方法中传递用户名，它返回我们预定义的 User 对象（org.springframework.security.core.userdetails.User）。
+UserDetailsService 是 Spring 框架在 org.springframework.security.core.userdetails 包下提供的预定义接口。为了使用 UserDetailsService，我们的实现类实现了这个接口并重写了它的 loadUserByUsername(String username) 方法。该方法的返回类型是 UserDetails，它又是一个接口。预定义的 User 类（org.springframework.security.core.userdetails.User）是 UserDetails 接口的实现。此外，我们在 loadUserByUsername(String username) 方法中传递用户名，它返回我们预定义的 User 对象（org.springframework.security.core.userdetails.User）。
 
-事实上，我们只向 UserDetailsS​​ervice 提供用户名和一些小配置。因此，我们将所有基于角色的内置安全功能作为框架的一部分实现。因此，当我们使用 UserDetailsS​​ervice 接口时，我们在实现安全性方面节省了很多精力。
+事实上，我们只向 UserDetailsService 提供用户名和一些小配置。因此，我们将所有基于角色的内置安全功能作为框架的一部分实现。因此，当我们使用 UserDetailsService 接口时，我们在实现安全性方面节省了很多精力。
 
 ## 如何将 UserDetailsService 安全性合并到我们的应用程序中？
 
-首先，您必须有一个 Spring Boot Web 应用程序，其中您将有一个表单，即一种用户注册表单。作为 Spring MVC 结构的一部分，您将拥有一个 UserService 实现类。假设它是 UserServiceImpl.java。要记住的第二件事是，您必须将 User 对象转换为预定义的 Spring User 对象。此外，请按照以下步骤在您的应用程序中实现 UserDetailsS​​ervice。
+首先，您必须有一个 Spring Boot Web 应用程序，其中您将有一个表单，即一种用户注册表单。作为 Spring MVC 结构的一部分，您将拥有一个 UserService 实现类。假设它是 UserServiceImpl.java。要记住的第二件事是，您必须将 User 对象转换为预定义的 Spring User 对象。此外，请按照以下步骤在您的应用程序中实现 UserDetailsService。
 
-**1)** 你的用户服务类‘UserServiceImpl.java’应该实现接口 UserDetailsS​​ervice.java（由 Spring 提供）
+**1)** 你的用户服务类‘UserServiceImpl.java’应该实现接口 UserDetailsService.java（由 Spring 提供）
 
-**2)** 同样重要的是，重写 UserServiceImpl 类中 UserDetailsS​​ervice 接口的 loadUserByUsername(String username) 方法。
+**2)** 同样重要的是，重写 UserServiceImpl 类中 UserDetailsService 接口的 loadUserByUsername(String username) 方法。
 
 **3)** 作为实施的一部分，
 
@@ -74,7 +74,7 @@ UserDetailsS​​ervice 是 Spring 框架在 org.springframework.security.core.
 **(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。
 **(C)** 返回 Spring 定义的 User 对象，它是 UserDetails的实现。
 
-下面的代码代表了 UserDetailsS​​ervice 的实现。但是，您将在下面的部分中看到完整的代码。
+下面的代码代表了 UserDetailsService 的实现。但是，您将在下面的部分中看到完整的代码。
 
 UserServiceImpl.java
 
@@ -213,7 +213,7 @@ public class SecurityConfig {
 
 ## 使用 Spring Boot 3 的 Spring Security UserDetailsService 示例
 
-为了简化使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice 的实现，让我们考虑一个用例。
+为了简化使用 Spring Boot 3 的 Spring Security UserDetailsService 的实现，让我们考虑一个用例。
 
 ### Use case Details 用例详细信息
 
@@ -221,7 +221,7 @@ public class SecurityConfig {
 
 不用说，该组织将有一个用户注册页面，即使没有登录，所有用户也必须可以访问该页面。现在让我们创建一个标准用户注册流程，如下所示。
 
-![Spring Security UserDetailsService Using Spring Boot 3](UserRegistrationFlow-1-20241105083905186.webp)
+![Spring Security UserDetailsService Using Spring Boot 3](UserRegistrationFlow-1.webp)
 
 ### 步骤#1：在 STS中创建一个 Spring Boot Starter 项目
 
@@ -347,7 +347,7 @@ public class AppConfig {
 
 ### 步骤#5：创建服务接口和服务实现类
 
-相应地创建服务接口和服务 Impl 类作为 IUserService.java 和 UserServiceImpl.java，如下所示。事实上，UserServiceImpl.java 中 loadUserByUsername(String email) 方法的实现是整个 UserDetailsS​​ervice 中最重要的部分。
+相应地创建服务接口和服务 Impl 类作为 IUserService.java 和 UserServiceImpl.java，如下所示。事实上，UserServiceImpl.java 中 loadUserByUsername(String email) 方法的实现是整个 UserDetailsService 中最重要的部分。
 
 IUserService.java
 
@@ -798,7 +798,7 @@ public class SecurityConfig {
 
 ## 如何使用 Spring Boot 3 将以前的实现迁移到 Spring Security UserDetailsService？
 
-以下是一些分步指南，您可以按照这些指南从旧版本实现迁移到使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice。
+以下是一些分步指南，您可以按照这些指南从旧版本实现迁移到使用 Spring Boot 3 的 Spring Security UserDetailsService。
 
 1. 根据推荐 Spring 官方文档，如果使用较低版本实现，请先将实现升级到 Spring Boot 2.7.0。我们可以通过更新 pom.xml 中的 Spring Boot 版本来做到这一点，如下所示。
 
@@ -855,7 +855,7 @@ public class SecurityConfig {
 
 ## 概括
 
-在完成“使用 Spring Boot 3 的 Spring Security UserDetailsS​​ervice”的所有理论和示例部分之后，最后，我们应该能够在 Spring Boot 项目中实现基于角色的 Web 安全性。当然，在本文中我们介绍了实现安全功能的第三种方法。同样，我们将在接下来的文章中讨论更多安全方法。未来若有任何变化，我们将进行相应更新。
+在完成“使用 Spring Boot 3 的 Spring Security UserDetailsService”的所有理论和示例部分之后，最后，我们应该能够在 Spring Boot 项目中实现基于角色的 Web 安全性。当然，在本文中我们介绍了实现安全功能的第三种方法。同样，我们将在接下来的文章中讨论更多安全方法。未来若有任何变化，我们将进行相应更新。
 
 如果您想了解 Spring Boot 3.0 中的新增功能，请访问我们关于“Spring Boot 3 中的新功能”的单独文章。另外，欢迎在评论区提出你的意见。
 

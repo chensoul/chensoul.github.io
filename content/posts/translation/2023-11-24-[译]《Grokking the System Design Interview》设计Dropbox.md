@@ -32,7 +32,7 @@ Cloud file storage services have become very popular recently as they simplify t
 
 **Scalability:** Users will never have to worry about getting out of storage space. With cloud storage you have unlimited storage as long as you are ready to pay for it.
 
-> 可扩展性：用户永远不必担心存储空间不足。使用云存储，只要您准备好付费，您就可以拥有无​​限的存储空间。
+> 可扩展性：用户永远不必担心存储空间不足。使用云存储，只要您准备好付费，您就可以拥有无限的存储空间。
 
 If you haven’t used dropbox.com before, we would highly recommend creating an account there and uploading/editing a file and also going through the different options their service offers. This will help you a lot in understanding this chapter.
 

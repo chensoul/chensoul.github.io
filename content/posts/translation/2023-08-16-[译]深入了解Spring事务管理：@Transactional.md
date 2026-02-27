@@ -148,7 +148,7 @@ public class UserService {
     </tx:advice>
 ```
 
-您使用上面的 XML 块指定 AOP 建议（面向方面 ​​ 的编程），然后可以将其应用到 UserService bean，如下所示：
+您使用上面的 XML 块指定 AOP 建议（面向方面  的编程），然后可以将其应用到 UserService bean，如下所示：
 
 ```xml
 <aop:config>

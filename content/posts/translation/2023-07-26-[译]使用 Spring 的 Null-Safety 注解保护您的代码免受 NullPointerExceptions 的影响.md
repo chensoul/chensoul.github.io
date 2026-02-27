@@ -114,7 +114,7 @@ import org.springframework.lang.NonNullFields;
 
 现在，我们不再需要使用 `@NonNull` 注释来注释字段。因为默认情况下，该包中类的所有字段现在都被视为非空。而且，我们仍然会看到与以前相同的警告：
 
-![IDE warning for NonNullFields](nonnull-ide-warning_hu5348352c54dfc5689093e49bbc5394b7_33745_1138x0_resize_box_3.webp)
+![IDE warning for NonNullFields](spring-boot-null-safety-annotations-04.webp)
 
 这里要注意的另一点是，如果有任何未初始化的字段，那么我们将看到初始化这些字段的警告：
 

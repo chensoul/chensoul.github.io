@@ -1,18 +1,49 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/*
+ * 全站主题：变量名与配色参考 https://zdyxry.github.io/
+ *
+ * 文字与背景
+ * --text-primary / --text-secondary  主/次文字色
+ * --background / --background-secondary  主内容区 / 页面外层背景
+ * --accent / --accent-dark  强调色及深色变体
+ *
+ * 灰度（RGB 三元组，用于 rgba(var(--black), 0.1) 或 rgb(var(--gray-light))）
+ * --black       深色（阴影、遮罩等） light: 15,23,42  dark: 15,23,42
+ * --gray        中灰（次要边框、图标）
+ * --gray-light  浅灰（弱化背景、code/表格背景）→ 替代原 --muted
+ * --gray-dark   深灰（暗色主题下的浅块）
+ *
+ * --border      边框色（hex）
+ * --shadow-frame  主内容区投影（使用 rgba(var(--black), α)）
+ */
 :root,
 html[data-theme="light"] {
-  --background: #f9f8f6;
-  --foreground: #282728;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
   --accent: #2563eb;
-  --muted: #e5e7eb;
-  --border: #e5e7eb;
+  --accent-dark: #1d4ed8;
+  --black: 15, 23, 42;
+  --gray: 100, 116, 139;
+  --gray-light: 241, 245, 249;
+  --gray-dark: 71, 85, 105;
+  --border: #e2e8f0;
+  --shadow-frame: 0 8px 24px rgba(var(--black), 0.08);
 }
 
 html[data-theme="dark"] {
-  --background: #302e2c;
-  --foreground: #eaedf3;
-  --accent: #d19a66;
-  --muted: #374151;
-  --border: #374151;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --background: #1e293b;
+  --background-secondary: #0f172a;
+  --accent: #60a5fa;
+  --accent-dark: #93c5fd;
+  --black: 15, 23, 42;
+  --gray: 148, 163, 184;
+  --gray-light: 51, 65, 85;
+  --gray-dark: 30, 41, 59;
+  --border: #475569;
+  --shadow-frame: 0 8px 24px rgba(var(--black), 0.35);
 }

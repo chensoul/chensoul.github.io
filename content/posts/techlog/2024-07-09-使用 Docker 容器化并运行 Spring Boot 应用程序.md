@@ -301,7 +301,7 @@ $ curl  --request GET \
 
 您将使用 IntelliJ IDEA 自带的调试器。您可以使用此 IDE 的社区版本。在 IntelliJ IDEA 中打开您的项目，转到**“运行”**菜单，然后**转到“编辑配置”**。添加类似于以下内容的新远程 JVM 调试配置：
 
-![Java 连接调试器](https://docs.docker.com/guides/java/images/connect-debugger.webp)
+![Java 连接调试器](connect-debugger.webp)
 
 设置断点。
 
@@ -309,11 +309,11 @@ $ curl  --request GET \
 
 要启动调试会话，请选择**运行**菜单，然后**选择调试\*NameOfYourConfiguration\***。
 
-![调试菜单](https://docs.docker.com/guides/java/images/debug-menu.webp)
+![调试菜单](debug-menu.webp)
 
 您现在应该可以在 Compose 应用程序的日志中看到该连接。
 
-![撰写日志文件](https://docs.docker.com/guides/java/images/compose-logs.webp)
+![撰写日志文件](compose-logs.webp)
 
 您现在可以调用服务器端点。
 
@@ -323,7 +323,7 @@ $ curl --request GET --url http://localhost:8080/vets
 
 您应该已经看到代码在标记的行上中断，现在您可以像平常一样使用调试器。您还可以检查和观察变量、设置条件断点、查看堆栈跟踪以及执行许多其他操作。
 
-![调试器代码断点](https://docs.docker.com/guides/java/images/debugger-breakpoint.webp)
+![调试器代码断点](debugger-breakpoint.webp)
 
 按下`ctrl+c`终端即可停止您的应用程序。
 
