@@ -8,9 +8,10 @@ import sharp from 'sharp';
 /** 与 src/styles/base.css 中 @import 的 @fontsource/noto-sans-sc 一致，OG 图与站点同字体 */
 const require = createRequire(import.meta.url);
 const notoSansScDir = path.dirname(require.resolve('@fontsource/noto-sans-sc/package.json'));
+/** Satori 不支持 WOFF2（会报 Unsupported OpenType signature wOF2），使用 .woff */
 const fontFiles = {
-  regular: path.join(notoSansScDir, 'files', 'noto-sans-sc-chinese-simplified-400-normal.woff2'),
-  bold: path.join(notoSansScDir, 'files', 'noto-sans-sc-chinese-simplified-700-normal.woff2'),
+  regular: path.join(notoSansScDir, 'files', 'noto-sans-sc-chinese-simplified-400-normal.woff'),
+  bold: path.join(notoSansScDir, 'files', 'noto-sans-sc-chinese-simplified-700-normal.woff'),
 };
 
 const avatarDir = path.join(process.cwd(), 'public/images');
