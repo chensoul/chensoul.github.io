@@ -288,18 +288,6 @@ import { SITE } from "@/config";
     }
 
     /**
-     * 页面切换前清理
-     *
-     * 清理工作：
-     * 1. 销毁 Artalk 实例
-     * 2. 断开所有观察器
-     */
-    function handleBeforeSwap() {
-      destroyArtalk();
-      cleanupObservers();
-    }
-
-    /**
      * 单次设置事件监听
      *
      * 避免重复绑定事件
