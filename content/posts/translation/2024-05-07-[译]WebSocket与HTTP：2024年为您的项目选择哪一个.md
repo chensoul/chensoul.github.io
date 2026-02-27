@@ -90,7 +90,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 这不仅浪费带宽和服务器资源，而且在最近的请求完成后不久更新就会中断 - 可能需要几秒钟才能发送下一个请求并且用户获得更新。一般来说，这种方法称为[HTTP 轮询](https://ably.com/topic/long-polling)，它既不高效也不实时！ 
 
-![img](http-long-polling-20241105080917667.webp)
+![img](http-long-polling.webp)
 
 
 相反，如果服务器能够在新信息可用时将数据推送到客户端，那就更好了，但这从根本上违背了请求-响应模式的原则。 
@@ -111,7 +111,7 @@ HTTP 遵循请求-响应消息传递模式，其中客户端发出请求，Web �
 
 使用 HTTP 流，服务器必须维护大量长期连接的状态，并且不能再被视为无状态。这给扩展 HTTP 流带来了新的挑战，并且还带来了单点故障。 
 
-![img](server_sent_events_how_it_works-20241105080916892.webp)
+![img](server_sent_events_how_it_works.webp)
 
 **HTTP 流式传输的缺点**
 

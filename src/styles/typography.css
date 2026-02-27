@@ -12,7 +12,7 @@
   .prose h4,
   .prose h5,
   .prose h6 {
-    color: var(--foreground) !important;
+    color: var(--text-primary) !important;
   }
 
   /* h2 上边距缩小 */
@@ -24,7 +24,7 @@
   html[data-theme="dark"] .prose h4,
   html[data-theme="dark"] .prose h5,
   html[data-theme="dark"] .prose h6 {
-    color: var(--foreground) !important;
+    color: var(--text-primary) !important;
   }
 
   /* inline code */

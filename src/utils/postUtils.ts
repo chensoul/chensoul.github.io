@@ -351,7 +351,7 @@ export class PostUtils {
         new Date(date),
         timeZone ?? SITE.timezone
       ).split("-");
-      return [basePath, yyyy, mm, dd, slug].join("/");
+      return [basePath, yyyy, mm, dd, slug].filter(Boolean).join("/");
     }
 
     const pathSegments = filePath
@@ -363,9 +363,9 @@ export class PostUtils {
       .map(segment => slugifyStr(segment));
 
     if (!pathSegments || pathSegments.length < 1) {
-      return [basePath, slug].join("/");
+      return [basePath, slug].filter(Boolean).join("/");
     }
-    return [basePath, ...pathSegments, slug].join("/");
+    return [basePath, ...pathSegments, slug].filter(Boolean).join("/");
   }
 
   /**

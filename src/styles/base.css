@@ -22,11 +22,12 @@
 
 /* ========== 主题（Tailwind @theme + 组件覆盖） ========== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--background-secondary);
+  --color-content-background: var(--background);
+  --color-foreground: var(--text-primary);
   --color-accent: var(--accent);
-  --color-muted: var(--muted);
-  --color-text-muted: var(--text-muted);
+  --color-muted: rgb(var(--gray-light));
+  --color-text-muted: var(--text-secondary);
   --color-border: var(--border);
 }
 
@@ -44,11 +45,16 @@
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
-    background-color: var(--background);
+    background-color: var(--background-secondary);
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col font-sans text-foreground selection:bg-accent/75 selection:text-background;
     font-family: var(--font-sans), var(--font-emoji);
+    background-color: var(--background-secondary);
+  }
+  #site-frame {
+    background-color: var(--background);
+    box-shadow: var(--shadow-frame);
   }
   a,
   button {
@@ -67,7 +73,8 @@
 
 @layer utilities {
   #sidebar {
-    @apply fixed z-40 transform overflow-y-auto bg-background text-sm;
+    @apply fixed z-40 transform overflow-y-auto text-sm;
+    background-color: var(--background);
   }
 
   @media (max-width: 1023px) {
@@ -81,7 +88,7 @@
   }
 
   @media (min-width: 1300px) {
-    /* TOC 在 site-frame 外，固定于视口右侧 */
+    /* TOC 在 site-frame 外，固定于视口右侧，与主内容区同色 */
     #sidebar {
       position: fixed;
       top: 6rem;
@@ -99,14 +106,14 @@
 
   .toc-list-item {
     @apply truncate overflow-hidden whitespace-nowrap;
-    color: var(--foreground);
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
   }
   .toc-list-item:last-child {
     margin-bottom: 0;
   }
   .toc-link {
-    color: var(--foreground);
+    color: var(--text-primary);
     display: block;
     padding: 0.125rem 0;
     line-height: 1.4;
@@ -121,13 +128,13 @@
 
   #sidebar #back-to-top svg,
   #sidebar #back-to-top span {
-    color: var(--foreground);
+    color: var(--text-primary);
   }
 }
 
-/* View Transitions: match root group background to theme to avoid white flash
+/* View Transitions: match root group background to theme to avoid white flash */
 ::view-transition-group(root) {
-  background: color-mix(in srgb, var(--background) 92%, var(--foreground));
+  background: var(--background-secondary);
 }
 ::view-transition-old(*),
 ::view-transition-new(*) {
@@ -139,7 +146,6 @@
     animation-duration: 0.01ms;
   }
 }
-*/
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */

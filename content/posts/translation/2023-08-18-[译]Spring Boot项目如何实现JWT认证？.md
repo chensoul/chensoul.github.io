@@ -8,7 +8,7 @@ tags: ['spring-boot', 'security']
 
 ![How to implement JWT Authentication in Spring Boot Project?](JWT_With_SpringBoot-1.webp)
 
-没有人可以否认这样一个事实：安全性是生产就绪应用程序的一项重要功能。尽管我们可以[使用内存身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)、[JDBC 身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)或通过 [UserDetailsS](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)​​ervice 来保护一个 Web 应用程序的安全。但是，当一个应用程序在内部使用其他应用程序的服务时，使用 Web 服务概念实现安全性就变得很重要。在这种情况下，我们使用具有特定有效期的令牌来保护我们的应用程序。此外，我们将学习“如何在 Spring Boot 项目中实现 JWT 身份验证？”以整体了解 JWT（JSON Web Token）身份验证背后的概念。
+没有人可以否认这样一个事实：安全性是生产就绪应用程序的一项重要功能。尽管我们可以[使用内存身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)、[JDBC 身份验证](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)或通过 [UserDetailsS](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)ervice 来保护一个 Web 应用程序的安全。但是，当一个应用程序在内部使用其他应用程序的服务时，使用 Web 服务概念实现安全性就变得很重要。在这种情况下，我们使用具有特定有效期的令牌来保护我们的应用程序。此外，我们将学习“如何在 Spring Boot 项目中实现 JWT 身份验证？”以整体了解 JWT（JSON Web Token）身份验证背后的概念。
 
 由于 JWT 代表“JSON Web Token”，很明显，该令牌仅以 JSON 形式保存数据。
 
@@ -58,7 +58,7 @@ tags: ['spring-boot', 'security']
 
 ## 什么是令牌、JWT 身份验证是什么以及使用它的好处是什么？
 
-简单来说，Token 就是一种编码格式的数据。它可以使用密钥（一种密码）生成。 JWT 是“JSON Web Token”的缩写，它是生成令牌的标准机制。它定义了一种紧凑且独立的方式，以 JSON 对象的形式在各 ​​ 方（多个服务器）之间安全地传输信息。 JWT 由三部分组成：标头、有效负载和签名。每个部分都用逗号分隔。它是一个开源 API。
+简单来说，Token 就是一种编码格式的数据。它可以使用密钥（一种密码）生成。 JWT 是“JSON Web Token”的缩写，它是生成令牌的标准机制。它定义了一种紧凑且独立的方式，以 JSON 对象的形式在各  方（多个服务器）之间安全地传输信息。 JWT 由三部分组成：标头、有效负载和签名。每个部分都用逗号分隔。它是一个开源 API。
 
 JWT 概念不仅存在于 Java 中，也存在于其他语言中。
 

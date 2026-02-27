@@ -49,8 +49,6 @@ Spring Security 与其他框架和库无缝集成，以增强应用程序的安�
 
 当谈到 Spring Security 时，几个核心组件在为 Java 应用程序提供安全功能方面发挥着至关重要的作用。这些组件协同工作以确保强大的身份验证、授权和其他安全功能。
 
-![Spring-Security-Architechture](Spring-Security-Architechture.svg)
-
 ### 2.1.委托过滤代理
 
 `DelegatingFilterProxy`是 Spring 框架提供的一个特殊的 Servlet Filter。它充当处理安全相关请求的入口点。当收到请求时，`DelegatingFilterProxy` 将请求委托给 Spring FilterChainProxy bean 进行进一步处理（`springSecurityFilterChain` bean）。 `FilterChainProxy` 利用`SecurityFilterChain` 来确定为当前请求调用的适当的过滤器集。
@@ -102,7 +100,7 @@ Spring Security 中的一些重要安全过滤器包括：
 - `UsernamePasswordAuthenticationFilter` 提取用户名和密码并创建一个 Authentication 对象（来自 `UsernamePasswordAuthenticationToken` 的实例）。
 - 然后将 `Authentication` 对象传递给 `AuthenticationManager`。
 - `AuthenticationManager` 将身份验证过程委托给一个或多个 `AuthenticationProvider`。
-- `AuthenticationProvider` 使用具有方法 `loadUserByUsername(username)` 的 `UserDetailsS`​​ervice bean 验证凭据。它返回包含用户数据的 `UserDetails` 对象。如果没有找到具有给定用户名的用户，则抛出 `UsernameNotFoundException` 。
+- `AuthenticationProvider` 使用具有方法 `loadUserByUsername(username)` 的 `UserDetailsS`ervice bean 验证凭据。它返回包含用户数据的 `UserDetails` 对象。如果没有找到具有给定用户名的用户，则抛出 `UsernameNotFoundException` 。
 - 如果身份验证成功，则将包含经过身份验证的用户信息的 `Authentication` 对象返回到 `AuthenticationManager`。
 - `AuthenticationManager` 将经过身份验证的 `Authentication` 对象存储在 `SecurityContext` 中。
 - 安全上下文通常存储在线程局部变量中，使其可以在整个应用程序中访问。
@@ -145,7 +143,7 @@ public Authentication authenticate(Authentication authentication) throws Authent
 
 ## 6.什么是密码编码器？默认编码器是什么？
 
-`PasswordEncoder` 是一个用于使用 `encode()` 和 `matches() `方法对密码进行编码和验证的接口。它负责获取用户的密码，应用单向哈希算法，并安全地存储哈希密码。当用户尝试登录时，输入的密码会使用相同的算法再次进行哈希处理，并将生成的哈希值与存储的哈希密码进行比较以进行身份 ​​ 验证。
+`PasswordEncoder` 是一个用于使用 `encode()` 和 `matches() `方法对密码进行编码和验证的接口。它负责获取用户的密码，应用单向哈希算法，并安全地存储哈希密码。当用户尝试登录时，输入的密码会使用相同的算法再次进行哈希处理，并将生成的哈希值与存储的哈希密码进行比较以进行身份  验证。
 
 默认密码编码器是 `BCryptPasswordEncoder`。 BCrypt 是一种广泛使用的安全哈希算法，它结合了加盐和成本因素，以防止各种类型的攻击，包括暴力攻击。 `BCryptPasswordEncoder` 是密码存储的不错选择，因为它提供了高级别的安全性。
 
@@ -353,7 +351,7 @@ OAuth2 是一个授权框架，允许应用程序获得对用户帐户的有限�
 
 授权服务器负责对用户进行身份验证并颁发访问令牌。在 Spring Security 中，我们可以使用 AuthorizationServerConfigurerAdapter 类来配置授权服务器。
 
-以下类设置授权服务器，定义安全约束，并配置可以访问服务器的客户端以获取访问令牌以进行身份 ​​ 验证和授权。
+以下类设置授权服务器，定义安全约束，并配置可以访问服务器的客户端以获取访问令牌以进行身份  验证和授权。
 
 ```java
 @Configuration

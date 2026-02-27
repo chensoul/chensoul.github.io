@@ -216,7 +216,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
         "hidden", // 移动端默认隐藏
         "my-2 flex flex-wrap gap-2",
         "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-0 sm:[&>li>a]:py-1",
-        "[&>li>a]:text-sm [&>li>a]:text-[var(--foreground)]",
+        "[&>li>a]:text-sm [&>li>a]:text-[var(--text-primary)]",
         "sm:flex sm:gap-x-5 sm:gap-y-0", // 桌面端横向展开
         // 移动端全屏靠上垂直排列，减少上方空白
         "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:mx-0 max-sm:my-0 max-sm:flex-col max-sm:items-center max-sm:justify-start max-sm:pt-[14%] max-sm:gap-1",
@@ -354,7 +354,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
     position: fixed;
     inset: 0;
     z-index: 40;
-    background-color: var(--background);
+    background-color: var(--background-secondary);
     /* 动画：与页面切换动画时长一致 */
     opacity: 0;
     visibility: hidden;
@@ -371,7 +371,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
   /* 移动端全屏菜单面板：显式背景，避免透过看到底层闪白 */
   @media (max-width: 640px) {
     #menu-items {
-      background-color: var(--background);
+      background-color: var(--background-secondary);
     }
   }
 
@@ -386,7 +386,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 
   /* 当悬停下拉菜单时，移除"更多"的激活颜色 */
   .dropdown-container:hover .dropdown-trigger.active-nav {
-    color: var(--foreground) !important;
+    color: var(--text-primary) !important;
   }
 
   /* 移动端禁用 clip-path 动画 */
@@ -398,7 +398,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
     /* 移动端菜单：与桌面端一致，默认前景色，当前项为主色 */
     #menu-items a,
     #menu-items button {
-      color: var(--foreground) !important;
+      color: var(--text-primary) !important;
     }
 
     #menu-items a.active-nav,

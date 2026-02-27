@@ -51,13 +51,13 @@ tags: ['spring-boot', 'security']
 
 AuthenticationManager 由 ProviderManager 实现，后者将流程委托给一个或多个 AuthenticationProvider 实例。任何实现 AuthenticationProvider 接口的类都必须实现两个方法——authenticate() 和 supports()。首先，我们来谈谈 supports()方法。它用于检查我们的 AuthenticationProvider 实现类是否支持特定的身份验证类型。如果支持则返回 true，否则返回 false。
 
-接下来是 authenticate() 方法。这是身份验证发生的地方。如果支持该认证类型，则启动认证过程。这里这个类可以使用 UserDetailsS​​ervice 实现的 loadUserByUsername() 方法。如果未找到用户，则会抛出 UsernameNotFoundException。
+接下来是 authenticate() 方法。这是身份验证发生的地方。如果支持该认证类型，则启动认证过程。这里这个类可以使用 UserDetailsService 实现的 loadUserByUsername() 方法。如果未找到用户，则会抛出 UsernameNotFoundException。
 
 另一方面，如果找到用户，则使用该用户的身份验证详细信息来验证该用户。例如，在基本认证场景中，可以将用户提供的密码与数据库中的密码进行核对。如果发现它们彼此匹配，则说明成功。然后我们可以从此方法返回一个 Authentication 对象，该对象将存储在安全上下文中，我们将在稍后讨论。
 
 ### UserDetailsService 用户详情服务
 
-它是 Spring Security 的核心接口之一。任何请求的身份验证主要取决于 UserDetailsS​​ervice 接口的实现。它最常用于数据库支持的身份验证中以检索用户数据。通过单独的 loadUserByUsername() 方法的实现来检索数据，我们可以在其中提供逻辑来获取用户的用户详细信息。如果未找到用户，该方法将抛出 UsernameNotFoundException。
+它是 Spring Security 的核心接口之一。任何请求的身份验证主要取决于 UserDetailsService 接口的实现。它最常用于数据库支持的身份验证中以检索用户数据。通过单独的 loadUserByUsername() 方法的实现来检索数据，我们可以在其中提供逻辑来获取用户的用户详细信息。如果未找到用户，该方法将抛出 UsernameNotFoundException。
 
 ### 密码编码器
 
@@ -85,7 +85,7 @@ Spring Security 只需要了解登录表单的详细信息，例如登录表单�
 
 ### 使用数据库登录
 
-正如我们所讨论的，Spring Security 默认情况下自动提供内存中身份验证实现。我们可以通过验证其详细信息存储在数据库中的用户来覆盖这一点。在这种情况下，在对用户进行身份验证时，我们可以根据数据库中的凭据验证用户提供的凭据以进行身份 ​​ 验证。我们还可以让新用户在我们的应用程序中注册并将他们的凭据存储在同一数据库中。
+正如我们所讨论的，Spring Security 默认情况下自动提供内存中身份验证实现。我们可以通过验证其详细信息存储在数据库中的用户来覆盖这一点。在这种情况下，在对用户进行身份验证时，我们可以根据数据库中的凭据验证用户提供的凭据以进行身份  验证。我们还可以让新用户在我们的应用程序中注册并将他们的凭据存储在同一数据库中。
 
 此外，我们还可以提供更改或更新其密码、角色或其他数据的方法。因此，这为我们提供了可以使用更长时间的持久用户数据。
 
@@ -481,7 +481,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
 现在，我们将设置身份验证过程。我们将使用数据库设置身份验证并锁定用户帐户。
 
-让我们首先创建 UserDetailsS​​ervice 的实现。正如我们之前讨论的，我们需要提供使用数据库进行身份验证的自定义实现。这是因为，正如我们所知，Spring Security 默认情况下仅提供内存中的身份验证实现。因此，我们需要使用基于数据库的流程来覆盖该实现。为此，我们需要重写 UserDetailsS​​ervice 的 loadUserByUsername() 方法。
+让我们首先创建 UserDetailsService 的实现。正如我们之前讨论的，我们需要提供使用数据库进行身份验证的自定义实现。这是因为，正如我们所知，Spring Security 默认情况下仅提供内存中的身份验证实现。因此，我们需要使用基于数据库的流程来覆盖该实现。为此，我们需要重写 UserDetailsService 的 loadUserByUsername() 方法。
 
 ### 用户详情服务
 
@@ -602,7 +602,7 @@ import com.tutorial.spring.security.formlogin.repository.UserRepository;
 }
 ```
 
-- authenticate() - 此方法返回一个经过完全身份验证的对象，包括成功身份验证时的凭据。然后将该对象存储在 SecurityContext 中。为了执行身份验证，我们将使用应用程序的 SecurityUserDetailsS​​ervice 类的 loaduserByUsername() 方法。在这里我们执行多项操作 -
+- authenticate() - 此方法返回一个经过完全身份验证的对象，包括成功身份验证时的凭据。然后将该对象存储在 SecurityContext 中。为了执行身份验证，我们将使用应用程序的 SecurityUserDetailsService 类的 loaduserByUsername() 方法。在这里我们执行多项操作 -
 
 - - 首先，我们从身份验证请求对象中提取用户凭据，该对象作为参数传递给我们的函数。该身份验证对象由 AuthenticationFilter 类准备，并通过 AuthenticationManager 向下传递到 AuthenticationProvider。
 
@@ -626,7 +626,7 @@ import com.tutorial.spring.security.formlogin.repository.UserRepository;
 
 ### 控制器
 
-现在让我们创建控制器包。它将包含我们的 HelloController 类。使用这个控制器类，我们将把视图映射到端点，并在命中相应的端点时提供这些视图。我们还将自动装配该组件中的 PasswordEncoder 和 UserDetailsS​​ervice 类。这些注入的依赖项将用于创建我们的用户。现在让我们创建端点。
+现在让我们创建控制器包。它将包含我们的 HelloController 类。使用这个控制器类，我们将把视图映射到端点，并在命中相应的端点时提供这些视图。我们还将自动装配该组件中的 PasswordEncoder 和 UserDetailsService 类。这些注入的依赖项将用于创建我们的用户。现在让我们创建端点。
 
 ```java
 package com.tutorial.spring.security.formlogin.controller;
@@ -820,6 +820,6 @@ public class HelloController {
 
 ## **结论**
 
-从今天的文章中，我们学习了如何使用基于注释的配置使用数据库来使用自定义表单进行登录。我们还学习了如何防止多次登录尝试失败。在这样做的过程中，我们已经看到了如何实现我们自己的 AuthenticationProvider 和 UserDetailsS​​ervice 来使用我们的自定义身份验证流程对用户进行身份验证。
+从今天的文章中，我们学习了如何使用基于注释的配置使用数据库来使用自定义表单进行登录。我们还学习了如何防止多次登录尝试失败。在这样做的过程中，我们已经看到了如何实现我们自己的 AuthenticationProvider 和 UserDetailsService 来使用我们的自定义身份验证流程对用户进行身份验证。
 
 原文链接：[https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm](https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm)

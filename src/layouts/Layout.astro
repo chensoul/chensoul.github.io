@@ -72,9 +72,15 @@ const {
 
 const fullDescription = description;
 
-// 社交分享图：文章可传 ogImage 覆盖，否则用站点默认（参考 astro-paper）
-const ogImage = ogImageProp ?? (SITE.ogImage ? `/${SITE.ogImage}` : "/og.png");
-const socialImageURL = new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, Astro.url);
+// 社交分享图：仅文章页传 ogImage 时有图（PostDetails 传 og/.../slug.png），非文章页不输出 og:image
+const ogImage = ogImageProp ?? "";
+const hasOgImage = Boolean(ogImage);
+const socialImageURL = hasOgImage
+  ? new URL(ogImage.startsWith("/") ? ogImage : `/${ogImage}`, Astro.url)
+  : null;
+/** OG 图尺寸（与 utils/og-image.ts 生成一致） */
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
 
 /**
  * 结构化数据（JSON-LD）
@@ -86,7 +92,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${title}`,
-  image: `${socialImageURL}`,
+  ...(hasOgImage && socialImageURL && { image: `${socialImageURL}` }),
   datePublished: `${pubDatetime?.toISOString()}`,
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
   author: [
@@ -101,17 +107,12 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 参考 astro-paper：首字节内联脚本设置 data-theme，防止闪白 -->
+    <!-- 主题首屏防 FOUC：与 zdyxry 一致，localStorage.getItem('theme') || 'light'，不跟随系统偏好 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function(){
-        let theme="light";
-        if(lightAndDarkMode){
-          const cur=localStorage.getItem("theme");
-          theme=(cur==="dark"||cur==="light")?cur:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
-        }
-        document.documentElement.setAttribute("data-theme",theme);
-        document.documentElement.style.backgroundColor=theme==="dark"?"#302e2c":"#f9f8f6";
-        window.theme={themeValue:theme};
+        const theme = lightAndDarkMode ? (localStorage.getItem("theme") || "light") : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+        window.theme = { themeValue: theme };
       })();
     </script>
     <meta charset="UTF-8" />
@@ -125,13 +126,20 @@ const structuredData = {
     <meta name="title" content={title} />
     <meta name="description" content={fullDescription} />
     <meta name="author" content={author} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={fullDescription} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={socialImageURL} />
+    {hasOgImage && socialImageURL && (
+      <>
+        <meta property="og:image" content={socialImageURL} />
+        <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+        <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+        <meta property="og:image:alt" content={title} />
+      </>
+    )}
     <meta property="og:locale" content={SITE.langOg} />
     <meta property="og:type" content="website" />
 
@@ -154,11 +162,16 @@ const structuredData = {
     }
 
     <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:card" content={hasOgImage ? "summary_large_image" : "summary"} />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={fullDescription} />
-    <meta property="twitter:image" content={socialImageURL} />
+    {hasOgImage && socialImageURL && (
+      <>
+        <meta property="twitter:image" content={socialImageURL} />
+        <meta property="twitter:image:alt" content={title} />
+      </>
+    )}
 
     <!-- Google JSON-LD Structured data -->
     <script
@@ -191,8 +204,87 @@ const structuredData = {
     <!-- View transitions: https://docs.astro.build/en/guides/view-transitions/-->
     <ClientRouter />
 
-    <script>
-      import "@/scripts/theme";
+    <!-- 主题切换：与参考站 zdyxry 一致，仅内联脚本，localStorage 不跟随系统偏好；含 theme-color、view transitions 同步 -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+      (function () {
+        if (!lightAndDarkMode) return;
+        const THEME_KEY = "theme";
+        const LIGHT = "light";
+        const DARK = "dark";
+        const themeBtnSel = "#theme-btn";
+        const themeColorMetaSel = "meta[name=\"theme-color\"]";
+
+        function getTheme() {
+          const stored = localStorage.getItem(THEME_KEY);
+          return stored === LIGHT || stored === DARK ? stored : document.documentElement.getAttribute("data-theme") || LIGHT;
+        }
+        function setTheme(val) {
+          window._themeValue = val;
+          if (window.theme) window.theme.themeValue = val;
+        }
+        function reflectPreference() {
+          const val = window._themeValue != null ? window._themeValue : getTheme();
+          if (window._themeValue == null) window._themeValue = val;
+          document.documentElement.setAttribute("data-theme", val);
+          const btn = document.querySelector(themeBtnSel);
+          if (btn) btn.setAttribute("aria-label", val);
+          const meta = document.querySelector(themeColorMetaSel);
+          if (meta && document.body) {
+            const bg = window.getComputedStyle(document.body).backgroundColor;
+            if (bg) meta.setAttribute("content", bg);
+          }
+        }
+        function setPreference() {
+          const val = window._themeValue != null ? window._themeValue : getTheme();
+          localStorage.setItem(THEME_KEY, val);
+          reflectPreference();
+        }
+        function setupThemeButton() {
+          window._themeValue = window._themeValue != null ? window._themeValue : getTheme();
+          if (window.theme) {
+            window.theme.themeValue = window._themeValue;
+            window.theme.getTheme = getTheme;
+            window.theme.setTheme = setTheme;
+            window.theme.reflectPreference = reflectPreference;
+            window.theme.setPreference = setPreference;
+          }
+          reflectPreference();
+          const btn = document.querySelector(themeBtnSel);
+          if (!btn) return;
+          btn.addEventListener("click", function () {
+            const next = window._themeValue === LIGHT ? DARK : LIGHT;
+            setTheme(next);
+            setPreference();
+          });
+        }
+        function onBeforeSwap(e) {
+          const newDoc = e.newDocument;
+          const theme = document.documentElement.getAttribute("data-theme") || (localStorage.getItem(THEME_KEY) === DARK ? DARK : LIGHT);
+          newDoc.documentElement.setAttribute("data-theme", theme);
+          const curMeta = document.querySelector(themeColorMetaSel);
+          if (curMeta && curMeta.getAttribute("content")) {
+            const newMeta = newDoc.querySelector(themeColorMetaSel);
+            if (newMeta) newMeta.setAttribute("content", curMeta.getAttribute("content"));
+          }
+        }
+        window._themeValue = window.theme && window.theme.themeValue != null ? window.theme.themeValue : getTheme();
+        window.theme = window.theme || {};
+        window.theme.themeValue = window._themeValue;
+        window.theme.getTheme = getTheme;
+        window.theme.setTheme = setTheme;
+        window.theme.reflectPreference = reflectPreference;
+        window.theme.setPreference = setPreference;
+        function runWhenReady() {
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", setupThemeButton);
+          } else {
+            setupThemeButton();
+          }
+        }
+        runWhenReady();
+        document.addEventListener("astro:after-swap", setupThemeButton);
+        document.addEventListener("astro:before-swap", function (e) { onBeforeSwap(e); });
+      })();
     </script>
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
@@ -202,7 +294,7 @@ const structuredData = {
   <body>
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:px-8 sm:pt-4 sm:shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
+      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:px-8 sm:pt-4"
     >
       <!-- 插槽：子布局内容 -->
       <slot />

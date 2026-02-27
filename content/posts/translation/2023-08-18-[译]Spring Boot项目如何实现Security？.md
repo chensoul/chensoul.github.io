@@ -102,7 +102,7 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 
 ### 使用用户详细信息服务
 
-我们将数据存储在数据库中，并在请求到来时验证数据。但 UserDetailsS​​ervice 是基于 ORM（Spring Data JPA）工作的。简而言之，UserDetailsS​​ervice 是 Spring Security 模块提供的一个接口。在登录表单中输入用户名后，当我们单击登录按钮时，将调用该服务。随后，它根据提供的用户名找到用户。它包含一个方法 loadUserByUsername(String username) 返回 UserDetails 对象。此外，UserDetails 对象为我们提供了用户名。
+我们将数据存储在数据库中，并在请求到来时验证数据。但 UserDetailsService 是基于 ORM（Spring Data JPA）工作的。简而言之，UserDetailsService 是 Spring Security 模块提供的一个接口。在登录表单中输入用户名后，当我们单击登录按钮时，将调用该服务。随后，它根据提供的用户名找到用户。它包含一个方法 loadUserByUsername(String username) 返回 UserDetails 对象。此外，UserDetails 对象为我们提供了用户名。
 
 ## 在 Spring Boot 应用程序中实现 Web 安全的步骤是什么？
 
@@ -955,6 +955,6 @@ Spring Boot 3.0 在 Spring Security 模块中进行了重大 API 级别更改。
 
 ## 概括
 
-随后，通过“如何在 Spring Boot 项目中实现安全性？”的所有理论和示例部分，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了两种实现安全功能的方法。此外，我们可以在[另一篇文章](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)中了解 UserDetailsS​​ervice（实现安全性的第三种方式）。此外，有关 Spring Boot Security 的完整教程请访问[此处](https://javatechonline.com/spring-boot/#Spring_Boot_Security)。后续如有更新，我们也会及时更新。也请随时在下面的评论部分提供您的意见。
+随后，通过“如何在 Spring Boot 项目中实现安全性？”的所有理论和示例部分，最后，我们能够在 Spring Boot 项目中实现 Web 安全性。当然，在本文中我们介绍了两种实现安全功能的方法。此外，我们可以在[另一篇文章](https://javatechonline.com/how-to-implement-security-in-spring-boot-using-userdetailsservice/)中了解 UserDetailsService（实现安全性的第三种方式）。此外，有关 Spring Boot Security 的完整教程请访问[此处](https://javatechonline.com/spring-boot/#Spring_Boot_Security)。后续如有更新，我们也会及时更新。也请随时在下面的评论部分提供您的意见。
 
 原文链接：[https://javatechonline.com/how-to-implement-security-in-spring-boot-project/](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)

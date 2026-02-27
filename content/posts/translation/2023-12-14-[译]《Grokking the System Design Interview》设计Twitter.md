@@ -292,7 +292,7 @@ If we assume our current epoch seconds are “1483228800,” our TweetID will lo
 
 If we make our TweetID 64bits (8 bytes) long, we can easily store tweets for the next 100 years and also store them for mili-seconds granularity.
 
-> 如果我们将 TweetID 设为 64 位（8 字节）长，我们​​就可以轻松存储未来 100 年的推文，并以毫秒为粒度进行存储。
+> 如果我们将 TweetID 设为 64 位（8 字节）长，我们就可以轻松存储未来 100 年的推文，并以毫秒为粒度进行存储。
 
 In the above approach, we still have to query all the servers for timeline generation, but our reads (and writes) will be substantially quicker.
 
@@ -381,7 +381,7 @@ By monitoring these counters, we will realize if we need more replication, load 
 
 **How do we serve feeds?** Get all the latest tweets from the people someone follows and merge/sort them by time. Use pagination to fetch/show tweets. Only fetch top N tweets from all the people someone follows. This N will depend on the client’s Viewport, since on a mobile we show fewer tweets compared to a Web client. We can also cache next top tweets to speed things up.
 
-> 我们如何提供 Feed？获取某人关注的人的所有最新推文，并按时间对它们进行合并/排序。使用分页来获取/显示推文。只获取所有关注者的前 N ​​条推文。这个 N 将取决于客户端的视口，因为与 Web 客户端相比，我们在移动设备上显示的推文更少。我们还可以缓存下一个热门推文以加快速度。
+> 我们如何提供 Feed？获取某人关注的人的所有最新推文，并按时间对它们进行合并/排序。使用分页来获取/显示推文。只获取所有关注者的前 N 条推文。这个 N 将取决于客户端的视口，因为与 Web 客户端相比，我们在移动设备上显示的推文更少。我们还可以缓存下一个热门推文以加快速度。
 
 Alternately, we can pre-generate the feed to improve efficiency; for details please see ‘Ranking and timeline generation’ under Designing Instagram.
 

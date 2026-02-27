@@ -320,7 +320,7 @@ public class MyCustomObservation {
 
 ## 使用 Spring Boot 3.0 的 Spring Security UserDetailsService 示例
 
-此外，我们还有一篇单独的文章作为 [Spring Security UserDetailsS​​ervice 使用 Spring Boot 3](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的示例，该文章完全使用 Spring Boot 3.0 并遵循 Spring 官方文档提供的分步指南进行开发。此外，您可以阅读《[Spring Boot 3.0 迁移指南](https://javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/)》来彻底了解迁移过程。
+此外，我们还有一篇单独的文章作为 [Spring Security UserDetailsService 使用 Spring Boot 3](https://javatechonline.com/spring-security-userdetailsservice-using-spring-boot-3/) 的示例，该文章完全使用 Spring Boot 3.0 并遵循 Spring 官方文档提供的分步指南进行开发。此外，您可以阅读《[Spring Boot 3.0 迁移指南](https://javatechonline.com/how-to-migrate-spring-boot-2-to-spring-boot-3/)》来彻底了解迁移过程。
 
 这是目前的功能列表。显然，还有更多。我们将不时更新文章。
 

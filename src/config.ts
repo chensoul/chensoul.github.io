@@ -4,20 +4,13 @@ export const SITE = {
   website: "https://blog.chensoul.cc",
 
   /** 作者名称，显示在文章元数据和页脚 */
-  author: "chensoul",
+  author: "ChenSoul",
 
   /** 站点描述，用于 SEO 和页面 meta 标签 */
   desc: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
 
   /** 站点标题，显示在浏览器标签和页眉 */
   title: "ChenSoul Blog",
-
-  /**
-   * 默认社交分享图（Open Graph / Twitter Card）
-   * 放在 public 下，如 "og.png"；留空则使用 "/og.png"
-   * 文章可覆盖为自定义图（见 PostDetails 传 ogImage）
-   */
-  ogImage: "og.png",
 
   /**
    * Google Search Console 站点验证码
@@ -27,7 +20,7 @@ export const SITE = {
   googleSiteVerification: "",
 
   /** 是否启用浅色/深色模式切换功能 */
-  lightAndDarkMode: false,
+  lightAndDarkMode: true,
 
   // ========== 分页配置 ==========
   /**

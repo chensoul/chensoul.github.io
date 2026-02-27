@@ -1,6 +1,8 @@
 import { SITE } from "./src/config";
 import { defineConfig } from "astro/config";
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap, { type SitemapOptions } from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
@@ -12,10 +14,7 @@ import rehypeRewrite, { type RehypeRewriteOptions } from "rehype-rewrite";
 import rehypeWrapAll from "rehype-wrap-all";
 import rehypeExternalLinks from "rehype-external-links";
 import mermaid from "astro-mermaid";
-import expressiveCode, {
-  ExpressiveCodeTheme,
-  type AstroExpressiveCodeOptions,
-} from "astro-expressive-code";
+import expressiveCode, { type AstroExpressiveCodeOptions } from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import compressor from "astro-compressor";
@@ -23,17 +22,10 @@ import { minify } from "@zokki/astro-minify";
 import critters from "@critters-rs/astro";
 import photosuite from "photosuite";
 
-// Import custom theme
-const themeJsoncString = fs.readFileSync(
-  new URL("./theme/mod-min-light.jsonc", import.meta.url),
-  "utf-8"
-);
-const modMinLightTheme = ExpressiveCodeTheme.fromJSONString(themeJsoncString);
-
 // Expressive Code syntax highlighting, https://expressive-code.com/reference/configuration/
 const expressiveCodeOption: AstroExpressiveCodeOptions = {
   plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
-  themes: ["one-dark-pro", modMinLightTheme],
+  themes: ["one-dark-pro", "one-light"],
   themeCssSelector: theme => {
     if (theme.name === "one-dark-pro") {
       return "[data-theme='dark']";
@@ -83,7 +75,9 @@ const rehypeRewriteOption: RehypeRewriteOptions = {
 };
 
 // Sitemap options, https://docs.astro.build/en/guides/integrations-guide/sitemap/
+// 参考 zdyxry：entryLimit 保证单文件，构建后重命名为 sitemap.xml
 const sitemapOption: SitemapOptions = {
+  entryLimit: 50_000,
   serialize(item) {
     if (/\/(tags|categories|archives|page|search)/.test(item.url)) {
       item.priority = 0.2;
@@ -100,6 +94,27 @@ const sitemapOption: SitemapOptions = {
     return item;
   },
 };
+
+// 参考 zdyxry：构建后将 sitemap-0.xml 重命名为 sitemap.xml，移除 sitemap-index.xml
+function simplifySitemap() {
+  return {
+    name: "simplify-sitemap",
+    hooks: {
+      "astro:build:done": async ({ dir }: { dir: URL }) => {
+        const outDir = fileURLToPath(dir);
+        const sitemap0Path = path.join(outDir, "sitemap-0.xml");
+        const sitemapIndexPath = path.join(outDir, "sitemap-index.xml");
+        const sitemapPath = path.join(outDir, "sitemap.xml");
+        if (fs.existsSync(sitemap0Path)) {
+          fs.renameSync(sitemap0Path, sitemapPath);
+        }
+        if (fs.existsSync(sitemapIndexPath)) {
+          fs.unlinkSync(sitemapIndexPath);
+        }
+      },
+    },
+  };
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -132,6 +147,7 @@ export default defineConfig({
     expressiveCode(expressiveCodeOption),
     mdx(),
     sitemap(sitemapOption),
+    simplifySitemap(),
     minify({
       css: { minify: true, errorRecovery: true },
       // 关闭 SVG 压缩，避免 astro:build:done 时 public 尚未完全复制到 dist 导致 ENOENT

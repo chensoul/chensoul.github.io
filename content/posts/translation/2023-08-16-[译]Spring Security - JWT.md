@@ -267,7 +267,7 @@ public class TokenManager implements Serializable {
 
 从获得的声明实例中，我们提取主题和到期日期以验证令牌的有效性。用户名应该是用户的用户名，并且令牌不应过期。如果满足这两个条件，我们将返回 true，这表示令牌有效。
 
-我们要创建的下一个类是 JwtUserDetailsS​​ervice。这个类将扩展 Spring security 的 UserDetailsS​​ervice，我们将实现 loadUserByUsername() 方法，如下所示 -
+我们要创建的下一个类是 JwtUserDetailsService。这个类将扩展 Spring security 的 UserDetailsService，我们将实现 loadUserByUsername() 方法，如下所示 -
 
 ```java
 package com.spring.security.jwtbasic.jwtutils;
@@ -394,11 +394,11 @@ public class JwtController {
 }
 ```
 
-如果我们查看代码，我们可以看到，我们自动装配了三个依赖项，即 JwtUserDetailsS​​ervice、AuthenticationManager 和 TokenManager。虽然我们已经看到了上面 JwtUserDetailsS​​ervice 和 TokenManager 类的实现，但身份验证管理器 bean 是我们将在 WebSecurityConfig 类中创建的一个。
+如果我们查看代码，我们可以看到，我们自动装配了三个依赖项，即 JwtUserDetailsService、AuthenticationManager 和 TokenManager。虽然我们已经看到了上面 JwtUserDetailsService 和 TokenManager 类的实现，但身份验证管理器 bean 是我们将在 WebSecurityConfig 类中创建的一个。
 
 AuthenticationManager 类将负责我们的身份验证。我们将使用 UsernamePasswordAuthenticationToken 模型来验证请求。如果身份验证成功，我们将为用户生成一个 JWT，该 JWT 可以在后续请求的 Authorization 标头中发送以获取任何资源。
 
-正如我们所看到的，我们正在使用 JwtUserDetailsS​​ervice 类的 loadUserByUsername() 方法和 TokenManager 类中的 generateJwtToken()。
+正如我们所看到的，我们正在使用 JwtUserDetailsService 类的 loadUserByUsername() 方法和 TokenManager 类中的 generateJwtToken()。
 
 如上所述，生成的 JWT 作为成功身份验证的响应发送给用户。
 
@@ -462,7 +462,7 @@ public class JwtFilter extends OncePerRequestFilter {
 }
 ```
 
-正如我们在上面看到的，我们也在这里自动装配了 JwtUserDetailsS​​ervice 和 TokenManager 类。我们扩展了 SpringSecurity 的 OncePerRequestFilter，确保过滤器针对每个请求运行。我们已经为 OncePerRequestFilter 类的重写方法 doFilterInternal() 提供了实现。
+正如我们在上面看到的，我们也在这里自动装配了 JwtUserDetailsService 和 TokenManager 类。我们扩展了 SpringSecurity 的 OncePerRequestFilter，确保过滤器针对每个请求运行。我们已经为 OncePerRequestFilter 类的重写方法 doFilterInternal() 提供了实现。
 
 这里的方法从标头中提取令牌并借助 TokenManager 类的 validateJwtToken() 方法对其进行验证。在验证过程中，它会检查用户名和到期日期。如果两个值都有效，我们会将身份验证保存在 Spring Security 上下文中，并让代码继续执行过滤器链中的下一个过滤器。如果任何验证失败或令牌存在问题，或者未找到令牌，我们会抛出适当的异常并发回适当的响应，同时阻止请求继续进行。
 

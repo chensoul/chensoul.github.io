@@ -298,7 +298,7 @@ create table users (id int auto_increment primary key, username varchar(255), pa
 1. 用户详细信息服务。
 2. 密码编码器。
 
-指定 UserDetailsS​​ervice 就这么简单：
+指定 UserDetailsService 就这么简单：
 
 ```java
 @Bean
@@ -307,7 +307,7 @@ public UserDetailsService userDetailsService() {
 }
 ```
 
-1.  MyDatabaseUserDetailsS​​ervice 实现了 UserDetailsS​​ervice，这是一个非常简单的接口，它由一个返回 UserDetails 对象的方法组成：
+1.  MyDatabaseUserDetailsService 实现了 UserDetailsService，这是一个非常简单的接口，它由一个返回 UserDetails 对象的方法组成：
 
 ```java
 public class MyDatabaseUserDetailsService implements UserDetailsService {
@@ -331,7 +331,7 @@ public interface UserDetails extends Serializable { // (2)
 }
 ```
 
-1. UserDetailsS​​ervice 通过用户的用户名加载 UserDetails。请注意，该方法仅采用一个参数：用户名（而不是密码）。
+1. UserDetailsService 通过用户的用户名加载 UserDetails。请注意，该方法仅采用一个参数：用户名（而不是密码）。
 2. UserDetails 接口具有获取（散列！）密码的方法和获取用户名的方法。
 3. UserDetails 有更多方法，例如帐户处于活动状态还是被阻止、凭据是否已过期或用户拥有什么权限 - 但我们不会在这里介绍它们。
 
@@ -339,20 +339,20 @@ public interface UserDetails extends Serializable { // (2)
 
 #### 现成的实施
 
-简单说明一下：您始终可以自己实现 UserDetailsS​​ervice 和 UserDetails 接口。
+简单说明一下：您始终可以自己实现 UserDetailsService 和 UserDetails 接口。
 
 但是，您还会发现 Spring Security 提供的现成实现，您可以使用/配置/扩展/覆盖。
 
-1. **JdbcUserDetailsManager**, 这是一个基于 JDBC（数据库）的 UserDetailsS​​ervice。您可以配置它以匹配您的用户表/列结构。
+1. **JdbcUserDetailsManager**, 这是一个基于 JDBC（数据库）的 UserDetailsService。您可以配置它以匹配您的用户表/列结构。
 2. **InMemoryUserDetailsManager**, 它将所有用户详细信息保留在内存中，非常适合测试。
 3. **org.springframework.security.core.userdetail.User**, 这是您可以使用的合理的默认 UserDetails 实现。这意味着实体/数据库表和此用户类之间可能存在映射/复制。或者，您可以简单地让您的实体实现 UserDetails 接口。
 
 #### 完整的用户详细信息工作流程：HTTP 基本身份验证
 
-现在回想一下您的 HTTP 基本身份验证，这意味着您正在使用 Spring Security 和基本身份验证来保护您的应用程序。当您指定 UserDetailsS​​ervice 并尝试登录时会发生以下情况：
+现在回想一下您的 HTTP 基本身份验证，这意味着您正在使用 Spring Security 和基本身份验证来保护您的应用程序。当您指定 UserDetailsService 并尝试登录时会发生以下情况：
 
 1.  从过滤器中的 HTTP Basic Auth 标头中提取用户名/密码组合。您无需为此做任何事情，它会在幕后发生。
-2.  调用 MyDatabaseUserDetailsS​​ervice 从数据库加载相应的用户，包装为 UserDetails 对象，该对象公开用户的哈希密码。
+2.  调用 MyDatabaseUserDetailsService 从数据库加载相应的用户，包装为 UserDetails 对象，该对象公开用户的哈希密码。
 3.  从 HTTP Basic Auth 标头中获取提取的密码，自动对其进行哈希处理，并将其与 UserDetails 对象中的哈希密码进行比较。如果两者匹配，则用户身份验证成功。
 
 这里的所有都是它的。但是等一下，Spring Security 如何对来自客户端的密码进行哈希处理（步骤 3）？用什么算法？
@@ -396,7 +396,7 @@ Spring Security 将：
 
 本节的要点是：如果您使用 Spring Security 并有权访问用户的密码，那么：
 
-1. 指定 UserDetailsS​​ervice。要么是自定义实现，要么使用并配置 Spring Security 提供的实现。
+1. 指定 UserDetailsService。要么是自定义实现，要么使用并配置 Spring Security 提供的实现。
 2. 指定密码编码器。
    简而言之，这就是 Spring Security 身份验证。
 
@@ -409,7 +409,7 @@ Spring Security 将：
 1.  您的应用程序中不再有用户密码，因为您不能要求 Crowd 只提供这些密码。
 2.  但是，您确实有一个 REST API，您可以使用您的用户名和密码登录。 （对 `*/rest/usermanagement/1/authentication*` REST 端点的 POST 请求）。
 
-如果是这种情况，您不能再使用 UserDetailsS​​ervice，而是需要实现并提供 AuthenticationProvider @Bean。
+如果是这种情况，您不能再使用 UserDetailsService，而是需要实现并提供 AuthenticationProvider @Bean。
 
 ```java
     @Bean
@@ -511,7 +511,7 @@ public final class SimpleGrantedAuthority implements GrantedAuthority {
 
 ### 1. UserDetailsService：在哪里存储和获取权限？
 
-假设您将用户存储在自己的应用程序中（想想：UserDetailsS​​ervice），您将有一个 Users 表。
+假设您将用户存储在自己的应用程序中（想想：UserDetailsService），您将有一个 Users 表。
 
 现在，您只需向其中添加一个名为“authorities”的列即可。对于本文，我在这里选择了一个简单的字符串列，尽管它可以包含多个以逗号分隔的值。或者，我也可以有一个完全独立的表 AUTHORITIES，但对于本文的范围来说，这样做就可以了。
 
@@ -522,7 +522,7 @@ public final class SimpleGrantedAuthority implements GrantedAuthority {
 | [john@doe.com](mailto:john@doe.com)           | {bcrypt}… {bcrypt}... | ROLE*ADMIN ROLE*管理员          |     |
 | [my@callcenter.com](mailto:my@callcenter.com) | {sha256}… {sha256}…   | ROLE_CALLCENTER ROLE_CALLCENTER |     |
 
-剩下要做的唯一一件事就是调整您的 UserDetailsS​​ervice 以在该权限列中读取。
+剩下要做的唯一一件事就是调整您的 UserDetailsService 以在该权限列中读取。
 
 ```java
 public class MyDatabaseUserDetailsService implements UserDetailsService {
@@ -813,7 +813,7 @@ public class MyController {
 }
 ```
 
-1. 如果用户经过身份验证，@AuthenticationPrincipal 将注入主体；如果没有用户经过身份验证，则 @AuthenticationPrincipal 将注入 null。该主体是来自 UserDetailsS​​ervice/AuthenticationManager 的对象！
+1. 如果用户经过身份验证，@AuthenticationPrincipal 将注入主体；如果没有用户经过身份验证，则 @AuthenticationPrincipal 将注入 null。该主体是来自 UserDetailsService/AuthenticationManager 的对象！
 2. 或者您可以将当前会话 CSRFToken 注入每个方法中。
 
 如果您不使用 @AuthenticationPrincipal 注释，则必须通过 SecurityContextHolder 自行获取主体。这是一种在遗留 Spring Security 应用程序中常见的技术。
