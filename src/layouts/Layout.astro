@@ -113,6 +113,7 @@ const structuredData = {
       (function(){
         const theme = lightAndDarkMode ? (localStorage.getItem("theme") || "light") : "light";
         document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
         window.theme = { themeValue: theme };
       })();
     </script>
@@ -225,6 +226,8 @@ const structuredData = {
           const val = window._themeValue != null ? window._themeValue : getTheme();
           if (window._themeValue == null) window._themeValue = val;
           document.documentElement.setAttribute("data-theme", val);
+          document.documentElement.style.colorScheme = val === DARK ? "dark" : "light";
+          void document.documentElement.offsetHeight;
           const btn = document.querySelector(themeBtnSel);
           if (btn) btn.setAttribute("aria-label", val);
           const meta = document.querySelector(themeColorMetaSel);

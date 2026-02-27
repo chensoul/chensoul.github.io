@@ -46,11 +46,13 @@
   html {
     @apply overflow-y-scroll scroll-smooth;
     background-color: var(--background-secondary);
+    transition: background-color 0s;
   }
   body {
     @apply flex min-h-svh flex-col font-sans text-foreground selection:bg-accent/75 selection:text-background;
     font-family: var(--font-sans), var(--font-emoji);
     background-color: var(--background-secondary);
+    transition: background-color 0s;
   }
   #site-frame {
     background-color: var(--background);
