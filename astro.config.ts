@@ -116,7 +116,7 @@ export default defineConfig({
       scope: '#article',
       imageBase: "https://cos.chensoul.cc/images",
       exif: {
-          enabled: true,
+          enabled: false,
           fields: [
             'Model',            // Camera Model
             'LensModel',        // Lens Model
