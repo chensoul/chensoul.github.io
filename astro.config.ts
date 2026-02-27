@@ -134,6 +134,8 @@ export default defineConfig({
     sitemap(sitemapOption),
     minify({
       css: { minify: true, errorRecovery: true },
+      // 关闭 SVG 压缩，避免 astro:build:done 时 public 尚未完全复制到 dist 导致 ENOENT
+      svg: false,
     }),
     compressor({ gzip: true, brotli: true }),
     critters({
