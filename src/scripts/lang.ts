@@ -294,7 +294,7 @@ const zhCN: typeof _en = {
     desc: "搜索文章 ...",
   },
   notFoundPage: {
-    title: "你似乎来到了没有知识存在的荒原",
+    title: " 404，您访问的页面不存在～",
     toHome: "Go back home",
     toSearch: "Try searching",
     images: "https://cos.lhasa.icu/StylePictures/404.gif",
