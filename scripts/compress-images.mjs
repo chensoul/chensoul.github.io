@@ -5,6 +5,7 @@
  * 用法：node scripts/compress-images.mjs [目录]
  * 默认目录：public/images
  */
+/* eslint-disable no-console -- CLI 脚本需输出到控制台 */
 
 import { readdir, stat } from "fs/promises";
 import { join, extname } from "path";

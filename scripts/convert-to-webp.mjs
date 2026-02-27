@@ -6,6 +6,7 @@
  * 默认目录：public/images
  * --keep：保留原图，不删除
  */
+/* eslint-disable no-console -- CLI 脚本需输出到控制台 */
 
 import { readdir, stat, unlink } from "fs/promises";
 import { join, extname } from "path";

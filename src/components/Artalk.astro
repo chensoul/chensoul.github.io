@@ -40,9 +40,9 @@ import { SITE } from "@/config";
      * 确保 Artalk 样式已注入：若 head 中尚无该 CSS 则插入 link
      */
     function ensureArtalkCSS() {
-      var selector = 'link[href="' + ARTALK_CSS_URL + '"]';
+      const selector = 'link[href="' + ARTALK_CSS_URL + '"]';
       if (document.querySelector(selector)) return;
-      var link = document.createElement("link");
+      const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = ARTALK_CSS_URL;
       document.head.appendChild(link);
@@ -57,7 +57,7 @@ import { SITE } from "@/config";
         callback();
         return;
       }
-      var existing = document.querySelector('script[src="' + ARTALK_SCRIPT_URL + '"]');
+      const existing = document.querySelector('script[src="' + ARTALK_SCRIPT_URL + '"]');
       if (existing) {
         if (typeof window.Artalk !== "undefined") {
           callback();
@@ -69,7 +69,7 @@ import { SITE } from "@/config";
         });
         return;
       }
-      var script = document.createElement("script");
+      const script = document.createElement("script");
       script.src = ARTALK_SCRIPT_URL;
       script.async = false;
       script.onload = function () {
