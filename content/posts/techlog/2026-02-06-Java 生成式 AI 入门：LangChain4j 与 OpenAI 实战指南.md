@@ -13,9 +13,25 @@ image: /thumbnails/langchain4j.svg
 
 <!--more-->
 
-## 源代码
+## 源代码与项目结构
 
-您可以在 [GitHub 仓库](https://github.com/chensoul/langchain4j-samples/tree/main/01-chat-openai) 中找到本文的示例代码。
+本文示例代码位于 GitHub 仓库 **[langchain4j-samples/01-chat-openai](https://github.com/chensoul/langchain4j-samples/tree/main/01-chat-openai)**，克隆后进入该模块即可运行：
+
+```bash
+git clone https://github.com/chensoul/langchain4j-samples.git
+cd langchain4j-samples/01-chat-openai
+```
+
+项目为 Maven 多模块中的子模块，主要结构如下：
+
+| 路径 | 说明 |
+|------|------|
+| `pom.xml` | 依赖：LangChain4j OpenAI、DashScope 社区包、Spring Boot、Lombok |
+| `src/main/java/cc/chensoul/ai/PlainChatDemo.java` | 原生 Java + Jackson 调用 OpenAI Chat API |
+| `src/main/java/cc/chensoul/ai/LangChainChatDemo.java` | 使用 LangChain4j 的聊天示例（含监听器） |
+| `src/main/java/cc/chensoul/ai/LangChainImageDemo.java` | 使用 LangChain4j 的图像生成示例 |
+| `src/main/java/cc/chensoul/ai/ChatOpenAIApplication.java` | Spring Boot 启动类与 Chat 演示 |
+| `src/main/resources/application.yaml` | LangChain4j / OpenAI 配置 |
 
 ## 前置条件
 
@@ -91,12 +107,14 @@ curl https://api.openai.com/v1/chat/completions \
 </dependency>
 ```
 
-首先，我们将创建 Java Record 类来表示请求和响应 JSON 有效负载。
+首先，创建 Java Record 表示请求和响应的 JSON（与仓库 [PlainChatDemo.java](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/java/cc/chensoul/ai/PlainChatDemo.java) 一致）：
 
 ```java
+package cc.chensoul.ai;
+
 record Message(String role, String content) {}
 
-record ChatRequest( String model, List<Message> messages, double temperature) {}
+record ChatRequest(String model, List<Message> messages, double temperature) {}
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 record ChatUsage(
@@ -152,88 +170,76 @@ public class PlainChatDemo {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        String body = response.body();
-        ChatResponse chatResponse = mapper.readValue(body, ChatResponse.class);
+        ChatResponse chatResponse = mapper.readValue(response.body(), ChatResponse.class);
         System.out.println(chatResponse.choices().getFirst().message().content());
     }
 }
 ```
 
-设置环境变量：
+设置环境变量后运行主类即可看到模型回复：
 
 ```bash
-OPENAI_API_KEY=XXXXX
+export OPENAI_API_KEY=your_openai_api_key
+mvn compile exec:java -Dexec.mainClass="cc.chensoul.ai.PlainChatDemo"
 ```
-
-然后启动 PlainChatDemo，可以看到输出结果
 
 ### 使用 LangChain4j
 
-```java title="LangChainChatDemo.java"
+使用 [LangChainChatDemo.java](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/java/cc/chensoul/ai/LangChainChatDemo.java) 时，只需几行即可完成同样效果。**先以 OpenAI 为例**：
+
+```java title="LangChainChatDemo.java（OpenAI）"
+package cc.chensoul.ai;
+
 public class LangChainChatDemo {
-
     public static void main(String[] args) {
-				ChatModel model = OpenAiChatModel.builder().apiKey(System.getenv("OPENAI_API_KEY")).build();
-				
-      	String answer = model.chat("Who are you");
-        System.out.println(answer);
-    }
-}
-```
-
-设置环境变量：
-
-```bash
-DASHSCOPE_API_KEY=XXXXX
-```
-
-然后启动 LangChainChatDemo，可以看到输出结果：
-
-```txt
-I am Qwen, a large-scale language model developed by Alibaba Group. I can answer questions, create text, write code, and perform many other tasks. How can I assist you today?
-```
-
-上面代码使用的是 OpenAI 的接口进行测，我们也可以使用其他模型提供商的接口和模型，比如下面代码使用的是阿里千问的模型：
-
-```java title="LangChainChatDemo.java"
-public class LangChainChatDemo {
-
-    public static void main(String[] args) {
-//        ChatModel model = OpenAiChatModel.builder()
-//                .apiKey(System.getenv("OPENAI_API_KEY"))
-//                .build();
-
         ChatModel model = OpenAiChatModel.builder()
-                .baseUrl("https://dashscope.aliyuncs.com/compatible-mode/v1")
-                .apiKey(System.getenv("DASHSCOPE_API_KEY"))
-                .modelName("qwen-turbo")
+                .apiKey(System.getenv("OPENAI_API_KEY"))
                 .build();
-
         String answer = model.chat("Who are you");
         System.out.println(answer);
     }
 }
 ```
 
-OpenAiChatModel 还支持更多参数设置：
+设置 `OPENAI_API_KEY` 后运行，即可得到 OpenAI 模型的回复。
+
+**若改用阿里云百炼（千问）等兼容 OpenAI 的接口**，只需指定 `baseUrl` 与 `modelName`，并设置对应的 API Key（如 `DASHSCOPE_API_KEY`）：
+
+```java title="LangChainChatDemo.java（千问）"
+ChatModel model = OpenAiChatModel.builder()
+        .baseUrl("https://dashscope.aliyuncs.com/compatible-mode/v1")
+        .apiKey(System.getenv("DASHSCOPE_API_KEY"))
+        .modelName("qwen-turbo")
+        .build();
+String answer = model.chat("Who are you");
+System.out.println(answer);
+```
+
+此时输出会来自千问，例如：
+
+```txt
+I am Qwen, a large-scale language model developed by Alibaba Group...
+```
+
+`OpenAiChatModel` 还支持温度、超时、重试以及请求/响应监听器等配置，便于调试与监控。仓库中的 [LangChainChatDemo](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/java/cc/chensoul/ai/LangChainChatDemo.java) 即在此基础上增加了 `ChatModelListener` 示例：
 
 ```java
 ChatModel model = OpenAiChatModel.builder()
-  .baseUrl("https://dashscope.aliyuncs.com/compatible-mode/v1")
-  .apiKey(System.getenv("DASHSCOPE_API_KEY"))
-  .modelName("qwen-turbo")
-  .temperature(0.3)
-  .maxRetries(1)
-  .timeout(Duration.ofSeconds(60))
-  .listeners(List.of(new TestChatModelListener()))
-  .logRequests(true)
-  .logResponses(true)
-  .build();
+        .baseUrl("https://dashscope.aliyuncs.com/compatible-mode/v1")
+        .apiKey(System.getenv("DASHSCOPE_API_KEY"))
+        .modelName("qwen-turbo")
+        .temperature(0.3)
+        .maxRetries(1)
+        .timeout(Duration.ofSeconds(60))
+        .listeners(List.of(new TestChatModelListener()))
+        .logRequests(true)
+        .logResponses(true)
+        .build();
 ```
 
-TestChatModelListener 
+监听器可实现 `ChatModelListener`，在请求发出、响应返回或发生错误时执行逻辑（例如打日志、传递上下文）：
 
-```java 
+```java
 @Slf4j
 public static class TestChatModelListener implements ChatModelListener {
     @Override
@@ -245,7 +251,6 @@ public static class TestChatModelListener implements ChatModelListener {
     @Override
     public void onResponse(ChatModelResponseContext responseContext) {
         Object object = responseContext.attributes().get("test");
-
         log.info("返回结果:{}", object);
     }
 
@@ -256,72 +261,48 @@ public static class TestChatModelListener implements ChatModelListener {
 }
 ```
 
-以上是使用聊天模型，如果想使用图像模型，则代码如下：
+### 图像生成
 
-```java title="LangChainImageDemo.java"
-public class LangChainImageDemo {
+除聊天外，LangChain4j 也支持图像生成。**使用 OpenAI DALL·E** 时，可参考：
 
-    public static void main(String[] args) {
-        ImageModel model = OpenAiImageModel.builder()
-                .apiKey(System.getenv("OPENAI_API_KEY"))
-                .modelName(DALL_E_3)
-                .build();
-
-        Response<Image> response = model.generate(
-                "Swiss software developers with cheese fondue, a parrot and a cup of coffee");
-
-        System.out.println(response.content().url());
-    }
-}
+```java
+ImageModel model = OpenAiImageModel.builder()
+        .apiKey(System.getenv("OPENAI_API_KEY"))
+        .modelName(DALL_E_3)
+        .build();
+Response<Image> response = model.generate(
+        "Swiss software developers with cheese fondue, a parrot and a cup of coffee");
+System.out.println(response.content().url());
 ```
 
-同样，你也可以使用阿里千问的图像模型，但是首先必须添加依赖：
-
-```xml title="pom.xml"
-<dependency>
-  <groupId>dev.langchain4j</groupId>
-  <artifactId>langchain4j-community-dashscope</artifactId>
-</dependency>
-```
-
-然后，修改 LangChainImageDemo 如下：
-
-```java title="LangChainImageDemo.java"
-public class LangChainImageDemo {
-
-    public static void main(String[] args) {
-//        ImageModel model = OpenAiImageModel.builder()
-//                .apiKey(System.getenv("OPENAI_API_KEY"))
-//                .modelName(DALL_E_3)
-//                .build();
-
-        ImageModel model = WanxImageModel.builder()
-                .apiKey(System.getenv("DASHSCOPE_API_KEY"))
-                .modelName("qwen-image")
-                .build();
-
-        Response<Image> response = model.generate(
-                "Swiss software developers with cheese fondue, a parrot and a cup of coffee");
-
-        System.out.println(response.content().url());
-    }
-}
-```
-
-## 使用 Spring Boot
-
-首先，需要添加依赖：
+**使用阿里云百炼（通义万相）** 时，需在 `pom.xml` 中增加 `langchain4j-community-dashscope` 依赖（仓库 [01-chat-openai/pom.xml](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/pom.xml) 已包含），然后使用 `WanxImageModel`，见仓库 [LangChainImageDemo.java](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/java/cc/chensoul/ai/LangChainImageDemo.java)：
 
 ```xml title="pom.xml"
 <dependency>
     <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-open-ai-spring-boot-starter</artifactId>
+    <artifactId>langchain4j-community-dashscope</artifactId>
 </dependency>
 ```
 
-然后，添加配置：
+```java title="LangChainImageDemo.java"
+package cc.chensoul.ai;
 
-```yaml title="application.yaml"
+ImageModel model = WanxImageModel.builder()
+        .apiKey(System.getenv("DASHSCOPE_API_KEY"))
+        .modelName("qwen-image")
+        .build();
+Response<Image> response = model.generate(
+        "Swiss software developers with cheese fondue, a parrot and a cup of coffee");
+System.out.println(response.content().url());
+```
+
+## 使用 Spring Boot
+
+在模块 [01-chat-openai](https://github.com/chensoul/langchain4j-samples/tree/main/01-chat-openai) 中，`pom.xml` 已引入 `langchain4j-open-ai-spring-boot-starter`，只需在配置文件中指定 API Key 与模型即可注入 `ChatModel`。
+
+**配置**（[application.yaml](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/resources/application.yaml)）：使用阿里云百炼时设置 `base-url` 与 `model-name`，API Key 可用环境变量 `DASHSCOPE_API_KEY`。
+
+```yaml title="src/main/resources/application.yaml"
 langchain4j:
   open-ai:
     chat-model:
@@ -330,9 +311,11 @@ langchain4j:
       base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
 ```
 
-ChatOpenAIApplication：
+**启动类与演示**（[ChatOpenAIApplication.java](https://github.com/chensoul/langchain4j-samples/blob/main/01-chat-openai/src/main/java/cc/chensoul/ai/ChatOpenAIApplication.java)）：应用启动后通过 `CommandLineRunner` 调用一次聊天并打印结果。
 
 ```java title="ChatOpenAIApplication.java"
+package cc.chensoul.ai;
+
 @SpringBootApplication
 public class ChatOpenAIApplication {
 
@@ -349,4 +332,10 @@ public class ChatOpenAIApplication {
     }
 }
 ```
+
+运行前设置 `DASHSCOPE_API_KEY`，在仓库根目录执行 `mvn spring-boot:run -pl 01-chat-openai` 即可看到控制台输出模型回复。
+
+## 总结
+
+本文示例均可在 [chensoul/langchain4j-samples · 01-chat-openai](https://github.com/chensoul/langchain4j-samples/tree/main/01-chat-openai) 中查看与运行；从原生 Java 调用 OpenAI，到 LangChain4j 封装聊天/图像，再到 Spring Boot 集成，可按需选用。
 
