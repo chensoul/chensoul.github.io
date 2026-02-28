@@ -110,7 +110,9 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 主题首屏防 FOUC：与 Astro Theme Switcher 一致，从 localStorage 读 theme 并设 data-theme -->
+    <!-- 首屏防闪白：在带主题的 CSS 加载前不显示，由 base.css 中 html{visibility:visible} 解除 -->
+    <style is:inline>html{visibility:hidden}</style>
+    <!-- 主题首屏防 FOUC：从 localStorage 读 theme 并设 data-theme，再加载的 CSS 依 data-theme 生效 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function(){
         const stored = lightAndDarkMode ? localStorage.getItem("theme") : null;

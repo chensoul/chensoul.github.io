@@ -47,8 +47,8 @@
     @apply overflow-y-scroll scroll-smooth;
     background-color: var(--background-secondary);
     transition: background-color 0s;
-    /* 与 Layout 内联的 visibility:hidden 配合：带主题的 CSS 加载后即显示，避免首屏闪白 */
-    visibility: visible;
+    /* 覆盖 Layout 内联的 visibility:hidden，带主题的 CSS 加载后即显示（!important 保证生效） */
+    visibility: visible !important;
   }
   body {
     @apply flex min-h-svh flex-col font-sans text-foreground selection:bg-accent/75 selection:text-background;
