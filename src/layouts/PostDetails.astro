@@ -65,10 +65,11 @@ const {
 // 渲染文章内容
 const { Content } = await render(post);
 
-// OG 图：仅当 SITE.ogImage 为 true 时传入，否则不生成/不输出
-const ogSlug = SITE.ogImage
-  ? PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone)
-  : null;
+// OG 图：仅生产环境且 SITE.ogImage 为 true 时传入
+const ogSlug =
+  import.meta.env.PROD && SITE.ogImage
+    ? PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone)
+    : null;
 
 const layoutProps = {
   title: SITE.title,

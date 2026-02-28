@@ -77,12 +77,12 @@ export const SITE = {
   showPageDesc: false,
 
   /**
-   * 是否生成 OG 分享图
+   * 是否生成 OG 分享图（仅生产环境生效）
    *
-   * true：为每篇文章生成 /og/.../slug.png，并在 meta 中输出 og:image
-   * false：不生成 OG 图、不输出 og:image
+   * 生产构建（astro build）时：true 则生成 /og/.../slug.png 并输出 og:image meta
+   * 开发环境（astro dev）时：不生成 OG 图、不输出 og:image
    */
-  ogImage: true,
+  ogImage: false,
 
   /**
    * HTML 页面的 lang 属性值
