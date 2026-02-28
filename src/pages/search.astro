@@ -220,4 +220,20 @@ import Layout from "../layouts/Layout.astro";
     padding: 1rem;
     font-style: italic;
   }
+
+  @media (max-width: 480px) {
+    .search-container {
+      padding: 1rem 0.75rem;
+    }
+    .search-box {
+      flex-wrap: wrap;
+    }
+    #search-input {
+      min-width: 0;
+    }
+    #search-button {
+      width: 100%;
+      min-height: 44px;
+    }
+  }
 </style>

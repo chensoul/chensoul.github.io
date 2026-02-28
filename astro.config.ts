@@ -116,6 +116,8 @@ export default defineConfig({
       mergeStylesheets: true,
       // 禁用字体 preload，避免 "preloaded but not used within a few seconds" 警告
       preloadFonts: false,
+      // 不将外部 CSS 转为 preload，避免 tocbot 等按需样式 "preloaded but not used" 警告
+      preload: "None",
     }),
   ],
   markdown: {

@@ -3,7 +3,6 @@ import { SITE } from "@/config";
 import YearProgress from "./YearProgress.astro";
 
 const navLinks = [
-  { href: "/", text: "首页" },
   { href: "/posts", text: "文章" },
   ...(SITE.showArchives ? [{ href: "/archives", text: "归档" }] : []),
   { href: "/tags", text: "标签" },
@@ -283,11 +282,14 @@ const { pathname } = Astro.url;
 
     .nav-links a {
       font-size: 0.8125rem;
+      padding: 0.5rem 0.25rem;
     }
 
     .search-link,
     .theme-toggle {
-      padding: 0.375rem;
+      padding: 0.625rem;
+      min-width: 44px;
+      min-height: 44px;
     }
   }
 </style>

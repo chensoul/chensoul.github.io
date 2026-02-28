@@ -26,7 +26,7 @@ const notFoundTitle = "404，您访问的页面不存在～";
 <Layout title={`404 Not Found | ${SITE.title}`}>
   <div class="mb-14 flex flex-col items-center justify-center">
     <!-- 图片容器：包含静态图和动画图 -->
-    <div id="image-container" class="relative h-[350px] w-[350px]">
+    <div id="image-container" class="relative w-full max-w-[350px] aspect-square">
       <!-- 静态图片（默认显示） -->
       <img
         id="static-image"
@@ -43,7 +43,7 @@ const notFoundTitle = "404，您访问的页面不存在～";
         alt="404 Not Found"
         loading="lazy"
         decoding="async"
-        class="absolute top-0 left-0 hidden h-full w-full object-contain"
+        class="absolute top-0 left-0 hidden h-full w-full object-contain max-w-full"
       />
     </div>
     <!-- 错误提示文本 -->
