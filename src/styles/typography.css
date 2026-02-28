@@ -15,9 +15,10 @@
     color: var(--text-primary) !important;
   }
 
-  /* h2 上边距缩小 */
+  /* h2 上下间距一致 */
   .prose h2 {
     margin-top: 1.25em !important;
+    margin-bottom: 1.25em !important;
   }
 
   /* 深色主题下 h4/h5/h6 略淡，层级更清晰 */

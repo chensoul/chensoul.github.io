@@ -106,6 +106,52 @@
         @apply w-56;
       }
     }
+
+    /* tocbot 旧版样式（适当留白，不紧凑） */
+    /* 仅顶级列表留白，避免内层列表被影响 */
+    .toc > .toc-list {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    /* h2 条目：只用 margin-bottom 控制间隔，有无子节点都一致（避免 margin 折叠） */
+    .toc > .toc-list > .toc-list-item {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    .toc > .toc-list > .toc-list-item:last-child {
+      margin-bottom: 0;
+    }
+    /* 有子节点时：内层列表与 h2 链接的间距、且不增加底部空隙 */
+    .toc > .toc-list > .toc-list-item > .toc-list {
+      margin-top: 0.25rem;
+      margin-bottom: 0;
+      padding-left: 0.75rem;
+    }
+    .toc-list-item {
+      @apply truncate overflow-hidden whitespace-nowrap;
+      color: var(--text-primary);
+    }
+    .toc-list .toc-list .toc-list-item {
+      @apply my-1;
+    }
+    .toc-link {
+      color: var(--text-primary);
+      @apply py-1 block;
+      line-height: 1.5;
+    }
+    .toc-link.is-active-link {
+      @apply !text-accent;
+    }
+    .toc-link::before {
+      @apply !hidden;
+      content: "";
+    }
+
+    @media (max-width: 1023px) {
+      .toc-list-item {
+        @apply my-4;
+      }
+    }
   }
 
   #sidebar #back-to-top svg,

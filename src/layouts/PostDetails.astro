@@ -25,7 +25,6 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
-import Toc from "@/components/Toc.astro";
 import Artalk from "@/components/Artalk.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { PostUtils } from "@/utils/postUtils";
@@ -218,12 +217,13 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   </main>
 
   <Footer />
+  <!-- 侧边栏：文章目录（与 astro-lhasa 一致，内联实现） -->
   <aside
     id="sidebar"
     slot="sidebar"
     class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
   >
-    <Toc enabled={toc} />
+    {toc && <div id="toc-container" class="js-toc" />}
     <div
       class="flex flex-col items-start space-y-0 truncate overflow-hidden whitespace-nowrap opacity-80"
     >
@@ -234,8 +234,37 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 <!-- Artalk 评论系统 -->
 <Artalk />
 
-<script>
-  /** 页面就绪时滚动到顶部（含 View Transitions 后） */
+<script is:inline data-astro-rerun define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl }}>
+  /* Tocbot：与 astro-lhasa 一致内联，样式由 Layout 条件加载（tocbot CSS + 自定义） */
+  (function () {
+    if (!document.getElementById("toc-container")) return;
+    const scrollSmoothOffset = 0;
+    function initTocbot() {
+      if (typeof window !== "undefined" && window.tocbot) {
+        window.tocbot.init({
+          tocSelector: ".js-toc",
+          contentSelector: ".js-toc-content",
+          headingSelector: "h2, h3, h4",
+          hasInnerContainers: true,
+          scrollSmoothDuration: 300,
+          scrollSmoothOffset,
+        });
+      }
+    }
+    if (window.tocbot) {
+      initTocbot();
+    } else if (tocbotJsUrl) {
+      const script = document.createElement("script");
+      script.src = tocbotJsUrl;
+      script.crossOrigin = "anonymous";
+      script.referrerPolicy = "no-referrer";
+      script.onload = initTocbot;
+      document.body.appendChild(script);
+    }
+  })();
+  document.addEventListener("astro:after-swap", () => {
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+  });
   function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   }
