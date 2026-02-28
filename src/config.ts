@@ -75,11 +75,6 @@ export const SITE = {
   showBackButton: true,
 
   /**
-   * 是否在文章详情页显示页面描述
-   */
-  showPageDesc: false,
-
-  /**
    * 是否生成 OG 分享图（仅生产环境生效）
    *
    * 生产构建（astro build）时：true 则生成 /og/.../slug.png 并输出 og:image meta
