@@ -22,9 +22,6 @@ export const SITE = {
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,
 
-  /** 主题列表（与 Astro Theme Switcher 一致：多主题 + 持久化），如 ["light", "dark"]，可扩展 "blue" 等 */
-  themes: ["light", "dark"] as const,
-
   // ========== 分页配置 ==========
   /**
    * 首页文章列表每页显示数量
@@ -159,6 +156,18 @@ export const SITE = {
   },
 
   /**
+   * 页脚社交链接（图标 + 链接）
+   *
+   * icon 需与 SocialIcon 支持的 name 一致：github | rss | twitter | x | linkedin | facebook | mail | telegram | whatsapp | pinterest
+   */
+  socialLinks: [
+    { name: "GitHub", url: "https://github.com/chensoul", icon: "github" },
+    { name: "RSS", url: "/rss.xml", icon: "rss" },
+    { name: "Twitter", url: "https://twitter.com/ichensoul", icon: "twitter" },
+     { name: "Telegram", url: "https://t.me/ichensoul", icon: "telegram" },
+  ],
+
+  /**
    * 自定义页脚链接
    *
    * 可在页脚添加额外的自定义链接
@@ -225,17 +234,8 @@ export const SITE = {
    */
   imageConfig: {
     imagesUrl: "https://cos.chensoul.cc",
-
-    tags: {
-      defaultStyle: "l" as "l" | "s" | false,
-    },
-
     loading: {
       lazy: true,
-
-      quality: {
-        enabled: true,
-      },
     },
   },
 } as const;

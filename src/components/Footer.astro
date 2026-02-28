@@ -1,48 +1,138 @@
 ---
-import { SITE } from "@/config";
-
 /**
- * 组件属性接口
+ * 页脚组件
  *
- * @property noMarginTop - 是否移除顶部外边距
+ * @fileoverview 参考 zdyxry.github.io Footer：社交图标区 + 版权/备案/自定义链接
+ * @see https://github.com/zdyxry/zdyxry.github.io/blob/astro/src/components/Footer.astro
  */
+
+import { SITE } from "@/config";
+import SocialIcon from "@/components/SocialIcon.astro";
+
 export interface Props {
+  /** 是否移除顶部外边距 */
   noMarginTop?: boolean;
+  /** 是否显示社交链接区 */
+  showSocial?: boolean;
 }
 
 const currentYear = new Date().getFullYear();
+const { noMarginTop = false, showSocial = true } = Astro.props;
 
-const { noMarginTop = false } = Astro.props;
+const socialLinks = SITE.socialLinks ?? [];
+const hasSocial = showSocial && socialLinks.length > 0;
 ---
 
-<footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
-  <div
-    class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <!-- 版权信息区：自定义链接 + ICP 备案号 -->
-    <div
-      class="mx-auto my-2 flex flex-col items-center text-[15px] whitespace-nowrap text-[var(--text-secondary)] sm:flex-row"
-    >
-      <span>&#169; {currentYear} {SITE.author}. All rights reserved.</span>
-      <!-- 自定义页脚链接（如统计页面） -->
-      {
-        SITE.customFooterLink.enabled && (
-          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+<footer class:list={["footer", "w-full", { "mt-auto": !noMarginTop }]}>
+  <div class="footer-content">
+    {hasSocial && (
+      <div class="social-links">
+        {socialLinks.map((link) => (
+          <a
+            href={link.url}
+            target={link.url.startsWith("http") ? "_blank" : undefined}
+            rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+            aria-label={link.name}
+          >
+            <SocialIcon name={link.icon} width={20} height={20} />
+          </a>
+        ))}
+      </div>
+    )}
+    <div class="footer-bottom">
+      <span class="copyright">
+        &#169; {currentYear} {SITE.author}. All rights reserved.
+      </span>
+      {SITE.customFooterLink.enabled && (
+        <>
+          <span class="separator" aria-hidden="true">|</span>
           <a href={SITE.customFooterLink.url} target="_blank" rel="noopener noreferrer">
             {SITE.customFooterLink.text}
           </a>
-        )
-      }
-
-      <!-- ICP 备案号（中国大陆特有） -->
-      {
-        SITE.icp && (
-          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+        </>
+      )}
+      {SITE.icp && (
+        <>
+          <span class="separator" aria-hidden="true">|</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
             备案号 {SITE.icp}
           </a>
-        )
-      }
+        </>
+      )}
     </div>
   </div>
 </footer>
+
+<style>
+  .footer {
+    background: var(--background);
+    border-top: 1px solid var(--border);
+    padding: 2rem 1rem;
+  }
+
+  .footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .social-links a {
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .social-links a:hover,
+  .social-links a:focus-visible {
+    color: var(--accent);
+    text-decoration: none;
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-bottom .copyright {
+    white-space: nowrap;
+  }
+
+  .footer-bottom .separator {
+    opacity: 0.7;
+  }
+
+  .footer-bottom a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .footer-bottom a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .footer-bottom a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>

@@ -23,7 +23,6 @@ import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 
 /**
  * 生成静态路径：每个标签一个路由，该标签下全部文章由懒加载分批显示
@@ -47,7 +46,7 @@ const { tag } = params;
 const { page, tagName } = Astro.props;
 ---
 
-<Layout title={`${_t.tag.title}${tagName} | ${SITE.title}`}>
+<Layout>
     <h1 slot="title">{`Tag:${tag}`}</h1>
     <p class="mb-4 text-base font-semibold">
       标签：{tagName}
