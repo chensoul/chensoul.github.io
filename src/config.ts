@@ -199,7 +199,7 @@ export const SITE = {
     /** 站点 ID（Umami 后台创建网站后获得） */
     websiteId: "2311be4b-ebe4-4a94-9c69-b2e841584d0d",
     /** 统计脚本 URL */
-    scriptUrl: "https://umami.chensoul.cc/random-string.js",
+    scriptUrl: "https://cos.chensoul.cc/dist/umami/random-string.js",
   },
 
   /**

@@ -22,17 +22,6 @@ git clone https://github.com/chensoul/langchain4j-samples.git
 cd langchain4j-samples/01-chat-openai
 ```
 
-项目为 Maven 多模块中的子模块，主要结构如下：
-
-| 路径 | 说明 |
-|------|------|
-| `pom.xml` | 依赖：LangChain4j OpenAI、DashScope 社区包、Spring Boot、Lombok |
-| `src/main/java/cc/chensoul/ai/PlainChatDemo.java` | 原生 Java + Jackson 调用 OpenAI Chat API |
-| `src/main/java/cc/chensoul/ai/LangChainChatDemo.java` | 使用 LangChain4j 的聊天示例（含监听器） |
-| `src/main/java/cc/chensoul/ai/LangChainImageDemo.java` | 使用 LangChain4j 的图像生成示例 |
-| `src/main/java/cc/chensoul/ai/ChatOpenAIApplication.java` | Spring Boot 启动类与 Chat 演示 |
-| `src/main/resources/application.yaml` | LangChain4j / OpenAI 配置 |
-
 ## 前置条件
 
 - Java 17+
