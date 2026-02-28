@@ -193,6 +193,8 @@ const structuredData = {
       (function() {
         const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#ffffff');
       })();
     </script>
 
@@ -208,12 +210,41 @@ const structuredData = {
     <BackToTop />
     <Footer/>
 
-    <!-- 主题切换：点击按钮在 light/dark 间切换并持久化；先更新 meta theme-color 再改 data-theme 减少闪白 -->
+    <!-- 主题切换：统一在 Layout 绑定，支持 View Transitions 后重新绑定；先更新 theme-color 再改 data-theme 减少闪白 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function () {
         if (!lightAndDarkMode) return;
-        const theme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', theme);
+        function applyTheme(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#ffffff');
+          localStorage.setItem('theme', theme);
+        }
+        function attachThemeToggle() {
+          var btn = document.getElementById('theme-toggle');
+          if (!btn) return;
+          btn.removeEventListener('click', onToggle);
+          btn.removeEventListener('keydown', onKeydown);
+          btn.addEventListener('click', onToggle);
+          btn.addEventListener('keydown', onKeydown);
+        }
+        function onToggle() {
+          var cur = document.documentElement.getAttribute('data-theme') || 'light';
+          var next = cur === 'light' ? 'dark' : 'light';
+          applyTheme(next);
+        }
+        function onKeydown(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onToggle();
+          }
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', attachThemeToggle);
+        } else {
+          attachThemeToggle();
+        }
+        document.addEventListener('astro:page-load', attachThemeToggle);
       })();
     </script>
 

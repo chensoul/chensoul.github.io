@@ -29,7 +29,7 @@ const years = Object.keys(groupedByYear)
         <h2 class="mb-1 text-base">
           {year} ({groupedByYear[year].length})
         </h2>
-        <ul class="mt-1 space-y-1">
+        <ul>
           {groupedByYear[year].map(({ data, id, filePath }) => {
             const d = new Date(data.updated ?? data.date);
             const tz = data.timezone ?? SITE.timezone;
@@ -61,3 +61,4 @@ const years = Object.keys(groupedByYear)
     ))
   }
 </Layout>
+

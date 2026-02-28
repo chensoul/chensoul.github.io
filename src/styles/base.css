@@ -238,15 +238,37 @@ blockquote {
   font-style: italic;
 }
 
-/* Lists */
+/* Lists：默认显示 list-style，包裹 Card 的列表除外 */
 ul,
-ol {
-  padding-left: 0rem;
+ol,
+menu {
+  list-style-position: outside;
+  padding-left: 2em;
   margin-bottom: 1rem;
+}
+
+ul,
+menu {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
 }
 
 li {
   margin-bottom: 0.5rem;
+}
+
+/* 首页/文章列表等用 Card 的 <ul> 不显示符号 */
+main > ul:has(> li.mb-4) {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* 归档页列表无缩进 */
+.archives-year ul {
+  padding-left: 0;
 }
 
 /* Tables */
