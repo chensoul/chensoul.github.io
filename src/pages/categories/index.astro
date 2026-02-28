@@ -51,7 +51,10 @@ categories.forEach(({ categoryName }) => {
 ---
 
 <Layout title={`分类 | ${SITE.title}`}>
-  <ul class="categories-list grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2" aria-label="分类列表">
+  <ul
+    class="categories-list grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2"
+    aria-label="分类列表"
+  >
     {
       categories.map(({ category, categoryName, count }, i) => (
         <li class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}>
@@ -80,12 +83,12 @@ categories.forEach(({ categoryName }) => {
             </div>
             {/* 渐变遮罩 */}
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            {/* 文字内容 */}
+            {/* 文字内容：叠层上固定白字，! 覆盖全局 a 颜色 */}
             <div class="absolute right-0 bottom-0 left-0 p-4">
-              <span class="mb-1 block text-xs text-white/80">
+              <span class="mb-1 block text-sm !text-white/85">
                 {categoryName}（{count}篇）
               </span>
-              <h3 class="line-clamp-1 text-sm leading-tight text-white">
+              <h3 class="line-clamp-1 text-sm leading-tight !text-white">
                 {categoryLatestPost.get(categoryName) || categoryName}
               </h3>
             </div>

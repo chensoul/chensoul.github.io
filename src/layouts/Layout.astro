@@ -188,13 +188,12 @@ const structuredData = {
       </>
     )}
 
-    <!-- Theme initialization script to prevent flash -->
-    <script is:inline>
+    <!-- Theme initialization script to prevent flash；切换禁用时固定浅色 -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function() {
-        const theme = localStorage.getItem('theme') || 'light';
+        let theme = 'light';
+        if (lightAndDarkMode) theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0f172a' : '#ffffff');
       })();
     </script>
 
@@ -209,14 +208,6 @@ const structuredData = {
     <BackButton />
     <BackToTop />
     <Footer/>
-
-     <!-- Theme initialization script to prevent flash -->
-    <script is:inline>
-      (function() {
-        const theme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-      })();
-    </script>
 
     <!-- Umami 分析（config.ts 中配置 SITE.umami；首屏后再加载以减轻 LCP 影响） -->
     {

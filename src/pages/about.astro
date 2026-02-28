@@ -52,9 +52,6 @@ const md = new MarkdownIt({
 const htmlContent = md.render(content);
 ---
 
-<Layout
-  title={`关于 | ${SITE.title}`}
-  description={frontmatter.description}
->
+<Layout title={`关于 | ${SITE.title}`} description={frontmatter.description}>
   <Fragment set:html={htmlContent} />
 </Layout>

@@ -59,13 +59,16 @@
 }
 
 html {
-  font-family: "Noto Sans SC", "Noto Sans", "Fallback Sans", "Microsoft YaHei", sans-serif;
+  font-family:
+    "Noto Sans SC", "Noto Sans", "Fallback Sans", "Microsoft YaHei", sans-serif;
   font-size: 15px;
   background: var(--background);
   color: var(--text-primary);
   line-height: 1.6;
   scroll-behavior: smooth;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 body {
@@ -76,7 +79,9 @@ body {
   flex-direction: column;
   background: var(--background);
   color: var(--text-primary);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   overflow-x: hidden;
 }
 

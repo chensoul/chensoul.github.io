@@ -455,7 +455,10 @@ const hrZoneColors: Record<number, string> = {
     const tabNav = document.getElementById("periodTabNav");
     if (tabNav) {
       tabNav.addEventListener("click", function (e) {
-        const btn = (e.target && typeof e.target.closest === "function") ? e.target.closest(".period-tab-btn") : null;
+        const btn =
+          e.target && typeof e.target.closest === "function"
+            ? e.target.closest(".period-tab-btn")
+            : null;
         if (!btn) return;
 
         const period = btn.getAttribute("data-period");
@@ -495,8 +498,22 @@ const hrZoneColors: Record<number, string> = {
   }
 
   // 心率区间标签与颜色（数字 key，与 zdyxry 一致，便于 run.hr_zone 等数字索引）
-  const hrZoneLabels = { 0: "未知", 1: "Z1 恢复", 2: "Z2 有氧", 3: "Z3 节奏", 4: "Z4 阈值", 5: "Z5 最大" };
-  const hrZoneColors = { 0: "var(--text-secondary)", 1: "#4ade80", 2: "#60a5fa", 3: "#fbbf24", 4: "#fb923c", 5: "#f87171" };
+  const hrZoneLabels = {
+    0: "未知",
+    1: "Z1 恢复",
+    2: "Z2 有氧",
+    3: "Z3 节奏",
+    4: "Z4 阈值",
+    5: "Z5 最大",
+  };
+  const hrZoneColors = {
+    0: "var(--text-secondary)",
+    1: "#4ade80",
+    2: "#60a5fa",
+    3: "#fbbf24",
+    4: "#fb923c",
+    5: "#f87171",
+  };
 
   // 查看更多功能
   const loadMoreBtn = document.getElementById("loadMoreBtn");
@@ -776,8 +793,8 @@ const hrZoneColors: Record<number, string> = {
       // 如果有多个配速，使用相对比例
       if (allPaces.length > 1) {
         const allSeconds = allPaces
-          .map((p) => paceToSeconds(p))
-          .filter((s) => s > 0);
+          .map(p => paceToSeconds(p))
+          .filter(s => s > 0);
         if (allSeconds.length > 1) {
           const minPace = Math.min(...allSeconds);
           const maxPace = Math.max(...allSeconds);
@@ -821,8 +838,8 @@ const hrZoneColors: Record<number, string> = {
     if (run.segments && run.segments.length > 0) {
       // 收集所有配速用于相对比例计算
       const allSegmentPaces = run.segments
-        .map((s) => s.pace)
-        .filter((p) => p && p !== "0'00\"");
+        .map(s => s.pace)
+        .filter(p => p && p !== "0'00\"");
 
       const segmentRows = run.segments
         .map((seg, idx) => {
@@ -914,7 +931,10 @@ const hrZoneColors: Record<number, string> = {
   const runListEl = document.getElementById("runList");
   if (runListEl) {
     runListEl.addEventListener("click", function (e) {
-      const card = (e.target && typeof e.target.closest === "function") ? e.target.closest(".run-card") : null;
+      const card =
+        e.target && typeof e.target.closest === "function"
+          ? e.target.closest(".run-card")
+          : null;
       if (!card) return;
       const runData = card.getAttribute("data-run");
       if (runData) openModal(JSON.parse(runData));
