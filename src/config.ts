@@ -68,6 +68,9 @@ export const SITE = {
   /** 是否显示归档页面入口 */
   showArchives: true,
 
+  /** 是否在顶栏下方显示年度进度条 */
+  showYearProgress: true,
+
   /**
    * 是否在文章详情页显示"返回"按钮
    * false 表示使用浏览器默认后退行为

@@ -293,8 +293,8 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
     </nav>
   </div>
 
-  <!-- 年度进度条 -->
-  <YearProgress />
+  {SITE.showYearProgress && <YearProgress />}
+
 </header>
 
 <!-- 内联脚本：尽早定义，切换独立移动端抽屉 #mobile-drawer（参考站方式） -->
