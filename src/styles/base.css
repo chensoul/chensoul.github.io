@@ -119,3 +119,6 @@
 :target {
   scroll-margin-block: 1rem;
 }
+
+/* TOC 覆盖样式（tocbot 之后由 Toc 组件通过 head 中 link 顺序保证覆盖，或随主包加载） */
+@import "./toc-override.css";
