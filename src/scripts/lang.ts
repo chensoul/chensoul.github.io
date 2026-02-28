@@ -235,8 +235,6 @@ const _en = {
     dark: "Dark",
     /** "所有文章"筛选按钮 */
     allPosts: "All Posts",
-    /** "精选文章"筛选按钮 */
-    featuredPosts: "Featured",
     /** "最新文章"筛选按钮 */
     recentPosts: "Recent Posts",
     /** "更多"按钮/链接 */
@@ -330,7 +328,6 @@ const zhCN: typeof _en = {
     light: "浅色",
     dark: "深色",
     allPosts: "所有文章",
-    featuredPosts: "Set Top",
     recentPosts: "New",
     more: "更多",
   },
@@ -405,7 +402,6 @@ const zhHant: typeof _en = {
     backToTop: "回到頂部",
     themeBtn: "切換深色模式",
     allPosts: "所有文章",
-    featuredPosts: "精選文章",
     recentPosts: "最新文章",
   },
 };
@@ -476,7 +472,6 @@ const ja: typeof _en = {
     backToTop: "トップに戻る",
     themeBtn: "ライト/ダークモード切替",
     allPosts: "すべての記事",
-    featuredPosts: "おすすめ記事",
     recentPosts: "最新記事",
   },
 };
@@ -549,7 +544,6 @@ const es: typeof _en = {
     backToTop: "Volver arriba",
     themeBtn: "Alternar modo claro/oscuro",
     allPosts: "Todos los artículos",
-    featuredPosts: "Destacados",
     recentPosts: "Artículos recientes",
   },
 };
