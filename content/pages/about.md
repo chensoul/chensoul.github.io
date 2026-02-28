@@ -9,7 +9,14 @@ title: "关于"
 
 我是 ChenSoul，一个来自中国武汉的开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
-## 更新
+你可以通过以下方式联系我：
+- **WeChat**: ichensoul
+- **X**: [@ichensoul](https://twitter.com/ichensoul)
+- **Github**: [@chensoul](https://twitter.com/chensoul)
+- **Tg**: [@ichensoul](https://t.me/ichensoul)
+- **Email**: [ichensoul@gmail.com](mailto:ichensoul@gmail.com)
+
+## 博客更新
 
 - 2021-09-09 » 注册 chensoul.com 域名，并使用 Hugo 主题构建博客
 - 202?-0?-0? » 将博客域名改为 blog.chensoul.cc 

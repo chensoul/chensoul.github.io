@@ -13,9 +13,6 @@
  * - Allow: / - 允许抓取根目录及所有子路径
  * - Sitemap - 告知爬虫网站地图的位置
  *
- * 依赖关系：
- * - 被 /robots.txt 路径访问
- * - 引用 sitemap.xml（构建时由 sitemap-0.xml 重命名，参考 zdyxry）
  */
 
 import type { APIRoute } from "astro";
@@ -43,6 +40,6 @@ Sitemap: ${sitemapURL.href}
  */
 export const GET: APIRoute = ({ site }) => {
   // 构建 Sitemap URL
-  const sitemapURL = new URL("sitemap.xml", site);
+  const sitemapURL = new URL("sitemap-index.xml", site);
   return new Response(getRobotsTxt(sitemapURL));
 };
