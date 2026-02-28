@@ -2,6 +2,7 @@
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Layout from "./Layout.astro";
+import Main from "./Main.astro";
 import { SITE } from "@/config";
 
 /**
@@ -12,6 +13,7 @@ import { SITE } from "@/config";
 export interface Props {
   frontmatter: {
     title: string;
+    description?: string;
   };
 }
 
@@ -20,15 +22,13 @@ const { frontmatter } = Astro.props;
 
 <Layout title={`${frontmatter.title} | ${SITE.title}`}>
   <Header />
-  <main id="main-content">
-    <!-- 关于页内容区 -->
-    <section
+  <Main pageTitle={frontmatter.title} pageDesc={frontmatter.description}>
+    <div
       id="about"
-      class="prose mx-auto mb-28 max-w-4xl prose-img:mx-auto prose-img:block prose-img:w-full prose-img:max-w-full prose-img:border-0"
+      class="prose !mt-0 pt-0 [&>*:first-child]:!mt-0 [&_p:first-of-type]:!mt-0 prose-img:mx-auto prose-img:block prose-img:w-full prose-img:max-w-full prose-img:border-0"
     >
-      <!-- 插槽：页面内容 -->
       <slot />
-    </section>
-  </main>
+    </div>
+  </Main>
   <Footer />
 </Layout>

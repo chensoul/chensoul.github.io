@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
 
@@ -190,10 +191,11 @@ const hrZoneLabels: Record<number, string> = {
 ---
 
 <Layout title={`${title} | ${SITE.title}`} description={description}>
-  <div class="page-running">
   <Header />
-  <div class="running-page">
-    <article>
+  <Main pageTitle={title}>
+    <div class="running-page">
+      <h2 class="text-xl font-semibold text-foreground mt-0 mb-[1.25em]">跑步统计</h2>
+      <article>
       {
         (!data || !data.stats) ? (
           <p>暂无数据。</p>
@@ -294,7 +296,7 @@ const hrZoneLabels: Record<number, string> = {
               </div>
             </div>
 
-            <h2 class="section-title">最近活动</h2>
+            <h2 class="text-xl font-semibold text-foreground mt-[1.25em] mb-[1.25em]">最近活动</h2>
             <div class="run-list" id="runList" data-all-runs={JSON.stringify(allRuns)} data-hr-zone-labels={JSON.stringify(hrZoneLabels)}>
               {recentRuns.map((run, index) => (
                 <div class="run-card" data-run-index={index} data-run={JSON.stringify(run)}>
@@ -350,8 +352,9 @@ const hrZoneLabels: Record<number, string> = {
           </div>
         )
       }
-    </article>
-  </div>
+      </article>
+    </div>
+  </Main>
 
   <!-- 运动详情弹窗 -->
   <div class="run-detail-modal" id="runDetailModal">
@@ -366,7 +369,6 @@ const hrZoneLabels: Record<number, string> = {
     </div>
   </div>
   <Footer />
-  </div>
 </Layout>
 
 <script>
@@ -378,7 +380,7 @@ const hrZoneLabels: Record<number, string> = {
 
 <style>
   /* 跑步页配色：参考 zdyxry.github.io/running/，仅在本页生效，随 data-theme 切换 */
-  :global(.page-running) {
+  :global(.running-page) {
     --hr-zone-1: #4ade80;
     --hr-zone-2: #60a5fa;
     --hr-zone-3: #fbbf24;
@@ -397,7 +399,7 @@ const hrZoneLabels: Record<number, string> = {
     --load-stat-color: #3b82f6;
   }
 
-  :global(html[data-theme="dark"]) :global(.page-running) {
+  :global(html[data-theme="dark"]) :global(.running-page) {
     --hr-zone-1: #4ade80;
     --hr-zone-2: #60a5fa;
     --hr-zone-3: #fbbf24;
@@ -421,6 +423,11 @@ const hrZoneLabels: Record<number, string> = {
     margin: 0 auto;
   }
 
+  /* 与年进度条距离和关于页一致：首块无上边距 */
+  .running-page > *:first-child {
+    margin-top: 0 !important;
+  }
+
   .page-header {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
@@ -439,15 +446,6 @@ const hrZoneLabels: Record<number, string> = {
     color: var(--text-primary);
     margin: 0;
     font-size: 1rem;
-  }
-
-  .section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 2rem 0 1rem 0;
-    color: var(--text-primary);
-    padding-left: 0.75rem;
-    border-left: 3px solid var(--accent);
   }
 
   /* 周期统计卡片 - Tab 样式 */

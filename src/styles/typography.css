@@ -21,6 +21,14 @@
     margin-bottom: 1.25em !important;
   }
 
+  /* 关于页：顶部不留白，与进度条下方间距与其他页面一致 */
+  #about.prose > *:first-child,
+  #about.prose h1:first-child,
+  #about.prose h2:first-child,
+  #about.prose p:first-of-type {
+    margin-top: 0 !important;
+  }
+
   /* 深色主题下 h4/h5/h6 略淡，层级更清晰 */
   html[data-theme="dark"] .prose h4,
   html[data-theme="dark"] .prose h5,

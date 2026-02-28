@@ -251,8 +251,10 @@ const structuredData = {
           var btn = document.querySelector(themeBtnSel);
           if (!btn) return;
           btn.addEventListener("click", function () {
-            document.documentElement.classList.add("theme-transition");
             setTheme(nextTheme());
+            requestAnimationFrame(function () {
+              document.documentElement.classList.add("theme-transition");
+            });
           });
         }
         window.theme = window.theme || {};

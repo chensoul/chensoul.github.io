@@ -61,11 +61,12 @@
     background-color: var(--background);
     transition: background-color 0s;
   }
-  /* 参考 Astro Theme Switcher：用户切换主题时平滑过渡（由 JS 在点击时添加 .theme-transition） */
+  /* 主题切换平滑过渡：由 JS 在 setTheme 之后 rAF 添加 .theme-transition，避免先加过渡再改 theme 导致闪白 */
   html.theme-transition,
   html.theme-transition body,
-  html.theme-transition #site-frame {
-    transition-duration: 0.25s;
+  html.theme-transition #site-frame,
+  html.theme-transition .site-header {
+    transition-duration: 0.2s;
     transition-timing-function: ease;
     transition-property: background-color, color;
   }
@@ -177,5 +178,3 @@
 :target {
   scroll-margin-block: 1rem;
 }
-
-/* TOC 覆盖样式已移至 Layout.astro：在 toc 为 true 时紧接 tocbot <link> 后内联输出，保证覆盖顺序、避免 FOUC */
