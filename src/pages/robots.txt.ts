@@ -6,40 +6,20 @@
  * 核心逻辑：
  * 1. 允许所有爬虫访问（User-agent: *）
  * 2. 允许抓取所有路径（Allow: /）
- * 3. 指定 Sitemap 位置
- *
- * Robots.txt 规则：
- * - User-agent: * - 适用于所有爬虫
- * - Allow: / - 允许抓取根目录及所有子路径
- * - Sitemap - 告知爬虫网站地图的位置
- *
+ * 3. 指定 Astro 生成的 sitemap-index.xml
  */
 
 import type { APIRoute } from "astro";
 
-/**
- * 生成 Robots.txt 内容
- *
- * @param sitemapURL - Sitemap 的完整 URL
- * @returns Robots.txt 文本内容
- */
-const getRobotsTxt = (sitemapURL: URL) => `
-User-agent: *
+export const GET: APIRoute = ({ site }) => {
+  const base = typeof site === "string" ? site : (site instanceof URL ? site.href : "https://blog.chensoul.cc");
+  const sitemapURL = new URL("/sitemap-index.xml", base);
+  const body = `User-agent: *
 Allow: /
 
 Sitemap: ${sitemapURL.href}
 `;
-
-/**
- * GET 处理函数
- *
- * 生成并返回 Robots.txt 文件
- *
- * @param site - Astro 的 site 配置（SITE.website）
- * @returns Robots.txt 文本响应
- */
-export const GET: APIRoute = ({ site }) => {
-  // 构建 Sitemap URL
-  const sitemapURL = new URL("sitemap-index.xml", site);
-  return new Response(getRobotsTxt(sitemapURL));
+  return new Response(body, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 };

@@ -300,10 +300,10 @@ const zhCN: typeof _en = {
   },
   date: {
     shortFormat(datetime: dayjs.Dayjs): string {
-      return datetime.format("MMM D, YYYY");
+      return datetime.format("YYYY-MM-DD");
     },
     fullFormat(datetime: dayjs.Dayjs): string {
-      return datetime.format("MMMM D, YYYY hh:mm A");
+      return datetime.format("YYYY-MM-DD HH:mm");
     },
     published(strDate: string): string {
       return `Published: ${strDate}`;

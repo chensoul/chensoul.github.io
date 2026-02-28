@@ -77,6 +77,14 @@ export const SITE = {
   showPageDesc: false,
 
   /**
+   * 是否生成 OG 分享图
+   *
+   * true：为每篇文章生成 /og/.../slug.png，并在 meta 中输出 og:image
+   * false：不生成 OG 图、不输出 og:image
+   */
+  ogImage: true,
+
+  /**
    * HTML 页面的 lang 属性值
    *
    * 影响：

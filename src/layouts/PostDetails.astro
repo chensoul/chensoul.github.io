@@ -65,10 +65,11 @@ const {
 // 渲染文章内容
 const { Content } = await render(post);
 
-// OG 图 slug（与 /og/[...slug].png.ts 路由一致，参考 zdyxry）
-const ogSlug = PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone);
+// OG 图：仅当 SITE.ogImage 为 true 时传入，否则不生成/不输出
+const ogSlug = SITE.ogImage
+  ? PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone)
+  : null;
 
-// 传递给 Layout 的属性（ogImage 使用动态生成的 /og/slug.png）
 const layoutProps = {
   title: SITE.title,
   author,
@@ -80,7 +81,7 @@ const layoutProps = {
   math,
   comments,
   mermaid: mermaid ?? false,
-  ogImage: `og/${ogSlug}.png`,
+  ...(ogSlug && { ogImage: `og/${ogSlug}.png` }),
 };
 
 /* ========== Prev/Next Posts ========== */

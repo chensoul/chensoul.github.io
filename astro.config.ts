@@ -2,6 +2,7 @@ import { SITE } from "./src/config";
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -100,6 +101,7 @@ export default defineConfig({
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),
+    sitemap(),
     minify({
       css: { minify: true, errorRecovery: true },
       // 关闭 SVG 压缩，避免 astro:build:done 时 public 尚未完全复制到 dist 导致 ENOENT

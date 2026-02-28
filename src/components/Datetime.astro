@@ -7,15 +7,25 @@
  * 核心逻辑：
  * 1. 自动选择最新时间（更新时间或发布时间）
  * 2. 生成 ISO 格式 datetime 属性（SEO 优化）
- * 3. 绝对日期按文章/站点时区显示，避免 +08:00 等被解析成 UTC 后显示为前一天
+ * 3. 使用 dayjs 做时区与相对时间格式化
  *
  * 依赖关系：
  * - 被 Card.astro 等组件使用
  * - 用于显示文章列表和详情页的时间信息
  */
 
-import { PostUtils } from "@/utils/postUtils";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/zh-cn";
 import { SITE } from "@/config";
+import { _t } from "@/scripts/lang";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(relativeTime);
+dayjs.locale("zh-cn");
 
 /**
  * 组件属性接口
@@ -39,53 +49,22 @@ export interface Props {
 const {
   pubDatetime,
   modDatetime,
-  timezone,
+  timezone: tzProp,
   size = "sm",
   class: className = "",
   format = "relative",
 } = Astro.props;
 
-// 解析日期对象
-const pub = new Date(pubDatetime);
-const mod = modDatetime ? new Date(modDatetime) : null;
-// 选择最新时间（优先使用更新时间）
-const latest = mod && mod.getTime() > pub.getTime() ? mod : pub;
-// ISO 格式（用于 datetime 属性）
+const pub = dayjs(pubDatetime);
+const mod = modDatetime ? dayjs(modDatetime) : null;
+const latest = mod && mod.isAfter(pub) ? mod : pub;
 const iso = latest.toISOString();
-// 中文格式（用于 title 提示）
-const title = pub.toLocaleString("zh-CN");
+const tz = tzProp || SITE.timezone;
+const title = _t.date.fullFormat(pub.tz(tz));
 
-// 计算相对时间（构建时计算，客户端 JS 会更新为最新）
-function formatRelativeTime(date: Date): string {
-  const now = Date.now();
-  let diff = Math.floor((now - date.getTime()) / 1000);
-  if (diff < 0) diff = 0;
-  if (diff < 60) return "几秒前";
-  const m = Math.floor(diff / 60);
-  if (m < 2) return "1 分钟前";
-  if (m < 60) return `${m} 分钟前`;
-  const h = Math.floor(m / 60);
-  if (h < 2) return "1 小时前";
-  if (h < 24) return `${h} 小时前`;
-  const d = Math.floor(h / 24);
-  if (d < 2) return "1 天前";
-  if (d < 30) return `${d} 天前`;
-  const mo = Math.floor(d / 30);
-  if (mo < 2) return "1 个月前";
-  if (mo < 12) return `${mo} 个月前`;
-  const y = Math.floor(d / 365);
-  if (y < 2) return "1 年前";
-  return `${y} 年前`;
-}
-
-const relativeTime = formatRelativeTime(latest);
-
-// 绝对时间格式：按文章/站点时区显示 YYYY-MM-DD，避免 UTC 导致日期差一天
-const tz = timezone || SITE.timezone;
+const latestInTz = dayjs.utc(latest.toDate()).tz(tz);
 const displayTime =
-  format === "absolute"
-    ? PostUtils.getLocalDateString(latest, tz)
-    : relativeTime;
+  format === "absolute" ? _t.date.shortFormat(latestInTz) : latest.fromNow();
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>
