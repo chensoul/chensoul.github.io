@@ -5,7 +5,7 @@ slug: spring-ai-ToolCallbackProvider
 description: "深入解析 Spring AI ToolCallbackProvider 接口及其实现类：MethodToolCallbackProvider、SyncMcpToolCallbackProvider、AsyncMcpToolCallbackProvider、StaticToolCallbackProvider。学习工具调用的最佳实践、使用场景对比和配置示例。"
 categories: [ "techlog" ]
 tags: ['spring-ai', 'mcp']
-image: /thumbnails/spring-ai-logo.svg
+image: /thumbs/spring-ai-logo.svg
 ---
 
 `ToolCallbackProvider` 是 Spring AI 中用于提供工具回调的接口。本文将详细介绍其主要实现类及其使用场景。

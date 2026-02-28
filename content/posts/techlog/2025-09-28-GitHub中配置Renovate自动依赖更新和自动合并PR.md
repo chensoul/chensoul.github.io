@@ -4,7 +4,7 @@ date: 2025-09-28 08:00:00+08:00
 slug: config-renovate-in-github
 categories: [ "techlog" ]
 tags: ['github','renovate']
-image: /thumbnails/github.svg
+image: /thumbs/github.svg
 ---
 
 本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。

@@ -202,6 +202,12 @@ export const SITE = {
     scriptUrl: "https://umami.chensoul.cc/random-string.js",
   },
 
+  /**
+   * 懒加载列表脚本 CDN 地址（文章列表、分类、标签页滚动加载）
+   * 留空则使用站点同源 /lazy-list.js
+   */
+  lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list/lazy-list.js",
+
   // ========== 图片组件配置 ==========
   /**
    * 图片相关配置

@@ -5,7 +5,7 @@ slug: vibesafe4j-annotation-processor-implementation
 description: "详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"
 categories: [ "techlog" ]
 tags: ['vibesafe4j', 'annotation-processor', 'ai']
-image: /thumbnails/java.svg
+image: /thumbs/java.svg
 ---
 
 [Vibesafe4j](https://github.com/joshlong-attic/vibesafe4j) 默认在运行时生成代码，这种方式虽然灵活，但在生产环境中可能遇到一些问题：性能开销、调试困难、IDE 支持有限等。

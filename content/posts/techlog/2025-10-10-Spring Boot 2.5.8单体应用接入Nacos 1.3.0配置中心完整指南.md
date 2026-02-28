@@ -5,7 +5,7 @@ slug: "spring-boot-2.5.8-nacos-1.3.0-config-center-integration-guide"
 categories: [ "techlog" ]
 tags: ["nacos","spring-boot"]
 description: "详细介绍Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心的三种技术方案，包括升级Spring Boot版本、降级Spring Boot版本和使用注解方式配置，提供完整的Maven依赖配置和代码示例。"
-image: /thumbnails/nacos-logo.jpeg
+image: /thumbs/nacos-logo.jpeg
 ---
 
 本文详细介绍Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心的完整解决方案。针对现有微服务架构环境（Spring Boot 2.3.12 + Spring Cloud Alibaba 2.2.6.RELEASE + Nacos 1.3.0），提供三种技术方案：

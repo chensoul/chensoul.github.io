@@ -82,7 +82,7 @@ const { page, tagName } = Astro.props;
   <Footer noMarginTop={true} />
 </Layout>
 
-<script is:inline src="/lazy-list.js"></script>
+<script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
 <script is:inline>
   function boot() {
     if (typeof window.setupLazyList !== "function") return;
