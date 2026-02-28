@@ -59,15 +59,13 @@ const isActive = (path: string) => {
  *
  * @property leadingTitle - 标题前的额外文字（如分类名）
  * @property hideSiteTitle - 是否隐藏站点标题
- * @property leadingTitleTransition - View Transition 名称
  */
 interface Props {
   leadingTitle?: string;
   hideSiteTitle?: boolean;
-  leadingTitleTransition?: string;
 }
 
-const { leadingTitle, hideSiteTitle, leadingTitleTransition } =
+const { leadingTitle, hideSiteTitle } =
   Astro.props as Props;
 
 /**
@@ -128,10 +126,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
           <!-- 桌面端：前导标题（如分类名）+ 网站名称 -->
           {
             leadingTitle && (
-              <span
-                class="mr-2 font-medium max-sm:hidden sm:inline"
-                transition:name={leadingTitleTransition}
-              >
+              <span class="mr-2 font-medium max-sm:hidden sm:inline">
                 {leadingTitle}
               </span>
             )

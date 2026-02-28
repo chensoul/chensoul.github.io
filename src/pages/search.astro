@@ -15,15 +15,18 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
   <Header />
   <Main pageTitle="" pageDesc={_t.search.desc}>
     <!-- Pagefind 搜索容器 -->
-    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
+    <div id="pagefind-search" data-backurl={backUrl}></div>
   </Main>
   <Footer />
 </Layout>
 
 <script>
+  let _searchInitStarted = false;
+
   function initSearch(): void {
     const pageFindSearch = document.querySelector("#pagefind-search") as HTMLElement | null;
-    if (!pageFindSearch) return;
+    if (!pageFindSearch || _searchInitStarted) return;
+    _searchInitStarted = true;
 
     const params = new URLSearchParams(window.location.search);
     const onIdle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1));
@@ -88,13 +91,10 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
   }
 
   function maybeInitSearch() {
-    const pagefindSearch = document.querySelector("#pagefind-search");
-    if (pagefindSearch?.querySelector("form")) return;
     initSearch();
   }
   document.addEventListener("DOMContentLoaded", maybeInitSearch);
   window.addEventListener("load", maybeInitSearch);
-  initSearch();
 </script>
 
 <style is:global>

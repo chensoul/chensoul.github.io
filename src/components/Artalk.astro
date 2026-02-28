@@ -115,14 +115,26 @@ import { SITE } from "@/config";
     }
 
     /**
+     * 清理所有观察器（主题/按钮 MutationObserver）
+     */
+    function cleanupObservers() {
+      if (window._artalkThemeObserver) {
+        window._artalkThemeObserver.disconnect();
+        window._artalkThemeObserver = null;
+      }
+      if (window._artalkBtnObserver) {
+        window._artalkBtnObserver.disconnect();
+        window._artalkBtnObserver = null;
+      }
+    }
+
+    /**
      * 销毁 Artalk 实例
      *
-     * 清理工作：
-     * 1. 调用 destroy() 方法
-     * 2. 移除残留的 DOM 元素
-     * 3. 清空实例引用
+     * 清理工作：先清理观察器，再调用 destroy()、移除残留 DOM、清空实例引用
      */
     function destroyArtalk() {
+      cleanupObservers();
       if (window.artalkInstance) {
         try {
           window.artalkInstance.destroy();
@@ -271,20 +283,6 @@ import { SITE } from "@/config";
           setupThemeObserver();
         }, 100);
       });
-    }
-
-    /**
-     * 清理所有观察器
-     */
-    function cleanupObservers() {
-      if (window._artalkThemeObserver) {
-        window._artalkThemeObserver.disconnect();
-        window._artalkThemeObserver = null;
-      }
-      if (window._artalkBtnObserver) {
-        window._artalkBtnObserver.disconnect();
-        window._artalkBtnObserver = null;
-      }
     }
 
     /**
