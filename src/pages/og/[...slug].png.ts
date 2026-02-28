@@ -2,7 +2,6 @@
  * 动态 OG 图片路由：参考 https://github.com/zdyxry/zdyxry.github.io (astro 分支)
  * 为每篇文章生成 /og/yyyy/mm/dd/slug.png，构建时静态生成
  */
-
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { generateOgImage } from "@/utils/og-image";

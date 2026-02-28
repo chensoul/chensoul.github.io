@@ -1,22 +1,4 @@
 ---
-/**
- * 标签详情页（懒加载）
- *
- * @fileoverview 显示某个标签下的所有文章，首屏外的文章懒加载
- *
- * 核心逻辑：
- * 1. 使用 getStaticPaths 为每个标签生成一个路由（该标签下全部文章）
- * 2. 筛选出包含当前标签的文章（使用 getPostsByTag）
- * 3. 首屏显示 SITE.postPerIndex 篇，其余由 /lazy-list.js 滚动懒加载
- *
- * 路由格式：
- * - /tags/javascript - 该标签下所有文章（懒加载）
- *
- * 依赖关系：
- * - 使用 Card 组件显示文章
- * - 依赖 /lazy-list.js 实现懒加载
- */
-
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";

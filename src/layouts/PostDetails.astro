@@ -31,6 +31,7 @@ const {
   math,
   comments,
   mermaid,
+  description: postDescription,
 } = post.data;
 
 // 渲染文章内容
@@ -45,6 +46,7 @@ const ogSlug =
 const layoutProps = {
   title: SITE.title,
   author,
+  description: postDescription,
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,

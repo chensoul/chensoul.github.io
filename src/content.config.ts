@@ -183,6 +183,13 @@ const blog = defineCollection({
 
       // ========== SEO 和元数据 ==========
       /**
+       * 文章描述（用于 meta description、SEO）
+       *
+       * 可选，若在 frontmatter 中设置则作为该文章页的 fullDescription 传给 Layout
+       */
+      description: z.string().optional(),
+
+      /**
        * 规范链接（Canonical URL）
        *
        * 可选字段，用于：

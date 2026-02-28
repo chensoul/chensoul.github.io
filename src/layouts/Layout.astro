@@ -30,7 +30,6 @@ export interface Props {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
-  scrollSmooth?: boolean;
   toc?: boolean;
   math?: boolean;
   comments?: boolean;
@@ -46,7 +45,6 @@ const {
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
   pubDatetime,
   modDatetime,
-  scrollSmooth = false,
   toc = false,
   mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;

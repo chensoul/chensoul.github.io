@@ -1,11 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE } from "@/config";
 
 // 加载跑步数据
 import runningJson from '../data/running.json';
-
-const title = 'Running';
-const description = '这里展示我的跑步记录统计与列表。';
 
 const data = runningJson;
 const recentRuns = data.runs.slice(0, 10);
@@ -194,7 +192,7 @@ const hrZoneColors: Record<number, string> = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={`跑步 | ${SITE.title}`}>
   <div class="running-page">
     <article>
       <h2>跑步统计</h2>
@@ -375,15 +373,17 @@ const hrZoneColors: Record<number, string> = {
 </Layout>
 
 <script>
+  // @ts-nocheck — 内联脚本不做类型检查，避免 DOM/run 等隐式 any 报错
   // 周期统计 Tab 切换
   document.addEventListener('DOMContentLoaded', function() {
     const tabNav = document.getElementById('periodTabNav');
     if (tabNav) {
       tabNav.addEventListener('click', function(e) {
-        const btn = e.target.closest('.period-tab-btn');
+        const target = e.target;
+        const btn = target && typeof target.closest === 'function' ? target.closest('.period-tab-btn') : null;
         if (!btn) return;
 
-        const period = btn.dataset.period;
+        const period = btn.getAttribute('data-period');
         if (!period) return;
 
         // 切换按钮状态
@@ -395,7 +395,7 @@ const hrZoneColors: Record<number, string> = {
         // 切换面板内容
         document.querySelectorAll('.period-panel').forEach(panel => {
           panel.classList.remove('active');
-          if (panel.dataset.panel === period) {
+          if (panel.getAttribute('data-panel') === period) {
             panel.classList.add('active');
           }
         });
@@ -419,24 +419,23 @@ const hrZoneColors: Record<number, string> = {
     }
   }
 
-  // 心率区间标签
+  // 心率区间标签与颜色（字符串 key 便于用 run.hr_zone 索引）
   const hrZoneLabels = {
-    0: '未知',
-    1: 'Z1 恢复',
-    2: 'Z2 有氧',
-    3: 'Z3 节奏',
-    4: 'Z4 阈值',
-    5: 'Z5 最大'
+    '0': '未知',
+    '1': 'Z1 恢复',
+    '2': 'Z2 有氧',
+    '3': 'Z3 节奏',
+    '4': 'Z4 阈值',
+    '5': 'Z5 最大'
   };
 
-  // 心率区间颜色
   const hrZoneColors = {
-    0: 'var(--text-secondary)',
-    1: '#4ade80',
-    2: '#60a5fa',
-    3: '#fbbf24',
-    4: '#fb923c',
-    5: '#f87171'
+    '0': 'var(--text-secondary)',
+    '1': '#4ade80',
+    '2': '#60a5fa',
+    '3': '#fbbf24',
+    '4': '#fb923c',
+    '5': '#f87171'
   };
 
   // 查看更多功能
@@ -444,7 +443,7 @@ const hrZoneColors: Record<number, string> = {
   const runList = document.getElementById('runList');
 
   if (loadMoreBtn && runList) {
-    const allRuns = JSON.parse(runList.dataset.allRuns || '[]');
+    const allRuns = JSON.parse(runList.getAttribute('data-all-runs') || '[]');
     let isExpanded = false;
 
     loadMoreBtn.addEventListener('click', () => {
@@ -455,8 +454,8 @@ const hrZoneColors: Record<number, string> = {
           const runCard = document.createElement('div');
           runCard.className = 'run-card';
           runCard.style.animation = 'fadeIn 0.3s ease';
-          runCard.dataset.runIndex = 10 + idx;
-          runCard.dataset.run = JSON.stringify(run);
+          runCard.setAttribute('data-run-index', String(10 + idx));
+          runCard.setAttribute('data-run', JSON.stringify(run));
 
           const hrZoneBadge = run.hr_zone > 0 ? `
             <span
@@ -703,7 +702,8 @@ const hrZoneColors: Record<number, string> = {
     // 辅助函数：计算配速柱状图宽度
     // 使用非线性映射，让快慢配速差异更明显
     // 配速范围：4'00" (240s) 到 8'00" (480s)
-    function getPaceBarWidth(paceStr, allPaces = []) {
+    function getPaceBarWidth(paceStr, allPaces) {
+      allPaces = allPaces || [];
       const paceSeconds = paceToSeconds(paceStr);
       if (paceSeconds === 0) return 0;
 
@@ -753,8 +753,8 @@ const hrZoneColors: Record<number, string> = {
       const allSegmentPaces = run.segments.map(s => s.pace).filter(p => p && p !== "0'00\"");
 
       const segmentRows = run.segments.map((seg, idx) => {
-        const zoneClass = seg.hr_zone ? `zone-${seg.hr_zone}` : '';
-        const zoneLabel = seg.hr_zone ? hrZoneLabels[seg.hr_zone]?.split(' ')[0] : '';
+        const zoneClass = seg.hr_zone != null ? `zone-${seg.hr_zone}` : '';
+        const zoneLabel = seg.hr_zone != null ? (hrZoneLabels[seg.hr_zone] || '').split(' ')[0] : '';
         const barWidth = getPaceBarWidth(seg.pace, allSegmentPaces);
         const barClass = getPaceBarClass(seg.pace);
         return `
@@ -800,8 +800,8 @@ const hrZoneColors: Record<number, string> = {
     let lapsHtml = '';
     if (run.laps && run.laps.length > 0) {
       const lapRows = run.laps.map((lap, idx) => {
-        const zoneClass = lap.hr_zone ? `zone-${lap.hr_zone}` : '';
-        const zoneLabel = lap.hr_zone ? hrZoneLabels[lap.hr_zone]?.split(' ')[0] : '';
+        const zoneClass = lap.hr_zone != null ? `zone-${lap.hr_zone}` : '';
+        const zoneLabel = lap.hr_zone != null ? (hrZoneLabels[lap.hr_zone] || '').split(' ')[0] : '';
         return `
           <tr>
             <td>${idx + 1}</td>
@@ -879,7 +879,7 @@ const hrZoneColors: Record<number, string> = {
   // 为初始的跑步卡片添加点击事件
   document.querySelectorAll('.run-card').forEach(card => {
     card.addEventListener('click', () => {
-      const runData = card.dataset.run;
+      const runData = card.getAttribute('data-run');
       if (runData) {
         openModal(JSON.parse(runData));
       }

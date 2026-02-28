@@ -1,25 +1,4 @@
 ---
-/**
- * 标签索引页
- *
- * @fileoverview 显示所有标签及其文章数量
- *
- * 核心逻辑：
- * 1. 获取所有标签（使用 getUniqueTags）
- * 2. 使用 Tag 组件显示每个标签
- * 3. 大号显示（size="lg"）
- * 4. 显示标签使用次数
- *
- * 视觉设计：
- * - 标签云布局
- * - 圆角胶囊样式
- * - 悬停效果：向上移动
- *
- * 依赖关系：
- * - 被 /tags 路径访问
- * - 使用 Tag 组件显示标签
- */
-
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
@@ -33,7 +12,7 @@ const posts = await getCollection("blog");
 let tags = PostUtils.getUniqueTags(posts);
 ---
 
-<Layout>
+<Layout title={`标签 | ${SITE.title}`}>
     <ul>
       {
         tags.map(({ tag, tagName, count }) => (

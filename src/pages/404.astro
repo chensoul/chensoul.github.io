@@ -11,13 +11,16 @@
  *
  * 依赖关系：
  * - 当路由匹配失败时自动显示
- * - 使用 scripts/lang 获取文案和图片 URL
+ * - 文案与图片路径直接写在本页
  */
 
 import Layout from "@/layouts/Layout.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
+
+const notFoundStaticImage = "https://cos.lhasa.icu/StylePictures/404.webp";
+const notFoundAnimatedImage = "https://cos.lhasa.icu/StylePictures/404.gif";
+const notFoundTitle = "404，您访问的页面不存在～";
 ---
 
 <Layout title={`404 Not Found | ${SITE.title}`}>
@@ -27,7 +30,7 @@ import { _t } from "@/scripts/lang";
         <!-- 静态图片（默认显示） -->
         <img
           id="static-image"
-          src={_t.notFoundPage.staticImages}
+          src={notFoundStaticImage}
           alt="404 Not Found"
           loading="eager"
           decoding="async"
@@ -36,7 +39,7 @@ import { _t } from "@/scripts/lang";
         <!-- 动画图片（鼠标悬停时显示） -->
         <img
           id="animated-image"
-          src={_t.notFoundPage.images}
+          src={notFoundAnimatedImage}
           alt="404 Not Found"
           loading="lazy"
           decoding="async"
@@ -44,13 +47,13 @@ import { _t } from "@/scripts/lang";
         />
       </div>
       <!-- 错误提示文本 -->
-      <p class="mt-4 text-xl">{_t.notFoundPage.title}</p>
+      <p class="mt-4 text-xl">{notFoundTitle}</p>
       <!-- 返回首页按钮 -->
       <LinkButton
         href="/"
-        class="my-6 text-lg decoration-dashed underline-offset-8"
+        class="my-6 text-sm decoration-dashed underline-offset-8"
       >
-        {'回到首页 >>>'}
+        {'回到首页 >>'}
       </LinkButton>
     </div>
 </Layout>
