@@ -9,9 +9,9 @@ import BackButton from "@/components/BackButton.astro";
 /**
  * 组件属性接口
  *
- * @property title - 页面标题
+ * @property title - 页面标题，可不传；未传或为空时使用 SITE.title（网站名称）
  * @property author - 作者名称
- * @property description - 页面描述
+ * @property description - 页面描述，可不传；未传或为空时使用 SITE.desc（站点描述）
  * @property canonicalURL - 规范链接
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间
@@ -36,11 +36,11 @@ export interface Props {
   mermaid?: boolean;
 }
 
-// 解构属性，设置默认值
+// 解构属性，设置默认值（title 未传或为空时用网站名称）
 const {
-  title = SITE.title,
+  title: titleProp,
   author = SITE.author,
-  description = SITE.desc,
+  description: descriptionProp,
   ogImage: ogImageProp,
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
   pubDatetime,
@@ -49,8 +49,8 @@ const {
   mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;
 
-
-const fullDescription = description;
+const title = titleProp?.trim() || SITE.title;
+const fullDescription = descriptionProp?.trim() || SITE.desc;
 
 // 社交分享图：仅文章页传 ogImage 时有图（PostDetails 传 og/.../slug.png），非文章页不输出 og:image
 // 必须使用站点主域名的绝对 URL，否则分享时爬虫无法正确拉取图片（Facebook/LinkedIn 等要求）
@@ -164,16 +164,6 @@ const structuredData = {
     />
 
     <meta name="theme-color" content="#ffffff" />
-    <!-- 主题首屏：从 localStorage 恢复 data-theme 与 theme-color，避免闪白 -->
-    <script is:inline>
-      (function () {
-        var t = localStorage.getItem("theme");
-        if (t !== "light" && t !== "dark") t = "light";
-        document.documentElement.setAttribute("data-theme", t);
-        var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", t === "dark" ? "#0f172a" : "#ffffff");
-      })();
-    </script>
 
     <!-- Google 站点验证（config.ts 中配置 googleSiteVerification） -->
     {
@@ -196,6 +186,14 @@ const structuredData = {
       </>
     )}
 
+    <!-- Theme initialization script to prevent flash -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
   </head>
   <body>
@@ -212,18 +210,18 @@ const structuredData = {
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function () {
         if (!lightAndDarkMode) return;
-        var THEME_KEY = "theme";
-        var btn = document.getElementById("theme-toggle");
+        const THEME_KEY = "theme";
+        const btn = document.getElementById("theme-toggle");
         if (!btn) return;
         function getTheme() {
-          var t = localStorage.getItem(THEME_KEY);
+          const t = localStorage.getItem(THEME_KEY);
           return t === "dark" || t === "light" ? t : "light";
         }
         function setTheme(t) {
           if (t !== "light" && t !== "dark") return;
           document.documentElement.setAttribute("data-theme", t);
           localStorage.setItem(THEME_KEY, t);
-          var m = document.querySelector('meta[name="theme-color"]');
+          const m = document.querySelector('meta[name="theme-color"]');
           if (m) m.setAttribute("content", t === "dark" ? "#0f172a" : "#ffffff");
         }
         function nextTheme() {

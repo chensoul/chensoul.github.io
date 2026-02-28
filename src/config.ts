@@ -164,7 +164,7 @@ export const SITE = {
     { name: "GitHub", url: "https://github.com/chensoul", icon: "github" },
     { name: "RSS", url: "/rss.xml", icon: "rss" },
     { name: "Twitter", url: "https://twitter.com/ichensoul", icon: "twitter" },
-     { name: "Telegram", url: "https://t.me/ichensoul", icon: "telegram" },
+    { name: "Telegram", url: "https://t.me/ichensoul", icon: "telegram" },
   ],
 
   /**

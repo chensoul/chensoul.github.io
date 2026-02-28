@@ -1,11 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout
-  title="搜索"
-  description="搜索所有文章"
->
+<Layout title="搜索" description="搜索所有文章">
   <div class="search-container">
     <div id="search">
       <div class="search-box">
@@ -23,31 +20,31 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script is:inline>
-  window.addEventListener('DOMContentLoaded', async () => {
-    const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-button');
-    const resultsContainer = document.getElementById('search-results');
+  window.addEventListener("DOMContentLoaded", async () => {
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-button");
+    const resultsContainer = document.getElementById("search-results");
 
     let pagefind;
 
     try {
       // 初始化 pagefind
-      pagefind = await import('/pagefind/pagefind.js');
+      pagefind = await import("/pagefind/pagefind.js");
       await pagefind.init();
 
       // 启用输入框
-      searchInput.placeholder = '搜索文章标题、内容...';
+      searchInput.placeholder = "搜索文章标题、内容...";
       searchInput.disabled = false;
-    } catch (error) {
-      console.error('Failed to load Pagefind:', error);
-      resultsContainer.innerHTML = '<p class="error">搜索功能加载失败，请刷新页面重试</p>';
+    } catch {
+      resultsContainer.innerHTML =
+        '<p class="error">搜索功能加载失败，请刷新页面重试</p>';
       return;
     }
 
     async function performSearch() {
       const query = searchInput.value.trim();
       if (!query) {
-        resultsContainer.innerHTML = '';
+        resultsContainer.innerHTML = "";
         return;
       }
 
@@ -57,37 +54,48 @@ import Layout from '../layouts/Layout.astro';
         const search = await pagefind.search(query);
 
         if (search.results.length === 0) {
-          resultsContainer.innerHTML = '<p class="no-results">未找到「' + query + '」的相关结果</p>';
+          resultsContainer.innerHTML =
+            '<p class="no-results">未找到「' + query + "」的相关结果</p>";
           return;
         }
 
-        let html = '<p class="result-count">找到 ' + search.results.length + ' 个结果</p>';
+        let html =
+          '<p class="result-count">找到 ' +
+          search.results.length +
+          " 个结果</p>";
         html += '<ul class="results-list">';
 
         for (const result of search.results.slice(0, 10)) {
           const data = await result.data();
           html += '<li class="result-item">';
-          html += '<a href="' + data.url + '" class="result-title">' + (data.meta.title || '无标题') + '</a>';
-          html += '<p class="result-excerpt">' + data.excerpt + '</p>';
-          html += '</li>';
+          html +=
+            '<a href="' +
+            data.url +
+            '" class="result-title">' +
+            (data.meta.title || "无标题") +
+            "</a>";
+          html += '<p class="result-excerpt">' + data.excerpt + "</p>";
+          html += "</li>";
         }
 
-        html += '</ul>';
+        html += "</ul>";
 
         if (search.results.length > 10) {
-          html += '<p class="more-results">还有 ' + (search.results.length - 10) + ' 个结果...</p>';
+          html +=
+            '<p class="more-results">还有 ' +
+            (search.results.length - 10) +
+            " 个结果...</p>";
         }
 
         resultsContainer.innerHTML = html;
-      } catch (error) {
-        console.error('Search error:', error);
+      } catch {
         resultsContainer.innerHTML = '<p class="error">搜索出错，请重试</p>';
       }
     }
 
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') performSearch();
+    searchButton.addEventListener("click", performSearch);
+    searchInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") performSearch();
     });
   });
 </script>

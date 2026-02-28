@@ -13,9 +13,8 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { page } = Astro.props;
 
-const groupedByYear = PostUtils.groupBy(
-  page.data,
-  item => new Date(item.data.updated ?? item.data.date).getFullYear()
+const groupedByYear = PostUtils.groupBy(page.data, item =>
+  new Date(item.data.updated ?? item.data.date).getFullYear()
 );
 
 const years = Object.keys(groupedByYear)
@@ -31,28 +30,32 @@ const years = Object.keys(groupedByYear)
           {year} ({groupedByYear[year].length})
         </h2>
         <ul class="mt-1 space-y-1">
-          {
-            groupedByYear[year].map(({ data, id, filePath }) => {
-              const d = new Date(data.updated ?? data.date);
-              const tz = data.timezone ?? SITE.timezone;
-              const dateStr = PostUtils.getLocalDateString(d, tz);
-              const dateText = dateStr.slice(5);
-              return (
-                <li class="flex items-center gap-2 leading-6">
-                  <span class="w-14 text-right text-sm tabular-nums opacity-80">
-                    {dateText}
-                  </span>
-                  <span class="opacity-80">»</span>
-                  <a
-                    href={PostUtils.getPath(id, filePath, true, data.date, data.timezone)}
-                    class="flex-1 truncate text-sm hover:underline"
-                  >
-                    {data.title}
-                  </a>
-                </li>
-              );
-            })
-          }
+          {groupedByYear[year].map(({ data, id, filePath }) => {
+            const d = new Date(data.updated ?? data.date);
+            const tz = data.timezone ?? SITE.timezone;
+            const dateStr = PostUtils.getLocalDateString(d, tz);
+            const dateText = dateStr.slice(5);
+            return (
+              <li class="flex items-center gap-2 leading-6">
+                <span class="w-14 text-right text-sm tabular-nums opacity-80">
+                  {dateText}
+                </span>
+                <span class="opacity-80">»</span>
+                <a
+                  href={PostUtils.getPath(
+                    id,
+                    filePath,
+                    true,
+                    data.date,
+                    data.timezone
+                  )}
+                  class="flex-1 truncate text-sm hover:underline"
+                >
+                  {data.title}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </section>
     ))

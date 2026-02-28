@@ -50,61 +50,56 @@ categories.forEach(({ categoryName }) => {
 });
 ---
 
-<Layout>
-      <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2" aria-label="分类列表">
-        {
-          categories.map(({ category, categoryName, count }, i) => (
-            <li
-              class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}
-            >
-              <a
-                href={`/categories/${category}`}
-                aria-label={`查看 ${categoryName} 分类`}
-                class="group relative block overflow-hidden"
-              >
-                <div
-                  class="w-full overflow-hidden"
-                  style="aspect-ratio: 16 / 9;"
-                >
-                  {getCategoryImageUrl(category) ||
-                  getCategoryImageUrl(categoryName) ? (
-                    <img
-                      src={
-                        getCategoryImageUrl(category) ||
-                        getCategoryImageUrl(categoryName)
-                      }
-                      alt={`${categoryName} 封面图`}
-                      loading="lazy"
-                      decoding="async"
-                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  ) : (
-                    // 无封面图时显示占位背景
-                    <div class="h-full w-full bg-black/20 dark:bg-white/20" />
-                  )}
-                </div>
-                {/* 渐变遮罩 */}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                {/* 文字内容 */}
-                <div class="absolute right-0 bottom-0 left-0 p-4">
-                  <span class="mb-1 block text-xs text-white/80">
-                    {categoryName}（{count}篇）
-                  </span>
-                  <h3 class="line-clamp-1 text-sm leading-tight text-white">
-                    {categoryLatestPost.get(categoryName) || categoryName}
-                  </h3>
-                </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <div
-        id="categories-sentinel"
-        data-init={SITE.postPerIndex}
-        data-chunk={SITE.postPerPage}
-      >
-      </div>
+<Layout title={`分类 | ${SITE.title}`}>
+  <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2" aria-label="分类列表">
+    {
+      categories.map(({ category, categoryName, count }, i) => (
+        <li class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}>
+          <a
+            href={`/categories/${category}`}
+            aria-label={`查看 ${categoryName} 分类`}
+            class="group relative block overflow-hidden"
+          >
+            <div class="w-full overflow-hidden" style="aspect-ratio: 16 / 9;">
+              {getCategoryImageUrl(category) ||
+              getCategoryImageUrl(categoryName) ? (
+                <img
+                  src={
+                    getCategoryImageUrl(category) ||
+                    getCategoryImageUrl(categoryName)
+                  }
+                  alt={`${categoryName} 封面图`}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              ) : (
+                // 无封面图时显示占位背景
+                <div class="h-full w-full bg-black/20 dark:bg-white/20" />
+              )}
+            </div>
+            {/* 渐变遮罩 */}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            {/* 文字内容 */}
+            <div class="absolute right-0 bottom-0 left-0 p-4">
+              <span class="mb-1 block text-xs text-white/80">
+                {categoryName}（{count}篇）
+              </span>
+              <h3 class="line-clamp-1 text-sm leading-tight text-white">
+                {categoryLatestPost.get(categoryName) || categoryName}
+              </h3>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div
+    id="categories-sentinel"
+    data-init={SITE.postPerIndex}
+    data-chunk={SITE.postPerPage}
+  >
+  </div>
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
@@ -119,4 +114,3 @@ categories.forEach(({ categoryName }) => {
   document.addEventListener("DOMContentLoaded", boot);
   window.addEventListener("load", boot);
 </script>
-

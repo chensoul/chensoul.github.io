@@ -43,10 +43,8 @@ const { name, width = 18, height = 18, class: className = "" } = Astro.props;
 const IconComponent = iconMap[name.toLowerCase()];
 ---
 
-{IconComponent ? (
-  <IconComponent
-    width={width}
-    height={height}
-    class={className}
-  />
-) : null}
+{
+  IconComponent ? (
+    <IconComponent width={width} height={height} class={className} />
+  ) : null
+}

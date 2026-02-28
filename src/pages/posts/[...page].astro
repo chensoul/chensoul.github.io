@@ -63,36 +63,36 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout>
-    <ul class="posts-list">
-      {
-        /**
-         * 渲染文章列表
-         *
-         * 懒加载逻辑：
-         * - 索引小于 SITE.postPerIndex 的文章直接显示
-         * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
-         *
-         * 数据来源：
-         * - page.data 是当前分页的文章数组
-         * - 由于 pageSize 设置为全部，这里包含所有文章
-         */
-        page.data.map((data, i) => (
-          <Card
-            {...data}
-            itemClass="posts-item"
-            hidden={i >= SITE.postPerIndex}
-          />
-        ))
-      }
-    </ul>
-    {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-    <div
-      id="posts-sentinel"
-      data-init={SITE.postPerIndex}
-      data-chunk={SITE.postPerPage}
-    >
-    </div>
+<Layout title={`文章 | ${SITE.title}`}>
+  <ul class="posts-list">
+    {
+      /**
+       * 渲染文章列表
+       *
+       * 懒加载逻辑：
+       * - 索引小于 SITE.postPerIndex 的文章直接显示
+       * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
+       *
+       * 数据来源：
+       * - page.data 是当前分页的文章数组
+       * - 由于 pageSize 设置为全部，这里包含所有文章
+       */
+      page.data.map((data, i) => (
+        <Card
+          {...data}
+          itemClass="posts-item"
+          hidden={i >= SITE.postPerIndex}
+        />
+      ))
+    }
+  </ul>
+  {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
+  <div
+    id="posts-sentinel"
+    data-init={SITE.postPerIndex}
+    data-chunk={SITE.postPerPage}
+  >
+  </div>
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>

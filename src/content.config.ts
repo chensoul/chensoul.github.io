@@ -70,6 +70,13 @@ const blog = defineCollection({
        */
       title: z.string(),
 
+      /**
+       * 文章描述（用于 meta description、SEO）
+       *
+       * 可选，若在 frontmatter 中设置则作为该文章页的 fullDescription 传给 Layout
+       */
+      description: z.string().optional(),
+
       // ========== 日期相关 ==========
       /**
        * 文章发布日期
@@ -82,7 +89,7 @@ const blog = defineCollection({
        */
       date: z
         .union([z.date(), z.string()])
-        .transform((v) =>
+        .transform(v =>
           v instanceof Date ? v : new Date(String(v).replace(" ", "T"))
         ),
 
@@ -98,7 +105,7 @@ const blog = defineCollection({
         .union([z.date(), z.string()])
         .optional()
         .nullable()
-        .transform((v) => {
+        .transform(v => {
           if (v == null) return v;
           return v instanceof Date ? v : new Date(String(v).replace(" ", "T"));
         }),
@@ -180,14 +187,6 @@ const blog = defineCollection({
        * 设为 true 后会在该文章页加载 Mermaid 并渲染 ```mermaid 代码块
        */
       mermaid: z.boolean().default(false),
-
-      // ========== SEO 和元数据 ==========
-      /**
-       * 文章描述（用于 meta description、SEO）
-       *
-       * 可选，若在 frontmatter 中设置则作为该文章页的 fullDescription 传给 Layout
-       */
-      description: z.string().optional(),
 
       /**
        * 规范链接（Canonical URL）

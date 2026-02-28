@@ -94,36 +94,36 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page, categoryName } = Astro.props;
 ---
 
-<Layout>
-    <p class="mb-4 text-base font-semibold">
-      分类：{categoryName}
-    </p>
-    <ul class="category-posts-list">
-      {
-        /**
-         * 渲染分类文章列表
-         *
-         * 懒加载逻辑：
-         * - 索引小于 SITE.postPerIndex 的文章直接显示
-         * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
-         */
-        page.data.map((data, i) => (
-          <Card
-            {...data}
-            itemClass="category-post-item"
-            hidden={i >= SITE.postPerIndex}
-            dateFormat="absolute"
-          />
-        ))
-      }
-    </ul>
-    {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-    <div
-      id="category-posts-sentinel"
-      data-init={SITE.postPerIndex}
-      data-chunk={SITE.postPerPage}
-    >
-    </div>
+<Layout title={`${categoryName} | ${SITE.title}`}>
+  <p class="mb-4 text-base font-semibold">
+    分类：{categoryName}
+  </p>
+  <ul class="category-posts-list">
+    {
+      /**
+       * 渲染分类文章列表
+       *
+       * 懒加载逻辑：
+       * - 索引小于 SITE.postPerIndex 的文章直接显示
+       * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
+       */
+      page.data.map((data, i) => (
+        <Card
+          {...data}
+          itemClass="category-post-item"
+          hidden={i >= SITE.postPerIndex}
+          dateFormat="absolute"
+        />
+      ))
+    }
+  </ul>
+  {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
+  <div
+    id="category-posts-sentinel"
+    data-init={SITE.postPerIndex}
+    data-chunk={SITE.postPerPage}
+  >
+  </div>
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>

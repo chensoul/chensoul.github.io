@@ -22,7 +22,11 @@
   id="year-progress"
   class="group relative mx-auto w-full max-w-4xl border-0 bg-black/[0.06]"
 >
-  <div id="year-progress-track" class="h-[3px] w-full rounded border-0 bg-black/[0.06]" aria-hidden="true">
+  <div
+    id="year-progress-track"
+    class="h-[3px] w-full rounded border-0 bg-black/[0.06]"
+    aria-hidden="true"
+  >
     <div id="year-progress-fill" class="h-[3px] w-0 rounded bg-blue-600"></div>
   </div>
   <span
@@ -31,11 +35,11 @@
   ></span>
   <span
     id="year-progress-label"
-    class="pointer-events-none absolute top-1/2 left-0 z-20 -translate-y-1/2 text-xs text-blue-600 whitespace-nowrap opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="pointer-events-none absolute top-1/2 left-0 z-20 -translate-y-1/2 text-xs whitespace-nowrap text-blue-600 opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <div
     id="year-progress-popup"
-    class="pointer-events-none absolute top-0 left-0 z-30 -translate-y-[calc(100%+8px)] rounded border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-800 whitespace-nowrap opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
+    class="pointer-events-none absolute top-0 left-0 z-30 -translate-y-[calc(100%+8px)] rounded border border-slate-200 bg-slate-50 px-2 py-1 text-xs whitespace-nowrap text-slate-800 opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
   >
   </div>
 </div>
@@ -61,7 +65,13 @@
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 1);
     const end = new Date(now.getFullYear() + 1, 0, 1);
-    return Math.min(1, Math.max(0, (now.getTime() - start.getTime()) / (end.getTime() - start.getTime())));
+    return Math.min(
+      1,
+      Math.max(
+        0,
+        (now.getTime() - start.getTime()) / (end.getTime() - start.getTime())
+      )
+    );
   }
 
   function getElements(): {
@@ -108,7 +118,11 @@
     positionLabel(els, progress);
   }
 
-  function animateProgress(els: YearProgressEls, target: number, onComplete?: () => void): void {
+  function animateProgress(
+    els: YearProgressEls,
+    target: number,
+    onComplete?: () => void
+  ): void {
     const startTs = performance.now();
     function step(ts: number): void {
       const t = Math.min(1, (ts - startTs) / ANIMATION_DURATION);
@@ -163,7 +177,8 @@
 
   function init(): void {
     const raw = getElements();
-    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup) return;
+    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup)
+      return;
     const els: YearProgressEls = raw as YearProgressEls;
 
     const target = calcProgress();
@@ -192,7 +207,8 @@
 
   function update(): void {
     const raw = getElements();
-    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup) return;
+    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup)
+      return;
     const els: YearProgressEls = raw as YearProgressEls;
     const target = calcProgress();
     setProgress(els, target);

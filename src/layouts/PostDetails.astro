@@ -40,11 +40,17 @@ const { Content } = await render(post);
 // OG 图：仅生产环境且 SITE.ogImage 为 true 时传入
 const ogSlug =
   import.meta.env.PROD && SITE.ogImage
-    ? PostUtils.getPath(post.id, post.filePath, false, post.data.date, post.data.timezone)
+    ? PostUtils.getPath(
+        post.id,
+        post.filePath,
+        false,
+        post.data.date,
+        post.data.timezone
+      )
     : null;
 
 const layoutProps = {
-  title: SITE.title,
+  title,
   author,
   description: postDescription,
   pubDatetime: date,
@@ -68,12 +74,20 @@ const layoutProps = {
  * 2. 找到当前文章的索引
  * 3. 获取上一篇（索引-1）和下一篇（索引+1）
  */
-const allPosts = posts.map(({ data: { title, date, timezone }, id, filePath }) => ({
-  path: PostUtils.getPath(id, filePath, true, date, timezone),
-  title,
-}));
+const allPosts = posts.map(
+  ({ data: { title, date, timezone }, id, filePath }) => ({
+    path: PostUtils.getPath(id, filePath, true, date, timezone),
+    title,
+  })
+);
 
-const currentPostPath = PostUtils.getPath(post.id, post.filePath, true, post.data.date, post.data.timezone);
+const currentPostPath = PostUtils.getPath(
+  post.id,
+  post.filePath,
+  true,
+  post.data.date,
+  post.data.timezone
+);
 const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
 
 const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
@@ -88,27 +102,31 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
 <Layout {...layoutProps}>
   <!-- KaTeX 数学公式样式（仅文章详情且启用公式时加载） -->
-  {math && (
-    <link
-      slot="head"
-      rel="preload"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
-      as="style"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      onload={linkPreloadOnLoad}
-    />
-  )}
-  {math && (
-    <noscript slot="head">
+  {
+    math && (
       <link
-        rel="stylesheet"
+        slot="head"
+        rel="preload"
         href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+        as="style"
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
+        onload={linkPreloadOnLoad}
       />
-    </noscript>
-  )}
+    )
+  }
+  {
+    math && (
+      <noscript slot="head">
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
+      </noscript>
+    )
+  }
 
   <!-- 文章标题与发布日期（不在 main 内） -->
   <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
@@ -118,69 +136,63 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       modDatetime={updated}
       timezone={post.data.timezone}
       format="absolute"
-      class="mt-1 flex justify-center text-sm article-date"
+      class="article-date mt-1 flex justify-center text-sm"
     />
   </section>
 
-    <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
-    <article
-      id="article"
-      class="js-toc-content"
-    >
-      <Content />
-    </article>
+  <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
+  <article id="article" class="js-toc-content">
+    <Content />
+  </article>
 
-    <!-- 标签列表 -->
-    <ul class="my-1 flex flex-col flex-wrap space-y-2 md:flex-row md:space-y-0">
-      {
-        tags.length > 0 && (
-          <li class="flex items-center space-x-0.5">
-            <IconTag class="mt-0.5 h-4 w-4" />
-            <ul>
-              {tags.map((tag: string) => (
-                <Tag tag={slugifyStr(tag)} tagName={tag} />
-              ))}
-            </ul>
-          </li>
-        )
-      }
-    </ul>
-    <hr class="my-6" />
+  <!-- 标签列表 -->
+  <ul class="my-1 flex flex-col flex-wrap space-y-2 md:flex-row md:space-y-0">
+    {
+      tags.length > 0 && (
+        <li class="flex items-center space-x-0.5">
+          <IconTag class="mt-0.5 h-4 w-4" />
+          <ul>
+            {tags.map((tag: string) => (
+              <Tag tag={slugifyStr(tag)} tagName={tag} />
+            ))}
+          </ul>
+        </li>
+      )
+    }
+  </ul>
+  <hr class="my-6" />
 
-    <!-- Previous/Next Post Buttons -->
-    <div
-      data-pagefind-ignore
-      class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2"
-    >
-      <!-- 上一篇 -->
-      {
-        prevPost && (
-          <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
-            <IconChevronLeft class="inline-block flex-none" />
-            <div>
-              <div class="text-sm link-subtle">{prevPost.title}</div>
-            </div>
-          </a>
-        )
-      }
-      <!-- 下一篇 -->
-      {
-        nextPost && (
-          <a
-            href={nextPost.path}
-            class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
-          >
-            <div>
-              <div class="text-sm link-subtle">{nextPost.title}</div>
-            </div>
-            <IconChevronRight class="inline-block flex-none" />
-          </a>
-        )
-      }
-    </div>
+  <!-- Previous/Next Post Buttons -->
+  <div data-pagefind-ignore class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <!-- 上一篇 -->
+    {
+      prevPost && (
+        <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
+          <IconChevronLeft class="inline-block flex-none" />
+          <div>
+            <div class="link-subtle text-sm">{prevPost.title}</div>
+          </div>
+        </a>
+      )
+    }
+    <!-- 下一篇 -->
+    {
+      nextPost && (
+        <a
+          href={nextPost.path}
+          class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
+        >
+          <div>
+            <div class="link-subtle text-sm">{nextPost.title}</div>
+          </div>
+          <IconChevronRight class="inline-block flex-none" />
+        </a>
+      )
+    }
+  </div>
 
-    <!-- 评论容器 -->
-    <div id="Comments"></div>
+  <!-- 评论容器 -->
+  <div id="Comments"></div>
 
   <!-- 侧边栏：文章目录（与 astro-lhasa 一致，内联实现） -->
   <aside
@@ -198,7 +210,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 <!-- Artalk 评论系统 -->
 <Artalk />
 
-<script is:inline data-astro-rerun define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl }}>
+<script
+  is:inline
+  data-astro-rerun
+  define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl }}
+>
   /* Tocbot：与 astro-lhasa 一致内联，样式由 Layout 条件加载（tocbot CSS + 自定义） */
   (function () {
     if (!document.getElementById("toc-container")) return;

@@ -11,7 +11,9 @@ import rehypeRewrite, { type RehypeRewriteOptions } from "rehype-rewrite";
 import rehypeWrapAll from "rehype-wrap-all";
 import rehypeExternalLinks from "rehype-external-links";
 import mermaid from "astro-mermaid";
-import expressiveCode, { type AstroExpressiveCodeOptions } from "astro-expressive-code";
+import expressiveCode, {
+  type AstroExpressiveCodeOptions,
+} from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import compressor from "astro-compressor";
@@ -83,21 +85,21 @@ export default defineConfig({
       },
     }),
     photosuite({
-      scope: '#article',
+      scope: "#article",
       imageBase: "https://cos.chensoul.cc/images",
       exif: {
-          enabled: false,
-          fields: [
-            'Model',            // Camera Model
-            'LensModel',        // Lens Model
-            'FocalLength',      // Focal Length
-            'FNumber',          // Aperture
-            'ExposureTime',     // Shutter Speed
-            'ISO',              // ISO
-            'DateTimeOriginal'  // Date Original
-          ],
-          separator: ' · '      // Separator
-        },
+        enabled: false,
+        fields: [
+          "Model", // Camera Model
+          "LensModel", // Lens Model
+          "FocalLength", // Focal Length
+          "FNumber", // Aperture
+          "ExposureTime", // Shutter Speed
+          "ISO", // ISO
+          "DateTimeOriginal", // Date Original
+        ],
+        separator: " · ", // Separator
+      },
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),

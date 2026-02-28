@@ -1,6 +1,9 @@
 # Ignore everything
 /*
 
+# Prettier 无法解析 Astro define:vars 内联脚本，跳过该文件
+src/layouts/Layout.astro
+
 # Except these files & folders
 !/src
 !/public

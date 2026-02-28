@@ -9,6 +9,7 @@ import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
+import { SITE } from "@/config";
 
 // 读取 about.md 文件
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -51,6 +52,9 @@ const md = new MarkdownIt({
 const htmlContent = md.render(content);
 ---
 
-<Layout title={frontmatter.title || "关于"} description={frontmatter.description}>
+<Layout
+  title={`关于 | ${SITE.title}`}
+  description={frontmatter.description}
+>
   <Fragment set:html={htmlContent} />
 </Layout>

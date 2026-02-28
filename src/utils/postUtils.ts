@@ -114,9 +114,7 @@ export class PostUtils {
       .filter(this.filter)
       .sort(
         (a, b) =>
-          Math.floor(
-            new Date(b.data.updated ?? b.data.date).getTime() / 1000
-          ) -
+          Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
           Math.floor(new Date(a.data.updated ?? a.data.date).getTime() / 1000)
       );
   }
@@ -250,9 +248,7 @@ export class PostUtils {
     category: string
   ): CollectionEntry<"blog">[] {
     return this.sort(
-      posts.filter(post =>
-        slugifyAll(post.data.categories).includes(category)
-      )
+      posts.filter(post => slugifyAll(post.data.categories).includes(category))
     );
   }
 

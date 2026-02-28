@@ -12,27 +12,24 @@ const sortedPosts = PostUtils.sort(posts);
 ---
 
 <Layout>
-      <ul>
-        {sortedPosts
-          .slice(0, SITE.postPerIndex)
-          .map((data, index) => (
-            <Card
-              variant="h3"
-              priority={index === 0}
-              {...data}
-            />
-          ))}
-      </ul>
+  <ul>
+    {
+      sortedPosts
+        .slice(0, SITE.postPerIndex)
+        .map((data, index) => (
+          <Card variant="h3" priority={index === 0} {...data} />
+        ))
+    }
+  </ul>
 
-    <!-- 查看所有文章：使用主题色边框与文字，与全站风格一致 -->
-    <div class="text-center">
-      <LinkButton
-        href="/posts"
-        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 index-all-posts-btn"
-      >
-        查看所有文章
-        <IconArrowRight class="inline-block size-4" />
-      </LinkButton>
-    </div>
+  <!-- 查看所有文章：使用主题色边框与文字，与全站风格一致 -->
+  <div class="text-center">
+    <LinkButton
+      href="/posts"
+      class="index-all-posts-btn inline-flex items-center gap-1.5 px-4 py-2.5 text-sm no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+    >
+      查看所有文章
+      <IconArrowRight class="inline-block size-4" />
+    </LinkButton>
+  </div>
 </Layout>
-

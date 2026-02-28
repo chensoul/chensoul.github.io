@@ -23,10 +23,6 @@ export default [
     },
   },
   {
-    ignores: [
-      "dist/**",
-      ".astro",
-      "public/pagefind/**",
-    ],
+    ignores: ["dist/**", ".astro", "public/pagefind/**"],
   },
 ];

@@ -17,7 +17,17 @@
 import { SITE } from "@/config";
 ---
 
-<script is:inline data-astro-rerun define:vars={{ ARTALK_SCRIPT_URL: SITE.artalk.scriptUrl, ARTALK_CSS_URL: SITE.artalk.cssUrl, artalkServer: SITE.artalk.server, artalkSite: SITE.artalk.site, artalkVote: SITE.artalk.vote }}>
+<script
+  is:inline
+  data-astro-rerun
+  define:vars={{
+    ARTALK_SCRIPT_URL: SITE.artalk.scriptUrl,
+    ARTALK_CSS_URL: SITE.artalk.cssUrl,
+    artalkServer: SITE.artalk.server,
+    artalkSite: SITE.artalk.site,
+    artalkVote: SITE.artalk.vote,
+  }}
+>
   /* eslint-disable no-console -- Artalk 调试与错误输出 */
   /**
    * Artalk 评论系统集成
@@ -57,7 +67,9 @@ import { SITE } from "@/config";
         callback();
         return;
       }
-      const existing = document.querySelector('script[src="' + ARTALK_SCRIPT_URL + '"]');
+      const existing = document.querySelector(
+        'script[src="' + ARTALK_SCRIPT_URL + '"]'
+      );
       if (existing) {
         if (typeof window.Artalk !== "undefined") {
           callback();

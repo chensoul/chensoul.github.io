@@ -33,7 +33,7 @@ import { SITE } from "@/config";
 }
 
 <script is:inline data-astro-rerun>
-  (function() {
+  (function () {
     /**
      * 防抖函数
      */
@@ -54,99 +54,101 @@ import { SITE } from "@/config";
      * 判断当前页面是否需要显示返回按钮，并设置返回链接
      */
     function getBackInfo() {
-    const path = window.location.pathname;
+      const path = window.location.pathname;
 
-    // 文章页面 /posts/xxx
-    if (/^\/posts\/[^/]+/.test(path)) {
-      const backUrl = sessionStorage.getItem("backUrl");
-      return { show: true, href: backUrl || "/" };
+      // 文章页面 /posts/xxx
+      if (/^\/posts\/[^/]+/.test(path)) {
+        const backUrl = sessionStorage.getItem("backUrl");
+        return { show: true, href: backUrl || "/" };
+      }
+
+      // 分类详情页 /categories/xxx
+      if (/^\/categories\/[^/]+/.test(path)) {
+        return { show: true, href: "/categories" };
+      }
+
+      // 标签详情页 /tags/xxx
+      if (/^\/tags\/[^/]+/.test(path)) {
+        return { show: true, href: "/tags" };
+      }
+
+      return { show: false, href: "/" };
     }
 
-    // 分类详情页 /categories/xxx
-    if (/^\/categories\/[^/]+/.test(path)) {
-      return { show: true, href: "/categories" };
+    /**
+     * 更新返回按钮位置，与 BackToTop 保持一致
+     */
+    function updatePosition() {
+      const btn = document.getElementById("back-button");
+      const frame = document.getElementById("main-content");
+      if (!btn || !frame) return;
+
+      const frameRect = frame.getBoundingClientRect();
+      const rightOffset = window.innerWidth - frameRect.right;
+      const btnWidth = btn.offsetWidth;
+
+      if (rightOffset < btnWidth + 32) {
+        btn.style.right = "1rem";
+      } else {
+        btn.style.right = `${rightOffset - btnWidth - 16}px`;
+      }
     }
 
-    // 标签详情页 /tags/xxx
-    if (/^\/tags\/[^/]+/.test(path)) {
-      return { show: true, href: "/tags" };
+    // 防抖优化：resize 事件使用防抖，避免频繁计算
+    const debouncedUpdatePosition = debounce(updatePosition, 150);
+
+    /**
+     * 更新返回按钮的显示状态和链接
+     */
+    function updateBackButton() {
+      const btn = document.getElementById("back-button");
+      if (!btn) return;
+
+      const { show, href } = getBackInfo();
+
+      if (show) {
+        btn.href = href;
+        btn.classList.remove("hidden");
+        btn.classList.add("flex");
+        updatePosition();
+        // 检查 BackToTop 当前状态并调整位置
+        const backToTop = document.getElementById("back-to-top");
+        const isBackToTopVisible =
+          backToTop && !backToTop.classList.contains("opacity-0");
+        updateVerticalPosition(isBackToTopVisible);
+      } else {
+        btn.classList.add("hidden");
+        btn.classList.remove("flex");
+      }
     }
 
-    return { show: false, href: "/" };
-  }
+    /**
+     * 更新返回按钮的垂直位置
+     * @param {boolean} shiftUp - 是否向上移动让开位置
+     */
+    function updateVerticalPosition(shiftUp) {
+      const btn = document.getElementById("back-button");
+      if (!btn) return;
 
-  /**
-   * 更新返回按钮位置，与 BackToTop 保持一致
-   */
-  function updatePosition() {
-    const btn = document.getElementById("back-button");
-    const frame = document.getElementById("main-content");
-    if (!btn || !frame) return;
-
-    const frameRect = frame.getBoundingClientRect();
-    const rightOffset = window.innerWidth - frameRect.right;
-    const btnWidth = btn.offsetWidth;
-
-    if (rightOffset < btnWidth + 32) {
-      btn.style.right = "1rem";
-    } else {
-      btn.style.right = `${rightOffset - btnWidth - 16}px`;
+      const isMobile = window.innerWidth < 768;
+      if (shiftUp) {
+        btn.style.bottom = isMobile ? "4.5rem" : "5rem";
+      } else {
+        btn.style.bottom = isMobile ? "1.5rem" : "2rem";
+      }
     }
-  }
 
-  // 防抖优化：resize 事件使用防抖，避免频繁计算
-  const debouncedUpdatePosition = debounce(updatePosition, 150);
+    // 监听 BackToTop 可见性变化
+    window.addEventListener("backToTopVisibilityChange", e => {
+      updateVerticalPosition(e.detail.visible);
+    });
 
-  /**
-   * 更新返回按钮的显示状态和链接
-   */
-  function updateBackButton() {
-    const btn = document.getElementById("back-button");
-    if (!btn) return;
-
-    const { show, href } = getBackInfo();
-
-    if (show) {
-      btn.href = href;
-      btn.classList.remove("hidden");
-      btn.classList.add("flex");
-      updatePosition();
-      // 检查 BackToTop 当前状态并调整位置
-      const backToTop = document.getElementById("back-to-top");
-      const isBackToTopVisible =
-        backToTop && !backToTop.classList.contains("opacity-0");
-      updateVerticalPosition(isBackToTopVisible);
-    } else {
-      btn.classList.add("hidden");
-      btn.classList.remove("flex");
-    }
-  }
-
-  /**
-   * 更新返回按钮的垂直位置
-   * @param {boolean} shiftUp - 是否向上移动让开位置
-   */
-  function updateVerticalPosition(shiftUp) {
-    const btn = document.getElementById("back-button");
-    if (!btn) return;
-
-    const isMobile = window.innerWidth < 768;
-    if (shiftUp) {
-      btn.style.bottom = isMobile ? "4.5rem" : "5rem";
-    } else {
-      btn.style.bottom = isMobile ? "1.5rem" : "2rem";
-    }
-  }
-
-  // 监听 BackToTop 可见性变化
-  window.addEventListener("backToTopVisibilityChange", e => {
-    updateVerticalPosition(e.detail.visible);
-  });
-
-  // 监听窗口大小变化（使用防抖优化性能）
-  window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
-  document.addEventListener("DOMContentLoaded", updateBackButton);
-  window.addEventListener("load", updateBackButton);
-  updateBackButton();
+    // 监听窗口大小变化（使用防抖优化性能）
+    window.addEventListener("resize", debouncedUpdatePosition, {
+      passive: true,
+    });
+    document.addEventListener("DOMContentLoaded", updateBackButton);
+    window.addEventListener("load", updateBackButton);
+    updateBackButton();
   })();
 </script>

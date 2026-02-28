@@ -25,40 +25,61 @@ const hasSocial = showSocial && socialLinks.length > 0;
 
 <footer class:list={["footer", "w-full", { "mt-auto": !noMarginTop }]}>
   <div class="footer-content">
-    {hasSocial && (
-      <div class="social-links">
-        {socialLinks.map((link) => (
-          <a
-            href={link.url}
-            target={link.url.startsWith("http") ? "_blank" : undefined}
-            rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-            aria-label={link.name}
-          >
-            <SocialIcon name={link.icon} width={20} height={20} />
-          </a>
-        ))}
-      </div>
-    )}
+    {
+      hasSocial && (
+        <div class="social-links">
+          {socialLinks.map(link => (
+            <a
+              href={link.url}
+              target={link.url.startsWith("http") ? "_blank" : undefined}
+              rel={
+                link.url.startsWith("http") ? "noopener noreferrer" : undefined
+              }
+              aria-label={link.name}
+            >
+              <SocialIcon name={link.icon} width={20} height={20} />
+            </a>
+          ))}
+        </div>
+      )
+    }
     <div class="footer-bottom">
       <span class="copyright">
-        &#169; {currentYear} {SITE.author}. All rights reserved.
+        &#169; {currentYear}
+        {SITE.author}. All rights reserved.
       </span>
-      {SITE.customFooterLink.enabled && (
-        <>
-          <span class="separator" aria-hidden="true">|</span>
-          <a href={SITE.customFooterLink.url} target="_blank" rel="noopener noreferrer">
-            {SITE.customFooterLink.text}
-          </a>
-        </>
-      )}
-      {SITE.icp && (
-        <>
-          <span class="separator" aria-hidden="true">|</span>
-          <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-            备案号 {SITE.icp}
-          </a>
-        </>
-      )}
+      {
+        SITE.customFooterLink.enabled && (
+          <>
+            <span class="separator" aria-hidden="true">
+              |
+            </span>
+            <a
+              href={SITE.customFooterLink.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {SITE.customFooterLink.text}
+            </a>
+          </>
+        )
+      }
+      {
+        SITE.icp && (
+          <>
+            <span class="separator" aria-hidden="true">
+              |
+            </span>
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              备案号 {SITE.icp}
+            </a>
+          </>
+        )
+      }
     </div>
   </div>
 </footer>

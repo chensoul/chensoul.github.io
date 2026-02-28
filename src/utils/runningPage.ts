@@ -64,7 +64,7 @@ function getPaceBarWidth(paceStr: string, allPaces: string[] = []): number {
   const paceSeconds = paceToSeconds(paceStr);
   if (paceSeconds === 0) return 0;
   if (allPaces.length > 1) {
-    const allSeconds = allPaces.map((p) => paceToSeconds(p)).filter((s) => s > 0);
+    const allSeconds = allPaces.map(p => paceToSeconds(p)).filter(s => s > 0);
     if (allSeconds.length > 1) {
       const minPace = Math.min(...allSeconds);
       const maxPace = Math.max(...allSeconds);
@@ -93,15 +93,20 @@ export function initRunningPage(): void {
   const tabNav = document.getElementById("periodTabNav");
   if (tabNav) {
     tabNav.addEventListener("click", (e: Event) => {
-      const btn = (e.target as HTMLElement | null)?.closest?.(".period-tab-btn");
+      const btn = (e.target as HTMLElement | null)?.closest?.(
+        ".period-tab-btn"
+      );
       if (!btn) return;
       const period = (btn as HTMLElement).dataset.period;
       if (!period) return;
-      document.querySelectorAll(".period-tab-btn").forEach((b) => b.classList.remove("active"));
+      document
+        .querySelectorAll(".period-tab-btn")
+        .forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      document.querySelectorAll(".period-panel").forEach((panel) => {
+      document.querySelectorAll(".period-panel").forEach(panel => {
         panel.classList.remove("active");
-        if ((panel as HTMLElement).dataset.panel === period) panel.classList.add("active");
+        if ((panel as HTMLElement).dataset.panel === period)
+          panel.classList.add("active");
       });
     });
   }
@@ -131,7 +136,8 @@ export function initRunningPage(): void {
             (run.training_load as number) > 0
               ? `<div class="stat load-stat"><span class="stat-value">${run.training_load}</span><span class="stat-label">负荷</span></div>`
               : "";
-          const dateStr = typeof run.date === "string" ? run.date.split(" ")[0] : "";
+          const dateStr =
+            typeof run.date === "string" ? run.date.split(" ")[0] : "";
           runCard.innerHTML = `
             <div class="run-main">
               <div class="run-header"><time class="run-date">${dateStr}</time>${hrZoneBadge}</div>
@@ -191,28 +197,99 @@ export function initRunningPage(): void {
     const detailStats: { icon: string; label: string; value: string }[] = [];
     const dist = Number(run.distance);
     const dur = (run.duration as string) ?? "";
-    detailStats.push({ icon: icons.distance, label: "距离", value: `${dist.toFixed(2)} km` });
-    detailStats.push({ icon: icons.duration, label: "移动时间", value: formatDuration(dur) });
-    detailStats.push({ icon: icons.duration, label: "总时间", value: formatDuration(dur) });
-    detailStats.push({ icon: icons.pace, label: "配速", value: `${run.pace ?? ""} /km` });
-    if (Number(run.heart_rate) > 0) detailStats.push({ icon: icons.heartRate, label: "平均心率", value: `${Math.round(Number(run.heart_rate))} bpm` });
-    if (Number(run.max_heart_rate) > 0) detailStats.push({ icon: icons.heartRate, label: "最大心率", value: `${Math.round(Number(run.max_heart_rate))} bpm` });
-    if (Number(run.cadence) > 0) detailStats.push({ icon: icons.cadence, label: "步频", value: `${Math.round(Number(run.cadence))} spm` });
-    if (Number(run.stride_length) > 0) detailStats.push({ icon: icons.stride, label: "步幅", value: `${Number(run.stride_length).toFixed(2)} m` });
-    if (Number(run.avg_power) > 0) detailStats.push({ icon: icons.power, label: "平均功率", value: `${Math.round(Number(run.avg_power))} w` });
-    if (Number(run.max_power) > 0) detailStats.push({ icon: icons.power, label: "最大功率", value: `${Math.round(Number(run.max_power))} w` });
-    if (Number(run.calories) > 0) detailStats.push({ icon: icons.calories, label: "热量消耗", value: `${Math.round(Number(run.calories))} kcal` });
-    if (Number(run.elevation_gain) > 0) detailStats.push({ icon: icons.elevation, label: "累计爬升", value: `${Math.round(Number(run.elevation_gain))} m` });
-    if (Number(run.vdot) > 0) detailStats.push({ icon: icons.vdot, label: "VDOT", value: Number(run.vdot).toFixed(1) });
-    if (Number(run.training_load) > 0) detailStats.push({ icon: icons.load, label: "训练负荷", value: String(run.training_load) });
+    detailStats.push({
+      icon: icons.distance,
+      label: "距离",
+      value: `${dist.toFixed(2)} km`,
+    });
+    detailStats.push({
+      icon: icons.duration,
+      label: "移动时间",
+      value: formatDuration(dur),
+    });
+    detailStats.push({
+      icon: icons.duration,
+      label: "总时间",
+      value: formatDuration(dur),
+    });
+    detailStats.push({
+      icon: icons.pace,
+      label: "配速",
+      value: `${run.pace ?? ""} /km`,
+    });
+    if (Number(run.heart_rate) > 0)
+      detailStats.push({
+        icon: icons.heartRate,
+        label: "平均心率",
+        value: `${Math.round(Number(run.heart_rate))} bpm`,
+      });
+    if (Number(run.max_heart_rate) > 0)
+      detailStats.push({
+        icon: icons.heartRate,
+        label: "最大心率",
+        value: `${Math.round(Number(run.max_heart_rate))} bpm`,
+      });
+    if (Number(run.cadence) > 0)
+      detailStats.push({
+        icon: icons.cadence,
+        label: "步频",
+        value: `${Math.round(Number(run.cadence))} spm`,
+      });
+    if (Number(run.stride_length) > 0)
+      detailStats.push({
+        icon: icons.stride,
+        label: "步幅",
+        value: `${Number(run.stride_length).toFixed(2)} m`,
+      });
+    if (Number(run.avg_power) > 0)
+      detailStats.push({
+        icon: icons.power,
+        label: "平均功率",
+        value: `${Math.round(Number(run.avg_power))} w`,
+      });
+    if (Number(run.max_power) > 0)
+      detailStats.push({
+        icon: icons.power,
+        label: "最大功率",
+        value: `${Math.round(Number(run.max_power))} w`,
+      });
+    if (Number(run.calories) > 0)
+      detailStats.push({
+        icon: icons.calories,
+        label: "热量消耗",
+        value: `${Math.round(Number(run.calories))} kcal`,
+      });
+    if (Number(run.elevation_gain) > 0)
+      detailStats.push({
+        icon: icons.elevation,
+        label: "累计爬升",
+        value: `${Math.round(Number(run.elevation_gain))} m`,
+      });
+    if (Number(run.vdot) > 0)
+      detailStats.push({
+        icon: icons.vdot,
+        label: "VDOT",
+        value: Number(run.vdot).toFixed(1),
+      });
+    if (Number(run.training_load) > 0)
+      detailStats.push({
+        icon: icons.load,
+        label: "训练负荷",
+        value: String(run.training_load),
+      });
 
     let segmentsHtml = "";
     if (run.segments && run.segments.length > 0) {
-      const allSegmentPaces = run.segments.map((s) => s.pace).filter((p): p is string => Boolean(p && p !== "0'00\""));
+      const allSegmentPaces = run.segments
+        .map(s => s.pace)
+        .filter((p): p is string => Boolean(p && p !== "0'00\""));
       const segmentRows = run.segments
         .map((seg: Segment, idx: number) => {
           const zoneClass = seg.hr_zone ? `zone-${seg.hr_zone}` : "";
-          const zoneLabel = seg.hr_zone != null ? (hrZoneLabels[seg.hr_zone] ?? "").split(" ")[0] : "";
+          const zoneLabel =
+            seg.hr_zone != null
+              ? (hrZoneLabels[seg.hr_zone] ?? "").split(" ")[0]
+              : "";
           const barWidth = getPaceBarWidth(seg.pace ?? "", allSegmentPaces);
           const barClass = getPaceBarClass(seg.pace ?? "");
           return `
@@ -248,7 +325,7 @@ export function initRunningPage(): void {
         </div>
       </div>
       <div class="detail-stats-grid">
-        ${detailStats.map((stat) => `<div class="detail-stat-item"><span class="detail-stat-icon">${stat.icon}</span><span class="detail-stat-label">${stat.label}</span><span class="detail-stat-value">${stat.value}</span></div>`).join("")}
+        ${detailStats.map(stat => `<div class="detail-stat-item"><span class="detail-stat-icon">${stat.icon}</span><span class="detail-stat-label">${stat.label}</span><span class="detail-stat-value">${stat.value}</span></div>`).join("")}
       </div>
       ${segmentsHtml}
     `;
@@ -262,7 +339,7 @@ export function initRunningPage(): void {
     document.body.style.overflow = "";
   }
 
-  document.querySelectorAll(".run-card").forEach((card) => {
+  document.querySelectorAll(".run-card").forEach(card => {
     card.addEventListener("click", () => {
       const runData = (card as HTMLElement).dataset.run;
       if (runData) openModal(JSON.parse(runData) as RunRecord);
@@ -271,7 +348,7 @@ export function initRunningPage(): void {
 
   modalClose?.addEventListener("click", closeModal);
   modalOverlay?.addEventListener("click", closeModal);
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeModal();
   });
 }

@@ -28,29 +28,29 @@ const { tag } = params;
 const { page, tagName } = Astro.props;
 ---
 
-<Layout>
-    <h1 slot="title">{`Tag:${tag}`}</h1>
-    <p class="mb-4 text-base font-semibold">
-      标签：{tagName}
-    </p>
-    <ul class="tag-posts-list">
-      {
-        page.data.map((data, i) => (
-          <Card
-            {...data}
-            itemClass="tag-post-item"
-            hidden={i >= SITE.postPerIndex}
-            dateFormat="absolute"
-          />
-        ))
-      }
-    </ul>
-    <div
-      id="tag-posts-sentinel"
-      data-init={SITE.postPerIndex}
-      data-chunk={SITE.postPerPage}
-    >
-    </div>
+<Layout title={`${tag} | ${SITE.title}`}>
+  <h1 slot="title">{`Tag:${tag}`}</h1>
+  <p class="mb-4 text-base font-semibold">
+    标签：{tagName}
+  </p>
+  <ul class="tag-posts-list">
+    {
+      page.data.map((data, i) => (
+        <Card
+          {...data}
+          itemClass="tag-post-item"
+          hidden={i >= SITE.postPerIndex}
+          dateFormat="absolute"
+        />
+      ))
+    }
+  </ul>
+  <div
+    id="tag-posts-sentinel"
+    data-init={SITE.postPerIndex}
+    data-chunk={SITE.postPerPage}
+  >
+  </div>
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>

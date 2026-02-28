@@ -48,7 +48,7 @@ const { class: className } = Astro.props;
 </button>
 
 <script is:inline data-astro-rerun>
-  (function() {
+  (function () {
     // 从 data 属性读取配置
     const el = document.getElementById("back-to-top");
     const mobileWidth = Number(el?.dataset.mobileWidth);
@@ -61,113 +61,119 @@ const { class: className } = Astro.props;
      * 防抖函数
      */
     function debounce(func, wait) {
-    let timeout = null;
-    return function executedFunction(...args) {
-      if (timeout !== null) {
-        clearTimeout(timeout);
+      let timeout = null;
+      return function executedFunction(...args) {
+        if (timeout !== null) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+          func(...args);
+          timeout = null;
+        }, wait);
+      };
+    }
+
+    /**
+     * 更新按钮位置，使其紧贴 main-content 容器右边缘
+     */
+    function updatePosition() {
+      const btn = document.getElementById("back-to-top");
+      const frame = document.getElementById("main-content");
+      if (!btn || !frame) return;
+
+      const frameRect = frame.getBoundingClientRect();
+      const rightOffset = window.innerWidth - frameRect.right;
+      const btnWidth = btn.offsetWidth;
+
+      if (rightOffset < btnWidth + 32) {
+        btn.style.right = "1rem";
+      } else {
+        btn.style.right = `${rightOffset - btnWidth - 16}px`;
       }
-      timeout = setTimeout(() => {
-        func(...args);
-        timeout = null;
-      }, wait);
-    };
-  }
-
-  /**
-   * 更新按钮位置，使其紧贴 main-content 容器右边缘
-   */
-  function updatePosition() {
-    const btn = document.getElementById("back-to-top");
-    const frame = document.getElementById("main-content");
-    if (!btn || !frame) return;
-
-    const frameRect = frame.getBoundingClientRect();
-    const rightOffset = window.innerWidth - frameRect.right;
-    const btnWidth = btn.offsetWidth;
-
-    if (rightOffset < btnWidth + 32) {
-      btn.style.right = "1rem";
-    } else {
-      btn.style.right = `${rightOffset - btnWidth - 16}px`;
     }
-  }
 
-  // 防抖优化：resize 事件使用防抖，避免频繁计算
-  const debouncedUpdatePosition = debounce(updatePosition, 150);
+    // 防抖优化：resize 事件使用防抖，避免频繁计算
+    const debouncedUpdatePosition = debounce(updatePosition, 150);
 
-  /**
-   * 更新按钮显示状态
-   *
-   * 显示条件：
-   * 1. 页面溢出高度 >= 最小溢出值
-   * 2. 且（滚动比例 >= 阈值 或 滚动距离 >= 最小距离）
-   */
-  function updateVisibility() {
-    const el = document.getElementById("back-to-top");
-    if (!el) return;
-    const doc = document.documentElement;
-    const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
-    const overflow = doc.scrollHeight - doc.clientHeight;
-    const hasEnoughOverflow = overflow >= minOverflow;
-    const ratio = overflow > 0 ? scrollTop / overflow : 0;
-    const show =
-      hasEnoughOverflow &&
-      (ratio >= showAfterRatio || scrollTop >= minScrollTop);
-    const wasVisible = !el.classList.contains("opacity-0");
-    if (show) {
-      el.classList.remove("translate-y-8", "opacity-0", "pointer-events-none");
-      el.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
-    } else {
-      el.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
-      el.classList.remove(
-        "translate-y-0",
-        "opacity-100",
-        "pointer-events-auto"
-      );
+    /**
+     * 更新按钮显示状态
+     *
+     * 显示条件：
+     * 1. 页面溢出高度 >= 最小溢出值
+     * 2. 且（滚动比例 >= 阈值 或 滚动距离 >= 最小距离）
+     */
+    function updateVisibility() {
+      const el = document.getElementById("back-to-top");
+      if (!el) return;
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
+      const overflow = doc.scrollHeight - doc.clientHeight;
+      const hasEnoughOverflow = overflow >= minOverflow;
+      const ratio = overflow > 0 ? scrollTop / overflow : 0;
+      const show =
+        hasEnoughOverflow &&
+        (ratio >= showAfterRatio || scrollTop >= minScrollTop);
+      const wasVisible = !el.classList.contains("opacity-0");
+      if (show) {
+        el.classList.remove(
+          "translate-y-8",
+          "opacity-0",
+          "pointer-events-none"
+        );
+        el.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+      } else {
+        el.classList.add("translate-y-8", "opacity-0", "pointer-events-none");
+        el.classList.remove(
+          "translate-y-0",
+          "opacity-100",
+          "pointer-events-auto"
+        );
+      }
+      // 通知 BackButton 位置变化
+      if (show !== wasVisible) {
+        window.dispatchEvent(
+          new CustomEvent("backToTopVisibilityChange", {
+            detail: { visible: show },
+          })
+        );
+      }
     }
-    // 通知 BackButton 位置变化
-    if (show !== wasVisible) {
-      window.dispatchEvent(
-        new CustomEvent("backToTopVisibilityChange", {
-          detail: { visible: show },
-        })
-      );
-    }
-  }
 
-  // 监听滚动事件
-  window.addEventListener("scroll", updateVisibility, { passive: true });
-  // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
-  window.addEventListener("resize", debouncedUpdatePosition, { passive: true });
-  document.addEventListener("DOMContentLoaded", () => {
+    // 监听滚动事件
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
+    window.addEventListener("resize", debouncedUpdatePosition, {
+      passive: true,
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      updateVisibility();
+      updatePosition();
+    });
+    window.addEventListener("load", () => {
+      updateVisibility();
+      updatePosition();
+    });
     updateVisibility();
     updatePosition();
-  });
-  window.addEventListener("load", () => {
-    updateVisibility();
-    updatePosition();
-  });
-  updateVisibility();
-  updatePosition();
 
-  /**
-   * 点击处理
-   *
-   * 1. 滚动到页面顶部
-   * 2. 移动端：关闭侧边栏（如果存在）
-   */
-  document.getElementById("back-to-top")?.addEventListener("click", () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    /**
+     * 点击处理
+     *
+     * 1. 滚动到页面顶部
+     * 2. 移动端：关闭侧边栏（如果存在）
+     */
+    document.getElementById("back-to-top")?.addEventListener("click", () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
 
-    // 移动端：关闭侧边栏
-    const sidebar = document.getElementById("sidebar");
-    const backdrop = document.getElementById("sidebar-backdrop");
-    if (isMobileDevice() && sidebar && backdrop) {
-      sidebar.classList.remove("mobile-open");
-      backdrop.classList.remove("opacity-100");
-      backdrop.classList.add("pointer-events-none");
-    }
-  });
+      // 移动端：关闭侧边栏
+      const sidebar = document.getElementById("sidebar");
+      const backdrop = document.getElementById("sidebar-backdrop");
+      if (isMobileDevice() && sidebar && backdrop) {
+        sidebar.classList.remove("mobile-open");
+        backdrop.classList.remove("opacity-100");
+        backdrop.classList.add("pointer-events-none");
+      }
+    });
   })();
 </script>

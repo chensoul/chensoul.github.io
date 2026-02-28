@@ -12,7 +12,12 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = ({ site }) => {
-  const base = typeof site === "string" ? site : (site instanceof URL ? site.href : "https://blog.chensoul.cc");
+  const base =
+    typeof site === "string"
+      ? site
+      : site instanceof URL
+        ? site.href
+        : "https://blog.chensoul.cc";
   const sitemapURL = new URL("/sitemap-index.xml", base);
   const body = `User-agent: *
 Allow: /

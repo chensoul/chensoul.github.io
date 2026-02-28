@@ -11,7 +11,7 @@ import { SITE } from "@/config";
 export const getStaticPaths: GetStaticPaths = async () => {
   if (!SITE.ogImage || !import.meta.env.PROD) return [];
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map((post) => {
+  return posts.map(post => {
     const slug = PostUtils.getPath(
       post.id,
       post.filePath,
