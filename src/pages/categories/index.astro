@@ -51,7 +51,7 @@ categories.forEach(({ categoryName }) => {
 ---
 
 <Layout title={`分类 | ${SITE.title}`}>
-  <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2" aria-label="分类列表">
+  <ul class="categories-list grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2" aria-label="分类列表">
     {
       categories.map(({ category, categoryName, count }, i) => (
         <li class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}>

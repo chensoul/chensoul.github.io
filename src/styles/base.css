@@ -271,6 +271,13 @@ main > ul:has(> li.mb-4) {
   padding-left: 0;
 }
 
+/* 分类页列表无符号、无缩进 */
+.categories-list,
+.category-posts-list {
+  list-style: none;
+  padding-left: 0;
+}
+
 /* Tables */
 table {
   width: 100%;
