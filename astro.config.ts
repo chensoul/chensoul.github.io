@@ -1,10 +1,6 @@
 import { SITE } from "./src/config";
 import { defineConfig } from "astro/config";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
-import sitemap, { type SitemapOptions } from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -74,48 +70,6 @@ const rehypeRewriteOption: RehypeRewriteOptions = {
   },
 };
 
-// Sitemap options, https://docs.astro.build/en/guides/integrations-guide/sitemap/
-// 参考 zdyxry：entryLimit 保证单文件，构建后重命名为 sitemap.xml
-const sitemapOption: SitemapOptions = {
-  entryLimit: 50_000,
-  serialize(item) {
-    if (/\/(tags|categories|archives|page|search)/.test(item.url)) {
-      item.priority = 0.2;
-    } else if (/\/posts\/\d+\/?$/.test(item.url)) {
-      item.priority = 0.3;
-    } else if (/\/posts\//.test(item.url)) {
-      // Main blog page
-      item.priority = 0.8;
-    } else {
-      // Default priority for all other pages
-      item.priority = 0.5;
-    }
-
-    return item;
-  },
-};
-
-// 参考 zdyxry：构建后将 sitemap-0.xml 重命名为 sitemap.xml，移除 sitemap-index.xml
-function simplifySitemap() {
-  return {
-    name: "simplify-sitemap",
-    hooks: {
-      "astro:build:done": async ({ dir }: { dir: URL }) => {
-        const outDir = fileURLToPath(dir);
-        const sitemap0Path = path.join(outDir, "sitemap-0.xml");
-        const sitemapIndexPath = path.join(outDir, "sitemap-index.xml");
-        const sitemapPath = path.join(outDir, "sitemap.xml");
-        if (fs.existsSync(sitemap0Path)) {
-          fs.renameSync(sitemap0Path, sitemapPath);
-        }
-        if (fs.existsSync(sitemapIndexPath)) {
-          fs.unlinkSync(sitemapIndexPath);
-        }
-      },
-    },
-  };
-}
-
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
@@ -130,12 +84,22 @@ export default defineConfig({
     photosuite({
       scope: '#article',
       imageBase: "https://cos.chensoul.cc/images",
-      exif: false, // 传 false 才不注册 EXIF 插件；传对象 { enabled: false } 仍会获取 EXIF
+      exif: {
+          enabled: false,
+          fields: [
+            'Model',            // Camera Model
+            'LensModel',        // Lens Model
+            'FocalLength',      // Focal Length
+            'FNumber',          // Aperture
+            'ExposureTime',     // Shutter Speed
+            'ISO',              // ISO
+            'DateTimeOriginal'  // Date Original
+          ],
+          separator: ' · '      // Separator
+        },
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),
-    sitemap(sitemapOption),
-    simplifySitemap(),
     minify({
       css: { minify: true, errorRecovery: true },
       // 关闭 SVG 压缩，避免 astro:build:done 时 public 尚未完全复制到 dist 导致 ENOENT

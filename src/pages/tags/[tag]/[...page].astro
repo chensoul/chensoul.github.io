@@ -54,7 +54,6 @@ const { page, tagName } = Astro.props;
   <Header />
   <Main
     pageTitle={[_t.tag.title, `${tagName}`]}
-    titleTransition={tag}
     pageDesc={_t.tag.desc(tagName)}
   >
     <h1 slot="title">{`Tag:${tag}`}</h1>
