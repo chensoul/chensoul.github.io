@@ -110,10 +110,11 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 主题首屏防 FOUC：与 zdyxry 一致，仅同步设 data-theme，颜色由 CSS 控制 -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+    <!-- 主题首屏防 FOUC：与 Astro Theme Switcher 一致，从 localStorage 读 theme 并设 data-theme -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function(){
-        const theme = lightAndDarkMode ? (localStorage.getItem("theme") || "light") : "light";
+        const stored = lightAndDarkMode ? localStorage.getItem("theme") : null;
+        const theme = (themeIds && themeIds.includes(stored)) ? stored : (themeIds && themeIds[0]) || "light";
         document.documentElement.setAttribute("data-theme", theme);
         window.theme = { themeValue: theme };
       })();
@@ -203,79 +204,57 @@ const structuredData = {
       )
     }
 
-    <!-- 主题切换：参考 Astro Theme Switcher，localStorage 持久化 + 切换平滑过渡 + astro:after-swap 恢复 -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+    <!-- 主题切换：Astro Theme Switcher 方式（主题列表 + 持久化 + 平滑过渡 + View Transitions 恢复） -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function () {
-        if (!lightAndDarkMode) return;
+        if (!lightAndDarkMode || !themeIds || !themeIds.length) return;
         const THEME_KEY = "theme";
-        const LIGHT = "light";
-        const DARK = "dark";
         const themeBtnSel = "#theme-btn";
         const themeColorMetaSel = "meta[name=\"theme-color\"]";
 
         function getTheme() {
           const stored = localStorage.getItem(THEME_KEY);
-          return stored === LIGHT || stored === DARK ? stored : document.documentElement.getAttribute("data-theme") || LIGHT;
+          if (themeIds.includes(stored)) return stored;
+          const current = document.documentElement.getAttribute("data-theme");
+          return themeIds.includes(current) ? current : themeIds[0];
         }
-        function setTheme(val) {
-          window._themeValue = val;
-          if (window.theme) window.theme.themeValue = val;
-        }
-        function reflectPreference() {
-          const val = window._themeValue != null ? window._themeValue : getTheme();
-          if (window._themeValue == null) window._themeValue = val;
-          document.documentElement.setAttribute("data-theme", val);
-          void document.documentElement.offsetHeight;
-          const btn = document.querySelector(themeBtnSel);
-          if (btn) btn.setAttribute("aria-label", val);
-          const meta = document.querySelector(themeColorMetaSel);
+        function setTheme(id) {
+          if (!themeIds.includes(id)) return;
+          if (window.theme) window.theme.themeValue = id;
+          document.documentElement.setAttribute("data-theme", id);
+          localStorage.setItem(THEME_KEY, id);
+          var btn = document.querySelector(themeBtnSel);
+          if (btn) btn.setAttribute("aria-label", id);
+          var meta = document.querySelector(themeColorMetaSel);
           if (meta && document.body) {
-            const bg = window.getComputedStyle(document.body).backgroundColor;
+            var bg = window.getComputedStyle(document.body).backgroundColor;
             if (bg) meta.setAttribute("content", bg);
           }
         }
-        function setPreference() {
-          const val = window._themeValue != null ? window._themeValue : getTheme();
-          localStorage.setItem(THEME_KEY, val);
-          reflectPreference();
+        function nextTheme() {
+          var i = themeIds.indexOf(getTheme());
+          return themeIds[(i + 1) % themeIds.length];
         }
         function setupThemeButton() {
-          window._themeValue = window._themeValue != null ? window._themeValue : getTheme();
-          if (window.theme) {
-            window.theme.themeValue = window._themeValue;
-            window.theme.getTheme = getTheme;
-            window.theme.setTheme = setTheme;
-            window.theme.reflectPreference = reflectPreference;
-            window.theme.setPreference = setPreference;
-          }
-          reflectPreference();
-          const btn = document.querySelector(themeBtnSel);
+          setTheme(getTheme());
+          var btn = document.querySelector(themeBtnSel);
           if (!btn) return;
           btn.addEventListener("click", function () {
             document.documentElement.classList.add("theme-transition");
-            const next = window._themeValue === LIGHT ? DARK : LIGHT;
-            setTheme(next);
-            setPreference();
+            setTheme(nextTheme());
           });
         }
-        window._themeValue = window.theme && window.theme.themeValue != null ? window.theme.themeValue : getTheme();
         window.theme = window.theme || {};
-        window.theme.themeValue = window._themeValue;
+        window.theme.themeValue = getTheme();
         window.theme.getTheme = getTheme;
         window.theme.setTheme = setTheme;
-        window.theme.reflectPreference = reflectPreference;
-        window.theme.setPreference = setPreference;
-        function runWhenReady() {
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", setupThemeButton);
-          } else {
-            setupThemeButton();
-          }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", setupThemeButton);
+        } else {
+          setupThemeButton();
         }
-        runWhenReady();
         document.addEventListener("astro:after-swap", function () {
-          window._themeValue = getTheme();
-          reflectPreference();
+          setTheme(getTheme());
         });
       })();
     </script>

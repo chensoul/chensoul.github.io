@@ -22,6 +22,9 @@ export const SITE = {
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,
 
+  /** 主题列表（与 Astro Theme Switcher 一致：多主题 + 持久化），如 ["light", "dark"]，可扩展 "blue" 等 */
+  themes: ["light", "dark"] as const,
+
   // ========== 分页配置 ==========
   /**
    * 首页文章列表每页显示数量
