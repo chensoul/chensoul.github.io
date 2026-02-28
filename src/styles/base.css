@@ -64,6 +64,7 @@ html {
   color: var(--text-primary);
   line-height: 1.6;
   scroll-behavior: smooth;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {
@@ -74,6 +75,14 @@ body {
   flex-direction: column;
   background: var(--background);
   color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    transition: none;
+  }
 }
 
 main {
