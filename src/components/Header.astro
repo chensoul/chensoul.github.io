@@ -116,7 +116,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
         aria-label="Open Menu"
         aria-expanded="false"
         aria-controls="menu-items"
-        onclick="typeof window.__mobileDrawerToggle === 'function' && window.__mobileDrawerToggle(this, event)"
+        onclick="typeof window.__mobileDrawerToggle === 'function' && window.__mobileDrawerToggle(this, arguments[0])"
       >
         <IconX id="close-icon" class="hidden" />
         <IconMenuDeep id="menu-icon" />
