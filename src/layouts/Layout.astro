@@ -203,7 +203,7 @@ const structuredData = {
       )
     }
 
-    <!-- 主题切换：与参考站 zdyxry 一致，仅内联脚本，localStorage 不跟随系统偏好；含 theme-color 同步 -->
+    <!-- 主题切换：参考 Astro Theme Switcher，localStorage 持久化 + 切换平滑过渡 + astro:after-swap 恢复 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function () {
         if (!lightAndDarkMode) return;
@@ -252,6 +252,7 @@ const structuredData = {
           const btn = document.querySelector(themeBtnSel);
           if (!btn) return;
           btn.addEventListener("click", function () {
+            document.documentElement.classList.add("theme-transition");
             const next = window._themeValue === LIGHT ? DARK : LIGHT;
             setTheme(next);
             setPreference();
@@ -272,6 +273,10 @@ const structuredData = {
           }
         }
         runWhenReady();
+        document.addEventListener("astro:after-swap", function () {
+          window._themeValue = getTheme();
+          reflectPreference();
+        });
       })();
     </script>
 

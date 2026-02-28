@@ -59,6 +59,15 @@
   #site-frame {
     background-color: var(--background);
     box-shadow: var(--shadow-frame);
+    transition: background-color 0s, box-shadow 0s;
+  }
+  /* 参考 Astro Theme Switcher：用户切换主题时平滑过渡（由 JS 在点击时添加 .theme-transition） */
+  html.theme-transition,
+  html.theme-transition body,
+  html.theme-transition #site-frame {
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    transition-property: background-color, color, box-shadow;
   }
   a,
   button {
