@@ -1,503 +1,218 @@
 ---
-import IconX from "@/assets/icons/IconX.svg";
-import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
-import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconRss from "@/assets/icons/IconRss.svg";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 import YearProgress from "./YearProgress.astro";
+
+const navLinks = [
+  { href: '/', text: '首页' },
+  { href: '/posts', text: '文章' },
+  { href: '/archives', text: '归档' },
+  { href: '/tags', text: '标签' },
+  { href: '/categories', text: '分类' },
+  { href: '/running', text: '跑步' },
+  { href: '/links', text: ' 链接' },
+  { href: '/about', text: '关于' },
+];
 
 // 获取当前路径，用于判断激活状态
 const { pathname } = Astro.url;
-
-// 规范化路径：移除 index.html 和 .html 后缀
-const rawPath = pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
-// 移除末尾斜杠（根路径除外）
-const currentPath =
-  rawPath.endsWith("/") && rawPath !== "/" ? rawPath.slice(0, -1) : rawPath;
-
-/**
- * 判断导航链接是否处于激活状态
- *
- * 激活规则：
- * 1. 路径完全匹配
- * 2. 或路径的第一段匹配（处理 /posts/page/2 这种情况）
- *
- * @param path - 要检测的路径
- * @returns 是否激活
- */
-const isActive = (path: string) => {
-  const currentPathArray = currentPath.split("/").filter(p => p.trim());
-  const pathArray = path.split("/").filter(p => p.trim());
-
-  return currentPath === path || currentPathArray[0] === pathArray[0];
-};
-
-/**
- * 组件属性接口
- *
- * @property leadingTitle - 标题前的额外文字（如分类名）
- * @property hideSiteTitle - 是否隐藏站点标题
- */
-interface Props {
-  leadingTitle?: string;
-  hideSiteTitle?: boolean;
-}
-
-const { leadingTitle, hideSiteTitle } =
-  Astro.props as Props;
-
-/**
- * 当前页标题（用于面包屑末项）
- */
-function getCurrentPageTitle(): string {
-  if (isActive("/posts")) return _t.posts.title;
-  if (isActive("/categories")) return _t.categories.title;
-  if (isActive("/tags")) return _t.tags.title;
-  if (isActive("/about")) return _t.about.title;
-  if (isActive("/archives")) return _t.archives.title;
-  if (isActive("/search")) return _t.search.title;
-  if (isActive("/links")) return _t.links.title;
-  if (isActive("/running")) return _t.running.title;
-  return SITE.title;
-}
-
-/** 移动端标题：当前页面名称（分类/标签页用 leadingTitle，其余用 getCurrentPageTitle） */
-const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 ---
 
-<header class="site-header fixed inset-x-0 top-0 z-30 border-0 bg-[var(--background)] pb-1">
-  <!-- 无障碍访问：跳转到主内容 -->
-  <a
-    id="skip-to-content"
-    href="#main-content"
-    class="absolute -top-full left-16 z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
-  >
-    Skip to content
-  </a>
-
-  <!-- 移动端导航遮罩层 -->
-  <div id="mobile-nav-overlay" class="mobile-nav-overlay sm:!hidden"></div>
-
-  <!-- 单行顶栏：左侧标题 + 右侧导航（参考 Astro Theme Switcher） -->
-  <div
-    id="nav-container"
-    class="site-header__bar mx-auto flex max-w-4xl flex-col gap-3 pt-3 pb-1 sm:flex-row sm:items-center sm:justify-between sm:gap-0"
-  >
-    <!-- 左侧：站点标题（移动端为当前页名 + 菜单按钮，桌面端为站点名） -->
-    <div class="site-header__brand flex min-w-0 flex-1 items-center justify-between gap-2 sm:flex-initial sm:justify-start">
-      <a
-        href="/"
-        class="site-header__title max-w-[28ch] overflow-hidden text-ellipsis whitespace-nowrap sm:max-w-none sm:overflow-visible sm:text-clip"
-      >
-        {!hideSiteTitle && (
-          <span class="text-xl font-semibold tracking-tight text-[var(--text-primary)] max-sm:inline sm:hidden">
-            {mobileTitle}
-          </span>
-        )}
-        {leadingTitle && (
-          <span class="mr-2 text-base font-medium text-[var(--text-secondary)] max-sm:hidden sm:inline">
-            {leadingTitle}
-          </span>
-        )}
-        {!hideSiteTitle && (
-          <span class="text-xl font-semibold tracking-tight text-[var(--text-primary)] max-sm:hidden sm:inline">
-            {SITE.title}
-          </span>
-        )}
-      </a>
-      <!-- 移动端菜单按钮：onclick 兜底，确保点击必有反应 -->
-      <button
-        type="button"
-        id="menu-btn"
-        data-mobile-menu-toggle
-        class="focus-outline site-header__menu-btn relative z-[60] min-h-[44px] min-w-[44px] p-2 sm:hidden"
-        aria-label="Open Menu"
-        aria-expanded="false"
-        aria-controls="menu-items"
-        onclick="typeof window.__mobileDrawerToggle === 'function' && window.__mobileDrawerToggle(this, arguments[0])"
-      >
-        <IconX id="close-icon" class="hidden" />
-        <IconMenuDeep id="menu-icon" />
-      </button>
-    </div>
-
-    <!-- 右侧：主导航（仅桌面端）+ RSS + 主题 -->
-    <nav aria-label="Primary" class="site-header__nav flex items-center gap-1 sm:gap-0">
-      <ul
-        id="menu-items"
-        class="site-header__menu my-2 hidden flex-wrap gap-2 sm:my-0 sm:flex sm:flex-row sm:gap-1"
-      >
-        <li>
-          <a href="/posts" class="site-header__link" class:list={{ "active-nav": isActive("/posts") }}>
-            {_t.posts.title}
-          </a>
-        </li>
-        {
-          SITE.showArchives && (
+<header>
+  <nav>
+      <a href="/" class="logo">{SITE.title}</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          {navLinks.map(link => (
             <li>
-              <a href="/archives" class="site-header__link" class:list={{ "active-nav": isActive("/archives") }}>
-                {_t.archives.title}
+              <a href={link.href} class={pathname === link.href || pathname.startsWith(link.href + '/') ? 'active' : ''}>
+                {link.text}
               </a>
             </li>
-          )
-        }
-        <li>
-          <a href="/categories" class="site-header__link" class:list={{ "active-nav": isActive("/categories") }}>
-            {_t.categories.title}
-          </a>
-        </li>
-        <li>
-          <a href="/tags" class="site-header__link" class:list={{ "active-nav": isActive("/tags") }}>
-            {_t.tags.title}
-          </a>
-        </li>
-        <li>
-          <a href="/links" class="site-header__link" class:list={{ "active-nav": isActive("/links") }}>
-            {_t.links.title}
-          </a>
-        </li>
-        <li>
-          <a href="/running" class="site-header__link" class:list={{ "active-nav": isActive("/running") }}>
-            {_t.running.title}
-          </a>
-        </li>
-        <li>
-          <a href="/about" class="site-header__link" class:list={{ "active-nav": isActive("/about") }}>
-            {_t.about.title}
-          </a>
-        </li>
-        <li>
-          <a href="/search" class="site-header__link" class:list={{ "active-nav": isActive("/search") }}>
-            {_t.search.title}
-          </a>
-        </li>
-      </ul>
-      <!-- 移动端：独立抽屉容器（参考 Astro Theme Switcher，与桌面 nav 分离） -->
-      <div
-        id="mobile-drawer"
-        class="mobile-drawer fixed inset-y-0 right-0 z-[60] w-[min(20rem,100vw)] flex flex-col bg-[var(--background)] pt-16 px-4 shadow-2xl transition-transform duration-300 ease-out sm:hidden"
-        aria-hidden="true"
-        style="transform: translateX(100%);"
-      >
-        <ul class="site-header__menu flex flex-1 flex-col gap-1 pt-2" aria-label="Primary">
-          <li>
-            <a href="/posts" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/posts") }}>
-              {_t.posts.title}
-            </a>
-          </li>
-          {
-            SITE.showArchives && (
-              <li>
-                <a href="/archives" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/archives") }}>
-                  {_t.archives.title}
-                </a>
-              </li>
-            )
-          }
-          <li>
-            <a href="/categories" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/categories") }}>
-              {_t.categories.title}
-            </a>
-          </li>
-          <li>
-            <a href="/tags" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/tags") }}>
-              {_t.tags.title}
-            </a>
-          </li>
-          <li>
-            <a href="/links" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/links") }}>
-              {_t.links.title}
-            </a>
-          </li>
-          <li>
-            <a href="/running" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/running") }}>
-              {_t.running.title}
-            </a>
-          </li>
-          <li>
-            <a href="/about" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/about") }}>
-              {_t.about.title}
-            </a>
-          </li>
-          <li>
-            <a href="/search" class="site-header__link mobile-drawer__link" class:list={{ "active-nav": isActive("/search") }}>
-              {_t.search.title}
-            </a>
-          </li>
+          ))}
         </ul>
-        <div class="mt-auto flex gap-2 border-t border-border py-4">
-          <a
-            href="/rss.xml"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="site-header__action-btn inline-flex h-9 min-w-[36px] items-center justify-center rounded-md bg-transparent text-[var(--text-secondary)] hover:bg-[var(--header-hover-bg)] hover:text-[var(--text-primary)]"
-            aria-label="rss feed"
-            title="RSS Feed"
-          >
-            <IconRss width={16} height={16} class="inline-block stroke-[2.5]" />
-          </a>
-          {SITE.lightAndDarkMode && (
-            <button
-              type="button"
-              id="mobile-theme-btn"
-              class="focus-outline site-header__action-btn inline-flex h-9 min-w-[36px] items-center justify-center rounded-md bg-transparent text-[var(--text-secondary)] hover:bg-[var(--header-hover-bg)] hover:text-[var(--text-primary)]"
-              title={_t.common.themeBtn}
-              aria-label="theme"
-            >
-              <IconMoon width={16} height={16} class="inline-block stroke-[2.5] dark:hidden" />
-              <IconSunHigh width={16} height={16} class="hidden stroke-[2.5] dark:inline-block" />
-            </button>
-          )}
-        </div>
-      </div>
-      <!-- RSS + 主题（桌面端与导航同一行） -->
-      <div class="site-header__actions -mr-1 flex shrink-0 items-center gap-1 max-sm:hidden sm:ml-2">
-        <a
-          href="/rss.xml"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="site-header__action-btn inline-flex h-9 min-w-[36px] items-center justify-center rounded-md bg-transparent text-[var(--text-secondary)] transition-[color,background-color,box-shadow] hover:bg-[var(--header-hover-bg)] hover:text-[var(--text-primary)] hover:shadow-[var(--header-link-shadow)]"
-          aria-label="rss feed"
-          title="RSS Feed"
-        >
-          <IconRss width={16} height={16} class="inline-block stroke-[2.5]" />
-          <span class="sr-only">RSS Feed</span>
+        <a href="/search" class="search-link" aria-label="搜索">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
         </a>
-        {
-          SITE.lightAndDarkMode && (
-            <button
-              id="theme-btn"
-              type="button"
-              class="focus-outline site-header__action-btn inline-flex h-9 min-w-[36px] items-center justify-center rounded-md bg-transparent text-[var(--text-secondary)] transition-[color,background-color,box-shadow] hover:bg-[var(--header-hover-bg)] hover:text-[var(--text-primary)] hover:shadow-[var(--header-link-shadow)]"
-              title={_t.common.themeBtn}
-              aria-label="auto"
-              aria-live="polite"
-            >
-              <IconMoon
-                width={16}
-                height={16}
-                class="inline-block stroke-[2.5] dark:hidden"
-              />
-              <IconSunHigh
-                width={16}
-                height={16}
-                class="hidden stroke-[2.5] dark:inline-block"
-              />
-              <span class="sr-only">{_t.common.themeBtn}</span>
-            </button>
-          )
-        }
+        {SITE.lightAndDarkMode && (
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        )}
       </div>
     </nav>
-  </div>
-
-  {SITE.showYearProgress && <YearProgress />}
-
+    {SITE.showYearProgress && <YearProgress />}
 </header>
 
-<!-- 内联脚本：尽早定义，切换独立移动端抽屉 #mobile-drawer（参考站方式） -->
-<script is:inline>
-(function(){
-  function toggle(btn, e) {
-    if (e) { e.preventDefault(); e.stopPropagation(); }
-    var header = btn && btn.closest && btn.closest(".site-header");
-    if (!header) return;
-    var drawer = header.querySelector("#mobile-drawer");
-    var overlay = header.querySelector("#mobile-nav-overlay");
-    var menuIcon = header.querySelector("#menu-icon");
-    var closeIcon = header.querySelector("#close-icon");
-    if (!drawer || !overlay || !menuIcon || !closeIcon) return;
-    var isOpen = drawer.classList.contains("open");
-    if (isOpen) {
-      drawer.classList.remove("open");
-      drawer.setAttribute("aria-hidden", "true");
-      overlay.classList.remove("active");
-      menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
-      btn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    } else {
-      drawer.classList.add("open");
-      drawer.setAttribute("aria-hidden", "false");
-      overlay.classList.add("active");
-      menuIcon.classList.add("hidden");
-      closeIcon.classList.remove("hidden");
-      btn.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
-    }
-  }
-  window.__mobileDrawerToggle = toggle;
-})();
-</script>
-
-<script>
-  /**
-   * 移动端抽屉：遮罩/抽屉内链接关闭、主题按钮转发（按钮由 onclick + 内联脚本处理）
-   */
-  (function () {
-    const getDrawerElements = (from: Element) => {
-      const header = from.closest(".site-header");
-      if (!header) return null;
-      const menuBtn = header.querySelector("[data-mobile-menu-toggle], #menu-btn");
-      const drawer = header.querySelector("#mobile-drawer");
-      const menuIcon = header.querySelector("#menu-icon");
-      const closeIcon = header.querySelector("#close-icon");
-      const overlay = header.querySelector("#mobile-nav-overlay");
-      if (!menuBtn || !drawer || !menuIcon || !closeIcon || !overlay) return null;
-      return { menuBtn, drawer, menuIcon, closeIcon, overlay };
-    };
-
-    const closeMenu = (el: NonNullable<ReturnType<typeof getDrawerElements>>) => {
-      el.menuBtn.setAttribute("aria-expanded", "false");
-      el.menuBtn.setAttribute("aria-label", "Open Menu");
-      el.drawer.classList.remove("open");
-      el.drawer.setAttribute("aria-hidden", "true");
-      el.menuIcon.classList.remove("hidden");
-      el.closeIcon.classList.add("hidden");
-      el.overlay.classList.remove("active");
-      document.body.style.overflow = "";
-    };
-
-    document.addEventListener("click", (e: Event) => {
-      const target = e.target as Element;
-      if (target.closest("[data-mobile-menu-toggle], #menu-btn")) return;
-      if (target.id === "mobile-nav-overlay" || target.classList.contains("mobile-nav-overlay")) {
-        const el = getDrawerElements(target);
-        if (el) closeMenu(el);
-        return;
-      }
-      const link = target.closest("#mobile-drawer a");
-      if (link) {
-        const el = getDrawerElements(link);
-        if (el) closeMenu(el);
-        return;
-      }
-      if (target.closest("#mobile-theme-btn")) {
-        const themeBtn = document.querySelector("#theme-btn") as HTMLElement | null;
-        if (themeBtn) themeBtn.click();
-      }
-    }, true);
-  })();
-</script>
-
-<!-- 样式：参考 Astro Theme Switcher - 标题简洁、导航为带边框的块状链接，hover 时主色边框+阴影 -->
 <style>
-  /* token 风格变量（顶栏固定由 class sticky top-0 z-30 实现） */
-  .site-header {
-    --header-hover-bg: rgba(0, 0, 0, 0.05);
-    --header-link-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  header {
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
-  [data-theme="dark"] .site-header {
-    --header-hover-bg: rgba(255, 255, 255, 0.08);
-    --header-link-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.15);
+  nav {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  /* 标题：参考站风格 - 简洁字重、无下划线，hover 保持主色 */
-  .site-header__title {
+  .logo {
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--text-primary);
     text-decoration: none;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+  }
+
+  .logo:hover {
+    text-decoration: none;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .search-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .search-link:hover,
+  .search-link:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.25rem;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9375rem;
     transition: color 0.2s ease;
+    padding: 0.25rem 0;
   }
 
-  .site-header__title:hover {
-    color: var(--text-primary);
-  }
-
-  /* 导航链接：无边框，hover 时背景+阴影 */
-  .site-header__link {
-    display: inline-block;
-    padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-primary);
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: var(--accent);
     text-decoration: none;
-    border-radius: 0.375rem;
-    background-color: transparent;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease,
-      box-shadow 0.2s ease;
   }
 
-  .site-header__link:hover {
-    background-color: var(--header-hover-bg);
-    box-shadow: var(--header-link-shadow);
-    color: var(--text-primary);
-  }
-
-  .site-header__link.active-nav {
+  .nav-links a.active {
     color: var(--accent);
-    font-weight: 600;
+    text-decoration: none;
   }
 
-  .site-header__link.active-nav:hover {
-    background-color: var(--header-hover-bg);
-    box-shadow: var(--header-link-shadow);
+  .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: border-color 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
+    border-color: var(--accent);
     color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
-  /* 桌面端导航与操作同一行、适当间距 */
-  @media (min-width: 640px) {
-    .site-header__menu {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .site-header__menu .site-header__link {
-      padding: 0.375rem 0.5rem;
-    }
+  /* 默认亮色主题：显示月亮图标（点击可切换至暗色） */
+  .theme-toggle .sun-icon {
+    display: none;
   }
-
-  /* 移动端：遮罩层（与抽屉动画时长一致） */
-  .mobile-nav-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    background-color: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.3s ease,
-      visibility 0.3s ease;
-  }
-
-  .mobile-nav-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  /* 移动端：独立抽屉容器（参考 Astro Theme Switcher） */
-  .mobile-drawer {
-    transform: translateX(100%);
-  }
-
-  .mobile-drawer.open {
-    transform: translateX(0) !important;
-  }
-
-  .mobile-drawer__link,
-  #mobile-drawer .site-header__link {
-    color: var(--text-primary);
-    padding: 0.75rem 1rem;
+  .theme-toggle .moon-icon {
     display: block;
-    border-radius: 0.375rem;
+  }
+  /* 暗色主题：显示太阳图标 */
+  :global(html[data-theme="dark"]) .theme-toggle .sun-icon {
+    display: block;
+  }
+  :global(html[data-theme="dark"]) .theme-toggle .moon-icon {
+    display: none;
   }
 
-  #mobile-drawer .site-header__link:hover {
-    background-color: var(--header-hover-bg);
-    color: var(--text-primary);
-  }
+  @media (max-width: 640px) {
+    header {
+      position: relative;
+    }
 
-  #mobile-drawer .site-header__link.active-nav {
-    color: var(--accent);
-    font-weight: 600;
+    nav {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    .nav-right {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem 0.6rem;
+      width: 100%;
+    }
+
+    .nav-links {
+      display: contents;
+    }
+
+    .nav-links li {
+      display: inline;
+    }
+
+    .nav-links a {
+      font-size: 0.8125rem;
+    }
+
+    .search-link,
+    .theme-toggle {
+      padding: 0.375rem;
+    }
   }
 </style>

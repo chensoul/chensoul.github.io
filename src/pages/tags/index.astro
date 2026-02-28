@@ -21,14 +21,10 @@
  */
 
 import { getCollection } from "astro:content";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 
 // 获取所有文章
 const posts = await getCollection("blog");
@@ -37,16 +33,12 @@ const posts = await getCollection("blog");
 let tags = PostUtils.getUniqueTags(posts);
 ---
 
-<Layout title={`${_t.tags.title} | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="">
+<Layout>
     <ul>
       {
         tags.map(({ tag, tagName, count }) => (
-          <Tag {tag} {tagName} {count} size="sm" />
+          <Tag {tag} {tagName} {count} size="lg" />
         ))
       }
     </ul>
-  </Main>
-  <Footer />
 </Layout>

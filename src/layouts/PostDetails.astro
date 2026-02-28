@@ -1,28 +1,6 @@
 ---
-/**
- * 文章详情页布局
- *
- * @fileoverview 单篇文章的完整页面布局
- *
- * 核心逻辑：
- * 1. 渲染文章内容（使用 render() API）
- * 2. 生成上一篇/下一篇导航链接
- * 3. 条件加载：
- *    - TOC 目录（toc 属性）
- *    - KaTeX 数学公式（math 属性）
- *    - Artalk 评论（comments 属性）
- * 4. 侧边栏：显示文章目录（桌面端）
- *
- * 依赖关系：
- * - 被 /posts/[...slug]/index.astro 页面使用
- * - 继承 Layout.astro
- * - 导入 Header、Footer、Tag 等组件
- */
-
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
@@ -34,12 +12,6 @@ import IconTag from "@/assets/icons/IconTag.svg";
 import { SITE } from "@/config";
 import "photosuite/dist/photosuite.css";
 
-/**
- * 组件属性接口
- *
- * @property post - 当前文章对象
- * @property posts - 所有文章数组（用于上一篇/下一篇导航）
- */
 export interface Props {
   post: CollectionEntry<"blog">;
   posts: CollectionEntry<"blog">[];
@@ -135,7 +107,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       />
     </noscript>
   )}
-  <Header />
 
   <!-- 文章标题与发布日期（不在 main 内） -->
   <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
@@ -145,20 +116,14 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       modDatetime={updated}
       timezone={post.data.timezone}
       format="absolute"
-      class="mt-1 flex justify-center text-sm text-accent"
+      class="mt-1 flex justify-center text-sm article-date"
     />
   </section>
 
-  <!-- 主内容区（TOC 在 main 外，大屏下与 main 同行） -->
-  <main
-    id="main-content"
-    class="mx-auto w-full max-w-4xl pb-8"
-    data-pagefind-body
-  >
-    <!-- 文章内容 -->
+    <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
     <article
       id="article"
-      class="js-toc-content mx-auto prose mb-12 max-w-4xl"
+      class="js-toc-content"
     >
       <Content />
     </article>
@@ -191,7 +156,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
             <IconChevronLeft class="inline-block flex-none" />
             <div>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
+              <div class="text-sm link-subtle">{prevPost.title}</div>
             </div>
           </a>
         )
@@ -204,7 +169,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
           >
             <div>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
+              <div class="text-sm link-subtle">{nextPost.title}</div>
             </div>
             <IconChevronRight class="inline-block flex-none" />
           </a>
@@ -214,13 +179,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
     <!-- 评论容器 -->
     <div id="Comments"></div>
-  </main>
 
-  <Footer />
   <!-- 侧边栏：文章目录（与 astro-lhasa 一致，内联实现） -->
   <aside
     id="sidebar"
-    slot="sidebar"
     class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
   >
     {toc && <div id="toc-container" class="js-toc" />}

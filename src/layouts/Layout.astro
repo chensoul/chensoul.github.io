@@ -1,26 +1,8 @@
 ---
-/**
- * 基础布局组件
- *
- * @fileoverview 整个网站的最外层布局，包含 HTML head、meta 标签、全局样式
- *
- * 核心逻辑：
- * 1. SEO 优化：完整的 meta 标签、Open Graph、Twitter Cards
- * 2. Google 验证：支持 Google Search Console 验证
- * 3. 第三方集成：
- *    - Artalk 评论系统
- *    - Matomo 网站分析（仅生产环境）
- *    - Google Fonts 字体
- * 4. 条件加载：根据 toc、math 属性动态加载对应资源
- *
- * 依赖关系：
- * - 被 Main.astro、PostDetails.astro 等所有布局继承
- * - 导入全局样式、BackToTop 组件
- * - 使用 config.ts 获取站点配置
- */
-
 import { SITE } from "@/config";
 import "@/styles/global.css";
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import BackToTop from "@/components/BackToTop.astro";
 import BackButton from "@/components/BackButton.astro";
 
@@ -108,30 +90,8 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang={`${SITE.lang ?? "en"}`} class={`bg-background ${scrollSmooth ? "scroll-smooth" : ""}`.trim()}>
+<html>
   <head>
-    <!-- 首屏防闪白：先隐藏，脚本设 data-theme 后由下方内联主题样式解除，不依赖延迟加载的 CSS（Critters 会推迟非 critical CSS） -->
-    <style is:inline>html{visibility:hidden}</style>
-    <!-- 主题首屏防 FOUC：从 localStorage 读 theme 并设 data-theme -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
-      (function(){
-        let stored = null;
-        try {
-          stored = lightAndDarkMode ? localStorage.getItem("theme") : null;
-        } catch (_) {
-          stored = null;
-        }
-        const theme = (themeIds && themeIds.includes(stored)) ? stored : (themeIds && themeIds[0]) || "light";
-        document.documentElement.setAttribute("data-theme", theme);
-        window.theme = { themeValue: theme };
-      })();
-    </script>
-    <!-- 首屏主题背景（参考 zdyxry.github.io：data-theme + 变量），主 CSS 加载前生效防 FOUC -->
-    <style is:inline>
-      [data-theme="light"]{visibility:visible !important;--background:#fff}
-      [data-theme="dark"]{visibility:visible !important;color-scheme:dark;--background:#1e293b}
-      .bg-background{background-color:var(--background)}
-    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -206,12 +166,14 @@ const structuredData = {
     />
 
     <meta name="theme-color" content="#ffffff" />
+    <!-- 主题首屏：从 localStorage 恢复 data-theme 与 theme-color，避免闪白 -->
     <script is:inline>
       (function () {
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (!meta) return;
-        var theme = document.documentElement.getAttribute("data-theme");
-        meta.setAttribute("content", theme === "dark" ? "#1e293b" : "#ffffff");
+        var t = localStorage.getItem("theme");
+        if (t !== "light" && t !== "dark") t = "light";
+        document.documentElement.setAttribute("data-theme", t);
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute("content", t === "dark" ? "#0f172a" : "#ffffff");
       })();
     </script>
 
@@ -225,64 +187,6 @@ const structuredData = {
       )
     }
 
-    <!-- 主题切换：参考 zdyxry.github.io（localStorage theme + data-theme）+ 首屏防闪 + 平滑过渡 + astro:after-swap -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
-      (function () {
-        if (!lightAndDarkMode || !themeIds || !themeIds.length) return;
-        const THEME_KEY = "theme";
-        const themeBtnSel = "#theme-btn";
-        const themeColorMetaSel = "meta[name=\"theme-color\"]";
-
-        function getTheme() {
-          const stored = localStorage.getItem(THEME_KEY);
-          if (themeIds.includes(stored)) return stored;
-          const current = document.documentElement.getAttribute("data-theme");
-          return themeIds.includes(current) ? current : themeIds[0];
-        }
-        function setTheme(id) {
-          if (!themeIds.includes(id)) return;
-          if (window.theme) window.theme.themeValue = id;
-          document.documentElement.setAttribute("data-theme", id);
-          localStorage.setItem(THEME_KEY, id);
-          var btn = document.querySelector(themeBtnSel);
-          if (btn) btn.setAttribute("aria-label", id);
-          var meta = document.querySelector(themeColorMetaSel);
-          if (meta && document.body) {
-            var bg = window.getComputedStyle(document.body).backgroundColor;
-            if (bg) meta.setAttribute("content", bg);
-          }
-        }
-        function nextTheme() {
-          var i = themeIds.indexOf(getTheme());
-          return themeIds[(i + 1) % themeIds.length];
-        }
-        function setupThemeButton() {
-          setTheme(getTheme());
-          var btn = document.querySelector(themeBtnSel);
-          if (!btn) return;
-          btn.addEventListener("click", function () {
-            setTheme(nextTheme());
-            requestAnimationFrame(function () {
-              document.documentElement.classList.add("theme-transition");
-            });
-          });
-        }
-        window.theme = window.theme || {};
-        window.theme.themeValue = getTheme();
-        window.theme.getTheme = getTheme;
-        window.theme.setTheme = setTheme;
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", setupThemeButton);
-        } else {
-          setupThemeButton();
-        }
-        document.addEventListener("astro:after-swap", function () {
-          setTheme(getTheme());
-          window.scrollTo({ left: 0, top: 0, behavior: "instant" });
-        });
-      })();
-    </script>
-
     {toc && (
       <>
         <link
@@ -295,20 +199,53 @@ const structuredData = {
     )}
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
-    <slot name="head" />
-
   </head>
-  <body class="bg-background">
-    <div
-      id="site-frame"
-      class="bg-background mx-auto w-full px-3 pt-[5rem] sm:w-[960px] sm:max-w-[72rem] sm:px-8"
-    >
-      <!-- 插槽：子布局内容 -->
+  <body>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+    <Header />
+    <main id="main-content">
       <slot />
-    </div>
-    <slot name="sidebar" />
+    </main>
     <BackButton />
     <BackToTop />
+    <Footer/>
+
+    <!-- 主题切换：点击按钮在 light/dark 间切换并持久化 -->
+    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+      (function () {
+        if (!lightAndDarkMode) return;
+        var THEME_KEY = "theme";
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        function getTheme() {
+          var t = localStorage.getItem(THEME_KEY);
+          return t === "dark" || t === "light" ? t : "light";
+        }
+        function setTheme(t) {
+          if (t !== "light" && t !== "dark") return;
+          document.documentElement.setAttribute("data-theme", t);
+          localStorage.setItem(THEME_KEY, t);
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute("content", t === "dark" ? "#0f172a" : "#ffffff");
+        }
+        function nextTheme() {
+          return getTheme() === "light" ? "dark" : "light";
+        }
+        function onToggle() {
+          setTheme(nextTheme());
+        }
+        btn.addEventListener("click", onToggle);
+        btn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle();
+          }
+        });
+        document.addEventListener("astro:after-swap", function () {
+          setTheme(getTheme());
+        });
+      })();
+    </script>
 
     <!-- Umami 分析（config.ts 中配置 SITE.umami；首屏后再加载以减轻 LCP 影响） -->
     {

@@ -69,7 +69,7 @@ export const SITE = {
   showArchives: true,
 
   /** 是否在顶栏下方显示年度进度条 */
-  showYearProgress: true,
+  showYearProgress: false,
 
   /**
    * 是否在文章详情页显示"返回"按钮

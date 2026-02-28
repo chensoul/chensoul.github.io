@@ -1,37 +1,17 @@
 ---
-/**
- * 站点首页
- *
- * @fileoverview 显示最新文章列表
- *
- * 核心逻辑：
- * 1. 获取所有文章并按时间排序
- * 2. 首页只显示前 N 篇（由 SITE.postPerIndex 控制）
- * 3. 底部提供"查看所有文章"链接
- */
-
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 
 const posts = await getCollection("blog");
 const sortedPosts = PostUtils.sort(posts);
 ---
 
 <Layout>
-  <Header />
-  <main id="main-content" data-layout="index">
-    <section id="recent-posts">
-      <h2 class="text-2xl font-semibold tracking-wide">
-        {/* 标题可通过 slot 或 props 自定义 */}
-      </h2>
       <ul>
         {sortedPosts
           .slice(0, SITE.postPerIndex)
@@ -43,32 +23,16 @@ const sortedPosts = PostUtils.sort(posts);
             />
           ))}
       </ul>
-    </section>
 
     <!-- 查看所有文章：使用主题色边框与文字，与全站风格一致 -->
     <div class="text-center">
       <LinkButton
         href="/posts"
-        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm text-[var(--color-accent)] no-underline transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 index-all-posts-btn"
       >
-        {_t.common.allPosts}
+        查看所有文章
         <IconArrowRight class="inline-block size-4" />
       </LinkButton>
     </div>
-  </main>
-  <Footer />
 </Layout>
 
-<script>
-  /**
-   * 存储首页 URL 到 sessionStorage
-   *
-   * 当用户从首页点击文章后，返回按钮会带回首页
-   */
-  function saveIndexBackUrl() {
-    const mainContent = document.querySelector("#main-content") as HTMLElement | null;
-    if (mainContent?.dataset?.layout) sessionStorage.setItem("backUrl", "/");
-  }
-  document.addEventListener("DOMContentLoaded", saveIndexBackUrl);
-  window.addEventListener("load", saveIndexBackUrl);
-</script>

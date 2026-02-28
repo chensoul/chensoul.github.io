@@ -1,7 +1,7 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
-import AboutLayout from "@/layouts/AboutLayout.astro";
+import Layout from "@/layouts/Layout.astro";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
 
@@ -46,6 +46,6 @@ const md = new MarkdownIt({
 const htmlContent = md.render(content);
 ---
 
-<AboutLayout frontmatter={{ title: frontmatter.title || "链接", description: frontmatter.description }}>
+<Layout title={frontmatter.title || "链接"} description={frontmatter.description}>
   <Fragment set:html={htmlContent} />
-</AboutLayout>
+</Layout>

@@ -20,12 +20,17 @@ import timezone from "dayjs/plugin/timezone";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 dayjs.locale("zh-cn");
+
+const TZ = SITE.timezone || "Asia/Shanghai";
+/** 完整日期时间格式（用于 title 等） */
+const FULL_FORMAT = "YYYY-MM-DD HH:mm:ss";
+/** 短日期格式（绝对时间显示） */
+const SHORT_FORMAT = "YYYY-MM-DD";
 
 /**
  * 组件属性接口
@@ -59,12 +64,13 @@ const pub = dayjs(pubDatetime);
 const mod = modDatetime ? dayjs(modDatetime) : null;
 const latest = mod && mod.isAfter(pub) ? mod : pub;
 const iso = latest.toISOString();
-const tz = tzProp || SITE.timezone;
-const title = _t.date.fullFormat(pub.tz(tz));
-
+const tz = tzProp || TZ;
 const latestInTz = dayjs.utc(latest.toDate()).tz(tz);
+const pubInTz = dayjs.utc(pub.toDate()).tz(tz);
+
+const title = pubInTz.format(FULL_FORMAT);
 const displayTime =
-  format === "absolute" ? _t.date.shortFormat(latestInTz) : latest.fromNow();
+  format === "absolute" ? latestInTz.format(SHORT_FORMAT) : latest.fromNow();
 ---
 
 <div class:list={["flex items-end space-x-1", className]} title={title}>

@@ -22,13 +22,9 @@
  */
 
 import { getCollection } from "astro:content";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 import { getCategoryImageUrl } from "@/utils/categoryImages";
 
 // 获取所有文章并排序
@@ -54,10 +50,7 @@ categories.forEach(({ categoryName }) => {
 });
 ---
 
-<Layout title={`${_t.categories.title} | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="">
-    <section class="space-y-6">
+<Layout>
       <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2" aria-label="分类列表">
         {
           categories.map(({ category, categoryName, count }, i) => (
@@ -87,7 +80,7 @@ categories.forEach(({ categoryName }) => {
                     />
                   ) : (
                     // 无封面图时显示占位背景
-                    <div class="h-full w-full bg-foreground/20" />
+                    <div class="h-full w-full bg-black/20 dark:bg-white/20" />
                   )}
                 </div>
                 {/* 渐变遮罩 */}
@@ -112,10 +105,8 @@ categories.forEach(({ categoryName }) => {
         data-chunk={SITE.postPerPage}
       >
       </div>
-    </section>
-  </Main>
-  <Footer />
 </Layout>
+
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
 <script is:inline>
   function boot() {

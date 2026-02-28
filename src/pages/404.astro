@@ -15,16 +15,12 @@
  */
 
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { SITE } from "@/config";
 import { _t } from "@/scripts/lang";
 ---
 
 <Layout title={`404 Not Found | ${SITE.title}`}>
-  <Header />
-  <main id="main-content" class="max-w-app mx-auto w-full px-4 pb-12">
     <div class="mb-14 flex flex-col items-center justify-center">
       <!-- 图片容器：包含静态图和动画图 -->
       <div id="image-container" class="relative h-[350px] w-[350px]">
@@ -48,7 +44,7 @@ import { _t } from "@/scripts/lang";
         />
       </div>
       <!-- 错误提示文本 -->
-      <p class="mt-4 text-xl sm:text-xl">{_t.notFoundPage.title}</p>
+      <p class="mt-4 text-xl">{_t.notFoundPage.title}</p>
       <!-- 返回首页按钮 -->
       <LinkButton
         href="/"
@@ -57,8 +53,6 @@ import { _t } from "@/scripts/lang";
         {'回到首页 >>>'}
       </LinkButton>
     </div>
-  </main>
-  <Footer />
 </Layout>
 
 <script>

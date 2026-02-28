@@ -36,10 +36,7 @@
 
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
@@ -134,8 +131,6 @@ const { page, categoryName } = Astro.props;
 ---
 
 <Layout>
-  <Header />
-  <Main pageTitle="">
     <p class="mb-4 text-base font-semibold">
       分类：{categoryName}
     </p>
@@ -165,8 +160,6 @@ const { page, categoryName } = Astro.props;
       data-chunk={SITE.postPerPage}
     >
     </div>
-  </Main>
-  <Footer noMarginTop={true} />
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>

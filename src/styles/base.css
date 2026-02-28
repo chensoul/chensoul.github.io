@@ -19,94 +19,339 @@
   descent-override: 22%;
   line-gap-override: 0%;
 }
+/* Global Styles - Clean & Minimal */
 
-/* ========== 主题（Tailwind @theme + 组件覆盖） ========== */
-@theme inline {
-  /* 顶栏固定后整页统一为 --background，不再区分内外背景 */
-  --color-background: var(--background);
-  --color-content-background: var(--background);
-  --color-foreground: var(--text-primary);
-  --color-accent: var(--accent);
-  --color-muted: rgb(var(--gray-light));
-  --color-text-muted: var(--text-secondary);
-  --color-border: var(--border);
+/* Light theme (default) */
+:root,
+[data-theme="light"] {
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --black: 15, 23, 42;
+  --gray: 100, 116, 139;
+  --gray-light: 241, 245, 249;
+  --gray-dark: 71, 85, 105;
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --color-foreground: #0f172a;
 }
 
-/* ========== 基础层 ========== */
-@layer base {
-  * {
-    @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: color-mix(
-        in srgb,
-        var(--color-muted) 80%,
-        var(--color-foreground) 20%
-      )
-      transparent;
-  }
-  html {
-    @apply overflow-y-scroll scroll-smooth;
-    /* 不设背景，由 body 统一提供整页背景，避免 html/body 两层色差 */
-    transition: background-color 0s;
-    /* 覆盖 Layout 内联的 visibility:hidden，带主题的 CSS 加载后即显示（!important 保证生效） */
-    visibility: visible !important;
-  }
-  body {
-    @apply flex min-h-svh flex-col font-sans text-foreground selection:bg-accent/75 selection:text-background;
-    font-family: var(--font-sans), var(--font-emoji);
-    background-color: var(--background);
-    transition: background-color 0s;
-  }
-  #site-frame {
-    background-color: var(--background);
-    transition: background-color 0s;
-  }
-  /* 主题切换平滑过渡：由 JS 在 setTheme 之后 rAF 添加 .theme-transition，避免先加过渡再改 theme 导致闪白 */
-  html.theme-transition,
-  html.theme-transition body,
-  html.theme-transition #site-frame,
-  html.theme-transition .site-header {
-    transition-duration: 0.2s;
-    transition-timing-function: ease;
-    transition-property: background-color, color;
-  }
-  a,
-  button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2;
-  }
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
+/* Dark theme */
+[data-theme="dark"] {
+  --accent: #60a5fa;
+  --accent-dark: #3b82f6;
+  --black: 248, 250, 252;
+  --gray: 148, 163, 184;
+  --gray-light: 30, 41, 59;
+  --gray-dark: 203, 213, 225;
+  --background: #0f172a;
+  --background-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  --color-foreground: #f8fafc;
 }
 
-.active-nav {
-  color: var(--accent) !important;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  background: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 文章发布日期使用主色 */
+.article-date {
+  color: var(--accent);
+}
+
+/* 首页「查看所有文章」按钮：主色与聚焦轮廓 */
+.index-all-posts-btn {
+  color: var(--accent);
+  outline-color: var(--accent);
+}
+.index-all-posts-btn:hover {
+  color: var(--accent-dark);
+}
+.index-all-posts-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 链接次要文字（如上一篇/下一篇标题）：主色 85% 不透明度 */
+.link-subtle {
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+/* 标签组件：链接与悬停主色 */
+.tag-link {
+  color: inherit;
+}
+.tag-link:hover {
+  color: var(--accent);
+}
+.tag-count {
+  color: var(--accent);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
   font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
 }
 
-@layer utilities {
-  #sidebar {
-    @apply fixed z-40 transform overflow-y-auto text-sm;
-    background-color: var(--background);
-    border: none;
+h1 { font-size: 1.875rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1.0625rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-primary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Code blocks */
+code {
+  font-family: "Roboto Mono", "SF Mono", Monaco, Inconsolata, monospace;
+  font-size: 0.875rem;
+}
+
+/* Inline code (not in pre blocks) */
+:not(pre) > code {
+  background: var(--background-secondary);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+/* Shiki syntax highlighting - preserve its styles */
+pre.astro-code {
+  /* Shiki handles its own background via inline styles */
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+pre.astro-code code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Fallback for non-Shiki code blocks */
+pre:not(.astro-code) {
+  background: var(--background-secondary);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+pre:not(.astro-code) code {
+  background: none;
+  padding: 0;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 0rem;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.9375rem; /* 15px，略小于正文便于表格紧凑 */
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+th {
+  background: var(--background-secondary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+td {
+  color: var(--text-primary);
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 8px 8px;
+  z-index: 1000;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* Mark highlight - subtle style like mentions */
+mark {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--gray), 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--gray), 0.5) transparent;
+}
+
+/* Responsive：小屏略缩小标题，保持层级 */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  h1 { font-size: 1.625rem; }
+  h2 { font-size: 1.3125rem; }
+  h3 { font-size: 1.125rem; }
+  h4 { font-size: 1rem; }
+
+  main {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  @media (max-width: 1023px) {
-    #sidebar {
-      @apply fixed top-0 right-0 bottom-0 left-auto flex h-full max-h-none w-4/5 max-w-70 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
-    }
-
-    #sidebar.mobile-open {
-      @apply translate-x-0;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
 
-  @media (min-width: 1300px) {
+@media (min-width: 1300px) {
     /* TOC 在 site-frame 外，固定于视口右侧；背景稍深一点更明显，无边框 */
     #sidebar {
       position: fixed;
-      top: 6rem;
+      top: 10rem;
       right: 4.5rem;
       background-color: color-mix(in srgb, var(--text-primary) 2%, var(--background));
       border: none;
@@ -148,12 +393,13 @@
       @apply my-1;
     }
     .toc-link {
+      font-size: 0.875rem;
       color: var(--text-primary);
       @apply py-1 block;
       line-height: 1.5;
     }
     .toc-link.is-active-link {
-      @apply !text-accent;
+      color: var(--accent);
     }
     .toc-link::before {
       @apply !hidden;
@@ -167,8 +413,3 @@
     }
   }
 
-  #sidebar #back-to-top svg,
-  #sidebar #back-to-top span {
-    color: var(--text-primary);
-  }
-}

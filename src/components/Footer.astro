@@ -1,21 +1,4 @@
 ---
-/**
- * 站点页脚组件
- *
- * @fileoverview 网站底部区域，显示版权信息、ICP 备案号等
- *
- * 核心逻辑：
- * 1. 响应式布局：移动端居中，桌面端右对齐
- * 2. 条件显示：根据配置显示自定义链接和 ICP 备案号
- * 3. 使用 mt-auto 将页脚推到页面底部（Flexbox 布局）
- *
- * 依赖关系：
- * - 被 Layout.astro 导入，在每个页面底部显示
- * - 依赖 config.ts 获取站点配置
- * - 依赖 scripts/lang 获取国际化文本
- */
-
-import { _t } from "@/scripts/lang";
 import { SITE } from "@/config";
 
 /**
@@ -56,7 +39,7 @@ const { noMarginTop = false } = Astro.props;
         SITE.icp && (
           <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
           <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-            {_t.license.icp} {SITE.icp}
+            备案号 {SITE.icp}
           </a>
         )
       }

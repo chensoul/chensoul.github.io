@@ -74,11 +74,11 @@ const { class: className } = Astro.props;
   }
 
   /**
-   * 更新按钮位置，使其紧贴 site-frame 容器右边缘
+   * 更新按钮位置，使其紧贴 main-content 容器右边缘
    */
   function updatePosition() {
     const btn = document.getElementById("back-to-top");
-    const frame = document.getElementById("site-frame");
+    const frame = document.getElementById("main-content");
     if (!btn || !frame) return;
 
     const frameRect = frame.getBoundingClientRect();

@@ -38,14 +38,10 @@
 
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
-import { _t } from "@/scripts/lang";
 
 /**
  * 生成文章列表页的静态路径
@@ -104,18 +100,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout title={`${_t.posts.title} | ${SITE.title}`}>
-  {
-    /**
-     * 文章列表页头部配置
-     *
-     * 与首页的区别：
-     * - 首页有 leadingTitle，文章列表页使用默认的站点标题
-     * - 首页可能有限制显示的文章数量，文章列表页显示全部
-     */
-  }
-  <Header />
-  <Main pageTitle="">
+<Layout>
     <ul class="posts-list">
       {
         /**
@@ -145,8 +130,6 @@ const { page } = Astro.props;
       data-chunk={SITE.postPerPage}
     >
     </div>
-  </Main>
-  <Footer noMarginTop={true} />
 </Layout>
 
 <script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
