@@ -448,16 +448,14 @@ const hrZoneColors: Record<number, string> = {
 </Layout>
 
 <script>
-  // 周期统计 Tab 切换
+  /* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- 内联脚本不参与 TS 编译，与 zdyxry 一致用数字键 hrZone，避免隐式 any 报错 */
+  // @ts-nocheck
+  // 周期统计 Tab 切换（与 zdyxry 一致：e.target.closest + getAttribute）
   document.addEventListener("DOMContentLoaded", function () {
     const tabNav = document.getElementById("periodTabNav");
     if (tabNav) {
       tabNav.addEventListener("click", function (e) {
-        const target = e.target;
-        const btn =
-          target && typeof target.closest === "function"
-            ? target.closest(".period-tab-btn")
-            : null;
+        const btn = (e.target && typeof e.target.closest === "function") ? e.target.closest(".period-tab-btn") : null;
         if (!btn) return;
 
         const period = btn.getAttribute("data-period");
@@ -496,24 +494,9 @@ const hrZoneColors: Record<number, string> = {
     }
   }
 
-  // 心率区间标签与颜色（字符串 key 便于用 run.hr_zone 索引）
-  const hrZoneLabels = {
-    "0": "未知",
-    "1": "Z1 恢复",
-    "2": "Z2 有氧",
-    "3": "Z3 节奏",
-    "4": "Z4 阈值",
-    "5": "Z5 最大",
-  };
-
-  const hrZoneColors = {
-    "0": "var(--text-secondary)",
-    "1": "#4ade80",
-    "2": "#60a5fa",
-    "3": "#fbbf24",
-    "4": "#fb923c",
-    "5": "#f87171",
-  };
+  // 心率区间标签与颜色（数字 key，与 zdyxry 一致，便于 run.hr_zone 等数字索引）
+  const hrZoneLabels = { 0: "未知", 1: "Z1 恢复", 2: "Z2 有氧", 3: "Z3 节奏", 4: "Z4 阈值", 5: "Z5 最大" };
+  const hrZoneColors = { 0: "var(--text-secondary)", 1: "#4ade80", 2: "#60a5fa", 3: "#fbbf24", 4: "#fb923c", 5: "#f87171" };
 
   // 查看更多功能
   const loadMoreBtn = document.getElementById("loadMoreBtn");
@@ -796,8 +779,8 @@ const hrZoneColors: Record<number, string> = {
       // 如果有多个配速，使用相对比例
       if (allPaces.length > 1) {
         const allSeconds = allPaces
-          .map(p => paceToSeconds(p))
-          .filter(s => s > 0);
+          .map((p) => paceToSeconds(p))
+          .filter((s) => s > 0);
         if (allSeconds.length > 1) {
           const minPace = Math.min(...allSeconds);
           const maxPace = Math.max(...allSeconds);
@@ -841,8 +824,8 @@ const hrZoneColors: Record<number, string> = {
     if (run.segments && run.segments.length > 0) {
       // 收集所有配速用于相对比例计算
       const allSegmentPaces = run.segments
-        .map(s => s.pace)
-        .filter(p => p && p !== "0'00\"");
+        .map((s) => s.pace)
+        .filter((p) => p && p !== "0'00\"");
 
       const segmentRows = run.segments
         .map((seg, idx) => {
@@ -893,57 +876,6 @@ const hrZoneColors: Record<number, string> = {
       `;
     }
 
-    // 生成记圈数据表格（如果有）
-    let lapsHtml = "";
-    if (run.laps && run.laps.length > 0) {
-      const lapRows = run.laps
-        .map((lap, idx) => {
-          const zoneClass = lap.hr_zone != null ? `zone-${lap.hr_zone}` : "";
-          const zoneLabel =
-            lap.hr_zone != null
-              ? (hrZoneLabels[lap.hr_zone] || "").split(" ")[0]
-              : "";
-          return `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${lap.distance?.toFixed(2) || "-"}</td>
-            <td>
-              <span class="pace-tag ${zoneClass}">${lap.pace || "-"}</span>
-            </td>
-            <td>${lap.cadence || "-"}</td>
-            <td>${lap.power || "-"}</td>
-            <td>
-              <span class="hr-zone-tag ${zoneClass}">${lap.heart_rate || "-"} ${zoneLabel}</span>
-            </td>
-          </tr>
-        `;
-        })
-        .join("");
-
-      lapsHtml = `
-        <div class="detail-section">
-          <h4 class="section-subtitle">记圈数据</h4>
-          <div class="laps-table-wrapper">
-            <table class="laps-table">
-              <thead>
-                <tr>
-                  <th>圈</th>
-                  <th>距离(km)</th>
-                  <th>配速</th>
-                  <th>步频</th>
-                  <th>功率</th>
-                  <th>心率</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${lapRows}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
-    }
-
     modalBody.innerHTML = `
       <div class="detail-header">
         <h3 class="detail-title">${run.workout_name || "跑步"}</h3>
@@ -969,7 +901,6 @@ const hrZoneColors: Record<number, string> = {
       </div>
 
       ${segmentsHtml}
-      ${lapsHtml}
     `;
 
     modal.classList.add("active");
@@ -1721,31 +1652,26 @@ const hrZoneColors: Record<number, string> = {
     margin: 0 0 0.75rem 0;
   }
 
-  :global(.segments-table-wrapper),
-  :global(.laps-table-wrapper) {
+  :global(.segments-table-wrapper) {
     overflow-x: auto;
     border: 1px solid var(--border);
     border-radius: 8px;
   }
 
-  :global(.segments-table),
-  :global(.laps-table) {
+  :global(.segments-table) {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.8125rem;
   }
 
   :global(.segments-table th),
-  :global(.segments-table td),
-  :global(.laps-table th),
-  :global(.laps-table td) {
+  :global(.segments-table td) {
     padding: 0.5rem 0.75rem;
     text-align: left;
     border-bottom: 1px solid var(--border);
   }
 
-  :global(.segments-table th),
-  :global(.laps-table th) {
+  :global(.segments-table th) {
     background: var(--background-secondary);
     font-weight: 600;
     color: var(--text-primary);
@@ -1754,13 +1680,11 @@ const hrZoneColors: Record<number, string> = {
     letter-spacing: 0.025em;
   }
 
-  :global(.segments-table tr:last-child td),
-  :global(.laps-table tr:last-child td) {
+  :global(.segments-table tr:last-child td) {
     border-bottom: none;
   }
 
-  :global(.segments-table tr:hover),
-  :global(.laps-table tr:hover) {
+  :global(.segments-table tr:hover) {
     background: var(--background-secondary);
   }
 
