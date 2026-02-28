@@ -277,84 +277,15 @@ const structuredData = {
       })();
     </script>
 
-    <!-- TOC 条件加载：tocbot CSS + 覆盖样式（仅 toc 为 true 时，顺序保证无 FOUC） -->
-    {
-      toc && (
-        <>
-          <link
-            rel="stylesheet"
-            href={TOCBOT_CSS_CDN}
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-          />
-          <style is:global>
-            .toc-card.js-toc,
-            .toc-card.js-toc .toc {
-              background: var(--background);
-              border-radius: 10px;
-              padding: 1rem 1.25rem;
-            }
-            .toc-card.js-toc .toc {
-              padding: 0;
-              box-shadow: none;
-            }
-            .toc-card.js-toc .toc-list {
-              list-style: none;
-              margin: 0;
-              padding: 0;
-            }
-            .toc-card.js-toc .toc-list-item {
-              color: var(--text-primary);
-              margin-bottom: 0.25rem;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .toc-card.js-toc .toc-list-item:last-child {
-              margin-bottom: 0;
-            }
-            .toc-card.js-toc .toc-list-item:has(> .toc-list) {
-              margin-bottom: 0;
-            }
-            .toc-card.js-toc .toc-list-item:has(> .toc-list) + .toc-list-item {
-              margin-top: 0;
-            }
-            .toc-card.js-toc .toc-list-item:has(.toc-link:empty) {
-              display: none;
-            }
-            .toc-card.js-toc .toc-list .toc-list {
-              padding-left: 0.75rem;
-              margin-top: 0;
-              margin-bottom: 0.25rem;
-            }
-            .toc-card.js-toc .toc-list .toc-list .toc-list-item {
-              font-size: 0.9em;
-              margin-bottom: 0.2rem;
-            }
-            .toc-card.js-toc .toc-list .toc-list .toc-list-item:last-child {
-              margin-bottom: 0;
-            }
-            .toc-card.js-toc .toc-link {
-              color: var(--text-primary);
-              display: block;
-              padding: 0.125rem 0;
-              line-height: 1.4;
-              text-decoration: none;
-            }
-            .toc-card.js-toc .toc-link:hover {
-              color: var(--color-accent, var(--accent));
-            }
-            .toc-card.js-toc .toc-link.is-active-link {
-              color: var(--color-accent, var(--accent)) !important;
-              font-weight: 500;
-            }
-            .toc-card.js-toc .toc-link::before {
-              display: none !important;
-            }
-          </style>
-        </>
-      )
-    }
+    <!-- TOC 条件加载：仅 toc 为 true 时加载 tocbot CSS；自定义样式见 base.css -->
+    {toc && (
+      <link
+        rel="stylesheet"
+        href={TOCBOT_CSS_CDN}
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    )}
 
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
     <slot name="head" />

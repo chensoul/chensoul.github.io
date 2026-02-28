@@ -4,7 +4,7 @@
  *
  * @fileoverview 基于 tocbot 在侧边栏渲染文章标题目录，按需加载脚本并初始化
  *
- * 核心逻辑：渲染占位容器 #toc-container.toc-card.js-toc，按需加载 tocbot 脚本并初始化。
+ * 核心逻辑：渲染占位容器 .js-toc（id=toc-container 供脚本检测），按需加载 tocbot 脚本并初始化。
  * TOC 样式（tocbot CSS + 覆盖样式）由 Layout.astro 在 toc 为 true 时条件加载。
  *
  * 依赖关系：
@@ -24,7 +24,7 @@ const { enabled = true } = Astro.props;
 
 {enabled && (
   <>
-    <div id="toc-container" class="toc-card js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
+    <div id="toc-container" class="js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
   </>
 )}
 
