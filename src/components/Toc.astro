@@ -53,28 +53,57 @@ const { enabled = true, variant = "body" } = Astro.props;
 
 {variant === "body" && enabled && (
   <>
-    <div id="toc-container" class="js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
+    <div id="toc-container" class="toc-card js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
     <style is:global>
-      .toc-list-item {
+      /* 所有选择器挂在 #toc-container 下，提高优先级，覆盖 CDN 的 tocbot 默认样式 */
+      #toc-container.toc-card,
+      #toc-container.toc-card .toc {
+        background: var(--background);
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        padding: 1rem 1.25rem;
+      }
+      #toc-container.toc-card .toc {
+        padding: 0;
+        box-shadow: none;
+      }
+      #toc-container .toc-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      #toc-container .toc-list-item {
         color: var(--text-primary);
         margin-bottom: 0.5rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      .toc-list-item:last-child {
+      #toc-container .toc-list-item:last-child {
         margin-bottom: 0;
       }
-      .toc-link {
+      #toc-container .toc-list .toc-list {
+        margin-top: 0.375rem;
+        margin-bottom: 0.5rem;
+        padding-left: 1rem;
+      }
+      #toc-container .toc-list .toc-list .toc-list-item {
+        font-size: 0.9em;
+      }
+      #toc-container .toc-link {
         color: var(--text-primary);
         display: block;
-        padding: 0.125rem 0;
-        line-height: 1.4;
+        padding: 0.25rem 0;
+        line-height: 1.5;
+        text-decoration: none;
       }
-      .toc-link.is-active-link {
-        color: var(--accent) !important;
+      #toc-container .toc-link:hover {
+        color: var(--color-accent, var(--accent));
       }
-      .toc-link::before {
+      #toc-container .toc-link.is-active-link {
+        color: var(--color-accent, var(--accent)) !important;
+      }
+      #toc-container .toc-link::before {
         content: "";
         display: none !important;
       }
