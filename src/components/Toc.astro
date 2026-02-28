@@ -85,7 +85,7 @@ const { enabled = true, variant = "body" } = Astro.props;
           return typeof window !== "undefined" && window.tocbot;
         }
         function initTocbot() {
-          var tocbot = getTocbot();
+          const tocbot = getTocbot();
           if (!tocbot) return;
           tocbot.init({
             tocSelector: ".js-toc",
@@ -97,14 +97,14 @@ const { enabled = true, variant = "body" } = Astro.props;
           });
         }
         function tryLoadAndInitTocbot() {
-          var container = document.getElementById("toc-container");
+          const container = document.getElementById("toc-container");
           if (!container) return;
           if (getTocbot()) {
             initTocbot();
           } else {
-            var src = container.getAttribute("data-tocbot-src");
+            const src = container.getAttribute("data-tocbot-src");
             if (!src) return;
-            var script = document.createElement("script");
+            const script = document.createElement("script");
             script.src = src;
             script.crossOrigin = "anonymous";
             script.referrerPolicy = "no-referrer";
