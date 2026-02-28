@@ -110,9 +110,9 @@ const structuredData = {
 <!doctype html>
 <html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
-    <!-- 首屏防闪白：在带主题的 CSS 加载前不显示，由 base.css 中 html{visibility:visible} 解除 -->
+    <!-- 首屏防闪白：先隐藏，脚本设 data-theme 后由下方内联主题样式解除，不依赖延迟加载的 CSS（Critters 会推迟非 critical CSS） -->
     <style is:inline>html{visibility:hidden}</style>
-    <!-- 主题首屏防 FOUC：从 localStorage 读 theme 并设 data-theme，再加载的 CSS 依 data-theme 生效 -->
+    <!-- 主题首屏防 FOUC：从 localStorage 读 theme 并设 data-theme -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function(){
         const stored = lightAndDarkMode ? localStorage.getItem("theme") : null;
@@ -121,6 +121,15 @@ const structuredData = {
         window.theme = { themeValue: theme };
       })();
     </script>
+    <!-- 内联首屏主题背景 + 显示，部署后 Critters 推迟主 CSS 时也避免闪白（与 variables.css 一致） -->
+    <style is:inline>
+      html[data-theme="light"]{visibility:visible !important;background-color:#f8fafc}
+      html[data-theme="light"] body{background-color:#f8fafc}
+      html[data-theme="light"] #site-frame{background-color:#fff}
+      html[data-theme="dark"]{visibility:visible !important;background-color:#0f172a;color-scheme:dark}
+      html[data-theme="dark"] body{background-color:#0f172a}
+      html[data-theme="dark"] #site-frame{background-color:#1e293b}
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -279,7 +288,7 @@ const structuredData = {
   <body>
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-2 sm:mt-5 sm:w-[960px] sm:max-w-[72rem] sm:px-8 sm:pt-4"
+      class="mx-auto w-full px-3 sm:w-[960px] sm:max-w-[72rem] sm:px-8"
     >
       <!-- 插槽：子布局内容 -->
       <slot />
