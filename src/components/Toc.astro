@@ -5,13 +5,13 @@
  * @fileoverview 基于 tocbot 在侧边栏渲染文章标题目录，包含异步样式与按需脚本
  *
  * 核心逻辑：
- * 1. variant="head"：异步加载 tocbot CSS（preload 转 stylesheet，无 JS 时 noscript 回退为同步 link）
- * 2. variant="body"（默认）：渲染占位容器 .toc-card.js-toc，按需加载 tocbot 脚本并初始化；覆盖样式在 src/styles/toc-override.css，由 base.css 引入
+ * 1. variant="head"：同步加载 tocbot CSS + 紧随其后的覆盖样式 /toc-override.css，避免刷新时先现默认再闪为自定义
+ * 2. variant="body"（默认）：渲染占位容器 .toc-card.js-toc，按需加载 tocbot 脚本并初始化
  * 3. 使用处：Layout 的 head slot 放 <Toc enabled={toc} variant="head" slot="head" />，侧边栏放 <Toc enabled={toc} />
  *
  * 依赖关系：
  * - 页面需提供 .js-toc-content 包裹正文（如文章详情布局）
- * - 覆盖样式：src/styles/toc-override.css（.toc-card.js-toc）
+ * - 覆盖样式：public/toc-override.css，在 head 中紧接 tocbot 之后加载
  */
 
 const TOCBOT_CSS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css";
@@ -20,7 +20,7 @@ const TOCBOT_JS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
 export interface Props {
   /** 是否启用目录，为 false 时不渲染 */
   enabled?: boolean;
-  /** head：异步加载 tocbot CSS；body：容器 + 按需加载 tocbot 脚本（默认） */
+  /** head：同步加载 tocbot CSS 与覆盖样式；body：容器 + 按需加载 tocbot 脚本（默认） */
   variant?: "head" | "body";
 }
 
@@ -30,21 +30,12 @@ const { enabled = true, variant = "body" } = Astro.props;
 {variant === "head" && enabled && (
   <>
     <link
-      rel="preload"
+      rel="stylesheet"
       href={TOCBOT_CSS_CDN}
-      as="style"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-      onload="this.onload=null;this.rel='stylesheet'"
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href={TOCBOT_CSS_CDN}
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-      />
-    </noscript>
+    <link rel="stylesheet" href="/toc-override.css" />
   </>
 )}
 

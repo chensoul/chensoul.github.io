@@ -1,8 +1,6 @@
 /**
- * TOC 自定义覆盖样式
- * 在 tocbot 样式之后加载，覆盖默认样式（卡片、层级、当前项高亮）
- * 使用站点 CSS 变量，兼容浅色/深色主题
- * 选择器基于 .toc-card.js-toc，不依赖 id
+ * TOC 自定义覆盖样式（须在 tocbot 之后加载，避免闪烁）
+ * 选择器：.toc-card.js-toc
  */
 .toc-card.js-toc,
 .toc-card.js-toc .toc {
