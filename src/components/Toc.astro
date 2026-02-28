@@ -14,11 +14,7 @@
  */
 
 const TOCBOT_CSS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css";
-const TOCBOT_CSS_LOCAL = "/tocbot/tocbot.min.css";
 const TOCBOT_JS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
-
-/** 预加载样式转正样式用 */
-const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
 export interface Props {
   /** 是否启用目录，为 false 时不渲染 */
@@ -33,21 +29,11 @@ const { enabled = true, variant = "body" } = Astro.props;
 {variant === "head" && enabled && (
   <>
     <link
-      rel="preload"
+      rel="stylesheet"
       href={TOCBOT_CSS_CDN}
-      as="style"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-      onload={linkPreloadOnLoad}
     />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href={TOCBOT_CSS_LOCAL}
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-      />
-    </noscript>
   </>
 )}
 
