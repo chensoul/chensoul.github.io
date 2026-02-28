@@ -2,110 +2,27 @@
 /**
  * 文章目录（TOC）组件
  *
- * @fileoverview 基于 tocbot 在侧边栏渲染文章标题目录，包含同步样式与按需脚本
+ * @fileoverview 基于 tocbot 在侧边栏渲染文章标题目录，按需加载脚本并初始化
  *
- * 核心逻辑：
- * 1. variant="head"：加载 tocbot CSS + 内联 TOC 覆盖样式（紧接其后，保证覆盖）
- * 2. variant="body"（默认）：渲染占位容器 .toc-card.js-toc，按需加载 tocbot 脚本并初始化
- * 3. 使用处：Layout 的 head slot 放 <Toc enabled={toc} variant="head" slot="head" />，侧边栏放 <Toc enabled={toc} />
+ * 核心逻辑：渲染占位容器 #toc-container.toc-card.js-toc，按需加载 tocbot 脚本并初始化。
+ * TOC 样式（tocbot CSS + 覆盖样式）由 Layout.astro 在 toc 为 true 时条件加载。
  *
  * 依赖关系：
  * - 页面需提供 .js-toc-content 包裹正文（如文章详情布局）
- * - tocbot CSS：CDN；覆盖样式：见下方 <style is:global>，内联到 head
+ * - Layout 需传入 toc 并在 head 中输出 tocbot CSS + 覆盖样式
  */
 
-const TOCBOT_CSS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css";
 const TOCBOT_JS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
-
 
 export interface Props {
   /** 是否启用目录，为 false 时不渲染 */
   enabled?: boolean;
-  /** head：加载 tocbot CSS；body：容器 + 按需加载 tocbot 脚本（默认） */
-  variant?: "head" | "body";
 }
 
-const { enabled = true, variant = "body" } = Astro.props;
+const { enabled = true } = Astro.props;
 ---
 
-{variant === "head" && enabled && (
-  <>
-    <link
-      rel="stylesheet"
-      href={TOCBOT_CSS_CDN}
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <!-- 覆盖样式紧接 tocbot CSS 之后，保证 cascade 顺序，避免先显示默认再刷新为自定义的 FOUC -->
-    <style is:global>
-      .toc-card.js-toc,
-      .toc-card.js-toc .toc {
-        background: var(--background);
-        border-radius: 10px;
-        padding: 1rem 1.25rem;
-      }
-      .toc-card.js-toc .toc {
-        padding: 0;
-        box-shadow: none;
-      }
-      .toc-card.js-toc .toc-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .toc-card.js-toc .toc-list-item {
-        color: var(--text-primary);
-        margin-bottom: 0.25rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .toc-card.js-toc .toc-list-item:last-child {
-        margin-bottom: 0;
-      }
-      .toc-card.js-toc .toc-list-item:has(> .toc-list) {
-        margin-bottom: 0;
-      }
-      .toc-card.js-toc .toc-list-item:has(> .toc-list) + .toc-list-item {
-        margin-top: 0;
-      }
-      .toc-card.js-toc .toc-list-item:has(.toc-link:empty) {
-        display: none;
-      }
-      .toc-card.js-toc .toc-list .toc-list {
-        padding-left: 0.75rem;
-        margin-top: 0;
-        margin-bottom: 0.25rem;
-      }
-      .toc-card.js-toc .toc-list .toc-list .toc-list-item {
-        font-size: 0.9em;
-        margin-bottom: 0.2rem;
-      }
-      .toc-card.js-toc .toc-list .toc-list .toc-list-item:last-child {
-        margin-bottom: 0;
-      }
-      .toc-card.js-toc .toc-link {
-        color: var(--text-primary);
-        display: block;
-        padding: 0.125rem 0;
-        line-height: 1.4;
-        text-decoration: none;
-      }
-      .toc-card.js-toc .toc-link:hover {
-        color: var(--color-accent, var(--accent));
-      }
-      .toc-card.js-toc .toc-link.is-active-link {
-        color: var(--color-accent, var(--accent)) !important;
-        font-weight: 500;
-      }
-      .toc-card.js-toc .toc-link::before {
-        display: none !important;
-      }
-    </style>
-  </>
-)}
-
-{variant === "body" && enabled && (
+{enabled && (
   <>
     <div id="toc-container" class="toc-card js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
   </>
@@ -114,9 +31,9 @@ const { enabled = true, variant = "body" } = Astro.props;
 <script is:inline>
   (function () {
     // 如果未启用 TOC，直接返回
-      if (!document.getElementById("toc-container")) {
-        return;
-      }
+    if (!document.getElementById("toc-container")) {
+      return;
+    }
     function getTocbot() {
       return typeof window !== "undefined" && window.tocbot;
     }

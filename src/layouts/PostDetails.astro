@@ -114,7 +114,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  <Toc enabled={toc} variant="head" slot="head" />
   <!-- KaTeX 数学公式样式（仅文章详情且启用公式时加载） -->
   {math && (
     <link
