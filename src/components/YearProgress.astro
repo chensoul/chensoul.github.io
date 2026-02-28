@@ -20,10 +20,10 @@
 
 <div
   id="year-progress"
-  class="year-progress group relative mx-auto mb-5 w-full max-w-4xl sm:mb-0"
+  class="year-progress group relative mx-auto mb-5 w-full max-w-4xl border-0 sm:mb-0"
 >
-  <!-- 进度条背景（使用主题变量，随 data-theme 切换） -->
-  <div class="year-progress-track h-[3px] w-full rounded" aria-hidden="true">
+  <!-- 进度条背景（与页面同色，无边框，避免导航下出现横线） -->
+  <div class="year-progress-track h-[3px] w-full rounded border-0" aria-hidden="true">
     <!-- 进度条填充（宽度由 JS 动态设置，颜色由 CSS 变量控制以适配主题） -->
     <div
       id="year-progress-fill"
@@ -50,8 +50,11 @@
 </div>
 
 <style is:global>
+  /* 轨道与背景同色、无边框，避免导航下出现横线（全局 * 的 border 会在这里形成线） */
+  .year-progress,
   .year-progress-track {
-    background-color: color-mix(in srgb, var(--color-border) 70%, transparent);
+    border: none !important;
+    background-color: var(--background);
   }
   .year-progress-fill {
     background-color: var(--accent);

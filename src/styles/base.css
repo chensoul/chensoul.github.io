@@ -22,7 +22,8 @@
 
 /* ========== 主题（Tailwind @theme + 组件覆盖） ========== */
 @theme inline {
-  --color-background: var(--background-secondary);
+  /* 顶栏固定后整页统一为 --background，不再区分内外背景 */
+  --color-background: var(--background);
   --color-content-background: var(--background);
   --color-foreground: var(--text-primary);
   --color-accent: var(--accent);
@@ -45,7 +46,7 @@
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
-    background-color: var(--background-secondary);
+    /* 不设背景，由 body 统一提供整页背景，避免 html/body 两层色差 */
     transition: background-color 0s;
     /* 覆盖 Layout 内联的 visibility:hidden，带主题的 CSS 加载后即显示（!important 保证生效） */
     visibility: visible !important;
@@ -53,13 +54,12 @@
   body {
     @apply flex min-h-svh flex-col font-sans text-foreground selection:bg-accent/75 selection:text-background;
     font-family: var(--font-sans), var(--font-emoji);
-    background-color: var(--background-secondary);
+    background-color: var(--background);
     transition: background-color 0s;
   }
   #site-frame {
     background-color: var(--background);
-    box-shadow: var(--shadow-frame);
-    transition: background-color 0s, box-shadow 0s;
+    transition: background-color 0s;
   }
   /* 参考 Astro Theme Switcher：用户切换主题时平滑过渡（由 JS 在点击时添加 .theme-transition） */
   html.theme-transition,
@@ -67,7 +67,7 @@
   html.theme-transition #site-frame {
     transition-duration: 0.25s;
     transition-timing-function: ease;
-    transition-property: background-color, color, box-shadow;
+    transition-property: background-color, color;
   }
   a,
   button {
@@ -88,6 +88,7 @@
   #sidebar {
     @apply fixed z-40 transform overflow-y-auto text-sm;
     background-color: var(--background);
+    border: none;
   }
 
   @media (max-width: 1023px) {
@@ -101,13 +102,15 @@
   }
 
   @media (min-width: 1300px) {
-    /* TOC 在 site-frame 外，固定于视口右侧，与主内容区同色 */
+    /* TOC 在 site-frame 外，固定于视口右侧；背景稍深一点更明显，无边框 */
     #sidebar {
       position: fixed;
       top: 6rem;
       right: 4.5rem;
-      background-color: var(--background);
-      @apply z-40 m-0 max-h-[calc(100vh-8rem)] w-40 translate-x-0 rounded-lg p-4 shadow-none;
+      background-color: color-mix(in srgb, var(--text-primary) 2%, var(--background));
+      border: none;
+      box-shadow: none;
+      @apply z-40 m-0 max-h-[calc(100vh-8rem)] w-40 translate-x-0 rounded-lg p-4;
     }
 
     @media (min-width: 1280px) {

@@ -123,11 +123,11 @@ const structuredData = {
     </script>
     <!-- 内联首屏主题背景 + 显示，部署后 Critters 推迟主 CSS 时也避免闪白（与 variables.css 一致） -->
     <style is:inline>
-      html[data-theme="light"]{visibility:visible !important;background-color:#f8fafc}
-      html[data-theme="light"] body{background-color:#f8fafc}
+      html[data-theme="light"]{visibility:visible !important}
+      html[data-theme="light"] body{background-color:#fff}
       html[data-theme="light"] #site-frame{background-color:#fff}
-      html[data-theme="dark"]{visibility:visible !important;background-color:#0f172a;color-scheme:dark}
-      html[data-theme="dark"] body{background-color:#0f172a}
+      html[data-theme="dark"]{visibility:visible !important;color-scheme:dark}
+      html[data-theme="dark"] body{background-color:#1e293b}
       html[data-theme="dark"] #site-frame{background-color:#1e293b}
     </style>
     <meta charset="UTF-8" />
@@ -288,7 +288,7 @@ const structuredData = {
   <body>
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 sm:w-[960px] sm:max-w-[72rem] sm:px-8"
+      class="mx-auto w-full px-3 pt-[5.5rem] sm:w-[960px] sm:max-w-[72rem] sm:px-8"
     >
       <!-- 插槽：子布局内容 -->
       <slot />

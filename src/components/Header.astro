@@ -67,7 +67,7 @@ function getCurrentPageTitle(): string {
 const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 ---
 
-<header class="site-header mb-4">
+<header class="site-header fixed inset-x-0 top-0 z-30 border-0 bg-[var(--background)] pb-1">
   <!-- 无障碍访问：跳转到主内容 -->
   <a
     id="skip-to-content"
@@ -384,7 +384,7 @@ const mobileTitle = leadingTitle ?? getCurrentPageTitle();
 
 <!-- 样式：参考 Astro Theme Switcher - 标题简洁、导航为带边框的块状链接，hover 时主色边框+阴影 -->
 <style>
-  /* 与 Astro Theme Switcher 一致的 token 风格变量（无边框） */
+  /* token 风格变量（顶栏固定由 class sticky top-0 z-30 实现） */
   .site-header {
     --header-hover-bg: rgba(0, 0, 0, 0.05);
     --header-link-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
