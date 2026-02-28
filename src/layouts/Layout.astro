@@ -108,27 +108,29 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang=`${SITE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
+<html lang={`${SITE.lang ?? "en"}`} class={`bg-background ${scrollSmooth ? "scroll-smooth" : ""}`.trim()}>
   <head>
     <!-- 首屏防闪白：先隐藏，脚本设 data-theme 后由下方内联主题样式解除，不依赖延迟加载的 CSS（Critters 会推迟非 critical CSS） -->
     <style is:inline>html{visibility:hidden}</style>
     <!-- 主题首屏防 FOUC：从 localStorage 读 theme 并设 data-theme -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function(){
-        const stored = lightAndDarkMode ? localStorage.getItem("theme") : null;
+        let stored = null;
+        try {
+          stored = lightAndDarkMode ? localStorage.getItem("theme") : null;
+        } catch (_) {
+          stored = null;
+        }
         const theme = (themeIds && themeIds.includes(stored)) ? stored : (themeIds && themeIds[0]) || "light";
         document.documentElement.setAttribute("data-theme", theme);
         window.theme = { themeValue: theme };
       })();
     </script>
-    <!-- 内联首屏主题背景 + 显示，部署后 Critters 推迟主 CSS 时也避免闪白（与 variables.css 一致） -->
+    <!-- 首屏主题背景（参考 zdyxry.github.io：data-theme + 变量），主 CSS 加载前生效防 FOUC -->
     <style is:inline>
-      html[data-theme="light"]{visibility:visible !important}
-      html[data-theme="light"] body{background-color:#fff}
-      html[data-theme="light"] #site-frame{background-color:#fff}
-      html[data-theme="dark"]{visibility:visible !important;color-scheme:dark}
-      html[data-theme="dark"] body{background-color:#1e293b}
-      html[data-theme="dark"] #site-frame{background-color:#1e293b}
+      [data-theme="light"]{visibility:visible !important;--background:#fff}
+      [data-theme="dark"]{visibility:visible !important;color-scheme:dark;--background:#1e293b}
+      .bg-background{background-color:var(--background)}
     </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -203,7 +205,15 @@ const structuredData = {
       href={new URL("rss.xml", Astro.site)}
     />
 
-    <meta name="theme-color" content="" />
+    <meta name="theme-color" content="#ffffff" />
+    <script is:inline>
+      (function () {
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (!meta) return;
+        var theme = document.documentElement.getAttribute("data-theme");
+        meta.setAttribute("content", theme === "dark" ? "#1e293b" : "#ffffff");
+      })();
+    </script>
 
     <!-- Google 站点验证（config.ts 中配置 googleSiteVerification） -->
     {
@@ -215,7 +225,7 @@ const structuredData = {
       )
     }
 
-    <!-- 主题切换：Astro Theme Switcher 方式（主题列表 + 持久化 + 平滑过渡 + View Transitions 恢复） -->
+    <!-- 主题切换：参考 zdyxry.github.io（localStorage theme + data-theme）+ 首屏防闪 + 平滑过渡 + astro:after-swap -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode, themeIds: SITE.themes }}>
       (function () {
         if (!lightAndDarkMode || !themeIds || !themeIds.length) return;
@@ -288,10 +298,10 @@ const structuredData = {
     <slot name="head" />
 
   </head>
-  <body>
+  <body class="bg-background">
     <div
       id="site-frame"
-      class="mx-auto w-full px-3 pt-[5rem] sm:w-[960px] sm:max-w-[72rem] sm:px-8"
+      class="bg-background mx-auto w-full px-3 pt-[5rem] sm:w-[960px] sm:max-w-[72rem] sm:px-8"
     >
       <!-- 插槽：子布局内容 -->
       <slot />

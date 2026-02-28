@@ -17,8 +17,9 @@
  * --border      边框色（hex）
  * --shadow-frame  主内容区投影（使用 rgba(var(--black), α)）
  */
+/* 与 zdyxry.github.io 一致：用 [data-theme] 选择器，主题由 documentElement.setAttribute("data-theme", id) 控制 */
 :root,
-html[data-theme="light"] {
+[data-theme="light"] {
   --text-primary: #0f172a;
   --text-secondary: #64748b;
   --background: #ffffff;
@@ -33,7 +34,7 @@ html[data-theme="light"] {
   --shadow-frame: 0 8px 24px rgba(var(--black), 0.08);
 }
 
-html[data-theme="dark"] {
+[data-theme="dark"] {
   color-scheme: dark;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;

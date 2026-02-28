@@ -23,6 +23,7 @@ title: "关于"
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
 - 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面。
 - 2026-02-27 » 使用 [https://zdyxry.github.io/](https://zdyxry.github.io/) 的主题配色
+- 2026-02-28 » 参考 [Astro Theme Switcher](https://astro-theme-switcher.netlify.app/) 调整导航菜单样式
 
 ## 知识共享协议
 

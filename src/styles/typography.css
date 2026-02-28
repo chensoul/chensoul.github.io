@@ -30,9 +30,9 @@
   }
 
   /* 深色主题下 h4/h5/h6 略淡，层级更清晰 */
-  html[data-theme="dark"] .prose h4,
-  html[data-theme="dark"] .prose h5,
-  html[data-theme="dark"] .prose h6 {
+  [data-theme="dark"] .prose h4,
+  [data-theme="dark"] .prose h5,
+  [data-theme="dark"] .prose h6 {
     color: var(--text-primary) !important;
   }
 
