@@ -5,10 +5,9 @@
  * @fileoverview 包装页面主要内容区，被各个页面使用
  *
  * 核心逻辑：
- * 1. 提供统一的内容区容器（max-w-3xl）
- * 2. 支持 pageTitle 和 pageDesc 属性
- * 3. 通过 data-backUrl 属性存储返回路径
- * 4. 配合 BackButton 组件实现返回功能
+ * 1. 提供统一的内容区容器（max-w-4xl）
+ * 2. 通过 data-backUrl 属性存储返回路径
+ * 3. 配合 BackButton 组件实现返回功能
  *
  * 依赖关系：
  * - 被 Archives.astro 使用
@@ -23,7 +22,6 @@ import { SITE } from "@/config";
  */
 interface StringTitleProp {
   pageTitle: string;
-  pageDesc?: string;
 }
 
 /**
@@ -31,7 +29,6 @@ interface StringTitleProp {
  */
 interface ArrayTitleProp {
   pageTitle: [string, string];
-  pageDesc?: string;
 }
 
 /**
@@ -55,10 +52,6 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
   id="main-content"
   class="mx-auto w-full max-w-4xl pb-4"
 >
-  <!-- 页面描述（条件显示） -->
-  {SITE.showPageDesc && <p class="mt-2 mb-6 italic">{props.pageDesc}</p>}
-
-  <!-- 插槽：页面内容 -->
   <slot />
 </main>
 

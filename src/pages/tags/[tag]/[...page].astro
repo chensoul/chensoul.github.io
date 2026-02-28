@@ -52,10 +52,7 @@ const { page, tagName } = Astro.props;
 
 <Layout title={`${_t.tag.title}${tagName} | ${SITE.title}`}>
   <Header />
-  <Main
-    pageTitle={[_t.tag.title, `${tagName}`]}
-    pageDesc={_t.tag.desc(tagName)}
-  >
+  <Main pageTitle={[_t.tag.title, `${tagName}`]}>
     <h1 slot="title">{`Tag:${tag}`}</h1>
     <p class="mb-4 text-base font-semibold">
       标签：{tagName}
