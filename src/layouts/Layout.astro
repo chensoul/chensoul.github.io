@@ -69,8 +69,6 @@ const {
   mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;
 
-/** TOC 条件加载：tocbot CSS + 覆盖样式（顺序保证覆盖默认，避免 FOUC） */
-const TOCBOT_CSS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css";
 
 const fullDescription = description;
 
@@ -281,7 +279,7 @@ const structuredData = {
     {toc && (
       <link
         rel="stylesheet"
-        href={TOCBOT_CSS_CDN}
+        href={SITE.tocbot.cssUrl}
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
       />

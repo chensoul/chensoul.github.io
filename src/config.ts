@@ -208,6 +208,14 @@ export const SITE = {
    */
   lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list/lazy-list.js",
 
+  /**
+   * tocbot 目录：CSS/JS CDN（仅文章页启用 TOC 时按需加载）
+   */
+  tocbot: {
+    cssUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css",
+    jsUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js",
+  },
+
   // ========== 图片组件配置 ==========
   /**
    * 图片相关配置

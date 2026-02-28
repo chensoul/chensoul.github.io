@@ -12,7 +12,7 @@
  * - Layout 需传入 toc 并在 head 中输出 tocbot CSS + 覆盖样式
  */
 
-const TOCBOT_JS_CDN = "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js";
+import { SITE } from "@/config";
 
 export interface Props {
   /** 是否启用目录，为 false 时不渲染 */
@@ -24,49 +24,45 @@ const { enabled = true } = Astro.props;
 
 {enabled && (
   <>
-    <div id="toc-container" class="js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
+    <div id="toc-container" class="js-toc" />
+    <script
+      is:inline
+      define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl }}
+    >
+      (function () {
+        if (!document.getElementById("toc-container")) return;
+        function getTocbot() {
+          return typeof window !== "undefined" && window.tocbot;
+        }
+        function initTocbot() {
+          const tocbot = getTocbot();
+          if (!tocbot) return;
+          tocbot.init({
+            tocSelector: ".js-toc",
+            contentSelector: ".js-toc-content",
+            headingSelector: "h2, h3, h4",
+            hasInnerContainers: true,
+            scrollSmoothDuration: 300,
+            scrollSmoothOffset: 0,
+          });
+        }
+        function tryLoadAndInitTocbot() {
+          if (!document.querySelector(".js-toc")) return;
+          if (getTocbot()) {
+            initTocbot();
+          } else if (tocbotJsUrl) {
+            const script = document.createElement("script");
+            script.src = tocbotJsUrl;
+            script.crossOrigin = "anonymous";
+            script.referrerPolicy = "no-referrer";
+            script.onload = initTocbot;
+            document.body.appendChild(script);
+          }
+        }
+        tryLoadAndInitTocbot();
+        document.addEventListener("DOMContentLoaded", tryLoadAndInitTocbot);
+        window.addEventListener("load", tryLoadAndInitTocbot);
+      })();
+    </script>
   </>
 )}
-
-<script is:inline>
-  (function () {
-    // 如果未启用 TOC，直接返回
-    if (!document.getElementById("toc-container")) {
-      return;
-    }
-    function getTocbot() {
-      return typeof window !== "undefined" && window.tocbot;
-    }
-    function initTocbot() {
-      const tocbot = getTocbot();
-      if (!tocbot) return;
-      tocbot.init({
-        tocSelector: ".js-toc",
-        contentSelector: ".js-toc-content",
-        headingSelector: "h2, h3, h4",
-        hasInnerContainers: true,
-        scrollSmoothDuration: 300,
-        scrollSmoothOffset: 0,
-      });
-    }
-    function tryLoadAndInitTocbot() {
-      const container = document.querySelector(".js-toc");
-      if (!container) return;
-      if (getTocbot()) {
-        initTocbot();
-      } else {
-        const src = container.getAttribute("data-tocbot-src");
-        if (!src) return;
-        const script = document.createElement("script");
-        script.src = src;
-        script.crossOrigin = "anonymous";
-        script.referrerPolicy = "no-referrer";
-        script.onload = initTocbot;
-        document.body.appendChild(script);
-      }
-    }
-    tryLoadAndInitTocbot();
-    document.addEventListener("DOMContentLoaded", tryLoadAndInitTocbot);
-    window.addEventListener("load", tryLoadAndInitTocbot);
-  })();
-</script>
