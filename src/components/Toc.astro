@@ -36,49 +36,120 @@ const { enabled = true, variant = "body" } = Astro.props;
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- 覆盖样式紧接 tocbot CSS 之后，保证 cascade 顺序，避免先显示默认再刷新为自定义的 FOUC -->
+    <style is:global>
+      .toc-card.js-toc,
+      .toc-card.js-toc .toc {
+        background: var(--background);
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+      }
+      .toc-card.js-toc .toc {
+        padding: 0;
+        box-shadow: none;
+      }
+      .toc-card.js-toc .toc-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .toc-card.js-toc .toc-list-item {
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .toc-card.js-toc .toc-list-item:last-child {
+        margin-bottom: 0;
+      }
+      .toc-card.js-toc .toc-list-item:has(> .toc-list) {
+        margin-bottom: 0;
+      }
+      .toc-card.js-toc .toc-list-item:has(> .toc-list) + .toc-list-item {
+        margin-top: 0;
+      }
+      .toc-card.js-toc .toc-list-item:has(.toc-link:empty) {
+        display: none;
+      }
+      .toc-card.js-toc .toc-list .toc-list {
+        padding-left: 0.75rem;
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+      }
+      .toc-card.js-toc .toc-list .toc-list .toc-list-item {
+        font-size: 0.9em;
+        margin-bottom: 0.2rem;
+      }
+      .toc-card.js-toc .toc-list .toc-list .toc-list-item:last-child {
+        margin-bottom: 0;
+      }
+      .toc-card.js-toc .toc-link {
+        color: var(--text-primary);
+        display: block;
+        padding: 0.125rem 0;
+        line-height: 1.4;
+        text-decoration: none;
+      }
+      .toc-card.js-toc .toc-link:hover {
+        color: var(--color-accent, var(--accent));
+      }
+      .toc-card.js-toc .toc-link.is-active-link {
+        color: var(--color-accent, var(--accent)) !important;
+        font-weight: 500;
+      }
+      .toc-card.js-toc .toc-link::before {
+        display: none !important;
+      }
+    </style>
   </>
 )}
 
 {variant === "body" && enabled && (
   <>
-    <div class="toc-card js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
-    <script is:inline>
-      (function () {
-        function getTocbot() {
-          return typeof window !== "undefined" && window.tocbot;
-        }
-        function initTocbot() {
-          const tocbot = getTocbot();
-          if (!tocbot) return;
-          tocbot.init({
-            tocSelector: ".js-toc",
-            contentSelector: ".js-toc-content",
-            headingSelector: "h2, h3, h4",
-            hasInnerContainers: true,
-            scrollSmoothDuration: 300,
-            scrollSmoothOffset: 0,
-          });
-        }
-        function tryLoadAndInitTocbot() {
-          const container = document.querySelector(".js-toc");
-          if (!container) return;
-          if (getTocbot()) {
-            initTocbot();
-          } else {
-            const src = container.getAttribute("data-tocbot-src");
-            if (!src) return;
-            const script = document.createElement("script");
-            script.src = src;
-            script.crossOrigin = "anonymous";
-            script.referrerPolicy = "no-referrer";
-            script.onload = initTocbot;
-            document.body.appendChild(script);
-          }
-        }
-        tryLoadAndInitTocbot();
-        document.addEventListener("DOMContentLoaded", tryLoadAndInitTocbot);
-        window.addEventListener("load", tryLoadAndInitTocbot);
-      })();
-    </script>
+    <div id="toc-container" class="toc-card js-toc" data-tocbot-src={TOCBOT_JS_CDN} />
   </>
 )}
+
+<script is:inline>
+  (function () {
+    // 如果未启用 TOC，直接返回
+      if (!document.getElementById("toc-container")) {
+        return;
+      }
+    function getTocbot() {
+      return typeof window !== "undefined" && window.tocbot;
+    }
+    function initTocbot() {
+      const tocbot = getTocbot();
+      if (!tocbot) return;
+      tocbot.init({
+        tocSelector: ".js-toc",
+        contentSelector: ".js-toc-content",
+        headingSelector: "h2, h3, h4",
+        hasInnerContainers: true,
+        scrollSmoothDuration: 300,
+        scrollSmoothOffset: 0,
+      });
+    }
+    function tryLoadAndInitTocbot() {
+      const container = document.querySelector(".js-toc");
+      if (!container) return;
+      if (getTocbot()) {
+        initTocbot();
+      } else {
+        const src = container.getAttribute("data-tocbot-src");
+        if (!src) return;
+        const script = document.createElement("script");
+        script.src = src;
+        script.crossOrigin = "anonymous";
+        script.referrerPolicy = "no-referrer";
+        script.onload = initTocbot;
+        document.body.appendChild(script);
+      }
+    }
+    tryLoadAndInitTocbot();
+    document.addEventListener("DOMContentLoaded", tryLoadAndInitTocbot);
+    window.addEventListener("load", tryLoadAndInitTocbot);
+  })();
+</script>
