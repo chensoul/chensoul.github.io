@@ -136,7 +136,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       modDatetime={updated}
       timezone={post.data.timezone}
       format="absolute"
-      class="article-date mt-1 flex justify-center text-sm"
+      class="mt-1 flex justify-center text-sm text-[var(--accent)]"
     />
   </section>
 
@@ -170,7 +170,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
           <IconChevronLeft class="inline-block flex-none" />
           <div>
-            <div class="link-subtle text-sm">{prevPost.title}</div>
+            <div class="text-sm text-[var(--accent)] opacity-85">{prevPost.title}</div>
           </div>
         </a>
       )
@@ -183,7 +183,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
         >
           <div>
-            <div class="link-subtle text-sm">{nextPost.title}</div>
+            <div class="text-sm text-[var(--accent)] opacity-85">{nextPost.title}</div>
           </div>
           <IconChevronRight class="inline-block flex-none" />
         </a>
@@ -206,6 +206,79 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     </div>
   </aside>
 </Layout>
+
+<!-- 侧栏与 TOC 样式（tocbot 注入的 .toc 等类） -->
+<style>
+  @media (min-width: 1300px) {
+    #sidebar {
+      position: fixed;
+      top: 10rem;
+      right: 4.5rem;
+      z-index: 40;
+      margin: 0;
+      max-height: calc(100vh - 8rem);
+      width: 10rem;
+      transform: translateX(0);
+      border: none;
+      box-shadow: none;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background-color: color-mix(in srgb, var(--text-primary) 2%, var(--background));
+    }
+    @media (min-width: 1280px) {
+      #sidebar {
+        width: 14rem;
+      }
+    }
+    :global(.toc > .toc-list) {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    :global(.toc > .toc-list > .toc-list-item) {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    :global(.toc > .toc-list > .toc-list-item:last-child) {
+      margin-bottom: 0;
+    }
+    :global(.toc > .toc-list > .toc-list-item > .toc-list) {
+      margin-top: 0.25rem;
+      margin-bottom: 0;
+      padding-left: 0.75rem;
+    }
+    :global(.toc-list-item) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-primary);
+    }
+    :global(.toc-list .toc-list .toc-list-item) {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    :global(.toc-link) {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      display: block;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      line-height: 1.5;
+    }
+    :global(.toc-link.is-active-link) {
+      color: var(--accent);
+    }
+    :global(.toc-link::before) {
+      display: none !important;
+      content: "";
+    }
+    @media (max-width: 1023px) {
+      :global(.toc-list-item) {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+</style>
 
 <!-- Artalk 评论系统 -->
 <Artalk />

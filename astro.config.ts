@@ -171,9 +171,7 @@ export default defineConfig({
     format: "file", // generate `page.html` instead of `page/index.html`
   },
   compressHTML: true,
-  prefetch: {
-    prefetchAll: false, // 仅预取 hover 链接，减少首屏请求与带宽
-  },
+  prefetch: false, // 禁用预取，链接点击为整页刷新
   // image: {
   //   // Used for all Markdown images; not configurable per-image
   //   // Used for all `<Image />` and `<Picture />` components unless overridden with a prop

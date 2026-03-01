@@ -198,7 +198,12 @@ const structuredData = {
     <!-- 子页面可注入 head 内容（如文章详情页的 Artalk） -->
   </head>
   <body>
-    <a href="#main-content" class="skip-link">跳转到主要内容</a>
+    <a
+      href="#main-content"
+      class="skip-link absolute -top-full left-1/2 z-[1000] -translate-x-1/2 rounded-b-xl bg-[var(--accent)] px-6 py-3 font-medium text-white no-underline transition-[top] duration-200 focus:top-0 focus:outline-none"
+    >
+      跳转到主要内容
+    </a>
     <Header />
     <main id="main-content">
       <slot />

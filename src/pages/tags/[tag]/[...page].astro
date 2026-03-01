@@ -33,7 +33,7 @@ const { page, tagName } = Astro.props;
   <p class="mb-4 text-base font-semibold">
     标签：{tagName}
   </p>
-  <ul class="tag-posts-list">
+  <ul class="tag-posts-list list-none pl-0">
     {
       page.data.map((data, i) => (
         <Card

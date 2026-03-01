@@ -13,10 +13,10 @@ let tags = PostUtils.getUniqueTags(posts);
 ---
 
 <Layout title={`标签 | ${SITE.title}`}>
-  <ul>
+  <ul class="list-none pl-0">
     {
       tags.map(({ tag, tagName, count }) => (
-        <Tag {tag} {tagName} {count} size="lg" />
+        <Tag {tag} {tagName} {count} size="sm" />
       ))
     }
   </ul>

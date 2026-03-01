@@ -66,9 +66,6 @@ html {
   color: var(--text-primary);
   line-height: 1.6;
   scroll-behavior: smooth;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
 }
 
 body {
@@ -79,17 +76,7 @@ body {
   flex-direction: column;
   background: var(--background);
   color: var(--text-primary);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
   overflow-x: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html,
-  body {
-    transition: none;
-  }
 }
 
 main {
@@ -108,41 +95,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-/* 文章发布日期使用主色 */
-.article-date {
-  color: var(--accent);
-}
-
-/* 首页「查看所有文章」按钮：主色与聚焦轮廓 */
-.index-all-posts-btn {
-  color: var(--accent);
-  outline-color: var(--accent);
-}
-.index-all-posts-btn:hover {
-  color: var(--accent-dark);
-}
-.index-all-posts-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* 链接次要文字（如上一篇/下一篇标题）：主色 85% 不透明度 */
-.link-subtle {
-  color: var(--accent);
-  opacity: 0.85;
-}
-
-/* 标签组件：链接与悬停主色 */
-.tag-link {
-  color: inherit;
-}
-.tag-link:hover {
-  color: var(--accent);
-}
-.tag-count {
-  color: var(--accent);
 }
 
 h1,
@@ -243,44 +195,33 @@ blockquote {
   font-style: italic;
 }
 
-/* Lists：默认显示 list-style，包裹 Card 的列表除外 */
-ul,
-ol,
-menu {
+/* Lists：默认显示 list-style 与缩进；使用 :where 降权，便于页面用 Tailwind list-none/pl-0 覆盖 */
+:where(ul),
+:where(ol),
+:where(menu) {
   list-style-position: outside;
   padding-left: 2em;
   margin-bottom: 1rem;
 }
 
-ul,
-menu {
+:where(ul),
+:where(menu) {
   list-style-type: disc;
 }
 
-ol {
+:where(ol) {
   list-style-type: decimal;
+}
+
+/* 首页/归档/分类/标签等列表：main 下 ul 无符号、无缩进（Card 列表、归档、分类列表） */
+main > ul,
+main > section > ul {
+  list-style: none;
+  padding-left: 0;
 }
 
 li {
   margin-bottom: 0.5rem;
-}
-
-/* 首页/文章列表等用 Card 的 <ul> 不显示符号 */
-main > ul:has(> li.mb-4) {
-  list-style: none;
-  padding-left: 0;
-}
-
-/* 归档页列表无缩进 */
-.archives-year ul {
-  padding-left: 0;
-}
-
-/* 分类页列表无符号、无缩进 */
-.categories-list,
-.category-posts-list {
-  list-style: none;
-  padding-left: 0;
 }
 
 /* Tables */
@@ -306,27 +247,6 @@ th {
 
 td {
   color: var(--text-primary);
-}
-
-/* Skip link for accessibility */
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--accent);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0 0 8px 8px;
-  z-index: 1000;
-  font-weight: 500;
-  text-decoration: none;
-  transition: top 0.2s ease;
-}
-
-.skip-link:focus {
-  top: 0;
-  outline: none;
 }
 
 /* Focus styles for accessibility */
@@ -419,72 +339,3 @@ mark {
   }
 }
 
-@media (min-width: 1300px) {
-  /* TOC 在 site-frame 外，固定于视口右侧；背景稍深一点更明显，无边框 */
-  #sidebar {
-    position: fixed;
-    top: 10rem;
-    right: 4.5rem;
-    background-color: color-mix(
-      in srgb,
-      var(--text-primary) 2%,
-      var(--background)
-    );
-    border: none;
-    box-shadow: none;
-    @apply z-40 m-0 max-h-[calc(100vh-8rem)] w-40 translate-x-0 rounded-lg p-4;
-  }
-
-  @media (min-width: 1280px) {
-    #sidebar {
-      @apply w-56;
-    }
-  }
-
-  /* tocbot 旧版样式（适当留白，不紧凑） */
-  /* 仅顶级列表留白，避免内层列表被影响 */
-  .toc > .toc-list {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-  /* h2 条目：只用 margin-bottom 控制间隔，有无子节点都一致（避免 margin 折叠） */
-  .toc > .toc-list > .toc-list-item {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-  }
-  .toc > .toc-list > .toc-list-item:last-child {
-    margin-bottom: 0;
-  }
-  /* 有子节点时：内层列表与 h2 链接的间距、且不增加底部空隙 */
-  .toc > .toc-list > .toc-list-item > .toc-list {
-    margin-top: 0.25rem;
-    margin-bottom: 0;
-    padding-left: 0.75rem;
-  }
-  .toc-list-item {
-    @apply truncate overflow-hidden whitespace-nowrap;
-    color: var(--text-primary);
-  }
-  .toc-list .toc-list .toc-list-item {
-    @apply my-1;
-  }
-  .toc-link {
-    font-size: 0.875rem;
-    color: var(--text-primary);
-    @apply block py-1;
-    line-height: 1.5;
-  }
-  .toc-link.is-active-link {
-    color: var(--accent);
-  }
-  .toc-link::before {
-    @apply !hidden;
-    content: "";
-  }
-
-  @media (max-width: 1023px) {
-    .toc-list-item {
-      @apply my-4;
-    }
-  }
-}
