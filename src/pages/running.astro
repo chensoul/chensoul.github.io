@@ -966,7 +966,9 @@ const hrZoneColors: Record<number, string> = {
 </script>
 
 <style is:global>
-  /* 主题变量由 Layout 引入的 global.css → base.css → theme.css 提供，此处不再重复引入 */
+  /* 显式引入主题变量，避免生产环境该页面样式拆分/缓存异常导致变量缺失 */
+  @import "../styles/theme.css";
+
   .running-page {
     max-width: 100%;
     margin: 0 auto;
