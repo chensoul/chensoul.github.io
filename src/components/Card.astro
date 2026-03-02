@@ -82,8 +82,7 @@ const buildCoverSrc = (): string | undefined => {
     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
 
     if (import.meta.env.DEV) {
-      const requestOrigin = Astro.url.origin.replace(/\/$/, "");
-      return requestOrigin ? `${requestOrigin}${normalizedSrc}` : normalizedSrc;
+      return normalizedSrc;
     }
 
     const imagesBase = (SITE.imageConfig.imagesUrl ?? "")
@@ -127,7 +126,7 @@ const coverSrc = buildCoverSrc();
             }
             fetchpriority={priority ? "high" : undefined}
             decoding="async"
-            class="h-[50px] w-[50px] shrink-0 rounded-md object-cover"
+            class="h-[40px] w-[40px] shrink-0 rounded-md object-cover"
           />
         )
       }
