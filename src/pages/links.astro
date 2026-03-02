@@ -48,5 +48,7 @@ const htmlContent = md.render(content);
 ---
 
 <Layout title={`链接 | ${SITE.title}`} description={frontmatter.description}>
-  <Fragment set:html={htmlContent} />
+  <div class="page-content">
+    <Fragment set:html={htmlContent} />
+  </div>
 </Layout>

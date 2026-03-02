@@ -24,6 +24,7 @@ title: "链接"
 - [游钓四方](https://blog.lhasa.icu/)
 - [拾月](https://www.skyue.com/) PC互联网遗民
 - [Yiran's Blog](https://zdyxry.github.io/)
+- [Verne in GitHub](https://blog.einverne.info/)
 
 
 ## 工具

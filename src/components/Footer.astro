@@ -45,8 +45,31 @@ const hasSocial = showSocial && socialLinks.length > 0;
     }
     <div class="footer-bottom">
       <span class="copyright">
-        &#169; {currentYear}
-        {SITE.author}. All rights reserved.
+        &#169; {currentYear} {SITE.author}. All rights reserved. Hosted on{" "}
+        <a
+          href="https://github.com/chensoul/chensoul.github.io"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>{" "}
+        &{" "}
+        <a
+          href="https://app.cloudcone.com/?ref=10783"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CloudCone
+        </a>
+        . Join{" "}
+        <a
+          href="https://t.me/ichensoul"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Telegram Channel
+        </a>
+        .
       </span>
       {
         SITE.customFooterLink.enabled && (
@@ -88,7 +111,7 @@ const hasSocial = showSocial && socialLinks.length > 0;
   .footer {
     background: var(--background);
     border-top: 1px solid var(--border);
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
   }
 
   .footer-content {
@@ -142,7 +165,7 @@ const hasSocial = showSocial && socialLinks.length > 0;
   }
 
   .footer-bottom a {
-    color: var(--text-secondary);
+    color: var(--accent);
     text-decoration: none;
   }
 
