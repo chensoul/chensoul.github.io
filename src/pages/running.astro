@@ -1521,8 +1521,9 @@ const hrZoneColors: Record<number, string> = {
     background: transparent;
   }
 
-  :root,
-  [data-theme="light"] {
+  /* 仅用 :global(html...) 避免 scoped 下 :root 变成组件根导致暗色被覆盖 */
+  :global(html:not([data-theme="dark"])),
+  :global([data-theme="light"]) {
     --cal-intensity-0: var(--border);
     --cal-intensity-1: #bfdbfe;
     --cal-intensity-2: #93c5fd;
