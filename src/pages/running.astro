@@ -966,10 +966,13 @@ const hrZoneColors: Record<number, string> = {
 </script>
 
 <style>
+  /* 显式使用主题变量，避免暗色下继承或 scoped 导致整页仍为浅色 */
   .running-page {
     max-width: 100%;
     margin: 0 auto;
     overflow-x: hidden;
+    background: var(--background);
+    color: var(--text-primary);
   }
 
   .run-list-empty {
@@ -996,20 +999,6 @@ const hrZoneColors: Record<number, string> = {
     font-size: 0.875rem;
     flex-shrink: 0;
     line-height: 1.35;
-  }
-
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-    font-weight: 600;
-    text-wrap: balance;
-  }
-
-  .subtitle {
-    color: var(--text-primary);
-    margin: 0;
-    font-size: 1rem;
   }
 
   /* 周期统计卡片 - Tab 样式 */
@@ -1172,72 +1161,6 @@ const hrZoneColors: Record<number, string> = {
     }
   }
 
-  /* 统计概览卡片 */
-  .stats-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0;
-  }
-
-  .stat-card {
-    background: var(--background-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    transition: all 0.2s ease;
-  }
-
-  .stat-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .stat-card.vdot-card {
-    background: linear-gradient(
-      135deg,
-      var(--background-secondary) 0%,
-      rgba(139, 92, 246, 0.1) 100%
-    );
-    border-color: rgba(139, 92, 246, 0.3);
-  }
-
-  .stat-card.load-card {
-    background: linear-gradient(
-      135deg,
-      var(--background-secondary) 0%,
-      rgba(59, 130, 246, 0.1) 100%
-    );
-    border-color: rgba(59, 130, 246, 0.3);
-  }
-
-  .stat-icon {
-    font-size: 1.5rem;
-    line-height: 1;
-  }
-
-  .stat-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  .stat-number {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.2;
-  }
-
-  .stat-desc {
-    font-size: 0.75rem;
-    color: var(--text-primary);
-  }
-
   /* 心率区间标签 */
   :global(.hr-zone-badge) {
     display: inline-flex;
@@ -1372,7 +1295,6 @@ const hrZoneColors: Record<number, string> = {
     gap: 0.375rem;
   }
 
-  :global(.workout-name),
   :global(.run-route) {
     color: var(--accent);
     font-weight: 500;
@@ -1468,7 +1390,7 @@ const hrZoneColors: Record<number, string> = {
     aspect-ratio: 1;
     width: 100%;
     border-radius: 2px;
-    background: var(--cal-intensity-0);
+    background: var(--border);
     transition: transform 0.1s ease;
     position: relative;
   }
@@ -1521,40 +1443,21 @@ const hrZoneColors: Record<number, string> = {
     background: transparent;
   }
 
-  /* 仅用 :global(html...) 避免 scoped 下 :root 变成组件根导致暗色被覆盖 */
-  :global(html:not([data-theme="dark"])),
-  :global([data-theme="light"]) {
-    --cal-intensity-0: var(--border);
-    --cal-intensity-1: #bfdbfe;
-    --cal-intensity-2: #93c5fd;
-    --cal-intensity-3: #60a5fa;
-    --cal-intensity-4: #3b82f6;
-    --cal-intensity-5: #1d4ed8;
-  }
-
-  :global([data-theme="dark"]) {
-    --cal-intensity-0: var(--background-secondary);
-    --cal-intensity-1: #1e3a5f;
-    --cal-intensity-2: #1e40af;
-    --cal-intensity-3: #2563eb;
-    --cal-intensity-4: #3b82f6;
-    --cal-intensity-5: #60a5fa;
-  }
-
+  /* 日历热力：一套样式适配两种主题，用 accent 与 background-secondary 混合，无需按主题分别设色 */
   .day.intensity-1 {
-    background: var(--cal-intensity-1);
+    background: color-mix(in srgb, var(--accent) 20%, var(--background-secondary));
   }
   .day.intensity-2 {
-    background: var(--cal-intensity-2);
+    background: color-mix(in srgb, var(--accent) 40%, var(--background-secondary));
   }
   .day.intensity-3 {
-    background: var(--cal-intensity-3);
+    background: color-mix(in srgb, var(--accent) 60%, var(--background-secondary));
   }
   .day.intensity-4 {
-    background: var(--cal-intensity-4);
+    background: color-mix(in srgb, var(--accent) 80%, var(--background-secondary));
   }
   .day.intensity-5 {
-    background: var(--cal-intensity-5);
+    background: var(--accent);
   }
 
   /* 详情弹窗样式 - 使用 :global 因为内容是动态插入的 */
@@ -1823,8 +1726,7 @@ const hrZoneColors: Record<number, string> = {
     font-variant-numeric: tabular-nums;
   }
 
-  :global(.hr-zone-tag),
-  :global(.pace-tag) {
+  :global(.hr-zone-tag) {
     display: inline-block;
     font-size: 0.75rem;
     padding: 0.125rem 0.375rem;
@@ -1832,54 +1734,32 @@ const hrZoneColors: Record<number, string> = {
     font-weight: 500;
   }
 
-  :global(.hr-zone-tag.zone-1),
-  :global(.pace-tag.zone-1) {
+  :global(.hr-zone-tag.zone-1) {
     background: #4ade8020;
     color: #4ade80;
   }
 
-  :global(.hr-zone-tag.zone-2),
-  :global(.pace-tag.zone-2) {
+  :global(.hr-zone-tag.zone-2) {
     background: #60a5fa20;
     color: #60a5fa;
   }
 
-  :global(.hr-zone-tag.zone-3),
-  :global(.pace-tag.zone-3) {
+  :global(.hr-zone-tag.zone-3) {
     background: #fbbf2420;
     color: #fbbf24;
   }
 
-  :global(.hr-zone-tag.zone-4),
-  :global(.pace-tag.zone-4) {
+  :global(.hr-zone-tag.zone-4) {
     background: #fb923c20;
     color: #fb923c;
   }
 
-  :global(.hr-zone-tag.zone-5),
-  :global(.pace-tag.zone-5) {
+  :global(.hr-zone-tag.zone-5) {
     background: #f8717120;
     color: #f87171;
   }
 
   @media (max-width: 768px) {
-    h1 {
-      font-size: 1.75rem;
-    }
-
-    .stats-overview {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-    }
-
-    .stat-card {
-      padding: 0.75rem;
-    }
-
-    .stat-number {
-      font-size: 1.1rem;
-    }
-
     :global(.run-card) {
       flex-direction: column;
       align-items: flex-start;
@@ -1939,10 +1819,6 @@ const hrZoneColors: Record<number, string> = {
   }
 
   @media (max-width: 480px) {
-    .stats-overview {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     :global(.run-stats) {
       gap: 0.25rem 0.5rem;
     }
