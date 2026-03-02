@@ -191,27 +191,51 @@ const structuredData = {
       (function () {
         const html = document.documentElement;
 
+        function readStoredTheme() {
+          try {
+            return localStorage.getItem("theme");
+          } catch {
+            return null;
+          }
+        }
+
         function getTheme() {
           if (!lightAndDarkMode) return "light";
-          return localStorage.getItem("theme") || "light";
+
+          const storedTheme = readStoredTheme();
+          if (storedTheme === "light" || storedTheme === "dark") {
+            return storedTheme;
+          }
+
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ) {
+            return "dark";
+          }
+
+          return "light";
         }
 
         function setTheme(theme) {
-          html.setAttribute("data-theme", theme);
-          if (lightAndDarkMode) localStorage.setItem("theme", theme);
+          const nextTheme = theme === "dark" ? "dark" : "light";
+          html.setAttribute("data-theme", nextTheme);
+          if (lightAndDarkMode) {
+            try {
+              localStorage.setItem("theme", nextTheme);
+            } catch {}
+          }
+          return nextTheme;
         }
 
-        const initialTheme = getTheme();
-        html.setAttribute("data-theme", initialTheme);
+        const initialTheme = setTheme(getTheme());
 
         window.__theme = {
           getTheme,
           setTheme,
           toggleTheme() {
-            const currentTheme = html.getAttribute("data-theme") || "light";
-            const nextTheme = currentTheme === "light" ? "dark" : "light";
-            setTheme(nextTheme);
-            return nextTheme;
+            const currentTheme = html.getAttribute("data-theme") || initialTheme;
+            return setTheme(currentTheme === "light" ? "dark" : "light");
           },
         };
       })();

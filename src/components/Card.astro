@@ -78,15 +78,32 @@ const linkProps = {
  * @returns 用于 <img src> 的完整或相对 URL
  */
 const buildCoverSrc = (): string | undefined => {
-  let src = typeof image === "string" ? image.trim() : "";
-  if (!src) {
-    const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
-    const filename = firstCategory || "blank";
-    src = `/thumbs/${filename}.svg`;
+  const resolveLocalSrc = (src: string): string => {
+    const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+
+    if (import.meta.env.DEV) {
+      const requestOrigin = Astro.url.origin.replace(/\/$/, "");
+      return requestOrigin ? `${requestOrigin}${normalizedSrc}` : normalizedSrc;
+    }
+
+    const imagesBase = (SITE.imageConfig.imagesUrl ?? "")
+      .trim()
+      .replace(/\/$/, "");
+    return imagesBase ? `${imagesBase}${normalizedSrc}` : normalizedSrc;
+  };
+
+  const rawImage = typeof image === "string" ? image.trim() : "";
+
+  if (rawImage) {
+    if (rawImage.startsWith("http://") || rawImage.startsWith("https://")) {
+      return rawImage;
+    }
+    return resolveLocalSrc(rawImage);
   }
-  if (src.startsWith("http://") || src.startsWith("https://")) return src;
-  const base = (SITE.imageConfig.imagesUrl ?? "").trim();
-  return base ? `${base}${src}` : src;
+
+  const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
+  const filename = firstCategory || "blank";
+  return resolveLocalSrc(`/thumbs/${filename}.svg`);
 };
 
 const coverSrc = buildCoverSrc();
