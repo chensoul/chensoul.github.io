@@ -188,10 +188,32 @@ const structuredData = {
 
     <!-- Theme initialization script to prevent flash；切换禁用时固定浅色 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
-      (function() {
-        let theme = 'light';
-        if (lightAndDarkMode) theme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', theme);
+      (function () {
+        const html = document.documentElement;
+
+        function getTheme() {
+          if (!lightAndDarkMode) return "light";
+          return localStorage.getItem("theme") || "light";
+        }
+
+        function setTheme(theme) {
+          html.setAttribute("data-theme", theme);
+          if (lightAndDarkMode) localStorage.setItem("theme", theme);
+        }
+
+        const initialTheme = getTheme();
+        html.setAttribute("data-theme", initialTheme);
+
+        window.__theme = {
+          getTheme,
+          setTheme,
+          toggleTheme() {
+            const currentTheme = html.getAttribute("data-theme") || "light";
+            const nextTheme = currentTheme === "light" ? "dark" : "light";
+            setTheme(nextTheme);
+            return nextTheme;
+          },
+        };
       })();
     </script>
 
