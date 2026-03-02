@@ -167,6 +167,7 @@ for (let m = 0; m < 12; m++) {
 
 // 统计数据
 const stats = data.stats;
+const statisticsTime = stats?.statistics_time;
 
 // 周期统计数据
 const periodStats = stats.period_stats || {};
@@ -201,7 +202,12 @@ const hrZoneColors: Record<number, string> = {
 <Layout title={`跑步 | ${SITE.title}`}>
   <div class="running-page">
     <article>
-      <h2>跑步统计</h2>
+      <div class="article-header">
+        <h2>跑步统计</h2>
+        {statisticsTime && (
+          <span class="statistics-time">数据更新时间：{statisticsTime}</span>
+        )}
+      </div>
       {
         !data || !data.stats ? (
           <p>暂无数据。</p>
@@ -333,6 +339,10 @@ const hrZoneColors: Record<number, string> = {
             </div>
 
             <h2>最近活动</h2>
+            {data.runs.length === 0 ? (
+              <p class="run-list-empty">暂无跑步记录</p>
+            ) : (
+              <>
             <div
               class="run-list"
               id="runList"
@@ -357,11 +367,14 @@ const hrZoneColors: Record<number, string> = {
                           {hrZoneLabels[run.hr_zone]}
                         </span>
                       )}
+                      {run.weather && (
+                        <span class="run-weather" title="天气">{run.weather}</span>
+                      )}
                     </div>
                     <span class="run-type">
                       {run.activity_type || "室外跑步"}
-                      {run.workout_name && (
-                        <span class="workout-name"> · {run.workout_name}</span>
+                      {run.route && (
+                        <span class="run-route"> · {run.route}</span>
                       )}
                     </span>
                   </div>
@@ -411,6 +424,8 @@ const hrZoneColors: Record<number, string> = {
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
+            )}
+              </>
             )}
           </div>
         )
@@ -499,7 +514,7 @@ const hrZoneColors: Record<number, string> = {
 
   // 心率区间标签与颜色（数字 key，与 zdyxry 一致，便于 run.hr_zone 等数字索引）
   const hrZoneLabels = {
-    0: "未知",
+    0: "",
     1: "Z1 恢复",
     2: "Z2 有氧",
     3: "Z3 节奏",
@@ -571,7 +586,7 @@ const hrZoneColors: Record<number, string> = {
               </div>
               <span class="run-type">
                 ${run.activity_type || "室外跑步"}
-                ${run.workout_name ? `<span class="workout-name"> · ${run.workout_name}</span>` : ""}
+                ${run.route ? `<span class="run-route"> · ${run.route}</span>` : ""}
               </span>
             </div>
             <div class="run-stats">
@@ -859,7 +874,7 @@ const hrZoneColors: Record<number, string> = {
                 <span>${seg.pace}</span>
               </div>
             </td>
-            <td>${seg.gap || seg.pace}</td>
+            <td>${seg.cadence ? seg.cadence : "-"}</td>
             <td>
               <span class="hr-zone-tag ${zoneClass}">${seg.heart_rate || "-"} ${zoneLabel}</span>
             </td>
@@ -877,7 +892,7 @@ const hrZoneColors: Record<number, string> = {
                 <tr>
                   <th>公里</th>
                   <th>配速</th>
-                  <th>GAP</th>
+                  <th>步频</th>
                   <th>心率</th>
                 </tr>
               </thead>
@@ -890,6 +905,11 @@ const hrZoneColors: Record<number, string> = {
       `;
     }
 
+    const detailMetaExtras = [
+      run.route ? `<span class="detail-route" title="路线">${run.route}</span>` : "",
+      run.weather ? `<span class="detail-weather" title="天气">${run.weather}</span>` : "",
+    ].filter(Boolean).join("");
+
     modalBody.innerHTML = `
       <div class="detail-header">
         <h3 class="detail-title">${run.workout_name || "跑步"}</h3>
@@ -897,6 +917,7 @@ const hrZoneColors: Record<number, string> = {
           <span class="detail-date">${run.date}</span>
           ${hrZoneBadge}
           <span class="detail-type">${run.activity_type || "室外跑步"}</span>
+          ${detailMetaExtras ? `<span class="detail-meta-sep" aria-hidden="true">·</span>${detailMetaExtras}` : ""}
         </div>
       </div>
 
@@ -960,6 +981,32 @@ const hrZoneColors: Record<number, string> = {
     max-width: 100%;
     margin: 0 auto;
     overflow-x: hidden;
+  }
+
+  .run-list-empty {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0;
+    font-size: 0.9375rem;
+  }
+
+  .article-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
+  }
+
+  .article-header h2 {
+    margin-bottom: 0;
+  }
+
+  .statistics-time {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    line-height: 1.35;
   }
 
   h1 {
@@ -1322,6 +1369,12 @@ const hrZoneColors: Record<number, string> = {
     font-variant-numeric: tabular-nums;
   }
 
+  :global(.run-weather) {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
   :global(.run-type) {
     font-size: 0.8125rem;
     color: var(--text-secondary);
@@ -1330,7 +1383,8 @@ const hrZoneColors: Record<number, string> = {
     gap: 0.375rem;
   }
 
-  :global(.workout-name) {
+  :global(.workout-name),
+  :global(.run-route) {
     color: var(--accent);
     font-weight: 500;
   }
@@ -1626,6 +1680,17 @@ const hrZoneColors: Record<number, string> = {
     border: 1px solid var(--border);
     border-radius: 4px;
     color: var(--text-primary);
+  }
+
+  :global(.detail-meta-sep) {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  :global(.detail-route),
+  :global(.detail-weather) {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
   }
 
   :global(.detail-hr-zone) {
