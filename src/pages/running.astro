@@ -167,7 +167,12 @@ for (let m = 0; m < 12; m++) {
 
 // 统计数据
 const stats = data.stats;
-const statisticsTime = stats?.statistics_time;
+const rawTime =
+  stats != null &&
+  typeof (stats as unknown as Record<string, unknown>)["statistics_time"] === "string"
+    ? String((stats as unknown as Record<string, unknown>)["statistics_time"]).trim()
+    : "";
+const statisticsTime = rawTime || undefined;
 
 // 周期统计数据
 const periodStats = stats.period_stats || {};
