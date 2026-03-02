@@ -169,8 +169,11 @@ for (let m = 0; m < 12; m++) {
 const stats = data.stats;
 const rawTime =
   stats != null &&
-  typeof (stats as unknown as Record<string, unknown>)["statistics_time"] === "string"
-    ? String((stats as unknown as Record<string, unknown>)["statistics_time"]).trim()
+  typeof (stats as unknown as Record<string, unknown>)["statistics_time"] ===
+    "string"
+    ? String(
+        (stats as unknown as Record<string, unknown>)["statistics_time"]
+      ).trim()
     : "";
 const statisticsTime = rawTime || undefined;
 
