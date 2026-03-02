@@ -2,8 +2,7 @@ name: Sync running data
 
 on:
   schedule:
-    # 每小時整點執行
-    - cron: "0 0/4 * * *"
+    - cron: "0 0,2,4,6,8,10,12,14 * * *"
   workflow_dispatch: # 支援手動觸發
 
 jobs:
