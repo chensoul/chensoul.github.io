@@ -20,39 +20,7 @@
   line-gap-override: 0%;
 }
 /* Global Styles - Clean & Minimal */
-
-/* Light theme (default) */
-:root,
-[data-theme="light"] {
-  --accent: #2563eb;
-  --accent-dark: #1d4ed8;
-  --black: 15, 23, 42;
-  --gray: 100, 116, 139;
-  --gray-light: 241, 245, 249;
-  --gray-dark: 71, 85, 105;
-  --background: #ffffff;
-  --background-secondary: #f8fafc;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --border: #e2e8f0;
-  --color-foreground: #0f172a;
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-  --accent: #60a5fa;
-  --accent-dark: #3b82f6;
-  --black: 248, 250, 252;
-  --gray: 148, 163, 184;
-  --gray-light: 30, 41, 59;
-  --gray-dark: 203, 213, 225;
-  --background: #0f172a;
-  --background-secondary: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border: #334155;
-  --color-foreground: #f8fafc;
-}
+@import "./theme.css";
 
 * {
   box-sizing: border-box;
