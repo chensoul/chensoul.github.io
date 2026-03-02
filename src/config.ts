@@ -80,7 +80,7 @@ export const SITE = {
    * 生产构建（astro build）时：true 则生成 /og/.../slug.png 并输出 og:image meta
    * 开发环境（astro dev）时：不生成 OG 图、不输出 og:image
    */
-  ogImage: false,
+  ogImage: true,
 
   /**
    * HTML 页面的 lang 属性值
