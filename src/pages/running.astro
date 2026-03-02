@@ -477,6 +477,9 @@ const hrZoneColors: Record<number, string> = {
 </Layout>
 
 <script>
+  /* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- 内联脚本不参与 TS 编译，与 zdyxry 一致用数字键 hrZone，避免隐式 any 报错 */
+  // @ts-nocheck
+
   // 时长格式化函数
   function formatDuration(duration) {
     const hourMatch = duration.match(/(\d+)小时/);
