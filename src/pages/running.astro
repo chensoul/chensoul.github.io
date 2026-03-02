@@ -204,9 +204,11 @@ const hrZoneColors: Record<number, string> = {
     <article>
       <div class="article-header">
         <h2>跑步统计</h2>
-        {statisticsTime && (
-          <span class="statistics-time">数据更新时间：{statisticsTime}</span>
-        )}
+        {
+          statisticsTime && (
+            <span class="statistics-time">数据更新时间：{statisticsTime}</span>
+          )
+        }
       </div>
       {
         !data || !data.stats ? (
@@ -343,88 +345,92 @@ const hrZoneColors: Record<number, string> = {
               <p class="run-list-empty">暂无跑步记录</p>
             ) : (
               <>
-            <div
-              class="run-list"
-              id="runList"
-              data-all-runs={JSON.stringify(allRuns)}
-              data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
-              data-hr-zone-colors={JSON.stringify(hrZoneColors)}
-            >
-              {recentRuns.map((run, index) => (
                 <div
-                  class="run-card"
-                  data-run-index={index}
-                  data-run={JSON.stringify(run)}
+                  class="run-list"
+                  id="runList"
+                  data-all-runs={JSON.stringify(allRuns)}
+                  data-hr-zone-labels={JSON.stringify(hrZoneLabels)}
+                  data-hr-zone-colors={JSON.stringify(hrZoneColors)}
                 >
-                  <div class="run-main">
-                    <div class="run-header">
-                      <time class="run-date">{run.date.split(" ")[0]}</time>
-                      {run.hr_zone > 0 && (
-                        <span
-                          class="hr-zone-badge"
-                          style={`background-color: ${hrZoneColors[run.hr_zone]}20; color: ${hrZoneColors[run.hr_zone]}; border: 1px solid ${hrZoneColors[run.hr_zone]}40;`}
-                        >
-                          {hrZoneLabels[run.hr_zone]}
+                  {recentRuns.map((run, index) => (
+                    <div
+                      class="run-card"
+                      data-run-index={index}
+                      data-run={JSON.stringify(run)}
+                    >
+                      <div class="run-main">
+                        <div class="run-header">
+                          <time class="run-date">{run.date.split(" ")[0]}</time>
+                          {run.hr_zone > 0 && (
+                            <span
+                              class="hr-zone-badge"
+                              style={`background-color: ${hrZoneColors[run.hr_zone]}20; color: ${hrZoneColors[run.hr_zone]}; border: 1px solid ${hrZoneColors[run.hr_zone]}40;`}
+                            >
+                              {hrZoneLabels[run.hr_zone]}
+                            </span>
+                          )}
+                          {run.weather && (
+                            <span class="run-weather" title="天气">
+                              {run.weather}
+                            </span>
+                          )}
+                        </div>
+                        <span class="run-type">
+                          {run.activity_type || "室外跑步"}
+                          {run.route && (
+                            <span class="run-route"> · {run.route}</span>
+                          )}
                         </span>
-                      )}
-                      {run.weather && (
-                        <span class="run-weather" title="天气">{run.weather}</span>
-                      )}
-                    </div>
-                    <span class="run-type">
-                      {run.activity_type || "室外跑步"}
-                      {run.route && (
-                        <span class="run-route"> · {run.route}</span>
-                      )}
-                    </span>
-                  </div>
-                  <div class="run-stats">
-                    <div class="stat">
-                      <span class="stat-value">{run.distance.toFixed(1)}</span>
-                      <span class="stat-label">km</span>
-                    </div>
-                    <div class="stat">
-                      <span class="stat-value">
-                        {formatDuration(run.duration)}
-                      </span>
-                      <span class="stat-label">时长</span>
-                    </div>
-                    <div class="stat">
-                      <span class="stat-value">{run.pace}</span>
-                      <span class="stat-label">配速</span>
-                    </div>
-                    <div class="stat vdot-stat">
-                      <span class="stat-value">{run.vdot ?? "-"}</span>
-                      <span class="stat-label">VDOT</span>
-                    </div>
-                    {run.training_load > 0 && (
-                      <div class="stat load-stat">
-                        <span class="stat-value">{run.training_load}</span>
-                        <span class="stat-label">负荷</span>
                       </div>
-                    )}
-                  </div>
+                      <div class="run-stats">
+                        <div class="stat">
+                          <span class="stat-value">
+                            {run.distance.toFixed(1)}
+                          </span>
+                          <span class="stat-label">km</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-value">
+                            {formatDuration(run.duration)}
+                          </span>
+                          <span class="stat-label">时长</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-value">{run.pace}</span>
+                          <span class="stat-label">配速</span>
+                        </div>
+                        <div class="stat vdot-stat">
+                          <span class="stat-value">{run.vdot ?? "-"}</span>
+                          <span class="stat-label">VDOT</span>
+                        </div>
+                        {run.training_load > 0 && (
+                          <div class="stat load-stat">
+                            <span class="stat-value">{run.training_load}</span>
+                            <span class="stat-label">负荷</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {hasMoreRuns && (
-              <button class="load-more-btn" id="loadMoreBtn">
-                <span>更多</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-            )}
+                {hasMoreRuns && (
+                  <button class="load-more-btn" id="loadMoreBtn">
+                    <span>更多</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -906,9 +912,15 @@ const hrZoneColors: Record<number, string> = {
     }
 
     const detailMetaExtras = [
-      run.route ? `<span class="detail-route" title="路线">${run.route}</span>` : "",
-      run.weather ? `<span class="detail-weather" title="天气">${run.weather}</span>` : "",
-    ].filter(Boolean).join("");
+      run.route
+        ? `<span class="detail-route" title="路线">${run.route}</span>`
+        : "",
+      run.weather
+        ? `<span class="detail-weather" title="天气">${run.weather}</span>`
+        : "",
+    ]
+      .filter(Boolean)
+      .join("");
 
     modalBody.innerHTML = `
       <div class="detail-header">

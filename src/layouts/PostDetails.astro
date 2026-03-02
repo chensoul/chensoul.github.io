@@ -170,7 +170,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
           <IconChevronLeft class="inline-block flex-none" />
           <div>
-            <div class="text-sm text-[var(--accent)] opacity-85">{prevPost.title}</div>
+            <div class="text-sm text-[var(--accent)] opacity-85">
+              {prevPost.title}
+            </div>
           </div>
         </a>
       )
@@ -183,7 +185,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
         >
           <div>
-            <div class="text-sm text-[var(--accent)] opacity-85">{nextPost.title}</div>
+            <div class="text-sm text-[var(--accent)] opacity-85">
+              {nextPost.title}
+            </div>
           </div>
           <IconChevronRight class="inline-block flex-none" />
         </a>
@@ -223,7 +227,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       box-shadow: none;
       border-radius: 0.5rem;
       padding: 1rem;
-      background-color: color-mix(in srgb, var(--text-primary) 2%, var(--background));
+      background-color: color-mix(
+        in srgb,
+        var(--text-primary) 2%,
+        var(--background)
+      );
     }
     @media (min-width: 1280px) {
       #sidebar {
