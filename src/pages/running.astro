@@ -6,9 +6,12 @@ import { SITE } from "@/config";
 import runningJson from "../data/running.json";
 
 const data = runningJson;
-const recentRuns = data.runs.slice(0, 10);
-const allRuns = data.runs;
-const hasMoreRuns = data.runs.length > 10;
+const allRuns = data.runs.map(run => ({
+  ...run,
+  durationShort: formatDuration(run.duration),
+}));
+const recentRuns = allRuns.slice(0, 10);
+const hasMoreRuns = allRuns.length > 10;
 
 // 转换时长格式："1小时16分钟" -> "1h16m", "41分钟" -> "41m"
 function formatDuration(duration: string): string {
@@ -399,7 +402,7 @@ const hrZoneColors: Record<number, string> = {
                         </div>
                         <div class="stat">
                           <span class="stat-value">
-                            {formatDuration(run.duration)}
+                            {run.durationShort}
                           </span>
                           <span class="stat-label">时长</span>
                         </div>
@@ -480,43 +483,14 @@ const hrZoneColors: Record<number, string> = {
   /* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- 内联脚本不参与 TS 编译，与 zdyxry 一致用数字键 hrZone，避免隐式 any 报错 */
   // @ts-nocheck
 
-  // 时长格式化函数
-  function formatDuration(duration) {
-    const hourMatch = duration.match(/(\d+)小时/);
-    const minMatch = duration.match(/(\d+)分钟/);
-    const hours = hourMatch ? parseInt(hourMatch[1]) : 0;
-    const mins = minMatch ? parseInt(minMatch[1]) : 0;
-
-    if (hours > 0 && mins > 0) {
-      return `${hours}h${mins}m`;
-    } else if (hours > 0) {
-      return `${hours}h`;
-    } else {
-      return `${mins}m`;
-    }
-  }
-
-  // 心率区间标签与颜色（数字 key，与 zdyxry 一致，便于 run.hr_zone 等数字索引）
-  const hrZoneLabels = {
-    0: "",
-    1: "Z1 恢复",
-    2: "Z2 有氧",
-    3: "Z3 节奏",
-    4: "Z4 阈值",
-    5: "Z5 最大",
-  };
-  const hrZoneColors = {
-    0: "var(--text-secondary)",
-    1: "#4ade80",
-    2: "#60a5fa",
-    3: "#fbbf24",
-    4: "#fb923c",
-    5: "#f87171",
-  };
-
-  // 查看更多功能
   const loadMoreBtn = document.getElementById("loadMoreBtn");
   const runList = document.getElementById("runList");
+  const hrZoneLabels = runList
+    ? JSON.parse(runList.getAttribute("data-hr-zone-labels") || "{}")
+    : {};
+  const hrZoneColors = runList
+    ? JSON.parse(runList.getAttribute("data-hr-zone-colors") || "{}")
+    : {};
 
   if (loadMoreBtn && runList) {
     const allRuns = JSON.parse(runList.getAttribute("data-all-runs") || "[]");
@@ -579,7 +553,7 @@ const hrZoneColors: Record<number, string> = {
                 <span class="stat-label">km</span>
               </div>
               <div class="stat">
-                <span class="stat-value">${formatDuration(run.duration)}</span>
+                <span class="stat-value">${run.durationShort}</span>
                 <span class="stat-label">时长</span>
               </div>
               <div class="stat">
@@ -617,6 +591,31 @@ const hrZoneColors: Record<number, string> = {
         // 滚动回列表顶部
         runList.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+    });
+  }
+
+  const periodTabNav = document.getElementById("periodTabNav");
+  if (periodTabNav) {
+    periodTabNav.addEventListener("click", e => {
+      const target =
+        e.target && typeof e.target.closest === "function"
+          ? e.target.closest(".period-tab-btn")
+          : null;
+      if (!target) return;
+
+      const period = target.getAttribute("data-period");
+      if (!period) return;
+
+      const tabButtons = periodTabNav.querySelectorAll(".period-tab-btn");
+      tabButtons.forEach(btn => {
+        btn.classList.toggle("active", btn === target);
+      });
+
+      const periodPanels = document.querySelectorAll(".period-panel");
+      periodPanels.forEach(panel => {
+        const panelPeriod = panel.getAttribute("data-panel");
+        panel.classList.toggle("active", panelPeriod === period);
+      });
     });
   }
 
@@ -667,13 +666,13 @@ const hrZoneColors: Record<number, string> = {
     detailStats.push({
       icon: icons.duration,
       label: "移动时间",
-      value: formatDuration(run.duration),
+      value: run.durationShort,
     });
 
     detailStats.push({
       icon: icons.duration,
       label: "总时间",
-      value: formatDuration(run.duration),
+      value: run.durationShort,
     });
 
     detailStats.push({
