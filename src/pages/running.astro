@@ -1443,6 +1443,27 @@ const hrZoneColors: Record<number, string> = {
     background: transparent;
   }
 
+  /* 跑步页显式在 html 上设置主题变量，避免 scoped/加载顺序导致点击切换后仍为浅色 */
+  :global(html:not([data-theme="dark"])),
+  :global([data-theme="light"]) {
+    --accent: #2563eb;
+    --accent-dark: #1d4ed8;
+    --background: #ffffff;
+    --background-secondary: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+  }
+  :global([data-theme="dark"]) {
+    --accent: #60a5fa;
+    --accent-dark: #3b82f6;
+    --background: #0f172a;
+    --background-secondary: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+
   /* 日历热力：一套样式适配两种主题，用 accent 与 background-secondary 混合，无需按主题分别设色 */
   .day.intensity-1 {
     background: color-mix(in srgb, var(--accent) 20%, var(--background-secondary));
