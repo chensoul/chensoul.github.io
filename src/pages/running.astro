@@ -965,8 +965,8 @@ const hrZoneColors: Record<number, string> = {
   });
 </script>
 
-<style>
-  /* 显式使用主题变量，避免暗色下继承或 scoped 导致整页仍为浅色 */
+<style is:global>
+  /* 跑步页样式不 scoped，主题变量等直接作用到 html，避免暗色不生效 */
   .running-page {
     max-width: 100%;
     margin: 0 auto;
@@ -1162,7 +1162,7 @@ const hrZoneColors: Record<number, string> = {
   }
 
   /* 心率区间标签 */
-  :global(.hr-zone-badge) {
+  .hr-zone-badge {
     display: inline-flex;
     align-items: center;
     font-size: 0.6875rem;
@@ -1174,12 +1174,12 @@ const hrZoneColors: Record<number, string> = {
   }
 
   /* VDOT 和训练负荷统计样式 */
-  :global(.vdot-stat .stat-value) {
+  .vdot-stat .stat-value {
     color: #8b5cf6;
     font-weight: 700;
   }
 
-  :global(.load-stat .stat-value) {
+  .load-stat .stat-value {
     color: #3b82f6;
     font-weight: 700;
   }
@@ -1224,13 +1224,13 @@ const hrZoneColors: Record<number, string> = {
     }
   }
 
-  :global(.run-list) {
+  .run-list {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  :global(.run-card) {
+  .run-card {
     padding: 1rem 1.25rem;
     background: var(--background);
     border: 1px solid var(--border);
@@ -1246,19 +1246,19 @@ const hrZoneColors: Record<number, string> = {
     -webkit-tap-highlight-color: transparent;
   }
 
-  :global(.run-card:hover),
-  :global(.run-card:focus-visible) {
+  .run-card:hover,
+  .run-card:focus-visible {
     border-color: var(--accent);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transform: translateY(-1px);
   }
 
-  :global(.run-card:hover) :global(.run-date),
-  :global(.run-card:focus-visible) :global(.run-date) {
+  .run-card:hover .run-date,
+  .run-card:focus-visible .run-date {
     color: var(--accent);
   }
 
-  :global(.run-main) {
+  .run-main {
     display: flex;
     flex-direction: column;
     gap: 0.375rem;
@@ -1266,14 +1266,14 @@ const hrZoneColors: Record<number, string> = {
     flex: 1;
   }
 
-  :global(.run-header) {
+  .run-header {
     display: flex;
     align-items: center;
     gap: 0.625rem;
     flex-wrap: wrap;
   }
 
-  :global(.run-date) {
+  .run-date {
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-primary);
@@ -1281,13 +1281,13 @@ const hrZoneColors: Record<number, string> = {
     font-variant-numeric: tabular-nums;
   }
 
-  :global(.run-weather) {
+  .run-weather {
     font-size: 0.75rem;
     color: var(--text-secondary);
     font-variant-numeric: tabular-nums;
   }
 
-  :global(.run-type) {
+  .run-type {
     font-size: 0.8125rem;
     color: var(--text-secondary);
     display: flex;
@@ -1295,12 +1295,12 @@ const hrZoneColors: Record<number, string> = {
     gap: 0.375rem;
   }
 
-  :global(.run-route) {
+  .run-route {
     color: var(--accent);
     font-weight: 500;
   }
 
-  :global(.run-stats) {
+  .run-stats {
     display: flex;
     gap: 0.5rem 1rem;
     flex: 1;
@@ -1308,7 +1308,7 @@ const hrZoneColors: Record<number, string> = {
     justify-content: flex-end;
   }
 
-  :global(.stat) {
+  .stat {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1317,7 +1317,7 @@ const hrZoneColors: Record<number, string> = {
     min-width: 0;
   }
 
-  :global(.stat-value) {
+  .stat-value {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -1326,7 +1326,7 @@ const hrZoneColors: Record<number, string> = {
     line-height: 1.2;
   }
 
-  :global(.stat-label) {
+  .stat-label {
     font-size: 0.6875rem;
     color: var(--text-secondary);
     font-weight: 500;
@@ -1443,27 +1443,6 @@ const hrZoneColors: Record<number, string> = {
     background: transparent;
   }
 
-  /* 跑步页显式在 html 上设置主题变量，避免 scoped/加载顺序导致点击切换后仍为浅色 */
-  :global(html:not([data-theme="dark"])),
-  :global([data-theme="light"]) {
-    --accent: #2563eb;
-    --accent-dark: #1d4ed8;
-    --background: #ffffff;
-    --background-secondary: #f8fafc;
-    --text-primary: #0f172a;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-  }
-  :global([data-theme="dark"]) {
-    --accent: #60a5fa;
-    --accent-dark: #3b82f6;
-    --background: #0f172a;
-    --background-secondary: #1e293b;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --border: #334155;
-  }
-
   /* 日历热力：一套样式适配两种主题，用 accent 与 background-secondary 混合，无需按主题分别设色 */
   .day.intensity-1 {
     background: color-mix(in srgb, var(--accent) 20%, var(--background-secondary));
@@ -1481,8 +1460,8 @@ const hrZoneColors: Record<number, string> = {
     background: var(--accent);
   }
 
-  /* 详情弹窗样式 - 使用 :global 因为内容是动态插入的 */
-  :global(.run-detail-modal) {
+  /* 详情弹窗样式（内容为 JS 动态插入） */
+  .run-detail-modal {
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -1492,11 +1471,11 @@ const hrZoneColors: Record<number, string> = {
     padding: 1rem;
   }
 
-  :global(.run-detail-modal.active) {
+  .run-detail-modal.active {
     display: flex;
   }
 
-  :global(.modal-overlay) {
+  .modal-overlay {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
@@ -1505,7 +1484,7 @@ const hrZoneColors: Record<number, string> = {
     -webkit-tap-highlight-color: transparent;
   }
 
-  :global(.modal-content) {
+  .modal-content {
     position: relative;
     background: var(--background);
     border: 1px solid var(--border);
@@ -1529,7 +1508,7 @@ const hrZoneColors: Record<number, string> = {
     }
   }
 
-  :global(.modal-close) {
+  .modal-close {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -1551,43 +1530,43 @@ const hrZoneColors: Record<number, string> = {
     -webkit-tap-highlight-color: transparent;
   }
 
-  :global(.modal-close:hover) {
+  .modal-close:hover {
     background: var(--border);
     color: var(--text-primary);
   }
 
-  :global(.modal-body) {
+  .modal-body {
     padding: 1.5rem;
     overflow-y: auto;
     max-height: 90vh;
   }
 
-  :global(.detail-header) {
+  .detail-header {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
   }
 
-  :global(.detail-title) {
+  .detail-title {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0 0 0.5rem 0;
   }
 
-  :global(.detail-meta) {
+  .detail-meta {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
 
-  :global(.detail-date) {
+  .detail-date {
     font-size: 0.875rem;
     color: var(--text-primary);
   }
 
-  :global(.detail-type) {
+  .detail-type {
     font-size: 0.75rem;
     padding: 0.125rem 0.5rem;
     background: var(--background-secondary);
@@ -1596,32 +1575,32 @@ const hrZoneColors: Record<number, string> = {
     color: var(--text-primary);
   }
 
-  :global(.detail-meta-sep) {
+  .detail-meta-sep {
     font-size: 0.875rem;
     color: var(--text-secondary);
   }
 
-  :global(.detail-route),
-  :global(.detail-weather) {
+  .detail-route,
+  .detail-weather {
     font-size: 0.875rem;
     color: var(--text-secondary);
   }
 
-  :global(.detail-hr-zone) {
+  .detail-hr-zone {
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.125rem 0.5rem;
     border-radius: 4px;
   }
 
-  :global(.detail-stats-grid) {
+  .detail-stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
 
-  :global(.detail-stat-item) {
+  .detail-stat-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -1632,25 +1611,25 @@ const hrZoneColors: Record<number, string> = {
     font-size: 0.8125rem;
   }
 
-  :global(.detail-stat-icon) {
+  .detail-stat-icon {
     width: 16px;
     height: 16px;
     color: var(--accent);
     flex-shrink: 0;
   }
 
-  :global(.detail-stat-icon svg) {
+  .detail-stat-icon svg {
     width: 100%;
     height: 100%;
   }
 
-  :global(.detail-stat-label) {
+  .detail-stat-label {
     font-size: 0.8125rem;
     color: var(--text-secondary);
     white-space: nowrap;
   }
 
-  :global(.detail-stat-value) {
+  .detail-stat-value {
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -1658,37 +1637,37 @@ const hrZoneColors: Record<number, string> = {
     font-variant-numeric: tabular-nums;
   }
 
-  :global(.detail-section) {
+  .detail-section {
     margin-top: 1.5rem;
   }
 
-  :global(.section-subtitle) {
+  .section-subtitle {
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0 0 0.75rem 0;
   }
 
-  :global(.segments-table-wrapper) {
+  .segments-table-wrapper {
     overflow-x: auto;
     border: 1px solid var(--border);
     border-radius: 8px;
   }
 
-  :global(.segments-table) {
+  .segments-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.8125rem;
   }
 
-  :global(.segments-table th),
-  :global(.segments-table td) {
+  .segments-table th,
+  .segments-table td {
     padding: 0.5rem 0.75rem;
     text-align: left;
     border-bottom: 1px solid var(--border);
   }
 
-  :global(.segments-table th) {
+  .segments-table th {
     background: var(--background-secondary);
     font-weight: 600;
     color: var(--text-primary);
@@ -1697,15 +1676,15 @@ const hrZoneColors: Record<number, string> = {
     letter-spacing: 0.025em;
   }
 
-  :global(.segments-table tr:last-child td) {
+  .segments-table tr:last-child td {
     border-bottom: none;
   }
 
-  :global(.segments-table tr:hover) {
+  .segments-table tr:hover {
     background: var(--background-secondary);
   }
 
-  :global(.pace-bar) {
+  .pace-bar {
     position: relative;
     height: 22px;
     background: var(--background-secondary);
@@ -1716,7 +1695,7 @@ const hrZoneColors: Record<number, string> = {
     padding: 0 0.5rem;
   }
 
-  :global(.pace-bar-fill) {
+  .pace-bar-fill {
     position: absolute;
     left: 0;
     top: 0;
@@ -1727,19 +1706,19 @@ const hrZoneColors: Record<number, string> = {
   }
 
   /* 根据配速显示不同颜色：快=绿色，中=蓝色，慢=橙色/红色 */
-  :global(.pace-bar-fill.fast) {
+  .pace-bar-fill.fast {
     background: linear-gradient(90deg, #22c55e, #16a34a);
   }
 
-  :global(.pace-bar-fill.medium) {
+  .pace-bar-fill.medium {
     background: linear-gradient(90deg, #60a5fa, #3b82f6);
   }
 
-  :global(.pace-bar-fill.slow) {
+  .pace-bar-fill.slow {
     background: linear-gradient(90deg, #fb923c, #f97316);
   }
 
-  :global(.pace-bar span) {
+  .pace-bar span {
     position: relative;
     z-index: 1;
     font-weight: 600;
@@ -1747,7 +1726,7 @@ const hrZoneColors: Record<number, string> = {
     font-variant-numeric: tabular-nums;
   }
 
-  :global(.hr-zone-tag) {
+  .hr-zone-tag {
     display: inline-block;
     font-size: 0.75rem;
     padding: 0.125rem 0.375rem;
@@ -1755,47 +1734,47 @@ const hrZoneColors: Record<number, string> = {
     font-weight: 500;
   }
 
-  :global(.hr-zone-tag.zone-1) {
+  .hr-zone-tag.zone-1 {
     background: #4ade8020;
     color: #4ade80;
   }
 
-  :global(.hr-zone-tag.zone-2) {
+  .hr-zone-tag.zone-2 {
     background: #60a5fa20;
     color: #60a5fa;
   }
 
-  :global(.hr-zone-tag.zone-3) {
+  .hr-zone-tag.zone-3 {
     background: #fbbf2420;
     color: #fbbf24;
   }
 
-  :global(.hr-zone-tag.zone-4) {
+  .hr-zone-tag.zone-4 {
     background: #fb923c20;
     color: #fb923c;
   }
 
-  :global(.hr-zone-tag.zone-5) {
+  .hr-zone-tag.zone-5 {
     background: #f8717120;
     color: #f87171;
   }
 
   @media (max-width: 768px) {
-    :global(.run-card) {
+    .run-card {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.75rem;
       padding: 1rem;
     }
 
-    :global(.run-stats) {
+    .run-stats {
       width: 100%;
       display: flex;
       justify-content: stretch;
       gap: 0.5rem;
     }
 
-    :global(.stat) {
+    .stat {
       flex: 1 1 0;
       min-width: 0;
     }
@@ -1804,60 +1783,60 @@ const hrZoneColors: Record<number, string> = {
       border-radius: 1px;
     }
 
-    :global(.modal-content) {
+    .modal-content {
       max-height: 95vh;
       margin: 0.5rem;
     }
 
-    :global(.modal-body) {
+    .modal-body {
       padding: 1rem;
     }
 
-    :global(.detail-stats-grid) {
+    .detail-stats-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 0.5rem;
     }
 
-    :global(.detail-stat-item) {
+    .detail-stat-item {
       padding: 0.5rem;
       font-size: 0.75rem;
     }
 
-    :global(.detail-stat-icon) {
+    .detail-stat-icon {
       width: 14px;
       height: 14px;
     }
 
-    :global(.detail-stat-label),
-    :global(.detail-stat-value) {
+    .detail-stat-label,
+    .detail-stat-value {
       font-size: 0.75rem;
     }
 
-    :global(.detail-title) {
+    .detail-title {
       font-size: 1.125rem;
       padding-right: 2.5rem;
     }
   }
 
   @media (max-width: 480px) {
-    :global(.run-stats) {
+    .run-stats {
       gap: 0.25rem 0.5rem;
     }
 
-    :global(.stat-value) {
+    .stat-value {
       font-size: 0.9375rem;
     }
 
-    :global(.stat-label) {
+    .stat-label {
       font-size: 0.625rem;
     }
 
-    :global(.detail-stats-grid) {
+    .detail-stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
     }
 
-    :global(.detail-stat-item) {
+    .detail-stat-item {
       padding: 0.5rem;
     }
   }
