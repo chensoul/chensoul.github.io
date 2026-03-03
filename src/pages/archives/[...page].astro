@@ -57,7 +57,7 @@ const years = Object.keys(groupedByYear)
   <section class="archives-by-year" aria-label="按年归档">
     {
       years.map(year => (
-        <div id={`year-${year}`} class="archives-year mb-8" tabIndex={-1}>
+        <div id={`year-${year}`} class="archives-year mb-8" tabindex={-1}>
           <h2 class="mb-1 text-base">
           {year} ({groupedByYear[year].length})
         </h2>
