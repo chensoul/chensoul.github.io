@@ -69,10 +69,14 @@ const ogSlug =
       )
     : null;
 
+/** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 picture） */
+const fullDescription =
+  postDescription?.trim() || PostUtils.getDescription(post.body ?? "");
+
 const layoutProps = {
   title,
   author,
-  description: postDescription,
+  description: fullDescription,
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,
