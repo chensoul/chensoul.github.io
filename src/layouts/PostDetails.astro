@@ -37,7 +37,22 @@ const {
   comments,
   mermaid,
   description: postDescription,
+  picture: pictureRaw,
 } = post.data;
+
+/** 解析 picture 的完整 URL：绝对地址原样返回，相对路径在生产环境拼接 CDN 前缀 */
+const pictureSrc =
+  pictureRaw && pictureRaw.trim()
+    ? (() => {
+        const src = pictureRaw.trim();
+        if (src.startsWith("http://") || src.startsWith("https://"))
+          return src;
+        const normalized = src.startsWith("/") ? src : `/${src}`;
+        if (import.meta.env.DEV) return normalized;
+        const base = (SITE.imageConfig.imagesUrl ?? "").trim().replace(/\/$/, "");
+        return base ? `${base}${normalized}` : normalized;
+      })()
+    : undefined;
 
 // 渲染文章内容
 const { Content } = await render(post);
@@ -147,6 +162,15 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
   <article id="article" class="js-toc-content">
+    <!-- 文章主体上方配图（frontmatter picture，不参与描述提取） -->
+    {
+      pictureSrc && (
+          <img
+            src={pictureSrc}
+            alt={title}
+          />
+      )
+    }
     <Content />
   </article>
 
