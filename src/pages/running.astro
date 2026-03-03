@@ -191,7 +191,7 @@ const periodLabels: Record<string, string> = {
 
 // 心率区间标签
 const hrZoneLabels: Record<number, string> = {
-  0: "未知",
+  0: "",
   1: "Z1 热身",
   2: "Z2 轻松",
   3: "Z3 有氧",
@@ -218,7 +218,7 @@ const hrZoneColors: Record<number, string> = {
         <h2>跑步统计</h2>
         {
           statisticsTime && (
-            <span class="statistics-time">数据更新时间：{statisticsTime}</span>
+            <span class="statistics-time">更新时间：{statisticsTime}</span>
           )
         }
       </div>
@@ -411,6 +411,12 @@ const hrZoneColors: Record<number, string> = {
                           <span class="stat-value">{run.pace}</span>
                           <span class="stat-label">配速</span>
                         </div>
+                        <div class="stat">
+                          <span class="stat-value">
+                            {run.heart_rate > 0 ? Math.round(run.heart_rate) : "-"}
+                          </span>
+                          <span class="stat-label">BPM</span>
+                        </div>
                         <div class="stat vdot-stat">
                           <span class="stat-value">{run.vdot ?? "-"}</span>
                           <span class="stat-label">VDOT</span>
@@ -560,6 +566,10 @@ const hrZoneColors: Record<number, string> = {
               <div class="stat">
                 <span class="stat-value">${run.pace}</span>
                 <span class="stat-label">配速</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">${run.heart_rate > 0 ? Math.round(run.heart_rate) : "-"}</span>
+                <span class="stat-label">平均心率</span>
               </div>
               ${vdotStat}
               ${loadStat}
@@ -969,8 +979,10 @@ const hrZoneColors: Record<number, string> = {
 <style is:global>
   .running-page {
     max-width: 100%;
+    width: 100%;
     margin: 0 auto;
     overflow-x: hidden;
+    box-sizing: border-box;
     background: var(--background);
     color: var(--text-primary);
   }
@@ -1824,7 +1836,7 @@ const hrZoneColors: Record<number, string> = {
     }
 
     .stat-value {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
     }
 
     .stat-label {
