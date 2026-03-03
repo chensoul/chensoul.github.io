@@ -10,7 +10,7 @@ title: "关于"
 
 ## 联系我：
 
-- 我的个人联系方式：[WeChat](/images/my-wechat.webp)、[Email](mailto:ichensoul@gmail.com)、[Telegram](https://t.me/chensoul)
+- 我的个人联系方式：[WeChat](/images/my-wechat.webp)、ichensoul@gmail.com、[Telegram](https://t.me/chensoul)
 - 我的社交账号：[Github](https://twitter.com/chensoul)、[Twitter](https://twitter.com/ichensoul)、[Telegram Channel](https://t.me/ichensoul)
 - 我的自建服务：[跑步](https://run.chensoul.cc/)、[书签](https://linkding.chensoul.cc/)、[Memos](https://memos.chensoul.cc/)
 

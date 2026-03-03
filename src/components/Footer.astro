@@ -21,6 +21,13 @@ const { noMarginTop = false, showSocial = true } = Astro.props;
 
 const socialLinks = SITE.socialLinks ?? [];
 const hasSocial = showSocial && socialLinks.length > 0;
+
+/** 规范化链接：若为邮箱地址则补全 mailto:，避免被当作相对路径 */
+function normalizeSocialHref(url: string): string {
+  if (url.startsWith("mailto:") || url.startsWith("http")) return url;
+  if (url.includes("@")) return `mailto:${url}`;
+  return url;
+}
 ---
 
 <footer class:list={["footer", "w-full", { "mt-auto": !noMarginTop }]}>
@@ -28,18 +35,20 @@ const hasSocial = showSocial && socialLinks.length > 0;
     {
       hasSocial && (
         <div class="social-links">
-          {socialLinks.map(link => (
-            <a
-              href={link.url}
-              target={link.url.startsWith("http") ? "_blank" : undefined}
-              rel={
-                link.url.startsWith("http") ? "noopener noreferrer" : undefined
-              }
-              aria-label={link.name}
-            >
-              <SocialIcon name={link.icon} width={20} height={20} />
-            </a>
-          ))}
+          {socialLinks.map(link => {
+            const href = normalizeSocialHref(link.url);
+            const isExternal = href.startsWith("http");
+            return (
+              <a
+                href={href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                aria-label={link.name}
+              >
+                <SocialIcon name={link.icon} width={20} height={20} />
+              </a>
+            );
+          })}
         </div>
       )
     }
