@@ -192,21 +192,21 @@ const periodLabels: Record<string, string> = {
 // 心率区间标签
 const hrZoneLabels: Record<number, string> = {
   0: "未知",
-  1: "Z1 恢复",
+  1: "Z1 热身",
   2: "Z2 有氧",
-  3: "Z3 节奏",
-  4: "Z4 阈值",
-  5: "Z5 最大",
+  3: "Z3 耐力",
+  4: "Z4 无氧",
+  5: "Z5 极限",
 };
 
 // 心率区间颜色
 const hrZoneColors: Record<number, string> = {
   0: "var(--text-secondary)",
-  1: "#4ade80", // 绿色 - 恢复
-  2: "#60a5fa", // 蓝色 - 有氧
-  3: "#fbbf24", // 黄色 - 节奏
-  4: "#fb923c", // 橙色 - 阈值
-  5: "#f87171", // 红色 - 最大
+  1: "#3489dc", // 蓝色 - 热身
+  2: "#36d9d6", // 蓝色 - 有氧
+  3: "#4ade80", // 黄色 - 耐力
+  4: "#fb923c", // 橙色 - 无氧
+  5: "#f87171", // 红色 - 极限
 };
 ---
 
@@ -1711,7 +1711,7 @@ const hrZoneColors: Record<number, string> = {
   }
 
   .pace-bar-fill.medium {
-    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    background: linear-gradient(90deg, #36d9d6, #3b82f6);
   }
 
   .pace-bar-fill.slow {
@@ -1735,18 +1735,18 @@ const hrZoneColors: Record<number, string> = {
   }
 
   .hr-zone-tag.zone-1 {
-    background: #4ade8020;
-    color: #4ade80;
+    background: #3489dc20;
+    color: #3489dc;
   }
 
   .hr-zone-tag.zone-2 {
-    background: #60a5fa20;
-    color: #60a5fa;
+    background: #36d9d620;
+    color: #36d9d6;
   }
 
   .hr-zone-tag.zone-3 {
-    background: #fbbf2420;
-    color: #fbbf24;
+    background: #4ade8020;
+    color: #4ade80;
   }
 
   .hr-zone-tag.zone-4 {
