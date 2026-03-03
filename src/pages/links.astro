@@ -1,4 +1,9 @@
 ---
+/**
+ * 链接页
+ *
+ * @fileoverview 从 content/pages/links.md 读取内容，用 markdown-it 渲染（html + linkify，关闭 typographer），输出到 Layout 下的 page-content 容器。
+ */
 import fs from "node:fs";
 import path from "node:path";
 import Layout from "@/layouts/Layout.astro";

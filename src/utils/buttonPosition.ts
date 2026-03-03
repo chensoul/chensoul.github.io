@@ -1,3 +1,18 @@
+/**
+ * 返回/返回顶部等按钮位置工具
+ *
+ * @fileoverview 根据主内容区与视口宽度，将指定按钮定位在内容区右侧或视口右侧，避免遮挡或溢出
+ *
+ * 逻辑：若主内容区右侧到视口右边缘空间不足（按钮宽度 + 32px），则按钮固定于视口右侧 1rem；否则对齐内容区右边缘外 16px。
+ *
+ * @see BackButton.astro、BackToTop 等调用处
+ */
+
+/**
+ * 根据主内容区宽度更新按钮的 right 位置，使按钮在内容区右侧或视口右侧
+ *
+ * @param buttonId - 按钮元素的 id（需存在于 DOM）
+ */
 export function updateButtonPosition(buttonId: string): void {
   const btn = document.getElementById(buttonId);
   const frame = document.getElementById("main-content");

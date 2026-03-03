@@ -1,4 +1,11 @@
 ---
+/**
+ * 搜索页
+ *
+ * @fileoverview 客户端使用 Pagefind 搜索文章，输入关键词后请求 /pagefind/pagefind.js 进行检索，结果展示标题、摘要与链接（最多 10 条）。
+ *
+ * 依赖：构建阶段需生成 pagefind 索引（如 Astro 或 CI 中执行 pagefind）；若加载失败则显示错误提示。
+ */
 import Layout from "../layouts/Layout.astro";
 ---
 

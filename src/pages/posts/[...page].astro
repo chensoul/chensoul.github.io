@@ -1,4 +1,9 @@
 ---
+/**
+ * 文章列表页（/posts、/posts/2 等）
+ *
+ * @fileoverview 分页展示全部文章卡片；getStaticPaths 仅生成单页路由，首屏条数由懒加载脚本控制。
+ */
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";

@@ -1,4 +1,9 @@
 ---
+/**
+ * 归档页
+ *
+ * @fileoverview 按年分组展示全部文章，顶部为分类与年份锚点链接；getStaticPaths 生成单页（pageSize 为全部文章数），实际列表由前端懒加载或一次性渲染。
+ */
 import Layout from "@/layouts/Layout.astro";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";

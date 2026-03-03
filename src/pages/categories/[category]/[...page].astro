@@ -1,4 +1,9 @@
 ---
+/**
+ * 分类详情页
+ *
+ * @fileoverview 展示某一分类下的文章列表；getStaticPaths 为每个分类生成分页路由，页面内用 Card 列表 + 可选懒加载展示。
+ */
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";

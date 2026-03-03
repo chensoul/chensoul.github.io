@@ -2,7 +2,7 @@
 /**
  * 关于页
  *
- * 从 content/pages 目录读取 _about.md，使用 AboutLayout 布局
+ * @fileoverview 从 content/pages/about.md 读取正文，解析 frontmatter 后使用 markdown-it 渲染（html + linkify，关闭 typographer），输出到 Layout 下的 page-content。
  */
 import fs from "node:fs";
 import path from "node:path";

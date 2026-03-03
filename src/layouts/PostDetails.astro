@@ -1,4 +1,9 @@
 ---
+/**
+ * 文章详情布局
+ *
+ * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表、评论（Artalk）、TOC/数学公式/Mermaid 等按 frontmatter 启用。OG 图与 canonical 由本布局传给 Layout。
+ */
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";

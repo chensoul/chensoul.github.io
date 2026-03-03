@@ -1,6 +1,7 @@
 /**
- * 文章描述生成用正则：more 标签与 Markdown 语法清理规则
- * 供 getDescription 使用
+ * 文章描述生成用正则
+ *
+ * @fileoverview 提供 more 标签匹配与 Markdown 语法清理规则，供 PostUtils.getDescription 从正文提取摘要时使用。
  */
 
 /** 匹配 `<!-- more -->` 之前的内容，捕获组 $1 为摘要 */

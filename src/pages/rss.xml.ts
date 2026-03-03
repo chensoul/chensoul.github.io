@@ -1,13 +1,13 @@
+/**
+ * RSS 订阅端点
+ *
+ * @fileoverview 生成 RSS 2.0 订阅源，包含最近 10 篇非草稿文章；摘要优先取 <!-- more --> 前内容，否则由 PostUtils.getDescription 截取。
+ */
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
-/**
- * RSS 订阅源
- *
- * 输出摘要信息（优先 <!-- more --> 前的内容，否则前 N 字符），不输出全文
- */
 export async function GET() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   const sortedPosts = posts

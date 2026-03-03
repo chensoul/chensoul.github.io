@@ -1,3 +1,13 @@
+/**
+ * OG 分享图生成
+ *
+ * @fileoverview 使用 Satori + Resvg 将文章标题、日期等渲染为 1200×630 PNG，供 og:image 使用
+ *
+ * 字体使用 @fontsource/noto-sans-sc（与 base.css 一致）；头像从 public/images/avatar.png 或 avatar.webp 读取，WebP 会转为 PNG 后以 data URL 嵌入。
+ *
+ * @see pages/og/[...slug].png.ts
+ */
+
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import fs from "fs/promises";
@@ -73,12 +83,21 @@ function getFonts(): Promise<{ regular: ArrayBuffer; bold: ArrayBuffer }> {
   return fontsPromise;
 }
 
+/** 生成 OG 图时的入参 */
 interface OgImageOptions {
   title: string;
   date: Date;
   siteTitle?: string;
 }
 
+/**
+ * 根据标题和日期生成 1200×630 的 OG 图 PNG Buffer
+ *
+ * @param options.title - 文章标题
+ * @param options.date - 发布日期（用于展示）
+ * @param options.siteTitle - 可选站点名，当前未在布局中使用
+ * @returns PNG 二进制
+ */
 export async function generateOgImage({
   title,
   date,

@@ -1,4 +1,9 @@
 ---
+/**
+ * 标签详情页
+ *
+ * @fileoverview 展示某一标签下的文章列表；getStaticPaths 为每个标签生成路由，首屏显示 postPerIndex 条，其余由懒加载或「加载更多」展示。
+ */
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
@@ -6,9 +11,7 @@ import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
-/**
- * 生成静态路径：每个标签一个路由，该标签下全部文章由懒加载分批显示
- */
+/** 生成静态路径：每个标签一个路由，该标签下全部文章由懒加载分批显示 */
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getCollection("blog");
   const tags = PostUtils.getUniqueTags(posts);
