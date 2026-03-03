@@ -69,11 +69,11 @@ const linkProps = {
 /**
  * 构建封面图 URL
  *
- * 1. image 为空：使用分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg
- * 2. 以 http:// 或 https:// 开头：原样返回（绝对地址）
- * 3. 其他（含 /images、/thumbs 及任意相对路径）：
- *    - SITE.imageConfig.imagesUrl 不为空时：拼接 CDN 前缀后返回
- *    - 为空时：直接返回 src，由浏览器按当前网站 host 解析
+ * - image 为空：取首个分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg，再按下方规则解析
+ * - 以 http:// 或 https:// 开头：原样返回（绝对地址）
+ * - 其他（相对路径或 /images、/thumbs 等）：
+ *   - 开发环境：统一为以 / 开头的站内路径，不拼接 CDN
+ *   - 生产环境：若 SITE.imageConfig.imagesUrl 非空则拼接为完整 CDN URL，否则为站内路径
  *
  * @returns 用于 <img src> 的完整或相对 URL
  */
