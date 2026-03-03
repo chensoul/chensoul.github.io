@@ -2,24 +2,17 @@
 title: "关于"
 ---
 
-## 关于我
+健康，爱情和使命，按照这个顺序，其它的都不重要。 ------纳瓦尔
 
-> 健康，爱情和使命，按照这个顺序，其它的都不重要。
-> ------纳瓦尔
+## 关于我
 
 我是 ChenSoul，一个来自中国武汉的开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
 ## 联系我：
 
-我的个人联系方式：
-- **WeChat**: ichensoul
-- **Email**: [@gmail](mailto:ichensoul@gmail.com)
-- **Telegram**: [@chensoul](https://t.me/chensoul)
-
-我的社交账号：
-- **Github**: [@chensoul](https://twitter.com/chensoul)
-- **Twitter**: [@ichensoul](https://twitter.com/ichensoul)
-- **Telegram Channel**: [@ichensoul](https://t.me/ichensoul)
+- 我的个人联系方式：[WeChat](/images/my-wechat.webp)、[Email](mailto:ichensoul@gmail.com)、[Telegram](https://t.me/chensoul)
+- 我的社交账号：[Github](https://twitter.com/chensoul)、[Twitter](https://twitter.com/ichensoul)、[Telegram Channel](https://t.me/ichensoul)
+- 我的自建服务：[跑步](https://run.chensoul.cc/)、[书签](https://linkding.chensoul.cc/)、[Memos](https://memos.chensoul.cc/)
 
 ### 我使用的 APP
 
