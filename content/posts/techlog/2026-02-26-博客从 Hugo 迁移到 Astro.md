@@ -4,7 +4,7 @@ date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "techlog" ]
 tags: [ 'astro' ]
-image: /thumbs/astro-logo.svg
+cover: /thumbs/astro.svg
 description: "最近将博客从 Hugo 迁移到了 Astro，并选择了 astro-lhasa 做为博客主题，我还对该主题做了一些修改（修改后的主题在 chensoul/astro-lhasa ..."
 ---
 

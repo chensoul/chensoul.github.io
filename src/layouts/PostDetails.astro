@@ -37,14 +37,14 @@ const {
   comments,
   mermaid,
   description: postDescription,
-  picture: pictureRaw,
+  "top-image": topImageRaw,
 } = post.data;
 
-/** 解析 picture 的完整 URL：绝对地址原样返回，相对路径在生产环境拼接 CDN 前缀 */
-const pictureSrc =
-  pictureRaw && pictureRaw.trim()
+/** 解析 top-image 的完整 URL：绝对地址原样返回，相对路径在生产环境拼接 CDN 前缀 */
+const topImageSrc =
+  topImageRaw && topImageRaw.trim()
     ? (() => {
-        const src = pictureRaw.trim();
+        const src = topImageRaw.trim();
         if (src.startsWith("http://") || src.startsWith("https://"))
           return src;
         const normalized = src.startsWith("/") ? src : `/${src}`;
@@ -69,7 +69,7 @@ const ogSlug =
       )
     : null;
 
-/** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 picture） */
+/** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
   postDescription?.trim() || PostUtils.getDescription(post.body ?? "");
 
@@ -166,11 +166,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
   <article id="article" class="js-toc-content">
-    <!-- 文章主体上方配图（frontmatter picture，不参与描述提取） -->
+    <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
     {
-      pictureSrc && (
+      topImageSrc && (
           <img
-            src={pictureSrc}
+            src={topImageSrc}
             alt={title}
           />
       )

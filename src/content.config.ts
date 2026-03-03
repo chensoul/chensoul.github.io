@@ -207,7 +207,7 @@ const blog = defineCollection({
        * - 文章列表的缩略图
        * - OG 图片生成（如果启用了动态 OG 图片）
        */
-      image: z.string().optional(),
+      cover: z.string().optional(),
 
       /**
        * 文章主体上方配图
@@ -215,7 +215,7 @@ const blog = defineCollection({
        * 可选字段，用于在正文上方单独展示一张图片（如头图、配图）。
        * 仅用于文章详情页展示，不参与摘要/描述提取（getDescription 已通过正则剔除正文中的图片语法）。
        */
-      picture: z.string().optional(),
+      "top-image": z.string().optional(),
     }),
 });
 

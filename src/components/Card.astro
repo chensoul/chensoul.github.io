@@ -54,7 +54,7 @@ const {
 } = Astro.props;
 
 // 解构文章元数据
-const { title, date, updated, timezone, image, categories } = data;
+const { title, date, updated, timezone, cover, categories } = data;
 
 // 标题容器样式（处理溢出省略）
 const headerProps = {
@@ -69,7 +69,7 @@ const linkProps = {
 /**
  * 构建封面图 URL
  *
- * - image 为空：取首个分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg，再按下方规则解析
+ * - cover 为空：取首个分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg，再按下方规则解析
  * - 以 http:// 或 https:// 开头：原样返回（绝对地址）
  * - 其他（相对路径或 /images、/thumbs 等）：
  *   - 开发环境：统一为以 / 开头的站内路径，不拼接 CDN
@@ -91,7 +91,7 @@ const buildCoverSrc = (): string | undefined => {
     return imagesBase ? `${imagesBase}${normalizedSrc}` : normalizedSrc;
   };
 
-  const rawImage = typeof image === "string" ? image.trim() : "";
+  const rawImage = typeof cover === "string" ? cover.trim() : "";
 
   if (rawImage) {
     if (rawImage.startsWith("http://") || rawImage.startsWith("https://")) {

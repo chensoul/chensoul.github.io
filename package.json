@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "compress-images": "node scripts/compress-images.mjs",
     "convert-to-webp": "node scripts/convert-to-webp.mjs",
+    "convert-to-svg": "node scripts/convert-to-svg.mjs",
     "spell": "pnpm dlx cspell --config cspell.yaml .",
     "md:check": "pnpm dlx markdownlint-cli2 ./content/posts/**",
     "md:fix": "pnpm dlx markdownlint-cli2 --fix ./content/posts/**",
