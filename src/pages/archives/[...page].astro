@@ -25,7 +25,7 @@ const years = Object.keys(groupedByYear)
 ---
 
 <Layout title={`归档 | ${SITE.title}`}>
-  <section class="archives-categories mb-8" aria-label="分类列表">
+  <section class="archives-categories mb-4" aria-label="分类列表">
     <p class="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
       <span class="opacity-80">分类：</span>
       {
@@ -96,6 +96,10 @@ const years = Object.keys(groupedByYear)
 </Layout>
 
 <style>
+  .archives-by-year ul {
+    padding-left: 0;
+  }
+
   /* 锚点滚动时留出顶栏高度，避免被 sticky header 遮住 */
   .archives-year {
     scroll-margin-top: 5rem;
