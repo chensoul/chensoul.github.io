@@ -4,6 +4,7 @@ date: 2024-05-10 08:00:00+08:00
 slug: install-cert-manager
 tags: ['kubernetes']
 categories: [ "techlog" ]
+description: "cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。 ..."
 ---
 
 cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。

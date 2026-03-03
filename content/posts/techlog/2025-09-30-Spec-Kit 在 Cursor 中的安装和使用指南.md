@@ -5,6 +5,7 @@ slug: spec-kit-with-cursor
 categories: [ "techlog" ]
 tags: ['spring-ai', 'cursor', 'spec-kit']
 image: /thumbs/openai.svg
+description: "在现代软件开发中，规范驱动开发（Spec-Driven Development）正成为一种越来越重要的开发方法。Spec-Kit 是 GitHub 开源的一个强大工具包，专门设计用于与 AI 编码工具（如 Cursor）集成，帮助开发者实现从规范定义到代码实现的完整工作流。 ..."
 ---
 
 在现代软件开发中，规范驱动开发（Spec-Driven Development）正成为一种越来越重要的开发方法。Spec-Kit 是 GitHub 开源的一个强大工具包，专门设计用于与 AI 编码工具（如 Cursor）集成，帮助开发者实现从规范定义到代码实现的完整工作流。

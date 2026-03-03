@@ -4,6 +4,7 @@ date: 2024-06-26 09:00:00+08:00
 slug: install-jenkins
 categories: [ "techlog" ]
 tags: ['docker', 'jenkins']
+description: "使用 Docker 安装 ..."
 ---
 
 ## 使用 Docker 安装

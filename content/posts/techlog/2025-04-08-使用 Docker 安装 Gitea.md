@@ -4,6 +4,7 @@ date: 2025-04-08 08:00:00+08:00
 slug: install-gitea-using-docker
 tags: ['docker', 'gitea']
 categories: [ "techlog" ]
+description: "安装 Gitea ..."
 ---
 
 ## 安装 Gitea

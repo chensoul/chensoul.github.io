@@ -4,6 +4,7 @@ date: 2024-08-01 08:00:00+08:00
 slug: publishing-a-jar-to-maven-repository-with-github-action
 categories: [ "techlog" ]
 tags: ['github','maven']
+description: "作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。 ..."
 ---
 
 作为一名 Java 开发者,将自己的项目发布到 Maven 中央仓库是一个非常重要的步骤。这不仅可以让更多的开发者发现和使用您的项目,也可以提高项目的知名度和影响力。

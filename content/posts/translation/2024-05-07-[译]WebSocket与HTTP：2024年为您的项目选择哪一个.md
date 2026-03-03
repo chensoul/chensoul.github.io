@@ -4,6 +4,7 @@ date: 2024-05-07 08:00:00+08:00
 slug: websockets-vs-http
 categories: [ "translation" ]
 tags: ['websocket', 'http']
+description: "..."
 ---
 
 

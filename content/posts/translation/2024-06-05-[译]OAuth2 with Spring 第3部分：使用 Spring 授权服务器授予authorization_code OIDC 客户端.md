@@ -4,6 +4,7 @@ date: 2024-06-05 08:00:00+08:00
 slug: oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring
 categories: [ "translation" ]
 tags: ['spring-boot','oauth2']
+description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a..."
 ---
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a>

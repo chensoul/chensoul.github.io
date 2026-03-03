@@ -4,6 +4,7 @@ date: 2024-07-18 08:00:00+08:00
 slug: publishing-a-maven-site-to-github-pages
 categories: [ "techlog" ]
 tags: ['maven', 'github']
+description: "本文源代码：https://github.com/chensoul/maven-site-github-example/ 。 ..."
 ---
 
 本文源代码：[https://github.com/chensoul/maven-site-github-example/](https://github.com/chensoul/maven-site-github-example/) 。

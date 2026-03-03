@@ -4,6 +4,7 @@ date: 2024-07-15 08:00:00+08:00
 slug: install-gitlab-using-yum
 categories: [ "techlog" ]
 tags: ['gitlab']
+description: "Gitlab Server 部署 ..."
 ---
 
 ## Gitlab Server 部署

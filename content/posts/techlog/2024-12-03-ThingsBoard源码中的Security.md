@@ -4,6 +4,7 @@ date: 2024-12-03 09:00:00+08:00
 slug: security-in-thingsboard
 categories: [ "techlog" ]
 tags: ['security', 'thingsboard']
+description: "ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard ，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。 ..."
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。

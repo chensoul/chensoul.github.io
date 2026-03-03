@@ -4,6 +4,7 @@ date: 2023-08-16 08:00:00+08:00
 slug: spring-boot-docker
 categories: [ "translation" ]
 tags: ['spring-boot']
+description: "容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。 ..."
 ---
 
 容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。

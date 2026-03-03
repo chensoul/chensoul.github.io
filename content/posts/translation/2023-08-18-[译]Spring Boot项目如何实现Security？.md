@@ -4,6 +4,7 @@ date: 2023-08-18 08:00:00+08:00
 slug: how-to-implement-security-in-spring-boot-project
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
+description: "..."
 ---
 
 ![How to implement Security in Spring Boot Project?](SpringSecurityBasics-2.webp)

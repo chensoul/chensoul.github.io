@@ -4,6 +4,7 @@ date: 2023-07-26 08:00:00+08:00
 slug: using-oauth2-in-spring-scopes
 categories: [ "translation" ]
 tags: ['spring-boot', 'oauth2']
+description: "我们在上一篇文章 中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。 ..."
 ---
 
 我们在[上一篇文章](/posts/2023/07/26/using-oauth2-in-spring/)中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。

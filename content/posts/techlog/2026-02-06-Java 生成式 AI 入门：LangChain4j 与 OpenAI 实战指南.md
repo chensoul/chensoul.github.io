@@ -5,6 +5,7 @@ slug: getting-started-with-langchain4j
 categories: [ "techlog" ]
 tags: ['langchain4j', 'ai', 'openai']
 image: /thumbs/langchain4j.svg
+description: "生成式 AI 正在重塑应用开发的方式。虽然 Python 在该领域占据主导地位，但 Java 开发者并未被遗忘。LangChain4j 应运而生——这是一个功能强大的库，旨在简化大语言模型（LLMs）与 Java 应用的集成。 ..."
 ---
 
 生成式 AI 正在重塑应用开发的方式。虽然 Python 在该领域占据主导地位，但 Java 开发者并未被遗忘。**LangChain4j** 应运而生——这是一个功能强大的库，旨在简化大语言模型（LLMs）与 Java 应用的集成。

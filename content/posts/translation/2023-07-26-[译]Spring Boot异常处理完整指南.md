@@ -4,6 +4,7 @@ date: 2023-07-26 08:00:00+08:00
 slug: spring-boot-exception-handling
 categories: [ "translation" ]
 tags: ['spring-boot']
+description: "处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。 ..."
 ---
 
 处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。

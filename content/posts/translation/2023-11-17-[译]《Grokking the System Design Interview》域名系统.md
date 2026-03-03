@@ -4,6 +4,7 @@ date: 2023-11-17 08:00:00+08:00
 slug: dns
 categories: [ "translation" ]
 tags: ['architecture']
+description: "这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-na ..."
 ---
 
 这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-name-system-dns) 这篇章节。

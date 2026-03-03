@@ -4,6 +4,7 @@ date: 2023-08-25 08:00:00+08:00
 slug: spring-security-async-principal-propagation
 categories: [ "translation" ]
 tags: ['spring-boot']
+description: "1. 简介 ..."
 ---
 
 ## 1. 简介

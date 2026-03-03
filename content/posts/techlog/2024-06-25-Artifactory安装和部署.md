@@ -4,6 +4,7 @@ date: 2024-06-25 08:00:00+08:00
 slug: install-artifactory-oss
 categories: [ "techlog" ]
 tags: ['artifactory', 'maven']
+description: "安装 Artifactory ..."
 ---
 
 ## 安装 Artifactory

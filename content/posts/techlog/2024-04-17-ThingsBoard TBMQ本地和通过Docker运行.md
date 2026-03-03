@@ -4,6 +4,7 @@ date: 2024-04-17 08:00:00+08:00
 slug: thingsboard-tbmq-local-docker-run
 categories: [ "techlog" ]
 tags: ['thingsboard']
+description: "docker-compose 运行 ..."
 ---
 
 ## docker-compose 运行

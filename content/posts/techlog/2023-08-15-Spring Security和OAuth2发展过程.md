@@ -4,6 +4,7 @@ date: 2023-08-15 08:00:00+08:00
 slug: spring-security-oauth2-history
 categories: [ "techlog" ]
 tags: ['spring-boot', 'oauth2']
+description: "Spring Security 的发展过程 ..."
 ---
 
 ## Spring Security 的发展过程

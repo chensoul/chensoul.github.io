@@ -4,6 +4,7 @@ date: 2024-05-07 08:00:00+08:00
 slug: websockets-kafka
 categories: [ "translation" ]
 tags: ['websocket', 'kafka']
+description: "原文链接：https://ably.com/topic/websockets-kafka ..."
 ---
 
 原文链接：[https://ably.com/topic/websockets-kafka](https://ably.com/topic/websockets-kafka)

@@ -4,6 +4,7 @@ date: 2024-07-09 09:00:00+08:00
 slug: docker-for-spring-boot
 categories: [ "techlog" ]
 tags: ['docker', 'spring-boot']
+description: "本文翻译自 Docker 官方网站的《Java language-specific guide 》文章，并做了一些改动。 ..."
 ---
 
 > 本文翻译自 Docker 官方网站的《[Java language-specific guide](https://docs.docker.com/guides/java/)》文章，并做了一些改动。

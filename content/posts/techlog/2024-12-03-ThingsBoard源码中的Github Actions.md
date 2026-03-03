@@ -4,6 +4,7 @@ date: 2024-12-03 08:00:00+08:00
 slug: github-actions-in-thingsboard
 categories: [ "techlog" ]
 tags: ['thingsboard', 'github']
+description: "ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard ，其 .github/workflows 目录下面有两个文件： ..."
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：

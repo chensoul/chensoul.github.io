@@ -4,6 +4,7 @@ date: 2024-05-10 08:00:00+08:00
 slug: all-things-about-websocket
 categories: [ "techlog" ]
 tags: ['websocket']
+description: "..."
 ---
 
 

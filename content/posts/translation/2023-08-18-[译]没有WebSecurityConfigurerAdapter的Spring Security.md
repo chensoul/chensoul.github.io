@@ -4,6 +4,7 @@ date: 2023-08-18 08:00:00+08:00
 slug: spring-security-without-websecurityconfigureradapter
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
+description: "..."
 ---
 
 ![WebSecurityConfigurerAdapter Deprecated](WebSecurityConfigurerAdapter-Deprecated-1.webp)

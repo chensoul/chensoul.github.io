@@ -4,6 +4,7 @@ date: 2025-04-30 08:00:00+08:00
 slug: codes-in-thingsboard
 categories: [ "techlog" ]
 tags: ['thingsboard']
+description: "Uuids ..."
 ---
 
 Uuids

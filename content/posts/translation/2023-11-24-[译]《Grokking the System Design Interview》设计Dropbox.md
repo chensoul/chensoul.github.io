@@ -4,6 +4,7 @@ date: 2023-11-24 08:00:00+08:00
 slug: designing-dropbox
 categories: [ "translation" ]
 tags: ['architecture']
+description: "这是一篇双语翻译的文章，原文出自 groksystemdesigninterview.pdf 的一篇文章《Designing Dropbox》设计 Dropbox。 ..."
 ---
 
 这是一篇双语翻译的文章，原文出自 [grok_system_design_interview.pdf](https://github.com/sharanyaa/grok_sdi_educative/blob/master/grok_system_design_interview.pdf) 的一篇文章《Designing Dropbox》设计 Dropbox。

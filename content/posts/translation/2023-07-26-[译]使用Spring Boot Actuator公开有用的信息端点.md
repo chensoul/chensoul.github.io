@@ -4,6 +4,7 @@ date: 2023-07-26 08:00:00+08:00
 slug: spring-boot-info-endpoint
 categories: [ "translation" ]
 tags: ['spring-boot']
+description: "在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。 ..."
 ---
 
 在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。

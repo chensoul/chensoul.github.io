@@ -4,6 +4,7 @@ date: 2024-06-06 11:00:00+08:00
 slug: spring-boot-docker-image
 categories: [ "techlog" ]
 tags: ['spring-boot','docker']
+description: "手动创建 Dockerfile ..."
 ---
 
 ## 手动创建 Dockerfile

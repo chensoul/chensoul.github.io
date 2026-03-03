@@ -4,6 +4,7 @@ date: 2023-12-14 08:00:00+08:00
 slug: all-things-about-microprofile
 categories: [ "techlog" ]
 tags: ['microprofile']
+description: "最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。 ..."
 ---
 
 最近在一些开源项目中看到了 MicroProfile ，于是在网上查阅了相关资料加深对 MicroProfile 的理解，并做了笔记形成此文。

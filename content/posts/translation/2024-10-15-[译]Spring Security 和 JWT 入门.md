@@ -4,6 +4,7 @@ date: 2024-10-15 08:00:00+08:00
 slug: spring-security-jwt-guard
 categories: [ "translation" ]
 tags: ['spring-boot','security','jwt']
+description: "Spring Security 为 Java 应用程序提供了一套全面的安全功能，涵盖身份验证、授权、会话管理以及针对CSRF（跨站点请求伪造） 等常见安全威胁的防护。Spring Security ..."
 ---
 
 [Spring Security](https://docs.spring.io/spring-security/reference/index.html) 为 Java 应用程序提供了一套全面的安全功能，涵盖身份验证、授权、会话管理以及针对[CSRF（跨站点请求伪造）](https://reflectoring.io/spring-csrf/)等常见安全威胁的防护。Spring Security 框架具有高度可定制性，允许开发人员根据其应用程序需求来管理安全配置。它提供了一个灵活的架构，支持各种身份验证机制，如基本身份验证、JWT 和 OAuth。

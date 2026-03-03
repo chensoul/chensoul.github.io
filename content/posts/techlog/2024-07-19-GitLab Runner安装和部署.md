@@ -4,6 +4,7 @@ date: 2024-07-19 08:00:00+08:00
 slug: gitlab-runner-install
 categories: [ "techlog" ]
 tags: ['gitlab']
+description: "介绍 ..."
 ---
 
 ## 介绍

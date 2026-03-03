@@ -4,6 +4,7 @@ date: 2024-05-07 08:00:00+08:00
 slug: websocket-vs-rest
 categories: [ "translation" ]
 tags: ['websocket','rest']
+description: "原文链接：https://ably.com/topic/websocket-vs-rest ..."
 ---
 
 原文链接：[https://ably.com/topic/websocket-vs-rest](https://ably.com/topic/websocket-vs-rest)

@@ -4,6 +4,7 @@ date: 2023-07-26 08:00:00+08:00
 slug: spring-cors
 categories: [ "translation" ]
 tags: ['spring-boot']
+description: "跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。 ..."
 ---
 
 跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。

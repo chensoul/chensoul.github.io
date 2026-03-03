@@ -4,6 +4,7 @@ date: 2024-06-26 08:00:00+08:00
 slug: install-gitlab
 categories: [ "techlog" ]
 tags: ['docker', 'gitlab']
+description: "安装 Gitlab ..."
 ---
 
 ## 安装 Gitlab

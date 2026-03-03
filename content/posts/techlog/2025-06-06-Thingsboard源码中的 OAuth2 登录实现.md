@@ -4,6 +4,7 @@ date: 2025-06-06 08:00:00+08:00
 slug: oauth2-client-login-in-thingsboard
 categories: [ "techlog" ]
 tags: ['oauth2', 'thingsboard']
+description: "Thingsboard 启用 OAuth2 功能 ..."
 ---
 
 ## Thingsboard 启用 OAuth2 功能

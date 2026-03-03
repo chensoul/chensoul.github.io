@@ -4,6 +4,7 @@ date: 2024-05-07 08:00:00+08:00
 slug: websockets-java
 categories: [ "translation" ]
 tags: ['websocket']
+description: "原文：https://ably.com/topic/websockets-java ..."
 ---
 
 原文：[https://ably.com/topic/websockets-java](https://ably.com/topic/websockets-java)

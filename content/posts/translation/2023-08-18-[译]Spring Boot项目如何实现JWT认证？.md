@@ -4,6 +4,7 @@ date: 2023-08-18 08:00:00+08:00
 slug: how-to-implement-jwt-authentication-in-spring-boot-project
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
+description: "..."
 ---
 
 ![How to implement JWT Authentication in Spring Boot Project?](JWT_With_SpringBoot-1.webp)

@@ -5,6 +5,7 @@ slug: thingsboard-http-transport
 categories: [ "techlog" ]
 tags: ['thingsboard']
 mermaid: true
+description: "本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP自动注册（provision）机制的完整调用链、核心模块及消息流转机制，并补充核心注册逻辑代码说明，帮助理解其分层解耦与分布式架构设计。 ..."
 ---
 
 本篇文档系统梳理 ThingsBoard 平台 HTTP 设备接入的整体实现方式，重点详解 HTTP

@@ -4,6 +4,7 @@ date: 2023-08-18 08:00:00+08:00
 slug: how-to-implement-security-in-spring-boot3-using-userdetailsservice
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
+description: "..."
 ---
 
 ![Spring Security UserDetailsService Using Spring Boot 3](UserDetailsServiceSpringBoot3-1.webp)

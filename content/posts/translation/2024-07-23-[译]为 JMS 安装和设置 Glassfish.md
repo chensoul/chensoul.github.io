@@ -4,6 +4,7 @@ date: 2024-07-23 08:00:00+08:00
 slug: install-and-setup-glassfish-for-jms
 categories: [ "translation" ]
 tags: ['jms']
+description: "在本文中，我们将为 JMS 2.0 设置 Glassfish，创建一个 Java 项目并添加必要的依赖项。 ..."
 ---
 
 在本文中，我们将为 JMS 2.0 设置 Glassfish，创建一个 Java 项目并添加必要的依赖项。

@@ -4,6 +4,7 @@ date: 2023-11-16 08:00:00+08:00
 slug: system-design-master-template
 categories: [ "translation" ]
 tags: ['architecture']
+description: "这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 System Design Master Template 这篇章节 ..."
 ---
 
 这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [System Design Master Template](https://www.designgurus.io/course-play/grokking-the-system-design-interview/doc/645d5161fff33a24ccce4bb1) 这篇章节。

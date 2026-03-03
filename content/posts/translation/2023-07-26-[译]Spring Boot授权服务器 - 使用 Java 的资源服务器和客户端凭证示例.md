@@ -4,6 +4,7 @@ date: 2023-07-26 08:00:00+08:00
 slug: spring-boot-authorization-server
 categories: [ "translation" ]
 tags: ['spring-boot', 'oauth2']
+description: "概述 ..."
 ---
 
 # 概述

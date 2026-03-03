@@ -4,6 +4,7 @@ date: 2023-06-19 08:00:00+08:00
 slug: modern-javascript-explained-for-dinosaurs
 categories: [ "translation" ]
 tags: ['javascript']
+description: "..."
 ---
 
 ![Images from Dinosaur Comics by Ryan North](modern-javascript-explained-for-dinosaurs-01.webp)
