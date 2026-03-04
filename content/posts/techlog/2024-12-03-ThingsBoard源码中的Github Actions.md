@@ -14,9 +14,9 @@ ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://
 
 <!--more-->
 
-## check-configuration-files.yml 
+## check-configuration-files.yml
 
-check-configuration-files.yml 
+check-configuration-files.yml
 
 ```yaml
 name: Check configuration files
@@ -55,7 +55,7 @@ jobs:
 
 ## license-header-format.yml
 
-license-header-format.yml 
+license-header-format.yml
 
 ```yaml
 name: License header format
@@ -252,7 +252,7 @@ limitations under the License.
 </plugin>
 ```
 
-然后，可以在 license-maven-plugin 插件中使用 `${project.rootdir} `
+然后，可以在 license-maven-plugin 插件中使用 `${project.rootdir}`
 
 ```xml
 <plugin>
@@ -265,7 +265,7 @@ limitations under the License.
     </configuration>
     <executions>
         <execution>
-          	<phase>initialize</phase>
+           <phase>initialize</phase>
             <goals>
                 <goal>check</goal>
             </goals>
@@ -273,4 +273,3 @@ limitations under the License.
     </executions>
 </plugin>
 ```
-

@@ -154,4 +154,3 @@ curl -s -X POST http://localhost:8080/api/chat \
 - 同步调用链为 **prompt(...) → call() → content()**，与具体模型解耦。
 - 模型相关配置集中在 **application.properties**，并通过 Maven Profile 切换依赖。
 - 提示模板、结构化输出与工具调用示例已在本模块对应接口中覆盖。
-

@@ -66,7 +66,7 @@ DelegatingFilterProxy 是 Spring Security 模块提供的 org.springframework.we
 
 有四种最常用的授权实现类型。他们是 ：
 
-### 1) permitAll 
+### 1) permitAll
 
 PermitAll 表示无需任何授权即可访问当前页面。
 
@@ -119,11 +119,11 @@ hasAuthority 表示用户应该具有身份验证和基于角色的授权访问�
 - configure(AuthenticationManagerBuilder auth)
 - configure(HttpSecurity http)
 
-4. 此外，通过使用@Autowired（如 DataSource、BCryptPasswordEncoder 等）注入其他对象依赖项（如果有），并在需要的地方使用它们。
+1. 此外，通过使用@Autowired（如 DataSource、BCryptPasswordEncoder 等）注入其他对象依赖项（如果有），并在需要的地方使用它们。
 
-5. 同样重要的是，根据需要编写控制器类和视图页面。
+2. 同样重要的是，根据需要编写控制器类和视图页面。
 
-6. 最后，如果您不实施内存中身份验证，请更新 application.properties 文件中的数据库属性。
+3. 最后，如果您不实施内存中身份验证，请更新 application.properties 文件中的数据库属性。
 
 注意：从 Spring Security 5.7.0-M2 开始，WebSecurityConfigurerAdapter 已被弃用。为了了解实现自定义配置类的新方法，请访问有关[不使用 WebSecurityConfigurerAdapter 的 Spring Security](https://javatechonline.com/spring-security-without-websecurityconfigureradapter/) 的单独文章。
 
@@ -155,40 +155,40 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-	@GetMapping("/home")
-	public String getHomePage() {
-		return "homePage";
-	}
+ @GetMapping("/home")
+ public String getHomePage() {
+  return "homePage";
+ }
 
-	@GetMapping("/welcome")
-	public String getWelcomePage() {
-		return "welcomePage";
-	}
+ @GetMapping("/welcome")
+ public String getWelcomePage() {
+  return "welcomePage";
+ }
 
-	@GetMapping("/admin")
-	public String getAdminPage() {
-		return "adminPage";
-	}
+ @GetMapping("/admin")
+ public String getAdminPage() {
+  return "adminPage";
+ }
 
-	@GetMapping("/emp")
-	public String getEmployeePage() {
-		return "empPage";
-	}
+ @GetMapping("/emp")
+ public String getEmployeePage() {
+  return "empPage";
+ }
 
-	@GetMapping("/mgr")
-	public String getManagerPage() {
-		return "mgrPage";
-	}
+ @GetMapping("/mgr")
+ public String getManagerPage() {
+  return "mgrPage";
+ }
 
-	@GetMapping("/common")
-	public String getCommonPage() {
-		return "commonPage";
-	}
+ @GetMapping("/common")
+ public String getCommonPage() {
+  return "commonPage";
+ }
 
-	@GetMapping("/accessDenied")
-	public String getAccessDeniedPage() {
-		return "accessDeniedPage";
-	}
+ @GetMapping("/accessDenied")
+ public String getAccessDeniedPage() {
+  return "accessDeniedPage";
+ }
 }
 ```
 
@@ -333,47 +333,47 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		/ {noop} => No operation for password encoder	(no password encoding needed)
-		auth.inMemoryAuthentication().withUser("devs").password("{noop}devs").authorities("ADMIN");
-		auth.inMemoryAuthentication().withUser("ns").password("{noop}ns").authorities("EMPLOYEE");
-		auth.inMemoryAuthentication().withUser("vs").password("{noop}vs").authorities("MANAGER");
-	}
+  / {noop} => No operation for password encoder (no password encoding needed)
+  auth.inMemoryAuthentication().withUser("devs").password("{noop}devs").authorities("ADMIN");
+  auth.inMemoryAuthentication().withUser("ns").password("{noop}ns").authorities("EMPLOYEE");
+  auth.inMemoryAuthentication().withUser("vs").password("{noop}vs").authorities("MANAGER");
+ }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
 
-		/declares which Page(URL) will have What access type
-		http.authorizeRequests()
-		.antMatchers("/home").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("ADMIN")
-		.antMatchers("/emp").hasAuthority("EMPLOYEE")
-		.antMatchers("/mgr").hasAuthority("MANAGER")
-		.antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
+  /declares which Page(URL) will have What access type
+  http.authorizeRequests()
+  .antMatchers("/home").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("ADMIN")
+  .antMatchers("/emp").hasAuthority("EMPLOYEE")
+  .antMatchers("/mgr").hasAuthority("MANAGER")
+  .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		/ Any other URLs which are not configured in above antMatchers
-		/ generally declared aunthenticated() in real time
-		.anyRequest().authenticated()
+  / Any other URLs which are not configured in above antMatchers
+  / generally declared aunthenticated() in real time
+  .anyRequest().authenticated()
 
-		/Login Form Details
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome", true)
+  /Login Form Details
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome", true)
 
-		/Logout Form Details
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  /Logout Form Details
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		/Exception Details
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
-	}
+  /Exception Details
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
+ }
 }
 ```
 
@@ -406,62 +406,62 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	protected InMemoryUserDetailsManager configAuthentication() {
+ @Bean
+ protected InMemoryUserDetailsManager configAuthentication() {
 
-		List<UserDetails> users = new ArrayList<>();
-		List<GrantedAuthority> adminAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("ADMIN"));
-		UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
-		users.add(admin);
+  List<UserDetails> users = new ArrayList<>();
+  List<GrantedAuthority> adminAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("ADMIN"));
+  UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
+  users.add(admin);
 
-		List<GrantedAuthority> employeeAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
-		UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
-		users.add(employee);
+  List<GrantedAuthority> employeeAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
+  UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
+  users.add(employee);
 
-		List<GrantedAuthority> managerAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("MANAGER"));
-		UserDetails manager= new User("vs", "{noop}vs", managerAuthority);
-		users.add(manager);
+  List<GrantedAuthority> managerAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("MANAGER"));
+  UserDetails manager= new User("vs", "{noop}vs", managerAuthority);
+  users.add(manager);
 
-		return new InMemoryUserDetailsManager(users);
-	}
+  return new InMemoryUserDetailsManager(users);
+ }
 
-	@Bean
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		/declares which Page(URL) will have What access type
-		http.authorizeRequests()
-		.antMatchers("/home").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("ADMIN")
-		.antMatchers("/emp").hasAuthority("EMPLOYEE")
-		.antMatchers("/mgr").hasAuthority("MANAGER")
-		.antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
+  /declares which Page(URL) will have What access type
+  http.authorizeRequests()
+  .antMatchers("/home").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("ADMIN")
+  .antMatchers("/emp").hasAuthority("EMPLOYEE")
+  .antMatchers("/mgr").hasAuthority("MANAGER")
+  .antMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		/ Any other URLs which are not configured in above antMatchers
-		/ generally declared aunthenticated() in real time
-		.anyRequest().authenticated()
+  / Any other URLs which are not configured in above antMatchers
+  / generally declared aunthenticated() in real time
+  .anyRequest().authenticated()
 
-		/Login Form Details
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome", true)
+  /Login Form Details
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome", true)
 
-		/Logout Form Details
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  /Logout Form Details
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		/Exception Details
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
+  /Exception Details
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
 
-		return http.build();
-	}
+  return http.build();
+ }
 }
 ```
 
@@ -494,62 +494,62 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	protected InMemoryUserDetailsManager configAuthentication() {
+ @Bean
+ protected InMemoryUserDetailsManager configAuthentication() {
 
-		List<UserDetails> users = new ArrayList<>();
-		List<GrantedAuthority> adminAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("ADMIN"));
-		UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
-		users.add(admin);
+  List<UserDetails> users = new ArrayList<>();
+  List<GrantedAuthority> adminAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("ADMIN"));
+  UserDetails admin= new User("devs", "{noop}devs", adminAuthority);
+  users.add(admin);
 
-		List<GrantedAuthority> employeeAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
-		UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
-		users.add(employee);
+  List<GrantedAuthority> employeeAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("EMPLOYEE"));
+  UserDetails employee= new User("ns", "{noop}ns", employeeAuthority);
+  users.add(employee);
 
-		List<GrantedAuthority> managerAuthority = new ArrayList<>();
-		adminAuthority.add(new SimpleGrantedAuthority("MANAGER"));
-		UserDetails manager= new User("vs", "{noop}vs", managerAuthority);
-		users.add(manager);
+  List<GrantedAuthority> managerAuthority = new ArrayList<>();
+  adminAuthority.add(new SimpleGrantedAuthority("MANAGER"));
+  UserDetails manager= new User("vs", "{noop}vs", managerAuthority);
+  users.add(manager);
 
-		return new InMemoryUserDetailsManager(users);
-	}
+  return new InMemoryUserDetailsManager(users);
+ }
 
-	@Bean
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		/declares which Page(URL) will have What access type
-		http.authorizeHttpRequests()
-		.requestMatchers("/home").permitAll()
-		.requestMatchers("/welcome").authenticated()
-		.requestMatchers("/admin").hasAuthority("ADMIN")
-		.requestMatchers("/emp").hasAuthority("EMPLOYEE")
-		.requestMatchers("/mgr").hasAuthority("MANAGER")
-		.requestMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
+  /declares which Page(URL) will have What access type
+  http.authorizeHttpRequests()
+  .requestMatchers("/home").permitAll()
+  .requestMatchers("/welcome").authenticated()
+  .requestMatchers("/admin").hasAuthority("ADMIN")
+  .requestMatchers("/emp").hasAuthority("EMPLOYEE")
+  .requestMatchers("/mgr").hasAuthority("MANAGER")
+  .requestMatchers("/common").hasAnyAuthority("EMPLOYEE","MANAGER")
 
-		/ Any other URLs which are not configured in above antMatchers
-		/ generally declared aunthenticated() in real time
-		.anyRequest().authenticated()
+  / Any other URLs which are not configured in above antMatchers
+  / generally declared aunthenticated() in real time
+  .anyRequest().authenticated()
 
-		/Login Form Details
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome", true)
+  /Login Form Details
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome", true)
 
-		/Logout Form Details
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  /Logout Form Details
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		/Exception Details
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
+  /Exception Details
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
 
-		return http.build();
-	}
+  return http.build();
+ }
 }
 ```
 
@@ -590,11 +590,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class BCryptPasswordEncoderTest {
 
-	public static void main(String[] args) {
-		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
-		String encodedPWD = bpe.encode("devs@A!5003");
-		System.out.println(encodedPWD);
-	}
+ public static void main(String[] args) {
+  BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+  String encodedPWD = bpe.encode("devs@A!5003");
+  System.out.println(encodedPWD);
+ }
 }
 ```
 
@@ -659,10 +659,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class AppConfig {
 
-	@Bean
-	public BCryptPasswordEncoder encode() {
-		return new BCryptPasswordEncoder();
-	}
+ @Bean
+ public BCryptPasswordEncoder encode() {
+  return new BCryptPasswordEncoder();
+ }
 }
 ```
 
@@ -705,47 +705,47 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private DataSource dataSource;
+ @Autowired
+ private DataSource dataSource;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+ @Autowired
+ private BCryptPasswordEncoder passwordEncoder;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.jdbcAuthentication()
-		.dataSource(dataSource)     /creates database connection
-		.usersByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?")
-		.authoritiesByUsernameQuery("select user_name,user_role from user where user_name=?")
-		.passwordEncoder(passwordEncoder);
-	}
+  auth.jdbcAuthentication()
+  .dataSource(dataSource)     /creates database connection
+  .usersByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?")
+  .authoritiesByUsernameQuery("select user_name,user_role from user where user_name=?")
+  .passwordEncoder(passwordEncoder);
+ }
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
+ @Override
+ public void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-		.antMatchers("/home").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("ADMIN")
-		.antMatchers("/emp").hasAuthority("EMPLOYEE")
-		.antMatchers("/mgr").hasAuthority("MANAGER")
-		.anyRequest().authenticated()
+  http.authorizeRequests()
+  .antMatchers("/home").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("ADMIN")
+  .antMatchers("/emp").hasAuthority("EMPLOYEE")
+  .antMatchers("/mgr").hasAuthority("MANAGER")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
 
-	}
+ }
 }
 ```
 
@@ -779,49 +779,49 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	private DataSource dataSource;
+ @Autowired
+ private DataSource dataSource;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+ @Autowired
+ private BCryptPasswordEncoder passwordEncoder;
 
-	@Bean
+ @Bean
     public UserDetailsManager authenticateUsers() {
 
-		UserDetails user = User.withUsername("devs").
-				password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("password")).build();
-		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		users.setAuthoritiesByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?");
-		users.setUsersByUsernameQuery("select user_name,user_role from user where user_name=?");
-		users.createUser(user);
-		return users;
-	}
+  UserDetails user = User.withUsername("devs").
+    password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("password")).build();
+  JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+  users.setAuthoritiesByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?");
+  users.setUsersByUsernameQuery("select user_name,user_role from user where user_name=?");
+  users.createUser(user);
+  return users;
+ }
 
-	@Bean
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-		.antMatchers("/home").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("ADMIN")
-		.antMatchers("/emp").hasAuthority("EMPLOYEE")
-		.antMatchers("/mgr").hasAuthority("MANAGER")
-		.anyRequest().authenticated()
+  http.authorizeRequests()
+  .antMatchers("/home").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("ADMIN")
+  .antMatchers("/emp").hasAuthority("EMPLOYEE")
+  .antMatchers("/mgr").hasAuthority("MANAGER")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
-		return http.build();
-	}
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
+  return http.build();
+ }
 }
 ```
 
@@ -855,49 +855,49 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	private DataSource dataSource;
+ @Autowired
+ private DataSource dataSource;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+ @Autowired
+ private BCryptPasswordEncoder passwordEncoder;
 
-	@Bean
+ @Bean
     public UserDetailsManager authenticateUsers() {
 
-		UserDetails user = User.withUsername("devs").
-				password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("password")).build();
-		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		users.setAuthoritiesByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?");
-		users.setUsersByUsernameQuery("select user_name,user_role from user where user_name=?");
-		users.createUser(user);
-		return users;
-	}
+  UserDetails user = User.withUsername("devs").
+    password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("password")).build();
+  JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+  users.setAuthoritiesByUsernameQuery("select user_name,user_pwd,user_enabled from user where user_name=?");
+  users.setUsersByUsernameQuery("select user_name,user_role from user where user_name=?");
+  users.createUser(user);
+  return users;
+ }
 
-	@Bean
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests()
-		.requestMatchers("/home").permitAll()
-		.requestMatchers("/welcome").authenticated()
-		.requestMatchers("/admin").hasAuthority("ADMIN")
-		.requestMatchers("/emp").hasAuthority("EMPLOYEE")
-		.requestMatchers("/mgr").hasAuthority("MANAGER")
-		.anyRequest().authenticated()
+  http.authorizeHttpRequests()
+  .requestMatchers("/home").permitAll()
+  .requestMatchers("/welcome").authenticated()
+  .requestMatchers("/admin").hasAuthority("ADMIN")
+  .requestMatchers("/emp").hasAuthority("EMPLOYEE")
+  .requestMatchers("/mgr").hasAuthority("MANAGER")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
-		;
-		return http.build();
-	}
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
+  ;
+  return http.build();
+ }
 }
 ```
 
@@ -909,12 +909,12 @@ public class SecurityConfig {
 
 1. 启动应用程序，然后右键单击该项目，然后选择“Run As”>>“Spring Boot App”。
 
-2. 输入首页网址 http://localhost:8080/home，检查是否存在每个人都可以访问，甚至无需登录应用程序。
+2. 输入首页网址 <http://localhost:8080/home，检查是否存在每个人都可以访问，甚至无需登录应用程序。>
 
-3. 输入管理页面 URL http://localhost:8080/admin，然后它应该被重定向到内置登录页面（由 Spring Security 提供）
+3. 输入管理页面 URL <http://localhost:8080/admin，然后它应该被重定向到内置登录页面（由> Spring Security 提供）
 
 4. 使用提供的管理员凭据登录，您将被重定向到欢迎页面。
-5. 输入 URL http://localhost:8080/admin，然后您就可以看到管理页面了。
+5. 输入 URL <http://localhost:8080/admin，然后您就可以看到管理页面了。>
 6. 当您使用管理员凭据登录时，您还可以通过点击其他页面 URL 来查看所有页面。
 
 随后对其他角色也重复上述步骤并检查用户是否可以根据授予的角色访问该页面。
@@ -931,7 +931,7 @@ Spring Boot 3.0 在 Spring Security 模块中进行了重大 API 级别更改。
 
 - 使用 RegexRequestMatchers() 代替 regexMatchers()
 
-2. 在实体类中：
+1. 在实体类中：
 
 - 在 import 语句中，使用“jakarta”代替“javax”。例如：使用“jakarta.persistence.Entity;”代替“javax.persistence.Entity;”。
 

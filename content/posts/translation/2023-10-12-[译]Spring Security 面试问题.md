@@ -115,12 +115,12 @@ Spring Security 中的一些重要安全过滤器包括：
 
 ```java
 public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		Class<? extends Authentication> toTest = authentication.getClass();
-		// .......
-		for (AuthenticationProvider provider : getProviders()) {
-			if (!provider.supports(toTest)) {
-				continue;
-			}
+  Class<? extends Authentication> toTest = authentication.getClass();
+  // .......
+  for (AuthenticationProvider provider : getProviders()) {
+   if (!provider.supports(toTest)) {
+    continue;
+   }
                // ......
 }
 ```
@@ -144,7 +144,7 @@ public Authentication authenticate(Authentication authentication) throws Authent
 
 ## 6.什么是密码编码器？默认编码器是什么？
 
-`PasswordEncoder` 是一个用于使用 `encode()` 和 `matches() `方法对密码进行编码和验证的接口。它负责获取用户的密码，应用单向哈希算法，并安全地存储哈希密码。当用户尝试登录时，输入的密码会使用相同的算法再次进行哈希处理，并将生成的哈希值与存储的哈希密码进行比较以进行身份  验证。
+`PasswordEncoder` 是一个用于使用 `encode()` 和 `matches()`方法对密码进行编码和验证的接口。它负责获取用户的密码，应用单向哈希算法，并安全地存储哈希密码。当用户尝试登录时，输入的密码会使用相同的算法再次进行哈希处理，并将生成的哈希值与存储的哈希密码进行比较以进行身份  验证。
 
 默认密码编码器是 `BCryptPasswordEncoder`。 BCrypt 是一种广泛使用的安全哈希算法，它结合了加盐和成本因素，以防止各种类型的攻击，包括暴力攻击。 `BCryptPasswordEncoder` 是密码存储的不错选择，因为它提供了高级别的安全性。
 

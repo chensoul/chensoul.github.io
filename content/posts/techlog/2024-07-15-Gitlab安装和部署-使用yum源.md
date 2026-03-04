@@ -16,31 +16,32 @@ description: "Gitlab Server 部署 ..."
 开启邮件服务
 
 ```shell
-$ systemctl start  postfix
-$ systemctl enable postfix
+systemctl start  postfix
+systemctl enable postfix
 ```
 
-### 2、手动安装 
+### 2、手动安装
 
 #### 1、安装 gitlab 依赖包
 
 centos7:
 
 ```shell
-$ yum install -y curl openssh-server openssh-clients postfix cronie policycoreutils-python
+yum install -y curl openssh-server openssh-clients postfix cronie policycoreutils-python
 ```
 
 > gitlab-ce 10.x.x以后的版本需要依赖policycoreutils-python
 
 centos8:
+
 ```bash
-$ yum install -y curl openssh-server openssh-clients postfix cronie  policycoreutils-python-utils
+yum install -y curl openssh-server openssh-clients postfix cronie  policycoreutils-python-utils
 ```
 
 #### 2、添加官方源
 
 ```shell
-$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
 因为官方源太慢，可以使用国内清华yum源，配置如下
@@ -59,7 +60,7 @@ enabled=1
 自动安装最新版
 
 ```shell
-$ yum -y install gitlab-ce                    
+yum -y install gitlab-ce                    
 ```
 
 #### 4、配置 Gitlab
@@ -95,12 +96,12 @@ external_url 'http://172.17.0.61'     #绑定监听的域名或IP
 gitlab要求语言环境为英文环境，必须切换，切换方法如下：
 
 ```bash
-$ echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile 
+echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile 
 ```
 
 退出终端重新登陆。
 
-如果上面的方案不可以，再使用下面的方案： 	
+如果上面的方案不可以，再使用下面的方案：  
 
 ```bash
 $ yum install langpacks-zh_CN langpacks-en langpacks-en_GB -y
@@ -256,11 +257,9 @@ irb(main):005:0>
 curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 ```
 
-
-
 ## Gitlab 的使用
 
-**在浏览器中输入 http://192.168.1.178/ ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
+**在浏览器中输入 <http://192.168.1.178/> ，然后 change password:  ，并使用root用户登录 即可 (后续动作根据提示操作)**
 
 ### 1、Gitlab 命令行修改密码
 
@@ -269,19 +268,19 @@ $ gitlab-rails console production
 irb(main):001:0>user = User.where(id: 1).first      # id为1的是超级管理员
 irb(main):002:0>user.password = 'yourpassword'      # 密码必须至少8个字符
 irb(main):003:0>user.save!                          # 如没有问题 返回true
-exit 												# 退出
+exit             # 退出
 ```
 
 ### 2、Gitlab服务管理
 
 ```shell
-$ gitlab-ctl start                        # 启动所有 gitlab 组件；
-$ gitlab-ctl stop                         # 停止所有 gitlab 组件；
-$ gitlab-ctl restart                      # 重启所有 gitlab 组件；
-$ gitlab-ctl status                       # 查看服务状态；
-$ gitlab-ctl reconfigure                  # 初始化服务；
-$ vim /etc/gitlab/gitlab.rb               # 修改默认的配置文件；
-$ gitlab-ctl tail                         # 查看日志；
+gitlab-ctl start                        # 启动所有 gitlab 组件；
+gitlab-ctl stop                         # 停止所有 gitlab 组件；
+gitlab-ctl restart                      # 重启所有 gitlab 组件；
+gitlab-ctl status                       # 查看服务状态；
+gitlab-ctl reconfigure                  # 初始化服务；
+vim /etc/gitlab/gitlab.rb               # 修改默认的配置文件；
+gitlab-ctl tail                         # 查看日志；
 ```
 
 ### 3、登陆 Gitlab
@@ -319,7 +318,7 @@ gitlab_rails['backup_path'] = "/data/gitlab/backups"
 #### 2、执行备份命令进行备份
 
 ```shell
-$ /opt/gitlab/bin/gitlab-rake gitlab:backup:create 
+/opt/gitlab/bin/gitlab-rake gitlab:backup:create 
 ```
 
 #### 3、添加到 crontab 中定时执行
@@ -364,8 +363,8 @@ gitlab_rails['backup_path'] = "/data/gitlab/backups"
 ##### 2、恢复前需要先停掉数据连接服务
 
 ```shell
-$ gitlab-ctl stop unicorn
-$ gitlab-ctl stop sidekiq
+gitlab-ctl stop unicorn
+gitlab-ctl stop sidekiq
 ```
 
 - 如果是台新搭建的主机，不需要操作，理论上不停这两个服务也可以。停这两个服务是为了保证数据一致性。
@@ -375,11 +374,10 @@ $ gitlab-ctl stop sidekiq
 将老服务器/data/gitlab/backups目录下的备份文件拷贝到新服务器上的/data/gitlab/backups
 
 ```shell
-$ rsync -avz 1530773117_2019_03_05_gitlab_backup.tar 192.168.95.135://data/gitlab/backups/ 
+rsync -avz 1530773117_2019_03_05_gitlab_backup.tar 192.168.95.135://data/gitlab/backups/ 
 ```
 
 - 注意权限：600权限是无权恢复的。 实验环境可改成了777，生产环境建议修改属主属组
-
 
 ```shell
 $ pwd

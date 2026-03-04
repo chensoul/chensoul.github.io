@@ -24,16 +24,16 @@ description: "..."
 1. 什么是安全上下文中的无状态和有状态身份验证？
 2. 无状态认证和有状态认证有什么区别？
 
-3) 那么什么是 Token，什么是 JWT(JSON Web Token)？
-4) 使用 JWT 认证有什么好处？
-5) JWT 内部如何运作？
-6) 我们在什么情况下使用 JWT 身份验证？
+1) 那么什么是 Token，什么是 JWT(JSON Web Token)？
+2) 使用 JWT 认证有什么好处？
+3) JWT 内部如何运作？
+4) 我们在什么情况下使用 JWT 身份验证？
 
-7) 此外，JWT 身份验证和状态身份验证之间有什么区别？
-8) 此外，如何生成 JWT 编码令牌以及如何将其解码回来？
-9) 如何在 Spring Boot 项目中逐步实现 JWT 认证？
-10) 在 Spring Boot 3.0 中，如何在不使用 WebSecurityConfigurerAdapter 的情况下编写安全配置类？
-11) 最后，如何测试启用 JWT 安全的应用程序？
+5) 此外，JWT 身份验证和状态身份验证之间有什么区别？
+6) 此外，如何生成 JWT 编码令牌以及如何将其解码回来？
+7) 如何在 Spring Boot 项目中逐步实现 JWT 认证？
+8) 在 Spring Boot 3.0 中，如何在不使用 WebSecurityConfigurerAdapter 的情况下编写安全配置类？
+9) 最后，如何测试启用 JWT 安全的应用程序？
 
 ## 什么是无状态和有状态身份验证？
 
@@ -97,11 +97,11 @@ eyJhbGciOiJIUzUxMiJ9
 
 为了实现“如何生成和读取声明”的 POC（概念验证），我们应该考虑为 JWT 找到一个 JAVA API。毫无疑问，我们已经有了 jjwt.jar 来使它成为可能。现在让我们创建一个 POC 来逐步实现我们的功能。
 
-### 步骤#1：在 Eclipse 或 STS 中创建一个简单的 Maven 项目。
+### 步骤#1：在 Eclipse 或 STS 中创建一个简单的 Maven 项目
 
 打开 Eclipse 并选择 File>New>Other，然后搜索“Maven Project”。然后单击“下一步”，选择“创建一个简单项目”复选框。现在点击“下一步”。输入“Group Id”和“Artifact id”作为您的项目详细信息。最后点击“完成”。
 
-### 步骤#2：在 pom.xml 中包含 jjwt 依赖项。
+### 步骤#2：在 pom.xml 中包含 jjwt 依赖项
 
 包含“jjwt”依赖项，如下所示。此外，如果您使用 JDK8 或更高版本，您还需要包含“jaxb”依赖项。
 
@@ -140,28 +140,28 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTUtil {
 
-	// code to generate Token
-	public static String generateToken(String subject, String secret_key) {
+ // code to generate Token
+ public static String generateToken(String subject, String secret_key) {
 
-		return Jwts.builder()
-				.setId("tk9931")
-				.setSubject(subject)
-				.setIssuer("ABC_Ltd")
-				.setAudience("XYZ_Ltd")
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
-				.signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encode(secret_key.getBytes()))
-				.compact();
-	}
+  return Jwts.builder()
+    .setId("tk9931")
+    .setSubject(subject)
+    .setIssuer("ABC_Ltd")
+    .setAudience("XYZ_Ltd")
+    .setIssuedAt(new Date(System.currentTimeMillis()))
+    .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
+    .signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encode(secret_key.getBytes()))
+    .compact();
+ }
 
-	//code to get Claims
-	public static Claims getClaims(String token, String secret_key) {
+ //code to get Claims
+ public static Claims getClaims(String token, String secret_key) {
 
-		return Jwts.parser()
-				.setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
-				.parseClaimsJws(token)
-				.getBody();
-	}
+  return Jwts.parser()
+    .setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
+    .parseClaimsJws(token)
+    .getBody();
+ }
 
 
 }
@@ -182,29 +182,29 @@ public class JWT_Test {
 
     private static String secret_key = "J@!gt*K";
 
-	public static void main(String[] args) {
+ public static void main(String[] args) {
 
-		// code to test generated Token
-		String token= JWTUtil.generateToken("Token1", secret_key);
-		System.out.println("------------------------TOKEN----------------------------------------------------");
-		System.out.println(token);
-		System.out.println();
-		System.out.println("------------------------CLAIMS----------------------------------------------------");
+  // code to test generated Token
+  String token= JWTUtil.generateToken("Token1", secret_key);
+  System.out.println("------------------------TOKEN----------------------------------------------------");
+  System.out.println(token);
+  System.out.println();
+  System.out.println("------------------------CLAIMS----------------------------------------------------");
 
-		//code to test parsed token : Claims
+  //code to test parsed token : Claims
 
-		Claims claims= Jwts.parser()
-				.setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
-				.parseClaimsJws(token)
-				.getBody();
+  Claims claims= Jwts.parser()
+    .setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
+    .parseClaimsJws(token)
+    .getBody();
 
-		System.out.println("Token ID: "+claims.getId());
-		System.out.println("Token Subject: "+claims.getSubject());
-		System.out.println("Token Issuer: "+claims.getIssuer());
-		System.out.println("Token Issue Date: "+claims.getIssuedAt());
-		System.out.println("Token Expiration Date: "+claims.getExpiration());
-		System.out.println("Token Audience: "+claims.getAudience());
-	}
+  System.out.println("Token ID: "+claims.getId());
+  System.out.println("Token Subject: "+claims.getSubject());
+  System.out.println("Token Issuer: "+claims.getIssuer());
+  System.out.println("Token Issue Date: "+claims.getIssuedAt());
+  System.out.println("Token Expiration Date: "+claims.getExpiration());
+  System.out.println("Token Audience: "+claims.getAudience());
+ }
 }
 ```
 
@@ -266,27 +266,27 @@ import lombok.Data;
 @Table(name="users")
 public class User {
 
-	@Id
-	@GeneratedValue
-	@Column(name="user_id")
-	private Integer id;
+ @Id
+ @GeneratedValue
+ @Column(name="user_id")
+ private Integer id;
 
-	@Column(name="user_name")
-	private String username;
+ @Column(name="user_name")
+ private String username;
 
-	@Column(name="user_passwd")
-	private String password;
+ @Column(name="user_passwd")
+ private String password;
 
-	@Column(name="user_email")
-	private String email;
+ @Column(name="user_email")
+ private String email;
 
-	@ElementCollection(fetch= FetchType.EAGER)
-	@CollectionTable(
-			name="roles",
-			joinColumns = @JoinColumn(name="user_id")
-			)
-	@Column(name="user_role")
-	private Set<String> roles;
+ @ElementCollection(fetch= FetchType.EAGER)
+ @CollectionTable(
+   name="roles",
+   joinColumns = @JoinColumn(name="user_id")
+   )
+ @Column(name="user_role")
+ private Set<String> roles;
 }
 ```
 
@@ -318,27 +318,27 @@ import lombok.Data;
 @Table(name="users")
 public class User {
 
-	@Id
-	@GeneratedValue
-	@Column(name="user_id")
-	private Integer id;
+ @Id
+ @GeneratedValue
+ @Column(name="user_id")
+ private Integer id;
 
-	@Column(name="user_name")
-	private String username;
+ @Column(name="user_name")
+ private String username;
 
-	@Column(name="user_passwd")
-	private String password;
+ @Column(name="user_passwd")
+ private String password;
 
-	@Column(name="user_email")
-	private String email;
+ @Column(name="user_email")
+ private String email;
 
-	@ElementCollection(fetch= FetchType.EAGER)
-	@CollectionTable(
-			name="roles",
-			joinColumns = @JoinColumn(name="user_id")
-			)
-	@Column(name="user_role")
-	private Set<String> roles;
+ @ElementCollection(fetch= FetchType.EAGER)
+ @CollectionTable(
+   name="roles",
+   joinColumns = @JoinColumn(name="user_id")
+   )
+ @Column(name="user_role")
+ private Set<String> roles;
 }
 ```
 
@@ -381,7 +381,7 @@ import com.dev.spring.security.jwt.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	Optional<User> findByUsername(String username);
+ Optional<User> findByUsername(String username);
 }
 ```
 
@@ -399,10 +399,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConfig {
 
-	@Bean
-	public BCryptPasswordEncoder encodePassword() {
-		return new BCryptPasswordEncoder();
-	}
+ @Bean
+ public BCryptPasswordEncoder encodePassword() {
+  return new BCryptPasswordEncoder();
+ }
 }
 ```
 
@@ -419,9 +419,9 @@ import com.dev.spring.security.jwt.entity.User;
 
 public interface IUserService {
 
-	Integer saveUser(User user);
+ Integer saveUser(User user);
 
-	Optional<User> findByUsername(String username);
+ Optional<User> findByUsername(String username);
 }
 ```
 
@@ -449,50 +449,50 @@ import com.dev.spring.security.jwt.repo.UserRepository;
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepo;
+ @Autowired
+ private UserRepository userRepo;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptEncoder;
+ @Autowired
+ private BCryptPasswordEncoder bCryptEncoder;
 
-	@Override
-	public Integer saveUser(User user) {
+ @Override
+ public Integer saveUser(User user) {
 
-		//Encode password before saving to DB
-		user.setPassword(bCryptEncoder.encode(user.getPassword()));
-		return userRepo.save(user).getId();
-	}
+  //Encode password before saving to DB
+  user.setPassword(bCryptEncoder.encode(user.getPassword()));
+  return userRepo.save(user).getId();
+ }
 
-	//find user by username
-	@Override
-	public Optional<User> findByUsername(String username) {
-		return userRepo.findByUsername(username);
-	}
+ //find user by username
+ @Override
+ public Optional<User> findByUsername(String username) {
+  return userRepo.findByUsername(username);
+ }
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> opt = userRepo.findByUsername(username);
+ @Override
+ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  Optional<User> opt = userRepo.findByUsername(username);
 
-		org.springframework.security.core.userdetails.User springUser=null;
+  org.springframework.security.core.userdetails.User springUser=null;
 
-		if(opt.isEmpty()) {
-			throw new UsernameNotFoundException("User with username: " +username +" not found");
-		}else {
-			User user =opt.get();	/retrieving user from DB
-			Set<String> roles = user.getRoles();
-			Set<GrantedAuthority> ga = new HashSet<>();
-			for(String role:roles) {
-				ga.add(new SimpleGrantedAuthority(role));
-			}
+  if(opt.isEmpty()) {
+   throw new UsernameNotFoundException("User with username: " +username +" not found");
+  }else {
+   User user =opt.get(); /retrieving user from DB
+   Set<String> roles = user.getRoles();
+   Set<GrantedAuthority> ga = new HashSet<>();
+   for(String role:roles) {
+    ga.add(new SimpleGrantedAuthority(role));
+   }
 
-			springUser = new org.springframework.security.core.userdetails.User(
-							username,
-							user.getPassword(),
-							ga );
-		}
+   springUser = new org.springframework.security.core.userdetails.User(
+       username,
+       user.getPassword(),
+       ga );
+  }
 
-		return springUser;
-	}
+  return springUser;
+ }
 
 }
 ```
@@ -519,57 +519,57 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTUtil {
 
-	@Value("${app.secret.key}")
-	private String secret_key;
+ @Value("${app.secret.key}")
+ private String secret_key;
 
-	// code to generate Token
-	public String generateToken(String subject) {
-		String tokenId= String.valueOf(new Random().nextInt(10000));
-		return Jwts.builder()
-				.setId(tokenId)
-				.setSubject(subject)
-				.setIssuer("ABC_Ltd")
-				.setAudience("XYZ_Ltd")
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
-				.signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encode(secret_key.getBytes()))
-				.compact();
-	}
+ // code to generate Token
+ public String generateToken(String subject) {
+  String tokenId= String.valueOf(new Random().nextInt(10000));
+  return Jwts.builder()
+    .setId(tokenId)
+    .setSubject(subject)
+    .setIssuer("ABC_Ltd")
+    .setAudience("XYZ_Ltd")
+    .setIssuedAt(new Date(System.currentTimeMillis()))
+    .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
+    .signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encode(secret_key.getBytes()))
+    .compact();
+ }
 
-	// code to get Claims
-	public Claims getClaims(String token) {
+ // code to get Claims
+ public Claims getClaims(String token) {
 
-		return Jwts.parser()
-				.setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
-				.parseClaimsJws(token)
-				.getBody();
-	}
+  return Jwts.parser()
+    .setSigningKey(Base64.getEncoder().encode(secret_key.getBytes()))
+    .parseClaimsJws(token)
+    .getBody();
+ }
 
-	// code to check if token is valid
-	public boolean isValidToken(String token) {
-		return getClaims(token).getExpiration().after(new Date(System.currentTimeMillis()));
-	}
+ // code to check if token is valid
+ public boolean isValidToken(String token) {
+  return getClaims(token).getExpiration().after(new Date(System.currentTimeMillis()));
+ }
 
-	// code to check if token is valid as per username
-	public boolean isValidToken(String token,String username) {
-		String tokenUserName=getSubject(token);
-		return (username.equals(tokenUserName) && !isTokenExpired(token));
-	}
+ // code to check if token is valid as per username
+ public boolean isValidToken(String token,String username) {
+  String tokenUserName=getSubject(token);
+  return (username.equals(tokenUserName) && !isTokenExpired(token));
+ }
 
-	// code to check if token is expired
-	public boolean isTokenExpired(String token) {
-		return getExpirationDate(token).before(new Date(System.currentTimeMillis()));
-	}
+ // code to check if token is expired
+ public boolean isTokenExpired(String token) {
+  return getExpirationDate(token).before(new Date(System.currentTimeMillis()));
+ }
 
-	//code to get expiration date
-	public Date getExpirationDate(String token) {
-		return getClaims(token).getExpiration();
-	}
+ //code to get expiration date
+ public Date getExpirationDate(String token) {
+  return getClaims(token).getExpiration();
+ }
 
-	//code to get expiration date
-	public String getSubject(String token) {
-		return getClaims(token).getSubject();
-	}
+ //code to get expiration date
+ public String getSubject(String token) {
+  return getClaims(token).getSubject();
+ }
 }
 ```
 
@@ -585,8 +585,8 @@ import lombok.Data;
 @Data
 public class UserRequest {
 
-	private String username;
-	private String password;
+ private String username;
+ private String password;
 }
 ```
 
@@ -604,8 +604,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserResponse {
 
-	private String token;
-	private String message;
+ private String token;
+ private String message;
 }
 ```
 
@@ -637,36 +637,36 @@ import com.dev.spring.security.jwt.util.JWTUtil;
 @RequestMapping("/user")
 public class UserRestController {
 
-	@Autowired
-	private IUserService userService;
-	@Autowired
-	private JWTUtil util;
-	@Autowired
-	private AuthenticationManager authenticationManager;
+ @Autowired
+ private IUserService userService;
+ @Autowired
+ private JWTUtil util;
+ @Autowired
+ private AuthenticationManager authenticationManager;
 
-	@PostMapping("/saveUser")
-	public ResponseEntity<String> saveUser(@RequestBody User user) {
+ @PostMapping("/saveUser")
+ public ResponseEntity<String> saveUser(@RequestBody User user) {
 
-		Integer id = userService.saveUser(user);
-		String message= "User with id '"+id+"' saved succssfully!";
-		//return new ResponseEntity<String>(message, HttpStatus.OK);
-		return ResponseEntity.ok(message);
-	}
+  Integer id = userService.saveUser(user);
+  String message= "User with id '"+id+"' saved succssfully!";
+  //return new ResponseEntity<String>(message, HttpStatus.OK);
+  return ResponseEntity.ok(message);
+ }
 
-	@PostMapping("/loginUser")
-	public ResponseEntity<UserResponse> login(@RequestBody UserRequest request){
+ @PostMapping("/loginUser")
+ public ResponseEntity<UserResponse> login(@RequestBody UserRequest request){
 
-		//Validate username/password with DB(required in case of Stateless Authentication)
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				request.getUsername(), request.getPassword()));
-		String token =util.generateToken(request.getUsername());
-		return ResponseEntity.ok(new UserResponse(token,"Token generated successfully!"));
-	}
+  //Validate username/password with DB(required in case of Stateless Authentication)
+  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+    request.getUsername(), request.getPassword()));
+  String token =util.generateToken(request.getUsername());
+  return ResponseEntity.ok(new UserResponse(token,"Token generated successfully!"));
+ }
 
-	@PostMapping("/getData")
-	public ResponseEntity<String> testAfterLogin(Principal p){
-		return ResponseEntity.ok("You are accessing data after a valid Login. You are :" +p.getName());
-	}
+ @PostMapping("/getData")
+ public ResponseEntity<String> testAfterLogin(Principal p){
+  return ResponseEntity.ok("You are accessing data after a valid Login. You are :" +p.getName());
+ }
 }
 ```
 
@@ -698,34 +698,34 @@ import com.dev.spring.security.jwt.util.JWTUtil;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-	@Autowired
-	private JWTUtil util;
-	@Autowired
-	private UserDetailsService userDetailsService;
+ @Autowired
+ private JWTUtil util;
+ @Autowired
+ private UserDetailsService userDetailsService;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+ @Override
+ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+   throws ServletException, IOException {
 
-		// Reading Token from Authorization Header
-		String token= request.getHeader("Authorization");
-		if(token !=null) {
-			String username= util.getSubject(token);
-			//if username is not null & Context Authentication must be null
-			if(username !=null && SecurityContextHolder.getContext().getAuthentication()==null) {
-				UserDetails user= userDetailsService.loadUserByUsername(username);
-				boolean isValid=util.isValidToken(token, user.getUsername());
-				if(isValid) {
-					UsernamePasswordAuthenticationToken authToken=
-							new UsernamePasswordAuthenticationToken(username, user.getPassword(), user.getAuthorities());
-					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(authToken);
+  // Reading Token from Authorization Header
+  String token= request.getHeader("Authorization");
+  if(token !=null) {
+   String username= util.getSubject(token);
+   //if username is not null & Context Authentication must be null
+   if(username !=null && SecurityContextHolder.getContext().getAuthentication()==null) {
+    UserDetails user= userDetailsService.loadUserByUsername(username);
+    boolean isValid=util.isValidToken(token, user.getUsername());
+    if(isValid) {
+     UsernamePasswordAuthenticationToken authToken=
+       new UsernamePasswordAuthenticationToken(username, user.getPassword(), user.getAuthorities());
+     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+     SecurityContextHolder.getContext().setAuthentication(authToken);
 
-				}
-			}
-		}
-		filterChain.doFilter(request, response);
-	}
+    }
+   }
+  }
+  filterChain.doFilter(request, response);
+ }
 
 }
 ```
@@ -750,12 +750,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UnAuthorizedUserAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
+ @Override
+ public void commence(HttpServletRequest request, HttpServletResponse response,
+   AuthenticationException authException) throws IOException, ServletException {
 
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UnAuthorized User");
-	}
+  response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"UnAuthorized User");
+ }
 
 }
 ```
@@ -786,50 +786,50 @@ import com.dev.spring.security.jwt.filter.SecurityFilter;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+ @Autowired
+ private UserDetailsService userDetailsService;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptEncoder;
+ @Autowired
+ private BCryptPasswordEncoder bCryptEncoder;
 
-	@Autowired
-	private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
+ @Autowired
+ private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
 
-	@Autowired
-	private SecurityFilter secFilter;
+ @Autowired
+ private SecurityFilter secFilter;
 
-	//Required in case of Stateless Authentication
-	@Override @Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
+ //Required in case of Stateless Authentication
+ @Override @Bean
+ protected AuthenticationManager authenticationManager() throws Exception {
+  return super.authenticationManager();
+ }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.userDetailsService(userDetailsService)
-		    .passwordEncoder(bCryptEncoder);
-	}
+  auth.userDetailsService(userDetailsService)
+      .passwordEncoder(bCryptEncoder);
+ }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
 
-		http
-			.csrf().disable()    /Disabling CSRF as not using form based login
-			.authorizeRequests()
-			.antMatchers("/user/saveUser","/user/loginUser").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.exceptionHandling()
-			.authenticationEntryPoint(authenticationEntryPoint)
-			.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			//To Verify user from second request onwards............
-			.and()
-			.addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
-			;
-	}
+  http
+   .csrf().disable()    /Disabling CSRF as not using form based login
+   .authorizeRequests()
+   .antMatchers("/user/saveUser","/user/loginUser").permitAll()
+   .anyRequest().authenticated()
+   .and()
+   .exceptionHandling()
+   .authenticationEntryPoint(authenticationEntryPoint)
+   .and()
+   .sessionManagement()
+   .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+   //To Verify user from second request onwards............
+   .and()
+   .addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
+   ;
+ }
 }
 ```
 
@@ -864,64 +864,64 @@ import com.dev.spring.security.jwt.filter.SecurityFilter;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+ @Autowired
+ private UserDetailsService userDetailsService;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptEncoder;
+ @Autowired
+ private BCryptPasswordEncoder bCryptEncoder;
 
-	@Autowired
-	private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
+ @Autowired
+ private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
 
-	@Autowired
-	private SecurityFilter secFilter;
+ @Autowired
+ private SecurityFilter secFilter;
 
-	//Required in case of Stateless Authentication
-	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
+ //Required in case of Stateless Authentication
+ @Override
+ @Bean
+ protected AuthenticationManager authenticationManager() throws Exception {
+  return super.authenticationManager();
+ }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.userDetailsService(userDetailsService)
-		    .passwordEncoder(bCryptEncoder);
-	}
+  auth.userDetailsService(userDetailsService)
+      .passwordEncoder(bCryptEncoder);
+ }
 
-	@Override
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Override
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http
-			// .csrf().disable()    /Disabling CSRF as not using form based login
-			.authorizeRequests()
-			.antMatchers("/user/saveUser","/user/loginUser").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.exceptionHandling()
-			.authenticationEntryPoint(authenticationEntryPoint)
-			.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			//To Verify user from second request onwards............
-			.and()
-			.addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
+  http
+   // .csrf().disable()    /Disabling CSRF as not using form based login
+   .authorizeRequests()
+   .antMatchers("/user/saveUser","/user/loginUser").permitAll()
+   .anyRequest().authenticated()
+   .and()
+   .exceptionHandling()
+   .authenticationEntryPoint(authenticationEntryPoint)
+   .and()
+   .sessionManagement()
+   .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+   //To Verify user from second request onwards............
+   .and()
+   .addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
 
-			.and()
-		    .authenticationProvider(authenticationProvider());
+   .and()
+      .authenticationProvider(authenticationProvider());
 
-		return http.build();
+  return http.build();
 
-	}
+ }
 
-	@Bean
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(bCryptEncoder);
-		return authenticationProvider;
-	}
+ @Bean
+ public AuthenticationProvider authenticationProvider() {
+  DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+  authenticationProvider.setUserDetailsService(userDetailsService);
+  authenticationProvider.setPasswordEncoder(bCryptEncoder);
+  return authenticationProvider;
+ }
 }
 ```
 
@@ -956,64 +956,64 @@ import com.dev.spring.security.jwt.filter.SecurityFilter;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+ @Autowired
+ private UserDetailsService userDetailsService;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptEncoder;
+ @Autowired
+ private BCryptPasswordEncoder bCryptEncoder;
 
-	@Autowired
-	private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
+ @Autowired
+ private UnAuthorizedUserAuthenticationEntryPoint authenticationEntryPoint;
 
-	@Autowired
-	private SecurityFilter secFilter;
+ @Autowired
+ private SecurityFilter secFilter;
 
-	//Required in case of Stateless Authentication
-	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
+ //Required in case of Stateless Authentication
+ @Override
+ @Bean
+ protected AuthenticationManager authenticationManager() throws Exception {
+  return super.authenticationManager();
+ }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.userDetailsService(userDetailsService)
-		    .passwordEncoder(bCryptEncoder);
-	}
+  auth.userDetailsService(userDetailsService)
+      .passwordEncoder(bCryptEncoder);
+ }
 
-	@Override
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Override
+ protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http
-			// .csrf().disable()    /Disabling CSRF as not using form based login
-			.authorizeHttpRequests()
-			.requestMatchers("/user/saveUser","/user/loginUser").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.exceptionHandling()
-			.authenticationEntryPoint(authenticationEntryPoint)
-			.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			/To Verify user from second request onwards............
-			.and()
-			.addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
+  http
+   // .csrf().disable()    /Disabling CSRF as not using form based login
+   .authorizeHttpRequests()
+   .requestMatchers("/user/saveUser","/user/loginUser").permitAll()
+   .anyRequest().authenticated()
+   .and()
+   .exceptionHandling()
+   .authenticationEntryPoint(authenticationEntryPoint)
+   .and()
+   .sessionManagement()
+   .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+   /To Verify user from second request onwards............
+   .and()
+   .addFilterBefore(secFilter, UsernamePasswordAuthenticationFilter.class)
 
-			.and()
-		    .authenticationProvider(authenticationProvider());
+   .and()
+      .authenticationProvider(authenticationProvider());
 
-		return http.build();
+  return http.build();
 
-	}
+ }
 
-	@Bean
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(bCryptEncoder);
-		return authenticationProvider;
-	}
+ @Bean
+ public AuthenticationProvider authenticationProvider() {
+  DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+  authenticationProvider.setUserDetailsService(userDetailsService);
+  authenticationProvider.setPasswordEncoder(bCryptEncoder);
+  return authenticationProvider;
+ }
 }
 ```
 
@@ -1028,7 +1028,7 @@ Finally, your project structure should look like below screenshot.
 
 ### 1) 使用 Postman 通过 REST 调用注册用户
 
-在 Postman 中输入 URL http://localhost:8080/user/saveUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
+在 Postman 中输入 URL <http://localhost:8080/user/saveUser，选择> POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
 
 ```json
 {
@@ -1047,7 +1047,7 @@ User with id ‘1’ saved succssfully!
 
 ### 2）以用户身份登录生成令牌
 
-在 Postman 中输入 URL http://localhost:8080/user/loginUser，选择 POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
+在 Postman 中输入 URL <http://localhost:8080/user/loginUser，选择> POST 方法，然后分别选择 Body>Raw>JSON。现在粘贴下面的 JSON 数据，然后单击“发送”按钮。
 
 ```json
 {
@@ -1080,7 +1080,7 @@ User with id ‘1’ saved succssfully!
 
 ### 3）在 token 有效期内访问数据/资源
 
-在 Postman URL 栏中输入 URL http://localhost:8080/user/getData，选择 POST 方法，然后选择 Headers。在标题下选择密钥作为“授权”。现在将令牌粘贴为授权值，如下面的屏幕截图所示。然后单击“发送”按钮。
+在 Postman URL 栏中输入 URL <http://localhost:8080/user/getData，选择> POST 方法，然后选择 Headers。在标题下选择密钥作为“授权”。现在将令牌粘贴为授权值，如下面的屏幕截图所示。然后单击“发送”按钮。
 
 ![How To Implement JWT Authentication In Spring Boot Project?](JWT1-3.webp)
 

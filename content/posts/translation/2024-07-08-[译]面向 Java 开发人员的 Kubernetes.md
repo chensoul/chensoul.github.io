@@ -14,7 +14,7 @@ description: "有一类新工具可用于将应用程序 docker 化并部署到 
 - 将应用程序打包到 Docker 等容器中。这涉及编写 Dockerfile。
 - 将容器部署到 Kubernetes 等编排器。这涉及编写一些资源；服务描述文件、部署等。
 
-用开发人员熟悉的术语来说，这就是“阻抗不匹配”。为了解决这个问题，我们需要一类能够使用开发人员的语言并使整个部署步骤对他们透明的工具。其中最著名的是[Jib ](https://github.com/GoogleContainerTools/jib)，我们在[之前的](https://dzone.com/articles/dockerizing-a-spring-boot-application)论文中讨论过它，它可以为您的 Java 应用程序构建优化的 Docker 和[OCI](https://github.com/opencontainers/image-spec)映像，并以 Maven 插件的形式提供。此类别中还有其他工具，例如[Dekorate](https://dekorate.io/dekorate/)，它允许我们仅使用 Maven 和 Java 注释来生成 Kubernetes 清单。此类别中最新且最全面的条目是 RedHat 的 JKube，这是我们的*当日主题。*
+用开发人员熟悉的术语来说，这就是“阻抗不匹配”。为了解决这个问题，我们需要一类能够使用开发人员的语言并使整个部署步骤对他们透明的工具。其中最著名的是[Jib](https://github.com/GoogleContainerTools/jib)，我们在[之前的](https://dzone.com/articles/dockerizing-a-spring-boot-application)论文中讨论过它，它可以为您的 Java 应用程序构建优化的 Docker 和[OCI](https://github.com/opencontainers/image-spec)映像，并以 Maven 插件的形式提供。此类别中还有其他工具，例如[Dekorate](https://dekorate.io/dekorate/)，它允许我们仅使用 Maven 和 Java 注释来生成 Kubernetes 清单。此类别中最新且最全面的条目是 RedHat 的 JKube，这是我们的*当日主题。*
 
 [JKube](https://www.eclipse.org/jkube/docs/kubernetes-maven-plugin)是一个 Maven 插件，其目标包括构建 Docker 映像和创建 Kubernetes 资源描述符。映像和描述符可以在没有配置的情况下生成，基于基于 pom 文件中条目的一些默认设置，或者可以使用 pom 中的 XML 条目进行自定义，或者在极端情况下使用 Dockerfile 和资源片段进行自定义。以下是该插件的目标：
 
@@ -77,7 +77,7 @@ livenessProbe:
   successThreshold: 1
 ```
 
-和 
+和
 
 ```yaml
 readinessProbe:
@@ -167,6 +167,4 @@ mvn install k8s:build k8s:resource k8s:apply -Djkube.enricher.jkube-service.type
 
 *非常感谢 Rohan Kumar 的帮助。*
 
-
-
-原文链接：https://dzone.com/articles/kubernetes-for-java-developers
+原文链接：<https://dzone.com/articles/kubernetes-for-java-developers>

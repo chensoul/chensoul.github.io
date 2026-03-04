@@ -9,8 +9,6 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google-be6097ec18a5>
 
-
-
 在[之前的文章](/posts/2024/06/05/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring/)中，我们学习了如何使用 OIDC 连接到我们自己的授权服务器。我们在自托管授权服务器中定义了我们自己的客户端应用程序。在今天的文章中，我们将使用 Google 和 GitHub 作为我们的授权服务器，并将我们的授权客户端应用程序连接到这些授权服务器并从它们接收令牌。应用程序登录屏幕将如下所示。
 
 ![oauth2-with-spring-part-4-01](oauth2-with-spring-part-4-01.webp)
@@ -123,7 +121,7 @@ spring:
 
 图 9
 
-现在让我们测试一下我们的应用程序。让我们访问http://localhost:8081/private-data，它将带我们进入登录页面 (10.1)。从这里选择 Google 作为授权服务器 (10.2)。
+现在让我们测试一下我们的应用程序。让我们访问<http://localhost:8081/private-data，它将带我们进入登录页面> (10.1)。从这里选择 Google 作为授权服务器 (10.2)。
 
 ![img](oauth2-with-spring-part-4-11.webp)
 

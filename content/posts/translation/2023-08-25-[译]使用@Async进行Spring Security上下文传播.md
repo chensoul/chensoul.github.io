@@ -48,7 +48,7 @@ public Object standardProcessing() throws Exception {
 }
 ```
 
-我们想要检查 Spring `SecurityContext` 是否传播到新线程。首先，我们在异步调用之前记录上下文，接下来我们运行异步方法，最后再次记录上下文。` asyncCall()` 方法具有以下实现：
+我们想要检查 Spring `SecurityContext` 是否传播到新线程。首先，我们在异步调用之前记录上下文，接下来我们运行异步方法，最后再次记录上下文。`asyncCall()` 方法具有以下实现：
 
 ```java
 @Async

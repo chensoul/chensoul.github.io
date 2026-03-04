@@ -224,7 +224,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 如果我们检查这里的邮递员快照，我们可以注意到一些事情。让我们在下面列出它们。
 
-- URL - 我们的 Spring Boot 应用程序在本地计算机的端口 8080 上运行，因此请求指向 http://localhost:8080。接下来的部分是 /oauth/token，我们知道它是 OAuth 公开的用于生成令牌的端点。
+- URL - 我们的 Spring Boot 应用程序在本地计算机的端口 8080 上运行，因此请求指向 <http://localhost:8080。接下来的部分是> /oauth/token，我们知道它是 OAuth 公开的用于生成令牌的端点。
 - 查询参数 - 由于这是“密码”授权授予类型，因此用户需要向我们的客户端应用程序提供他/她的用户名、密码和范围，然后客户端应用程序使用这些凭据及其凭据发送给我们想要令牌的授权服务器从。
 - 客户端授权- Oauth 系统要求客户端获得授权才能提供令牌。因此，在授权标头下，我们提供客户端身份验证信息，即我们在应用程序中配置的用户名和密码。
 
@@ -329,7 +329,7 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 http://localhost:8080/oauth/authorize?response_type=code&client_id=oauthclient2&scope=read 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。
+这就完成了我们对授权授予类型的设置。现在测试我们的设置并启动我们的应用程序。我们在 <http://localhost:8080/oauth/authorize?response_type=code&client_id=oauthclient2&scope=read> 启动浏览器。我们将重定向到 Spring Security 的默认表单登录页面。
 
 ![OAuth Authorization Server Signin](oauth_authorization_server_signin.webp)
 
@@ -337,7 +337,7 @@ public class UserConfig extends WebSecurityConfigurerAdapter {
 
 ![OAuth Approval](oauth_approval.webp)
 
-如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 http://locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为 Postman 中的客户端来登录授权服务器。
+如果我们批准并单击“授权”，我们将看到我们被重定向到给定的重定向 URL 以及访问代码。在我们的例子中，我们被重定向到 <http://locahost:9090/?code=7Hibnw，正如我们在应用程序中指定的那样。我们现在可以使用该代码作为> Postman 中的客户端来登录授权服务器。
 
 ![Postman Authorization](postman_authorization.webp)
 

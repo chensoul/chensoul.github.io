@@ -409,16 +409,20 @@ public class ConversationMemory {
 ### 常见问题
 
 1. **Docker Model Runner不可用**
+
    ```bash
    # 创建符号链接
    ln -s /Applications/Docker.app/Contents/Resources/cli-plugins/docker-model ~/.docker/cli-plugins/docker-model
    ```
 
 2. **pgvector SQL语法错误**
+
    ```
    PreparedStatementCallback; bad SQL grammar [SELECT *, embedding <=> ? AS distance FROM public.vector_store WHERE embedding <=> ? < ? ORDER BY distance LIMIT ? ]
    ```
+
    **解决方案**: 使用 `EUCLIDEAN_DISTANCE` 替代 `COSINE_DISTANCE`
+
    ```yaml
    spring:
      ai:
@@ -481,6 +485,7 @@ public class ConversationMemory {
 ### Q: Docker Model Runner与传统的AI模型部署有什么区别？
 
 **A**: Docker Model Runner是Docker官方推出的AI模型管理工具，相比传统方案有以下优势：
+
 - **零配置部署**: 无需复杂的容器编排
 - **OpenAI兼容**: 使用标准API格式，易于集成
 - **资源优化**: 自动管理内存和GPU资源
@@ -489,6 +494,7 @@ public class ConversationMemory {
 ### Q: Spring AI框架适合哪些应用场景？
 
 **A**: Spring AI特别适合以下场景：
+
 - **企业级AI应用**: 需要与现有Spring生态系统集成
 - **RAG系统开发**: 检索增强生成应用
 - **多模型支持**: 需要支持多种AI模型和向量存储
@@ -497,6 +503,7 @@ public class ConversationMemory {
 ### Q: pgvector与Elasticsearch向量搜索有什么区别？
 
 **A**: 主要区别如下：
+
 - **pgvector**: 基于PostgreSQL，ACID事务支持，SQL查询能力
 - **Elasticsearch**: 全文搜索能力强，分布式架构，实时分析
 - **选择建议**: 如果已有PostgreSQL基础设施，pgvector更简单；如果需要复杂搜索，Elasticsearch更强大
@@ -504,6 +511,7 @@ public class ConversationMemory {
 ### Q: 如何优化AI应用的性能？
 
 **A**: 性能优化建议：
+
 1. **模型选择**: 根据需求选择合适的模型大小
 2. **向量索引**: 使用HNSW索引提升搜索速度
 3. **缓存策略**: 实现结果缓存减少重复计算
@@ -533,17 +541,20 @@ public class ConversationMemory {
 ## 📚 相关资源
 
 ### 官方文档
+
 - [Docker Model Runner官方文档](https://docs.docker.com/ai/model-runner/)
 - [Spring AI官方文档](https://docs.spring.io/spring-ai/reference/)
 - [Docker官方文档](https://docs.docker.com/)
 - [PostgreSQL pgvector扩展](https://github.com/pgvector/pgvector)
 
 ### 模型资源
+
 - [Hugging Face模型库](https://huggingface.co/models)
 - [Gemma模型介绍](https://huggingface.co/google/gemma-7b)
 - [OpenAI API文档](https://platform.openai.com/docs)
 
 ### 社区资源
+
 - [Spring AI GitHub仓库](https://github.com/spring-projects/spring-ai)
 - [Docker AI社区](https://forums.docker.com/c/ai/)
 - [PostgreSQL中文社区](https://www.postgresql.org/about/newsarchive/)

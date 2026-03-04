@@ -69,7 +69,7 @@ OAuth 2 为不同的用例提供了多种“授权类型”。定义的授权类
 - [OAUTH_CLIENT_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/client/token/JdbcClientTokenServices.java)
 - [OAUTH_ACCESS_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
 - [OAUTH_REFRESH_TOKEN](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/token/store/JdbcTokenStore.java)
-- [OAUTH CODE ](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
+- [OAUTH CODE](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/code/JdbcAuthorizationCodeServices.java)
 - [OAUTH_APPROVALS](https://github.com/spring-projects/spring-security-oauth/blob/2.2.1.RELEASE/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/approval/JdbcApprovalStore.java)
 
 我们将调用像“product_api”这样的资源服务器 对于该服务器，我们定义一个客户端，称为：
@@ -269,7 +269,7 @@ public class ResourcesServerConfiguration  extends ResourceServerConfigurerAdapt
                 .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')")
                 .and()
                 .headers().addHeaderWriter((request, response) -> {
-            			response.addHeader("Access-Control-Allow-Origin", "*");
+               response.addHeader("Access-Control-Allow-Origin", "*");
                   if (request.getMethod().equals("OPTIONS")) {
                       response.setHeader("Access-Control-Allow-Methods", request.getHeader("Access-Control-Request-Method"));
                       response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
@@ -296,13 +296,13 @@ Got token for curl client as : 3be01519–0cab-4049-b87d-617c48bda502
 [{“version”:0,”name”:”product_1",”available”:false},{“version”:0,”name”:”product_2",”available”:true}]
 ```
 
-从 github 上查看整个代码：https://github.com/Akourtiim/oauth2-spring-boot-2.0.2.git
+从 github 上查看整个代码：<https://github.com/Akourtiim/oauth2-spring-boot-2.0.2.git>
 
 **参考：**
 
-- https://tools.ietf.org/html/rfc6749
-- https://dzone.com/articles/secure-spring-rest-with-spring-security-and-oauth2
-- http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/
-- https://github.com/FrontierPsychiatrist/spring-oauth-example
+- <https://tools.ietf.org/html/rfc6749>
+- <https://dzone.com/articles/secure-spring-rest-with-spring-security-and-oauth2>
+- <http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/>
+- <https://github.com/FrontierPsychiatrist/spring-oauth-example>
 
-原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https://akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4) [Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md](/../../work/ads/Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md) 
+原文链接：[Oauth 2 Centralized Authorization with Spring Boot 2.0.2 and Spring Security 5 and JDBC token store](https://akourtim-ahmed.medium.com/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4) [Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md](/../../work/ads/Spring Boot 2.5.8单体应用接入Nacos 1.3.0配置中心完整指南.md)

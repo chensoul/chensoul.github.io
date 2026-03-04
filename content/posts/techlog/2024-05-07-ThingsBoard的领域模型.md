@@ -26,21 +26,21 @@ ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设
 5. 系统设置（AdminSettings）：是用于配置和管理整个系统的全局设置和参数，包括：通用设置、邮件、JWT、连接设置等等。
 6. 审计日志（AuditLog）
 
-6. 资产（Asset）：指在系统中表示和管理的物理或虚拟实体。资产可以是设备、传感器、设施、车辆、建筑物、人员或其他实体，其状态、属性和行为可以被监测、控制和管理。
-7. 资产配置（AssetProfile）：配置资产使用的默认规则链、队列、移动端仪表盘
-8. 设备（Device）：
+7. 资产（Asset）：指在系统中表示和管理的物理或虚拟实体。资产可以是设备、传感器、设施、车辆、建筑物、人员或其他实体，其状态、属性和行为可以被监测、控制和管理。
+8. 资产配置（AssetProfile）：配置资产使用的默认规则链、队列、移动端仪表盘
+9. 设备（Device）：
    1. 遥测数据（TsKV）：
    2. 最新遥测数据：
    3. 属性（AttributeKvEntry）：属性类型分为客户端、服务端、共享
    4. 远程调用（Rpc）
    5. 设备凭证（DeviceCredentials）：
    6. OTA：
-9. 设备配置（DeviceProfile）：配置设备使用的默认规则链、队列、移动端仪表盘、边缘网关默认规则链、分配的固件、分配的软件、传输方式、告警规则、设置预配置
-10. 告警（Alarm）：包括字段：租户、客户、类型、明细、发起者、告警级别（严重、重要、次要、警告、不确定）、是否应答、是否清除、受理人、开始时间、结束时间、应答时间、清除时间、受理时间、是否传播、是否传播给所有者、是否传播给租户
-11. 告警评论（AlarmComment）：
-12. 实体告警（EntityAlarm）：
-13. 事件（Event）：分为异常事件、组件生命周期事件、规则链调试事件、规则节点事件、统计事件
-14. 通知（Notification）:
+10. 设备配置（DeviceProfile）：配置设备使用的默认规则链、队列、移动端仪表盘、边缘网关默认规则链、分配的固件、分配的软件、传输方式、告警规则、设置预配置
+11. 告警（Alarm）：包括字段：租户、客户、类型、明细、发起者、告警级别（严重、重要、次要、警告、不确定）、是否应答、是否清除、受理人、开始时间、结束时间、应答时间、清除时间、受理时间、是否传播、是否传播给所有者、是否传播给租户
+12. 告警评论（AlarmComment）：
+13. 实体告警（EntityAlarm）：
+14. 事件（Event）：分为异常事件、组件生命周期事件、规则链调试事件、规则节点事件、统计事件
+15. 通知（Notification）:
     1. 通知请求（NotificationRequest）
     2. 通知模版（NotificationTemplate）：
     3. 通知规则（NotificationRule）
@@ -62,8 +62,6 @@ ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设
 
 4. 查看告警
 5. 再次发送遥测数据，可以清除告警
-
-
 
 源码分析：
 
@@ -100,7 +98,7 @@ ThingsBoard是一个开源的物联网平台，用于管理和监控物联网设
           TbActorMailbox
            AppActor
             TenantActor
-             RuleChainActor	
+             RuleChainActor 
               RuleChainActorMessageProcessor
                RuleNodeActor
                 RuleNodeActorMessageProcessor

@@ -19,6 +19,7 @@ Spring AI 通过统一的 API 对 OpenAI 的各种接口进行了封装，使得
 ### 1. API 概述
 
 **基础信息：**
+
 - 基础 URL：`https://api.openai.com/v1`
 - 认证方式：Bearer Token
 - 请求格式：JSON
@@ -33,6 +34,7 @@ Content-Type: application/json
 ```
 
 **安全最佳实践：**
+
 - 将 API 密钥存储在环境变量中
 - 使用密钥管理服务
 - 定期轮换密钥
@@ -41,11 +43,13 @@ Content-Type: application/json
 ### 3. 速率限制与计费
 
 **速率限制：**
+
 - 基于账户类型和使用情况
 - 按分钟和按天限制
 - 可在账户设置中查看
 
 **计费模式：**
+
 - 按使用量计费
 - 不同模型不同价格
 - 按输入和输出标记数计算
@@ -75,6 +79,7 @@ Content-Type: application/json
 | `user`              | string  | 否   | 用户标识                            |
 
 **消息格式：**
+
 ```json
 {
   "role": "system|user|assistant",
@@ -83,6 +88,7 @@ Content-Type: application/json
 ```
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
@@ -101,6 +107,7 @@ curl https://api.openai.com/v1/chat/completions \
 ```
 
 **响应示例：**
+
 ```json
 {
   "id": "chatcmpl-abc123",
@@ -148,6 +155,7 @@ curl https://api.openai.com/v1/chat/completions \
 | `user`              | string       | 否   | 用户标识                        |
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/completions \
   -H "Content-Type: application/json" \
@@ -162,6 +170,7 @@ curl https://api.openai.com/v1/completions \
 ```
 
 **响应示例：**
+
 ```json
 {
   "id": "cmpl-abc123",
@@ -200,6 +209,7 @@ curl https://api.openai.com/v1/completions \
 | `user`            | string       | 否   | 用户标识                  |
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/embeddings \
   -H "Content-Type: application/json" \
@@ -213,6 +223,7 @@ curl https://api.openai.com/v1/embeddings \
 ```
 
 **响应示例：**
+
 ```json
 {
   "object": "list",
@@ -251,6 +262,7 @@ curl https://api.openai.com/v1/embeddings \
 | `user`            | string  | 否   | 用户标识                           |
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/images/generations \
   -H "Content-Type: application/json" \
@@ -267,6 +279,7 @@ curl https://api.openai.com/v1/images/generations \
 ```
 
 **响应示例：**
+
 ```json
 {
   "created": 1677652288,
@@ -298,6 +311,7 @@ curl https://api.openai.com/v1/images/generations \
 | `timestamp_granularities` | array  | 否   | 时间戳粒度                                     |
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/audio/transcriptions \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -309,6 +323,7 @@ curl https://api.openai.com/v1/audio/transcriptions \
 ```
 
 **响应示例：**
+
 ```json
 {
   "text": "想象一下你曾经有过的最疯狂的想法，并且你想知道它如何扩展到100倍、1000倍的规模。"
@@ -333,6 +348,7 @@ curl https://api.openai.com/v1/audio/transcriptions \
 | `user`            | string | 否   | 用户标识                                            |
 
 **请求示例：**
+
 ```bash
 curl https://api.openai.com/v1/audio/speech \
   -H "Content-Type: application/json" \
@@ -351,6 +367,7 @@ curl https://api.openai.com/v1/audio/speech \
 ### 7. 流式处理
 
 **流式聊天补全：**
+
 ```bash
 curl -X POST https://api.openai.com/v1/chat/completions \
   -H "Content-Type: application/json" \
@@ -363,6 +380,7 @@ curl -X POST https://api.openai.com/v1/chat/completions \
 ```
 
 **流式响应格式：**
+
 ```
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4","choices":[{"index":0,"delta":{"role":"assistant","content":"从前"},"finish_reason":null}]}
 
@@ -374,6 +392,7 @@ data: [DONE]
 ### 8. 错误处理
 
 **错误响应格式：**
+
 ```json
 {
   "error": {
@@ -385,6 +404,7 @@ data: [DONE]
 ```
 
 **常见错误码：**
+
 - `400`：请求错误
 - `401`：认证失败
 - `429`：速率限制
@@ -395,6 +415,7 @@ data: [DONE]
 ### 1. 聊天补全（Chat Completions）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/chat/completions
 {
@@ -409,6 +430,7 @@ POST https://api.openai.com/v1/chat/completions
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -499,6 +521,7 @@ public class ChatController {
 ### 2. 文本补全（Completions）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/completions
 {
@@ -510,6 +533,7 @@ POST https://api.openai.com/v1/completions
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -549,6 +573,7 @@ public class CompletionService {
 ### 3. 嵌入（Embeddings）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/embeddings
 {
@@ -560,6 +585,7 @@ POST https://api.openai.com/v1/embeddings
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -613,6 +639,7 @@ public class EmbeddingService {
 ### 4. 图像生成（Images）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/images/generations
 {
@@ -627,6 +654,7 @@ POST https://api.openai.com/v1/images/generations
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -685,6 +713,7 @@ public class ImageService {
 ### 5. 音频转录（Audio Transcriptions）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/audio/transcriptions
 -F file="@audio.mp3"
@@ -695,6 +724,7 @@ POST https://api.openai.com/v1/audio/transcriptions
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -749,6 +779,7 @@ public class AudioService {
 ### 6. 文本转语音（Text-to-Speech）
 
 #### OpenAI API
+
 ```bash
 POST https://api.openai.com/v1/audio/speech
 {
@@ -761,6 +792,7 @@ POST https://api.openai.com/v1/audio/speech
 ```
 
 #### Spring AI 对应
+
 ```java
 // 配置
 @Configuration
@@ -826,10 +858,10 @@ Spring AI 通过统一的 API 对 OpenAI 的各种接口进行了完整封装，
 6. **CompletionModel** ↔ **Completions API** - 文本补全
 
 这种设计使得开发者可以：
+
 - 使用统一的 API 访问不同的 AI 功能
 - 轻松切换不同的模型提供商
 - 享受 Spring 生态系统的所有优势
 - 简化配置和错误处理
 - 支持流式处理和异步操作
 - 实现复杂的多模态 AI 应用
-

@@ -166,6 +166,7 @@ spring.ai.chat.memory.repository.jdbc.initialize-schema=always
      -H "Content-Type: application/json" \
      -d '{"prompt":"我叫什么名字？"}' -b cookies.txt
    ```
+
 6. **查看数据库**。可以看到数据库里面创建一个 `spring_ai_chat_memory` 表：
 
    ![spring-ai-chat-memory-postgres-table]( /images/spring-ai-chat-memory-postgres-table.webp)
@@ -177,4 +178,3 @@ spring.ai.chat.memory.repository.jdbc.initialize-schema=always
 - **UI 强化**：前端处理 Markdown/HTML、代码块、表格、列表，真正做到“所见即所得”的 AI 对话体验。
 
 想要一个既能“记住你”又能“实时输出”的聊天机器人？在 chat-memory 的基础上加上这套 SSE 流就够了。
-

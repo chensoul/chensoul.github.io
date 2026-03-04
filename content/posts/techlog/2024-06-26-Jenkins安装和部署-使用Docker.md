@@ -10,9 +10,9 @@ description: "使用 Docker 安装 ..."
 ## 使用 Docker 安装
 
 ```bash
-$ docker volume create --name jenkins_data
+docker volume create --name jenkins_data
 
-$ docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
+docker run -p 8080:8080 -p 50000:50000 -v jenkins_data://var/jenkins_home jenkins/jenkins:jdk21
 ```
 
 第一次启动 Jenkins 时，Docker 日志将包含如下消息：
@@ -107,8 +107,6 @@ volumes:
     jenkins_docker_certs:
 ```
 
-
-
 ## Jenkins 设置
 
 登录之后，修改默认默默，安装插件，并创建第一个用户。
@@ -153,8 +151,6 @@ No ECDSA host key is known for github.houston.softwaregrp.net and you have reque
 
 参考 《[CI：如何使用 Docker Compose 在 arm64 macOS 中为 Jenkins 创建 Nginx 反向代理？](https://akarshseggemu.medium.com/ci-how-to-create-a-nginx-reverse-proxy-for-jenkins-in-arm64-macos-using-docker-compose-4f79c2c6013c)》。
 
-
-
 1. 准备好 SSL 文件，放置 /etc/nginx/ssl 目录
 2. 安装 nginx。
 
@@ -191,9 +187,9 @@ server {
     ignore_invalid_headers off;
 
     location ~ "^/static/[0-9a-fA-F]{8}\/(.*)$" {
-    	# rewrite all static files into requests to the root
-    	# E.g /static/12345678/css/something.css will become /css/something.css
-    	rewrite "^/static/[0-9a-fA-F]{8}\/(.*)" /$1 last;
+     # rewrite all static files into requests to the root
+     # E.g /static/12345678/css/something.css will become /css/something.css
+     rewrite "^/static/[0-9a-fA-F]{8}\/(.*)" /$1 last;
     }
 
     location / {
@@ -251,8 +247,6 @@ USER jenkins
 
 RUN jenkins-plugin-cli --plugins git:5.2.2
 ```
-
-
 
 ## 备份
 

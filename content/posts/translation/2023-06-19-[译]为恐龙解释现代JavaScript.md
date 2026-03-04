@@ -20,7 +20,7 @@ description: "..."
 本文的目的是提供一个历史背景，说明 JavaScript 工具如何在 2017 年发展到今天的样子。我们将从头开始，像恐龙一样构建一个示例网站 - 没有工具，只有普通的 HTML 和 JavaScript。然后，我们将逐步介绍不同的工具，以查看它们一次解决一个问题。有了这个历史背景，你将能够更好地学习和适应未来不断变化的 JavaScript 环境。让我们开始吧！
 
 > 更新：我制作了本文的视频课程版本，为了更清晰，我逐步浏览了每个部分，请在此处查看：
-> https://firstclass.actualize.co/p/modern-javascript-explained-for-dinosaurs
+> <https://firstclass.actualize.co/p/modern-javascript-explained-for-dinosaurs>
 
 ### 以"老派"的方式使用 JavaScript
 
@@ -98,7 +98,7 @@ console.log(moment().startOf("day").fromNow());
 让我们看看如何使用 npm 自动安装 moment.js 包，而不是手动下载它。如果您安装了 node.js，则您已经安装了 npm，这意味着您可以将命令行导航到包含 `index.html` 文件的文件夹并输入：
 
 ```bash
-$ npm init
+npm init
 ```
 
 这将提示您几个问题（默认值很好，您可以为每个问题点击“Enter”）并生成一个名为 `package.json` 的新文件。这是 npm 用来保存所有项目信息的配置文件。使用默认值时， `package.json` 的内容应如下所示：
@@ -120,7 +120,7 @@ $ npm init
 要安装 moment.js JavaScript 包，我们现在可以通过在命令行中输入以下命令来按照其主页上的 npm 说明进行操作：
 
 ```bash
-$ npm install moment --save
+npm install moment --save
 ```
 
 此命令执行两件事 — 首先，它从 [moment.js 包](https://unpkg.com/moment/) 下载所有代码名为 `node_modules` 的文件夹中。其次，它会自动修改 `package.json` 文件以跟踪 moment.js 作为项目依赖项。
@@ -166,7 +166,7 @@ $ npm install moment --save
 
 ![Dinosaur comic panel 2](modern-javascript-explained-for-dinosaurs-03.webp)
 
-### 使用 JavaScript 模块捆绑器（webpack)　
+### 使用 JavaScript 模块捆绑器（webpack)
 
 大多数编程语言都提供了一种将代码从一个文件导入另一个文件的方法。JavaScript 最初并不是使用此功能设计的，因为 JavaScript 被设计为仅在浏览器中运行，无法访问客户端计算机的文件系统（出于安全原因）。因此，在很长一段时间内，在多个文件中组织 JavaScript 代码需要您使用全局共享的变量加载每个文件。
 
@@ -196,7 +196,7 @@ console.log(moment().startOf("day").fromNow());
 让我们来看看如何使用 webpack 让上面的 `require('moment')` 示例在浏览器中工作。首先，我们需要将 webpack 安装到项目中。Webpack 本身是一个 npm 包，所以我们可以从命令行安装它：
 
 ```bash
-$ npm install webpack webpack-cli --save-dev
+npm install webpack webpack-cli --save-dev
 ```
 
 请注意，我们正在安装两个软件包 — webpack 和 webpack-cli（它使您能够从命令行使用 webpack）。另请注意 `--save-dev` 参数 — 这会将其保存为开发依赖项，这意味着它是开发环境中需要的包，而不是生产服务器上需要的包。您可以在自动更新的 `package.json` 文件中看到这反映在：
@@ -225,7 +225,7 @@ $ npm install webpack webpack-cli --save-dev
 现在我们已经将 webpack 和 webpack-cli 作为包安装在 `node_modules` 文件夹中。您可以从命令行使用 webpack-cli，如下所示：
 
 ```bash
-$ ./node_modules/.bin/webpack index.js --mode=development
+./node_modules/.bin/webpack index.js --mode=development
 ```
 
 此命令将运行安装在 `node_modules` 文件夹中的 webpack 工具，从 `index.js` 文件开始，找到任意 `require` 语句，并将它们替换为适当的代码以创建单个输出文件（默认为 `dist/main.js` ）。 `--mode=development` 参数是为了让开发人员保持 JavaScript 的可读性，而不是参数 `--mode=production` 的缩小输出。
@@ -266,7 +266,7 @@ module.exports = {
 现在每次我们更改 `index.js` 时，我们都可以使用以下命令运行 webpack：
 
 ```bash
-$ ./node_modules/.bin/webpack
+./node_modules/.bin/webpack
 ```
 
 我们不再需要指定 `index.js` 和 `--mode=development` 选项，因为 webpack 正在从 `webpack.config.js` 文件中加载这些选项。这更好，但为每个代码更改输入此命令仍然很乏味 - 我们将使此过程更顺畅。
@@ -279,12 +279,12 @@ $ ./node_modules/.bin/webpack
 
 转译代码意味着将一种语言的代码转换为另一种类似语言的代码。这是前端开发的一个重要部分——由于浏览器添加新功能的速度很慢，因此使用实验性功能创建了新语言，这些功能可以转换为浏览器兼容语言。
 
-对于 CSS，有 [Sass](http://sass-lang.com/)，[Less ](http://lesscss.org/)和 [Stylus](http://stylus-lang.com/)，仅举几例。对于 JavaScript，一段时间内最流行的转译器是 [CoffeeScript](http://coffeescript.org/)（2010 年左右发布），而现在大多数人使用 [babel ](https://babeljs.io/)或 [TypeScript](http://www.typescriptlang.org/)。CoffeeScript 是一种专注于通过显著改变语言来改进 JavaScript 的语言——可选的括号、重要的空格等。Babel 不是一门新语言，而是一种转译器，它将尚未适用于所有浏览器（[ES2015](https://babeljs.io/learn-es2015/) 及更高版本）的下一代 JavaScript 转译为更兼容的旧 JavaScript （ES5）。Typescript 是一种与下一代 JavaScript 基本相同的语言，但也添加了可选的静态类型。许多人选择使用 babel，因为它最接近原版 JavaScript。
+对于 CSS，有 [Sass](http://sass-lang.com/)，[Less](http://lesscss.org/)和 [Stylus](http://stylus-lang.com/)，仅举几例。对于 JavaScript，一段时间内最流行的转译器是 [CoffeeScript](http://coffeescript.org/)（2010 年左右发布），而现在大多数人使用 [babel](https://babeljs.io/)或 [TypeScript](http://www.typescriptlang.org/)。CoffeeScript 是一种专注于通过显著改变语言来改进 JavaScript 的语言——可选的括号、重要的空格等。Babel 不是一门新语言，而是一种转译器，它将尚未适用于所有浏览器（[ES2015](https://babeljs.io/learn-es2015/) 及更高版本）的下一代 JavaScript 转译为更兼容的旧 JavaScript （ES5）。Typescript 是一种与下一代 JavaScript 基本相同的语言，但也添加了可选的静态类型。许多人选择使用 babel，因为它最接近原版 JavaScript。
 
 让我们看一个如何在我们现有的 webpack 构建步骤中使用 babel 的示例。首先，我们将从命令行将 babel（这是一个 npm 包）安装到项目中：
 
 ```bash
-$ npm install @babel/core @babel/preset-env babel-loader --save-dev
+npm install @babel/core @babel/preset-env babel-loader --save-dev
 ```
 
 请注意，我们正在安装 3 个单独的包作为开发依赖项 — `@babel/core` 是 babel 的主要部分， `@babel/preset-env` 是定义要转译的新 JavaScript 功能的预设， `babel-loader` 是使 babel 能够使用 webpack 的包。我们可以通过编辑 `webpack.config.js` 文件将 webpack 配置为使用 `babel-loader` ，如下所示：
@@ -329,7 +329,7 @@ var name = "Bob",
 console.log(`Hello ${name}, how are you ${time}?`);
 ```
 
-我们还可以使用 [ES2015 import 语句 ](https://babeljs.io/learn-es2015/#ecmascript-2015-features-modules)代替 `require` 来加载模块，这就是您今天在很多代码库中看到的内容：
+我们还可以使用 [ES2015 import 语句](https://babeljs.io/learn-es2015/#ecmascript-2015-features-modules)代替 `require` 来加载模块，这就是您今天在很多代码库中看到的内容：
 
 ```js
 // index.js
@@ -344,7 +344,7 @@ console.log(`Hello ${name}, how are you ${time}?`);
 在此示例中， `import` 语法与 `require` 语法没有太大区别，但 `import` 对于更高级的情况具有额外的灵活性。由于我们更改了 `index.js` ，我们需要在命令行中再次运行 webpack：
 
 ```bash
-$ ./node_modules/.bin/webpack
+./node_modules/.bin/webpack
 ```
 
 现在您可以在浏览器中刷新 `index.html` 。在撰写本文时，大多数现代浏览器都支持所有 ES2015 功能，因此很难判断 babel 是否完成了它的工作。您可以在 IE9 等较旧的浏览器中对其进行测试，也可以在 `main.js` 中搜索以查找转译的代码行：
@@ -397,13 +397,13 @@ console.log("Hello " + name + ", how are you " + time + "?");
 在这里，我们添加了两个新脚本， `build` 和 `watch` 。要运行构建脚本，您可以在命令行中输入：
 
 ```bash
-$ npm run build
+npm run build
 ```
 
 这将运行 webpack（使用我们之前所做的 `webpack.config.js` 中的配置），其中 `--progress` 选项显示进度百分比， `--mode=production` 选项最小化生产代码。要运行 `watch` 脚本，请执行以下操作：
 
 ```bash
-$ npm run watch
+npm run watch
 ```
 
 它使用 `--watch` 选项代替，以便在每次任何 JavaScript 文件更改时自动重新运行 webpack，这对于开发非常有用。
@@ -411,7 +411,7 @@ $ npm run watch
 请注意， `package.json` 中的脚本可以在不必指定完整路径 `./node_modules/.bin/webpack` 的情况下运行 webpack，因为 node.js 知道每个 npm 模块路径的位置。这很甜！我们可以通过安装 webpack-dev-server 来让事情变得更加甜蜜，这是一个单独的工具，它提供了一个简单的 Web 服务器和实时重新加载。要将其安装为开发依赖项，请输入以下命令：
 
 ```bash
-$ npm install webpack-dev-server --save-dev
+npm install webpack-dev-server --save-dev
 ```
 
 然后将一个 npm 脚本添加到 `package.json` ：
@@ -446,14 +446,14 @@ $ npm install webpack-dev-server --save-dev
 现在，您可以通过运行以下命令来启动开发服务器：
 
 ```bash
-$ npm run serve
+npm run serve
 ```
 
 这将在您的浏览器中自动打开地址为 `localhost:8080` 的 `index.html` 网站（默认情况下）。每当你在 `index.js` 中更改 JavaScript 时，webpack-dev-server 都会重建它自己的捆绑 JavaScript 并自动刷新浏览器。这是一个非常有用的时间节省，因为它允许您将注意力集中在代码上，而不必在代码和浏览器之间不断切换上下文以查看新的更改。
 
 这只是表面，webpack 和 webpack-dev-server 还有更多选项（你可以在[这里](https://webpack.js.org/guides/development/)阅读）。当然，你也可以制作 npm 脚本来运行其他任务，例如将 Sass 转换为 CSS、压缩图像、运行测试 — 任何具有命令行工具的东西都是公平的游戏。npm 脚本本身也有一些很棒的高级选项和技巧——[Kate Hudson](https://twitter.com/k88hudson) 的这个演讲是一个很好的起点：
 
-https://youtu.be/0RYETb9YVrk
+<https://youtu.be/0RYETb9YVrk>
 
 ### 结论
 

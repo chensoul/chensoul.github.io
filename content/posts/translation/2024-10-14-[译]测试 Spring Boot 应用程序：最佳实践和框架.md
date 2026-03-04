@@ -104,8 +104,6 @@ public class EmployeeServiceTests {
 }
 ```
 
-
-
 **b. 使用 MockMvc 模拟 HTTP 请求并测试控制器的响应。使用 @AutoConfigureMockMvc 自动配置 MockMvc。**
 
 ```java
@@ -358,8 +356,6 @@ public class EmployeeServiceTest {
   }
 }
 ```
-
-
 
 **b.使用 @ConfigurationProperties 从配置文件注入属性。**
 
@@ -691,7 +687,5 @@ Spring Boot 应用程序中常用有几种测试工具，包括：
 > **请继续关注**[**Simform Engineering**](https://medium.com/simform-engineering)**博客，了解有关最新工具和技术的更多更新。**
 >
 > **关注我们：**[**Twitter**](https://twitter.com/simform) **|** [**LinkedIn**](https://www.linkedin.com/company/simform/)
-
-
 
 原文链接：[https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516](https://medium.com/simform-engineering/testing-spring-boot-applications-best-practices-and-frameworks-6294e1068516)

@@ -14,6 +14,7 @@ ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://
 ## 源码编译
 
 下载代码：
+
 ```bash
 git clone git@github.com:thingsboard/thingsboard.git
 ```
@@ -93,8 +94,6 @@ cd dao
 mvn install
 ```
 
-
-
 ## Idea 中运行
 
 首先 IDEA 需要安装 **lombok** 和 **Protobuf** 相关插件，有个 proto 文件生成的java代码过大(`TransportProtos`)，默认是不会解析的。需要编辑idea 的属性(Help -> Edit Custom Properties)，加入`idea.max.intellisense.filesize=3000`，将上限提高到3M。
@@ -127,7 +126,6 @@ docker compose -f docker-compose.postgres-1.yml up -d
 
 启动成功之后，在浏览器访问 [http://localhost:8080/login](http://localhost:8080/login)， ThingsBoard 默认账户
 
-- 系统管理员： sysadmin@thingsboard.org / sysadmin
-- 租户管理员：tenant@thingsboard.org / tenant
-- 客户用户： customer@thingsboard.org / customer
-
+- 系统管理员： <sysadmin@thingsboard.org> / sysadmin
+- 租户管理员：<tenant@thingsboard.org> / tenant
+- 客户用户： <customer@thingsboard.org> / customer

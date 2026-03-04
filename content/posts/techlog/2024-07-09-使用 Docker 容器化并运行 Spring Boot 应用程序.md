@@ -32,8 +32,8 @@ Java 入门指南教您如何使用 Docker 创建容器化的 Spring Boot 应用
 将要使用的示例应用程序克隆到本地开发机器。在终端中运行以下命令来克隆存储库。
 
 ```bash
-$ git clone https://github.com/spring-projects/spring-petclinic.git
-$ cd spring-petclinic
+git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
 ```
 
 ## 初始化 Docker 资产
@@ -72,7 +72,7 @@ WARNING: The following Docker files already exist in this directory:
 在目录内`spring-petclinic`，在终端运行以下命令。
 
 ```bash
-$ docker compose up --build
+docker compose up --build
 ```
 
 首次构建并运行应用程序时，Docker 会下载依赖项并构建应用程序。这可能需要几分钟，具体取决于您的网络连接。
@@ -84,7 +84,7 @@ $ docker compose up --build
 您可以通过添加选项来运行与终端分离的应用程序`-d` 。在`spring-petclinic`目录中，在终端中运行以下命令。
 
 ```bash
-$ docker compose up --build -d
+docker compose up --build -d
 ```
 
 打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
@@ -92,7 +92,7 @@ $ docker compose up --build -d
 在终端中，运行以下命令来停止应用程序。
 
 ```bash
-$ docker compose down
+docker compose down
 ```
 
 有关 Compose 命令的更多信息，请参阅 [Compose CLI 参考](https://docs.docker.com/compose/reference/)。
@@ -104,8 +104,6 @@ $ docker compose down
 相关信息：
 
 - [docker init 参考](https://docs.docker.com/reference/cli/docker/init/)
-
-
 
 # 使用容器进行 Java 开发
 
@@ -176,7 +174,7 @@ volumes:
 现在，运行以下`docker compose up`命令来启动您的应用程序。
 
 ```console
-$ docker compose up --build
+docker compose up --build
 ```
 
 打开浏览器并通过 [http://localhost:8080](http://localhost:8080/)查看应用程序。您应该看到一个宠物诊所的简单应用程序。
@@ -281,7 +279,7 @@ volumes:
 现在，启动您的应用程序并确认它正在运行。
 
 ```bash
-$ docker compose up --build
+docker compose up --build
 ```
 
 最后，测试您的 API 端点。运行以下 curl 命令：
@@ -319,7 +317,7 @@ $ curl  --request GET \
 您现在可以调用服务器端点。
 
 ```bash
-$ curl --request GET --url http://localhost:8080/vets
+curl --request GET --url http://localhost:8080/vets
 ```
 
 您应该已经看到代码在标记的行上中断，现在您可以像平常一样使用调试器。您还可以检查和观察变量、设置条件断点、查看堆栈跟踪以及执行许多其他操作。
@@ -375,10 +373,10 @@ volumes:
 运行以下命令以使用 Compose Watch 运行您的应用程序。
 
 ```bash
-$ docker compose watch
+docker compose watch
 ```
 
-打开 Web 浏览器并通过 http://localhost:8080 查看应用程序 。您应该会看到 Spring Pet Clinic 主页。
+打开 Web 浏览器并通过 <http://localhost:8080> 查看应用程序 。您应该会看到 Spring Pet Clinic 主页。
 
 现在，对本地计算机上应用程序源文件的任何更改都将自动反映在正在运行的容器中。
 
@@ -475,7 +473,7 @@ ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.b
 现在，构建您的映像并运行测试。您将运行命令`docker build`并添加`--target test`标志，以便专门运行测试构建阶段。
 
 ```bash
-$ docker build -t java-docker-image-test --progress=plain --no-cache --target=test .
+docker build -t java-docker-image-test --progress=plain --no-cache --target=test .
 ```
 
 您应该看到包含以下内容的输出
@@ -533,15 +531,15 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
 6. 在您机器上的本地存储库中，运行以下命令将源更改为您刚刚创建的存储库。确保更改 `your-username`为您的 GitHub 用户名和`your-repository`您创建的存储库的名称。
 
    ```bash
-   $ git remote set-url origin https://github.com/your-username/your-repository.git
+   git remote set-url origin https://github.com/your-username/your-repository.git
    ```
 
 7. 运行以下命令将本地存储库暂存、提交并推送到 GitHub。
 
    ```bash
-   $ git add -A
-   $ git commit -m "my commit"
-   $ git push -u origin main
+   git add -A
+   git commit -m "my commit"
+   git push -u origin main
    ```
 
 ## 第二步：设置工作流程
@@ -613,7 +611,7 @@ $ docker build -t java-docker-image-test --progress=plain --no-cache --target=te
              push: ${{ github.event_name != 'pull_request' }}
              labels: ${{ steps.meta.outputs.labels }}
    ```
-   
+
    有关的 YAML 语法的更多信息`docker/build-push-action`，请参阅 [GitHub Action README](https://github.com/docker/build-push-action/blob/master/README.md)。
 
 ## 第三步：运行工作流程
@@ -704,7 +702,7 @@ spec:
 1. 在终端中，导航到 Kubernetes`spring-petclinic`并将其部署到 Kubernetes。
 
    ```console
-   $ kubectl apply -f docker-java-kubernetes.yaml
+   kubectl apply -f docker-java-kubernetes.yaml
    ```
 
    您应该看到如下所示的输出，表明您的 Kubernetes 对象已成功创建。
@@ -717,7 +715,7 @@ spec:
 2. 通过列出您的部署来确保一切正常。
 
    ```bash
-   $ kubectl get deployments
+   kubectl get deployments
    ```
 
    您的部署应列出如下：
@@ -730,7 +728,7 @@ spec:
    这表明您在 YAML 中请求的所有 pod 均已启动并正在运行。对您的服务执行相同的检查。
 
    ```bash
-   $ kubectl get services
+   kubectl get services
    ```
 
    您应该获得如下输出。
@@ -760,7 +758,7 @@ spec:
 4. 运行以下命令来关闭您的应用程序。
 
    ```bash
-   $ kubectl delete -f docker-java-kubernetes.yaml
+   kubectl delete -f docker-java-kubernetes.yaml
    ```
 
 ## 概括

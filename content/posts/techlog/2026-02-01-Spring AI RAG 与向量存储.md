@@ -64,7 +64,7 @@ spring.ai.vectorstore.redis.initialize-schema=true
 @RequestMapping("/api/chat")
 class ChatController {
     private final VectorStore vectorStore;
-		//....
+  //....
 }
 ```
 

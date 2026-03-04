@@ -130,10 +130,10 @@ public class SecurityServletFilter extends HttpFilter {
 }
 ```
 
-1.  首先，过滤器需要从请求中提取用户名/密码。它可以通过基本身份验证 HTTP 标头、表单字段或 cookie 等实现。
-2.  然后，过滤器需要根据某些内容（例如数据库）验证用户名/密码组合。
-3.  成功验证后，过滤器需要检查用户是否有权访问所请求的 URI。
-4.  如果请求通过了所有这些检查，那么过滤器可以让请求传递到您的 DispatcherServlet，即您的 @Controller。
+1. 首先，过滤器需要从请求中提取用户名/密码。它可以通过基本身份验证 HTTP 标头、表单字段或 cookie 等实现。
+2. 然后，过滤器需要根据某些内容（例如数据库）验证用户名/密码组合。
+3. 成功验证后，过滤器需要检查用户是否有权访问所请求的 URI。
+4. 如果请求通过了所有这些检查，那么过滤器可以让请求传递到您的 DispatcherServlet，即您的 @Controller。
 
 #### 过滤器链
 
@@ -239,15 +239,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // (1)
 
 现在重要的是，您可以在这个 `*configure*` 方法中指定：
 
-1.  要保护哪些 URL (authenticated()) 以及允许哪些 URL (permitAll())。
-2.  允许哪些身份验证方法（formLogin()、httpBasic()）以及它们的配置方式。
-3.  简而言之：您的应用程序的完整安全配置。
+1. 要保护哪些 URL (authenticated()) 以及允许哪些 URL (permitAll())。
+2. 允许哪些身份验证方法（formLogin()、httpBasic()）以及它们的配置方式。
+3. 简而言之：您的应用程序的完整安全配置。
 
 注意：您不需要立即覆盖适配器的配置方法，因为它带有一个非常合理的实现 - 默认情况下。它看起来是这样的：
 
 ```java
 public abstract class WebSecurityConfigurerAdapter implements
-		WebSecurityConfigurer<WebSecurity> {
+  WebSecurityConfigurer<WebSecurity> {
 
     protected void configure(HttpSecurity http) throws Exception {
             http
@@ -308,12 +308,12 @@ public UserDetailsService userDetailsService() {
 }
 ```
 
-1.  MyDatabaseUserDetailsService 实现了 UserDetailsService，这是一个非常简单的接口，它由一个返回 UserDetails 对象的方法组成：
+1. MyDatabaseUserDetailsService 实现了 UserDetailsService，这是一个非常简单的接口，它由一个返回 UserDetails 对象的方法组成：
 
 ```java
 public class MyDatabaseUserDetailsService implements UserDetailsService {
 
-	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // (1)
+ UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // (1)
          // 1. Load the user from the users table by username. If not found, throw UsernameNotFoundException.
          // 2. Convert/wrap the user to a UserDetails object and return it.
         return someUserDetails;
@@ -352,9 +352,9 @@ public interface UserDetails extends Serializable { // (2)
 
 现在回想一下您的 HTTP 基本身份验证，这意味着您正在使用 Spring Security 和基本身份验证来保护您的应用程序。当您指定 UserDetailsService 并尝试登录时会发生以下情况：
 
-1.  从过滤器中的 HTTP Basic Auth 标头中提取用户名/密码组合。您无需为此做任何事情，它会在幕后发生。
-2.  调用 MyDatabaseUserDetailsService 从数据库加载相应的用户，包装为 UserDetails 对象，该对象公开用户的哈希密码。
-3.  从 HTTP Basic Auth 标头中获取提取的密码，自动对其进行哈希处理，并将其与 UserDetails 对象中的哈希密码进行比较。如果两者匹配，则用户身份验证成功。
+1. 从过滤器中的 HTTP Basic Auth 标头中提取用户名/密码组合。您无需为此做任何事情，它会在幕后发生。
+2. 调用 MyDatabaseUserDetailsService 从数据库加载相应的用户，包装为 UserDetails 对象，该对象公开用户的哈希密码。
+3. 从 HTTP Basic Auth 标头中获取提取的密码，自动对其进行哈希处理，并将其与 UserDetails 对象中的哈希密码进行比较。如果两者匹配，则用户身份验证成功。
 
 这里的所有都是它的。但是等一下，Spring Security 如何对来自客户端的密码进行哈希处理（步骤 3）？用什么算法？
 
@@ -407,8 +407,8 @@ Spring Security 将：
 
 这有两个含义：
 
-1.  您的应用程序中不再有用户密码，因为您不能要求 Crowd 只提供这些密码。
-2.  但是，您确实有一个 REST API，您可以使用您的用户名和密码登录。 （对 `*/rest/usermanagement/1/authentication*` REST 端点的 POST 请求）。
+1. 您的应用程序中不再有用户密码，因为您不能要求 Crowd 只提供这些密码。
+2. 但是，您确实有一个 REST API，您可以使用您的用户名和密码登录。 （对 `*/rest/usermanagement/1/authentication*` REST 端点的 POST 请求）。
 
 如果是这种情况，您不能再使用 UserDetailsService，而是需要实现并提供 AuthenticationProvider @Bean。
 
@@ -435,7 +435,7 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
             }
             return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities()); // (4)
         }
-	    // other method ignored
+     // other method ignored
 }
 ```
 
@@ -499,12 +499,12 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
 ```java
 public final class SimpleGrantedAuthority implements GrantedAuthority {
 
-	private final String role;
+ private final String role;
 
     @Override
-	public String getAuthority() {
-		return role;
-	}
+ public String getAuthority() {
+  return role;
+ }
 }
 ```
 
@@ -537,8 +537,8 @@ public class MyDatabaseUserDetailsService implements UserDetailsService {
 }
 ```
 
-1.  您只需将数据库列中的任何内容映射到 SimpleGrantedAuthorities 列表即可。完毕。
-2.  同样，我们在这里使用 Spring Security 的 UserDetails 基本实现。您还可以在此处使用自己的类实现 UserDetails，甚至可能不需要映射。
+1. 您只需将数据库列中的任何内容映射到 SimpleGrantedAuthorities 列表即可。完毕。
+2. 同样，我们在这里使用 Spring Security 的 UserDetails 基本实现。您还可以在此处使用自己的类实现 UserDetails，甚至可能不需要映射。
 
 ### 2. AuthenticationManager：在哪里存储和获取权限？
 
@@ -560,12 +560,12 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
         }
         return new UserNamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), mapToAuthorities(user.getGroups())); // (2)
     }
-	    // other method ignored
+     // other method ignored
 }
 ```
 
-1.  注意：这不是实际的 Atlassian Crowd 代码，但达到了其目的。您针对 REST 服务进行身份验证并获取 JSON User 对象，然后该对象将转换为 atlassian.crowd.User 对象。
-2.  该用户可以是一个或多个组的成员，此处假定这些组只是字符串。然后，您可以简单地将这些组映射到 Spring 的“SimpleGrantedAuthority”。
+1. 注意：这不是实际的 Atlassian Crowd 代码，但达到了其目的。您针对 REST 服务进行身份验证并获取 JSON User 对象，然后该对象将转换为 atlassian.crowd.User 对象。
+2. 该用户可以是一个或多个组的成员，此处假定这些组只是字符串。然后，您可以简单地将这些组映射到 Spring 的“SimpleGrantedAuthority”。
 
 ### 重新审视 WebSecurityConfigurerAdapter
 
@@ -576,8 +576,8 @@ public class AtlassianCrowdAuthenticationProvider implements AuthenticationProvi
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
         http
           .authorizeRequests()
             .antMatchers("/admin").hasAuthority("ROLE_ADMIN") // (1)
@@ -587,7 +587,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          .formLogin()
            .and()
          .httpBasic();
-	}
+ }
 }
 ```
 
@@ -604,8 +604,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/callcenter").hasAnyRole("ADMIN", "CALLCENTER") // (2)
 ```
 
-1.  现在，您不再调用“hasAuthority”，而是调用“hasRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 的权限。
-2.  现在，您不再调用“hasAnyAuthority”，而是调用“hasAnyRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 或 `*ROLE_CALLCENTER*` 的权限。
+1. 现在，您不再调用“hasAuthority”，而是调用“hasRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 的权限。
+2. 现在，您不再调用“hasAnyAuthority”，而是调用“hasAnyRole”。注意：Spring Security 将在经过身份验证的用户上查找名为 `*ROLE_ADMIN*` 或 `*ROLE_CALLCENTER*` 的权限。
 
 ### hasAccess 和 SpEL
 
@@ -703,7 +703,7 @@ public class MyController {
 1. 配置 Spring Security 以使用 CookieCsrfTokenRepository，它将把 CSRFToken 放入 cookie“XSRF-TOKEN”（并将其发送到浏览器）。
 2. 让您的 Javascript 应用程序采用该 cookie 值，并将其作为“X-XSRF-TOKEN”标头与每个 POST(/PUT/PATCH/DELETE) 请求一起发送。
 
-有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。
+有关完整的复制粘贴 React 示例，请查看这篇精彩的博客文章：<https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot。>
 
 #### 禁用 CSRF
 
@@ -782,8 +782,8 @@ public class SomeService {
 }
 ```
 
-1.  如前所述，@Secured 将权限/角色作为参数。 @RolesAllowed，同样。注意：请记住 `*@RolesAllowed("ADMIN")*` 将检查授予的权限 `*ROLE_ADMIN*` 。
-2.  如前所述，@PreAuthorize 接受权限，但也接受任何有效的 SpEL 表达式。有关常见内置安全表达式（如上面的 `*isAnonymous()*` ）的列表，而不是编写您自己的 SpEL 表达式，请查看官方文档。
+1. 如前所述，@Secured 将权限/角色作为参数。 @RolesAllowed，同样。注意：请记住 `*@RolesAllowed("ADMIN")*` 将检查授予的权限 `*ROLE_ADMIN*` 。
+2. 如前所述，@PreAuthorize 接受权限，但也接受任何有效的 SpEL 表达式。有关常见内置安全表达式（如上面的 `*isAnonymous()*` ）的列表，而不是编写您自己的 SpEL 表达式，请查看官方文档。
 
 ### 我应该使用哪个注释？
 
@@ -797,10 +797,10 @@ public class SomeService {
 
 至于与 Spring WebMVC 的集成，Spring Security 允许您执行以下操作：
 
-1.  除了 antMatchers 和 regexMatchers 之外，您还可以使用 mvcMatchers。不同之处在于，虽然 antMatchers 和 regexMatchers 基本上使用通配符匹配 URI 字符串，但 mvcMatchers 的行为与 @RequestMappings 完全相同。
-2.  将当前经过身份验证的主体注入到 @Controller/@RestController 方法中。
-3.  将当前会话 CSRFToken 注入到 @Controller/@RestController 方法中。
-4.  正确处理异步请求处理的安全性。
+1. 除了 antMatchers 和 regexMatchers 之外，您还可以使用 mvcMatchers。不同之处在于，虽然 antMatchers 和 regexMatchers 基本上使用通配符匹配 URI 字符串，但 mvcMatchers 的行为与 @RequestMappings 完全相同。
+2. 将当前经过身份验证的主体注入到 @Controller/@RestController 方法中。
+3. 将当前会话 CSRFToken 注入到 @Controller/@RestController 方法中。
+4. 正确处理异步请求处理的安全性。
 
 ```java
 @Controller
@@ -876,10 +876,10 @@ Spring Security 与 Thymeleaf 集成良好。它提供了一种特殊的 Spring 
 
 Spring Security 最近经历了一些重大变化。因此，您需要找到目标版本的迁移指南并完成它们：
 
-- Spring Security 3.x 到 4.x → https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html
-- Spring Security 4.x 到 5.x(< 5.3) → https://docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new （不是迁移指南，但有什么新鲜事）
-- Spring Security 5.x 到 5.3 → https://docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new （不是迁移指南，而是新功能）
-- Spring Security 最新版本 → https://docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）
+- Spring Security 3.x 到 4.x → <https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-jc.html>
+- Spring Security 4.x 到 5.x(< 5.3) → <https://docs.spring.io/spring-security/site/docs/5.0.15.RELEASE/reference/htmlsingle/#new> （不是迁移指南，但有什么新鲜事）
+- Spring Security 5.x 到 5.3 → <https://docs.spring.io/spring-security/site/docs/5.3.1.RELEASE/reference/html5/#new> （不是迁移指南，而是新功能）
+- Spring Security 最新版本 → <https://docs.spring.io/spring-security/reference/whats-new.html（不是迁移指南，而是新功能）>
 
 ### 我需要添加哪些依赖项才能使 Spring Security 正常工作？
 
@@ -984,10 +984,10 @@ context.setAuthentication(authentication);
 
 如果您已经读到这里，您现在应该对 Spring Security 生态系统的复杂性有了很好的了解，即使没有 OAuth2。总结一下：
 
-1.  如果您对 Spring Security 的 FilterChain 如何工作以及它的默认漏洞保护有什么基本了解（想想：CSRF），这会很有帮助。
-2.  确保了解身份验证和授权之间的区别。还有您需要为特定身份验证工作流程指定哪些 @Beans。
-3.  确保您了解 Spring Security 的 WebSecurityConfigurerAdapter 的 DSL 以及基于注释的方法安全性。
-4.  最后但并非最不重要的一点是，它有助于仔细检查 Spring Security 与其他框架和库（如 Spring MVC 或 Thymeleaf）的集成。
+1. 如果您对 Spring Security 的 FilterChain 如何工作以及它的默认漏洞保护有什么基本了解（想想：CSRF），这会很有帮助。
+2. 确保了解身份验证和授权之间的区别。还有您需要为特定身份验证工作流程指定哪些 @Beans。
+3. 确保您了解 Spring Security 的 WebSecurityConfigurerAdapter 的 DSL 以及基于注释的方法安全性。
+4. 最后但并非最不重要的一点是，它有助于仔细检查 Spring Security 与其他框架和库（如 Spring MVC 或 Thymeleaf）的集成。
 
 今天就够了，因为这真是一段旅程，不是吗？谢谢阅读！
 

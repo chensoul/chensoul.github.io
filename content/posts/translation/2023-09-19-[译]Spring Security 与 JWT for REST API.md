@@ -571,7 +571,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 @RolesAllowed(Role.USER_ADMIN)
 public class UserAdminApi {
 
-	// Details omitted for brevity
+ // Details omitted for brevity
 
 }
 
@@ -579,28 +579,28 @@ public class UserAdminApi {
 @RestController @RequestMapping(path = "api/author")
 public class AuthorApi {
 
-	// Details omitted for brevity
+ // Details omitted for brevity
 
-	@RolesAllowed(Role.AUTHOR_ADMIN)
-	@PostMapping
-	public void create() { }
+ @RolesAllowed(Role.AUTHOR_ADMIN)
+ @PostMapping
+ public void create() { }
 
-	@RolesAllowed(Role.AUTHOR_ADMIN)
-	@PutMapping("{id}")
-	public void edit() { }
+ @RolesAllowed(Role.AUTHOR_ADMIN)
+ @PutMapping("{id}")
+ public void edit() { }
 
-	@RolesAllowed(Role.AUTHOR_ADMIN)
-	@DeleteMapping("{id}")
-	public void delete() { }
+ @RolesAllowed(Role.AUTHOR_ADMIN)
+ @DeleteMapping("{id}")
+ public void delete() { }
 
-	@GetMapping("{id}")
-	public void get() { }
+ @GetMapping("{id}")
+ public void get() { }
 
-	@GetMapping("{id}/book")
-	public void getBooks() { }
+ @GetMapping("{id}/book")
+ public void getBooks() { }
 
-	@PostMapping("search")
-	public void search() { }
+ @PostMapping("search")
+ public void search() { }
 
 }
 
@@ -608,28 +608,28 @@ public class AuthorApi {
 @RestController @RequestMapping(path = "api/book")
 public class BookApi {
 
-	// Details omitted for brevity
+ // Details omitted for brevity
 
-	@RolesAllowed(Role.BOOK_ADMIN)
-	@PostMapping
-	public BookView create() { }
+ @RolesAllowed(Role.BOOK_ADMIN)
+ @PostMapping
+ public BookView create() { }
 
-	@RolesAllowed(Role.BOOK_ADMIN)
-	@PutMapping("{id}")
-	public void edit() { }
+ @RolesAllowed(Role.BOOK_ADMIN)
+ @PutMapping("{id}")
+ public void edit() { }
 
-	@RolesAllowed(Role.BOOK_ADMIN)
-	@DeleteMapping("{id}")
-	public void delete() { }
+ @RolesAllowed(Role.BOOK_ADMIN)
+ @DeleteMapping("{id}")
+ public void delete() { }
 
-	@GetMapping("{id}")
-	public void get() { }
+ @GetMapping("{id}")
+ public void get() { }
 
-	@GetMapping("{id}/author")
-	public void getAuthors() { }
+ @GetMapping("{id}/author")
+ public void getAuthors() { }
 
-	@PostMapping("search")
-	public void search() { }
+ @PostMapping("search")
+ public void search() { }
 
 }
 ```
@@ -708,7 +708,7 @@ These annotations are: 这些注释是：
 ```java
 @Test @WithMockUser(username="customUsername@example.io", roles={"USER_ADMIN"})
 public void test() {
-	// Details omitted for brevity
+ // Details omitted for brevity
 }
 ```
 
@@ -721,7 +721,7 @@ public void test() {
 ```java
 @Test @WithUserDetails("customUsername@example.io")
 public void test() {
-	// Details omitted for brevity
+ // Details omitted for brevity
 }
 ```
 

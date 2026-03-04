@@ -9,11 +9,11 @@ description: "安装 Gitlab ..."
 
 ## 安装 Gitlab
 
-安装 gitlab-ce  版本，当前最新版本为  17.2.0 
+安装 gitlab-ce  版本，当前最新版本为  17.2.0
 
 ### 配置 external_url
 
-参考 https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
+参考 <https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose>
 
 ```yaml
 services:
@@ -61,7 +61,7 @@ docker logs -f gitlab
 127.0.0.1 gitlab.example.com
 ```
 
-打开浏览器访问：https://gitlab.example.com/ ，用户名 root，密码通过下面命令查看：
+打开浏览器访问：<https://gitlab.example.com/> ，用户名 root，密码通过下面命令查看：
 
 ```bash
 cat /srv/gitlab/config/initial_root_password
@@ -69,7 +69,7 @@ cat /srv/gitlab/config/initial_root_password
 
 ### 修改默认端口
 
-参考 https://github.com/hutchgrant/gitlab-docker-local/，
+参考 <https://github.com/hutchgrant/gitlab-docker-local/，>
 
 ```yaml
 services:
@@ -191,7 +191,7 @@ puma['max_threads'] = 2
 sidekiq['concurrency'] = 5
 ```
 
-### 优化 postgresql 
+### 优化 postgresql
 
 ```toml
 # 减少 postgresql 数据库缓存
@@ -202,7 +202,7 @@ postgresql['max_connections'] = 60
 
 ### 使用自签名证书（不建议）
 
-参考 https://github.com/danieleagle/gitlab-https-docker#generating-a-self-signed-certificate ，生成服务端 key：
+参考 <https://github.com/danieleagle/gitlab-https-docker#generating-a-self-signed-certificate> ，生成服务端 key：
 
 ```bash
 sudo openssl genrsa -out server-key.pem 4096
@@ -332,13 +332,13 @@ server {
 
      location / {
         proxy_pass     http://127.0.0.1:8000;
-				proxy_read_timeout  90;
-    		proxy_set_header Host $host;
+    proxy_read_timeout  90;
+      proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    		proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Proto $scheme;
     
-    		# Websocket connection
+      # Websocket connection
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
      }
@@ -351,8 +351,6 @@ server {
 sudo mkdir -p /etc/nginx/ssl/
 sudo cp server-*.pem /etc/nginx/ssl/
 ```
-
-
 
 ### 使用外部 Redis（可选）
 
@@ -449,7 +447,7 @@ services:
         external_url 'https://gitlab.wesine.com.cn'
         gitlab_rails['gitlab_shell_ssh_port'] = 3122
         
-				# 使用外部 Niginx
+    # 使用外部 Niginx
         gitlab_workhorse['listen_network'] = "tcp"
         gitlab_workhorse['listen_addr'] = "0.0.0.0:8000"
         nginx['enable'] = false
@@ -560,8 +558,6 @@ f384149bfeab   gitlab          0.21%     2.028GiB / 31.26GiB   6.49%     756kB /
 febd4b504da8   gitlab-runner   0.00%     21.61MiB / 31.26GiB   0.07%     54kB / 330kB     0B / 0B          10
 ```
 
-
-
 ## 安装 Gitlab Runner
 
 参考 [部署gitlab-runner](https://xubiaosunny.top/post/gitlab_container_registry_and_auto_build_images_pfkb.html#%E9%83%A8%E7%BD%B2gitlab-runner)，在 docker-compose.yaml 文件中添加：
@@ -597,9 +593,9 @@ gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ez
 
 - 给该域名进行 DNS 解析，这个需要自己注册域名
 
-- 通过 extra_hosts 添加域名映射，可以参考 https://gitee.com/xuxiaowei-com-cn/GitLab/blob/main/docker-compose.yml
+- 通过 extra_hosts 添加域名映射，可以参考 <https://gitee.com/xuxiaowei-com-cn/GitLab/blob/main/docker-compose.yml>
 
-- 自定义网络并添加别名，参考：https://github.com/hutchgrant/gitlab-docker-local/blob/master/docker-compose.yml
+- 自定义网络并添加别名，参考：<https://github.com/hutchgrant/gitlab-docker-local/blob/master/docker-compose.yml>
 
   ```yaml
   services:
@@ -649,7 +645,7 @@ gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ez
         name: development
   ```
   
-- 不使用域名，而是使用 IP:Port，例如：http://192.168.1.107:8000/
+- 不使用域名，而是使用 IP:Port，例如：<http://192.168.1.107:8000/>
 
 ### 注册一个使用 Docker executor 的 runner
 
@@ -659,12 +655,12 @@ gitlab-runner register --url https://gitlab.example.com --token glrt-JhEv5bxs4ez
 - [Docker-in-Docker](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-in-docker)
 - [Docker 套接字绑定](https://docs.gitlab.cn/jh/ci/docker/using_docker_build.html#使用-docker-套接字绑定)
 
-#### 使用 Docker-in-Docker 
+#### 使用 Docker-in-Docker
 
 ```bash
 sudo gitlab-runner register \
-	--url https://gitlab.example.com \
-	--token glrt-JhEv5bxs4ezxY53uyYiz
+ --url https://gitlab.example.com \
+ --token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-privileged \
   --docker-image docker:stable 
@@ -718,8 +714,8 @@ docker exec -it gitlab-runner gitlab-runner restart
 
 ```bash
 sudo gitlab-runner register \
-	--url https://gitlab.example.com \
-	--token glrt-JhEv5bxs4ezxY53uyYiz
+ --url https://gitlab.example.com \
+ --token glrt-JhEv5bxs4ezxY53uyYiz
   --executor "docker" \
   --docker-image docker:latest \
   --docker-volumes /var/run/docker.sock://var/run/docker.sock
@@ -792,8 +788,6 @@ connection_max_age = "15m0s"
     </mirrors>
   </settings>
   ```
-
-  
 
 ## 配置 Gitlab
 
@@ -933,7 +927,7 @@ sudo sh gitlab_service.sh root /opt/docker/gitlab.yaml
 
 ### 访问
 
-访问 https://gitlab.example.com，修改默认密码，创建一个测试用户：test
+访问 <https://gitlab.example.com，修改默认密码，创建一个测试用户：test>
 
 ### 添加 SSH Key
 
@@ -943,7 +937,7 @@ sudo sh gitlab_service.sh root /opt/docker/gitlab.yaml
 tail ~/.ssh/id_rsa.pub
 ```
 
-拷贝并保存到 https://gitlab.example.com/profile/keys
+拷贝并保存到 <https://gitlab.example.com/profile/keys>
 
 ### 创建新项目
 
@@ -961,8 +955,6 @@ git add .
 git commit -m "Initial commit"
 git push -u origin main
 ```
-
-
 
 ## 备份
 
@@ -1036,8 +1028,6 @@ sudo crontab -e
 0 2 * * * sh /your/directory/gitlab_backup.sh
 ```
 
-
-
 ## 还原
 
 还原应用数据：
@@ -1109,13 +1099,11 @@ docker compose pull
 docker compose up -d
 ```
 
-
-
-## 
+##
 
 ## 参考文章
 
 - [Running Gitlab CE Via Docker Behind A Reverse Proxy On Ubuntu](https://techoverflow.net/2018/12/17/running-gitlab-ce-via-docker-behind-a-reverse-proxy-on-ubuntu/)
-- https://github.com/hutchgrant/gitlab-docker-local/
-- https://gitee.com/xuxiaowei-com-cn/GitLab
+- <https://github.com/hutchgrant/gitlab-docker-local/>
+- <https://gitee.com/xuxiaowei-com-cn/GitLab>
 - [Gitlab系列（3）—— 基于Gitlab-runner 的CI/CD集成](https://blog.csdn.net/tergou/article/details/120397845)

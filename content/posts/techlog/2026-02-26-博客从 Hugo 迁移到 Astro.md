@@ -24,37 +24,37 @@ description: "最近将博客从 Hugo 迁移到了 Astro，并选择了 astro-lh
 cd astro-lhasa && git remote -v && git branch -a && git status --short
 ```
 
-2. 看最近几次提交
+1. 看最近几次提交
 
 ```bash
 git log --oneline -5
 ```
 
-3. 添加上游并拉取
+1. 添加上游并拉取
 
 ```bash
 git remote add upstream https://github.com/achuanya/astro-lhasa.git 2>/dev/nullgit fetch upstream main 2>&1
 ```
 
-4. 和上游的差异统计（文件与行数）
+1. 和上游的差异统计（文件与行数）
 
 ```bash
 git diff upstream/main --stat
 ```
 
-5. 和上游的差异文件列表（含 A/M/D 状态）
+1. 和上游的差异文件列表（含 A/M/D 状态）
 
 ```bash
 git diff upstream/main --name-status
 ```
 
-6. 看几个关键文件的 diff
+1. 看几个关键文件的 diff
 
 ```bash
 git diff upstream/main -- src/content.config.ts | head -120git diff upstream/main -- src/config.ts | head -150git diff upstream/main -- astro.config.ts | head -80git diff upstream/main -- src/utils/getPath.ts | head -100git diff upstream/main -- src/pages/rss.xml.ts | head -80git diff upstream/main --stat -- src/layouts/PostDetails.astro src/layouts/AboutLayout.astro src/components/Header.astro
 ```
 
-7. 确认当前页面结构
+1. 确认当前页面结构
 
 ```bash
 find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sortls -la src/pages/posts 2>/dev/null || echo "No posts dir"
@@ -88,14 +88,14 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 #### 4. 已删除的页面与功能
 
 - **删除页面**：
-    - `src/pages/posts/[...page].astro`（文章列表分页）
-    - `src/pages/posts/[...slug]/index.astro`（文章详情）
-    - `src/pages/feeds/index.astro`（邻居/Feeds 页）
-    - `src/pages/guestbook.astro`（留言板）
-    - `src/pages/about.md`、`src/pages/favorites.md`（原 Markdown 页面）
+  - `src/pages/posts/[...page].astro`（文章列表分页）
+  - `src/pages/posts/[...slug]/index.astro`（文章详情）
+  - `src/pages/feeds/index.astro`（邻居/Feeds 页）
+  - `src/pages/guestbook.astro`（留言板）
+  - `src/pages/about.md`、`src/pages/favorites.md`（原 Markdown 页面）
 - **新增/迁移**：
-    - **关于**：`src/pages/about.astro` 从 `content/pages/about.md`（或 `_about.md`）读取，使用 AboutLayout。
-    - **链接**：`src/pages/links.astro` 替代原「收藏/邻居」页，数据来自 `content/pages/links.md`（或 `_links.md`），导航与 i18n
+  - **关于**：`src/pages/about.astro` 从 `content/pages/about.md`（或 `_about.md`）读取，使用 AboutLayout。
+  - **链接**：`src/pages/links.astro` 替代原「收藏/邻居」页，数据来自 `content/pages/links.md`（或 `_links.md`），导航与 i18n
       为「链接 / Links」。
 - **配置**：移除 `feedsPerIndex`、`feedsPerPage` 等 Feeds 相关配置。
 
@@ -126,12 +126,12 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 #### 2. Astro 与集成（`astro.config.ts`）
 
 - **图片与构建**：
-    - 新增 **astro-mermaid**：支持 Mermaid 图表（`mermaid` frontmatter）。
-    - 新增 **@critters-rs/astro**：关键 CSS 内联。
-    - **minify**：启用 CSS minify 并开启 `errorRecovery: true`。
+  - 新增 **astro-mermaid**：支持 Mermaid 图表（`mermaid` frontmatter）。
+  - 新增 **@critters-rs/astro**：关键 CSS 内联。
+  - **minify**：启用 CSS minify 并开启 `errorRecovery: true`。
 - **Expressive Code**：
-    - `wrap`：false → true。
-    - `overridesByLang` 增加 `gradle,java` 的 `frame: "none"`。
+  - `wrap`：false → true。
+  - `overridesByLang` 增加 `gradle,java` 的 `frame: "none"`。
 - **Vite**：`optimizeDeps.include` 增加 `@pagefind/default-ui`。
 
 #### 3. 内容 Schema（`src/content.config.ts`）
@@ -225,4 +225,3 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - 参考[zdyxry.github.io](https://github.com/zdyxry/zdyxry.github.io)
   ，添加[跑步](/running)页面（该页面样式同样做了一些调整）。跑步数据使用 [get_keep_data.py](https://github.com/chensoul/running_page/blob/master/run_page/get_keep_data.py)
   从 Keep 读取跑步数据并生成与 Garmin 脚本兼容的 [running.json](https://github.com/chensoul/running_page/blob/master/assets/running.json)。
-

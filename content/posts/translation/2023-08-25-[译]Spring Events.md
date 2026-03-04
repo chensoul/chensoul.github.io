@@ -47,7 +47,7 @@ public class CustomSpringEvent extends ApplicationEvent {
 
 现在让我们创建该事件的发布者。发布者构造事件对象并将其发布给正在侦听的任何人。
 
-要发布事件，发布者只需注入 `ApplicationEventPublisher` 并使用 `publishEvent() `API：
+要发布事件，发布者只需注入 `ApplicationEventPublisher` 并使用 `publishEvent()`API：
 
 ```java
 @Component
@@ -65,7 +65,7 @@ public class CustomSpringEventPublisher {
 
 或者，发布者类可以实现 `ApplicationEventPublisherAware` 接口，这也将在应用程序启动时注入事件发布者。通常，使用 `@Autowire` 注入发布者会更简单。
 
-从 Spring Framework 4.2 开始，`ApplicationEventPublisher` 接口为`publishEvent(Object event) `方法提供了新的重载，该方法接受任何对象作为事件。因此，Spring 事件不再需要扩展`ApplicationEvent` 类。
+从 Spring Framework 4.2 开始，`ApplicationEventPublisher` 接口为`publishEvent(Object event)`方法提供了新的重载，该方法接受任何对象作为事件。因此，Spring 事件不再需要扩展`ApplicationEvent` 类。
 
 ### 2.3.监听者
 
@@ -83,7 +83,7 @@ public class CustomSpringEventListener implements ApplicationListener<CustomSpri
 }
 ```
 
-请注意我们的自定义侦听器如何使用自定义事件的通用类型进行参数化，这使得 `onApplicationEvent() `方法类型安全。这也避免了必须检查对象是否是特定事件类的实例并转换它。
+请注意我们的自定义侦听器如何使用自定义事件的通用类型进行参数化，这使得 `onApplicationEvent()`方法类型安全。这也避免了必须检查对象是否是特定事件类的实例并转换它。
 
 而且，正如已经讨论过的（默认情况下 Spring 事件是同步的）， `doStuffAndPublishAnEvent()` 方法会阻塞，直到所有侦听器完成对事件的处理。
 

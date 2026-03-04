@@ -54,10 +54,10 @@ try (connection) {
 }
 ```
 
-1.  您需要连接到数据库才能启动事务。 DriverManager.getConnection（url，user，password）也可以工作，尽管在大多数企业应用程序中，您将配置一个数据源并从中获取连接。
-2.  这是在 Java 中“启动”数据库事务的唯一方法，尽管这个名字听起来有点不对劲。 setAutoCommit(true) 确保每个 SQL 语句自动包装在自己的事务中，而 setAutoCommit(false) 则相反：您是事务的主人，您需要开始调用 `*commit*` 标志在连接打开的整个时间内都有效，这意味着您只需调用该方法一次，而不是重复。
-3.  让我们提交我们的交易...​
-4.  或者，如果出现异常，则回滚我们的更改。
+1. 您需要连接到数据库才能启动事务。 DriverManager.getConnection（url，user，password）也可以工作，尽管在大多数企业应用程序中，您将配置一个数据源并从中获取连接。
+2. 这是在 Java 中“启动”数据库事务的唯一方法，尽管这个名字听起来有点不对劲。 setAutoCommit(true) 确保每个 SQL 语句自动包装在自己的事务中，而 setAutoCommit(false) 则相反：您是事务的主人，您需要开始调用 `*commit*` 标志在连接打开的整个时间内都有效，这意味着您只需调用该方法一次，而不是重复。
+3. 让我们提交我们的交易...​
+4. 或者，如果出现异常，则回滚我们的更改。
 
 是的，这 4 行（过于简单化的）是当你使用 @Transactional 注释时 Spring 所做的一切。在下一章中，您将了解其工作原理。但在我们开始之前，您还需要学习一些知识。
 
@@ -88,8 +88,8 @@ Savepoint savePoint = connection.setSavepoint(); // (2)
 connection.rollback(savePoint);
 ```
 
-1.  这就是 Spring 在数据库连接上设置隔离级别的方式。不完全是火箭科学，是吗？
-2.  Spring 中的嵌套事务只是 JDBC/数据库保存点。例如，如果您不知道什么是保存点，请查看本[教程](https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)。请注意，保存点支持取决于您的 JDBC 驱动程序/数据库。
+1. 这就是 Spring 在数据库连接上设置隔离级别的方式。不完全是火箭科学，是吗？
+2. Spring 中的嵌套事务只是 JDBC/数据库保存点。例如，如果您不知道什么是保存点，请查看本[教程](https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)。请注意，保存点支持取决于您的 JDBC 驱动程序/数据库。
 
 ## Spring 或 Spring Boot 的事务管理如何工作
 
@@ -282,7 +282,7 @@ public static class MyAppConfig {
 }
 ```
 
-1.  正确的。 Spring 在这里为您的 UserService 类构造一个动态 CGLib 代理，它可以为您打开和关闭数据库事务。您或任何其他 bean 甚至不会注意到它不是您的 UserService，而是包装您的 UserService 的代理。
+1. 正确的。 Spring 在这里为您的 UserService 类构造一个动态 CGLib 代理，它可以为您打开和关闭数据库事务。您或任何其他 bean 甚至不会注意到它不是您的 UserService，而是包装您的 UserService 的代理。
 
 ### 为什么需要事务管理器（如 PlatformTransactionManager）？
 
@@ -563,8 +563,8 @@ public class UserService {
 }
 ```
 
-1.  这是一个普通的、旧的 Hibernate SessionFactory，是所有 Hibernate 查询的入口点。
-2.  使用 Hibernate API 手动管理会话（即：数据库连接）和事务。
+1. 这是一个普通的、旧的 Hibernate SessionFactory，是所有 Hibernate 查询的入口点。
+2. 使用 Hibernate API 手动管理会话（即：数据库连接）和事务。
 
 然而，上面的代码有一个很大的问题：
 

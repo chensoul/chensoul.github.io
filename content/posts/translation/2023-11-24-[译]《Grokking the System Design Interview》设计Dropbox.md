@@ -15,7 +15,7 @@ Let’s design a file hosting service like Dropbox or Google Drive. Cloud file s
 
 > 让我们设计一个文件托管服务，例如 Dropbox 或 Google Drive。云文件存储使用户能够将数据存储在远程服务器上。通常，这些服务器由云存储提供商维护，并通过网络（通常通过互联网）提供给用户。用户按月支付云数据存储费用。类似服务：OneDrive、Google Drive 难度级别：中
 
-## 1. Why Cloud Storage? 
+## 1. Why Cloud Storage?
 
 >1. 为什么选择云存储？
 
@@ -39,9 +39,9 @@ If you haven’t used dropbox.com before, we would highly recommend creating an 
 
 > 如果您以前没有使用过 dropbox.com，我们强烈建议您在那里创建一个帐户并上传/编辑文件，并查看他们的服务提供的不同选项。这将对你理解本章有很大帮助。
 
-## 2. Requirements and Goals of the System 
+## 2. Requirements and Goals of the System
 
->2. 系统的要求和目标
+>1. 系统的要求和目标
 
 **You should always clarify requirements at the beginning of the interview. Be sure to ask questions to find the exact scope of the system that the interviewer has in mind.**
 
@@ -67,7 +67,7 @@ What do we wish to achieve from a Cloud Storage system? Here are the top-level r
 
    > 系统应支持存储高达 1 GB 的大文件。
 
-5. ACID-ity is required. Atomicity, Consistency, Isolation and Durability of all file operations should be guaranteed. 
+5. ACID-ity is required. Atomicity, Consistency, Isolation and Durability of all file operations should be guaranteed.
    需要ACID。所有文件操作的原子性、一致性、隔离性和持久性应该得到保证。
 
 6. Our system should support offline editing. Users should be able to add/delete/modify files while offline, and as soon as they come online, all their changes should be synced to the remote servers and other online devices.
@@ -82,9 +82,9 @@ What do we wish to achieve from a Cloud Storage system? Here are the top-level r
 
 > 系统应支持数据快照，以便用户可以返回到文件的任何版本。
 
-## 3. Some Design Considerations 
+## 3. Some Design Considerations
 
-> 3. 一些设计考虑
+> 1. 一些设计考虑
 
 - We should expect huge read and write volumes.
 
@@ -114,9 +114,9 @@ What do we wish to achieve from a Cloud Storage system? Here are the top-level r
 
   > 对于小的更改，客户端可以智能地上传差异而不是整个块。
 
-## 4. Capacity Estimation and Constraints 
+## 4. Capacity Estimation and Constraints
 
-> 4. 容量估计和约束
+> 1. 容量估计和约束
 
 - Let’s assume that we have 500M total users, and 100M daily active users (DAU).
 
@@ -140,9 +140,9 @@ What do we wish to achieve from a Cloud Storage system? Here are the top-level r
 
   > 我们还假设每分钟有 100 万个活动连接。
 
-## 5. High Level Design 
+## 5. High Level Design
 
->5. 高层设计
+>1. 高层设计
 
 The user will specify a folder as the workspace on their device. Any file/photo/folder placed in this folder will be uploaded to the cloud, and whenever a file is modified or deleted, it will be reflected in the same way in the cloud storage. The user can specify similar workspaces on all their devices and any modification done on one device will be propagated to all other devices to have the same view of the workspace everywhere.
 
@@ -162,9 +162,9 @@ High level design for Dropbox
 
 > Dropbox 的高级设计
 
-## 6. Component Design 
+## 6. Component Design
 
->6. 组件设计
+>1. 组件设计
 
 Let’s go through the major components of our system one by one:
 
@@ -224,15 +224,15 @@ I. **Internal Metadata Database** will keep track of all the files, chunks, thei
 
 II. **Chunker** will split the files into smaller pieces called chunks. It will also be responsible for reconstructing a file from its chunks. Our chunking algorithm will detect the parts of the files that have been modified by the user and only transfer those parts to the Cloud Storage; this will save us bandwidth and synchronization time.
 
-> 2. Chunker 会将文件分割成更小的块，称为块。它还将负责从文件块中重建文件。我们的分块算法将检测文件中已被用户修改的部分，并仅将这些部分传输到云存储；这将为我们节省带宽和同步时间。
+> 1. Chunker 会将文件分割成更小的块，称为块。它还将负责从文件块中重建文件。我们的分块算法将检测文件中已被用户修改的部分，并仅将这些部分传输到云存储；这将为我们节省带宽和同步时间。
 
 III. **Watcher** will monitor the local workspace folders and notify the Indexer (discussed below) of any action performed by the users, e.g. when users create, delete, or update files or folders. Watcher also listens to any changes happening on other clients that are broadcasted by Synchronization service.
 
-> 3. 观察者将监视本地工作区文件夹并通知索引器（如下所述）用户执行的任何操作，例如当用户创建、删除或更新文件或文件夹时。观察者还侦听同步服务广播的其他客户端上发生的任何更改。
+> 1. 观察者将监视本地工作区文件夹并通知索引器（如下所述）用户执行的任何操作，例如当用户创建、删除或更新文件或文件夹时。观察者还侦听同步服务广播的其他客户端上发生的任何更改。
 
 IV. **Indexer** will process the events received from the Watcher and update the internal metadata database with information about the chunks of the modified files. Once the chunks are successfully submitted/downloaded to the Cloud Storage, the Indexer will communicate with the remote Synchronization Service to broadcast changes to other clients and update remote metadata database.
 
-> 4. 索引器将处理从观察器接收到的事件，并使用有关已修改文件块的信息更新内部元数据数据库。一旦块成功提交/下载到云存储，索引器将与远程同步服务通信，以将更改广播到其他客户端并更新远程元数据数据库。
+> 1. 索引器将处理从观察器接收到的事件，并使用有关已修改文件块的信息更新内部元数据数据库。一旦块成功提交/下载到云存储，索引器将与远程同步服务通信，以将更改广播到其他客户端并更新远程元数据数据库。
 
 ![image-20231116095419475](dropbox-02.webp)
 
@@ -260,19 +260,19 @@ The metadata Database should be storing information about following objects:
 
 > 元数据数据库应存储有关以下对象的信息：
 
-1. Chunks 
+1. Chunks
 
    > 块
 
-2. Files 
+2. Files
 
    > 文件
 
-3. User 
+3. User
 
    > 用户
 
-4. Devices 
+4. Devices
 
    > 设备
 
@@ -324,9 +324,9 @@ Detailed component design for Dropbox
 
 > Dropbox 的详细组件设计
 
-## 7. File Processing Workflow 
+## 7. File Processing Workflow
 
->7. 文件处理工作流程
+>1. 文件处理工作流程
 
 The sequence below shows the interaction between the components of the application in a scenario when Client A updates a file that is shared with Client B and C, so they should receive the update too. If the other clients are not online at the time of the update, the Message Queuing Service keeps the update notifications in separate response queues for them until they come online later.
 
@@ -344,9 +344,9 @@ The sequence below shows the interaction between the components of the applicati
 
    > 客户 A 获得确认，并向客户 B 和 C 发送有关更改的通知。 4. 客户端 B 和 C 接收元数据更改并下载更新的块。
 
-## 8. Data Deduplication 
+## 8. Data Deduplication
 
-> 8. 重复数据删除
+> 1. 重复数据删除
 
 Data deduplication is a technique used for eliminating duplicate copies of data to improve storage utilization. It can also be applied to network data transfers to reduce the number of bytes that must be sent. For each new incoming chunk, we can calculate a hash of it and compare that hash with all the hashes of the existing chunks to see if we already have the same chunk present in our storage.
 
@@ -372,9 +372,9 @@ Alternatively, deduplication hash calculations can be done in real-time as the c
 
 > 或者，当客户端在其设备上输入数据时，可以实时完成重复数据删除哈希计算。如果我们的系统识别出它已经存储的块，则只会在元数据中添加对现有块的引用，而不是块的完整副本。这种方法将为我们提供最佳的网络和存储利用率。
 
-## 9. Metadata Partitioning 
+## 9. Metadata Partitioning
 
-> 9. 元数据分区
+> 1. 元数据分区
 
 To scale out metadata DB, we need to partition it so that it can store information about millions of users and billions of files/chunks. We need to come up with a partitioning scheme that would divide and store our data in different DB servers.
 
@@ -412,9 +412,9 @@ This approach can still lead to overloaded partitions, which can be solved by us
 
 > 这种方法仍然会导致分区过载，这可以通过使用一致性哈希来解决。
 
-## 10. Caching 
+## 10. Caching
 
->10. 缓存
+>1. 缓存
 
 We can have two kinds of caches in our system. To deal with hot files/chunks we can introduce a cache for Block storage. We can use an off-the-shelf solution like Memcached that can store whole chunks with its respective IDs/Hashes and Block servers before hitting Block storage can quickly check if the cache has desired chunk. Based on clients’ usage pattern we can determine how many cache servers we need. A high-end commercial server can have 144GB of memory; one such server can cache 36K chunks.
 
@@ -424,7 +424,7 @@ We can have two kinds of caches in our system. To deal with hot files/chunks we 
 
 > 哪种缓存替换策略最适合我们的需求？当缓存已满时，我们想用更新/更热的块替换一个块，我们会如何选择？最近最少使用（LRU）对于我们的系统来说是一个合理的策略。根据这个策略，我们首先丢弃最近最少使用的块。加载 类似地，我们可以为元数据数据库提供缓存。
 
-## 11. Load Balancer (LB) 
+## 11. Load Balancer (LB)
 
 >11.负载均衡器（LB）
 
@@ -432,9 +432,9 @@ We can add the Load balancing layer at two places in our system: 1) Between Clie
 
 > 我们可以在系统中的两个位置添加负载平衡层：1）客户端和块服务器之间以及2）客户端和元数据服务器之间。最初，可以采用简单的循环方法，在后端服务器之间平均分配传入请求。该LB实现简单，不会引入任何开销。这种方法的另一个好处是，如果服务器死机，LB 会将其从轮换中删除，并停止向其发送任何流量。循环负载均衡的一个问题是，它不会考虑服务器负载。如果服务器过载或速度缓慢，负载均衡器不会停止向该服务器发送新请求。为了解决这个问题，可以放置更智能的 LB 解决方案，定期查询后端服务器的负载并据此调整流量。
 
-## 12. Security, Permissions and File Sharing 
+## 12. Security, Permissions and File Sharing
 
->12. 安全、权限和文件共享
+>1. 安全、权限和文件共享
 
 One of the primary concerns users will have while storing their files in the cloud is the privacy and security of their data, especially since in our system users can share their files with other users or even make them public to share it with everyone. To handle this, we will be storing the permissions of each file in our metadata DB to reflect what files are visible or modifiable by any user.
 

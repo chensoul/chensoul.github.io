@@ -143,18 +143,18 @@ start 方法：
 
 ```
 BrokerService
-	BrokerRegistry
-	PersistenceAdapter
-	PListStore
-	JobSchedulerStore
-	Broker
-	TransportConnector
-		TransportServer
-			TransportConnection
-				Transport
-	NetworkConnector
-	ProxyConnector
-	JmsConnector
+ BrokerRegistry
+ PersistenceAdapter
+ PListStore
+ JobSchedulerStore
+ Broker
+ TransportConnector
+  TransportServer
+   TransportConnection
+    Transport
+ NetworkConnector
+ ProxyConnector
+ JmsConnector
 ```
 
 ## BrokerRegistry
@@ -292,7 +292,7 @@ doStartPersistenceAdapter 方法：
     - 如果开启持久化 persistent =true，则
       - PersistenceAdapterFactory 不为空，则调用 PersistenceAdapterFactory.createPersistenceAdapter() 方法
       - 否则，通过反射初始化 KahaDBPersistenceAdapter 对象，并设置持久化目录为 `${org.apache.activemq.default.directory.prefix}/activemq-data/${brokerName}/KahaDB`
-    - 如果没有开启持久化，则返回 MemoryPersistenceAdapter 
+    - 如果没有开启持久化，则返回 MemoryPersistenceAdapter
 
   - configureService：配置 Service
 
@@ -504,13 +504,13 @@ public interface Statistic {
 }
 
 // Statistic
-	// StatisticImpl
-		// CountStatisticImpl
+ // StatisticImpl
+  // CountStatisticImpl
     // SizeStatisticImpl
 
 // Stats
-	// StatsImpl
-		// MessageStoreStatistics
+ // StatsImpl
+  // MessageStoreStatistics
 ```
 
 创建 Queue 和 Topic 时，需要事务支持，ActiveMQ 定义了 TransactionStore 接口：
@@ -581,8 +581,6 @@ public void deleteAllMessages() throws IOException {
   }
 }
 ```
-
-
 
 #### MemoryMessageStore
 
@@ -665,8 +663,6 @@ public void removeAllMessages(ConnectionContext context) throws IOException {
 }
 ```
 
-
-
 #### MemoryTopicMessageStore
 
 `MemoryTopicMessageStore`是一个用于存储主题（Topic）消息的内存消息存储实现。
@@ -709,8 +705,6 @@ public synchronized void addMessage(ConnectionContext context, Message message) 
     }
 }
 ```
-
-
 
 #### MemoryTransactionStore
 

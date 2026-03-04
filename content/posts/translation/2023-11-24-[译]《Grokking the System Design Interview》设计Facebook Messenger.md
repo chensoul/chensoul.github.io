@@ -14,7 +14,7 @@ description: "这是一篇双语翻译的文章，原文出自 groksystemdesigni
 Let’s design an instant messaging service like Facebook Messenger where users can send text messages to each other through web and mobile interfaces.
 让我们设计一个像 Facebook Messenger 这样的即时消息服务，用户可以通过网络和移动界面互相发送短信。
 
-## 1. What is Facebook Messenger? 
+## 1. What is Facebook Messenger?
 
 >1.什么是 Facebook Messenger？
 
@@ -22,9 +22,9 @@ Facebook Messenger is a software application which provides text-based instant m
 
 > Facebook Messenger 是一款为其用户提供基于文本的即时消息服务的软件应用程序。 Messenger 用户可以通过手机和 Facebook 网站与 Facebook 好友聊天。
 
-## 2. Requirements and Goals of the System 
+## 2. Requirements and Goals of the System
 
->2. 系统的要求和目标
+>1. 系统的要求和目标
 
 Our Messenger should meet the following requirements:
 
@@ -34,11 +34,11 @@ Our Messenger should meet the following requirements:
 
 > **功能要求：**
 
-1. Messenger should support one-on-one conversations between users. 
+1. Messenger should support one-on-one conversations between users.
 
-   > Messenger 应支持用户之间的一对一对话。 
+   > Messenger 应支持用户之间的一对一对话。
 
-2. Messenger should keep track of the online/offline statuses of its users. 
+2. Messenger should keep track of the online/offline statuses of its users.
 
    > Messenger 应跟踪用户的在线/离线状态。
 
@@ -58,7 +58,7 @@ Our Messenger should meet the following requirements:
 
    > 我们的系统应该高度一致；用户应该能够在所有内容上看到相同的聊天记录他们的设备。
 
-3. Messenger’s high availability is desirable; we can tolerate lower availability in the interest of consistency. 
+3. Messenger’s high availability is desirable; we can tolerate lower availability in the interest of consistency.
 
    > Messenger 的高可用性是可取的；为了以下目的，我们可以容忍较低的可用性一致性。
 
@@ -74,9 +74,9 @@ Our Messenger should meet the following requirements:
 
   > 推送通知：Messenger 应该能够在用户有新消息时通知他们离线。
 
-## 3. Capacity Estimation and Constraints 
+## 3. Capacity Estimation and Constraints
 
-> 3. 容量估计和约束
+> 1. 容量估计和约束
 
 Let’s assume that we have 500 million daily active users and on average each user sends 40 messages daily; this gives us 20 billion messages per day.
 
@@ -94,7 +94,7 @@ To store five years of chat history, we would need 3.6 petabytes of storage.
 
 > 要存储五年的聊天历史记录，我们需要 3.6 PB 的存储空间。
 
-2 TB * 365 days * 5 years ~= 3.6 PB
+2 TB *365 days* 5 years ~= 3.6 PB
 
 Other than the chat messages, we would also need to store users’ information, messages’ metadata (ID, Timestamp, etc.). Not to mention, the above calculation doesn’t take data compression and replication in consideration.
 
@@ -118,9 +118,9 @@ Total messages 20 billion per day Storage for each day 2TB Storage for 5 years 3
 
 > 消息总数 每天 200 亿条 每天存储 2TB 存储 5 年 3.6PB 传入数据 25MB/s 传出数据 25MB/s
 
-## 4. High Level Design 
+## 4. High Level Design
 
->4. 高层设计
+>1. 高层设计
 
 At a high-level, we will need a chat server that will be the central piece, orchestrating all the communications between users. When a user wants to send a message to another user, they will connect to the chat server and send the message to the server; the server then passes that message to the other user and also stores it in the database.
 
@@ -138,9 +138,9 @@ The detailed workflow would look like this:
 
    > 服务器接收消息并向用户 A 发送确认。
 
-3. The server stores the message in its database and sends the message to User-B. 
+3. The server stores the message in its database and sends the message to User-B.
 
-   > 服务器将消息存储在其数据库中并将消息发送给用户 
+   > 服务器将消息存储在其数据库中并将消息发送给用户
 
 4. User-B receives the message and sends the acknowledgment to the server.
 
@@ -150,9 +150,9 @@ The detailed workflow would look like this:
 
    > 服务器通知用户 A 消息已成功传递给用户 B。
 
-## 5. Detailed Component Design 
+## 5. Detailed Component Design
 
->5. 详细组件设计
+>1. 详细组件设计
 
 Let’s try to build a simple solution first where everything runs on one server. At the high level our system needs to handle the following use cases:
 
@@ -166,7 +166,7 @@ Let’s try to build a simple solution first where everything runs on one server
 
    > 在数据库中存储和检索消息。
 
-3. Keep a record of which user is online or has gone offline, and notify all the relevant users about these status changes. 
+3. Keep a record of which user is online or has gone offline, and notify all the relevant users about these status changes.
 
    > 记录哪些用户在线或离线，并通知所有相关用户这些状态变化。
 
@@ -242,7 +242,7 @@ The chat server will first find the server that holds the connection for the rec
 
    > 服务器在 T1 接收 M1。
 
-3. Meanwhile, User-2 sends a message M2 to the server for User-1. 
+3. Meanwhile, User-2 sends a message M2 to the server for User-1.
 
    > 同时，User-2向User-1的服务器发送消息M2。
 
@@ -354,9 +354,9 @@ based searches. The servers can broadcast the online status of a user to other r
 
 > 基于搜索。服务器可以向其他相关用户广播用户的在线状态。客户端可以不频繁地为在客户端视口中可见的用户拉取状态更新。
 
-## 6. Data partitioning 
+## 6. Data partitioning
 
->6. 数据分区
+>1. 数据分区
 
 Since we will be storing a lot of data (3.6PB for five years), we need to distribute it onto multiple database servers. What will be our partitioning scheme?
 
@@ -378,15 +378,15 @@ Since we will store an unlimited history of messages, we can start with a big nu
 
 > 基于MessageID的分区：如果我们将一个用户的不同消息存储在不同的数据库分片上，那么获取一段聊天的一系列消息会非常慢，所以我们不应该采用这种方案。
 
-## 7. Cache 
+## 7. Cache
 
-> 7. 缓存
+> 1. 缓存
 
 We can cache a few recent messages (say last 15) in a few recent conversations that are visible in a user’s viewport (say last 5). Since we decided to store all of the user’s messages on one shard, cache for a user should entirely reside on one machine too.
 
 > 我们可以在用户视口中可见的一些最近对话（例如最后 5 条）中缓存一些最近的消息（例如最后 15 条）。由于我们决定将所有用户的消息存储在一个分片上，因此用户的缓存也应该完全驻留在一台机器上。
 
-## 8. Load balancing 
+## 8. Load balancing
 
 >8.负载均衡
 
@@ -394,9 +394,9 @@ We will need a load balancer in front of our chat servers; that can map each Use
 
 > 我们需要在聊天服务器前面有一个负载均衡器；它可以将每个 UserID 映射到保存用户连接的服务器，然后将请求定向到该服务器。同样，我们的缓存服务器需要一个负载平衡器。
 
-## 9. Fault tolerance and Replication 
+## 9. Fault tolerance and Replication
 
-> 9. 容错和复制
+> 1. 容错和复制
 
 **What will happen when a chat server fails?** Our chat servers are holding connections with the users. If a server goes down, should we devise a mechanism to transfer those connections to some other server? It’s extremely hard to failover TCP connections to other servers; an easier approach can be to have clients automatically reconnect if the connection is lost.
 
@@ -410,9 +410,9 @@ recover that data. For this, either we have to store multiple copies of the data
 
 > 恢复该数据。为此，我们要么必须在不同的服务器上存储数据的多个副本，要么使用 Reed-Solomon 编码等技术来分发和复制数据。
 
-## 10. Extended Requirements 
+## 10. Extended Requirements
 
-> 10. 扩展要求
+> 1. 扩展要求
 
 **a. Group chat**
 

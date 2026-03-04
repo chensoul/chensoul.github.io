@@ -405,8 +405,6 @@ project-root/
         └── / Specific configurations of the framework and infrastructure, such as security settings, Spring beans configuration, etc.
 ```
 
-
-
 ## 实现示例
 
 想象一下，我们正在构建一个应用程序来管理在线商店的订单：

@@ -23,7 +23,7 @@ description: "我们希望我们的微服务是可复制、可替换的工作程
 
 ## 构建Java Minion服务
 
-我们可以使用带有 Web starter 依赖项的[Spring Initializr ](https://start.spring.io/)将我们的微服务作为 Spring Boot Web 应用程序启动：
+我们可以使用带有 Web starter 依赖项的[Spring Initializr](https://start.spring.io/)将我们的微服务作为 Spring Boot Web 应用程序启动：
 
 ![img](minions-in-minikube-02.webp)
 
@@ -202,8 +202,6 @@ open http://$(minikube ip):30083
 
 ![img](minions-in-minikube-04.webp)
 
-
-
 ## 一个小兵倒下，另一个小兵接替他的位置
 
 假设当我们从浏览器访问 Happy Minion 服务时，我们得到了以下结果：
@@ -258,7 +256,5 @@ kubectl delete -f minion-army.yml
 ```
 
 使用“minikube stop”停止 minikube。
-
-
 
 原文链接：[https://dzone.com/articles/minions-in-minikube-a-kubernetes-intro-for-java-de](https://dzone.com/articles/minions-in-minikube-a-kubernetes-intro-for-java-de)

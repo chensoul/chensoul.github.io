@@ -9,8 +9,6 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a>
 
-
-
 在本系列**关于 Spring 的 OAuth2**的文章中，我将尝试介绍和解释与 OAuth2 相关的每一个问题以及如何在 Spring 框架中实现这些问题。请记住，OAuth2 完全是一个概念性的东西，在不同的框架中，它有自己的实现。此外，许多应用程序开发人员开发自己的 OAuth2 实现，而不使用 Spring 框架提供的 OAuth2 框架支持。因此，我将就这个主题撰写一系列文章。
 
 ## 什么是 OAuth2 以及为什么？
@@ -57,7 +55,7 @@ OAuth 工作流
 
 这就是整个过程的工作原理。在我的[下一篇文章](/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/)中，我将深入研究代码并演示使用内存客户端的 OAuth2 实现。
 
-## 参考：
+## 参考
 
-1. OAuth2 授权类型 — https://oauth.net/2/grant-types/
-2. OAuth2 角色 - http://websystique.com/spring-security/secure-spring-rest-api-using-oauth2/
+1. OAuth2 授权类型 — <https://oauth.net/2/grant-types/>
+2. OAuth2 角色 - <http://websystique.com/spring-security/secure-spring-rest-api-using-oauth2/>

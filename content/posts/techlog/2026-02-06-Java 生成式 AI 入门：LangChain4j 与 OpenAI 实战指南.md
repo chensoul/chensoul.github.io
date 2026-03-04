@@ -328,4 +328,3 @@ public class ChatOpenAIApplication {
 ## 总结
 
 本文示例均可在 [chensoul/langchain4j-samples · 01-chat-openai](https://github.com/chensoul/langchain4j-samples/tree/main/01-chat-openai) 中查看与运行；从原生 Java 调用 OpenAI，到 LangChain4j 封装聊天/图像，再到 Spring Boot 集成，可按需选用。
-

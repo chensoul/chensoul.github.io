@@ -11,13 +11,11 @@ description: "这是一篇双语翻译的文章，原文出自《Grokking the Sy
 
 ---
 
-
-
-# Introduction to Domain Name System (DNS) 
+# Introduction to Domain Name System (DNS)
 
 > 域名系统 (DNS) 简介
 
-# The origins of DNS 
+# The origins of DNS
 
 > DNS 的起源
 
@@ -31,7 +29,7 @@ Similarly, computers are uniquely identified by IP addresses—for example, `104
 
 ![](educative-dns-06.webp)
 
-## What is DNS? 
+## What is DNS?
 
 >什么是 DNS？
 
@@ -49,7 +47,7 @@ The entire operation is performed very quickly. Therefore, the end user experien
 
 > 整个操作进行得非常快。因此，最终用户体验到的延迟最小。我们还将了解浏览器如何保存一些常用的映射以供下一课稍后使用。
 
-## Important details 
+## Important details
 
 >重要细节
 
@@ -65,11 +63,11 @@ Let’s highlight some of the important details about DNS, some of which we’ll
 
   > 资源记录：DNS 数据库以资源记录 (RR) 的形式存储域名到 IP 地址的映射。 RR 是用户从名称服务器请求的最小信息单元。 RR 有不同类型。下表描述了常见的 RR。三个重要的信息是类型、名称和值。名称和值根据 RR 的类型而变化。
 
-## Common Types of Resource Records 
+## Common Types of Resource Records
 
 > 资源记录的常见类型
 
-| **Type ** | **Description **                                             | **Name **   | **Value**      | **Example (Type, Name, Value) **                         |
+| **Type** | **Description**                                             | **Name**   | **Value**      | **Example (Type, Name, Value)**                         |
 | --------- | ------------------------------------------------------------ | ----------- | -------------- | -------------------------------------------------------- |
 | A         | Provides the hostname to IP address mapping                  | Hostname    | IP address     | (A, relay1.main.educative.io,104.18.2.119)               |
 | NS        | Provides the hostname that is the authoritative DNS for a domain name | Domain name | Hostname       | (NS, educative.io, dns.educative.io)                     |
@@ -88,7 +86,7 @@ Let’s explore more details of the above points in the next lesson to get more 
 
 > 让我们在下一课中探讨上述要点的更多细节，以便更加清晰。
 
-# How the Domain Name System Works 
+# How the Domain Name System Works
 
 >域名系统如何运作
 
@@ -108,11 +106,11 @@ Through this lesson, we’ll answer the following questions:
 
   > DNS 基础设施的分布式特性如何有助于其稳健性？
 
-Let’s get started. 
+Let’s get started.
 
 > 让我们开始吧。
 
-## DNS hierarchy 
+## DNS hierarchy
 
 > DNS层次结构
 
@@ -142,7 +140,7 @@ There are mainly four types of servers in the DNS hierarchy:
 
 ![image-20231117165436915](educative-dns-01.webp)
 
-> **Question** 
+> **Question**
 >
 > > 问题
 >
@@ -158,9 +156,7 @@ There are mainly four types of servers in the DNS hierarchy:
 >
 > > 然而，从视觉上看，DNS 层次结构可以视为一棵树。
 
-
-
-### Iterative versus recursive query resolution 
+### Iterative versus recursive query resolution
 
 >迭代与递归查询解析
 
@@ -190,7 +186,7 @@ These days, we’ll find many third-party public DNS resolvers offered by Google
 
 > 如今，我们会发现 Google、Cloudflare、OpenDNS 等提供的许多第三方公共 DNS 解析器。有趣的是，这些公共 DNS 服务器可能比本地 ISP DNS 设施提供更快的响应。
 
-## Caching 
+## Caching
 
 >缓存
 
@@ -208,7 +204,7 @@ The slideshow below demonstrates the power of caching in the DNS:
 
 > 注意：即使没有可用的缓存来解析用户的查询并且必须访问 DNS 基础设施，缓存仍然是有益的。本地服务器或ISP DNS解析器可以缓存TLD服务器或权威服务器的IP地址，并避免请求根级服务器。
 
-## DNS as a distributed system 
+## DNS as a distributed system
 
 >DNS 作为分布式系统
 
@@ -236,7 +232,7 @@ Let’s now go over how DNS is scalable, reliable, and consistent.
 
 > 现在让我们回顾一下 DNS 如何实现可扩展、可靠和一致。
 
-### Highly scalable 
+### Highly scalable
 
 > 高度可扩展
 
@@ -244,7 +240,7 @@ Due to its hierarchical nature, DNS is a highly scalable system. Roughly 1,000 r
 
 > 由于其分层性质，DNS 是一个高度可扩展的系统。 13 台根级服务器的大约 1,000 个复制实例战略性地分布在世界各地，以处理用户查询。工作劳力被分配到 TLD 和根服务器来处理查询，最后分配到由组织自己管理的权威服务器以使整个系统正常运行。如上面的 DNS 层次结构树所示，不同的服务处理树的不同部分，从而实现系统的可扩展性和可管理性。
 
-### Reliable 
+### Reliable
 
 >可靠性
 
@@ -264,7 +260,7 @@ Three main reasons make the DNS a reliable system:
 
    > 协议：尽管许多客户端依赖不可靠的用户数据报协议 (UDP) 来请求和接收 DNS 响应，但重要的是要承认 UDP 也提供了独特的优势。 UDP 速度更快，因此可以提高 DNS 性能。此外，自诞生以来，互联网服务的可靠性已得到提高，因此 UDP 通常比 TCP 更受青睐。如果 DNS 解析器没有收到前一个请求的回复，则可以重新发送 UDP 请求。这种请求-响应仅需要一次往返，与在数据交换之前需要三次握手的 TCP 相比，延迟更短。
 
-> **Question** 
+> **Question**
 >
 > > 问题
 >
@@ -272,7 +268,7 @@ Three main reasons make the DNS a reliable system:
 >
 > > 如果网络拥塞会发生什么？ DNS 是否应该继续使用 UDP？
 >
-> 
+>
 >
 > Typically, DNS uses UDP. However, DNS can use TCP when its message size exceeds the original packet size of 512 Bytes. This is because large-size packets are more prone to be damaged in congested networks. DNS always uses TCP for zone transfers.
 >
@@ -282,19 +278,19 @@ Three main reasons make the DNS a reliable system:
 >
 > > 出于隐私原因，某些客户端更喜欢使用 DNS 而不是 TCP 来采用传输层安全性。
 
-### Consistent 
+### Consistent
 
 > 一致性
 
 DNS uses various protocols to update and transfer information among replicated servers in a hierarchy. DNS compromises on strong consistency to achieve high performance because data is read frequently from DNS databases as compared to writing. However, DNS provides eventual consistency and updates records on replicated servers lazily. Typically, it can take from a few seconds up to three days to update records on the DNS servers across the Internet. The time it takes to propagate information among different DNS clusters depends on the DNS infrastructure, the size of the update, and which part of the DNS tree is being updated.
 
-> DNS 使用各种协议在层次结构中的复制服务器之间更新和传输信息。 DNS 会在强一致性方面做出妥协以实现高性能，因为与写入相比，从 DNS 数据库中读取数据的频率更高。然而，DNS 提供最终一致性并延迟更新复制服务器上的记录。通常，更新 Internet 上 DNS 服务器上的记录可能需要几秒钟到三天的时间。在不同 DNS 集群之间传播信息所需的时间取决于 DNS 基础设施、更新的大小以及正在更新 DNS 树的哪一部分。 
+> DNS 使用各种协议在层次结构中的复制服务器之间更新和传输信息。 DNS 会在强一致性方面做出妥协以实现高性能，因为与写入相比，从 DNS 数据库中读取数据的频率更高。然而，DNS 提供最终一致性并延迟更新复制服务器上的记录。通常，更新 Internet 上 DNS 服务器上的记录可能需要几秒钟到三天的时间。在不同 DNS 集群之间传播信息所需的时间取决于 DNS 基础设施、更新的大小以及正在更新 DNS 树的哪一部分。
 
 Consistency can suffer because of caching too. Since authoritative servers are located within the organization, it may be possible that certain resource records are updated on the authoritative servers in case of server failures at the organization. Therefore, cached records at the default/local and ISP servers may be outdated. To mitigate this issue, each cached record comes with an expiration time called **time-to-live (TTL)**.
 
 > 由于缓存，一致性也会受到影响。由于权威服务器位于组织内，因此在组织中的服务器发生故障的情况下，权威服务器上的某些资源记录可能会被更新。因此，默认/本地和 ISP 服务器上的缓存记录可能会过时。为了缓解此问题，每个缓存记录都带有一个称为生存时间 (TTL) 的过期时间。
 
-> **Question** 
+> **Question**
 >
 > > 问题
 >
@@ -306,7 +302,7 @@ Consistency can suffer because of caching too. Since authoritative servers are l
 >
 > > 为了保持高可用性，TTL值应该很小。这是因为如果任何服务器或集群发生故障，组织可以立即更新资源记录。仅在 TTL 未过期期间，用户才会遇到不可用的情况。然而，如果 TTL 很大，组织将更新其资源记录，而用户将继续 ping 早就崩溃的过时服务器。渴望高可用性的公司将 TTL 值维持在低至 120 秒。因此，即使发生故障，最长停机时间也只有几分钟。
 
-## Test it out 
+## Test it out
 
 >测试一下
 
@@ -329,7 +325,7 @@ Let’s go through the meaning of the output:
 
 > 我们来看看输出的含义：
 
-### The `nslookup` output 
+### The `nslookup` output
 
 >`nslookup` 输出
 
@@ -357,7 +353,7 @@ Let’s go through the meaning of the output:
 
 > 注意：我们邀请您测试不同服务的 TTL 和查询时间，以加深您的理解。您可以使用上述终端来实现此目的。
 
-> **Question** 
+> **Question**
 >
 > > 问题
 >
@@ -365,7 +361,7 @@ Let’s go through the meaning of the output:
 >
 > > 如果我们需要 DNS 告诉我们哪个 IP 可以访问网站或服务，我们如何知道 DNS 解析器的 IP 地址？ （这似乎是一个先有鸡还是先有蛋的问题！）
 >
-> 
+>
 >
 > End users’ operating systems have configuration files (`/etc/resolv.conf` in Linux) with the DNS resolvers’ IP addresses, which in turn obtain all information for them. (Often, DHCP provides the default DNS resolver IP address along with other configurations.) The end-systems request DNS resolves for any DNS queries. DNS resolvers have special software installed to resolve queries through the DNS infrastructure. The root server’s IP addresses are within the special software. Typically, the Berkeley Internet Name Domain (BIND) software is used on DNS resolvers. The [InterNIC](https://www.internic.net/domain/named.root) maintains the updated list of 13 root servers.
 >

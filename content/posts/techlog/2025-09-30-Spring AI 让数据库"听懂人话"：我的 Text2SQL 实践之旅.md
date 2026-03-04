@@ -28,6 +28,7 @@ cover: /thumbs/sql.svg
 - **Spring 生态**：与现有 **Spring Boot** 项目无缝集成，支持**依赖注入**和**自动配置**
 
 **核心技术栈** ：
+
 - **Spring Boot 3.5.9** + **Spring AI 1.1.2**（企业级 Java 框架）
 - **MySQL 9** (Docker容器化部署)
 - **DeepSeek Chat API**（国产大语言模型）
@@ -35,6 +36,7 @@ cover: /thumbs/sql.svg
 - **Maven** 构建工具
 
 **关键特性**：
+
 - 支持三种**智能查询模式**：直接模式、**MCP工具模式**、**分步骤模式**
 - 内置**SQL注入防护**（仅允许SELECT查询，防止数据泄露）
 - **现代化Web界面**（支持移动端适配）
@@ -45,6 +47,7 @@ cover: /thumbs/sql.svg
 让我们先快速跑起来，看看**自然语言数据库查询**的效果如何：
 
 **第一步：环境准备**
+
 ```bash
 # 设置 DeepSeek API Key（支持 OpenAI、Claude、通义千问等多种 LLM）
 export DEEPSEEK_API_KEY="your-deepseek-api-key-here"
@@ -58,8 +61,8 @@ mvn clean spring-boot:run
 
 **第二步：体验智能查询**
 
-- **直接查询模式**：http://localhost:8080 （单步 SQL 生成）
-- **分步骤模式**：http://localhost:8080/step （多步推理查询）
+- **直接查询模式**：<http://localhost:8080> （单步 SQL 生成）
+- **分步骤模式**：<http://localhost:8080/step> （多步推理查询）
 
 > 💡 **小贴士**：首次启动会自动执行**数据库初始化脚本**，加载员工、部门、项目示例数据。
 
@@ -70,6 +73,7 @@ mvn clean spring-boot:run
 **核心思路**：**数据库结构** + **用户问题** → **AI 模型推理** → **SQL 语句** → **安全校验** → **执行查询**
 
 ### 系统架构图
+
 ```mermaid
 flowchart TD
   User["Browser UI"] --> Controller["REST Controller"]
@@ -176,10 +180,10 @@ public class DirectText2SqlService implements Text2SqlService {
 }
 ```
 
-
 ### 核心配置
 
 让我来展示一下关键的配置文件。首先是 `application.yml`：
+
 ```yaml
 spring:
   datasource:
@@ -197,6 +201,7 @@ spring:
 ```
 
 然后是 `docker-compose.yml` 的数据库配置：
+
 ```yaml
 services:
   mysql:
@@ -228,6 +233,7 @@ public class AppConfig {
 ```
 
 这个配置类做了一件事：
+
 1. **基础 ChatClient**：用于直接模式的 SQL 生成
 
 ### API 接口设计
@@ -300,6 +306,7 @@ curl -X POST http://localhost:8080/api/query \
 ```
 
 **返回结果**：
+
 ```json
 {
   "success": true,
@@ -316,12 +323,14 @@ curl -X POST http://localhost:8080/api/query \
 我设计了一个简洁美观的 Web 界面，让用户能够直观地体验 Text2SQL 功能：
 
 **主要功能**：
+
 - **自然语言输入**：用户可以直接用中文描述查询需求
 - **示例查询**：提供常用的查询模板，点击即可使用
 - **实时结果展示**：显示生成的 SQL 和查询结果
 - **数据库结构查看**：可以查看完整的数据库结构信息
 
 **界面特色**：
+
 - 使用 Bootstrap 5 构建，响应式设计
 - 渐变色背景，视觉效果现代
 - 代码高亮显示，SQL 语句清晰可读
@@ -376,6 +385,7 @@ INSERT IGNORE INTO departments (name, manager_id, budget, location) VALUES
 直接模式虽然简单，但遇到**复杂数据库查询**时就开始力不从心了。比如**多表关联查询**、**字段语义理解**等情况，AI 容易产生**幻觉问题**。
 
 这时候，我引入了 **MCP（Model Context Protocol）工具集成**，让 **LLM 大语言模型**能够：
+
 1. **先认知**：通过**函数调用**获取真实的**数据库 Schema**
 2. **再生成**：基于真实结构生成**精准 SQL**
 3. **后验证**：执行前先做**语法校验**和**安全检查**
@@ -594,7 +604,7 @@ public class McpText2SqlService implements Text2SqlService {
 }
 ```
 
-## 第三版：分步骤查询模式 - 让 AI 推理过程透明化 
+## 第三版：分步骤查询模式 - 让 AI 推理过程透明化
 
 有时候，我们不仅想要结果，还想知道 **AI 大语言模型**是怎么**逻辑推理**的。特别是在**教学演示**、**调试复杂查询**或者**生产环境监控**时，**分步骤展示**就显得尤为重要。
 
@@ -613,16 +623,19 @@ G --> E["Step 5 SQL执行"]
 以执行 "找出工资最高的员工" 为例，展示**多步推理**过程：
 
 **步骤 1：自然语言问题改写**
+
 ```bash
 问题改写，改写为：查询工资最高的员工信息
 ```
 
 **步骤 2：数据表智能选取**
+
 ```bash
 数据表选取，选择表为：employees
 ```
 
 **步骤 3：业务逻辑信息推理**
+
 ```markdown
 信息推理，本次推理参考业务信息是：
 
@@ -636,6 +649,7 @@ G --> E["Step 5 SQL执行"]
 ```
 
 **步骤 4：SQL 语句智能生成**
+
 ```markdown
 查询SQL生成，生成SQL查询语句为：
 
@@ -734,7 +748,7 @@ LIMIT 1
 
 ### 分步骤查询的前端界面
 
-启动应用之后，访问 http://localhost:8080/step 即可访问分步骤查询的前端界面： 
+启动应用之后，访问 <http://localhost:8080/step> 即可访问分步骤查询的前端界面：
 
 ## 第四版：智能业务规则推理，让AI更懂业务
 
@@ -743,11 +757,13 @@ LIMIT 1
 ### 为什么需要业务规则推理？
 
 想象一下这样的场景：
+
 - 用户问："近两年入职的员工平均薪水是多少？"
 - 用户问："技术部工资最高的前3名员工"
 - 用户问："每个部门的人数统计"
 
 这些查询不仅需要正确的 SQL 语法，更需要理解：
+
 - **时间推理**：什么是"近两年"？如何转换为具体的日期范围？
 - **业务术语**：什么是"平均薪水"？应该用哪个字段？
 - **排序逻辑**：如何找到"最高"的员工？
@@ -758,6 +774,7 @@ LIMIT 1
 第四版引入了 `BusinessRuleService`，提供五大核心推理能力：
 
 #### 1. 业务术语解释
+
 ```txt
 // 业务术语映射
 BUSINESS_TERMS.put("员工", "employees表中的员工记录");
@@ -849,14 +866,17 @@ projects + project_members → "通过project_id字段关联"
 让我们看看几个具体的例子：
 
 #### 例子1：时间推理
+
 **用户查询**："近一年入职的员工信息"
 
 **业务规则推理**：
+
 - 时间范围: 2023-12-01 至 2024-12-31
 - 筛选条件: hire_date >= '2023-12-01'
 - 业务规则: 需要添加WHERE条件进行时间筛选
 
 **生成的SQL**：
+
 ```sql
 SELECT * FROM employees 
 WHERE hire_date >= '2023-12-01' 
@@ -864,15 +884,18 @@ ORDER BY hire_date DESC
 ```
 
 #### 例子2：聚合推理
+
 **用户查询**："每个部门的平均工资"
 
 **业务规则推理**：
+
 - 分组统计: 按department字段分组
 - 聚合建议: 使用AVG聚合函数计算平均工资
 - 关键字段: department, salary
 - 业务规则: 需要添加GROUP BY子句进行分组统计
 
 **生成的SQL**：
+
 ```sql
 SELECT department, AVG(salary) as avg_salary 
 FROM employees 
@@ -881,15 +904,18 @@ ORDER BY avg_salary DESC
 ```
 
 #### 例子3：排序推理
+
 **用户查询**："技术部工资最高的前3名员工"
 
 **业务规则推理**：
+
 - 筛选条件: department = '技术部'
 - 排序规则: 按salary字段降序排列
 - 结果限制: 使用LIMIT 3限制结果数量
 - 关键字段: name, salary, department, position
 
 **生成的SQL**：
+
 ```sql
 SELECT name, salary, position 
 FROM employees 
@@ -991,16 +1017,19 @@ private static final String STEP3_PROMPT = """
 ### 实际应用场景
 
 **人力资源场景**：
+
 - "近半年入职的员工平均工资"
 - "各部门工资分布情况"
 - "技术部薪资最高的前5名"
 
 **项目管理场景**：
+
 - "进行中的项目预算统计"
 - "每个项目的参与人数"
 - "项目完成率分析"
 
 **财务分析场景**：
+
 - "各部门年度预算使用情况"
 - "项目成本效益分析"
 - "员工薪酬结构分析"
@@ -1295,12 +1324,14 @@ public class SqlUtils {
 ### 技术选型与架构建议
 
 **AI 大语言模型选择**：
+
 - **DeepSeek**：性价比高，**中文理解**好，适合个人项目
 - **OpenAI GPT-4**：准确率高，但成本较高
 - **Claude**：**推理能力**强，适合复杂查询
 - **本地模型**：数据安全，但需要强大的硬件支持
 
 **数据库支持**：
+
 - **MySQL**：最常用，生态完善
 - **PostgreSQL**：功能强大，支持复杂查询
 - **SQLite**：轻量级，适合原型开发
@@ -1309,12 +1340,14 @@ public class SqlUtils {
 ### 项目扩展方向
 
 **短期扩展**：
+
 - 支持更多数据库类型
 - 添加查询历史和管理功能
 - 实现查询结果可视化
 - 支持多语言查询
 
 **长期规划**：
+
 - 集成向量数据库，支持语义搜索
 - 实现智能查询优化建议
 - 添加数据血缘分析功能
@@ -1323,18 +1356,21 @@ public class SqlUtils {
 ## 学习资源推荐
 
 **官方文档**：
+
 - [Spring AI 官方文档](https://docs.spring.io/spring-ai/reference/) - Spring AI 框架完整指南
 - [OpenAI API 文档](https://platform.openai.com/docs) - GPT 模型 API 使用文档
 - [MySQL 官方文档](https://dev.mysql.com/doc/) - MySQL 数据库完整文档
 - [DeepSeek API 文档](https://platform.deepseek.com/api-docs) - DeepSeek 大语言模型 API
 
 **相关技术框架**：
+
 - [LangChain](https://python.langchain.com/) - Python 生态的 AI 应用开发框架
 - [LlamaIndex](https://www.llamaindex.ai/) - 数据索引和检索框架
 - [MCP 协议](https://modelcontextprotocol.io/) - 模型上下文协议标准
 - [Spring Boot](https://spring.io/projects/spring-boot) - Java 企业级应用开发框架
 
 **Text2SQL 相关资源**：
+
 - [Text2SQL 论文集合](https://github.com/eosphoros-ai/awesome-text2sql) - Text2SQL 学术研究资源
 - [SQL 注入防护指南](https://owasp.org/www-community/attacks/SQL_Injection) - OWASP SQL 注入防护
 - [数据库设计最佳实践](https://www.sqlstyle.guide/) - SQL 编码规范指南
@@ -1348,4 +1384,3 @@ public class SqlUtils {
 ---
 
 *本文基于 Spring AI 1.1.2 版本编写，[项目代码已开源](https://github.com/chensoul/spring-ai-text2sql-showcase)，欢迎 Star 和 Fork！*
-

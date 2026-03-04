@@ -185,19 +185,19 @@ foo
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+  auth.inMemoryAuthentication()
       .withUser("gwidgets").password("gwidgets").authorities("CLIENT");
-	}
+ }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		 http.authorizeRequests()
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
+   http.authorizeRequests()
        .anyRequest().authenticated()
        .and().formLogin().defaultSuccessUrl("/test.html")
        .and().csrf().disable();
-	}
+ }
 }
 ```
 
@@ -205,8 +205,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
-	-d 'grant_type=password&username=gwidgets&password=gwidgets' \
-	-H "Accept: application/json"
+ -d 'grant_type=password&username=gwidgets&password=gwidgets' \
+ -H "Accept: application/json"
 ```
 
 回复：
@@ -239,7 +239,7 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 </html>
 ```
 
-要执行隐式授予，我们需要在浏览器中导航到以下地址：http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html
+要执行隐式授予，我们需要在浏览器中导航到以下地址：<http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html>
 
 ![Login redirect](login-spring.webp)
 
@@ -310,7 +310,5 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'cl
 Spring OAuth 提供开箱即用的 OAuth 端点和流程，并且可以成为以最小的努力设置 OAuth 的绝佳解决方案。然而，对于不熟悉 Spring 的开发人员来说，这可能有点令人畏惧，因为很多事情都在幕后发生。希望这篇文章可以帮助您了解全局。在下一篇文章中，我们将讨论使用 OAuth 范围来保护端点。
 
 完整的源代码可以在[这里](https://github.com/zak905/oauth2-example)找到。
-
-
 
 原文链接：[http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/](http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)

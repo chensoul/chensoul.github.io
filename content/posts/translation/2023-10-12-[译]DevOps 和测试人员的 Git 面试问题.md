@@ -676,4 +676,4 @@ git reset HEAD -- .
 
 快乐学习！
 
-原文链接：[Git Interview Questions for DevOps and Testers ](https://howtodoinjava.com/interview-questions/git-interview-questions/)
+原文链接：[Git Interview Questions for DevOps and Testers](https://howtodoinjava.com/interview-questions/git-interview-questions/)

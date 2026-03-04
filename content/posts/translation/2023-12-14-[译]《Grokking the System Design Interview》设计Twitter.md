@@ -15,7 +15,7 @@ Let’s design a Twitter-like social networking service. Users of the service wi
 
 > 让我们设计一个类似 Twitter 的社交网络服务。该服务的用户将能够发布推文、关注其他人以及喜欢的推文。难度级别：中等
 
-## 1. What is Twitter? 
+## 1. What is Twitter?
 
 > 1.什么是推特？
 
@@ -25,7 +25,7 @@ Twitter is an online social networking service where users post and read short 1
 
 ## 2. Requirements and Goals of the System
 
-> 2. 系统的要求和目标
+> 1. 系统的要求和目标
 
 We will be designing a simpler version of Twitter with the following requirements:
 
@@ -38,19 +38,19 @@ We will be designing a simpler version of Twitter with the following requirement
 1. Users should be able to post new tweets.
   
    > 用户应该能够发布新的推文。
-   
+
 2. A user should be able to follow other users.
   
    > 用户应该能够关注其他用户。
-   
+
 3. Users should be able to mark tweets as favorites.
   
    > 用户应该能够将推文标记为收藏夹。
-   
+
 4. The service should be able to create and display a user’s timeline consisting of top tweets from all the people the user follows.
   
    > 该服务应该能够创建并显示用户的时间线，其中包含来自以下位置的热门推文：用户关注的所有人员。
-   
+
 5. Tweets can contain photos and videos.
   
    > 推文可以包含照片和视频。
@@ -62,11 +62,11 @@ We will be designing a simpler version of Twitter with the following requirement
 1. Our service needs to be highly available.
   
    > 我们的服务需要高度可用。
-   
+
 2. Acceptable latency of the system is 200ms for timeline generation.
   
    > 时间线生成系统可接受的延迟为 200 毫秒。
-   
+
 3. Consistency can take a hit (in the interest of availability); if a user doesn’t see a tweet for a while, it should be fine.
   
    > 一致性可能会受到影响（为了可用性）；如果用户没有看到某条推文同时，应该没问题。
@@ -75,7 +75,7 @@ We will be designing a simpler version of Twitter with the following requirement
 
 > 扩展要求
 
-1. Searching for tweets. 
+1. Searching for tweets.
 
    > 正在搜索推文。
 
@@ -83,29 +83,29 @@ We will be designing a simpler version of Twitter with the following requirement
 
    > 回复推文。
 
-3. Trending topics – current hot topics/searches. 
+3. Trending topics – current hot topics/searches.
 
-   > 热门话题 – 当前的热门话题/搜索。 
+   > 热门话题 – 当前的热门话题/搜索。
 
 4. Tagging other users.
 
    > 标记其他用户。
 
-5) Tweet Notification. 
+1) Tweet Notification.
 
    > 推文通知。
 
-6) Who to follow? Suggestions?
+2) Who to follow? Suggestions?
 
    > 跟随谁？建议？
 
-7) Moments.
+3) Moments.
 
    > 时刻。
 
 ## 3. Capacity Estimation and Constraints
 
-> 3. 容量估计和约束
+> 1. 容量估计和约束
 
 Let’s assume we have one billion total users with 200 million daily active users (DAU). Also assume we have 100 million new tweets every day and on average each user follows 200 people.
 
@@ -119,15 +119,13 @@ Let’s assume we have one billion total users with 200 million daily active use
 
 > 我们的系统总共会产生多少推文浏览量？假设用户平均每天访问自己的时间线两次，并访问其他五个人的页面。如果用户在每个页面上看到 20 条推文，那么我们的系统将生成 28B/天的总推文浏览量：
 
-200M DAU * ((2 + 5) * 20 tweets) => 28B/day
+200M DAU *((2 + 5)* 20 tweets) => 28B/day
 
 **Storage Estimates** Let’s say each tweet has 140 characters and we need two bytes to store a character without compression. Let’s assume we need 30 bytes to store metadata with each tweet (like ID, timestamp, user ID, etc.). Total storage we would need:
 
 > 存储估算 假设每条推文有 140 个字符，我们需要两个字节来存储一个字符而不进行压缩。假设我们需要 30 个字节来存储每条推文的元数据（如 ID、时间戳、用户 ID 等）。我们需要的总存储空间：
 
 100M * (280 + 30) bytes => 30GB/day
-
-
 
 What would our storage needs be for five years? How much storage we would need for users’ data, follows, favorites? We will leave this for the exercise.
 
@@ -137,8 +135,7 @@ Not all tweets will have media, let’s assume that on average every fifth tweet
 
 > 并非所有推文都会有媒体，我们假设平均每五条推文有一张照片，每十分之一有一个视频。我们还假设平均一张照片为 200KB，一段视频为 2MB。这将使我们每天拥有 24TB 的新媒体。
 
-(100M/5 photos * 200KB) + (100M/10 videos * 2MB) ~= 24TB/day
-
+(100M/5 photos *200KB) + (100M/10 videos* 2MB) ~= 24TB/day
 
 **Bandwidth Estimates** Since total ingress is 24TB per day, this would translate into 290MB/sec.
 
@@ -148,7 +145,7 @@ Remember that we have 28B tweet views per day. We must show the photo of every t
 
 > 请记住，我们每天的推文浏览量为 28B。我们必须显示每条推文的照片（如果它有照片），但我们假设用户观看他们在时间线中看到的每第三个视频。因此，总出口将为：
 
-## 4. System APIs 
+## 4. System APIs
 
 > **4. 系统API**
 
@@ -181,7 +178,7 @@ media_ids (number[]): Optional list of media_ids to be associated with the Tweet
 
 ## 5. High Level System Design
 
-> 5. 高层系统设计
+> 1. 高层系统设计
 
 We need a system that can efficiently store all the new tweets, 100M/86400s => 1150 tweets per second and read 28B/86400s => 325K tweets per second. It is clear from the requirements that this will be a read-heavy system.
 
@@ -199,7 +196,7 @@ Although our expected daily write load is 100 million and read load is 28 billio
 
 ## 6. Database Schema
 
-> 6. 数据库架构
+> 1. 数据库架构
 
 We need to store data about users, their tweets, their favorite tweets, and people they follow.
 
@@ -239,15 +236,15 @@ To recover from these situations either we have to repartition/redistribute our 
 1. Our application (app) server will find all the people the user follows.
   
    > 我们的应用程序（app）服务器将找到用户关注的所有人员。
-   
+
 2. App server will send the query to all database servers to find tweets from these people.
   
    > 应用服务器会将查询发送到所有数据库服务器以查找这些人的推文。
-   
-3. Each database server will find the tweets for each user, sort them by recency and return the top tweets. 
+
+3. Each database server will find the tweets for each user, sort them by recency and return the top tweets.
   
    > 每个数据库服务器都会找到每个用户的推文，按新近度对它们进行排序并返回顶部推文。
-   
+
 4. App server will merge all the results and sort them again to return the top results to the user.
   
    > 应用服务器将合并所有结果并再次排序，将排名靠前的结果返回给用户。
@@ -276,7 +273,7 @@ What could be the size of our TweetID? Let’s say our epoch time starts today, 
 
 > 我们的 TweetID 的大小是多少？假设我们的纪元时间从今天开始，我们需要多少位来存储未来 50 年的秒数？
 
-86400 sec/day * 365 (days a year) * 50 (years) => 1.6B
+86400 sec/day *365 (days a year)* 50 (years) => 1.6B
 
 ![image-20231116102448181](designing-twitter-02.webp)
 
@@ -298,7 +295,7 @@ In the above approach, we still have to query all the servers for timeline gener
 
 > 在上述方法中，我们仍然需要查询所有服务器以生成时间线，但我们的读取（和写入）将会快得多。
 
-1. Since we don’t have any secondary index (on creation time) this will reduce our write latency. 2. While reading, we don’t need to filter on creation-time as our primary key has epoch time included in it. 
+1. Since we don’t have any secondary index (on creation time) this will reduce our write latency. 2. While reading, we don’t need to filter on creation-time as our primary key has epoch time included in it.
   
    > 由于我们没有任何二级索引（在创建时），这将减少我们的写入延迟。 2.在读取时，我们不需要过滤创建时间，因为我们的主键有纪元时间包含在其中。
 
@@ -332,9 +329,9 @@ Our cache would be like a hash table where ‘key’ would be ‘OwnerID’ and 
 
 > **9. 时间线生成**
 
-For a detailed discussion about timeline generation, take a look at Designing Facebook’s Newsfeed. 
+For a detailed discussion about timeline generation, take a look at Designing Facebook’s Newsfeed.
 
-> 有关时间线生成的详细讨论，请查看设计 Facebook 的新闻源。 
+> 有关时间线生成的详细讨论，请查看设计 Facebook 的新闻源。
 
 ## 10. Replication and Fault Tolerance
 

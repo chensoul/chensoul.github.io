@@ -7,7 +7,7 @@ tags: ['security', 'thingsboard']
 description: "ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard ，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。 ..."
 ---
 
-ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。
+ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： <sysadmin@thingsboard.org> / sysadmin 进行登陆。
 
 <!--more-->
 
@@ -74,10 +74,9 @@ ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://
      - 映射器类型：GITHUB
      - First Name 名称属性：name
      - Last Name 名称属性：
-     - 租户名称策略：DOMAIN 
+     - 租户名称策略：DOMAIN
 
-
-​	以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：[http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)。
+​ 以 Google 为例，需要在 API 和服务 -> 凭据 -> OAuth 2.0 客户端 ID ，在 已获授权的重定向 URI 处添加 thingsboard 的重定向地址：[http://localhost:8080/login/oauth2/code/](http://localhost:8080/login/oauth2/code/)。
 
 完成配置之后，配置的内存保证到数据库中，系统设置对应数据库表是 `admin_settings`。
 
@@ -141,8 +140,6 @@ CREATE TABLE "public"."admin_settings" (
 ]
 ```
 
-
-
 OAuth2 相关的表为：
 
 - `domain`
@@ -160,8 +157,6 @@ OAuth2 相关的表为：
 - 验证 APP。使用手机上的 Google Authenticator、Authy或Duo等应用程序进行身份验证，它将生成用于登录的验证码。
 - 电子邮件。使用您电子邮件中的验证码进行身份验证。
 - 备份验证码。这些可打印的一次性密码允许您在离开手机时登录，比如正在旅行。
-
-
 
 个人账号的相关设置保存在以下两张表：
 
@@ -187,17 +182,17 @@ f02246b0-b121-11ef-983d-d79399efbf69 为 `oauth2_client` 主键。
 在登陆页面，点击使用 Google 登陆，后台在 `OAuth2AuthorizationRequestRedirectFilter` 的 `doFilterInternal` 方法打个断点。
 
 ```java
-	try {
-			OAuth2AuthorizationRequest authorizationRequest = this.authorizationRequestResolver.resolve(request);
-			if (authorizationRequest != null) {
-				this.sendRedirectForAuthorization(request, response, authorizationRequest);
-				return;
-			}
-		}
-		catch (Exception ex) {
-			this.unsuccessfulRedirectForAuthorization(request, response, ex);
-			return;
-		}
+ try {
+   OAuth2AuthorizationRequest authorizationRequest = this.authorizationRequestResolver.resolve(request);
+   if (authorizationRequest != null) {
+    this.sendRedirectForAuthorization(request, response, authorizationRequest);
+    return;
+   }
+  }
+  catch (Exception ex) {
+   this.unsuccessfulRedirectForAuthorization(request, response, ex);
+   return;
+  }
 ```
 
 `this.authorizationRequestResolver` 对于的 Bean 为 `CustomOAuth2AuthorizationRequestResolver`，其 `resolve` 方法逻辑如下：
@@ -233,25 +228,25 @@ public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
 
   ```json
   {
-  	"authorizationUri": "https://accounts.google.com/o/oauth2/v2/auth",
-  	"responseType": {
-  		"value": "code"
-  	},
-  	"clientId": "385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com",
-  	"redirectUri": "http://localhost:8080/login/oauth2/code/",
-  	"scopes": ["email", "openid", "profile"],
-  	"state": "M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE=",
-  	"additionalParameters": {
-  		"nonce": "zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00"
-  	},
-  	"authorizationRequestUri": "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com&scope=email%20openid%20profile&state=M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE%3D&redirect_uri=http://localhost:8080/login/oauth2/code/&nonce=zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00",
-  	"attributes": {
-  		"registration_id": "f02246b0-b121-11ef-983d-d79399efbf69",
-  		"nonce": "_toJxm0yUite6Kzjy_yfX4eKq4NtwmygCqgYJVjN83SV2q6sZtneWpBmWeNTN6ZMth8qCIyOWY1up-m_AKmcQmjf_j9HCheruxtNvQL1zTbL9dL-rwOSSonAUtAJ3BGH"
-  	},
-  	"grantType": {
-  		"value": "authorization_code"
-  	}
+   "authorizationUri": "https://accounts.google.com/o/oauth2/v2/auth",
+   "responseType": {
+    "value": "code"
+   },
+   "clientId": "385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com",
+   "redirectUri": "http://localhost:8080/login/oauth2/code/",
+   "scopes": ["email", "openid", "profile"],
+   "state": "M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE=",
+   "additionalParameters": {
+    "nonce": "zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00"
+   },
+   "authorizationRequestUri": "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=385465491380-8q1fk7r47tqu6mcc9klob2c1a9sl4jmd.apps.googleusercontent.com&scope=email%20openid%20profile&state=M0qcUWqzNMKfj7zHKmmvFaaZxISMS5GGDHDZv55acHE%3D&redirect_uri=http://localhost:8080/login/oauth2/code/&nonce=zz5r7lMyPdaJ1zvAaRZvzH1P_megtjC28nVFG1Dug00",
+   "attributes": {
+    "registration_id": "f02246b0-b121-11ef-983d-d79399efbf69",
+    "nonce": "_toJxm0yUite6Kzjy_yfX4eKq4NtwmygCqgYJVjN83SV2q6sZtneWpBmWeNTN6ZMth8qCIyOWY1up-m_AKmcQmjf_j9HCheruxtNvQL1zTbL9dL-rwOSSonAUtAJ3BGH"
+   },
+   "grantType": {
+    "value": "authorization_code"
+   }
   }
   ```
 
@@ -332,5 +327,3 @@ oauth2Login 登陆失败的 handler 为 `Oauth2AuthenticationFailureHandler`：
 - `OAuth2AppTokenFactory`
 
 - `HybridClientRegistrationRepository`
-
-  

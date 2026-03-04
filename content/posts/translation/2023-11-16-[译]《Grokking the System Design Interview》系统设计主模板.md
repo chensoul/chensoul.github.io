@@ -11,8 +11,6 @@ description: "这是一篇双语翻译的文章，原文出自《Grokking the Sy
 
 ---
 
-
-
 System design interviews are unstructured by design. In these interviews, you are asked to take on an open-ended design problem that doesn’t have a standard solution.
 
 > 系统设计面试在设计上是非结构化的。在这些面试中，您被要求解决一个没有标准解决方案的开放式设计问题。
@@ -41,13 +39,13 @@ With this master template in mind, we will discuss the 18 essential system desig
 
 > 考虑到这个主模板，我们将讨论 18 个基本的系统设计概念。以下是每项的简要说明：
 
-## 1. Domain Name System (DNS) 
+## 1. Domain Name System (DNS)
 
 > 1.域名系统（DNS）
 
 The Domain Name System (DNS) serves as a fundamental component of the internet infrastructure, translating user-friendly domain names into their corresponding IP addresses. It acts as a phonebook for the internet, enabling users to access websites and services by entering easily memorable domain names, such as [www.designgurus.io](http://www.designgurus.io/), rather than the numerical IP addresses like "192.0.2.1" that computers utilize to identify each other.
 
-> 域名系统 (DNS) 是互联网基础设施的基本组成部分，它将用户友好的域名转换为其相应的 IP 地址。它充当互联网的电话簿，使用户能够通过输入易于记忆的域名（例如 www.designgurus.io）来访问网站和服务，而不是计算机用来识别彼此的数字 IP 地址（例如“192.0.2.1”） 。
+> 域名系统 (DNS) 是互联网基础设施的基本组成部分，它将用户友好的域名转换为其相应的 IP 地址。它充当互联网的电话簿，使用户能够通过输入易于记忆的域名（例如 <www.designgurus.io）来访问网站和服务，而不是计算机用来识别彼此的数字> IP 地址（例如“192.0.2.1”） 。
 
 When you input a domain name into your web browser, the DNS is responsible for finding the associated IP address and directing your request to the appropriate server. This process commences with your computer sending a query to a recursive resolver, which then searches a series of DNS servers, beginning with the root server, followed by the Top-Level Domain (TLD) server, and ultimately the authoritative name server. Once the IP address is located, the recursive resolver returns it to your computer, allowing your browser to establish a connection with the target server and access the desired content.
 
@@ -55,7 +53,7 @@ When you input a domain name into your web browser, the DNS is responsible for f
 
 ![system-design-master-template-02](system-design-master-template-02.webp)
 
-## 2. Load Balancer 
+## 2. Load Balancer
 
 > 2.负载均衡器
 
@@ -79,9 +77,7 @@ Load balancers employ various algorithms to determine the distribution of incomi
 
 ![system-design-master-template-03](system-design-master-template-03.webp)
 
-
-
-## 3. API Gateway 
+## 3. API Gateway
 
 > 3.API网关
 
@@ -111,9 +107,7 @@ The primary functions of an API Gateway encompass:
 
 ![system-design-master-template-04](system-design-master-template-04.webp)
 
-
-
-## 4. CDN 
+## 4. CDN
 
 >4.CDN
 
@@ -136,11 +130,9 @@ A Content Delivery Network (CDN) is a distributed network of servers that store 
 
 ![system-design-master-template-05](system-design-master-template-05.webp)
 
+## 5. Forward Proxy vs. Reverse Proxy
 
-
-## 5. Forward Proxy vs. Reverse Proxy 
-
->5. 正向代理与反向代理
+>1. 正向代理与反向代理
 
 A forward proxy, also referred to as a "proxy server" or simply "proxy," is a server positioned in front of one or more client machines, acting as an intermediary between the clients and the internet. When a client machine requests a resource on the internet, the request is initially sent to the forward proxy. The forward proxy then forwards the request to the internet on behalf of the client machine and returns the response to the client machine.
 
@@ -152,9 +144,9 @@ On the other hand, a reverse proxy is a server that sits in front of one or more
 
 ![system-design-master-template-06](system-design-master-template-06.webp)
 
-## 6. Caching 
+## 6. Caching
 
->6. 缓存
+>1. 缓存
 
 Cache is a high-speed storage layer positioned between the application and the original data source, such as a database, file system, or remote web service. When an application requests data, the cache is checked first. If the data is present in the cache, it is returned to the application. If the data is not found in the cache, it is retrieved from its original source, stored in the cache for future use, and then returned to the application. In a distributed system, caching can occur in multiple locations, including the client, DNS, CDN, load balancer, API gateway, server, database, and more.
 
@@ -162,9 +154,9 @@ Cache is a high-speed storage layer positioned between the application and the o
 
 ![system-design-master-template-07](system-design-master-template-07.webp)
 
-## 7. Data Partitioning 
+## 7. Data Partitioning
 
->7. 数据分区
+>1. 数据分区
 
 In a database, **horizontal partitioning**, often referred to as **sharding**, entails dividing the rows of a table into smaller tables and storing them on distinct servers or database instances. This method is employed to distribute the database load across multiple servers, thereby enhancing performance.
 
@@ -176,9 +168,9 @@ Conversely, **vertical partitioning** involves splitting the columns of a table 
 
 ![system-design-master-template-08](system-design-master-template-08.webp)
 
-## 8. Database Replication 
+## 8. Database Replication
 
->8. 数据库复制
+>1. 数据库复制
 
 Database replication is a method employed to maintain multiple copies of the same database across various servers or locations. The main objective of database replication is to enhance data availability, redundancy, and fault tolerance, ensuring the system remains operational even in the face of hardware failures or other issues.
 
@@ -201,7 +193,7 @@ In a replicated database configuration, one server serves as the primary (or mas
   
    > 负载平衡：副本可以处理读取查询，从而实现更好的负载分配并减少主数据库的整体压力。
 
-## 9. Distributed Messaging Systems 
+## 9. Distributed Messaging Systems
 
 >9.分布式消息系统
 
@@ -209,9 +201,9 @@ Distributed messaging systems provide a reliable, scalable, and fault-tolerant m
 
 > 分布式消息传递系统提供了一种可靠、可扩展且容错的方式，用于在众多可能在地理上分散的应用程序、服务或组件之间交换消息。这些系统通过解耦发送器和接收器组件来促进通信，使它们能够独立开发和运行。分布式消息传递系统在大规模或复杂的系统中尤其有价值，例如微服务架构或分布式计算环境中的系统。这些系统的示例包括 Apache Kafka 和 RabbitMQ。
 
-## 10. Microservices 
+## 10. Microservices
 
-> 10. 微服务
+> 1. 微服务
 
 Microservices represent an architectural style wherein an application is organized as an assembly of small, loosely-coupled, and autonomously deployable services. Each microservice is accountable for a distinct aspect of functionality or domain within the application and communicates with other microservices via well-defined APIs. This method deviates from the conventional monolithic architecture, where an application is constructed as a single, tightly-coupled unit.
 
@@ -237,7 +229,7 @@ The primary characteristics of microservices include:
   
    > 容错性：由于微服务是独立的，一个服务的故障并不一定会导致整个系统崩溃，增强了应用程序的整体弹性。
 
-## 11. NoSQL Databases 
+## 11. NoSQL Databases
 
 >11.NoSQL 数据库
 
@@ -264,9 +256,9 @@ NoSQL databases can be categorized into four main types:
 
 ![system-design-master-template-09](system-design-master-template-09.webp)
 
-## 12. Database Index 
+## 12. Database Index
 
->12. 数据库索引
+>1. 数据库索引
 
 Database indexes are data structures that enhance the speed and efficiency of query operations within a database. They function similarly to an index in a book, enabling the database management system (DBMS) to swiftly locate data associated with a specific value or group of values, without the need to search through every row in a table. By offering a more direct route to the desired data, indexes can considerably decrease the time required to retrieve information from a database.
 
@@ -289,7 +281,7 @@ Although indexes can significantly enhance query performance, they also involve 
 
 ![system-design-master-template-10](system-design-master-template-10.webp)
 
-## 13. Distributed File Systems 
+## 13. Distributed File Systems
 
 > 13.分布式文件系统
 
@@ -297,7 +289,7 @@ Distributed file systems are storage systems designed to manage and grant access
 
 > 分布式文件系统是一种存储系统，旨在管理和授予对跨多个服务器、节点或机器的文件和目录的访问权限，这些服务器、节点或机器经常分布在网络上。它们允许用户和应用程序访问和修改文件，就像它们位于本地文件系统上一样，尽管实际文件可能物理上位于各种远程服务器上。分布式文件系统通常用于大规模或分布式计算环境中，以提供容错、高可用性和增强的性能。
 
-## 14. Notification System 
+## 14. Notification System
 
 >14.通知系统
 
@@ -305,15 +297,15 @@ These are used to send notifications or alerts to users, such as emails, push no
 
 > 它们用于向用户发送通知或警报，例如电子邮件、推送通知或短信。
 
-## 15. Full-text Search 
+## 15. Full-text Search
 
-> 15. 全文检索
+> 1. 全文检索
 
 Full-text search allows users to search for particular words or phrases within an application or website. Upon receiving a user query, the application or website delivers the most relevant results. To accomplish this rapidly and effectively, full-text search utilizes an inverted index, a data structure that associates words or phrases with the documents where they are found. Elastic Search is an example of such systems.
 
 > 全文搜索允许用户在应用程序或网站中搜索特定单词或短语。收到用户查询后，应用程序或网站会提供最相关的结果。为了快速有效地完成此任务，全文搜索使用倒排索引，这是一种将单词或短语与找到它们的文档相关联的数据结构。 Elastic Search 就是此类系统的一个示例。
 
-## 16. Distributed Coordination Services 
+## 16. Distributed Coordination Services
 
 > 16.分布式协调服务
 
@@ -321,9 +313,9 @@ Distributed coordination services are systems engineered to regulate and synchro
 
 > 分布式协调服务是旨在以可靠、高效和容错的方式调节和同步分布式应用程序、服务或节点的操作的系统。它们有助于维护一致性、解决分布式同步以及监督分布式环境中不同组件的配置和状态。分布式协调服务在大规模或复杂的系统中尤其有价值，例如微服务架构、分布式计算环境或集群数据库中遇到的系统。 Apache ZooKeeper、etcd 和 Consul 是此类服务的示例。
 
-## 17. Heartbeat 
+## 17. Heartbeat
 
-> 17. 心跳
+> 1. 心跳
 
 In a distributed environment, work/data is distributed among servers. To efficiently route requests in such a setup, servers need to know what other servers are part of the system. Furthermore, servers should know if other servers are alive and working. In a decentralized system, whenever a request arrives at a server, the server should have enough information to decide which server is responsible for entertaining that request. This makes the timely detection of server failure an important task, which also enables the system to take corrective actions and move the data/work to another healthy server and stop the environment from further deterioration.
 
@@ -337,9 +329,9 @@ Heartbeating is one of the mechanisms for detecting failures in a distributed sy
 
 > 心跳是分布式系统中检测故障的机制之一。如果有一个中心服务器，所有服务器都会定期向它发送心跳消息。如果没有中心服务器，则所有服务器随机选择一组服务器，每隔几秒向它们发送一条心跳消息。这样，如果一段时间内没有收到服务器的心跳消息，系统就会怀疑该服务器可能已经崩溃了。如果在配置的超时时间内没有心跳，系统可以断定服务器不再活动，并停止向其发送请求并开始进行替换。
 
-## 18. Checksum 
+## 18. Checksum
 
-> 18. 校验和
+> 1. 校验和
 
 In a distributed system, while moving data between components, it is possible that the data fetched from a node may arrive corrupted. This corruption can occur because of faults in a storage device, network, software, etc. How can a distributed system ensure data integrity, so that the client receives an error instead of corrupt data?
 

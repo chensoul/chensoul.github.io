@@ -9,8 +9,6 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-3-authorizing-oidc-client-with-via-authorization-code-grant-from-spring-67769f9dd68a>
 
-
-
 在[上一篇文章](/posts/2024/06/05/oauth2-with-spring-part-2-getting-started-with-authorization-server/)中，我们讨论了使用 client_credential 的 OAuth2 授权服务器配置。在本文中，我们将讨论使用 authorization_code 授予类型的授权服务器配置。此授权流程将有一个 OIDC 客户端，它将通过使用授权码进行请求来获取 JWT 令牌。
 
 如今，社交登录非常流行，它已由 OAuth2 和 OIDC 规范标准化。我们今天的讨论主题是设置我们的社交登录客户端 (oidc-client) 应用程序，将其注册到 Spring Boot 授权服务器，使用授权服务器登录并从 OIDC 客户端应用程序访问安全资源。
@@ -29,7 +27,7 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 - “/” 将使我们能够访问公共数据
 - “/private-data” 将为我们提供 JWT 令牌
 
-在浏览器上，导航到“ http://127.0.0.1:8081/private-data ”。这将带我们进入客户端应用程序的登录页面。
+在浏览器上，导航到“ <http://127.0.0.1:8081/private-data> ”。这将带我们进入客户端应用程序的登录页面。
 
 ![img](oauth2-with-spring-part-3-01.webp)
 
@@ -50,15 +48,11 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 - [scope = openid](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [profile](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [read](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=), [write](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
 - [redirect_uri=http://127.0.0.1:8081/login/oauth2/code/oidc-client](http://localhost:8080/oauth2/authorize?response_type=code&client_id=oidc-client&scope=openid+profile+read+write&state=PcF7UjHDmYvmhwpKfv9zVosy0ZBIA2pZe7HHPixZ76E%3D&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Flogin%2Foauth2%2Fcode%2Foidc-client&nonce=_KHIsN6mNur-AFQz5KNK0TnZi3VPmj567qbe8-4zPMo&continue=)
 
-
-
 ![img](oauth2-with-spring-part-3-03.webp)
 
 现在，从上面的页面提供您想要允许客户端应用程序的同意。
 
 如果最初请求的URL（/private-data）具有您刚刚提供的正确同意，它将向我们提供访问令牌和刷新令牌，否则它将显示403错误页面。
-
-
 
 ![img](oauth2-with-spring-part-3-04.webp)
 
@@ -335,11 +329,8 @@ public class SocialLoginClientApplication {
 
 根据[Spring Security 文档](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-refresh-token-grant)，对于“ authorization_code”授予，如果`OAuth2AuthorizedClient.getRefreshToken()`可用并且`OAuth2AuthorizedClient.getAccessToken()`已过期，则会自动刷新`RefreshTokenOAuth2AuthorizedClientProvider`。
 
-
-
 ![img](oauth2-with-spring-part-3-05.webp)
 
 感谢您的耐心阅读。在[下一篇文章](/posts/2024/06/05/oauth2-with-spring-part-4-spring-authorization-client-social-login-demo-with-google/)中，我们将尝试了解如何在客户端应用程序中使用 Google 作为授权服务器。
 
 此示例的完整代码可在[此处](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc)找到。
-

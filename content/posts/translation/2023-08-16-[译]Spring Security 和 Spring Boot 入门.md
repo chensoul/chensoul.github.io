@@ -466,8 +466,8 @@ public class SecurityConfiguration {
 
 让我们仔细看看代码：
 
-1.  我们有两个 SecurityFilterChain 方法 `bookFilterChain()` 和 `filterChain()` 方法以及 `@Order(1)` 和 `@Order(2)` 。它们都将按上述顺序执行。
-2.  由于两个过滤器链都满足不同的端点，因此 `application.yml` 中存在不同的凭据
+1. 我们有两个 SecurityFilterChain 方法 `bookFilterChain()` 和 `filterChain()` 方法以及 `@Order(1)` 和 `@Order(2)` 。它们都将按上述顺序执行。
+2. 由于两个过滤器链都满足不同的端点，因此 `application.yml` 中存在不同的凭据
 
 ```yaml
 auth:
@@ -510,7 +510,7 @@ auth:
 一旦为请求匹配器配置了 Spring Security，默认情况下添加的其他端点就会受到保护。例如，让我们向 `BookController` 类添加一个端点
 
 ```java
-		@GetMapping("/library/books/all")
+  @GetMapping("/library/books/all")
     public ResponseEntity<List<BookDto>> getAllBooks() {
         return ResponseEntity.ok().body(bookService.getAllBooks());
     }
@@ -531,12 +531,12 @@ auth:
 我们可以指定需要从安全配置中排除的端点列表。为此，我们首先向 `BookController` 类添加另一个端点，并添加以下配置：
 
 ```java
-		@GetMapping("/library/info")
+  @GetMapping("/library/info")
     public ResponseEntity<LibraryInfo> getInfo() {
         return ResponseEntity.ok().body(bookService.getLibraryInfo());
     }
 
-		@Bean
+  @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().antMatchers("/library/info");
     }
@@ -650,7 +650,7 @@ Will secure Ant [pattern='/library/**'] with
 这里为所有端点 `/library/**` 调用过滤器。为了进一步限制它以满足特定的端点，我们可以将 Filter 类修改为：
 
 ```java
-		@Override
+  @Override
     protected boolean shouldNotFilter(HttpServletRequest request)
             throws ServletException {
         String path = request.getRequestURI();
@@ -844,21 +844,21 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 ```xml
     <dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+   <groupId>org.springframework.security</groupId>
+   <artifactId>spring-security-test</artifactId>
+   <scope>test</scope>
+  </dependency>
 ```
 
 此外，我们还添加了 Hamcrest 依赖项。 Hamcrest 是一个框架，允许我们在断言中使用 Matcher 对象来进行更具表现力的响应匹配。请参阅 Hamcrest 文档以深入了解其功能。
 
 ```xml
     <dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-library</artifactId>
-			<version>2.2</version>
-			<scope>test</scope>
-		</dependency>
+   <groupId>org.hamcrest</groupId>
+   <artifactId>hamcrest-library</artifactId>
+   <version>2.2</version>
+   <scope>test</scope>
+  </dependency>
 ```
 
 首先，让我们设置 `ApplicationContext` 来测试 `BookController` 类。这里我们使用 `@Sql` 定义了一个示例测试数据
@@ -1006,7 +1006,5 @@ public class BookControllerTest {
 ## 结论
 
 在本文中，我们研究了适用于 Spring Security 的基本概念。此外，我们还解释了 spring 提供的默认配置以及如何覆盖它们。此外，我们还研究了一些常见的用例，并通过单元测试对其进行了验证。正如我们所看到的，Spring 提供了很大的灵活性，允许我们为复杂的应用程序定制安全性。我们可以扩展 [GitHub](https://github.com/thombergs/code-examples/tree/master/spring-security/getting-started) 上应用程序中应用的示例配置以满足我们的需求。
-
-
 
 原文链接：[https://reflectoring.io/spring-security/](https://reflectoring.io/spring-security/)

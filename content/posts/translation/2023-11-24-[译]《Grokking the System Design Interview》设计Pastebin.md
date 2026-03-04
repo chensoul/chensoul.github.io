@@ -15,7 +15,7 @@ Let’s design a Pastebin like web service, where users can store plain text. Us
 
 > 让我们设计一个类似 Pastebin 的 Web 服务，用户可以在其中存储纯文本。该服务的用户将输入一段文本并获得一个随机生成的 URL 来访问它。类似服务：pastebin.com、pasted.co、hopapp.com 难度级别：简单
 
-## 1. What is Pastebin? 
+## 1. What is Pastebin?
 
 > 1.Pastebin是什么？
 
@@ -27,9 +27,9 @@ If you haven’t used [pastebin.com](http://pastebin.com/) before, please try cr
 
 > 如果您以前没有使用过 pastebin.com，请尝试在那里创建一个新的“粘贴”，并花一些时间浏览他们的服务提供的不同选项。这将对你理解本章有很大帮助。
 
-## 2. Requirements and Goals of the System 
+## 2. Requirements and Goals of the System
 
-> 2. 系统的要求和目标
+> 1. 系统的要求和目标
 
 Our Pastebin service should meet the following requirements:
 
@@ -87,9 +87,9 @@ Our Pastebin service should meet the following requirements:
 
    > 我们的服务还应该可以由其他服务通过 REST API 访问。
 
-## 3. Some Design Considerations 
+## 3. Some Design Considerations
 
-> 3. 一些设计考虑
+> 1. 一些设计考虑
 
 Pastebin shares some requirements with [URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904), but there are some additional design considerations we should keep in mind.
 
@@ -103,9 +103,9 @@ Pastebin shares some requirements with [URL Shortening service](https://www.educ
 
 > 我们应该对自定义 URL 施加大小限制吗？由于我们的服务支持自定义 URL，因此用户可以选择他们喜欢的任何 URL，但提供自定义 URL 不是强制性的。然而，对自定义 URL 施加大小限制是合理的（而且通常是可取的），这样我们就有一个一致的 URL 数据库。
 
-## 4. Capacity Estimation and Constraints 
+## 4. Capacity Estimation and Constraints
 
-> 4. 容量估计和约束
+> 1. 容量估计和约束
 
 Our services will be read-heavy; there will be more read requests compared to new Pastes creation. We can assume a 5:1 ratio between read and write.
 
@@ -119,7 +119,7 @@ New Pastes per second:
 
 > 每秒新粘贴数：
 
-1M / (24 hours * 3600 seconds) ~= 12 pastes/sec 
+1M / (24 hours * 3600 seconds) ~= 12 pastes/sec
 
 Paste reads per second:
 
@@ -187,11 +187,11 @@ Since we have 5M read requests per day, to cache 20% of these requests, we would
 
 > 由于我们每天有 500 万个读取请求，为了缓存这些请求的 20%，我们需要：
 
-0.2 * 5M * 10KB ~= 10 GB
+0.2 *5M* 10KB ~= 10 GB
 
-## 5. System APIs 
+## 5. System APIs
 
-> 5. 系统API
+> 1. 系统API
 
 We can have SOAP or REST APIs to expose the functionality of our service. Following could be the definitions of the APIs to create/retrieve/delete Pastes:
 
@@ -238,9 +238,9 @@ A successful deletion returns ‘true’, otherwise returns ‘false’.
 
 > 成功删除返回“true”，否则返回“false”。
 
-## 6. Database Design 
+## 6. Database Design
 
-> 6. 数据库设计
+> 1. 数据库设计
 
 A few observations about the nature of the data we are storing:
 
@@ -278,9 +278,9 @@ Here, ‘URlHash’ is the URL equivalent of the TinyURL and ‘ContentKey’ is
 
 > 这里，“URlHash”是相当于 TinyURL 的 URL，“ContentKey”是存储粘贴内容的对象键。
 
-## 7. High Level Design 
+## 7. High Level Design
 
-> 7. 高层设计
+> 1. 高层设计
 
 At a high level, we need an application layer that will serve all the read and write requests. Application layer will talk to a storage layer to store and retrieve data. We can segregate our storage layer with one database storing metadata related to each paste, users, etc., while the other storing the paste contents in some object storage (like [Amazon S3](https://en.wikipedia.org/wiki/Amazon_S3)). This division of data will also allow us to scale them individually.
 
@@ -288,9 +288,9 @@ At a high level, we need an application layer that will serve all the read and w
 
 ![image-20231116090334771](pastebin-01.webp)
 
-## 8. Component Design 
+## 8. Component Design
 
-> 8. 组件设计
+> 1. 组件设计
 
 **a. Application layer**
 
@@ -340,35 +340,34 @@ Detailed component design for Pastebin
 
 > Pastebin 的详细组件设计
 
-## 9. Purging or DB Cleanup 
+## 9. Purging or DB Cleanup
 
-> 9. 清除或数据库清理
-
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
-
-> 请参阅设计 URL 缩短服务。
-
-## 10. Data Partitioning and Replication 
-
-> 10. 数据分区和复制
+> 1. 清除或数据库清理
 
 Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 
-## 11. Cache and Load Balancer 
+## 10. Data Partitioning and Replication
 
-> 11. 缓存和负载均衡器
-
-Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
-
-> 请参阅设计 URL 缩短服务。
-
-## 12. Security and Permissions 
-
-> 12. 安全和权限
+> 1. 数据分区和复制
 
 Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
 
 > 请参阅设计 URL 缩短服务。
 
+## 11. Cache and Load Balancer
+
+> 1. 缓存和负载均衡器
+
+Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+
+> 请参阅设计 URL 缩短服务。
+
+## 12. Security and Permissions
+
+> 1. 安全和权限
+
+Please see [Designing a URL Shortening service](https://www.educative.io/collection/page/5668639101419520/5649050225344512/5668600916475904).
+
+> 请参阅设计 URL 缩短服务。

@@ -197,6 +197,7 @@ MCP 服务器可在 **User** 的 `~/.claude.json` 或 **Project** 的 `.mcp.json
 ### 2. 设置环境变量
 
 设置 `~/.claude/settings.json` 文件，使用 OpenRouter 模型提供商。
+
 ```json
 {
   "env": {
@@ -218,6 +219,7 @@ MCP 服务器可在 **User** 的 `~/.claude.json` 或 **Project** 的 `.mcp.json
 ```bash
 claude
 ```
+
 若此前已用 Anthropic 账号登录，建议先执行 **`/logout`** 或 **`claude auth logout`** 清除本地凭据，再重新运行 `claude`。在会话内输入 **`/status`** 可查看当前 API 地址与模型信息；也可在 OpenRouter 后台的 Activity 中确认是否有请求。
 
 ## 八、参考链接

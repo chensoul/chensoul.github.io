@@ -33,14 +33,12 @@ description: "docker-compose 运行 ..."
    ./scripts/docker-start-services.sh
    ```
 
-   浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin
-
-   
+   浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：<sysadmin@thingsboard.org> / sysadmin
 
    查看 HaProxy 日志，发现出现异常：`Error: Specified qdisc kind is unknown.` 。
 
    目前，尚未找到解决办法，只能不使用 HaProxy 而是直接访问 tbmq1，修改 docker-compose.yml ，暴露容器端口 8083 到本地的 8083：
-   
+
    ```yaml
      tbmq1:
        restart: always
@@ -51,8 +49,8 @@ description: "docker-compose 运行 ..."
          - "8083:8083" #修改这里
          - "8084"
    ```
-   
-   然后，通过浏览器访问 浏览器访问：**http://localhost:8081**
+
+   然后，通过浏览器访问 浏览器访问：**<http://localhost:8081>**
 
 ## 源码编译并运行
 
@@ -126,7 +124,7 @@ description: "docker-compose 运行 ..."
    version: '3.0'
    
    services:
-   	kafka:
+    kafka:
        restart: always
        image: bitnami/kafka:3.7.0
        ports:
@@ -159,10 +157,8 @@ description: "docker-compose 运行 ..."
    localhost kafka
    ```
 
-   
-
 5. 导入 IDE 运行
 
    先运行 `ThingsboardMqttBrokerInstallApplication` 类执行安装程序。然后，运行 `ThingsboardMqttBrokerApplication` 类，启动应用。
 
-   启动成功之后，浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：sysadmin@thingsboard.org / sysadmin
+   启动成功之后，浏览器访问：[http://localhost:8083](http://localhost:8083)，用户名/密码：<sysadmin@thingsboard.org> / sysadmin

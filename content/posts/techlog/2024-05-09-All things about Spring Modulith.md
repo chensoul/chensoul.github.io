@@ -13,30 +13,26 @@ VMware 推出了一个实验性的项目[Spring Modulith](https://spring.io/proj
 
 2022 年 11 月推出的[Spring Boot 3](https://www.infoq.com/news/2022/10/spring-boot-3-jax-london)会是 Spring Modulith 的基础。所以它的基线是 Spring Framework 6、Java 17 和 Jakarta EE 9。Spring Modulith 是[Moduliths](https://github.com/moduliths/moduliths)（其名字有个“s”后缀）项目的继承者。该项目使用 Spring Boot 2.7，目前已经退役，只接收缺陷修正，直至 2023 年 11 月份。
 
+- <https://spring.io/blog/2022/10/21/introducing-spring-modulith>
+- <https://www.baeldung.com/spring-modulith>
+- <https://www.baeldung.com/spring-modulith-event-externalization>
+- <https://piotrminkowski.com/2023/10/13/guide-to-modulith-with-spring-boot/>
+- <https://springdoc.cn/guide-to-modulith-with-spring-boot/>
+- <https://medium.com/andamp/event-sourcing-with-spring-modulith-2b35b0569dbb>
+- <https://www.geeksforgeeks.org/what-is-spring-modulith/>
+- <https://github.com/xsreality/spring-modulith-with-ddd>
+- <https://riteshshergill.medium.com/the-spring-modulith-monolithic-but-manageable-ca1532a1e585>
+- <https://www.infoq.com/news/2022/11/spring-modulith-launch/>
+- <https://dzone.com/articles/architecture-style-modulith-vs-microservices>
+- <https://speakerdeck.com/olivergierke/spring-modulith-a-deep-dive>
+- <https://www.jappware.com/proffesional-activity/make-monolithic-apps-great-again-with-spring-modulith-coffeejug/>
+- <https://blog.worldline.tech/2024/01/23/modulith.html>
+- <https://springdoc.cn/spring-modulith-intro/>
+- <https://dimitri.codes/checking-out-spring-modulith/>
+- <https://www.lefer.cn/posts/29752/>
 
+- <https://www.jdon.com/63003.html>
 
-- https://spring.io/blog/2022/10/21/introducing-spring-modulith
-- https://www.baeldung.com/spring-modulith
-- https://www.baeldung.com/spring-modulith-event-externalization
-- https://piotrminkowski.com/2023/10/13/guide-to-modulith-with-spring-boot/
-- https://springdoc.cn/guide-to-modulith-with-spring-boot/
-- https://medium.com/andamp/event-sourcing-with-spring-modulith-2b35b0569dbb
-- https://www.geeksforgeeks.org/what-is-spring-modulith/
-- https://github.com/xsreality/spring-modulith-with-ddd
-- https://riteshshergill.medium.com/the-spring-modulith-monolithic-but-manageable-ca1532a1e585
-- https://www.infoq.com/news/2022/11/spring-modulith-launch/
-- https://dzone.com/articles/architecture-style-modulith-vs-microservices
-- https://speakerdeck.com/olivergierke/spring-modulith-a-deep-dive
-- https://www.jappware.com/proffesional-activity/make-monolithic-apps-great-again-with-spring-modulith-coffeejug/
-- https://blog.worldline.tech/2024/01/23/modulith.html
-- https://springdoc.cn/spring-modulith-intro/
-- https://dimitri.codes/checking-out-spring-modulith/
-- https://www.lefer.cn/posts/29752/
+- <https://blog.csdn.net/cfy_banq/article/details/132185951>
 
-
-
-- https://www.jdon.com/63003.html
-
-- https://blog.csdn.net/cfy_banq/article/details/132185951
-
-- https://www.zhihu.com/question/567053421
+- <https://www.zhihu.com/question/567053421>

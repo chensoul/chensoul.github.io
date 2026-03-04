@@ -57,8 +57,6 @@ git remote add origin git@github.com:chensoul/maven-site-github-example.git
 git push -u origin main
 ```
 
-
-
 ## GitHub Page 设置
 
 现在我们必须在 Git 存储库上创建 **gh-pages**分支。
@@ -70,7 +68,7 @@ echo "It works" > index.html
 git add . && git commit -m "initial site content" && git push origin gh-pages 
 ```
 
-相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：https://chensoul.github.io/maven-site-github-example：
+相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：<https://chensoul.github.io/maven-site-github-example：>
 
 ![maven-my-app-github-page-index](maven-my-app-github-page-index.webp)
 
@@ -96,7 +94,7 @@ git checkout main
                 <version>3.0.0</version>
                 <configuration>
                     <scmBranch>gh-pages</scmBranch>
-                  	<tryUpdate>true</tryUpdate>
+                   <tryUpdate>true</tryUpdate>
                 </configuration>
             </plugin>
         </plugins>
@@ -104,11 +102,9 @@ git checkout main
 </build>
 ```
 
+maven-scm-publish-plugin 插件需要以下参数，参考 <https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html：>
 
-
-maven-scm-publish-plugin 插件需要以下参数，参考 https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html：
-
--  **tryUpdate**： 参数用于指定是否尝试更新源代码管理（SCM）提供商中的项目文件。
+- **tryUpdate**： 参数用于指定是否尝试更新源代码管理（SCM）提供商中的项目文件。
 
   > 当你运行 `mvn scm-publish:publish-scm` 命令来发布 Maven 项目时，插件会检查 SCM 提供商中的项目文件是否与本地生成的网站内容一致。如果存在差异，插件默认情况下会拒绝发布，并显示错误消息。
   >
@@ -230,27 +226,27 @@ mvn clean site scm-publish:publish-scm
   >
   >1. 确保你的 Maven 项目已经配置了适当的 SCM 插件，以便与你使用的源代码管理系统进行集成。在项目的 `pom.xml` 文件中，你需要添加 SCM 配置，包括 SCM URL、连接信息和凭据等。例如，对于 Git，你可以添加以下配置：
   >
-  >   ```xml
-  >   <scm>
-  >     <connection>scm:git:git@github.com:<username>/<repository>.git</connection>
-  >     <developerConnection>scm:git:git@github.com:<username>/<repository>.git</developerConnection>
-  >     <url>https://github.com/<username>/<repository></url>
-  >   </scm>
+  > ```xml
+  > <scm>
+  >   <connection>scm:git:git@github.com:<username>/<repository>.git</connection>
+  >   <developerConnection>scm:git:git@github.com:<username>/<repository>.git</developerConnection>
+  >   <url>https://github.com/<username>/<repository></url>
+  > </scm>
   >   ```
   >
-  >   请将 `<username>` 替换为你的 GitHub 用户名，`<repository>` 替换为你的仓库名称。
+  > 请将 `<username>` 替换为你的 GitHub 用户名，`<repository>` 替换为你的仓库名称。
   >
-  >2. 打开终端或命令提示符。
+  >1. 打开终端或命令提示符。
   >
-  >3. 使用 `cd` 命令导航到 Maven 项目的根目录。
+  >2. 使用 `cd` 命令导航到 Maven 项目的根目录。
   >
-  >4. 运行以下命令：
+  >3. 运行以下命令：
   >
-  >   ```bash
-  >   mvn scm-publish:publish-scm
+  > ```bash
+  > mvn scm-publish:publish-scm
   >   ```
   >
-  >   Maven 将执行 SCM Publish 插件，将项目发布到指定的 SCM 提供商。
+  > Maven 将执行 SCM Publish 插件，将项目发布到指定的 SCM 提供商。
 
 从日志可以看出 git 推送提交的命令：`'git' 'push' 'git@github.com:chensoul/maven-site-github-example.git' 'refs/heads/gh-pages:refs/heads/gh-pages'`
 
@@ -399,11 +395,9 @@ mvn clean site scm-publish:publish-scm
 
 ![maven-my-app-github-skin-index](maven-my-app-github-skin-index.webp)
 
-可以在 https://github.com/chensoul/maven-site-github-example/actions 查看网站的部署：
+可以在 <https://github.com/chensoul/maven-site-github-example/actions> 查看网站的部署：
 
 ![maven-my-app-github-page-deploy](maven-my-app-github-page-deploy.webp)
-
-
 
 现在，可以通过添加/更改/删除目录 src/site 的内容，然后通过 Maven 再次发布该网站。
 
@@ -506,7 +500,7 @@ Warning:  Error injecting: org.apache.maven.report.projectinfo.CiManagementRepor
 java.lang.NoClassDefFoundError: org/apache/maven/doxia/siterenderer/DocumentContent
 ```
 
-从日志可以看到 maven-clean-plugin 版本是 2.5，maven-site-plugin 版本是 3.3 ，maven-project-info-reports-plugin 版本是 3.6.2 
+从日志可以看到 maven-clean-plugin 版本是 2.5，maven-site-plugin 版本是 3.3 ，maven-project-info-reports-plugin 版本是 3.6.2
 
 修改 pom.xml ，给 maven-site-plugin 设置版本为 4.0.0-M15：
 
@@ -533,7 +527,7 @@ Please make sure you have the correct access rights
 and the repository exists.
 ```
 
-从日志可以看到 git 从 `git@github.com:chensoul/maven-site-github-example.git `下载代码，没有权限，原因是没有配置 ssh。故需要修改  scmpublish.pubScmUrl 为 https 协议，将 `<scmpublish.pubScmUrl>scm:git:git@github.com:chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>`改为：
+从日志可以看到 git 从 `git@github.com:chensoul/maven-site-github-example.git`下载代码，没有权限，原因是没有配置 ssh。故需要修改  scmpublish.pubScmUrl 为 https 协议，将 `<scmpublish.pubScmUrl>scm:git:git@github.com:chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>`改为：
 
 ```xml
 <scmpublish.pubScmUrl>scm:git:https://github.com/chensoul/maven-site-github-example.git</scmpublish.pubScmUrl>
@@ -567,8 +561,6 @@ and the repository exists.
   </bannerLeft>
   ```
   
-  
-
 再次发布并打开网站，则正常显示：
 
 ![maven-my-app-github-i18n-index-ok](maven-my-app-github-i18n-index-ok.webp)

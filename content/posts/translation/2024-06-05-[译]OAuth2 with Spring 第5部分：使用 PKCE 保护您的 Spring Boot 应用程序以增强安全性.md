@@ -9,7 +9,6 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 
 原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-5-securing-your-spring-boot-application-with-pkce-for-enhanced-security-d8025cd08769>
 
-
 > 免责声明：本文技术性很强，需要清楚了解本系列前几篇文章，特别是第 1 部分和第 3 部分。
 
 带有代码交换证明密钥 (PKCE) 的授权代码流用于无法存储客户端机密的应用程序。此类应用程序包括：
@@ -22,8 +21,6 @@ description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-par
 ![img](oauth2-with-spring-part-5-01.webp)
 
 Spring Boot OAuth2 与 PKCE
-
-
 
 希望这张图已经足够清晰易懂了。因此，我将直接进入演示。
 
@@ -441,13 +438,13 @@ logging:
       - warn
 ```
 
-现在，我们在浏览器中输入**(1)** [http://localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是](http://localhost:8080/hello)http://localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。
+现在，我们在浏览器中输入**(1)** [http://localhost:8080/hello 。它将带我们到授权服务器的登录端点，在我们的例子中是](http://localhost:8080/hello)<http://localhost:9001/login。但在此之前，它会进行几次重定向。让我们先通过浏览器的网络选项卡查看它。>
 
 ![img](oauth2-with-spring-part-5-03.webp)
 
 网络响应
 
-如果我们注意到上述网络响应，我们可以看到，当我们请求 /hello 端点时，它首先将我们重定向到**(2)** http://localhost:8080/oauth2/authorization/oidc-client端点。
+如果我们注意到上述网络响应，我们可以看到，当我们请求 /hello 端点时，它首先将我们重定向到**(2)** <http://localhost:8080/oauth2/authorization/oidc-client端点。>
 
 然后，从客户端授权端点，我们再次被重定向到授权服务器的以下端点。**（3）**
 
@@ -497,9 +494,7 @@ logging:
 
 完整的源代码可以在[这里](https://github.com/mainul35/authorization-server-demo/tree/authorization-server-demo/social-login-with-oidc-pkce)找到
 
-
-
-## 参考：
+## 参考
 
 1. [draft-ietf-oauth-基于浏览器的应用程序-10](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-10#name-notational-conventions)
 2. [基于浏览器的应用程序 (SPA) 的实施指南 · 问题 #297 · spring-projects/spring-authorization-server (github.com)](https://github.com/spring-projects/spring-authorization-server/issues/297)

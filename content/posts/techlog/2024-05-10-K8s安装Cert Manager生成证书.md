@@ -26,10 +26,8 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 查看：
 
 ```bash
-$ kubectl get pods --namespace cert-manager
+kubectl get pods --namespace cert-manager
 ```
-
-
 
 ### 使用helm安装
 
@@ -44,10 +42,10 @@ helm repo update
 
 ```bash
 helm install cert-manager jetstack/cert-manager \
-	--namespace cert-manager   \
-	--create-namespace    \
-	--version v1.14.5    \
-	--set installCRDs=true
+ --namespace cert-manager   \
+ --create-namespace    \
+ --version v1.14.5    \
+ --set installCRDs=true
 ```
 
 更多配置参数，参考：[https://artifacthub.io/packages/helm/cert-manager/cert-manager](https://artifacthub.io/packages/helm/cert-manager/cert-manager)
@@ -62,14 +60,14 @@ $ kubectl get pods -n cert-manager
 NAME                                           READY   STATUS              RESTARTS   AGE
 pod/cert-manager-5c47f46f57-k78l6              1/1     Running             0          91s
 pod/cert-manager-cainjector-6659d6844d-tr8rf   1/1     Running             0          91s
-pod/cert-manager-webhook-547567b88f-8lthd      1/1     Running   					 0          91s
+pod/cert-manager-webhook-547567b88f-8lthd      1/1     Running         0          91s
 ```
 
 使用helm3查看：
 
 ```bash
 $ helm list -n cert-manager
-NAME        	NAMESPACE   	REVISION	UPDATED                                	STATUS  	CHART               cert-manager	cert-manager	1       	2024-05-09 17:35:59.976722226 +0800 CST	deployed	cert-manager-v1.14.5	v1.14.5
+NAME         NAMESPACE    REVISION UPDATED                                 STATUS   CHART               cert-manager cert-manager 1        2024-05-09 17:35:59.976722226 +0800 CST deployed cert-manager-v1.14.5 v1.14.5
 ```
 
 ### 验证
@@ -108,7 +106,7 @@ EOF
 创建 test-resources：
 
 ```bash
-$ kubectl apply -f test-resources.yaml
+kubectl apply -f test-resources.yaml
 ```
 
 查看证书状态：
@@ -156,10 +154,8 @@ Events:
 删除 test-resources：
 
 ```bash
-$ kubectl delete -f test-resources.yaml
+kubectl delete -f test-resources.yaml
 ```
-
-
 
 ## 卸载
 
@@ -211,8 +207,6 @@ ACME 支持两种验证方式：
 - DNS 验证：通过 DNS01 质询，您可以通过证明您控制域名的 DNS 记录来证明其所有权。这是通过创建具有特定内容的 TXT 记录来完成的，该记录证明您拥有对域 DNS 记录的控制权
 - HTTP 验证：通过 HTTP01 质询，您可以通过确保域中存在特定文件来证明域的所有权。
 
-
-
 Let's Encrypt 的 ACME 服务器分为两种：
 
 - 暂存环境：`https://acme-staging-v02.api.letsencrypt.org/directory`
@@ -220,17 +214,13 @@ Let's Encrypt 的 ACME 服务器分为两种：
 
 生产环境施加了更严格的速率限制，因此为了减少您达到这些限制的机会，建议测试过程中使用暂存环境。
 
-
-
 Let’s Encrypt 利用 ACME 协议来校验域名是否真的属于你，校验成功后就可以自动颁发免费证书，证书有效期只有 90 天，在到期前需要再校验一次来实现续期，幸运的是 cert-manager 可以自动续期，这样就可以使用永久免费的证书了。如何校验这个域名是否属于你呢？主流的两种校验方式是 HTTP-01 和 DNS-01，详细校验原理可参考 [Let's Encrypt 的运作方式](https://letsencrypt.org/zh-cn/how-it-works/)，下面将简单描述下。
 
 ### Let’s Encrypt生成证书
 
-#### ACME 颁发证书并使用 HTTP 验证 
+#### ACME 颁发证书并使用 HTTP 验证
 
 HTTP-01 的校验原理是给你域名指向的 HTTP 服务增加一个临时 location ，Let’s Encrypt 会发送 http 请求到 `http:///.well-known/acme-challenge/`，`YOUR_DOMAIN` 就是被校验的域名，`TOKEN` 是 ACME 协议的客户端负责放置的文件，在这里 ACME 客户端就是 cert-manager，它通过修改或创建 Ingress 规则来增加这个临时校验路径并指向提供 `TOKEN` 的服务。Let’s Encrypt 会对比 `TOKEN` 是否符合预期，校验成功后就会颁发证书。此方法仅适用于给使用 Ingress 暴露流量的服务颁发证书，并且不支持泛域名证书。
-
-
 
 先创建一个颁发者，因为测试，使用暂存环境的 ACME 服务器。
 
@@ -262,7 +252,7 @@ EOF
 创建颁发者：
 
 ```bash
-$ kubectl apply -f letsencrypt-staging.yaml
+kubectl apply -f letsencrypt-staging.yaml
 ```
 
 创建证书：
@@ -334,17 +324,15 @@ kubectl delete Issuers letsencrypt-staging
 kubectl delete certificate chensoul-cc-tls
 ```
 
-
-
-#### ACME 颁发证书并使用 DNS 验证 
+#### ACME 颁发证书并使用 DNS 验证
 
 DNS-01 的校验原理是利用 DNS 提供商的 API Key 拿到你的 DNS 控制权限， 在 Let’s Encrypt 为 ACME 客户端提供令牌后，ACME 客户端 (cert-manager) 将创建从该令牌和您的帐户密钥派生的 TXT 记录，并将该记录放在 `_acme-challenge.`。 然后 Let’s Encrypt 将向 DNS 系统查询该记录，如果找到匹配项，就可以颁发证书。此方法不需要你的服务使用 Ingress，并且支持泛域名证书。
 
-参考：https://medium.com/@sms-astanley/custom-issuers-with-letsencrypt-and-rancher-ingress-2c89ab1b0a91
+参考：<https://medium.com/@sms-astanley/custom-issuers-with-letsencrypt-and-rancher-ingress-2c89ab1b0a91>
 
-先创建一个颁发者，然后根据域名解析选择 DNS01 提供商，支持的提供商参考：https://cert-manager.io/docs/configuration/acme/dns01/
+先创建一个颁发者，然后根据域名解析选择 DNS01 提供商，支持的提供商参考：<https://cert-manager.io/docs/configuration/acme/dns01/>
 
-我的 DNS 提供商为 Cloudflare，参考 https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/ 在 [Cloudflare](https://dash.cloudflare.com/profile/api-tokens) 创建一个 API token 或者 API KEY。
+我的 DNS 提供商为 Cloudflare，参考 <https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/> 在 [Cloudflare](https://dash.cloudflare.com/profile/api-tokens) 创建一个 API token 或者 API KEY。
 
 ```yaml
 cat <<EOF > letsencrypt-staging.yaml
@@ -466,7 +454,7 @@ kubectl delete certificate chensoul-cc-tls
 
 HTTP-01 的校验方式的优点是: 配置简单通用，不管使用哪个 DNS 提供商都可以使用相同的配置方法；缺点是：需要依赖 Ingress，如果你的服务不是用 Ingress 暴露流量的就不适用，而且不支持泛域名证书。
 
-DNS-01 的校验方式的优点是没有 HTTP-01 校验方式缺点，不依赖 Ingress，也支持泛域名；缺点就是不同 DNS 提供商的配置方式不一样，而且 DNS 提供商有很多，cert-manager 的 Issuer 不可能每个都去支持，不过有一些可以通过部署实现了 cert-manager 的 [Webhook](https://cert-manager.io/docs/concepts/webhook/) 的服务来扩展 Issuer 进行支持，比如 DNSPod 和 阿里 DNS，详细 Webhook 列表请参考: https://cert-manager.io/docs/configuration/acme/dns01/#webhook
+DNS-01 的校验方式的优点是没有 HTTP-01 校验方式缺点，不依赖 Ingress，也支持泛域名；缺点就是不同 DNS 提供商的配置方式不一样，而且 DNS 提供商有很多，cert-manager 的 Issuer 不可能每个都去支持，不过有一些可以通过部署实现了 cert-manager 的 [Webhook](https://cert-manager.io/docs/concepts/webhook/) 的服务来扩展 Issuer 进行支持，比如 DNSPod 和 阿里 DNS，详细 Webhook 列表请参考: <https://cert-manager.io/docs/configuration/acme/dns01/#webhook>
 
 选择哪种方式呢？条件允许的话，建议是尽量用 `DNS-01` 的方式，限制更少，功能更全。
 
@@ -477,5 +465,4 @@ DNS-01 的校验方式的优点是没有 HTTP-01 校验方式缺点，不依赖 
 - [使用 LetsEncrypt配置kubernetes ingress-nginx免费HTTPS证书]()
 - [cert-manager管理k8s集群证书]()
 - <https://blog.csdn.net/xichenguan/article/details/100709830>
-- https://medium.com/@sms-astanley/custom-issuers-with-letsencrypt-and-rancher-ingress-2c89ab1b0a91
-
+- <https://medium.com/@sms-astanley/custom-issuers-with-letsencrypt-and-rancher-ingress-2c89ab1b0a91>

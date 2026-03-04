@@ -536,8 +536,6 @@ ThingsBoardThreadFactory
 - ContactBased
 - UUIDBased
 
-
-
 TODO：
 
 - actor

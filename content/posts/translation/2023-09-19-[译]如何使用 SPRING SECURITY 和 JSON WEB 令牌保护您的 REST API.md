@@ -83,13 +83,13 @@ HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret|priv
 
 您需要做的第一件事是创建一个您想要保护的 REST API。出于演示目的并保持简单，使用返回字符串的单个方法在 `controller` 包中创建 `HomeController` 。请求映射处理程序方法可以接受一系列参数，其中之一是 `java.security.Principal` 。这将允许您打印出当前经过身份验证的用户的用户名。
 
-Spring Security 采用默认安全的安全方法。这意味着，如果您启动应用程序并尝试访问 http://localhost:8080，您将被重定向到登录页面。如果您想登录，可以输入用户名 `user` ，密码将生成并应在控制台输出中列出。
+Spring Security 采用默认安全的安全方法。这意味着，如果您启动应用程序并尝试访问 <http://localhost:8080，您将被重定向到登录页面。如果您想登录，可以输入用户名> `user` ，密码将生成并应在控制台输出中列出。
 
 ```java
 @RestController
 public class HomeController {
 
-	@GetMapping
+ @GetMapping
     public String home(Principal principal) {
         return "Hello, " + principal.getName();
     }
@@ -146,7 +146,7 @@ public InMemoryUserDetailsManager users() {
 }
 ```
 
-配置新用户后，您应该能够重新启动应用程序并访问 http://localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用 `dvega` + `password` 登录。
+配置新用户后，您应该能够重新启动应用程序并访问 <http://localhost:8080。您将看到一个对话框，要求输入用户名和密码，如果一切正常，您应该能够使用> `dvega` + `password` 登录。
 
 ![Spring Security HTTP Basic](http-basic-auth.webp)
 
@@ -278,9 +278,9 @@ rsa.public-key=classpath:certs/public.pem
 @EnableConfigurationProperties(RsaKeyProperties.class)
 public class JwtDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JwtDemoApplication.class, args);
-	}
+ public static void main(String[] args) {
+  SpringApplication.run(JwtDemoApplication.class, args);
+ }
 
 }
 ```
@@ -398,7 +398,7 @@ public class AuthController {
 
 ![Postman Basic Auth](postman-basic-auth.webp)
 
-复制 JWT 并为 http://localhost:8080 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
+复制 JWT 并为 <http://localhost:8080> 创建新的 GET 请求。转到“授权”选项卡并选择“承载令牌”并粘贴生成的令牌。如果您发送请求，您应该取回从 `HomeController` 中的 home 方法返回的字符串。
 
 ![Postman with JWT Response](postman-with-jwt-response.webp)
 
@@ -430,8 +430,8 @@ http :8080 'Authorization: Bearer JWT_TOKEN_HERE'
 
 ```xml
 <dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-test</artifactId>
+ <groupId>org.springframework.security</groupId>
+ <artifactId>spring-security-test</artifactId>
 </dependency>
 ```
 

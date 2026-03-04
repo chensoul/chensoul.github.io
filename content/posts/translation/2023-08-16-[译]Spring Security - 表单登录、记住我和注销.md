@@ -71,7 +71,7 @@ http
 
 Thymeleaf 是 Java 的模板引擎。它允许我们快速开发静态或动态网页以在浏览器中呈现。它具有极强的可扩展性，允许我们详细定义和自定义模板的处理。除此之外，我们还可以通过点击此链接了解有关 Thymeleaf 的更多信息。
 
-让我们继续生成项目并下载它。然后，我们将其解压到我们选择的文件夹中，并使用任何 IDE 将其打开。我将使用 Spring Tools Suite 4。它可以从 https://spring.io/tools 网站免费下载，并且针对 Spring 应用程序进行了优化。
+让我们继续生成项目并下载它。然后，我们将其解压到我们选择的文件夹中，并使用任何 IDE 将其打开。我将使用 Spring Tools Suite 4。它可以从 <https://spring.io/tools> 网站免费下载，并且针对 Spring 应用程序进行了优化。
 
 让我们看一下 pom.xml 文件。它应该看起来与此类似 -
 
@@ -325,7 +325,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 ### 运行应用程序
 
-让我们将应用程序作为 Spring Boot 应用程序运行。当应用程序启动时，我们可以在浏览器上访问 http://localhost:8080。它应该要求我们提供用户名和密码。此外，我们还可以看到“记住我”复选框。
+让我们将应用程序作为 Spring Boot 应用程序运行。当应用程序启动时，我们可以在浏览器上访问 <http://localhost:8080。它应该要求我们提供用户名和密码。此外，我们还可以看到“记住我”复选框。>
 
 ![Sign In](sign_in.webp)
 

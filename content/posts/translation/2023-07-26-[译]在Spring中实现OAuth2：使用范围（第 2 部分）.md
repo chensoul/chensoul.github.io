@@ -67,17 +67,17 @@ public class ResourceController {
 - 使用安全配置：
 
 ```java
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-			 .antMatchers(HttpMethod.GET,"/hello").access("#oauth2.hasScope('read')")
-			 .antMatchers(HttpMethod.GET,"/foo").access("#oauth2.hasScope('read')")
-			 .antMatchers(HttpMethod.POST,"/bar").access("#oauth2.hasScope('write')")
-			 .antMatchers(HttpMethod.DELETE,"/test").access("#oauth2.hasScope('trust')")
-			.anyRequest().authenticated().
-			 and().csrf().disable();
-	}
+ @Override
+ public void configure(HttpSecurity http) throws Exception {
+  http
+   .authorizeRequests()
+    .antMatchers(HttpMethod.GET,"/hello").access("#oauth2.hasScope('read')")
+    .antMatchers(HttpMethod.GET,"/foo").access("#oauth2.hasScope('read')")
+    .antMatchers(HttpMethod.POST,"/bar").access("#oauth2.hasScope('write')")
+    .antMatchers(HttpMethod.DELETE,"/test").access("#oauth2.hasScope('trust')")
+   .anyRequest().authenticated().
+    and().csrf().disable();
+ }
 
 ```
 

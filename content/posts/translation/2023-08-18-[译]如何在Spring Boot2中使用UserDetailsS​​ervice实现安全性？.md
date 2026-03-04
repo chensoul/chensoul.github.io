@@ -52,9 +52,9 @@ UserDetailsService 是 Spring 中 org.springframework.security.core.userdetails 
 
 3）作为实施的一部分，
 
-**(A)** 借助 UserRepository 中的用户名/电子邮件获取您的用户对象。 
+**(A)** 借助 UserRepository 中的用户名/电子邮件获取您的用户对象。
 
-**(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。 
+**(B)** 将你的 User 对象相应地转换为 Spring 预定义的 User 对象(org.springframework.security.core.userdetails.User)。
 
 **(C)** 返回 Spring 定义的 User 对象，它是 UserDetails（方法的返回类型）的实现。
 
@@ -74,36 +74,36 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
-	@Autowired
-	private UserRepository userRepo;
+ @Autowired
+ private UserRepository userRepo;
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+ @Override
+ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		Optional<User> opt = userRepo.findUserByEmail(email);
+  Optional<User> opt = userRepo.findUserByEmail(email);
 
-		org.springframework.security.core.userdetails.User springUser = null;
+  org.springframework.security.core.userdetails.User springUser = null;
 
-		if (opt.isEmpty()) {
-			throw new UsernameNotFoundException("User with email: " + email + " not found");
-		} else {
-			User user = opt.get();
+  if (opt.isEmpty()) {
+   throw new UsernameNotFoundException("User with email: " + email + " not found");
+  } else {
+   User user = opt.get();
 
-			List<String> roles = user.getRoles();
-			Set<GrantedAuthority> ga = new HashSet<>();
-			for (String role : roles) {
-				ga.add(new SimpleGrantedAuthority(role));
-			}
+   List<String> roles = user.getRoles();
+   Set<GrantedAuthority> ga = new HashSet<>();
+   for (String role : roles) {
+    ga.add(new SimpleGrantedAuthority(role));
+   }
 
-			springUser = new org.springframework.security.core.userdetails.User(
-				email,
-				user.getPassword(),
-				ga);
+   springUser = new org.springframework.security.core.userdetails.User(
+    email,
+    user.getPassword(),
+    ga);
 
-		}
+  }
 
-		return springUser;
-	}
+  return springUser;
+ }
 
 }
 ```
@@ -123,34 +123,34 @@ import org.springframework.context.annotation.Configuration;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private UserDetailsService uds;
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+ @Autowired
+ private UserDetailsService uds;
+ @Autowired
+ private BCryptPasswordEncoder encoder;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(uds).passwordEncoder(encoder);
-	}
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+  auth.userDetailsService(uds).passwordEncoder(encoder);
+ }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/home", "/register", "/saveUser").permitAll()
-			.antMatchers("/welcome").authenticated()
-			.antMatchers("/admin").hasAuthority("Admin")
-			.antMatchers("/mgr").hasAuthority("Manager")
-			.antMatchers("/emp").hasAuthority("Employee")
-			.antMatchers("/hr").hasAuthority("HR")
-			.antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
-			.anyRequest().authenticated().and()
-			.formLogin()
-			.defaultSuccessUrl("/welcome", true).and()
-			.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
-			.exceptionHandling()
-			.accessDeniedPage("/accessDenied");
-	}
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
+  http.authorizeRequests()
+   .antMatchers("/home", "/register", "/saveUser").permitAll()
+   .antMatchers("/welcome").authenticated()
+   .antMatchers("/admin").hasAuthority("Admin")
+   .antMatchers("/mgr").hasAuthority("Manager")
+   .antMatchers("/emp").hasAuthority("Employee")
+   .antMatchers("/hr").hasAuthority("HR")
+   .antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
+   .anyRequest().authenticated().and()
+   .formLogin()
+   .defaultSuccessUrl("/welcome", true).and()
+   .logout()
+   .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
+   .exceptionHandling()
+   .accessDeniedPage("/accessDenied");
+ }
 }
 ```
 
@@ -177,51 +177,51 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private UserDetailsService uds;
+ @Autowired
+ private UserDetailsService uds;
 
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+ @Autowired
+ private BCryptPasswordEncoder encoder;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-		.antMatchers("/home","/register","/saveUser").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("Admin")
-		.antMatchers("/mgr").hasAuthority("Manager")
-		.antMatchers("/emp").hasAuthority("Employee")
-		.antMatchers("/hr").hasAuthority("HR")
-		.antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
-		.anyRequest().authenticated()
+  http.authorizeRequests()
+  .antMatchers("/home","/register","/saveUser").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("Admin")
+  .antMatchers("/mgr").hasAuthority("Manager")
+  .antMatchers("/emp").hasAuthority("Employee")
+  .antMatchers("/hr").hasAuthority("HR")
+  .antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
 
-		.and()
-		.authenticationProvider(authenticationProvider());
+  .and()
+  .authenticationProvider(authenticationProvider());
 
-		return http.build();
+  return http.build();
 
-	}
+ }
 
-	@Bean
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(uds);
-		authenticationProvider.setPasswordEncoder(encoder);
-		return authenticationProvider;
-	}
+ @Bean
+ public AuthenticationProvider authenticationProvider() {
+  DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+  authenticationProvider.setUserDetailsService(uds);
+  authenticationProvider.setPasswordEncoder(encoder);
+  return authenticationProvider;
+ }
 }
 ```
 
@@ -288,27 +288,27 @@ import lombok.Data;
 @Table(name="users")
 public class User {
 
-	@Id
-	@GeneratedValue
-	@Column(name="user_id")
-	private Integer id;
+ @Id
+ @GeneratedValue
+ @Column(name="user_id")
+ private Integer id;
 
-	@Column(name="user_name")
-	private String name;
+ @Column(name="user_name")
+ private String name;
 
-	@Column(name="user_passwd")
-	private String password;
+ @Column(name="user_passwd")
+ private String password;
 
-	@Column(name="user_email")
-	private String email;
+ @Column(name="user_email")
+ private String email;
 
-	@ElementCollection(fetch= FetchType.EAGER)
-	@CollectionTable(
-			name="roles",
-			joinColumns = @JoinColumn(name="user_id")
-			)
-	@Column(name="user_role")
-	private List<String> roles;
+ @ElementCollection(fetch= FetchType.EAGER)
+ @CollectionTable(
+   name="roles",
+   joinColumns = @JoinColumn(name="user_id")
+   )
+ @Column(name="user_role")
+ private List<String> roles;
 
 }
 ```
@@ -326,7 +326,7 @@ import com.dev.springboot.security.UserDetailsService.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	Optional<User> findUserByEmail(String email);
+ Optional<User> findUserByEmail(String email);
 }
 ```
 
@@ -346,10 +346,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class AppConfig {
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+ @Bean
+ public BCryptPasswordEncoder passwordEncoder() {
+  return new BCryptPasswordEncoder();
+ }
 }
 ```
 
@@ -366,7 +366,7 @@ import com.dev.springboot.security.UserDetailsService.model.User;
 
 public interface IUserService {
 
-	public Integer saveUser(User user);
+ public Integer saveUser(User user);
 }
 ```
 
@@ -396,47 +396,47 @@ import com.dev.springboot.security.UserDetailsService.service.IUserService;
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService{
 
-	@Autowired
-	private UserRepository userRepo;
+ @Autowired
+ private UserRepository userRepo;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+ @Autowired
+ private BCryptPasswordEncoder passwordEncoder;
 
-	@Override
-	public Integer saveUser(User user) {
-		String passwd= user.getPassword();
-		String encodedPasswod = passwordEncoder.encode(passwd);
-		user.setPassword(encodedPasswod);
-		user = userRepo.save(user);
-		return user.getId();
-	}
+ @Override
+ public Integer saveUser(User user) {
+  String passwd= user.getPassword();
+  String encodedPasswod = passwordEncoder.encode(passwd);
+  user.setPassword(encodedPasswod);
+  user = userRepo.save(user);
+  return user.getId();
+ }
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+ @Override
+ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		Optional<User> opt = userRepo.findUserByEmail(email);
+  Optional<User> opt = userRepo.findUserByEmail(email);
 
-		org.springframework.security.core.userdetails.User springUser=null;
+  org.springframework.security.core.userdetails.User springUser=null;
 
-		if(opt.isEmpty()) {
-			throw new UsernameNotFoundException("User with email: " +email +" not found");
-		}else {
-			User user =opt.get();
-			List<String> roles = user.getRoles();
-			Set<GrantedAuthority> ga = new HashSet<>();
-			for(String role:roles) {
-				ga.add(new SimpleGrantedAuthority(role));
-			}
+  if(opt.isEmpty()) {
+   throw new UsernameNotFoundException("User with email: " +email +" not found");
+  }else {
+   User user =opt.get();
+   List<String> roles = user.getRoles();
+   Set<GrantedAuthority> ga = new HashSet<>();
+   for(String role:roles) {
+    ga.add(new SimpleGrantedAuthority(role));
+   }
 
-			springUser = new org.springframework.security.core.userdetails.User(
-							email,
-							user.getPassword(),
-							ga );
+   springUser = new org.springframework.security.core.userdetails.User(
+       email,
+       user.getPassword(),
+       ga );
 
-		}
+  }
 
-		return springUser;
-	}
+  return springUser;
+ }
 }
 ```
 
@@ -462,27 +462,27 @@ import com.dev.springboot.security.UserDetailsService.service.IUserService;
 @Controller
 public class UserController {
 
-	@Autowired
-	private IUserService userService;
+ @Autowired
+ private IUserService userService;
 
-	/ Go to Registration Page
-	@GetMapping("/register")
-	public String register() {
-		return "registerUser";
-	}
+ / Go to Registration Page
+ @GetMapping("/register")
+ public String register() {
+  return "registerUser";
+ }
 
-	/ Read Form data to save into DB
-	@PostMapping("/saveUser")
-	public String saveUser(
-			@ModelAttribute User user,
-			Model model
-			)
-	{
-		Integer id = userService.saveUser(user);
-		String message = "User '"+id+"' saved successfully !";
-		model.addAttribute("msg", message);
-		return "registerUser";
-	}
+ / Read Form data to save into DB
+ @PostMapping("/saveUser")
+ public String saveUser(
+   @ModelAttribute User user,
+   Model model
+   )
+ {
+  Integer id = userService.saveUser(user);
+  String message = "User '"+id+"' saved successfully !";
+  model.addAttribute("msg", message);
+  return "registerUser";
+ }
 }
 ```
 
@@ -501,45 +501,45 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-	@GetMapping("/home")
-	public String getHomePage() {
-		return "homePage";
-	}
+ @GetMapping("/home")
+ public String getHomePage() {
+  return "homePage";
+ }
 
-	@GetMapping("/welcome")
-	public String getWelcomePage() {
-		return "welcomePage";
-	}
+ @GetMapping("/welcome")
+ public String getWelcomePage() {
+  return "welcomePage";
+ }
 
-	@GetMapping("/admin")
-	public String getAdminPage() {
-		return "adminPage";
-	}
+ @GetMapping("/admin")
+ public String getAdminPage() {
+  return "adminPage";
+ }
 
-	@GetMapping("/emp")
-	public String getEmployeePage() {
-		return "empPage";
-	}
+ @GetMapping("/emp")
+ public String getEmployeePage() {
+  return "empPage";
+ }
 
-	@GetMapping("/mgr")
-	public String getManagerPage() {
-		return "mgrPage";
-	}
+ @GetMapping("/mgr")
+ public String getManagerPage() {
+  return "mgrPage";
+ }
 
-	@GetMapping("/hr")
-	public String getHrPage() {
-		return "hrPage";
-	}
+ @GetMapping("/hr")
+ public String getHrPage() {
+  return "hrPage";
+ }
 
-	@GetMapping("/common")
-	public String getCommonPage() {
-		return "commonPage";
-	}
+ @GetMapping("/common")
+ public String getCommonPage() {
+  return "commonPage";
+ }
 
-	@GetMapping("/accessDenied")
-	public String getAccessDeniedPage() {
-		return "accessDeniedPage";
-	}
+ @GetMapping("/accessDenied")
+ public String getAccessDeniedPage() {
+  return "accessDeniedPage";
+ }
 }
 ```
 
@@ -568,8 +568,8 @@ Password: <input type="password" name="password"/>
 
 Role(s): <input type="checkbox" name="roles" value="Admin"/>Admin
          <input type="checkbox" name="roles" value="Manager"/>Manager
- 	 <input type="checkbox" name="roles" value="HR"/>HR
-	 <input type="checkbox" name="roles" value="Employee"/>Employee
+   <input type="checkbox" name="roles" value="HR"/>HR
+  <input type="checkbox" name="roles" value="Employee"/>Employee
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="submit" value="Register"/>
 
@@ -734,44 +734,44 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService uds;
+ @Autowired
+ private UserDetailsService uds;
 
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+ @Autowired
+ private BCryptPasswordEncoder encoder;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+ @Override
+ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.userDetailsService(uds).passwordEncoder(encoder);
-	}
+  auth.userDetailsService(uds).passwordEncoder(encoder);
+ }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+ @Override
+ protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-		.antMatchers("/home","/register","/saveUser").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("Admin")
-		.antMatchers("/mgr").hasAuthority("Manager")
-		.antMatchers("/emp").hasAuthority("Employee")
-		.antMatchers("/hr").hasAuthority("HR")
-		.antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
-		.anyRequest().authenticated()
+  http.authorizeRequests()
+  .antMatchers("/home","/register","/saveUser").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("Admin")
+  .antMatchers("/mgr").hasAuthority("Manager")
+  .antMatchers("/emp").hasAuthority("Employee")
+  .antMatchers("/hr").hasAuthority("HR")
+  .antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied");
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied");
 
-	}
+ }
 }
 ```
 
@@ -800,51 +800,51 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private UserDetailsService uds;
+ @Autowired
+ private UserDetailsService uds;
 
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+ @Autowired
+ private BCryptPasswordEncoder encoder;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+ @Bean
+ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-		.antMatchers("/home","/register","/saveUser").permitAll()
-		.antMatchers("/welcome").authenticated()
-		.antMatchers("/admin").hasAuthority("Admin")
-		.antMatchers("/mgr").hasAuthority("Manager")
-		.antMatchers("/emp").hasAuthority("Employee")
-		.antMatchers("/hr").hasAuthority("HR")
-		.antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
-		.anyRequest().authenticated()
+  http.authorizeRequests()
+  .antMatchers("/home","/register","/saveUser").permitAll()
+  .antMatchers("/welcome").authenticated()
+  .antMatchers("/admin").hasAuthority("Admin")
+  .antMatchers("/mgr").hasAuthority("Manager")
+  .antMatchers("/emp").hasAuthority("Employee")
+  .antMatchers("/hr").hasAuthority("HR")
+  .antMatchers("/common").hasAnyAuthority("Employeee,Manager,Admin")
+  .anyRequest().authenticated()
 
-		.and()
-		.formLogin()
-		.defaultSuccessUrl("/welcome",true)
+  .and()
+  .formLogin()
+  .defaultSuccessUrl("/welcome",true)
 
-		.and()
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+  .and()
+  .logout()
+  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 
-		.and()
-		.exceptionHandling()
-		.accessDeniedPage("/accessDenied")
+  .and()
+  .exceptionHandling()
+  .accessDeniedPage("/accessDenied")
 
-		.and()
-		.authenticationProvider(authenticationProvider());
+  .and()
+  .authenticationProvider(authenticationProvider());
 
-		return http.build();
+  return http.build();
 
-	}
+ }
 
-	@Bean
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(uds);
-		authenticationProvider.setPasswordEncoder(encoder);
-		return authenticationProvider;
-	}
+ @Bean
+ public AuthenticationProvider authenticationProvider() {
+  DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+  authenticationProvider.setUserDetailsService(uds);
+  authenticationProvider.setPasswordEncoder(encoder);
+  return authenticationProvider;
+ }
 }
 ```
 
@@ -856,12 +856,12 @@ public class SecurityConfig {
 
 1. 启动应用程序：右键单击项目，然后选择“Run As”>>“Spring Boot App”。
 
-2. 输入注册页面网址 http://localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。
+2. 输入注册页面网址 <http://localhost:8080/register，然后检查是否每个人都可以访问，甚至不需要登录应用程序。>
 
 3. 输入必填字段值并相应地单击“注册”按钮完成注册过程。
-4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL http://localhost:8080/admin，那么它应该将您重定向到内置的登录页面。
+4. 现在输入您在注册时选择的角色特定的任何 URL。假设您输入 URL <http://localhost:8080/admin，那么它应该将您重定向到内置的登录页面。>
 5. 输入凭据（电子邮件 ID 代替用户名）并登录到应用程序。它会将您重定向到默认的成功 URL，即欢迎页面。
-6. 现在输入网址 http://localhost:8080/admin
+6. 现在输入网址 <http://localhost:8080/admin>
 
 7. 对其他角色也重复上述步骤。
 

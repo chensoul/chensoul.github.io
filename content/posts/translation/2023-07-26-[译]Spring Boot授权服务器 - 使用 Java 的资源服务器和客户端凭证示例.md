@@ -17,7 +17,7 @@ description: "概述 ..."
 
 我们首先创建授权服务器。
 
-## 依赖项：
+## 依赖项
 
 让我们将以下依赖项添加到我们的项目中。
 
@@ -31,7 +31,7 @@ testImplementation 'org.springframework.security:spring-security-test'
 
 我们正在使用 spring oauth2 依赖项的最新（当时）稳定版本。
 
-## Java 实现：
+## Java 实现
 
 让我们创建一个名为 AuthorizationServerConfig 的配置类，并向该类添加 @Configuration 注解。现在让我们创建以下 bean 来完成配置：
 
@@ -139,7 +139,7 @@ curl -X POST 'http://localhost:9090/oauth2/token?grant_type=client_credentials' 
 
 现在让我们创建一个受此身份验证服务器保护的 API 端点，其范围为我们在令牌创建中使用的 articles.read。
 
-## 依赖项：
+## 依赖项
 
 让我们将以下依赖项添加到我们的项目中：
 
@@ -151,7 +151,7 @@ testImplementation 'org.springframework.boot:spring-boot-starter-test'
 testImplementation 'org.springframework.security:spring-security-test'
 ```
 
-## Java 实现：
+## Java 实现
 
 让我们首先创建一个简单的 rest 控制器，然后创建一个配置，以在正确的范围内保护该 API。之后，我们将在 application.yml 文件中配置身份验证服务器设置。
 
@@ -211,7 +211,7 @@ spring:
 
 我们现在将创建一个简单的 Spring Boot 项目，它将使用资源服务器创建的 API。我们将在此处配置身份验证服务器详细信息，以便它在发出 API 请求之前自动获取令牌。
 
-## 依赖项：
+## 依赖项
 
 ```
 implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -221,11 +221,11 @@ testImplementation 'org.springframework.boot:spring-boot-starter-test'
 testImplementation 'org.springframework.security:spring-security-test'
 ```
 
-## Java 实现：
+## Java 实现
 
 我们首先创建配置类，然后创建一个测试 API 来向资源服务器发出请求。之后，我们将在 application.yml 文件中定义令牌配置。
 
-- **SecurityConfig **
+- **SecurityConfig**
 
 ```java
 @Configuration

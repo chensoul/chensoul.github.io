@@ -52,7 +52,7 @@ javax.annotation.*    -> jakarta.annotation.*
 javax.transaction.*   -> jakarta.transaction.*
 ```
 
-注意：请注意，javax.sql._ 和 javax.crypto._ 等包不会更改为“jakarta.\*”，因为它们是 Java 17 JDK 的一部分，而不是 Java EE 的一部分。只有属于 Java EE 的那些包才会更改为 Jakarta EE。
+注意：请注意，javax.sql._和 javax.crypto._ 等包不会更改为“jakarta.\*”，因为它们是 Java 17 JDK 的一部分，而不是 Java EE 的一部分。只有属于 Java EE 的那些包才会更改为 Jakarta EE。
 
 只要有可能，我们都会选择 Jakarta EE 10 兼容的依赖项，包括：
 
@@ -112,7 +112,7 @@ javax.transaction.*   -> jakarta.transaction.*
   Jakarta XML WS 4.0
   ```
 
-2. 随着 Spring 框架升级到版本 6，其他 Spring 项目也在这个版本中升级，它们是：
+1. 随着 Spring 框架升级到版本 6，其他 Spring 项目也在这个版本中升级，它们是：
 
 - ```
   Spring AMQP 3.0.
@@ -166,7 +166,7 @@ javax.transaction.*   -> jakarta.transaction.*
   Spring WS 4.0.
   ```
 
-3. 第三方 jar 的最新稳定版本也会尽可能升级。一些常用的依赖项升级包括：
+1. 第三方 jar 的最新稳定版本也会尽可能升级。一些常用的依赖项升级包括：
 
 - ```
   Couchbase Client 3.4
@@ -317,7 +317,7 @@ public class MyCustomObservation {
 }
 ```
 
-2. Spring Boot 现在会自动为您配置 Micrometer Tracing。这包括对 Brave、OpenTelemetry、Zipkin 和 Wavefront 的支持。 Spring Cloud Sleuth 在新版本中被 Micrometer Tracing Framework 取代。
+1. Spring Boot 现在会自动为您配置 Micrometer Tracing。这包括对 Brave、OpenTelemetry、Zipkin 和 Wavefront 的支持。 Spring Cloud Sleuth 在新版本中被 Micrometer Tracing Framework 取代。
 
 ## 使用 Spring Boot 3.0 的 Spring Security UserDetailsService 示例
 

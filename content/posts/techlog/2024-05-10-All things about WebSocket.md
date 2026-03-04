@@ -17,7 +17,7 @@ description: "..."
 - [websocket protocol - RFC6455 - tools.ietf.org](https://tools.ietf.org/html/rfc6455)
 - [WebSocket](https://javascript.info/websocket)
 
-- [Ably：What are WebSockets used for? ](https://ably.com/topic/what-are-websockets-used-for)
+- [Ably：What are WebSockets used for?](https://ably.com/topic/what-are-websockets-used-for)
 - [Pusher：What are WebSockets?](https://pusher.com/websockets/)
 - [WebSocket vs. HTTP communication protocols](https://sendbird.com/developer/tutorials/websocket-vs-http-communication-protocols)
 - [What are WebSockets? | Web Security Academy](https://portswigger.net/web-security/websockets/what-are-websockets)
@@ -28,8 +28,6 @@ description: "..."
 - [Baeldung：A Guide to the Java API for WebSocket](https://www.baeldung.com/java-websockets)
 - [Baeldung：A Java Client for a WebSockets API](https://www.baeldung.com/websockets-api-java-spring-client)
 - [WebSocket Implementation with Spring Boot and STOMP](https://www.toptal.com/java/stomp-spring-boot-websocket)
-
-
 
 - [ApiFox：WebSocket协议入门到精通](https://apifox.com/apiskills/websocket-protocol/)
 
@@ -46,7 +44,4 @@ description: "..."
 - [用JAVA分别实现WebSocket客户端与服务端](https://www.cnblogs.com/jieerma666/p/10342435.html)
 - [WebSocket Programming with Java](https://medium.com/swlh/how-to-build-a-websocket-applications-using-java-486b3e394139)
 
-
-
 - [MQTT Websocket Client](https://www.hivemq.com/demos/websocket-client/)
-

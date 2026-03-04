@@ -177,7 +177,7 @@ public class CustomAsyncExceptionHandler
 }
 ```
 
-在上一节中，我们了解了配置类实现的 `AsyncConfigurer` 接口。作为其中的一部分，我们还需要重写 `getAsyncUncaughtExceptionHandler() ` 方法以返回我们的自定义异步异常处理程序：
+在上一节中，我们了解了配置类实现的 `AsyncConfigurer` 接口。作为其中的一部分，我们还需要重写 `getAsyncUncaughtExceptionHandler()` 方法以返回我们的自定义异步异常处理程序：
 
 ```java
 @Override
