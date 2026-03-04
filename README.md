@@ -111,10 +111,14 @@ top-image: "/images/top-image.jpg"     # 可选，正文上方配图
 ## 开发命令
 
 ```bash
-pnpm dev              # 启动开发服务器（热重载）
+pnpm dev              # 启动开发服务器（热重载，默认 --host 可局域网访问）
 pnpm build            # 类型检查 + 构建 + 生成 Pagefind 搜索索引
-pnpm preview          # 预览生产构建
+pnpm preview          # 预览生产构建（构建后本地看效果，通常比 dev 快）
+```
 
+若 `pnpm dev` 较慢：项目已通过 `optimizeDeps.include` 和 `server.warmup` 做预编译；仅本机访问时可去掉 `--host`（在 `package.json` 里把 `"dev": "astro dev --host"` 改为 `"dev": "astro dev"`）可略减开销。需要快速看效果时可用 `pnpm build && pnpm preview`。
+
+```bash
 pnpm lint             # ESLint 检查
 pnpm format           # Prettier 格式化
 pnpm format:check     # 检查格式（不写入）

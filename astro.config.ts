@@ -86,20 +86,7 @@ export default defineConfig({
     }),
     photosuite({
       scope: "#article",
-      imageBase: "https://cos.chensoul.cc/images",
-      exif: {
-        enabled: false,
-        fields: [
-          "Model", // Camera Model
-          "LensModel", // Lens Model
-          "FocalLength", // Focal Length
-          "FNumber", // Aperture
-          "ExposureTime", // Shutter Speed
-          "ISO", // ISO
-          "DateTimeOriginal", // Date Original
-        ],
-        separator: " · ", // Separator
-      },
+      imageBase: "https://cos.chensoul.cc/images"
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),
@@ -163,8 +150,24 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
-      include: ["@pagefind/default-ui", "mermaid"],
+      include: [
+        "@pagefind/default-ui",
+        "mermaid",
+        "dayjs",
+        "lodash.kebabcase",
+        "markdown-it",
+      ],
       exclude: ["@resvg/resvg-js"],
+    },
+    // 开发时预编译常用模块，减轻首屏/热更延迟
+    server: {
+      warmup: {
+        ssrFiles: [
+          "./src/layouts/Layout.astro",
+          "./src/utils/postUtils.ts",
+          "./src/config.ts",
+        ],
+      },
     },
   },
   trailingSlash: "ignore",
