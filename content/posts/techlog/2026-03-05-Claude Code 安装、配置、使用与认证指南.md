@@ -1,10 +1,10 @@
 ---
 title: "Claude Code 安装、配置、使用与认证指南"
-date: 2026-03-02 18:00:00+08:00
+date: 2026-03-05 20:30:00+08:00
 slug: claude-code-guide
-draft: true
+draft: false
 categories: [ "techlog" ]
-tags: ['claude', 'anthropic', 'cli', 'ai']
+tags: ['claude', 'anthropic', 'ai']
 description: "Claude Code 是 Anthropic 的 AI 编程助手，可读取代码库、编辑文件、执行命令，并与终端、IDE、桌面端、网页等环境集成。本文介绍其安装、配置、使用、认证与订阅方案，以及通过 OpenRouter 接入的使用方式。 ..."
 ---
 
