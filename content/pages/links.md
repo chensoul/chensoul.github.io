@@ -34,6 +34,6 @@ title: "链接"
 - [canva](https://canva.com) 设计像拼图一样简单
 - [pinterest](https://pinterest.com) 灵感后花园
 - [iloveimg](https://www.iloveimg.com) 没有它转不了的文件格式
-- [convertio](https://convertio.co) 图片剪裁、压缩、转换
+- [convertio](https://convertio.co) 图片剪裁、压缩、转换。支持图片转为 SVG。
 - [SVG Viewer](https://www.svgviewer.dev/) 在线查看、编辑 SVG
 

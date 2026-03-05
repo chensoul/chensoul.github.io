@@ -52,9 +52,8 @@ title: "关于"
 
 ## 博客更新
 
-- 2021-09-09 » 注册 chensoul.com 域名，并使用 Hugo 主题构建博客
-- 202?-0?-0? » 将博客域名改为 blog.chensoul.cc 
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
-- 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面。
-- 2026-02-27 » 使用 [https://zdyxry.github.io/](https://zdyxry.github.io/) 的主题配色
-- 2026-02-28 » 参考 [Astro Theme Switcher](https://astro-theme-switcher.netlify.app/) 调整导航菜单样式
+- 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面，优化样式。
+- 2026-02-28 » 参考 [Astro Theme Switcher](https://astro-theme-switcher.netlify.app/) 调整导航菜单样式为固定。
+- 2026-03-03 » 参考 [Yiran's Blog](https://zdyxry.github.io/)，修改主题配送、Footer 部分添加了社交链接、重构了 Astro 布局、去掉了分类页面、重构归档页面。
+- 2026-03-04 » 参考 [Verne in GitHub](https://blog.einverne.info/)，关于页面添加我使用的 APP。
