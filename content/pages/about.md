@@ -2,9 +2,9 @@
 title: "关于"
 ---
 
-健康，爱情和使命，按照这个顺序，其它的都不重要。 ------纳瓦尔
-
 ## 关于我
+
+> 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------纳瓦尔
 
 我是 ChenSoul，一个来自中国武汉的开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
 
@@ -55,5 +55,5 @@ title: "关于"
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
 - 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面，优化样式。
 - 2026-02-28 » 参考 [Astro Theme Switcher](https://astro-theme-switcher.netlify.app/) 调整导航菜单样式为固定。
-- 2026-03-03 » 参考 [Yiran's Blog](https://zdyxry.github.io/)，修改主题配送、Footer 部分添加了社交链接、重构了 Astro 布局、去掉了分类页面、重构归档页面。
+- 2026-03-03 » 参考 [Yiran's Blog](https://zdyxry.github.io/)，修改主题配送、Footer 部分添加了社交链接、重构了 Astro 布局、去掉分类页面、重构归档页面。
 - 2026-03-04 » 参考 [Verne in GitHub](https://blog.einverne.info/)，关于页面添加我使用的 APP。

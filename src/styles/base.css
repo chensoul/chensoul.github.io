@@ -185,10 +185,12 @@ pre:not(.astro-code) code {
 /* Blockquotes */
 blockquote {
   border-left: 3px solid var(--accent);
-  padding-left: 1rem;
-  margin: 1.5rem 0;
+  padding: 1rem 1rem 0.1rem;
+  margin: 1rem 0;
+  background: var(--background-secondary);
   color: var(--text-secondary);
   font-style: italic;
+  border-radius: 0 8px 8px 0;
 }
 
 /* Lists：默认显示 list-style 与缩进；使用 :where 降权，便于页面用 Tailwind list-none/pl-0 覆盖 */
@@ -220,7 +222,19 @@ li {
   margin-bottom: 0.5rem;
 }
 
-/* Tables */
+/* Tables：由 rehype-wrap-all 包在 .responsive-table 内，窄屏下仅在容器内横向滚动 */
+.responsive-table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+.responsive-table table {
+  margin-bottom: 0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

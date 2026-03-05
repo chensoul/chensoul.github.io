@@ -32,6 +32,7 @@ function normalizeSocialHref(url: string): string {
 
 <footer class:list={["footer", "w-full", { "mt-auto": !noMarginTop }]}>
   <div class="footer-content">
+    <hr class="footer-hr" aria-hidden="true" />
     {
       hasSocial && (
         <div class="social-links">
@@ -96,8 +97,14 @@ function normalizeSocialHref(url: string): string {
 <style>
   .footer {
     background: var(--background);
-    border-top: 1px solid var(--border);
     padding: 1rem 1rem;
+  }
+
+  .footer-hr {
+    width: 100%;
+    margin: 1rem 0 1rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
   }
 
   .footer-content {

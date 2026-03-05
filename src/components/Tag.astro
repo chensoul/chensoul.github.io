@@ -34,22 +34,21 @@ export interface Props {
 const { tag, tagName, count, size = "sm" } = Astro.props;
 ---
 
-<li class={`inline-block ${size === "sm" ? "my-2 mr-2" : "my-3 mr-2"}`}>
+<li class="mr-2 inline-flex items-center last:mr-0">
   <a
     href={`/tags/${tag}`}
-    class={`${size === "sm" ? "text-sm" : "text-lg"} group relative opacity-80 hover:-top-0.5 focus-visible:p-1 text-inherit hover:text-[var(--accent)]`}
+    class={`${size === "sm" ? "text-sm" : "text-lg"} group relative inline-flex items-center rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]`}
   >
-    <!-- 标签胶囊 -->
-    <div class="rounded-full bg-black/10 px-3 py-0 dark:bg-white/10">
-      <span>
-        {tagName}
-      </span>
-      <!-- 文章数量 -->
+    <!-- 标签胶囊：浅底 + 强调色文字 -->
+    <span
+      class="inline-flex items-center gap-1 rounded-full bg-[var(--background-secondary)] px-3 py-1 leading-none text-[var(--accent)] ring-1 ring-[var(--border)] transition-colors hover:bg-[var(--accent)]/10 hover:ring-[var(--accent)]/40"
+    >
+      {tagName}
       {
-        count && (
-          <span class="font-bold text-[var(--accent)] italic">{count}</span>
+        count !== undefined && count !== null && (
+          <span class="font-semibold italic opacity-90">{count}</span>
         )
       }
-    </div>
+    </span>
   </a>
 </li>

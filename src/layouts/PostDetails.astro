@@ -152,48 +152,48 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <!-- 文章标题与发布日期（不在 main 内） -->
-  <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
-    <h1 class="text-2xl font-semibold">{title}</h1>
-    <Datetime
-      pubDatetime={date}
-      modDatetime={updated}
-      timezone={post.data.timezone}
-      format="absolute"
-      class="mt-1 flex justify-center text-sm text-[var(--accent)]"
-    />
-  </section>
-
   <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
   <article id="article" class="js-toc-content">
     <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
-    {
-      topImageSrc && (
-          <img
-            src={topImageSrc}
-            alt={title}
-          />
-      )
-    }
+      {
+        topImageSrc && (
+            <img
+              src={topImageSrc}
+              alt={title}
+            />
+        )
+      }
+
+      <!-- 文章标题与发布日期 -->
+      <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
+        <h1 class="text-2xl font-semibold">{title}</h1>
+        <Datetime
+          pubDatetime={date}
+          modDatetime={updated}
+          timezone={post.data.timezone}
+          format="absolute"
+          class="mt-1 flex justify-center text-sm text-[var(--accent)]"
+        />
+      </section>
+
     <Content />
   </article>
 
   <!-- 标签列表 -->
-  <ul class="my-1 flex flex-col flex-wrap space-y-2 md:flex-row md:space-y-0">
-    {
-      tags.length > 0 && (
-        <li class="flex items-center space-x-0.5">
-          <IconTag class="mt-0.5 h-4 w-4" />
-          <ul>
-            {tags.map((tag: string) => (
-              <Tag tag={slugifyStr(tag)} tagName={tag} />
-            ))}
-          </ul>
-        </li>
-      )
-    }
-  </ul>
-  <hr class="my-6" />
+  {
+    tags.length > 0 && (
+      <div class="post-tags-row mt-8 mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+        <span class="post-tags-icon flex shrink-0 items-center" aria-hidden="true">
+          <IconTag class="h-4 w-4 text-[var(--text-secondary)]" />
+        </span>
+        <ul class="post-tags-list flex flex-wrap items-center gap-2" role="list">
+          {tags.map((tag: string) => (
+            <Tag tag={slugifyStr(tag)} tagName={tag} />
+          ))}
+        </ul>
+      </div>
+    )
+  }
 
   <!-- Previous/Next Post Buttons -->
   <div data-pagefind-ignore class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -318,6 +318,26 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         margin-bottom: 1rem;
       }
     }
+  }
+
+  /* 标签行：图标与标签胶囊同一水平线 */
+  .post-tags-row {
+    align-items: center;
+  }
+  .post-tags-icon {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+  }
+  .post-tags-icon :global(svg) {
+    display: block;
+    vertical-align: middle;
+  }
+  .post-tags-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    align-items: center;
   }
 </style>
 
