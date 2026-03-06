@@ -4,17 +4,23 @@ title: "关于"
 
 ## 关于我
 
+你好，欢迎来到我的个人博客。
+
+我是 ChenSoul，一个来自中国武汉的 Java 开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。
+
+这是我在互联网上搭建的一处安静的角落，用于记录、探索与分享。这里承载着我对技术的热爱、对生活的思考，以及那些不愿被时间冲淡的记忆碎片。
+
 > 健康，爱情和使命，按照这个顺序，其它的都不重要。 ------纳瓦尔
 
-我是 ChenSoul，一个来自中国武汉的开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。不定期更新[博客](https://blog.chensoul.cc)，分享学习心得。
+## 联系我
 
-## 联系我：
+你可以通过以下方式找到我：[WeChat](/images/my-wechat.webp)、[Telegram](https://t.me/chensoul)、[Github](https://twitter.com/chensoul)、[Twitter](https://twitter.com/ichensoul)，或者给我发送邮件：ichensoul@gmail.com
 
-- 我的个人联系方式：[WeChat](/images/my-wechat.webp)、ichensoul@gmail.com、[Telegram](https://t.me/chensoul)
-- 我的社交账号：[Github](https://twitter.com/chensoul)、[Twitter](https://twitter.com/ichensoul)、[Telegram Channel](https://t.me/ichensoul)
-- 我的自建服务：[跑步](https://run.chensoul.cc/)、[书签](https://linkding.chensoul.cc/)、[Memos](https://memos.chensoul.cc/)
+我在 [VPS](/posts/2023/01/25/notes-about-deploy-services-in-vps)
+上自建了一些服务：[跑步](https://run.chensoul.cc/)、[书签](https://linkding.chensoul.cc/)、[Memos](https://memos.chensoul.cc/)
+，另外我创建了一个 [Telegram Channel](https://t.me/ichensoul)，分享每天的所见、所闻、所感，如果你感兴趣，欢迎加入！👏
 
-### 我使用的 APP
+## 其他
 
 我使用的日常 IOS APP：
 
@@ -50,7 +56,7 @@ title: "关于"
 - 腾讯视频会员：150元，#年费
 - 京东 Plus + B 站大会员：148 元，#年费
 
-## 博客更新
+## 更新日志
 
 - 2026-02-24 » 从 Hugo 迁移到 Astro，使用 [astro-lhasa](https://github.com/achuanya/astro-lhasa) 主题。
 - 2026-02-25 » 参考 [Yiran's Blog](https://zdyxry.github.io/running/)，增加[跑步](/running)页面，优化样式。

@@ -18,22 +18,23 @@ title: "链接"
 
 ## 博客
 
-- [SivaLabs](https://www.sivalabs.in/blog/) Java、Spring Boot、微服务、云计算和DevOps教程
-- [Piotr's TechBlog](https://piotrminkowski.com/) Java, Spring, Kotlin, microservices, Kubernetes, containers
-- [Frost's Blog](https://frostming.com) 一名 Python 开发工程师，坐标深圳
+- [Pseudoyu](https://www.pseudoyu.com/) - 一名 web3 爱好者、区块链开发者和独立黑客。
+- [SivaLabs](https://www.sivalabs.in/blog/) - Java、Spring Boot、微服务、云计算和DevOps教程
+- [Piotr's TechBlog](https://piotrminkowski.com/) - Java, Spring, Kotlin, microservices, Kubernetes, containers
+- [Frost's Blog](https://frostming.com) - 一名 Python 开发工程师，坐标深圳
 - [游钓四方](https://blog.lhasa.icu/)
-- [拾月](https://www.skyue.com/) PC互联网遗民
+- [拾月](https://www.skyue.com/) - PC互联网遗民
 - [Yiran's Blog](https://zdyxry.github.io/)
 - [Verne in GitHub](https://blog.einverne.info/)
 
 
 ## 工具
 
-- [z-lib](https://z-lib.ai) 千万级数字图书馆
-- [sci-hub](https://www.wellesu.com) 最具争议性的项目，无视版权，提供全领域文献与书籍
-- [canva](https://canva.com) 设计像拼图一样简单
-- [pinterest](https://pinterest.com) 灵感后花园
-- [iloveimg](https://www.iloveimg.com) 没有它转不了的文件格式
-- [convertio](https://convertio.co) 图片剪裁、压缩、转换。支持图片转为 SVG。
-- [SVG Viewer](https://www.svgviewer.dev/) 在线查看、编辑 SVG
+- [z-lib](https://z-lib.ai) - 千万级数字图书馆
+- [sci-hub](https://www.wellesu.com) - 最具争议性的项目，无视版权，提供全领域文献与书籍
+- [canva](https://canva.com) - 设计像拼图一样简单
+- [pinterest](https://pinterest.com) - 灵感后花园
+- [iloveimg](https://www.iloveimg.com) - 没有它转不了的文件格式
+- [convertio](https://convertio.co) - 图片剪裁、压缩、转换。支持图片转为 SVG。
+- [SVG Viewer](https://www.svgviewer.dev/) - 在线查看、编辑 SVG
 
