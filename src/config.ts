@@ -80,10 +80,9 @@ export const SITE = {
   showBackButton: true,
 
   /**
-   * 是否生成 OG 分享图（仅生产环境生效）
+   * 是否生成 OG 分享图
    *
-   * 生产构建（astro build）时：true 则生成 /og/.../slug.png 并输出 og:image meta
-   * 开发环境（astro dev）时：不生成 OG 图、不输出 og:image
+   * true 时：dev 与 prod 均生成 /og/.../slug.png 并在文章页输出 og:image meta
    */
   ogImage: true,
 

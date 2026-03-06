@@ -58,10 +58,9 @@ const topImageSrc =
 // 渲染文章内容
 const { Content } = await render(post);
 
-// OG 图：仅生产环境且 SITE.ogImage 为 true 时传入
-const ogSlug =
-  import.meta.env.PROD && SITE.ogImage
-    ? PostUtils.getPath(
+// OG 图：SITE.ogImage 为 true 时传入（dev 与 prod 均生成并输出 og:image）
+const ogSlug = SITE.ogImage
+  ? PostUtils.getPath(
         post.id,
         post.filePath,
         false,
