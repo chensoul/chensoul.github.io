@@ -8,14 +8,14 @@
 
 ## 技术栈
 
-| 类别 | 技术 |
-|------|------|
-| 框架 | Astro 5.x |
-| 样式 | Tailwind CSS 4（via Vite 插件） |
-| 包管理 | pnpm |
-| 语言 | TypeScript |
-| 节点版本 | Node.js 20+ |
-| 构建输出 | 纯静态站点（SSG） |
+| 类别     | 技术                            |
+| -------- | ------------------------------- |
+| 框架     | Astro 5.x                       |
+| 样式     | Tailwind CSS 4（via Vite 插件） |
+| 包管理   | pnpm                            |
+| 语言     | TypeScript                      |
+| 节点版本 | Node.js 20+                     |
+| 构建输出 | 纯静态站点（SSG）               |
 
 ---
 
@@ -74,19 +74,19 @@ chensoul.github.io/
 ### 文章 Frontmatter
 
 ```yaml
-title: "文章标题"                       # 必填
-slug: "custom-url-slug"                # 可选，自定义 URL 路径片段（默认取文件名）
-description: "文章描述"                 # 可选，用于 meta description 和 SEO
-date: 2026-02-26 08:00:00+08:00        # 必填，决定 URL 日期前缀
-tags: [Java, Spring]                   # 默认 ["Others"]
-categories: [techlog]                  # 默认空数组
-draft: false                           # true 则排除构建
-toc: true                              # 显示目录
-math: false                            # 启用 KaTeX
-mermaid: false                         # 启用 Mermaid
-comments: false                        # 启用 Artalk 评论
-cover: "/thumbs/cover.jpg"             # 可选，封面图（列表缩略图 + OG 图）
-top-image: "/images/top-image.jpg"     # 可选，正文上方配图
+title: "文章标题" # 必填
+slug: "custom-url-slug" # 可选，自定义 URL 路径片段（默认取文件名）
+description: "文章描述" # 可选，用于 meta description 和 SEO
+date: 2026-02-26 08:00:00+08:00 # 必填，决定 URL 日期前缀
+tags: [Java, Spring] # 默认 ["Others"]
+categories: [techlog] # 默认空数组
+draft: false # true 则排除构建
+toc: true # 显示目录
+math: false # 启用 KaTeX
+mermaid: false # 启用 Mermaid
+comments: false # 启用 Artalk 评论
+cover: "/thumbs/cover.jpg" # 可选，封面图（列表缩略图 + OG 图）
+top-image: "/images/top-image.jpg" # 可选，正文上方配图
 ```
 
 ### 文章 URL 规则
@@ -99,12 +99,12 @@ top-image: "/images/top-image.jpg"     # 可选，正文上方配图
 
 ## 第三方服务
 
-| 服务 | 用途 |
-|------|------|
-| Artalk (`artalk.chensoul.cc`) | 评论系统 |
-| Umami (`umami.chensoul.cc`) | 访问统计 |
-| Pagefind | 本地全文搜索 |
-| COS (`cos.chensoul.cc`) | 图片/静态资源 CDN |
+| 服务                          | 用途              |
+| ----------------------------- | ----------------- |
+| Artalk (`artalk.chensoul.cc`) | 评论系统          |
+| Umami (`umami.chensoul.cc`)   | 访问统计          |
+| Pagefind                      | 本地全文搜索      |
+| COS (`cos.chensoul.cc`)       | 图片/静态资源 CDN |
 
 ---
 

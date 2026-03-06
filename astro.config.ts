@@ -86,7 +86,7 @@ export default defineConfig({
     }),
     photosuite({
       scope: "#article",
-      imageBase: "https://cos.chensoul.cc/images"
+      imageBase: "https://cos.chensoul.cc/images",
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),

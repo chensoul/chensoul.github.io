@@ -406,9 +406,7 @@ const hrZoneColors: Record<number, string> = {
                           <span class="stat-label">km</span>
                         </div>
                         <div class="stat">
-                          <span class="stat-value">
-                            {run.durationShort}
-                          </span>
+                          <span class="stat-value">{run.durationShort}</span>
                           <span class="stat-label">时长</span>
                         </div>
                         <div class="stat">
@@ -417,7 +415,9 @@ const hrZoneColors: Record<number, string> = {
                         </div>
                         <div class="stat">
                           <span class="stat-value">
-                            {run.heart_rate > 0 ? Math.round(run.heart_rate) : "-"}
+                            {run.heart_rate > 0
+                              ? Math.round(run.heart_rate)
+                              : "-"}
                           </span>
                           <span class="stat-label">BPM</span>
                         </div>
@@ -1461,16 +1461,32 @@ const hrZoneColors: Record<number, string> = {
 
   /* 日历热力：一套样式适配两种主题，用 accent 与 background-secondary 混合，无需按主题分别设色 */
   .day.intensity-1 {
-    background: color-mix(in srgb, var(--accent) 20%, var(--background-secondary));
+    background: color-mix(
+      in srgb,
+      var(--accent) 20%,
+      var(--background-secondary)
+    );
   }
   .day.intensity-2 {
-    background: color-mix(in srgb, var(--accent) 40%, var(--background-secondary));
+    background: color-mix(
+      in srgb,
+      var(--accent) 40%,
+      var(--background-secondary)
+    );
   }
   .day.intensity-3 {
-    background: color-mix(in srgb, var(--accent) 60%, var(--background-secondary));
+    background: color-mix(
+      in srgb,
+      var(--accent) 60%,
+      var(--background-secondary)
+    );
   }
   .day.intensity-4 {
-    background: color-mix(in srgb, var(--accent) 80%, var(--background-secondary));
+    background: color-mix(
+      in srgb,
+      var(--accent) 80%,
+      var(--background-secondary)
+    );
   }
   .day.intensity-5 {
     background: var(--accent);

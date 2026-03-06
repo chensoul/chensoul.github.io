@@ -35,10 +35,7 @@ const years = Object.keys(groupedByYear)
       <span class="opacity-80">分类：</span>
       {
         categories.map(({ category, categoryName, count }) => (
-          <a
-            href={`/categories/${category}`}
-            class="text-sm hover:underline"
-          >
+          <a href={`/categories/${category}`} class="text-sm hover:underline">
             {categoryName}（{count}）
           </a>
         ))
@@ -48,10 +45,7 @@ const years = Object.keys(groupedByYear)
       <span class="opacity-80">年份：</span>
       {
         years.map(year => (
-          <a
-            href={`#year-${year}`}
-            class="text-sm hover:underline"
-          >
+          <a href={`#year-${year}`} class="text-sm hover:underline">
             {year}（{groupedByYear[year].length}）
           </a>
         ))
@@ -64,36 +58,36 @@ const years = Object.keys(groupedByYear)
       years.map(year => (
         <div id={`year-${year}`} class="archives-year mb-8" tabindex={-1}>
           <h2 class="mb-1 text-base">
-          {year} ({groupedByYear[year].length})
-        </h2>
-        <ul class="mt-1 list-none space-y-1 pl-0 text-left">
-          {groupedByYear[year].map(({ data, id, filePath }) => {
-            const d = new Date(data.updated ?? data.date);
-            const tz = data.timezone ?? SITE.timezone;
-            const dateStr = PostUtils.getLocalDateString(d, tz);
-            const dateText = dateStr.slice(5);
-            return (
-              <li class="flex items-center gap-2 leading-6">
-                <span class="w-14 text-right text-sm tabular-nums opacity-80">
-                  {dateText}
-                </span>
-                <span class="opacity-80">»</span>
-                <a
-                  href={PostUtils.getPath(
-                    id,
-                    filePath,
-                    true,
-                    data.date,
-                    data.timezone
-                  )}
-                  class="flex-1 truncate text-sm hover:underline"
-                >
-                  {data.title}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+            {year} ({groupedByYear[year].length})
+          </h2>
+          <ul class="mt-1 list-none space-y-1 pl-0 text-left">
+            {groupedByYear[year].map(({ data, id, filePath }) => {
+              const d = new Date(data.updated ?? data.date);
+              const tz = data.timezone ?? SITE.timezone;
+              const dateStr = PostUtils.getLocalDateString(d, tz);
+              const dateText = dateStr.slice(5);
+              return (
+                <li class="flex items-center gap-2 leading-6">
+                  <span class="w-14 text-right text-sm tabular-nums opacity-80">
+                    {dateText}
+                  </span>
+                  <span class="opacity-80">»</span>
+                  <a
+                    href={PostUtils.getPath(
+                      id,
+                      filePath,
+                      true,
+                      data.date,
+                      data.timezone
+                    )}
+                    class="flex-1 truncate text-sm hover:underline"
+                  >
+                    {data.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       ))
     }

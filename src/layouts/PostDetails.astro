@@ -45,11 +45,12 @@ const topImageSrc =
   topImageRaw && topImageRaw.trim()
     ? (() => {
         const src = topImageRaw.trim();
-        if (src.startsWith("http://") || src.startsWith("https://"))
-          return src;
+        if (src.startsWith("http://") || src.startsWith("https://")) return src;
         const normalized = src.startsWith("/") ? src : `/${src}`;
         if (import.meta.env.DEV) return normalized;
-        const base = (SITE.imageConfig.imagesUrl ?? "").trim().replace(/\/$/, "");
+        const base = (SITE.imageConfig.imagesUrl ?? "")
+          .trim()
+          .replace(/\/$/, "");
         return base ? `${base}${normalized}` : normalized;
       })()
     : undefined;
@@ -155,26 +156,19 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
   <article id="article" class="js-toc-content">
     <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
-      {
-        topImageSrc && (
-            <img
-              src={topImageSrc}
-              alt={title}
-            />
-        )
-      }
+    {topImageSrc && <img src={topImageSrc} alt={title} />}
 
-      <!-- 文章标题与发布日期 -->
-      <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
-        <h1 class="text-2xl font-semibold">{title}</h1>
-        <Datetime
-          pubDatetime={date}
-          modDatetime={updated}
-          timezone={post.data.timezone}
-          format="absolute"
-          class="mt-1 flex justify-center text-sm text-[var(--accent)]"
-        />
-      </section>
+    <!-- 文章标题与发布日期 -->
+    <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
+      <h1 class="text-2xl font-semibold">{title}</h1>
+      <Datetime
+        pubDatetime={date}
+        modDatetime={updated}
+        timezone={post.data.timezone}
+        format="absolute"
+        class="mt-1 flex justify-center text-sm text-[var(--accent)]"
+      />
+    </section>
 
     <Content />
   </article>
@@ -183,10 +177,16 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   {
     tags.length > 0 && (
       <div class="post-tags-row mt-8 mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
-        <span class="post-tags-icon flex shrink-0 items-center" aria-hidden="true">
+        <span
+          class="post-tags-icon flex shrink-0 items-center"
+          aria-hidden="true"
+        >
           <IconTag class="h-4 w-4 text-[var(--text-secondary)]" />
         </span>
-        <ul class="post-tags-list flex flex-wrap items-center gap-2" role="list">
+        <ul
+          class="post-tags-list flex flex-wrap items-center gap-2"
+          role="list"
+        >
           {tags.map((tag: string) => (
             <Tag tag={slugifyStr(tag)} tagName={tag} />
           ))}

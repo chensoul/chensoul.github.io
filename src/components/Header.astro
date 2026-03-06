@@ -103,9 +103,11 @@ const { pathname } = Astro.url;
   const themeToggle = document.getElementById("theme-toggle");
 
   function toggleTheme() {
-    const themeManager = (window as Window & {
-      __theme?: { toggleTheme?: () => string };
-    }).__theme;
+    const themeManager = (
+      window as Window & {
+        __theme?: { toggleTheme?: () => string };
+      }
+    ).__theme;
 
     if (themeManager?.toggleTheme) {
       themeManager.toggleTheme();
