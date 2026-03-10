@@ -61,13 +61,13 @@ const { Content } = await render(post);
 // OG 图：SITE.ogImage 为 true 时传入（dev 与 prod 均生成并输出 og:image）
 const ogSlug = SITE.ogImage
   ? PostUtils.getPath(
-        post.id,
-        post.filePath,
-        false,
-        post.data.date,
-        post.data.timezone
-      )
-    : null;
+      post.id,
+      post.filePath,
+      false,
+      post.data.date,
+      post.data.timezone
+    )
+  : null;
 
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =

@@ -4,7 +4,7 @@
 This repository is an Astro-based personal blog.
 
 - `src/`: app source (pages, layouts, components, styles, utilities).
-- `content/`: Markdown content; posts are grouped by domain (`techlog`, `translation`, `lifelog`), plus standalone pages in `content/pages/`.
+- `content/`: Markdown content; posts are grouped by domain (`tech`, `translation`, `life`), plus standalone pages in `content/pages/`.
 - `public/`: static assets (images, thumbs, redirects/headers, generated search index under `public/pagefind/`).
 - `scripts/`: asset maintenance scripts (image compression and WebP conversion).
 - `.github/workflows/ci.yml`: CI checks for lint, format, and build.
@@ -26,7 +26,7 @@ There is no dedicated unit test suite in this repo currently; quality gate is li
 - Formatting: Prettier with `prettier-plugin-astro` and `prettier-plugin-tailwindcss`.
 - Linting: ESLint (`eslint.config.js`), including Astro + TypeScript rules.
 - Keep filenames and route segments consistent with existing patterns (e.g., `src/pages/categories/[category]/[...page].astro`).
-- Content post files should follow date-led names, e.g. `content/posts/techlog/YYYY-MM-DD-title.md`.
+- Content post files should follow date-led names, e.g. `content/posts/tech/YYYY-MM-DD-title.md`.
 
 ## Testing Guidelines
 - Before opening a PR, run:

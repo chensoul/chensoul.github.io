@@ -6,7 +6,7 @@ title: "关于"
 
 你好，欢迎来到我的个人博客。
 
-我是 ChenSoul，一个来自中国武汉的 Java 开发者，喜欢[编程](/categories/techlog)、[跑步](https://run.chensoul.cc/)。
+我是 ChenSoul，一个来自中国武汉的 Java 开发者，喜欢[编程](/categories/tech)、[跑步](https://run.chensoul.cc/)。
 
 这是我在互联网上搭建的一处安静的角落，用于记录、探索与分享。这里承载着我对技术的热爱、对生活的思考，以及那些不愿被时间冲淡的记忆碎片。
 

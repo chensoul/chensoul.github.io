@@ -71,7 +71,7 @@ export const SITE = {
   showArchives: true,
 
   /**
-   * 邻居 / Feeds 页（友联博客 RSS 聚合）
+   * 订阅 / Feeds 页（友联博客 RSS 聚合）
    *
    * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, blog_name?, avatar? }] }）。
    * dataSourceUrl 留空则不显示导航入口，页面仍可访问但会提示加载失败。
@@ -79,14 +79,14 @@ export const SITE = {
    * @see https://github.com/achuanya/lhasaRSS
    */
   feeds: {
-    /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /feeds/data.json），留空则不在导航显示「邻居」 */
+    /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /feeds/data.json），留空则不在导航显示「订阅」 */
     dataSourceUrl: "/data/feeds.json",
     /** 首屏展示条数 */
     initialCount: 12,
     /** 点击「加载更多」每次加载条数 */
     perPage: 12,
     /** 无头像时使用的默认图片 URL */
-    fallbackAvatarUrl: "https://cos.chensoul.cc/dist/avatar/default.png",
+    fallbackAvatarUrl: "https://cos.chensoul.cc/thumbs/blank.svg",
   },
 
   /** 是否在顶栏下方显示年度进度条 */

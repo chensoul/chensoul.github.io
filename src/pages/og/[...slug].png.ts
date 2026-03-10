@@ -23,8 +23,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       post.data.timezone
     );
     const pubDate = new Date(post.data.date);
-    const author =
-      (post.data as { author?: string }).author ?? SITE.author;
+    const author = (post.data as { author?: string }).author ?? SITE.author;
     return {
       params: { slug },
       props: { title: post.data.title, pubDate, author },

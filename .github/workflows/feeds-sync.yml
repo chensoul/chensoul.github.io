@@ -21,6 +21,7 @@ jobs:
         with:
           sources: public/data/rss.txt
           output: public/data/feeds.json
+          maxItemsPerFeed: 3
 
       - name: Commit and push
         run: |

@@ -35,9 +35,9 @@ The `pnpm build` command runs three steps in sequence: `astro check && astro bui
 ### Content Collections
 
 Content lives in `content/posts/` organized into three subfolders:
-- `techlog/` — technical posts
+- `tech/` — technical posts
 - `translation/` — translated articles
-- `lifelog/` — personal/lifestyle posts
+- `life/` — personal/lifestyle posts
 
 Posts are `.md` or `.mdx` files. Files prefixed with `_` are treated as drafts and excluded from builds. The schema is defined in `src/content.config.ts` using Zod.
 
@@ -46,7 +46,7 @@ Posts are `.md` or `.mdx` files. Files prefixed with `_` are treated as drafts a
 title: "Article Title"
 date: 2026-02-26 08:00:00+08:00
 tags: [Java, Spring]
-categories: [techlog]
+categories: [tech]
 draft: false          # exclude from build
 toc: true             # table of contents
 math: false           # KaTeX rendering
