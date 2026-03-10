@@ -105,7 +105,6 @@ export async function initFeeds(
   const noContentContainer = document.getElementById("feeds-no-content");
 
   if (!feedsListElement || !loadingContainer || !errorContainer || !noContentContainer) {
-    console.error("Required DOM elements for feeds are missing.");
     return;
   }
 
@@ -149,8 +148,7 @@ export async function initFeeds(
       } else if (loadMoreTrigger) {
         loadMoreTrigger.style.display = "none";
       }
-    } catch (e) {
-      console.error("Failed to fetch feeds:", e);
+    } catch {
       loadingContainer.classList.add("hidden");
       errorContainer.classList.remove("hidden");
       if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
@@ -195,8 +193,7 @@ function run() {
       d.itemsPerPage,
       d.dataSourceUrl,
     );
-  } catch (e) {
-    console.error("Feeds init error:", e);
+  } catch {
     const loadingContainer = document.getElementById("feeds-loading");
     const errorContainer = document.getElementById("feeds-error");
     if (loadingContainer) loadingContainer.classList.add("hidden");
