@@ -353,3 +353,87 @@ mark {
 .photosuite-item img {
   margin: 1rem 0.5rem;
 }
+
+/* Feeds 页面样式 */
+.feeds-page {
+  padding-inline: 0;
+}
+
+.feeds-loading,
+.feeds-message {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.feeds-message.hidden,
+.feeds-loading.hidden {
+  display: none !important;
+}
+
+.feeds-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feeds-card-wrapper {
+  margin-bottom: 1rem;
+}
+
+.feeds-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-primary);
+}
+
+.feeds-card-avatar-wrap {
+  flex-shrink: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 0.375rem;
+}
+
+.feeds-card img.feeds-card-avatar {
+  display: block;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  object-fit: cover;
+  border-radius: 0.375rem;
+}
+
+.feeds-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.feeds-card-title {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 0.25rem 0;
+  color: var(--accent);
+  text-decoration: none;
+  text-underline-offset: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+a.feeds-card-title:hover {
+  text-decoration: underline;
+}
+
+.feeds-card-meta {
+  display: block;
+  font-size: 0.875rem;
+  margin-top: 0.125rem;
+  opacity: 0.8;
+  color: var(--text-secondary);
+}
