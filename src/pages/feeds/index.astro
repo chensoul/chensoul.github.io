@@ -97,14 +97,20 @@ const clientData = {
   }
   .feeds-list :global(.feeds-card-avatar-wrap) {
     flex-shrink: 0;
+    display: block;
     width: 40px;
     height: 40px;
+    overflow: hidden;
+    border-radius: 0.375rem;
   }
   .feeds-list :global(.feeds-card img.feeds-card-avatar) {
+    display: block;
     width: 40px !important;
     height: 40px !important;
-    max-width: 40px;
-    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px !important;
+    max-height: 40px !important;
     object-fit: cover;
     border-radius: 0.375rem;
   }

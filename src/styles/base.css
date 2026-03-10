@@ -132,7 +132,7 @@ p {
   color: var(--text-primary);
 }
 
-img {
+img:not(.feeds-card-avatar) {
   max-width: 100%;
   height: auto;
   display: block;
