@@ -8,7 +8,7 @@ import Layout from "../layouts/Layout.astro";
 import { SITE } from "@/config";
 
 // 加载跑步数据
-import runningJson from "../data/running.json";
+import runningJson from "../../public/data/running.json";
 
 const data = runningJson;
 const allRuns = data.runs.map(run => ({

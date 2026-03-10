@@ -1,0 +1,130 @@
+---
+/**
+ * 邻居 / Feeds 页
+ *
+ * @fileoverview 从 SITE.feeds.dataSourceUrl 加载 JSON，客户端渲染列表并支持滚动加载更多。
+ * 参考：https://github.com/achuanya/astro-lhasa
+ */
+import Layout from "@/layouts/Layout.astro";
+import { SITE } from "@/config";
+
+const clientData = {
+  siteTimezone: SITE.timezone,
+  fallbackOgImage: SITE.feeds.fallbackAvatarUrl,
+  initialItemCount: SITE.feeds.initialCount,
+  itemsPerPage: SITE.feeds.perPage,
+  dataSourceUrl: SITE.feeds.dataSourceUrl || "",
+};
+---
+
+<Layout
+  title={`邻居 | ${SITE.title}`}
+  description={`最新文章聚合（RSS Feeds）`}
+>
+  <div class="page-content feeds-page">
+    <p class="feeds-intro text-[var(--text-secondary)] mb-6">
+      以下为我关注的的最新文章聚合，数据来自 RSS 定时抓取。若加载失败，请稍后重试或检查网络。
+      {!clientData.dataSourceUrl && (
+        <span class="block mt-2">
+          请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合 JSON 地址以启用列表。
+        </span>
+      )}
+    </p>
+
+    <div
+      id="feeds-data-json-container"
+      data-json={JSON.stringify(clientData)}
+      class="hidden"
+      aria-hidden="true"
+    />
+
+    <div id="feeds-loading" class="feeds-loading">
+      加载中…
+    </div>
+    <div id="feeds-error" class="feeds-message hidden">
+      加载 Feeds 失败，请稍后重试或检查网络连接。
+    </div>
+    <div id="feeds-no-content" class="feeds-message hidden">
+      暂无内容。
+    </div>
+
+    <ul id="feeds-list" class="feeds-list list-none pl-0 mt-4" aria-label="文章列表"></ul>
+    <div
+      id="load-more-trigger"
+      class="load-more-trigger h-8 flex items-center justify-center text-sm text-[var(--text-secondary)]"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <span>加载更多</span>
+    </div>
+  </div>
+
+  <script type="module" src="/feeds.js"></script>
+</Layout>
+
+<style>
+  .feeds-page {
+    padding-inline: 0;
+  }
+  .feeds-loading,
+  .feeds-message {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+  .feeds-message.hidden,
+  .feeds-loading.hidden {
+    display: none !important;
+  }
+  /* 与首页文章列表（Card）一致：无边框、无背景，仅 flex + mb-4 */
+  .feeds-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .feeds-list :global(.feeds-card-wrapper) {
+    margin-bottom: 1rem;
+  }
+  .feeds-list :global(.feeds-card) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .feeds-list :global(.feeds-card-avatar-wrap) {
+    flex-shrink: 0;
+  }
+  .feeds-list :global(.feeds-card img) {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 0.375rem;
+  }
+  .feeds-list :global(.feeds-card-content) {
+    flex: 1;
+    min-width: 0;
+  }
+  /* 与 Card 标题一致：text-sm font-medium、accent、默认无下划线、hover 下划线 */
+  .feeds-list :global(.feeds-card-title) {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 0.25rem 0;
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .feeds-list :global(.feeds-card:hover .feeds-card-title) {
+    text-decoration: underline;
+  }
+  .feeds-list :global(.feeds-card-meta) {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 0.125rem;
+    opacity: 0.8;
+    color: var(--text-secondary);
+  }
+</style>
