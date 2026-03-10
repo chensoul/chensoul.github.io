@@ -83,7 +83,7 @@ function createFeedCardHTML(item, fallbackOgImage) {
   const metaText = metaParts.join(" · ");
 
   const imgTag = imgSrc
-    ? `<img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="feeds-card-avatar" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} />`
+    ? `<img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="feeds-card-avatar" width="40" height="40" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} />`
     : "";
 
   const titleLink = link && link !== "#"
