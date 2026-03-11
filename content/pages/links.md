@@ -6,6 +6,9 @@ title: "链接"
 
 ## 博客
 
+以下是我平常关注的一些博客，更多关注请参看 [rss.txt](https://github.com/chensoul/chensoul.github.io/blob/main/public/data/rss.txt)
+文件。我写了一个程序定时抓取该文件的链接，制作了一个[邻居](/feeds)页面。
+
 - [Pseudoyu](https://www.pseudoyu.com/) - 一名 web3 爱好者、区块链开发者和独立黑客。
 - [SivaLabs](https://www.sivalabs.in/blog/) - Java、Spring Boot、微服务、云计算和DevOps教程
 - [Piotr's TechBlog](https://piotrminkowski.com/) - Java, Spring, Kotlin, microservices, Kubernetes, containers
@@ -16,6 +19,8 @@ title: "链接"
 - [Verne in GitHub](https://blog.einverne.info/)
 
 ## 文章
+
+以下是我觉得值得收藏、反复阅读的文章。
 
 - [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html)
 - [Get better at programming by learning how things work](https://jvns.ca/blog/learn-how-things-work/)
