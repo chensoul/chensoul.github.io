@@ -20,7 +20,7 @@ jobs:
         with:
           sources: public/data/rss.txt
           output: public/data/feeds.json
-          maxItemsPerFeed: 3
+          maxItemsPerFeed: 10
           maxDays: 180
 
       - name: Commit and push
