@@ -18,6 +18,9 @@ jobs:
     name: Code standards & build
     runs-on: ubuntu-latest
     timeout-minutes: 3
+    env:
+      # 避免 Node 20 弃用警告，让 Actions 使用 Node 24 运行
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     strategy:
       matrix:

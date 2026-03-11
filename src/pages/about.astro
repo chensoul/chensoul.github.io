@@ -7,13 +7,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
-import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
 import { SITE } from "@/config";
 
-// 读取 about.md 文件
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const filePath = path.join(__dirname, "../../content/pages/about.md");
+// 读取 about.md 文件（基于项目根目录，避免 CI 下 __dirname 指向 dist 导致 ENOENT）
+const filePath = path.join(process.cwd(), "content/pages/about.md");
 const fileContent = fs.readFileSync(filePath, "utf-8");
 
 // 解析 frontmatter
