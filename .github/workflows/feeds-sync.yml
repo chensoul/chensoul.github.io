@@ -2,8 +2,7 @@ name: Sync feeds
 
 on:
   schedule:
-    # 每 4 小时执行一次
-    - cron: "0 */4 * * *"
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 
 jobs:
