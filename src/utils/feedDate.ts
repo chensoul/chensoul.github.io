@@ -12,7 +12,9 @@ function formatDateYYYYMMDD(d: Date): string {
 /**
  * 今年内返回相对时间（中文），否则返回 YYYY-MM-DD。
  */
-export function formatFeedDate(value: string | number | null | undefined): string {
+export function formatFeedDate(
+  value: string | number | null | undefined
+): string {
   if (value == null || value === "") return "日期未知";
   const d = new Date(value);
   if (Number.isNaN(d.getTime()))

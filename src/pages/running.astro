@@ -143,7 +143,7 @@ for (let w = 0; w < totalWeeks; w++) {
     const isInRange = currentDate >= startOfRange && currentDate <= endOfRange;
     const intensity = getIntensity(run?.distance || 0);
     const title = run
-      ? `${dateStr}: ${run.distance.toFixed(1)}km, ${run.duration}${run.runs.length > 1 ? ` (${run.runs.length}次)` : ""}`
+      ? `${dateStr}: ${run.distance}km, ${run.duration}${run.runs.length > 1 ? ` (${run.runs.length}次)` : ""}`
       : dateStr;
 
     weekDays.push({
@@ -185,14 +185,19 @@ const rawTime =
     : "";
 const statisticsTime = rawTime || undefined;
 
-// 周期统计数据
+// 周期统计数据（昨日、周、月、年、总）
 const periodStats = stats.period_stats || {};
+const periodOrder = ["yesterday", "week", "month", "year", "total"] as const;
 const periodLabels: Record<string, string> = {
-  week: "周",
-  month: "月",
-  year: "年",
-  total: "总",
+  yesterday: "昨日",
+  week: "本周",
+  month: "本月",
+  year: "今年",
+  total: "总计",
 };
+const defaultPeriod = periodStats.week
+  ? ("week" as const)
+  : (periodOrder.find(p => periodStats[p]) ?? ("week" as const));
 
 // 心率区间标签
 const hrZoneLabels: Record<number, string> = {
@@ -237,31 +242,28 @@ const hrZoneColors: Record<number, string> = {
                 <div class="period-stats-card">
                   {/* Tab 导航 */}
                   <div class="period-tab-nav" id="periodTabNav">
-                    {(["week", "month", "year", "total"] as const).map(
-                      period => {
-                        const pStats = periodStats[period];
-                        if (!pStats) return null;
-                        const isActive = period === "week";
-                        return (
-                          <button
-                            class={`period-tab-btn ${isActive ? "active" : ""}`}
-                            data-period={period}
-                          >
-                            {periodLabels[period]}
-                          </button>
-                        );
-                      }
-                    )}
+                    {periodOrder.map(period => {
+                      const pStats = periodStats[period];
+                      if (!pStats) return null;
+                      const isActive = period === defaultPeriod;
+                      return (
+                        <button
+                          class={`period-tab-btn ${isActive ? "active" : ""}`}
+                          data-period={period}
+                        >
+                          {periodLabels[period]}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Tab 内容 */}
                   <div class="period-tab-content">
-                    {(["week", "month", "year", "total"] as const).map(
-                      period => {
-                        const pStats = periodStats[period];
-                        if (!pStats) return null;
-                        const isActive = period === "week";
-                        return (
+                    {periodOrder.map(period => {
+                      const pStats = periodStats[period];
+                      if (!pStats) return null;
+                      const isActive = period === defaultPeriod;
+                      return (
                           <div
                             class={`period-panel ${isActive ? "active" : ""}`}
                             data-panel={period}
@@ -283,7 +285,7 @@ const hrZoneColors: Record<number, string> = {
                               </div>
                               <div class="period-panel-stat">
                                 <span class="period-panel-value">
-                                  {pStats.total_distance.toFixed(0)}
+                                  {pStats.total_distance}
                                 </span>
                                 <span class="period-panel-label">
                                   距离(公里)
@@ -401,7 +403,7 @@ const hrZoneColors: Record<number, string> = {
                       <div class="run-stats">
                         <div class="stat">
                           <span class="stat-value">
-                            {run.distance.toFixed(1)}
+                            {run.distance}
                           </span>
                           <span class="stat-label">km</span>
                         </div>
@@ -560,7 +562,7 @@ const hrZoneColors: Record<number, string> = {
             </div>
             <div class="run-stats">
               <div class="stat">
-                <span class="stat-value">${run.distance.toFixed(1)}</span>
+                <span class="stat-value">${run.distance}</span>
                 <span class="stat-label">km</span>
               </div>
               <div class="stat">
@@ -675,7 +677,7 @@ const hrZoneColors: Record<number, string> = {
     detailStats.push({
       icon: icons.distance,
       label: "距离",
-      value: `${run.distance.toFixed(2)} km`,
+      value: `${run.distance} km`,
     });
 
     detailStats.push({
