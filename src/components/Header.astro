@@ -6,7 +6,7 @@ const navLinks = [
   ...(SITE.showArchives ? [{ href: "/archives", text: "归档" }] : []),
   { href: "/tags", text: "标签" },
   { href: "/running", text: "跑步" },
-  ...(SITE.feeds.dataSourceUrl ? [{ href: "/feeds", text: "订阅" }] : []),
+  ...(SITE.feeds.enabled ? [{ href: "/feeds", text: SITE.feeds.navLabel }] : []),
   { href: "/links", text: " 链接" },
   { href: "/about", text: "关于" },
 ];

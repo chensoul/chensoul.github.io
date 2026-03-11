@@ -1,15 +1,17 @@
 ---
 /**
- * 订阅 / Feeds 页
+ * 邻居 / Feeds 页（友联博客最新文章聚合）
  *
- * @fileoverview 构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，其余由客户端加载更多；
- * 否则完全由客户端拉取 JSON 并渲染。与 Card 组件结构一致的 FeedItem 负责单条展示。
+ * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，其余由客户端加载更多。
  */
 import fs from "node:fs";
 import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import FeedItem from "@/components/FeedItem.astro";
 import { SITE } from "@/config";
+
+const feedsEnabled = SITE.feeds.enabled;
+const navLabel = SITE.feeds.navLabel;
 
 let feedItems: Array<{
   title: string;
@@ -19,14 +21,16 @@ let feedItems: Array<{
   category?: string;
   avatar?: string;
 }> = [];
-try {
-  const dataPath = path.join(process.cwd(), "public", "data", "feeds.json");
-  if (fs.existsSync(dataPath)) {
-    const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
-    feedItems = Array.isArray(data.items) ? data.items : [];
+if (feedsEnabled) {
+  try {
+    const dataPath = path.join(process.cwd(), "public", "data", "feeds.json");
+    if (fs.existsSync(dataPath)) {
+      const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+      feedItems = Array.isArray(data.items) ? data.items : [];
+    }
+  } catch {
+    feedItems = [];
   }
-} catch {
-  feedItems = [];
 }
 
 const initialCount = SITE.feeds.initialCount;
@@ -45,71 +49,82 @@ const clientData = {
 ---
 
 <Layout
-  title={`订阅 | ${SITE.title}`}
-  description={`最新文章聚合（RSS Feeds）`}
+  title={`${navLabel} | ${SITE.title}`}
+  description={`邻居博客最新文章聚合`}
 >
   <div class="page-content feeds-page">
-    <p class="feeds-intro mb-6 text-[var(--text-secondary)]">
-      以下为我关注的的订阅聚合，数据来自 RSS
-      定时抓取。若加载失败，请稍后重试或检查网络。
-      {
-        !clientData.dataSourceUrl && (
-          <span class="mt-2 block">
-            请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合 JSON
-            地址以启用列表。
-          </span>
-        )
-      }
-    </p>
+    {
+      !feedsEnabled ? (
+        <p class="mb-6 text-[var(--text-secondary)]">
+          本页暂未开放。若需展示邻居博客的最新文章聚合，请在站点配置中开启
+          <code>SITE.feeds.enabled</code> 并配置数据源。
+        </p>
+      ) : (
+        <>
+          <p class="feeds-intro mb-6 text-[var(--text-secondary)]">
+            以下为邻居博客的最新文章聚合，数据来自 RSS
+            定时抓取。若加载失败，请稍后重试或检查网络。
+            {
+              !clientData.dataSourceUrl && (
+                <span class="mt-2 block">
+                  请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合 JSON
+                  地址以启用列表。
+                </span>
+              )
+            }
+          </p>
 
-    <div
-      id="feeds-data-json-container"
-      data-json={JSON.stringify(clientData)}
-      class="hidden"
-      aria-hidden="true"
-    >
-    </div>
+          <div
+            id="feeds-data-json-container"
+            data-json={JSON.stringify(clientData)}
+            class="hidden"
+            aria-hidden="true"
+          >
+          </div>
 
-    <div
-      id="feeds-loading"
-      class="feeds-loading"
-      class:list={[hasInitialItems && "hidden"]}
-    >
-      加载中…
-    </div>
-    <div id="feeds-error" class="feeds-message hidden">
-      加载 Feeds 失败，请稍后重试或检查网络连接。
-    </div>
-    <div id="feeds-no-content" class="feeds-message hidden">暂无内容。</div>
+          <div
+            id="feeds-loading"
+            class="feeds-loading"
+            class:list={[hasInitialItems && "hidden"]}
+          >
+            加载中…
+          </div>
+          <div id="feeds-error" class="feeds-message hidden">
+            加载失败，请稍后重试或检查网络连接。
+          </div>
+          <div id="feeds-no-content" class="feeds-message hidden">暂无内容。</div>
 
-    <ul
-      id="feeds-list"
-      class="feeds-list mt-4 list-none pl-0"
-      aria-label="文章列表"
-    >
-      {
-        initialItems.map((item, index) => (
-          <FeedItem
-            title={item.title}
-            link={item.link}
-            published={item.published}
-            blogName={item.blog_name}
-            category={item.category}
-            avatar={item.avatar}
-            priority={index === 0}
-          />
-        ))
-      }
-    </ul>
-    <div
-      id="load-more-trigger"
-      class="load-more-trigger flex h-8 items-center justify-center text-sm text-[var(--text-secondary)]"
-      style="display: none"
-      aria-hidden="true"
-    >
-      <span>加载更多</span>
-    </div>
+          <ul
+            id="feeds-list"
+            class="feeds-list mt-4 list-none pl-0"
+            aria-label="文章列表"
+          >
+            {
+              initialItems.map((item, index) => (
+                <FeedItem
+                  title={item.title}
+                  link={item.link}
+                  published={item.published}
+                  blogName={item.blog_name}
+                  category={item.category}
+                  avatar={item.avatar}
+                  priority={index === 0}
+                />
+              ))
+            }
+          </ul>
+          <div
+            id="load-more-trigger"
+            class="load-more-trigger flex h-8 items-center justify-center text-sm text-[var(--text-secondary)]"
+            style="display: none"
+            aria-hidden="true"
+          >
+            <span>加载更多</span>
+          </div>
+
+          <script is:inline type="module" src="/feeds.js"></script>
+        </>
+      )
+    }
   </div>
-
-  <script is:inline type="module" src="/feeds.js"></script>
 </Layout>
