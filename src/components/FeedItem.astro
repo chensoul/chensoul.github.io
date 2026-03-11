@@ -20,7 +20,15 @@ export interface Props {
   priority?: boolean;
 }
 
-const { title, link, published, blogName = "", category = "", avatar = "", priority = false } = Astro.props;
+const {
+  title,
+  link,
+  published,
+  blogName = "",
+  category = "",
+  avatar = "",
+  priority = false,
+} = Astro.props;
 
 const displayDate = formatFeedDate(published);
 const metaParts = [displayDate];
@@ -31,7 +39,9 @@ const metaText = metaParts.join(" · ");
 const avatarSrc = avatar.trim() || SITE.feeds.fallbackAvatarUrl || "";
 const hasLink = link && link !== "#";
 
-const headerProps = { class: "!m-0 truncate overflow-hidden whitespace-nowrap min-w-0" };
+const headerProps = {
+  class: "!m-0 truncate overflow-hidden whitespace-nowrap min-w-0",
+};
 const linkProps = {
   class:
     "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
@@ -62,7 +72,12 @@ const linkProps = {
           <h3 {...headerProps}>
             {
               hasLink ? (
-                <a href={link} {...linkProps} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={link}
+                  {...linkProps}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {title || "无标题"}
                 </a>
               ) : (
@@ -71,7 +86,9 @@ const linkProps = {
             }
           </h3>
         </div>
-        <div class="feeds-card-meta mt-1 opacity-80 text-[var(--text-secondary)] text-sm">
+        <div
+          class="feeds-card-meta mt-1 text-sm text-[var(--text-secondary)] opacity-80"
+        >
           {metaText}
         </div>
       </div>

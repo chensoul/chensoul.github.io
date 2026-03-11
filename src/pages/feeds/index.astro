@@ -64,14 +64,12 @@ const clientData = {
           <p class="feeds-intro mb-6 text-[var(--text-secondary)]">
             以下为邻居博客的最新文章聚合，数据来自 RSS
             定时抓取。若加载失败，请稍后重试或检查网络。
-            {
-              !clientData.dataSourceUrl && (
-                <span class="mt-2 block">
-                  请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合 JSON
-                  地址以启用列表。
-                </span>
-              )
-            }
+            {!clientData.dataSourceUrl && (
+              <span class="mt-2 block">
+                请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合
+                JSON 地址以启用列表。
+              </span>
+            )}
           </p>
 
           <div
@@ -79,8 +77,7 @@ const clientData = {
             data-json={JSON.stringify(clientData)}
             class="hidden"
             aria-hidden="true"
-          >
-          </div>
+          ></div>
 
           <div
             id="feeds-loading"
@@ -92,26 +89,26 @@ const clientData = {
           <div id="feeds-error" class="feeds-message hidden">
             加载失败，请稍后重试或检查网络连接。
           </div>
-          <div id="feeds-no-content" class="feeds-message hidden">暂无内容。</div>
+          <div id="feeds-no-content" class="feeds-message hidden">
+            暂无内容。
+          </div>
 
           <ul
             id="feeds-list"
             class="feeds-list mt-4 list-none pl-0"
             aria-label="文章列表"
           >
-            {
-              initialItems.map((item, index) => (
-                <FeedItem
-                  title={item.title}
-                  link={item.link}
-                  published={item.published}
-                  blogName={item.blog_name}
-                  category={item.category}
-                  avatar={item.avatar}
-                  priority={index === 0}
-                />
-              ))
-            }
+            {initialItems.map((item, index) => (
+              <FeedItem
+                title={item.title}
+                link={item.link}
+                published={item.published}
+                blogName={item.blog_name}
+                category={item.category}
+                avatar={item.avatar}
+                priority={index === 0}
+              />
+            ))}
           </ul>
           <div
             id="load-more-trigger"
@@ -122,7 +119,7 @@ const clientData = {
             <span>加载更多</span>
           </div>
 
-          <script is:inline type="module" src="/feeds.js"></script>
+          <script is:inline type="module" src="/feeds.js" />
         </>
       )
     }
