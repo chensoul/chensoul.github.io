@@ -223,5 +223,5 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - 文章链接改为 `/posts/YYYY/MM/DD/slug` 格式
 - 添加对 Mermaid 图表 的支持
 - 参考[zdyxry.github.io](https://github.com/zdyxry/zdyxry.github.io)
-  ，添加[跑步](/running)页面（该页面样式同样做了一些调整）。跑步数据使用 [get_keep_data.py](https://github.com/chensoul/running_page/blob/master/run_page/get_keep_data.py)
-  从 Keep 读取跑步数据并生成与 Garmin 脚本兼容的 [running.json](https://github.com/chensoul/running_page/blob/master/assets/running.json)。
+  ，添加[跑步](/running)页面（该页面样式同样做了一些调整）。跑步数据使用 [get_keep_data.py](https://github.com/chensoul/chensoul/blob/main/get_keep_data.py)
+  从 Keep 读取跑步数据并生成与 Garmin 脚本兼容的 [running.json](https://github.com/chensoul/chensoul/blob/main/data/running.json)。
