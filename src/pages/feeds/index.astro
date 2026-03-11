@@ -69,7 +69,7 @@ const feedsCriticalCSS = `.feeds-card-wrapper{margin-bottom:1rem}.feeds-card{dis
   </div>
 
   <!-- Critical CSS for dynamically loaded feeds cards (inlined to avoid critters pruning) -->
-  <div set:html={`<style>${feedsCriticalCSS}</style>`}></div>
+  <div set:html={`<style>${feedsCriticalCSS}</style>`} />
 
   <script is:inline type="module" src="/feeds.js"></script>
 </Layout>

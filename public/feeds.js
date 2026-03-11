@@ -86,9 +86,10 @@ function createFeedCardHTML(item, fallbackOgImage) {
     ? `<img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="feeds-card-avatar" width="40" height="40" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} />`
     : "";
 
-  const titleLink = link && link !== "#"
-    ? `<a href="${link.replace(/"/g, "&quot;")}" class="feeds-card-title" target="_blank" rel="noopener noreferrer">${title}</a>`
-    : `<span class="feeds-card-title">${title}</span>`;
+  const titleLink =
+    link && link !== "#"
+      ? `<a href="${link.replace(/"/g, "&quot;")}" class="feeds-card-title" target="_blank" rel="noopener noreferrer">${title}</a>`
+      : `<span class="feeds-card-title">${title}</span>`;
 
   return `
 <li class="feeds-card-wrapper">
