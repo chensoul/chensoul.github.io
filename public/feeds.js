@@ -82,33 +82,37 @@ function createFeedCardHTML(item, fallbackOgImage) {
   if (category) metaParts.push(category);
   const metaText = metaParts.join(" · ");
 
-  const imgTag = imgSrc
-    ? `<img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="feeds-card-avatar" width="40" height="40" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} />`
+  const avatarBlock = imgSrc
+    ? `<div class="h-[40px] w-[40px] shrink-0 overflow-hidden rounded-md"><img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="block h-full w-full object-cover" width="40" height="40" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} /></div>`
     : "";
 
-  const titleLink =
+  const titleBlock =
     link && link !== "#"
-      ? `<a href="${link.replace(/"/g, "&quot;")}" class="feeds-card-title" target="_blank" rel="noopener noreferrer">${title}</a>`
-      : `<span class="feeds-card-title">${title}</span>`;
+      ? `<div class="text-accent min-w-0 text-lg font-medium underline-offset-4"><h3 class="!m-0 truncate overflow-hidden whitespace-nowrap min-w-0"><a href="${link.replace(/"/g, "&quot;")}" class="text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0" target="_blank" rel="noopener noreferrer">${title}</a></h3></div>`
+      : `<div class="text-accent min-w-0 text-lg font-medium underline-offset-4"><h3 class="!m-0 truncate overflow-hidden whitespace-nowrap min-w-0"><span class="text-sm font-medium">${title}</span></h3></div>`;
 
   return `
-<li class="feeds-card-wrapper">
-  <div class="feeds-card">
-    ${imgTag ? `<span class="feeds-card-avatar-wrap">${imgTag}</span>` : ""}
-    <span class="feeds-card-content">
-      ${titleLink}
-      <span class="feeds-card-meta">${metaText}</span>
-    </span>
+<li class="feeds-card-wrapper mb-4">
+  <div class="relative block">
+    <div class="feeds-card flex items-center gap-3">
+      ${avatarBlock}
+      <div class="min-w-0 flex-1">
+        ${titleBlock}
+        <div class="feeds-card-meta mt-1 opacity-80 text-[var(--text-secondary)] text-sm">${metaText}</div>
+      </div>
+    </div>
   </div>
 </li>`;
 }
 
 export async function initFeeds(
-  siteTimezone,
+  _siteTimezone,
   fallbackOgImageGlobal,
   initialItemCount,
   itemsPerPage,
-  dataSourceUrl
+  dataSourceUrl,
+  hasInitialItems,
+  items
 ) {
   const feedsListElement = document.getElementById("feeds-list");
   const loadMoreTrigger = document.getElementById("load-more-trigger");
@@ -128,6 +132,25 @@ export async function initFeeds(
   let allFeeds = [];
   let currentIndex = 0;
   let observer;
+
+  if (hasInitialItems && Array.isArray(items) && items.length > 0) {
+    allFeeds = items;
+    currentIndex = initialItemCount;
+    loadingContainer.classList.add("hidden");
+    if (loadMoreTrigger && allFeeds.length > initialItemCount) {
+      loadMoreTrigger.style.display = "flex";
+      observer = new IntersectionObserver(
+        entries => {
+          if (entries[0].isIntersecting) loadMoreItems(itemsPerPage);
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(loadMoreTrigger);
+    } else if (loadMoreTrigger) {
+      loadMoreTrigger.style.display = "none";
+    }
+    return;
+  }
 
   async function fetchFeeds() {
     if (!dataSourceUrl || !dataSourceUrl.trim()) {
@@ -208,7 +231,9 @@ function run() {
       d.fallbackOgImage,
       d.initialItemCount,
       d.itemsPerPage,
-      d.dataSourceUrl
+      d.dataSourceUrl,
+      d.hasInitialItems === true,
+      d.items || []
     );
   } catch {
     const loadingContainer = document.getElementById("feeds-loading");

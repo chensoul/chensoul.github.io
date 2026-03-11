@@ -1,0 +1,80 @@
+---
+/**
+ * 订阅条目卡片组件
+ *
+ * @fileoverview 与 Card 组件结构一致：单条 RSS 聚合项（头像、标题、元信息）。
+ * 用于订阅页列表，可与 feeds.js 客户端追加的 HTML 结构保持一致。
+ */
+
+import { formatFeedDate } from "@/utils/feedDate";
+import { SITE } from "@/config";
+
+export interface Props {
+  title: string;
+  link: string;
+  published: string;
+  blogName?: string;
+  category?: string;
+  avatar?: string;
+  /** 首屏项可用 priority 以优先加载头像 */
+  priority?: boolean;
+}
+
+const { title, link, published, blogName = "", category = "", avatar = "", priority = false } = Astro.props;
+
+const displayDate = formatFeedDate(published);
+const metaParts = [displayDate];
+if (blogName.trim()) metaParts.push(blogName.trim());
+if (category.trim()) metaParts.push(category.trim());
+const metaText = metaParts.join(" · ");
+
+const avatarSrc = avatar.trim() || SITE.feeds.fallbackAvatarUrl || "";
+const hasLink = link && link !== "#";
+
+const headerProps = { class: "!m-0 truncate overflow-hidden whitespace-nowrap min-w-0" };
+const linkProps = {
+  class:
+    "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
+};
+---
+
+<li class="feeds-card-wrapper mb-4">
+  <div class="relative block">
+    <div class="feeds-card flex items-center gap-3">
+      {
+        avatarSrc && (
+          <div class="h-[40px] w-[40px] shrink-0 overflow-hidden rounded-md">
+            <img
+              src={avatarSrc}
+              alt=""
+              width={40}
+              height={40}
+              loading={priority ? "eager" : "lazy"}
+              fetchpriority={priority ? "high" : undefined}
+              decoding="async"
+              class="block h-full w-full object-cover"
+            />
+          </div>
+        )
+      }
+      <div class="min-w-0 flex-1">
+        <div class="text-accent min-w-0 text-lg font-medium underline-offset-4">
+          <h3 {...headerProps}>
+            {
+              hasLink ? (
+                <a href={link} {...linkProps} target="_blank" rel="noopener noreferrer">
+                  {title || "无标题"}
+                </a>
+              ) : (
+                <span class="text-sm font-medium">{title || "无标题"}</span>
+              )
+            }
+          </h3>
+        </div>
+        <div class="feeds-card-meta mt-1 opacity-80 text-[var(--text-secondary)] text-sm">
+          {metaText}
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

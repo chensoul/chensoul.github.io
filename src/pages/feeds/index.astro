@@ -2,22 +2,46 @@
 /**
  * 订阅 / Feeds 页
  *
- * @fileoverview 从 SITE.feeds.dataSourceUrl 加载 JSON，客户端渲染列表并支持滚动加载更多。
- * 参考：https://github.com/achuanya/astro-lhasa
+ * @fileoverview 构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，其余由客户端加载更多；
+ * 否则完全由客户端拉取 JSON 并渲染。与 Card 组件结构一致的 FeedItem 负责单条展示。
  */
+import fs from "node:fs";
+import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
+import FeedItem from "@/components/FeedItem.astro";
 import { SITE } from "@/config";
+
+let feedItems: Array<{
+  title: string;
+  link: string;
+  published: string;
+  blog_name?: string;
+  category?: string;
+  avatar?: string;
+}> = [];
+try {
+  const dataPath = path.join(process.cwd(), "public", "data", "feeds.json");
+  if (fs.existsSync(dataPath)) {
+    const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+    feedItems = Array.isArray(data.items) ? data.items : [];
+  }
+} catch {
+  feedItems = [];
+}
+
+const initialCount = SITE.feeds.initialCount;
+const initialItems = feedItems.slice(0, initialCount);
+const hasInitialItems = feedItems.length > 0;
 
 const clientData = {
   siteTimezone: SITE.timezone,
   fallbackOgImage: SITE.feeds.fallbackAvatarUrl,
-  initialItemCount: SITE.feeds.initialCount,
+  initialItemCount: initialCount,
   itemsPerPage: SITE.feeds.perPage,
   dataSourceUrl: SITE.feeds.dataSourceUrl || "",
+  hasInitialItems,
+  items: feedItems,
 };
-
-// Critical CSS for dynamically loaded feeds cards (inlined to avoid critters pruning)
-const feedsCriticalCSS = `.feeds-card-wrapper{margin-bottom:1rem}.feeds-card{display:flex;align-items:center;gap:.75rem;color:var(--text-primary)}.feeds-card-avatar-wrap{flex-shrink:0;display:block;width:40px;height:40px;overflow:hidden;border-radius:.375rem}.feeds-card img.feeds-card-avatar{display:block;width:40px!important;height:40px!important;min-width:40px;min-height:40px;max-width:40px!important;max-height:40px!important;object-fit:cover;border-radius:.375rem}.feeds-card-content{flex:1;min-width:0}.feeds-card-title{display:block;font-size:.875rem;font-weight:500;line-height:1.4;margin:0 0 .25rem;color:var(--accent);text-decoration:none;text-underline-offset:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}a.feeds-card-title:hover{text-decoration:underline}.feeds-card-meta{display:block;font-size:.875rem;margin-top:.125rem;opacity:.8;color:var(--text-secondary)}`;
 ---
 
 <Layout
@@ -46,7 +70,13 @@ const feedsCriticalCSS = `.feeds-card-wrapper{margin-bottom:1rem}.feeds-card{dis
     >
     </div>
 
-    <div id="feeds-loading" class="feeds-loading">加载中…</div>
+    <div
+      id="feeds-loading"
+      class="feeds-loading"
+      class:list={[hasInitialItems && "hidden"]}
+    >
+      加载中…
+    </div>
     <div id="feeds-error" class="feeds-message hidden">
       加载 Feeds 失败，请稍后重试或检查网络连接。
     </div>
@@ -57,6 +87,19 @@ const feedsCriticalCSS = `.feeds-card-wrapper{margin-bottom:1rem}.feeds-card{dis
       class="feeds-list mt-4 list-none pl-0"
       aria-label="文章列表"
     >
+      {
+        initialItems.map((item, index) => (
+          <FeedItem
+            title={item.title}
+            link={item.link}
+            published={item.published}
+            blogName={item.blog_name}
+            category={item.category}
+            avatar={item.avatar}
+            priority={index === 0}
+          />
+        ))
+      }
     </ul>
     <div
       id="load-more-trigger"
@@ -67,9 +110,6 @@ const feedsCriticalCSS = `.feeds-card-wrapper{margin-bottom:1rem}.feeds-card{dis
       <span>加载更多</span>
     </div>
   </div>
-
-  <!-- Critical CSS for dynamically loaded feeds cards (inlined to avoid critters pruning) -->
-  <div set:html={`<style>${feedsCriticalCSS}</style>`} />
 
   <script is:inline type="module" src="/feeds.js"></script>
 </Layout>
