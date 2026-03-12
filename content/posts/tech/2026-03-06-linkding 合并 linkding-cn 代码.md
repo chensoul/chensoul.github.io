@@ -116,80 +116,20 @@ linkding-cn 相比官方版本添加了以下主要功能：
 
 ## 三、Docker 镜像构建
 
-### 3.1 构建命令
+迁移成功之后，建议使用 github action 来构建 Docker 镜像。
 
-迁移成功之后，建议使用 github action 来构建 Docker 镜像，如果想在本地构建，则使用以下命令。
-
-```bash
-# 构建基础版本（linkding 目标）
-# 如果要在 x86_64 服务器上运行，添加 --platform linux/amd64
-docker build --platform linux/amd64 \
-  -f docker/default.Dockerfile \
-  --target linkding \
-  -t linkding:latest .
-
-# 构建完整版本（包含快照功能，linkding-plus 目标）
-docker build --platform linux/amd64 \
-  -f docker/default.Dockerfile \
-  --target linkding-plus \
-  -t linkding:plus .
-
-# 构建 Alpine 版本（更小的镜像）
-docker build --platform linux/amd64 \
-  -f docker/alpine.Dockerfile \
-  --target linkding \
-  -t linkding:alpine .
-
-# 构建 Plus-Alpine 版本（包含快照功能的 Alpine 版本）
-docker build --platform linux/amd64 \
-  -f docker/alpine.Dockerfile \
-  --target linkding-plus \
-  -t linkding:plus-alpine .
-```
-
-**重要提示**：如果在 macOS（特别是 Apple Silicon）上构建，但要在 Linux x86_64 服务器（如 CentOS）上运行，必须使用
-`--platform linux/amd64` 参数指定平台，否则会出现 `exec format error` 错误。
-
-**使用 Docker Buildx 构建多平台镜像：**
+如果想在本地 macos 系统构建，需要先修改脚本 scripts/build-docker.sh：
 
 ```bash
-# 创建并使用 buildx builder（如果还没有）
-docker buildx create --use --name multiarch
-
-# 构建并推送多平台镜像
-docker buildx build --platform linux/amd64,linux/arm64 \
-  -f docker/default.Dockerfile \
-  --target linkding \
-  -t chensoul/linkding:1.45.0.1 \
-  --push .
+base_platform="linux/amd64"
+plus_platform="linux/amd64"
 ```
 
-### 3.2 打标签
-
-为构建好的镜像打上版本标签：
+使用运行下面命令。
 
 ```bash
-# 为镜像打标签
-docker tag linkding:latest chensoul/linkding:latest
-docker tag linkding:latest chensoul/linkding:1.45.0.1
-docker tag linkding:plus chensoul/linkding:1.45.0.1-plus
-docker tag linkding:alpine chensoul/linkding:1.45.0.1-alpine
-docker tag linkding:plus-alpine chensoul/linkding:1.45.0.1-plus-alpine
+bash scripts/build-docker.sh
 ```
-
-### 3.3 推送镜像
-
-将镜像推送到 Docker Hub 或其他镜像仓库：
-
-```bash
-# 推送到 Docker Hub（需要先登录：docker login）
-docker push chensoul/linkding:latest
-docker push chensoul/linkding:1.45.0.1
-docker push chensoul/linkding:1.45.0.1-plus
-docker push chensoul/linkding:1.45.0.1-alpine
-docker push chensoul/linkding:1.45.0.1-plus-alpine
-```
-
 ## 四、如何使用
 
 先登录原来的系统，导出所有标签作为备份。
