@@ -40,6 +40,7 @@ const hasInitialItems = feedItems.length > 0;
 const clientData = {
   siteTimezone: SITE.timezone,
   fallbackOgImage: SITE.feeds.fallbackAvatarUrl,
+  cosHost: SITE.feeds.cosHost || "",
   initialItemCount: initialCount,
   itemsPerPage: SITE.feeds.perPage,
   dataSourceUrl: SITE.feeds.dataSourceUrl || "",

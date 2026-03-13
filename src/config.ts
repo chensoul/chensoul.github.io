@@ -70,28 +70,6 @@ export const SITE = {
   /** 是否显示归档页面入口 */
   showArchives: true,
 
-  /**
-   * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
-   *
-   * 由 enabled 控制是否启用：关闭后导航不显示、页面提示未开放。
-   * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, blog_name?, avatar? }] }）。
-   * @see https://github.com/achuanya/lhasaRSS
-   */
-  feeds: {
-    /** 是否启用邻居页（导航入口 + 页面内容） */
-    enabled: true,
-    /** 导航与页面内显示名称，避免与「RSS 订阅地址」混淆 */
-    navLabel: "邻居",
-    /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /data/feeds.json），留空则列表无数据 */
-    dataSourceUrl: "/data/feeds.json",
-    /** 首屏展示条数 */
-    initialCount: 12,
-    /** 点击「加载更多」每次加载条数 */
-    perPage: 12,
-    /** 无头像时使用的默认图片 URL */
-    fallbackAvatarUrl: "/thumbs/rss.svg",
-  },
-
   /** 是否在顶栏下方显示年度进度条 */
   showYearProgress: true,
 
@@ -264,5 +242,29 @@ export const SITE = {
     loading: {
       lazy: true,
     },
+  },
+
+  /**
+   * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
+   *
+   * 由 enabled 控制是否启用：关闭后导航不显示、页面提示未开放。
+   * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, blog_name?, avatar? }] }）。
+   * @see https://github.com/achuanya/lhasaRSS
+   */
+  feeds: {
+    /** 是否启用邻居页（导航入口 + 页面内容） */
+    enabled: true,
+    /** 导航与页面内显示名称，避免与「RSS 订阅地址」混淆 */
+    navLabel: "邻居",
+    /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /data/feeds.json），留空则列表无数据 */
+    dataSourceUrl: "/data/feeds.json",
+    /** 首屏展示条数 */
+    initialCount: 12,
+    /** 点击「加载更多」每次加载条数 */
+    perPage: 12,
+    /** 无头像时使用的默认图片 URL */
+    fallbackAvatarUrl: "/thumbs/rss.svg",
+    /** 相对路径 avatar 使用的 host（如 COS/R2 公网域名），为空则用本站 SITE.website */
+    cosHost: "https://cos.chensoul.cc",
   },
 } as const;

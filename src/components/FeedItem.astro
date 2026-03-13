@@ -38,7 +38,8 @@ const metaText = metaParts.join(" · ");
 
 let avatarSrc = avatar.trim() || SITE.feeds.fallbackAvatarUrl || "";
 if (avatarSrc && !/^https?:\/\//.test(avatarSrc) && !avatarSrc.startsWith("//")) {
-  avatarSrc = SITE.website + (avatarSrc.startsWith("/") ? avatarSrc : "/" + avatarSrc);
+  const avatarHost = (SITE.feeds.cosHost && SITE.feeds.cosHost.trim()) || SITE.website;
+  avatarSrc = avatarHost.replace(/\/$/, "") + (avatarSrc.startsWith("/") ? avatarSrc : "/" + avatarSrc);
 }
 const hasLink = link && link !== "#";
 

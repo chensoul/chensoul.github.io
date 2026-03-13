@@ -49,7 +49,7 @@ function getDisplayDate(value) {
   return Math.floor(diffMs / (24 * 60 * 60 * 1000)) + " 天前";
 }
 
-function createFeedCardHTML(item, fallbackOgImage) {
+function createFeedCardHTML(item, fallbackOgImage, cosHost) {
   const title = escapeHtml(item.title || "无标题");
   const link = item.link || "#";
   const published =
@@ -62,7 +62,12 @@ function createFeedCardHTML(item, fallbackOgImage) {
     typeof item.category === "string" ? escapeHtml(item.category.trim()) : "";
   let imgSrc = (item.avatar && item.avatar.trim()) || fallbackOgImage || "";
   if (imgSrc && !/^https?:\/\//i.test(imgSrc) && !imgSrc.startsWith("//")) {
-    const base = typeof location !== "undefined" ? location.origin : "";
+    const base =
+      cosHost && cosHost.trim()
+        ? cosHost.replace(/\/$/, "")
+        : typeof location !== "undefined"
+          ? location.origin
+          : "";
     imgSrc = base + (imgSrc.startsWith("/") ? imgSrc : "/" + imgSrc);
   }
   const fallbackSrc = fallbackOgImage
@@ -112,6 +117,7 @@ function createFeedCardHTML(item, fallbackOgImage) {
 export async function initFeeds(
   _siteTimezone,
   fallbackOgImageGlobal,
+  cosHost,
   initialItemCount,
   itemsPerPage,
   dataSourceUrl,
@@ -211,7 +217,7 @@ export async function initFeeds(
 
     let html = "";
     itemsToLoad.forEach(item => {
-      html += createFeedCardHTML(item, fallbackOgImageGlobal);
+      html += createFeedCardHTML(item, fallbackOgImageGlobal, cosHost);
     });
     feedsListElement.insertAdjacentHTML("beforeend", html);
     currentIndex += itemsToLoad.length;
@@ -233,6 +239,7 @@ function run() {
     initFeeds(
       d.siteTimezone,
       d.fallbackOgImage,
+      d.cosHost || "",
       d.initialItemCount,
       d.itemsPerPage,
       d.dataSourceUrl,
