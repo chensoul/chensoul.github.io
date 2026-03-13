@@ -61,6 +61,10 @@ function createFeedCardHTML(item, fallbackOgImage) {
   const category =
     typeof item.category === "string" ? escapeHtml(item.category.trim()) : "";
   let imgSrc = (item.avatar && item.avatar.trim()) || fallbackOgImage || "";
+  if (imgSrc && !/^https?:\/\//i.test(imgSrc) && !imgSrc.startsWith("//")) {
+    const base = typeof location !== "undefined" ? location.origin : "";
+    imgSrc = base + (imgSrc.startsWith("/") ? imgSrc : "/" + imgSrc);
+  }
   const fallbackSrc = fallbackOgImage
     ? fallbackOgImage.replace(/'/g, "\\'")
     : "";

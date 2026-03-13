@@ -25,8 +25,15 @@ jobs:
           faviconPathPrefix: favicons
           maxDays: 180
 
-      - name: sync favicons
+      - name: sync favicons to R2
+        env:
+          RCLONE_CONFIG_R2_TYPE: s3
+          RCLONE_CONFIG_R2_PROVIDER: Cloudflare
+          RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
+          curl -OfsS https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip -oq rclone-current-linux-amd64.zip && mv rclone-*-linux-amd64/rclone /usr/local/bin/ && chmod +x /usr/local/bin/rclone
           rclone sync public/favicons r2:cos/favicons -P
 
       - name: Commit and push
