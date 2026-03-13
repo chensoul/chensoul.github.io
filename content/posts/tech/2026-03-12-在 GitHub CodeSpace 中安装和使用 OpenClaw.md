@@ -60,6 +60,8 @@ curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -
 
 ![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-08.webp)
 
+注意：使用 qwen portal oauth2 登录的方式，可以选择的模型有限，而且还容易限流。如果想使用阿里的bailian Coding Plan，建议手动配置，并且再使用过程中切换模型到 bailian 的模型。
+
 选择一个渠道，这里我选择的是电报。输入提前创建好的机器人 Token。进入 Search provider 配置页面，根据你的实际情况配置搜索引擎。
 
 配置 skills，选择 Yes，回车。

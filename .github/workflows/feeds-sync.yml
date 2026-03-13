@@ -21,14 +21,20 @@ jobs:
           sources: public/data/rss.txt
           output: public/data/feeds.json
           maxItemsPerFeed: 10
+          faviconDir: public/favicons
+          faviconPathPrefix: favicons
           maxDays: 180
+
+      - name: sync favicons
+        run: |
+          rclone sync public/favicons r2:cos/favicons -P
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet public/data/feeds.json || (
-            git add public/data/feeds.json &&
+            git add . &&
             git commit -m "chore: sync feeds.json from RSS sources" &&
             git push
           )
