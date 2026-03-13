@@ -31,10 +31,6 @@ const {
 } = Astro.props;
 
 const displayDate = formatFeedDate(published);
-const metaParts = [displayDate];
-if (blogName.trim()) metaParts.push(blogName.trim());
-if (category.trim()) metaParts.push(category.trim());
-const metaText = metaParts.join(" · ");
 
 let avatarSrc = avatar.trim() || SITE.feeds.fallbackAvatarUrl || "";
 if (
@@ -100,7 +96,11 @@ const linkProps = {
         <div
           class="feeds-card-meta mt-1 text-sm text-[var(--text-secondary)] opacity-80"
         >
-          {metaText}
+          <span class="feeds-card-date" data-published={published}>
+            {displayDate}
+          </span>
+          {blogName.trim() ? " · " + blogName.trim() : ""}
+          {category.trim() ? " · " + category.trim() : ""}
         </div>
       </div>
     </div>
