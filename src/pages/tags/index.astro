@@ -11,15 +11,57 @@ import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 const posts = await getCollection("blog");
-let tags = PostUtils.getUniqueTags(posts);
+const tags = PostUtils.getUniqueTags(posts).sort(
+  (a, b) => b.count - a.count || a.tagName.localeCompare(b.tagName, "zh-CN")
+);
+const topTags = tags.slice(0, 10);
+const otherTags = [...tags.slice(10)].sort((a, b) =>
+  a.tagName.localeCompare(b.tagName, "zh-CN")
+);
 ---
 
 <Layout title={`标签 | ${SITE.title}`}>
-  <ul class="list-none pl-0">
-    {
-      tags.map(({ tag, tagName, count }) => (
-        <Tag {tag} {tagName} {count} size="sm" />
-      ))
-    }
-  </ul>
+  <p class="tags-intro">按标签浏览文章，常用标签会排在前面。</p>
+  {
+    topTags.length > 0 && (
+      <section class="tags-section">
+        <h2 class="tags-heading">热门标签</h2>
+        <ul class="list-none pl-0">
+          {topTags.map(({ tag, tagName, count }) => (
+            <Tag {tag} {tagName} {count} size="sm" />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  {
+    otherTags.length > 0 && (
+      <section class="tags-section">
+        <h2 class="tags-heading">全部标签</h2>
+        <ul class="list-none pl-0">
+          {otherTags.map(({ tag, tagName, count }) => (
+            <Tag {tag} {tagName} {count} size="sm" />
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </Layout>
+
+<style>
+  .tags-intro {
+    margin: 0 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .tags-section + .tags-section {
+    margin-top: 1.5rem;
+  }
+
+  .tags-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+</style>

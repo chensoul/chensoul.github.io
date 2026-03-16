@@ -2,7 +2,7 @@
 /**
  * 首页
  *
- * @fileoverview 展示最新 N 篇文章卡片（N 由 SITE.postPerIndex 配置），底部提供「查看所有文章」跳转至 /posts。
+ * @fileoverview 聚合站点入口：首屏介绍、主题入口、精选文章、最近更新与周报入口。
  */
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
@@ -14,21 +14,62 @@ import { SITE } from "@/config";
 
 const posts = await getCollection("blog");
 const sortedPosts = PostUtils.sort(posts);
+
+const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
+const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(0, 3);
 ---
 
-<Layout>
-  <ul class="list-none pl-0">
-    {
-      sortedPosts
-        .slice(0, SITE.postPerIndex)
-        .map((data, index) => (
-          <Card variant="h3" priority={index === 0} {...data} />
-        ))
-    }
-  </ul>
+<Layout
+  title={SITE.title}
+  description="记录 Java、Spring、AI 编码工具、架构与个人周报的博客。这里可以快速浏览最近更新和最新周报。"
+>
+  <section class="home-split">
+    <div class="home-main-panel">
+      <div class="home-section-head">
+        <h2>最近文章</h2>
+      </div>
+      <ul class="home-card-list">
+        {latestPosts.map(post => (
+          <Card variant="h3" {...post} />
+        ))}
+      </ul>
+    </div>
 
-  <!-- 查看所有文章：使用主题色边框与文字，与全站风格一致 -->
-  <div class="text-center">
+    <aside class="home-side-panel">
+      <div class="home-section-head">
+        <h2>最近周报</h2>
+        <LinkButton
+          href="/categories/weekly"
+          class="inline-flex items-center gap-1.5 border-0 bg-transparent px-4 py-2.5 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          查看全部
+          <IconArrowRight class="inline-block size-4" />
+        </LinkButton>
+      </div>
+      <div class="home-side-list">
+        {lifePosts.map(post => (
+          <a
+            class="home-side-card"
+            href={PostUtils.getPath(
+              post.id,
+              post.filePath,
+              true,
+              post.data.date,
+              post.data.timezone
+            )}
+          >
+            <h3>{post.data.title}</h3>
+            <p>
+              {post.data.description?.trim() ||
+                PostUtils.getDescription(post.body ?? "")}
+            </p>
+          </a>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <div class="home-footer-action">
     <LinkButton
       href="/posts"
       class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -38,3 +79,97 @@ const sortedPosts = PostUtils.sort(posts);
     </LinkButton>
   </div>
 </Layout>
+
+<style>
+  .home-section,
+  .home-side-card {
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+  }
+
+  .home-section-head h2,
+  .home-side-card h3 {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .home-section-head p,
+  .home-side-card p {
+    color: var(--text-secondary);
+  }
+
+  .home-section {
+    margin-bottom: 1.25rem;
+    padding: 1.25rem;
+    background: var(--background);
+  }
+
+  .home-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .home-section-head p {
+    margin: 0.35rem 0 0;
+  }
+
+  .home-split {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .home-card-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .home-main-panel {
+    min-width: 0;
+  }
+
+  .home-side-panel {
+    border-left: 0;
+  }
+
+  .home-side-list {
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  .home-side-card {
+    display: block;
+    padding: 1rem;
+    color: inherit;
+    text-decoration: none;
+    background: var(--background-secondary);
+  }
+
+  .home-side-card p {
+    margin: 0.6rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .home-footer-action {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .home-split {
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .home-section-head {
+      display: block;
+    }
+  }
+</style>

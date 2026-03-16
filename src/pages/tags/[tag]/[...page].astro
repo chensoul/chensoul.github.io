@@ -29,12 +29,13 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const params = Astro.params;
 const { tag } = params;
 const { page, tagName } = Astro.props;
+const totalPosts = page.data.length;
 ---
 
 <Layout title={`${tag} | ${SITE.title}`}>
-  <h1 slot="title">{`Tag:${tag}`}</h1>
-  <p class="mb-4 text-base font-semibold">
-    标签：{tagName}
+  <h1 slot="title">{tagName}</h1>
+  <p class="mb-4 text-sm text-[var(--text-secondary)]">
+    标签：{tagName}，共 {totalPosts} 篇文章
   </p>
   <ul class="tag-posts-list list-none pl-0">
     {

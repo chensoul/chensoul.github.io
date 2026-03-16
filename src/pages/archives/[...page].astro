@@ -31,6 +31,9 @@ const years = Object.keys(groupedByYear)
 
 <Layout title={`归档 | ${SITE.title}`}>
   <section class="archives-categories mb-4" aria-label="分类列表">
+    <p class="archives-intro">
+      按时间浏览全部文章，也可以先从分类进入。
+    </p>
     <p class="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
       <span class="opacity-80">分类：</span>
       {
@@ -66,8 +69,9 @@ const years = Object.keys(groupedByYear)
               const tz = data.timezone ?? SITE.timezone;
               const dateStr = PostUtils.getLocalDateString(d, tz);
               const dateText = dateStr.slice(5);
+              const primaryCategory = data.categories?.[0];
               return (
-                <li class="flex items-center gap-2 leading-6">
+                <li class="flex items-start gap-2 leading-6">
                   <span class="w-14 text-right text-sm tabular-nums opacity-80">
                     {dateText}
                   </span>
@@ -80,10 +84,18 @@ const years = Object.keys(groupedByYear)
                       data.date,
                       data.timezone
                     )}
-                    class="flex-1 truncate text-sm hover:underline"
+                    class="flex-1 text-sm hover:underline"
                   >
                     {data.title}
                   </a>
+                  {primaryCategory && (
+                    <a
+                      href={`/categories/${primaryCategory}`}
+                      class="archives-category"
+                    >
+                      {primaryCategory}
+                    </a>
+                  )}
                 </li>
               );
             })}
@@ -95,6 +107,12 @@ const years = Object.keys(groupedByYear)
 </Layout>
 
 <style>
+  .archives-intro {
+    margin: 0 0 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
   .archives-by-year ul {
     padding-left: 0;
   }
@@ -102,5 +120,22 @@ const years = Object.keys(groupedByYear)
   /* 锚点滚动时留出顶栏高度，避免被 sticky header 遮住 */
   .archives-year {
     scroll-margin-top: 5rem;
+  }
+
+  .archives-category {
+    align-self: start;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--background-secondary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .archives-category:hover {
+    color: var(--accent);
+    text-decoration: none;
   }
 </style>
