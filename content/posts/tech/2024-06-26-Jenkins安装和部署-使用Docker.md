@@ -1,10 +1,10 @@
 ---
-title: "Jenkins安装和部署-使用Docker"
+title: "Jenkins 安装与部署指南：使用 Docker"
 date: 2024-06-26 09:00:00+08:00
 slug: install-jenkins
 categories: [ "tech" ]
 tags: ['docker', 'jenkins']
-description: "使用 Docker 安装 ..."
+description: "记录使用 Docker 安装和启动 Jenkins 的基本步骤，包括数据卷、容器运行参数和首次启动初始化说明。"
 ---
 
 ## 使用 Docker 安装

@@ -1,10 +1,10 @@
 ---
-title: "Gitlab安装和部署-使用yum源"
+title: "GitLab 安装与部署指南：使用 yum 源"
 date: 2024-07-15 08:00:00+08:00
 slug: install-gitlab-using-yum
 categories: [ "tech" ]
 tags: ['gitlab']
-description: "Gitlab Server 部署 ..."
+description: "记录通过 yum 源安装和部署 GitLab Server 的过程，包括环境准备、基础配置和服务启动步骤。"
 ---
 
 ## Gitlab Server 部署

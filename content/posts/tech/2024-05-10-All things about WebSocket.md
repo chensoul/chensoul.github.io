@@ -1,10 +1,10 @@
 ---
-title: "All things about WebSocket"
+title: "WebSocket 学习资料与入门阅读清单"
 date: 2024-05-10 08:00:00+08:00
 slug: all-things-about-websocket
 categories: [ "tech" ]
 tags: ['websocket']
-description: "..."
+description: "整理 WebSocket 的基础概念、协议规范、API 文档和实践文章，适合作为入门和系统学习 WebSocket 的阅读清单。"
 ---
 
 

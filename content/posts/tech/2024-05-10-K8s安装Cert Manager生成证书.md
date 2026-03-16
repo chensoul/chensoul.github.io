@@ -1,10 +1,10 @@
 ---
-title: "K8s安装Cert Manager"
+title: "在 Kubernetes 中安装 Cert Manager 并生成证书"
 date: 2024-05-10 08:00:00+08:00
 slug: install-cert-manager
 tags: ['kubernetes']
 categories: [ "tech" ]
-description: "cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。 ..."
+description: "介绍如何在 Kubernetes 中安装 Cert Manager，并通过它为集群中的服务和 Ingress 自动签发与续订 TLS 证书。"
 ---
 
 cert-manager 为 Kubernetes 或 OpenShift 集群中的工作负载创建 TLS 证书，并在证书过期之前续订证书。

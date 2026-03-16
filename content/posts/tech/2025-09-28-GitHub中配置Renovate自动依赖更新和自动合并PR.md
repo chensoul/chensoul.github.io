@@ -1,11 +1,11 @@
 ---
-title: "GitHub中配置Renovate自动依赖更新和自动合并PR"
+title: "在 GitHub 中配置 Renovate 自动更新依赖与自动合并 PR"
 date: 2025-09-28 08:00:00+08:00
 slug: config-renovate-in-github
 categories: [ "tech" ]
 tags: ['github','renovate']
 cover: /thumbs/github.svg
-description: "本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。 ..."
+description: "详细介绍如何在 GitHub 项目中配置 Renovate，实现依赖自动更新与 PR 自动合并，涵盖从最小配置到复杂场景的常见用法。"
 ---
 
 本文详细介绍如何在GitHub项目中配置Renovate，实现依赖的自动更新和PR的自动合并。从最小配置到复杂场景，全面覆盖不同使用情况。

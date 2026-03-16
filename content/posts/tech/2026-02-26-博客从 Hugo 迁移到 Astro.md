@@ -5,7 +5,7 @@ slug: from-hugo-to-astro-blog
 categories: [ "tech" ]
 tags: [ 'astro' ]
 cover: /thumbs/astro.svg
-description: "最近将博客从 Hugo 迁移到了 Astro，并选择了 astro-lhasa 做为博客主题，我还对该主题做了一些修改（修改后的主题在 chensoul/astro-lhasa ..."
+description: "记录博客从 Hugo 迁移到 Astro 的过程，以及基于 astro-lhasa 主题做过的结构与样式调整，方便后续复盘与参考。"
 ---
 
 最近将博客从 Hugo 迁移到了 Astro，并选择了 [astro-lhasa](https://github.com/achuanya/astro-lhasa)

@@ -1,10 +1,10 @@
 ---
-title: "Spring Boot项目创建Docker镜像并运行应用"
+title: "Spring Boot 项目创建 Docker 镜像并运行应用"
 date: 2024-06-06 11:00:00+08:00
 slug: spring-boot-docker-image
 categories: [ "tech" ]
 tags: ['spring-boot','docker']
-description: "手动创建 Dockerfile ..."
+description: "介绍如何为 Spring Boot 项目编写 Dockerfile、构建镜像并运行容器，完成一次基础的应用容器化实践。"
 ---
 
 ## 手动创建 Dockerfile

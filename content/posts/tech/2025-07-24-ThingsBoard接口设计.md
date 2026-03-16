@@ -1,10 +1,10 @@
 ---
-title: "ThingsBoard接口设计"
+title: "ThingsBoard 接口设计整理"
 date: 2025-07-24 09:00:00+08:00
 slug: thingsboard-api
 categories: [ "tech" ]
 tags: ['docker','thingsboard']
-description: "本文档整理了ThingsBoard平台的各种协议接口设计，作为IoT平台开发的参考。 ..."
+description: "系统整理 ThingsBoard 平台的 REST、MQTT、HTTP 等协议接口设计，适合作为 IoT 平台开发与对接时的参考资料。"
 ---
 
 本文档整理了ThingsBoard平台的各种协议接口设计，作为IoT平台开发的参考。

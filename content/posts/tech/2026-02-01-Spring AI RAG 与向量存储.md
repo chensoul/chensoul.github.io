@@ -5,7 +5,7 @@ slug: spring-ai-rag-vector-store
 categories: [ "tech" ]
 tags: ['spring-ai', 'rag', 'redis']
 cover: /thumbs/storage.svg
-description: "本文将教你如何创建一个使用 RAG（检索增强生成）和向量存储以及 Spring AI 的 Spring Boot 应用程序。 ..."
+description: "介绍如何在 Spring AI 中结合 RAG 与向量存储构建 Spring Boot 应用，让模型能够基于外部知识做更准确的回答。"
 ---
 
 本文将教你如何创建一个使用 RAG（检索增强生成）和向量存储以及 Spring AI 的 Spring Boot 应用程序。

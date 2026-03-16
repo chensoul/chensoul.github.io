@@ -1,10 +1,10 @@
 ---
-title: "ThingsBoard源码中的Security"
+title: "ThingsBoard 源码中的安全配置与 Security 模块"
 date: 2024-12-03 09:00:00+08:00
 slug: security-in-thingsboard
 categories: [ "tech" ]
 tags: ['security', 'thingsboard']
-description: "ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard ，启动成功之后，使用系统管理员： sysadmin@thingsboard.org / sysadmin 进行登陆。 ..."
+description: "结合 ThingsBoard 源码与后台界面，整理平台中的安全相关配置、菜单项和核心 Security 模块，帮助理解其安全设计。"
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，启动成功之后，使用系统管理员： <sysadmin@thingsboard.org> / sysadmin 进行登陆。

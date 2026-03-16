@@ -4,7 +4,7 @@ date: 2024-06-25 08:00:00+08:00
 slug: install-artifactory-oss
 categories: [ "tech" ]
 tags: ['artifactory', 'maven']
-description: "安装 Artifactory ..."
+description: "介绍 Artifactory 开源版的安装与部署方式，适合作为搭建本地 Maven 仓库和制品管理服务的入门参考。"
 ---
 
 ## 安装 Artifactory

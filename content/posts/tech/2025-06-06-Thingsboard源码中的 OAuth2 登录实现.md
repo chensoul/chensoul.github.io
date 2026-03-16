@@ -1,10 +1,10 @@
 ---
-title: "Thingsboard源码中的OAuth2登录实现"
+title: "ThingsBoard 源码中的 OAuth2 登录实现"
 date: 2025-06-06 08:00:00+08:00
 slug: oauth2-client-login-in-thingsboard
 categories: [ "tech" ]
 tags: ['oauth2', 'thingsboard']
-description: "Thingsboard 启用 OAuth2 功能 ..."
+description: "结合后台配置与源码实现，分析 ThingsBoard 中 OAuth2 登录功能的配置方式与整体实现流程。"
 ---
 
 ## Thingsboard 启用 OAuth2 功能

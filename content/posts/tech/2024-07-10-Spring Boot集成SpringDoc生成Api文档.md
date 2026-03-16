@@ -1,10 +1,10 @@
 ---
-title: "Spring Boot集成SpringDoc生成Api文档"
+title: "Spring Boot 集成 SpringDoc 生成 API 文档"
 date: 2024-07-10 09:00:00+08:00
 slug: springdoc-with-spring-boot
 categories: [ "tech" ]
 tags: ['spring-boot','springdoc']
-description: "以下以 Maven 为例介绍 Spring Boot集成SpringDoc生成Api文档。 ..."
+description: "以 Maven 项目为例，介绍如何在 Spring Boot 中集成 SpringDoc，快速生成可用的 OpenAPI / Swagger API 文档。"
 ---
 
 以下以 Maven 为例介绍 Spring Boot集成SpringDoc生成Api文档。

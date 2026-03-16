@@ -1,10 +1,10 @@
 ---
-title: "ThingsBoard源码中的Github Actions"
+title: "ThingsBoard 源码中的 GitHub Actions"
 date: 2024-12-03 08:00:00+08:00
 slug: github-actions-in-thingsboard
 categories: [ "tech" ]
 tags: ['thingsboard', 'github']
-description: "ThingsBoard 源码地址：https://github.com/thingsboard/thingsboard ，其 .github/workflows 目录下面有两个文件： ..."
+description: "梳理 ThingsBoard 仓库中 GitHub Actions 的工作流文件，了解其配置校验、许可证处理等自动化流程。"
 ---
 
 ThingsBoard 源码地址：[https://github.com/thingsboard/thingsboard](https://github.com/thingsboard/thingsboard)，其 .github/workflows 目录下面有两个文件：

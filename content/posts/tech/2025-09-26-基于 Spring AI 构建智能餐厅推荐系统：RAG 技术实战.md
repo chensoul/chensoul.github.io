@@ -5,7 +5,7 @@ slug: spring-ai-restaurant-showcase-rag
 categories: [ "tech" ]
 tags: ['spring-boot','spring-ai']
 cover: /thumbs/spring-ai.svg
-description: "最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。 ..."
+description: "通过智能餐厅推荐系统示例，介绍如何用 Spring AI 实现 RAG 应用，让模型基于真实餐厅数据生成更准确的推荐结果。"
 ---
 
 最近在探索 Spring AI 的 RAG 功能，发现它确实是一个很强大的工具。今天就来分享一下如何用 Spring AI 构建一个智能餐厅推荐系统，通过检索增强生成技术让 AI 能够基于真实的餐厅数据给出更准确的推荐。

@@ -1,10 +1,10 @@
 ---
-title: "All things about Spring Modulith"
+title: "Spring Modulith 学习资料与入门索引"
 date: 2024-05-09 08:00:00+08:00
 slug: all-things-about-spring-modulith
 categories: [ "tech" ]
 tags: ['spring', 'modulith']
-description: "VMware 推出了一个实验性的项目Spring Modulith ，以便于通过模块和事件更好地组织 Spring Boot 3 应用。该项目引入了新的类和注解，但并不会生成代码。它的模块没有使用 Java Platform Module System（JPMS），而是映射到了普通的 Java 包。模块有 A ..."
+description: "整理 Spring Modulith 的背景介绍、核心概念与延伸阅读资料，适合作为了解模块化 Spring Boot 架构的入门索引。"
 ---
 
 VMware 推出了一个实验性的项目[Spring Modulith](https://spring.io/projects/spring-modulith)，以便于通过模块和事件更好地组织 Spring Boot 3 应用。该项目引入了新的类和注解，但并不会生成代码。它的模块没有使用 Java Platform Module System（JPMS），而是映射到了普通的 Java 包。模块有 API，但是 Spring Modulith 鼓励使用 Spring 应用事件作为“主要的交互方式”。这些事件可以自动持久化到事件日志中。Spring Modulith 还简化了模块和事件的测试。

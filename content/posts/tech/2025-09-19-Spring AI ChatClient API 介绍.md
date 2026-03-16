@@ -5,7 +5,7 @@ slug: spring-ai-chat-client-api
 categories: [ "tech" ]
 tags: ['spring-ai']
 cover: /thumbs/spring-ai.svg
-description: "ChatClient 是 Spring AI 提供的核心 API，提供流畅的调用方式，用于与各类大模型交互。本文结合 chat-model 示例，介绍 ChatClient 的创建方式、调用链、提示模板与结构化输出等能力。 ..."
+description: "围绕 Spring AI 的 ChatClient API，介绍其创建方式、调用链设计、提示模板与结构化输出等核心能力。"
 ---
 
 ChatClient 是 Spring AI 提供的核心 API，提供流畅的调用方式，用于与各类大模型交互。本文结合 [chat-model](https://github.com/chensoul/spring-ai-chat-model-samples/tree/main/chat-model) 示例，介绍 ChatClient 的创建方式、调用链、提示模板与结构化输出等能力。
