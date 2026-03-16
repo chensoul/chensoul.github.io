@@ -17,8 +17,9 @@ let feedItems: Array<{
   title: string;
   link: string;
   published: string;
+  name?: string;
   blog_name?: string;
-  category?: string;
+  category?: string | null;
   avatar?: string;
 }> = [];
 if (feedsEnabled) {
@@ -104,8 +105,8 @@ const clientData = {
                 title={item.title}
                 link={item.link}
                 published={item.published}
-                blogName={item.blog_name}
-                category={item.category}
+                blogName={item.name ?? item.blog_name}
+                category={item.category ?? undefined}
                 avatar={item.avatar}
                 priority={index === 0}
               />

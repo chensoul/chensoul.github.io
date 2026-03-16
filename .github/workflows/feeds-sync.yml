@@ -20,10 +20,7 @@ jobs:
         with:
           sources: public/data/rss.txt
           output: public/data/feeds.json
-          maxItemsPerFeed: 10
-          faviconDir: public/favicons
-          faviconPathPrefix: favicons
-          maxDays: 180
+          avatar-dir: public/avatars
 
       - name: sync favicons to R2
         env:
@@ -34,7 +31,8 @@ jobs:
           RCLONE_CONFIG_R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
         run: |
           curl -OfsS https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip -oq rclone-current-linux-amd64.zip && mv rclone-*-linux-amd64/rclone /usr/local/bin/ && chmod +x /usr/local/bin/rclone
-          rclone sync public/favicons r2:cos/favicons -P
+          rclone sync public/avatars r2:cos/avatars -P
+          rm -rf rclone-current-linux-amd64
 
       - name: Commit and push
         run: |

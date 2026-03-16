@@ -248,7 +248,7 @@ export const SITE = {
    * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
    *
    * 由 enabled 控制是否启用：关闭后导航不显示、页面提示未开放。
-   * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, blog_name?, avatar? }] }）。
+   * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, name?, category?, avatar? }] }，avatar 可为裸文件名，会按 /favicons/ 解析）。
    * @see https://github.com/achuanya/lhasaRSS
    */
   feeds: {
@@ -259,12 +259,12 @@ export const SITE = {
     /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /data/feeds.json），留空则列表无数据 */
     dataSourceUrl: "/data/feeds.json",
     /** 首屏展示条数 */
-    initialCount: 12,
+    initialCount: 10,
     /** 点击「加载更多」每次加载条数 */
-    perPage: 12,
+    perPage: 10,
     /** 无头像时使用的默认图片 URL */
     fallbackAvatarUrl: "/thumbs/rss.svg",
     /** 相对路径 avatar 使用的 host（如 COS/R2 公网域名），为空则用本站 SITE.website */
-    cosHost: "https://cos.chensoul.cc",
+    cosHost: "https://cos.chensoul.cc/avatars",
   },
 } as const;

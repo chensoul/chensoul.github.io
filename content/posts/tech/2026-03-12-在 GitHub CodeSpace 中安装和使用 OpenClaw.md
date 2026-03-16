@@ -217,3 +217,5 @@ openclaw pairing approve telegram DH4Q43VM
 - **配对与对话**：在 Telegram 触发配对后，在终端执行 `openclaw pairing approve telegram <码>` 完成绑定，即可在电报中与机器人对话。
 - **让机器人「记住」上下文**：通过对话告知项目路径、技术栈、Git 仓库、公网预览地址、开发偏好等，便于后续编码与推送。
 - **实战示例**：可让机器人开发应用（如 Todo List）并 push 到仓库；也可添加定时任务（如每小时推送天气），充分利用 OpenClaw 在 Codespaces 中的能力。
+
+「延伸阅读：[sanwan.ai](http://sanwan.ai/) — AI 自主运营网站实录」

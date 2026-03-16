@@ -9,6 +9,10 @@ cd "$(dirname "$0")/.."
 BASE="${RCLONE_REF_BASE:-HEAD~1}"
 HEAD="${RCLONE_REF_HEAD:-HEAD}"
 
+# rclone sync public/images r2:cos/images -P
+# rclone sync public/thumbs r2:cos/thumbs -P
+# rclone sync public/avatars r2:cos/avatars -P
+
 # Thumbs: copy only changed files
 changed_thumbs=$(git diff --name-only --diff-filter=ACMR "$BASE" "$HEAD" -- public/thumbs)
 if [[ -n "$changed_thumbs" ]]; then
@@ -23,4 +27,12 @@ if [[ -n "$changed_images" ]]; then
   echo "$changed_images" | sed 's|^public/images/||' | rclone copy public/images r2:cos/images --files-from - -P
 else
   echo "No changed files in public/images, skip sync."
+fi
+
+# Avatars: copy only changed files
+changed_avatars=$(git diff --name-only --diff-filter=ACMR "$BASE" "$HEAD" -- public/avatars)
+if [[ -n "changed_avatars" ]]; then
+  echo "changed_avatars" | sed 's|^public/avatars/||' | rclone copy public/avatars r2:cos/avatars --files-from - -P
+else
+  echo "No changed files in public/avatars, skip sync."
 fi

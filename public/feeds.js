@@ -1,7 +1,7 @@
 /**
  * 订阅 / Feeds 页客户端逻辑
  *
- * 从 dataSourceUrl 拉取 JSON（格式：{ items: [{ title, link, published, blog_name?, avatar? }] }），
+ * 从 dataSourceUrl 拉取 JSON（格式：{ items: [{ title, link, published, name?, category?, avatar? }] }），
  * 渲染列表并支持滚动加载更多。参考 astro-lhasa + rss-lhasa。
  */
 
@@ -57,18 +57,21 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
       ? getDisplayDate(item.published)
       : "日期未知";
   const blogName =
-    typeof item.blog_name === "string" ? escapeHtml(item.blog_name.trim()) : "";
+    typeof (item.name ?? item.blog_name) === "string"
+      ? escapeHtml((item.name ?? item.blog_name).trim())
+      : "";
   const category =
     typeof item.category === "string" ? escapeHtml(item.category.trim()) : "";
   let imgSrc = (item.avatar && item.avatar.trim()) || fallbackOgImage || "";
   if (imgSrc && !/^https?:\/\//i.test(imgSrc) && !imgSrc.startsWith("//")) {
+    const pathPart = imgSrc;
     const base =
       cosHost && cosHost.trim()
         ? cosHost.replace(/\/$/, "")
         : typeof location !== "undefined"
           ? location.origin
           : "";
-    imgSrc = base + (imgSrc.startsWith("/") ? imgSrc : "/" + imgSrc);
+    imgSrc = base + (pathPart.startsWith("/") ? pathPart : "/" + pathPart);
   }
   const fallbackSrc = fallbackOgImage
     ? fallbackOgImage.replace(/'/g, "\\'")
