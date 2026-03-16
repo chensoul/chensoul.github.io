@@ -1,6 +1,6 @@
 # ChenSoul Blog
 
-**ChenSoul Blog** 是一个基于 **Astro 5 + Tailwind CSS 4** 构建的个人技术博客，面向中文技术内容（Java、Spring、微服务、架构、Kubernetes、DevOps）。
+**ChenSoul Blog** 是一个基于 **Astro 6 + Tailwind CSS 4** 构建的个人技术博客，面向中文技术内容（Java、Spring、微服务、架构、Kubernetes、DevOps）。
 
 🌐 线上地址：[blog.chensoul.cc](https://blog.chensoul.cc)
 
@@ -8,14 +8,14 @@
 
 ## 技术栈
 
-| 类别     | 技术                            |
-| -------- | ------------------------------- |
-| 框架     | Astro 5.x                       |
+| 类别     | 技术                          |
+| -------- |-----------------------------|
+| 框架     | Astro 6.x                   |
 | 样式     | Tailwind CSS 4（via Vite 插件） |
-| 包管理   | pnpm                            |
-| 语言     | TypeScript                      |
-| 节点版本 | Node.js 20+                     |
-| 构建输出 | 纯静态站点（SSG）               |
+| 包管理   | pnpm                        |
+| 语言     | TypeScript                  |
+| 节点版本 | Node.js 22+                 |
+| 构建输出 | 纯静态站点（SSG）                  |
 
 ---
 
@@ -27,7 +27,8 @@ chensoul.github.io/
 │   └── posts/           # 文章内容
 │       ├── tech/     # 技术日志
 │       ├── translation/ # 翻译文章
-│       └── life/     # 生活日志
+│       ├── weekly/   # 周报
+│       └── wiki/     # 知识整理
 ├── src/
 │   ├── config.ts        # 站点唯一配置入口
 │   ├── content.config.ts # Zod schema 内容集合定义
@@ -50,7 +51,6 @@ chensoul.github.io/
 ### Astro 集成
 
 - `@astrojs/mdx` — MDX 支持
-- `@astrojs/sitemap` — 自动生成站点地图
 - `@astrojs/rss` — RSS 订阅
 - `astro-expressive-code` — 代码语法高亮（One Dark Pro + One Light 主题）
 - `astro-mermaid` — Mermaid 图表
@@ -105,6 +105,17 @@ top-image: "/images/top-image.jpg" # 可选，正文上方配图
 | Umami (`umami.chensoul.cc`)   | 访问统计          |
 | Pagefind                      | 本地全文搜索      |
 | COS (`cos.chensoul.cc`)       | 图片/静态资源 CDN |
+
+---
+
+## SEO 与机器入口
+
+- 自定义 `sitemap.xml`：由 [src/pages/sitemap.xml.ts](./src/pages/sitemap.xml.ts) 动态生成，不依赖 `@astrojs/sitemap`
+- `robots.txt`：由 [src/pages/robots.txt.ts](./src/pages/robots.txt.ts) 动态生成，默认指向 `https://blog.chensoul.cc/sitemap.xml`
+- `llms.txt`：由 [src/pages/llms.txt.ts](./src/pages/llms.txt.ts) 动态生成，提供简版机器入口
+- `llms-full.txt`：由 [src/pages/llms-full.txt.ts](./src/pages/llms-full.txt.ts) 动态生成，输出全部文章正文内容
+- 页面级索引控制：低价值聚合页使用 `noindex,follow`，文章页、首页、分类页保持可索引
+- 结构化数据：文章页输出 `BlogPosting`，首页输出 `WebSite`，其他页面按需输出 `CollectionPage` / `WebPage` / `AboutPage`
 
 ---
 
