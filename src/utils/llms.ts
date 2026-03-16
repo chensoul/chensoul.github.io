@@ -7,16 +7,15 @@ function toAbsoluteUrl(path: string): string {
   return new URL(path, SITE.website).toString();
 }
 
-function getPostUrl(post: CollectionEntry<"blog">): string {
-  return toAbsoluteUrl(
-    PostUtils.getPath(
-      post.id,
-      post.filePath,
-      true,
-      post.data.date,
-      post.data.timezone
-    )
+function getPostMarkdownUrl(post: CollectionEntry<"blog">): string {
+  const slugPath = PostUtils.getPath(
+    post.id,
+    post.filePath,
+    false,
+    post.data.date,
+    post.data.timezone
   );
+  return toAbsoluteUrl(`/posts/${slugPath}.md`);
 }
 
 function getPostDescription(post: CollectionEntry<"blog">): string {
@@ -29,7 +28,7 @@ function getPostDescription(post: CollectionEntry<"blog">): string {
 }
 
 function formatPostLine(post: CollectionEntry<"blog">): string {
-  return `- [${post.data.title}](${getPostUrl(post)}): ${getPostDescription(post)}`;
+  return `- [${post.data.title}](${getPostMarkdownUrl(post)}): ${getPostDescription(post)}`;
 }
 
 function formatLinkLine(

@@ -68,7 +68,19 @@ export const GET: APIRoute = async () => {
     priority: "0.64",
   }));
 
-  const urls = [...staticPages, ...categoryPages, ...postPages];
+  const llmPostPages = sortedPosts.map(post => ({
+    path: `${PostUtils.getPath(
+      post.id,
+      post.filePath,
+      true,
+      post.data.date,
+      post.data.timezone
+    )}.md`,
+    lastmod: new Date(post.data.updated ?? post.data.date).toISOString(),
+    priority: "0.51",
+  }));
+
+  const urls = [...staticPages, ...categoryPages, ...postPages, ...llmPostPages];
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
