@@ -12,6 +12,10 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
+function formatLastmod(value: string): string {
+  return value.replace("Z", "+00:00");
+}
+
 export const GET: APIRoute = async () => {
   const posts = await getCollection("blog");
   const sortedPosts = PostUtils.sort(posts);
@@ -24,14 +28,15 @@ export const GET: APIRoute = async () => {
     : new Date().toISOString();
 
   const staticPages = [
-    { path: "/", lastmod: latestPostUpdatedAt },
-    { path: "/about", lastmod: latestPostUpdatedAt },
-    { path: "/links", lastmod: latestPostUpdatedAt },
-    { path: "/posts", lastmod: latestPostUpdatedAt },
-    { path: "/categories", lastmod: latestPostUpdatedAt },
-    { path: "/rss.xml", lastmod: latestPostUpdatedAt },
-    { path: "/llms.txt", lastmod: latestPostUpdatedAt },
-    { path: "/llms-full.txt", lastmod: latestPostUpdatedAt },
+    { path: "/", lastmod: latestPostUpdatedAt, priority: "1.00" },
+    { path: "/about", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/links", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/posts", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/categories", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/running", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/rss.xml", lastmod: latestPostUpdatedAt, priority: "0.64" },
+    { path: "/llms.txt", lastmod: latestPostUpdatedAt, priority: "0.64" },
+    { path: "/llms-full.txt", lastmod: latestPostUpdatedAt, priority: "0.64" },
   ];
 
   const categoryPages = categories.map(category => {
@@ -48,6 +53,7 @@ export const GET: APIRoute = async () => {
     return {
       path: `/categories/${category.category}`,
       lastmod,
+      priority: "0.64",
     };
   });
 
@@ -60,16 +66,22 @@ export const GET: APIRoute = async () => {
       post.data.timezone
     ),
     lastmod: new Date(post.data.updated ?? post.data.date).toISOString(),
+    priority: "0.64",
   }));
 
   const urls = [...staticPages, ...categoryPages, ...postPages];
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 ${urls
   .map(
     entry => `  <url>
     <loc>${escapeXml(new URL(entry.path, SITE.website).toString())}</loc>
-    <lastmod>${entry.lastmod}</lastmod>
+    <lastmod>${formatLastmod(entry.lastmod)}</lastmod>
+    <priority>${entry.priority}</priority>
   </url>`
   )
   .join("\n")}

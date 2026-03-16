@@ -64,3 +64,4 @@ title: "关于"
 - 2026-03-03 » 参考 [Yiran's Blog](https://zdyxry.github.io/)，修改主题配送、Footer 部分添加了社交链接、重构了 Astro 布局、去掉分类页面、重构归档页面。
 - 2026-03-04 » 参考 [Verne in GitHub](https://blog.einverne.info/)，关于页面添加我使用的 APP。
 - 2026-03-10 » 参考 [游钓四方的邻居](https://blog.lhasa.icu/feeds) 页面，给博客添加[邻居](/feeds)页面。
+- 2026-03-16 » 为大模型添加 [llms.txt](/llms.txt)、[llms-full.txt](/llms-full.txt) 页面。
