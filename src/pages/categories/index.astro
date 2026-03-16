@@ -18,21 +18,25 @@
  *
  * 依赖关系：
  * - 被 /categories 路径访问
- * - 使用 getCategoryImageUrl 获取封面图
+ * - 使用分类元信息获取封面图
  */
 
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
-import { getCategoryImageUrl } from "@/utils/categoryImages";
+import { getCategoryImageUrl, getCategoryOrder } from "@/utils/categoryMeta";
 
 // 获取所有文章并排序
 const posts = await getCollection("blog");
 const sortedPosts = PostUtils.sort(posts);
 
 // 获取所有分类
-let categories = PostUtils.getUniqueCategories(posts);
+let categories = PostUtils.getUniqueCategories(posts).sort(
+  (a, b) =>
+    getCategoryOrder(a.category) - getCategoryOrder(b.category) ||
+    a.categoryName.localeCompare(b.categoryName, "zh-CN")
+);
 
 /**
  * 获取每个分类的最新文章标题
@@ -50,7 +54,10 @@ categories.forEach(({ categoryName }) => {
 });
 ---
 
-<Layout title={`分类 | ${SITE.title}`}>
+<Layout
+  title={`分类 | ${SITE.title}`}
+  description="按分类浏览博客内容，快速进入技术、周报、翻译和知识整理等主题。"
+>
   <ul
     class="categories-list grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2"
     aria-label="分类列表"

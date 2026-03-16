@@ -50,7 +50,14 @@ const md = new MarkdownIt({
 const htmlContent = md.render(content);
 ---
 
-<Layout title={`关于 | ${SITE.title}`} description={frontmatter.description}>
+<Layout
+  title={`关于 | ${SITE.title}`}
+  description={
+    frontmatter.description ||
+    "关于 ChenSoul：开发背景、正在使用的工具、联系方式，以及这个博客的更新记录。"
+  }
+  schemaType="AboutPage"
+>
   <div class="page-content">
     <Fragment set:html={htmlContent} />
   </div>

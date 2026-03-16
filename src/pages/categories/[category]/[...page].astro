@@ -8,7 +8,10 @@ import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
+import Tag from "@/components/Tag.astro";
+import { getCategoryDescription } from "@/utils/categoryMeta";
 import { PostUtils } from "@/utils/postUtils";
+import { slugifyStr } from "@/utils/slugify";
 import { SITE } from "@/config";
 
 /**
@@ -97,12 +100,49 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 // 从 Astro.props 中解构获取分页数据和分类显示名称
 const { page, categoryName } = Astro.props;
+const categorySlug = Astro.params.category ?? "";
+const categoryDescription =
+  getCategoryDescription(categorySlug) ||
+  `按时间浏览分类「${categoryName}」下的文章。`;
+const tagCount = new Map<string, { tagName: string; count: number }>();
+page.data.forEach(post => {
+  post.data.tags.forEach(tag => {
+    const slug = slugifyStr(tag);
+    const existing = tagCount.get(slug);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      tagCount.set(slug, { tagName: tag, count: 1 });
+    }
+  });
+});
+const topTags = Array.from(tagCount.entries())
+  .sort((a, b) => b[1].count - a[1].count || a[1].tagName.localeCompare(b[1].tagName, "zh-CN"))
+  .slice(0, 6);
 ---
 
-<Layout title={`${categoryName} | ${SITE.title}`}>
-  <p class="mb-4 text-base font-semibold">
-    分类：{categoryName}
-  </p>
+<Layout
+  title={`${categoryName} | ${SITE.title}`}
+  description={`查看分类「${categoryName}」下的 ${page.data.length} 篇文章，${categoryDescription}`}
+>
+  <section class="category-head mb-5">
+    <h1 class="mb-2 text-xl font-semibold">{categoryName}</h1>
+    <p class="mb-2 text-sm text-[var(--text-secondary)]">
+      {categoryDescription}
+    </p>
+    <p class="text-sm text-[var(--text-secondary)]">
+      共 {page.data.length} 篇文章
+    </p>
+    {
+      topTags.length > 0 && (
+        <ul class="category-tags mt-3 list-none pl-0">
+          {topTags.map(([tag, { tagName, count }]) => (
+            <Tag tag={tag} tagName={tagName} count={count} size="sm" />
+          ))}
+        </ul>
+      )
+    }
+  </section>
   <ul class="category-posts-list list-none pl-0">
     {
       /**
@@ -143,3 +183,11 @@ const { page, categoryName } = Astro.props;
   document.addEventListener("DOMContentLoaded", boot);
   window.addEventListener("load", boot);
 </script>
+
+<style>
+  .category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.25rem;
+  }
+</style>

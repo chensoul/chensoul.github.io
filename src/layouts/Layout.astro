@@ -33,6 +33,7 @@ export interface Props {
   description?: string;
   ogImage?: string;
   canonicalURL?: string;
+  schemaType?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
   toc?: boolean;
@@ -48,6 +49,7 @@ const {
   description: descriptionProp,
   ogImage: ogImageProp,
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
+  schemaType,
   pubDatetime,
   modDatetime,
   toc = false,
@@ -69,6 +71,21 @@ const socialImageURLString = socialImageURL?.href ?? "";
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;
+const pathname = Astro.url.pathname.replace(/\.html?$/, "") || "/";
+const canonicalHref = String(canonicalURL);
+const isArticlePage = Boolean(pubDatetime);
+const isHomePage = pathname === "/";
+const isCollectionPage =
+  /^\/(posts|archives|categories|tags)(\/|$)/.test(pathname);
+const ogType = isArticlePage ? "article" : "website";
+const defaultSchemaType = isArticlePage
+  ? "BlogPosting"
+  : isHomePage
+    ? "WebSite"
+    : isCollectionPage
+      ? "CollectionPage"
+      : "WebPage";
+const resolvedSchemaType = schemaType?.trim() || defaultSchemaType;
 
 /**
  * 结构化数据（JSON-LD）
@@ -76,20 +93,51 @@ const OG_IMAGE_HEIGHT = 630;
  * 用于搜索引擎理解页面内容，提升 SEO 效果
  * @see https://schema.org/BlogPosting
  */
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `${title}`,
-  ...(hasOgImage && socialImageURLString && { image: socialImageURLString }),
-  datePublished: `${pubDatetime?.toISOString()}`,
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`
-    },
-  ],
-};
+const structuredData = resolvedSchemaType === "BlogPosting"
+  ? {
+      "@context": "https://schema.org",
+      "@type": resolvedSchemaType,
+      headline: title,
+      description: fullDescription,
+      url: canonicalHref,
+      mainEntityOfPage: canonicalHref,
+      ...(hasOgImage && socialImageURLString && { image: socialImageURLString }),
+      datePublished: pubDatetime?.toISOString(),
+      ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+      author: [
+        {
+          "@type": "Person",
+          name: author,
+        },
+      ],
+      publisher: {
+        "@type": "Organization",
+        name: SITE.title,
+        url: SITE.website,
+      },
+    }
+  : resolvedSchemaType === "WebSite"
+    ? {
+        "@context": "https://schema.org",
+        "@type": resolvedSchemaType,
+        name: SITE.title,
+        url: SITE.website,
+        description: fullDescription,
+        inLanguage: SITE.lang,
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": resolvedSchemaType,
+        name: title,
+        url: canonicalHref,
+        description: fullDescription,
+        isPartOf: {
+          "@type": "WebSite",
+          name: SITE.title,
+          url: SITE.website,
+        },
+        inLanguage: SITE.lang,
+      };
 ---
 
 <!doctype html>
@@ -120,7 +168,7 @@ const structuredData = {
       </>
     )}
     <meta property="og:locale" content={SITE.langOg} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
 
     <!-- Article Published/Modified time -->
     {

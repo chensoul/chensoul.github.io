@@ -68,7 +68,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout title={`文章 | ${SITE.title}`}>
+<Layout
+  title={`文章 | ${SITE.title}`}
+  description="浏览博客的全部文章，按发布时间倒序展示技术内容、周报和专题记录。"
+>
   <ul class="posts-list list-none pl-0">
     {
       /**

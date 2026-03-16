@@ -26,13 +26,14 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   });
 }
 
-const params = Astro.params;
-const { tag } = params;
 const { page, tagName } = Astro.props;
 const totalPosts = page.data.length;
 ---
 
-<Layout title={`${tag} | ${SITE.title}`}>
+<Layout
+  title={`${tagName} | ${SITE.title}`}
+  description={`查看标签「${tagName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
+>
   <h1 slot="title">{tagName}</h1>
   <p class="mb-4 text-sm text-[var(--text-secondary)]">
     标签：{tagName}，共 {totalPosts} 篇文章
