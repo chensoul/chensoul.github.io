@@ -32,7 +32,7 @@ jobs:
         run: |
           curl -OfsS https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip -oq rclone-current-linux-amd64.zip && mv rclone-*-linux-amd64/rclone /usr/local/bin/ && chmod +x /usr/local/bin/rclone
           rclone sync public/avatars r2:cos/avatars -P
-          rm -rf rclone-current-linux-amd64
+          rm -rf rclone-*
 
       - name: Commit and push
         run: |
