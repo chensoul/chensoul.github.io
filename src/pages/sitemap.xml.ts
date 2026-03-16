@@ -18,7 +18,9 @@ export const GET: APIRoute = async () => {
   const categories = PostUtils.getUniqueCategories(posts);
 
   const latestPostUpdatedAt = sortedPosts[0]
-    ? new Date(sortedPosts[0].data.updated ?? sortedPosts[0].data.date).toISOString()
+    ? new Date(
+        sortedPosts[0].data.updated ?? sortedPosts[0].data.date
+      ).toISOString()
     : new Date().toISOString();
 
   const staticPages = [
@@ -33,9 +35,14 @@ export const GET: APIRoute = async () => {
   ];
 
   const categoryPages = categories.map(category => {
-    const categoryPosts = PostUtils.getPostsByCategory(posts, category.category);
+    const categoryPosts = PostUtils.getPostsByCategory(
+      posts,
+      category.category
+    );
     const lastmod = categoryPosts[0]
-      ? new Date(categoryPosts[0].data.updated ?? categoryPosts[0].data.date).toISOString()
+      ? new Date(
+          categoryPosts[0].data.updated ?? categoryPosts[0].data.date
+        ).toISOString()
       : latestPostUpdatedAt;
 
     return {

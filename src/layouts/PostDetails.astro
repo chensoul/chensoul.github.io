@@ -82,8 +82,9 @@ const plainText = (post.body ?? "")
   .replace(/[#>*_\-\n\r]/g, " ")
   .replace(/\s+/g, " ")
   .trim();
-const latinWordCount = (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || [])
-  .length;
+const latinWordCount = (
+  plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []
+).length;
 const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
 const estimatedWordCount = latinWordCount + cjkCharCount;
 const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
@@ -99,7 +100,10 @@ const breadcrumbItems = [
     ? [
         {
           name: primaryCategory,
-          item: new URL(`/categories/${slugifyStr(primaryCategory)}`, SITE.website).toString(),
+          item: new URL(
+            `/categories/${slugifyStr(primaryCategory)}`,
+            SITE.website
+          ).toString(),
         },
       ]
     : []),
@@ -170,7 +174,9 @@ const relatedPostLimit = 6;
 const scoredRelatedPosts = posts
   .filter(candidate => candidate.id !== post.id)
   .map(candidate => {
-    const sharedTags = candidate.data.tags.filter(tag => tags.includes(tag)).length;
+    const sharedTags = candidate.data.tags.filter(tag =>
+      tags.includes(tag)
+    ).length;
     const sharedCategories = candidate.data.categories.filter(category =>
       post.data.categories.includes(category)
     ).length;
@@ -200,8 +206,7 @@ const scoredRelatedPosts = posts
 const relatedPosts = [
   ...scoredRelatedPosts.filter(item => item.score > 0),
   ...scoredRelatedPosts.filter(item => item.score === 0),
-]
-  .slice(0, relatedPostLimit);
+].slice(0, relatedPostLimit);
 
 const shareText = `${title} | ${SITE.title}`;
 const shareUrl = encodeURIComponent(canonicalHref);
@@ -221,9 +226,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  {tags.map((tag: string) => (
-    <meta slot="head" property="article:tag" content={tag} />
-  ))}
+  {
+    tags.map((tag: string) => (
+      <meta slot="head" property="article:tag" content={tag} />
+    ))
+  }
   <script
     slot="head"
     type="application/ld+json"
@@ -267,22 +274,28 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <a href="/">首页</a>
       <span>/</span>
       <a href="/posts">文章</a>
-      {primaryCategory && (
-        <>
-          <span>/</span>
-          <a href={`/categories/${slugifyStr(primaryCategory)}`}>{primaryCategory}</a>
-        </>
-      )}
+      {
+        primaryCategory && (
+          <>
+            <span>/</span>
+            <a href={`/categories/${slugifyStr(primaryCategory)}`}>
+              {primaryCategory}
+            </a>
+          </>
+        )
+      }
     </nav>
 
     <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
       <h1 class="text-2xl font-semibold">{title}</h1>
       <div class="post-meta-strip">
-        {categoryLinks.map(category => (
-          <a class="post-category-chip" href={`/categories/${category.slug}`}>
-            {category.name}
-          </a>
-        ))}
+        {
+          categoryLinks.map(category => (
+            <a class="post-category-chip" href={`/categories/${category.slug}`}>
+              {category.name}
+            </a>
+          ))
+        }
         <span class="post-meta-divider" aria-hidden="true">·</span>
         <span>{readingMinutes} 分钟阅读</span>
         <span class="post-meta-divider" aria-hidden="true">·</span>
@@ -325,12 +338,12 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     <div class="post-promo-card">
       <p class="post-promo-eyebrow">订阅文章</p>
       <h2 class="post-promo-title">订阅更新，不错过后续文章</h2>
-      <p class="post-promo-copy">
-        直接通过 RSS 和 Telegram 订阅本站更新。
-      </p>
+      <p class="post-promo-copy">直接通过 RSS 和 Telegram 订阅本站更新。</p>
       <div class="post-promo-actions">
         <a class="post-promo-button primary" href="/rss.xml">订阅 RSS</a>
-        <a class="post-promo-button" href="https://t.me/ichensoul">关注 Telegram</a>
+        <a class="post-promo-button" href="https://t.me/ichensoul"
+          >关注 Telegram</a
+        >
       </div>
     </div>
 
@@ -603,12 +616,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     border: 1px solid var(--border);
     border-radius: 1rem;
     padding: 1.25rem;
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--accent) 7%, var(--background)),
-        var(--background)
-      );
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 7%, var(--background)),
+      var(--background)
+    );
   }
 
   .post-promo-eyebrow,

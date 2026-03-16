@@ -47,14 +47,18 @@ export function getCategoryMeta(nameOrSlug?: string): CategoryMeta | undefined {
   if (!nameOrSlug) return undefined;
 
   const slug = slugifyStr(nameOrSlug);
-  return CATEGORY_META.find(item => item.slug === slug || item.name === nameOrSlug);
+  return CATEGORY_META.find(
+    item => item.slug === slug || item.name === nameOrSlug
+  );
 }
 
 export function getCategoryImageUrl(nameOrSlug?: string): string | undefined {
   return getCategoryMeta(nameOrSlug)?.image;
 }
 
-export function getCategoryDescription(nameOrSlug?: string): string | undefined {
+export function getCategoryDescription(
+  nameOrSlug?: string
+): string | undefined {
   return getCategoryMeta(nameOrSlug)?.description;
 }
 

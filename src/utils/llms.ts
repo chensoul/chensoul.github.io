@@ -22,7 +22,9 @@ function getPostUrl(post: CollectionEntry<"blog">): string {
 function getPostDescription(post: CollectionEntry<"blog">): string {
   return (
     post.data.description?.trim() ||
-    PostUtils.getDescription(post.body ?? "").replace(/\s+/g, " ").trim()
+    PostUtils.getDescription(post.body ?? "")
+      .replace(/\s+/g, " ")
+      .trim()
   );
 }
 
@@ -30,7 +32,11 @@ function formatPostLine(post: CollectionEntry<"blog">): string {
   return `- [${post.data.title}](${getPostUrl(post)}): ${getPostDescription(post)}`;
 }
 
-function formatLinkLine(label: string, path: string, description?: string): string {
+function formatLinkLine(
+  label: string,
+  path: string,
+  description?: string
+): string {
   const link = `[${label}](${toAbsoluteUrl(path)})`;
   return description ? `- ${link}: ${description}` : `- ${link}`;
 }
@@ -38,11 +44,7 @@ function formatLinkLine(label: string, path: string, description?: string): stri
 function formatPostContent(post: CollectionEntry<"blog">): string[] {
   const body = (post.body ?? "").trim();
 
-  return [
-    `# ${post.data.title}`,
-    body || "_No content_",
-    "",
-  ];
+  return [`# ${post.data.title}`, body || "_No content_", ""];
 }
 
 function getAllPosts(posts: CollectionEntry<"blog">[]) {
@@ -67,7 +69,11 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
     `> ${SITE.desc}. Personal blog by ${SITE.author}.`,
     "",
     "## Files",
-    formatLinkLine("llms-full.txt", "/llms-full.txt", "Full blog context with article metadata and article bodies"),
+    formatLinkLine(
+      "llms-full.txt",
+      "/llms-full.txt",
+      "Full blog context with article metadata and article bodies"
+    ),
     "",
     "## Site",
     formatLinkLine("Home", "/", "Main entry point"),

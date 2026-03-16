@@ -52,10 +52,8 @@ const htmlContent = md.render(content);
 
 <Layout
   title={`链接 | ${SITE.title}`}
-  description={
-    frontmatter.description ||
-    "收集博客、文章、书籍和工具等值得长期关注的链接，也包含邻居页面的数据来源说明。"
-  }
+  description={frontmatter.description ||
+    "收集博客、文章、书籍和工具等值得长期关注的链接，也包含邻居页面的数据来源说明。"}
   schemaType="CollectionPage"
 >
   <div class="page-content">

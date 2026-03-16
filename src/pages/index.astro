@@ -16,7 +16,10 @@ const posts = await getCollection("blog");
 const sortedPosts = PostUtils.sort(posts);
 
 const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
-const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(0, 3);
+const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
+  0,
+  3
+);
 ---
 
 <Layout
@@ -29,9 +32,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(0, 3
         <h2>最近文章</h2>
       </div>
       <ul class="home-card-list">
-        {latestPosts.map(post => (
-          <Card variant="h3" {...post} />
-        ))}
+        {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
     </div>
 
@@ -47,24 +48,26 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(0, 3
         </LinkButton>
       </div>
       <div class="home-side-list">
-        {lifePosts.map(post => (
-          <a
-            class="home-side-card"
-            href={PostUtils.getPath(
-              post.id,
-              post.filePath,
-              true,
-              post.data.date,
-              post.data.timezone
-            )}
-          >
-            <h3>{post.data.title}</h3>
-            <p>
-              {post.data.description?.trim() ||
-                PostUtils.getDescription(post.body ?? "")}
-            </p>
-          </a>
-        ))}
+        {
+          lifePosts.map(post => (
+            <a
+              class="home-side-card"
+              href={PostUtils.getPath(
+                post.id,
+                post.filePath,
+                true,
+                post.data.date,
+                post.data.timezone
+              )}
+            >
+              <h3>{post.data.title}</h3>
+              <p>
+                {post.data.description?.trim() ||
+                  PostUtils.getDescription(post.body ?? "")}
+              </p>
+            </a>
+          ))
+        }
       </div>
     </aside>
   </section>

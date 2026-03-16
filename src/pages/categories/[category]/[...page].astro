@@ -117,7 +117,11 @@ page.data.forEach(post => {
   });
 });
 const topTags = Array.from(tagCount.entries())
-  .sort((a, b) => b[1].count - a[1].count || a[1].tagName.localeCompare(b[1].tagName, "zh-CN"))
+  .sort(
+    (a, b) =>
+      b[1].count - a[1].count ||
+      a[1].tagName.localeCompare(b[1].tagName, "zh-CN")
+  )
   .slice(0, 6);
 ---
 
