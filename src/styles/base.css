@@ -89,6 +89,10 @@ a {
   transition: color 0.2s ease;
 }
 
+a:visited {
+  color: color-mix(in srgb, var(--accent) 72%, var(--text-secondary));
+}
+
 a:hover {
   text-decoration: underline;
 }
