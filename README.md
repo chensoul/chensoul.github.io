@@ -113,7 +113,6 @@ top-image: "/images/top-image.jpg" # 可选，正文上方配图
 - 自定义 `sitemap.xml`：由 [src/pages/sitemap.xml.ts](./src/pages/sitemap.xml.ts) 动态生成，不依赖 `@astrojs/sitemap`
 - `robots.txt`：由 [src/pages/robots.txt.ts](./src/pages/robots.txt.ts) 动态生成，默认指向 `https://blog.chensoul.cc/sitemap.xml`
 - `llms.txt`：由 [src/pages/llms.txt.ts](./src/pages/llms.txt.ts) 动态生成，提供简版机器入口
-- `llms-full.txt`：由 [src/pages/llms-full.txt.ts](./src/pages/llms-full.txt.ts) 动态生成，输出全部文章正文内容
 - 页面级索引控制：低价值聚合页使用 `noindex,follow`，文章页、首页、分类页保持可索引
 - 结构化数据：文章页输出 `BlogPosting`，首页输出 `WebSite`，其他页面按需输出 `CollectionPage` / `WebPage` / `AboutPage`
 

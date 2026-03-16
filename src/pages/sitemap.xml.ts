@@ -36,7 +36,6 @@ export const GET: APIRoute = async () => {
     { path: "/running", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/rss.xml", lastmod: latestPostUpdatedAt, priority: "0.64" },
     { path: "/llms.txt", lastmod: latestPostUpdatedAt, priority: "0.64" },
-    { path: "/llms-full.txt", lastmod: latestPostUpdatedAt, priority: "0.64" },
   ];
 
   const categoryPages = categories.map(category => {

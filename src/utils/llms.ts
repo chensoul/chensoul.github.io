@@ -41,12 +41,6 @@ function formatLinkLine(
   return description ? `- ${link}: ${description}` : `- ${link}`;
 }
 
-function formatPostContent(post: CollectionEntry<"blog">): string[] {
-  const body = (post.body ?? "").trim();
-
-  return [`# ${post.data.title}`, body || "_No content_", ""];
-}
-
 function getAllPosts(posts: CollectionEntry<"blog">[]) {
   return PostUtils.sort(posts);
 }
@@ -68,13 +62,6 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
     "",
     `> ${SITE.desc}. Personal blog by ${SITE.author}.`,
     "",
-    "## Files",
-    formatLinkLine(
-      "llms-full.txt",
-      "/llms-full.txt",
-      "Full blog context with article metadata and article bodies"
-    ),
-    "",
     "## Site",
     formatLinkLine("Home", "/", "Main entry point"),
     formatLinkLine("About", "/about", "Author profile and site background"),
@@ -94,21 +81,8 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
     "",
     "## Notes For LLMs",
     "- Prefer canonical post URLs under /posts/.",
-    "- Use /llms-full.txt for the complete post list and richer topic context.",
     "- Posts are the primary source of truth; tag, archive, feed, and search pages are navigational.",
     "- Category pages provide useful topical entry points, especially /categories/tech and /categories/weekly.",
-  ];
-
-  return `${lines.join("\n")}\n`;
-}
-
-export function generateLlmsFullTxt(posts: CollectionEntry<"blog">[]): string {
-  const allPosts = getAllPosts(posts);
-
-  const lines = [
-    `<SYSTEM>This is the full text content of ${SITE.title} (${SITE.website}). Prefer canonical post URLs when citing. Posts are the primary source of truth.</SYSTEM>`,
-    "",
-    ...allPosts.flatMap(formatPostContent),
   ];
 
   return `${lines.join("\n")}\n`;
