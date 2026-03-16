@@ -1,0 +1,77 @@
+import type { APIRoute } from "astro";
+import { getCollection } from "astro:content";
+import { SITE } from "@/config";
+import { PostUtils } from "@/utils/postUtils";
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+export const GET: APIRoute = async () => {
+  const posts = await getCollection("blog");
+  const sortedPosts = PostUtils.sort(posts);
+  const categories = PostUtils.getUniqueCategories(posts);
+
+  const latestPostUpdatedAt = sortedPosts[0]
+    ? new Date(sortedPosts[0].data.updated ?? sortedPosts[0].data.date).toISOString()
+    : new Date().toISOString();
+
+  const staticPages = [
+    { path: "/", lastmod: latestPostUpdatedAt },
+    { path: "/about", lastmod: latestPostUpdatedAt },
+    { path: "/links", lastmod: latestPostUpdatedAt },
+    { path: "/posts", lastmod: latestPostUpdatedAt },
+    { path: "/categories", lastmod: latestPostUpdatedAt },
+    { path: "/rss.xml", lastmod: latestPostUpdatedAt },
+    { path: "/llms.txt", lastmod: latestPostUpdatedAt },
+    { path: "/llms-full.txt", lastmod: latestPostUpdatedAt },
+  ];
+
+  const categoryPages = categories.map(category => {
+    const categoryPosts = PostUtils.getPostsByCategory(posts, category.category);
+    const lastmod = categoryPosts[0]
+      ? new Date(categoryPosts[0].data.updated ?? categoryPosts[0].data.date).toISOString()
+      : latestPostUpdatedAt;
+
+    return {
+      path: `/categories/${category.category}`,
+      lastmod,
+    };
+  });
+
+  const postPages = sortedPosts.map(post => ({
+    path: PostUtils.getPath(
+      post.id,
+      post.filePath,
+      true,
+      post.data.date,
+      post.data.timezone
+    ),
+    lastmod: new Date(post.data.updated ?? post.data.date).toISOString(),
+  }));
+
+  const urls = [...staticPages, ...categoryPages, ...postPages];
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls
+  .map(
+    entry => `  <url>
+    <loc>${escapeXml(new URL(entry.path, SITE.website).toString())}</loc>
+    <lastmod>${entry.lastmod}</lastmod>
+  </url>`
+  )
+  .join("\n")}
+</urlset>
+`;
+
+  return new Response(body, {
+    headers: {
+      "Content-Type": "application/xml; charset=utf-8",
+    },
+  });
+};

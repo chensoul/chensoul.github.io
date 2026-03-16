@@ -6,7 +6,7 @@
  * 核心逻辑：
  * 1. 允许所有爬虫访问（User-agent: *）
  * 2. 允许抓取所有路径（Allow: /）
- * 3. 指定 Astro 生成的 sitemap-index.xml
+ * 3. 指定对搜索引擎更通用的 sitemap.xml 入口
  */
 
 import type { APIRoute } from "astro";
@@ -18,7 +18,7 @@ export const GET: APIRoute = ({ site }) => {
       : site instanceof URL
         ? site.href
         : "https://blog.chensoul.cc";
-  const sitemapURL = new URL("/sitemap-index.xml", base);
+  const sitemapURL = new URL("/sitemap.xml", base);
   const body = `User-agent: *
 Allow: /
 
