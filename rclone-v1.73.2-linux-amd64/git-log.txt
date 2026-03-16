@@ -1,0 +1,171 @@
+commit c0f03f8ac04951403431e6c1a218b7fee672ab2e
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Fri Mar 6 18:45:23 2026 +0000
+
+    Version v1.73.2
+
+commit 5f149a91c49bf7b85167bf408ecf58ce4d271467
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Fri Mar 6 12:57:34 2026 +0000
+
+    Update to go 1.25.8 to fix multiple CVEs
+    
+    This fixes the following CVEs
+    
+    - CVE-2026-27137
+    - CVE-2026-27138
+    - CVE-2026-25679
+    - CVE-2026-27142
+    
+    This disables the go1.24 build as the updates no longer build on go1.24
+    
+    Fixes #9220
+
+commit 41fb73c6698be4e411b047474940235ecd2d3b91
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Fri Feb 27 11:24:16 2026 +0000
+
+    build: update to golang.org/x/net v0.51.0 to fix CVE-2026-27141 #9220
+    
+    See: https://pkg.go.dev/vuln/GO-2026-4559
+
+commit 4b63e78358299edee33e07cc96d491361ffebcfb
+Author: razorloves <razorloves@gmail.com>
+Date:   Tue Mar 3 02:53:42 2026 -0600
+
+    docs: fix new drive flag typo in changelog
+
+commit 690587ebbf53767c3f5b79051b3679d0e70a1936
+Author: Romāns Potašovs <justgook@gmail.com>
+Date:   Sun Feb 8 23:34:10 2026 +0200
+
+    webdav: add missing headers for CORS
+    
+    fix #7492
+
+commit 3821c64711028644559d95b545fdd5e405967062
+Author: Adam Kasztenny <adamkasztenny@gmail.com>
+Date:   Sun Feb 8 21:12:10 2026 -0500
+
+    docs: Document unsupported S3 object keys with double slashes
+    
+    Fixes #5063 by documenting that S3 object keys containing
+    consecutive forward slashes (//) are not supported by rclone.
+    
+    The issue occurs because rclone normalizes paths like "a//b" to "a/b",
+    causing "object not found" errors when trying to access the original
+    object. This documentation addition explicitly warns users about this
+    limitation and provides workarounds.
+    
+    Changes:
+    - Added new subsection "Important note about double slashes (//)"
+      under "Restricted filename characters" in S3 documentation
+    - Explains the normalization behavior and its consequences
+    - Provides clear examples and workarounds
+    
+    AI Model/Tool Attribution:
+    - Implemented using opencode AI assistant
+    - Issue analysis and documentation update performed by AI tools
+    
+    Resolves: #5063
+
+commit dc73dba9b546c9eb6c58e528771df2f31b21bb14
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Thu Feb 26 11:59:20 2026 +0000
+
+    docs: note that --use-server-modtime only works on some backends
+    
+    Closes #6977
+
+commit 9267568fe3ac88951cb930d8a6e27401598219a2
+Author: jzunigax2 <125698953+jzunigax2@users.noreply.github.com>
+Date:   Mon Feb 9 14:06:26 2026 -0600
+
+    internxt: fix Entry doesn't belong in directory errors on windows
+
+commit a285c9eeee8fc71d44b228d4a29e9b8286d68bad
+Author: a1pcm <a1pcm@users.noreply.github.com>
+Date:   Mon Feb 23 03:26:31 2026 -0600
+
+    drime: fix chunk-uploaded files ignoring workspace ID
+    
+    When specifying --drime-workspace-id, a file greater than the limit at
+    which file uploads get chunked would ignore the specified ID and get put
+    into the default workspace instead.
+    
+    Completes the fix described in commit 2360e65 by properly closing the
+    chunkwriter by providing the workspace ID to the Drime API call.
+
+commit cf4d78e3c90667cef33feee8ada7ccc8b09a4040
+Author: Dark Dragon <darkdragon-001@web.de>
+Date:   Tue Feb 24 13:44:10 2026 +0100
+
+    docs: Fix headers hierarchy for mount.md
+    
+    Similar to "Mounting on macOS", "Mounting on Linux" needs to move one layer down. This also fixes the missing anchor overlay on hover.
+
+commit ea29edb35d10c580dc511a270496c2298594c5b0
+Author: Varun Chawla <34209028+veeceey@users.noreply.github.com>
+Date:   Fri Feb 20 08:30:15 2026 -0800
+
+    webdav: escape reserved characters in URL path segments
+    
+    Use URLPathEscapeAll instead of URLPathEscape for path encoding.
+    
+    URLPathEscape relies on Go's url.URL.String() which only minimally
+    escapes paths - reserved sub-delimiter characters like semicolons and
+    equals signs pass through unescaped. Per RFC 3986 section 3.3, these
+    characters must be percent-encoded when used as literal values in
+    path segments.
+    
+    Some WebDAV servers (notably dCache/Jetty) interpret unescaped
+    semicolons as path parameter delimiters, which truncates filenames
+    at the semicolon position. URLPathEscapeAll encodes everything
+    except [A-Za-z0-9/], which is safe for all servers.
+    
+    Fixes #9082
+
+commit de93ad8744f7608d2860b8827bec5fcf7b192a22
+Author: Jan-Philipp Reßler <75355263+TabError@users.noreply.github.com>
+Date:   Fri Feb 20 17:21:48 2026 +0100
+
+    bisync: add group Sync to the bisync command
+    
+    Co-authored-by: Jan-Philipp Reßler <xodarap@xodarap.de>
+
+commit 9bfc1a7a8ae501dc09b039cbe4dc6589f600db16
+Author: Varun Chawla <34209028+veeceey@users.noreply.github.com>
+Date:   Fri Feb 20 03:46:53 2026 -0800
+
+    archive: extract: strip "./" prefix from tar entry paths
+    
+    Tar files created from the current directory (e.g. tar -czf archive.tar.gz .)
+    produce entries prefixed with "./". When extracting, rclone's character
+    encoding replaces the "." with a full-width dot (U+FF0E), creating a
+    spurious directory instead of merging into the destination root.
+    
+    Strip the leading "./" from NameInArchive before processing. Only "./"
+    is stripped specifically to avoid enabling path traversal attacks via
+    "../".
+    
+    Fixes #9168
+
+commit d9e455d1d328b8a238ad0319d2a4ad3d742b9440
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Wed Feb 18 12:12:04 2026 +0000
+
+    docs: add instructions on how to update Go version
+
+commit 7502ec934bd682466ad5f3d45357ce6a133628de
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Wed Mar 4 11:24:31 2026 +0000
+
+    buid: update github.com/cloudflare/circl to v1.6.3 to fix CVE-2026-1229
+    
+    Fixes #9227
+
+commit bffc49742c4e1d67ed5bbbfeb2fd15f54281389b
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Feb 17 18:21:06 2026 +0000
+
+    Start v1.73.2-DEV development
