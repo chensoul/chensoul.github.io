@@ -1,119 +1,98 @@
 ---
 /**
- * 文章列表页（/posts、/posts/2 等）
+ * 归档页
  *
- * @fileoverview 分页展示全部文章卡片；getStaticPaths 仅生成单页路由，首屏条数由懒加载脚本控制。
+ * @fileoverview 按年分组展示全部文章，顶部为分类与年份锚点链接；getStaticPaths 生成单页（pageSize 为全部文章数），实际列表由前端懒加载或一次性渲染。
  */
-import type { GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import { PostUtils } from "@/utils/postUtils";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
 import { SITE } from "@/config";
+import { PostUtils } from "@/utils/postUtils";
 
-/**
- * 生成文章列表页的静态路径
- *
- * 处理流程：
- * 1. 获取所有博客文章，过滤掉草稿（draft: true）
- * 2. 使用 getSortedPosts 进行排序和进一步过滤
- *    - 过滤草稿（双重保险）
- *    - 过滤未到发布时间的文章
- *    - 按更新时间（或发布时间）降序排序
- * 3. 使用 paginate 生成分页路由
- *    - pageSize 设置为全部文章数量
- *    - 实际分页由前端的懒加载处理
- *
- * 为什么 pageSize 设置为全部文章数量：
- * - 减少构建时生成的路由数量
- * - 避免生成大量不会被访问的分页路由
- * - 所有分页逻辑由前端懒加载处理
- * - 只生成一个路由（/posts），提升构建速度
- *
- * @param paginate - Astro 提供的分页函数
- * @returns 静态路径数组，包含分页数据
- */
 export const getStaticPaths = (async ({ paginate }) => {
-  // 获取所有非草稿文章
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-
-  /**
-   * 对文章进行排序和过滤
-   *
-   * getSortedPosts 的处理：
-   * 1. 再次过滤草稿（确保万无一失）
-   * 2. 过滤未到发布时间的文章（publishDate > 当前日期）
-   * 3. 按更新时间（或发布时间）降序排序（最新的在前）
-   */
   const sortedPosts = PostUtils.sort(posts);
-
-  /**
-   * 生成分页路由
-   *
-   * 参数说明：
-   * - sortedPosts: 所有已发布的文章
-   * - pageSize: 每页的文章数量
-   *   - 设置为全部文章数量，只生成一个路由
-   *   - 实际分页由前端懒加载处理
-   *
-   * 返回格式：
-   * [
-   *   { params: { page: "1" } | undefined, props: { page: PageObject } }
-   * ]
-   */
   return paginate(sortedPosts, { pageSize: sortedPosts.length });
 }) satisfies GetStaticPaths;
 
-// 从 Astro.props 中解构获取分页数据
 const { page } = Astro.props;
+
+const categories = PostUtils.getUniqueCategories(page.data);
+
+const groupedByYear = PostUtils.groupBy(page.data, item =>
+  new Date(item.data.updated ?? item.data.date).getFullYear()
+);
+
+const years = Object.keys(groupedByYear)
+  .map(y => Number(y))
+  .sort((a, b) => b - a);
 ---
 
 <Layout
-  title={`文章 | ${SITE.title}`}
-  description="浏览博客的全部文章，按发布时间倒序展示技术内容、周报和专题记录。"
+  title={`归档 | ${SITE.title}`}
+  description="按时间浏览博客的全部文章，并可通过分类和年份快速定位到感兴趣的内容。"
+  robots="noindex,follow"
 >
-  <ul class="posts-list list-none pl-0">
+  <section class="archives-categories mb-4" aria-label="分类列表">
+    <p class="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
+      <span class="font-semibold opacity-80">分类：</span>
+      {
+        categories.map(({ category, categoryName, count }) => (
+          <a href={`/categories/${category}`} class="text-sm hover:underline">
+            {categoryName}（{count}）
+          </a>
+        ))
+      }
+    </p>
+    <p class="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
+      <span class="font-semibold opacity-80">年份：</span>
+      {
+        years.map(year => (
+          <a href={`#year-${year}`} class="text-sm hover:underline">
+            {year}（{groupedByYear[year].length}）
+          </a>
+        ))
+      }
+    </p>
+  </section>
+
+  <section class="archives-by-year" aria-label="按年归档">
     {
-      /**
-       * 渲染文章列表
-       *
-       * 懒加载逻辑：
-       * - 索引小于 SITE.postPerIndex 的文章直接显示
-       * - 索引大于等于该值的文章设置 hidden={true}，由懒加载脚本控制显示
-       *
-       * 数据来源：
-       * - page.data 是当前分页的文章数组
-       * - 由于 pageSize 设置为全部，这里包含所有文章
-       */
-      page.data.map((data, i) => (
-        <Card
-          {...data}
-          itemClass="posts-item"
-          hidden={i >= SITE.postPerIndex}
-        />
+      years.map(year => (
+        <div id={`year-${year}`} class="archives-year mb-8" tabindex={-1}>
+          <h2 class="mb-1 text-base">
+            {year} ({groupedByYear[year].length})
+          </h2>
+          <ul class="posts-list mt-2 list-none pl-0">
+            {groupedByYear[year].map(post => (
+              <Card {...post} variant="h3" itemClass="posts-item" dateFormat="absolute" />
+            ))}
+          </ul>
+        </div>
       ))
     }
-  </ul>
-  {/* 懒加载哨兵元素：用于 IntersectionObserver 检测滚动位置 */}
-  <div
-    id="posts-sentinel"
-    data-init={SITE.postPerIndex}
-    data-chunk={SITE.postPerPage}
-  >
-  </div>
+  </section>
 </Layout>
 
-<script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
-<script is:inline>
-  (function () {
-    function boot() {
-      if (typeof window.setupLazyList !== "function") return;
-      window.setupLazyList({
-        sentinelId: "posts-sentinel",
-        itemSelector: ".posts-item",
-      });
-    }
-    document.addEventListener("DOMContentLoaded", boot);
-    window.addEventListener("load", boot);
-  })();
-</script>
+<style>
+  /* 锚点滚动时留出顶栏高度，避免被 sticky header 遮住 */
+  .archives-year {
+    scroll-margin-top: 5rem;
+  }
+
+  .archives-by-year .posts-list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .archives-by-year .posts-list > li {
+    list-style: none;
+  }
+
+  .archives-by-year .posts-list > li::marker {
+    content: "";
+  }
+</style>
