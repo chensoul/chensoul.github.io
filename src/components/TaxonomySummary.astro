@@ -1,0 +1,87 @@
+---
+/**
+ * 关联导航摘要组件
+ *
+ * @fileoverview 在分类页、标签页头部展示一组关联入口。
+ */
+
+export interface TaxonomySummaryItem {
+  href: string;
+  label: string;
+  count?: number;
+}
+
+export interface Props {
+  title: string;
+  items: TaxonomySummaryItem[];
+}
+
+const { title, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="taxonomy-summary" aria-label={title}>
+      <p class="taxonomy-summary-text">
+        <span class="taxonomy-summary-label">{title}：</span>
+        {items.map(item => (
+          <a
+            href={item.href}
+            class="taxonomy-summary-link"
+          >
+            {item.label}
+            {
+              item.count !== undefined && item.count !== null && (
+                <span class="taxonomy-summary-count">（{item.count}）</span>
+              )
+            }
+          </a>
+        ))}
+      </p>
+    </section>
+  )
+}
+
+<style>
+  .taxonomy-summary {
+    margin-top: 1rem;
+  }
+
+  .taxonomy-summary-text {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  .taxonomy-summary-label {
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  .taxonomy-summary-link {
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .taxonomy-summary-link:hover {
+    text-decoration: underline;
+  }
+
+  .taxonomy-summary-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .taxonomy-summary-count {
+    margin-left: 0;
+  }
+
+  @media (max-width: 700px) {
+    .taxonomy-summary {
+      margin-top: 0.9rem;
+    }
+  }
+</style>

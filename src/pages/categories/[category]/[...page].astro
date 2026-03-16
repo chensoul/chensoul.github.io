@@ -8,8 +8,7 @@ import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import Tag from "@/components/Tag.astro";
-import { getCategoryDescription } from "@/utils/categoryMeta";
+import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { slugifyStr } from "@/utils/slugify";
 import { SITE } from "@/config";
@@ -100,10 +99,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 // 从 Astro.props 中解构获取分页数据和分类显示名称
 const { page, categoryName } = Astro.props;
-const categorySlug = Astro.params.category ?? "";
-const categoryDescription =
-  getCategoryDescription(categorySlug) ||
-  `按时间浏览分类「${categoryName}」下的文章。`;
+const totalPosts = page.data.length;
 const tagCount = new Map<string, { tagName: string; count: number }>();
 page.data.forEach(post => {
   post.data.tags.forEach(tag => {
@@ -123,29 +119,26 @@ const topTags = Array.from(tagCount.entries())
       a[1].tagName.localeCompare(b[1].tagName, "zh-CN")
   )
   .slice(0, 6);
+const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
+  href: `/tags/${tag}`,
+  label: tagName,
+  count,
+}));
 ---
 
 <Layout
   title={`${categoryName} | ${SITE.title}`}
-  description={`查看分类「${categoryName}」下的 ${page.data.length} 篇文章，${categoryDescription}`}
+  description={`查看分类「${categoryName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
 >
   <section class="category-head mb-5">
     <h1 class="mb-2 text-xl font-semibold">{categoryName}</h1>
     <p class="mb-2 text-sm text-[var(--text-secondary)]">
-      {categoryDescription}
+      按时间倒序浏览分类「{categoryName}」下的 {totalPosts} 篇文章。
     </p>
-    <p class="text-sm text-[var(--text-secondary)]">
-      共 {page.data.length} 篇文章
-    </p>
-    {
-      topTags.length > 0 && (
-        <ul class="category-tags mt-3 list-none pl-0">
-          {topTags.map(([tag, { tagName, count }]) => (
-            <Tag tag={tag} tagName={tagName} count={count} size="sm" />
-          ))}
-        </ul>
-      )
-    }
+    <TaxonomySummary
+      title="相关标签"
+      items={relatedTags}
+    />
   </section>
   <ul class="category-posts-list list-none pl-0">
     {
@@ -187,11 +180,3 @@ const topTags = Array.from(tagCount.entries())
   document.addEventListener("DOMContentLoaded", boot);
   window.addEventListener("load", boot);
 </script>
-
-<style>
-  .category-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 0.25rem;
-  }
-</style>

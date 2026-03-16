@@ -41,7 +41,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
         <h2>最近周报</h2>
         <LinkButton
           href="/categories/weekly"
-          class="inline-flex items-center gap-1.5 border-0 bg-transparent px-4 py-2.5 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           查看全部
           <IconArrowRight class="inline-block size-4" />
@@ -60,7 +60,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
                 post.data.timezone
               )}
             >
-              <h3>{post.data.title}</h3>
+              <b>{post.data.title}</b>
               <p>
                 {post.data.description?.trim() ||
                   PostUtils.getDescription(post.body ?? "")}
@@ -118,6 +118,11 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
   .home-section-head p {
     margin: 0.35rem 0 0;
+  }
+
+  .home-section-link {
+    flex-shrink: 0;
+    line-height: 1.45;
   }
 
   .home-split {

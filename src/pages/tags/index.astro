@@ -25,7 +25,6 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
   description="浏览博客的全部标签。前 10 个高频标签优先展示，其余标签按名称排序，方便按主题查找文章。"
   robots="noindex,follow"
 >
-  <p class="tags-intro">按标签浏览文章，常用标签会排在前面。</p>
   {
     topTags.length > 0 && (
       <section class="tags-section">
@@ -53,19 +52,12 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 </Layout>
 
 <style>
-  .tags-intro {
-    margin: 0 0 1rem;
-    color: var(--text-secondary);
-    font-size: 0.9375rem;
-  }
-
   .tags-section + .tags-section {
     margin-top: 1.5rem;
   }
 
   .tags-heading {
     margin: 0 0 0.75rem;
-    font-size: 1rem;
     font-weight: 600;
   }
 </style>

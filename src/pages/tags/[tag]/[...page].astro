@@ -8,7 +8,9 @@ import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
+import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { PostUtils } from "@/utils/postUtils";
+import { slugifyStr } from "@/utils/slugify";
 import { SITE } from "@/config";
 
 /** 生成静态路径：每个标签一个路由，该标签下全部文章由懒加载分批显示 */
@@ -28,6 +30,32 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 const { page, tagName } = Astro.props;
 const totalPosts = page.data.length;
+const categoryCount = new Map<string, { categoryName: string; count: number }>();
+page.data.forEach(post => {
+  post.data.categories.forEach(category => {
+    const slug = slugifyStr(category);
+    const existing = categoryCount.get(slug);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      categoryCount.set(slug, { categoryName: category, count: 1 });
+    }
+  });
+});
+const topCategories = Array.from(categoryCount.entries())
+  .sort(
+    (a, b) =>
+      b[1].count - a[1].count ||
+      a[1].categoryName.localeCompare(b[1].categoryName, "zh-CN")
+  )
+  .slice(0, 6);
+const relatedCategories = topCategories.map(
+  ([category, { categoryName, count }]) => ({
+    href: `/categories/${category}`,
+    label: categoryName,
+    count,
+  })
+);
 ---
 
 <Layout
@@ -35,10 +63,16 @@ const totalPosts = page.data.length;
   description={`查看标签「${tagName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
   robots="noindex,follow"
 >
-  <h1 slot="title">{tagName}</h1>
-  <p class="mb-4 text-sm text-[var(--text-secondary)]">
-    标签：{tagName}，共 {totalPosts} 篇文章
-  </p>
+  <section class="tag-head mb-5">
+    <h1 class="mb-2 text-xl font-semibold">{tagName}</h1>
+    <p class="mb-2 text-sm text-[var(--text-secondary)]">
+      按时间倒序浏览标签「{tagName}」下的 {totalPosts} 篇文章。
+    </p>
+    <TaxonomySummary
+      title="相关分类"
+      items={relatedCategories}
+    />
+  </section>
   <ul class="tag-posts-list list-none pl-0">
     {
       page.data.map((data, i) => (

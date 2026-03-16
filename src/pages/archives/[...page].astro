@@ -35,9 +35,8 @@ const years = Object.keys(groupedByYear)
   robots="noindex,follow"
 >
   <section class="archives-categories mb-4" aria-label="分类列表">
-    <p class="archives-intro">按时间浏览全部文章，也可以先从分类进入。</p>
     <p class="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
-      <span class="opacity-80">分类：</span>
+      <span class="font-semibold opacity-80">分类：</span>
       {
         categories.map(({ category, categoryName, count }) => (
           <a href={`/categories/${category}`} class="text-sm hover:underline">
@@ -47,7 +46,7 @@ const years = Object.keys(groupedByYear)
       }
     </p>
     <p class="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
-      <span class="opacity-80">年份：</span>
+      <span class="font-semibold opacity-80">年份：</span>
       {
         years.map(year => (
           <a href={`#year-${year}`} class="text-sm hover:underline">
@@ -109,12 +108,6 @@ const years = Object.keys(groupedByYear)
 </Layout>
 
 <style>
-  .archives-intro {
-    margin: 0 0 0.75rem;
-    color: var(--text-secondary);
-    font-size: 0.9375rem;
-  }
-
   .archives-by-year ul {
     padding-left: 0;
   }
