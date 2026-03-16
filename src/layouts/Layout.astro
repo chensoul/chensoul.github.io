@@ -34,6 +34,7 @@ export interface Props {
   ogImage?: string;
   canonicalURL?: string;
   schemaType?: string;
+  robots?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
   toc?: boolean;
@@ -50,6 +51,7 @@ const {
   ogImage: ogImageProp,
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
   schemaType,
+  robots,
   pubDatetime,
   modDatetime,
   toc = false,
@@ -58,6 +60,7 @@ const {
 
 const title = titleProp?.trim() || SITE.title;
 const fullDescription = descriptionProp?.trim() || SITE.desc;
+const robotsContent = robots?.trim() || "index,follow";
 
 // 社交分享图：仅文章页传 ogImage 时有图（PostDetails 传 og/.../slug.png），非文章页不输出 og:image
 // 必须使用站点主域名的绝对 URL，否则分享时爬虫无法正确拉取图片（Facebook/LinkedIn 等要求）
@@ -154,6 +157,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <meta name="title" content={title} />
     <meta name="description" content={fullDescription} />
     <meta name="author" content={author} />
+    <meta name="robots" content={robotsContent} />
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={fullDescription} />
@@ -293,6 +297,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
         };
       })();
     </script>
+    <slot name="head" />
   </head>
   <body>
     <a

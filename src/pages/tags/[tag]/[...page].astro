@@ -33,6 +33,7 @@ const totalPosts = page.data.length;
 <Layout
   title={`${tagName} | ${SITE.title}`}
   description={`查看标签「${tagName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
+  robots="noindex,follow"
 >
   <h1 slot="title">{tagName}</h1>
   <p class="mb-4 text-sm text-[var(--text-secondary)]">

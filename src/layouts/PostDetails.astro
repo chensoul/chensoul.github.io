@@ -38,6 +38,7 @@ const {
   mermaid,
   description: postDescription,
   "top-image": topImageRaw,
+  categories,
 } = post.data;
 
 /** 解析 top-image 的完整 URL：绝对地址原样返回，相对路径在生产环境拼接 CDN 前缀 */
@@ -72,6 +73,42 @@ const ogSlug = SITE.ogImage
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
   postDescription?.trim() || PostUtils.getDescription(post.body ?? "");
+const plainText = (post.body ?? "")
+  .replace(/```[\s\S]*?```/g, " ")
+  .replace(/`[^`]*`/g, " ")
+  .replace(/!\[[^\]]*]\([^)]+\)/g, " ")
+  .replace(/\[[^\]]*]\([^)]+\)/g, " ")
+  .replace(/<[^>]+>/g, " ")
+  .replace(/[#>*_\-\n\r]/g, " ")
+  .replace(/\s+/g, " ")
+  .trim();
+const latinWordCount = (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || [])
+  .length;
+const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
+const estimatedWordCount = latinWordCount + cjkCharCount;
+const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
+const primaryCategory = categories?.[0];
+const categoryLinks = categories.map(category => ({
+  name: category,
+  slug: slugifyStr(category),
+}));
+const breadcrumbItems = [
+  { name: "首页", item: SITE.website },
+  { name: "文章", item: new URL("/posts", SITE.website).toString() },
+  ...(primaryCategory
+    ? [
+        {
+          name: primaryCategory,
+          item: new URL(`/categories/${slugifyStr(primaryCategory)}`, SITE.website).toString(),
+        },
+      ]
+    : []),
+  { name: title, item: canonicalHrefPlaceholder() },
+];
+
+function canonicalHrefPlaceholder() {
+  return "";
+}
 
 const layoutProps = {
   title,
@@ -117,6 +154,17 @@ const canonicalHref =
   canonicalURL != null
     ? String(canonicalURL)
     : new URL(currentPostPath, SITE.website).toString();
+breadcrumbItems[breadcrumbItems.length - 1].item = canonicalHref;
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbItems.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    item: item.item,
+  })),
+};
 
 const relatedPostLimit = 6;
 const scoredRelatedPosts = posts
@@ -126,7 +174,7 @@ const scoredRelatedPosts = posts
     const sharedCategories = candidate.data.categories.filter(category =>
       post.data.categories.includes(category)
     ).length;
-    const score = sharedTags * 3 + sharedCategories * 2;
+    const score = sharedCategories * 4 + sharedTags * 2;
 
     return {
       post: candidate,
@@ -173,6 +221,15 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
+  {tags.map((tag: string) => (
+    <meta slot="head" property="article:tag" content={tag} />
+  ))}
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbStructuredData)}
+  />
   <!-- KaTeX 数学公式样式（仅文章详情且启用公式时加载） -->
   {
     math && (
@@ -206,15 +263,37 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     {topImageSrc && <img src={topImageSrc} alt={title} />}
 
     <!-- 文章标题与发布日期 -->
+    <nav class="post-breadcrumbs" aria-label="面包屑导航">
+      <a href="/">首页</a>
+      <span>/</span>
+      <a href="/posts">文章</a>
+      {primaryCategory && (
+        <>
+          <span>/</span>
+          <a href={`/categories/${slugifyStr(primaryCategory)}`}>{primaryCategory}</a>
+        </>
+      )}
+    </nav>
+
     <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
       <h1 class="text-2xl font-semibold">{title}</h1>
-      <Datetime
-        pubDatetime={date}
-        modDatetime={updated}
-        timezone={post.data.timezone}
-        format="absolute"
-        class="mt-1 flex justify-center text-sm text-[var(--accent)]"
-      />
+      <div class="post-meta-strip">
+        {categoryLinks.map(category => (
+          <a class="post-category-chip" href={`/categories/${category.slug}`}>
+            {category.name}
+          </a>
+        ))}
+        <span class="post-meta-divider" aria-hidden="true">·</span>
+        <span>{readingMinutes} 分钟阅读</span>
+        <span class="post-meta-divider" aria-hidden="true">·</span>
+        <Datetime
+          pubDatetime={date}
+          modDatetime={updated}
+          timezone={post.data.timezone}
+          format="absolute"
+          class="inline-flex text-sm text-[var(--accent)]"
+        />
+      </div>
     </section>
 
     <Content />
@@ -363,6 +442,55 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
 <!-- 侧栏与 TOC 样式（tocbot 注入的 .toc 等类） -->
 <style>
+  .post-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .post-breadcrumbs a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-breadcrumbs a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .post-meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .post-category-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: var(--background-secondary);
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .post-category-chip:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .post-meta-divider {
+    color: var(--border);
+  }
+
   #article :global(h2[id]),
   #article :global(h3[id]),
   #article :global(h4[id]),
