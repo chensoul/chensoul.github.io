@@ -3,7 +3,7 @@ import { SITE } from "@/config";
 import YearProgress from "./YearProgress.astro";
 
 const navLinks = [
-  ...(SITE.showArchives ? [{ href: "/posts", text: "文章" }] : []),
+  { href: "/posts", text: "文章" },
   { href: "/tags", text: "标签" },
   { href: "/running", text: "跑步" },
   ...(SITE.feeds.enabled

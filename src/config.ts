@@ -60,10 +60,6 @@ export const SITE = {
    */
   genDescriptionCount: 200,
 
-  // ========== 功能开关 ==========
-  /** 是否显示归档页面入口 */
-  showArchives: true,
-
   /** 是否在顶栏下方显示年度进度条 */
   showYearProgress: true,
 
