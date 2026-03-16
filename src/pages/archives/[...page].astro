@@ -8,7 +8,9 @@ import Layout from "@/layouts/Layout.astro";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { SITE } from "@/config";
+import { getCategoryMeta } from "@/utils/categoryMeta";
 import { PostUtils } from "@/utils/postUtils";
+import { slugifyStr } from "@/utils/slugify";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -71,6 +73,8 @@ const years = Object.keys(groupedByYear)
               const dateStr = PostUtils.getLocalDateString(d, tz);
               const dateText = dateStr.slice(5);
               const primaryCategory = data.categories?.[0];
+              const primaryCategoryLabel =
+                getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
               return (
                 <li class="flex items-start gap-2 leading-6">
                   <span class="w-14 text-right text-sm tabular-nums opacity-80">
@@ -91,10 +95,10 @@ const years = Object.keys(groupedByYear)
                   </a>
                   {primaryCategory && (
                     <a
-                      href={`/categories/${primaryCategory}`}
+                      href={`/categories/${slugifyStr(primaryCategory)}`}
                       class="archives-category"
                     >
-                      {primaryCategory}
+                      {primaryCategoryLabel}
                     </a>
                   )}
                 </li>

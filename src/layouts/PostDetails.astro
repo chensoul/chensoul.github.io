@@ -11,6 +11,7 @@ import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { PostUtils } from "@/utils/postUtils";
+import { getCategoryMeta } from "@/utils/categoryMeta";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
@@ -89,8 +90,10 @@ const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
 const estimatedWordCount = latinWordCount + cjkCharCount;
 const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
 const primaryCategory = categories?.[0];
+const primaryCategoryLabel =
+  getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
 const categoryLinks = categories.map(category => ({
-  name: category,
+  name: getCategoryMeta(category)?.name ?? category,
   slug: slugifyStr(category),
 }));
 const breadcrumbItems = [
@@ -99,7 +102,7 @@ const breadcrumbItems = [
   ...(primaryCategory
     ? [
         {
-          name: primaryCategory,
+          name: primaryCategoryLabel,
           item: new URL(
             `/categories/${slugifyStr(primaryCategory)}`,
             SITE.website
@@ -279,7 +282,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           <>
             <span>/</span>
             <a href={`/categories/${slugifyStr(primaryCategory)}`}>
-              {primaryCategory}
+              {primaryCategoryLabel}
             </a>
           </>
         )
@@ -390,7 +393,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           {relatedPosts.map(({ post: relatedPost, path }) => (
             <a href={path} class="related-post-card">
               <p class="related-post-meta">
-                {relatedPost.data.categories.join(" / ")}
+                {relatedPost.data.categories
+                  .map(category => getCategoryMeta(category)?.name ?? category)
+                  .join(" / ")}
               </p>
               <h3>{relatedPost.data.title}</h3>
               <p>

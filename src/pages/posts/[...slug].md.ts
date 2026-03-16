@@ -1,6 +1,7 @@
 import type { GetStaticPaths, APIRoute } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE } from "@/config";
+import { getCategoryMeta } from "@/utils/categoryMeta";
 import { PostUtils } from "@/utils/postUtils";
 
 interface Props {
@@ -45,7 +46,9 @@ export const GET: APIRoute<Props> = ({ props }) => {
   const { post } = props;
   const categories =
     post.data.categories.length > 0
-      ? post.data.categories.join(", ")
+      ? post.data.categories
+          .map(category => getCategoryMeta(category)?.name ?? category)
+          .join(", ")
       : "Uncategorized";
   const tags = post.data.tags.length > 0 ? post.data.tags.join(", ") : "None";
   const description =

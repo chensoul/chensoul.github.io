@@ -25,6 +25,7 @@
 import type { CollectionEntry } from "astro:content";
 import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
+import { getCategoryMeta } from "./categoryMeta";
 import { slugifyStr, slugifyAll } from "./slugify";
 import { tagMoreRegex, regexReplacers } from "./descriptionRegex";
 
@@ -191,6 +192,7 @@ export class PostUtils {
       .flatMap(post => post.data.categories)
       .forEach(cat => {
         const slugName = slugifyStr(cat);
+        const displayName = getCategoryMeta(cat)?.name ?? cat;
 
         if (catCountMap.has(slugName)) {
           const existing = catCountMap.get(slugName)!;
@@ -198,7 +200,7 @@ export class PostUtils {
         } else {
           catCountMap.set(slugName, {
             category: slugName,
-            categoryName: cat,
+            categoryName: displayName,
             count: 1,
           });
         }

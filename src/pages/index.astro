@@ -9,7 +9,6 @@ import Layout from "@/layouts/Layout.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 
 const posts = await getCollection("blog");
@@ -34,18 +33,19 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
       <ul class="home-card-list">
         {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
+      <div class="home-section-action">
+        <LinkButton
+          href="/archives"
+          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          查看全部文章
+        </LinkButton>
+      </div>
     </div>
 
     <aside class="home-side-panel">
       <div class="home-section-head">
         <h2>最近周报</h2>
-        <LinkButton
-          href="/categories/weekly"
-          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
-          查看全部
-          <IconArrowRight class="inline-block size-4" />
-        </LinkButton>
       </div>
       <div class="home-side-list">
         {
@@ -69,18 +69,17 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
           ))
         }
       </div>
+      <div class="home-section-action">
+        <LinkButton
+          href="/categories/weekly"
+          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          查看全部周报
+        </LinkButton>
+      </div>
     </aside>
   </section>
 
-  <div class="home-footer-action">
-    <LinkButton
-      href="/posts"
-      class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
-    >
-      查看所有文章
-      <IconArrowRight class="inline-block size-4" />
-    </LinkButton>
-  </div>
 </Layout>
 
 <style>
@@ -125,6 +124,12 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     line-height: 1.45;
   }
 
+  .home-section-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+
   .home-split {
     display: grid;
     gap: 1rem;
@@ -158,26 +163,30 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     background: var(--background-secondary);
   }
 
+  .home-side-card b {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
   .home-side-card p {
     margin: 0.6rem 0 0;
     font-size: 0.875rem;
     line-height: 1.65;
   }
 
-  .home-footer-action {
-    margin-top: 1.5rem;
-    text-align: center;
-  }
-
   @media (min-width: 900px) {
     .home-split {
-      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+      gap: 1.4rem;
+      grid-template-columns: minmax(0, 1.32fr) minmax(360px, 1.08fr);
     }
   }
 
   @media (max-width: 700px) {
     .home-section-head {
-      display: block;
+      align-items: center;
+      gap: 0.75rem;
     }
   }
 </style>

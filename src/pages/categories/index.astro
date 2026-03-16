@@ -44,9 +44,9 @@ let categories = PostUtils.getUniqueCategories(posts).sort(
  * 用于在分类卡片上显示该分类的最新文章标题
  */
 const categoryLatestPost = new Map<string, string>();
-categories.forEach(({ categoryName }) => {
+categories.forEach(({ category, categoryName }) => {
   const latestPost = sortedPosts.find(post =>
-    post.data.categories.includes(categoryName)
+    post.data.categories.some(postCategory => postCategory === category)
   );
   if (latestPost) {
     categoryLatestPost.set(categoryName, latestPost.data.title);

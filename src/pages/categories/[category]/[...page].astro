@@ -75,7 +75,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
      * - 按更新时间（或发布时间）降序排序
      */
     const categoryPosts = PostUtils.sort(
-      posts.filter(post => post.data.categories.includes(categoryName))
+      posts.filter(post =>
+        post.data.categories.some(postCategory => slugifyStr(postCategory) === category)
+      )
     );
 
     /**
