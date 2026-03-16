@@ -15,7 +15,10 @@ export async function GET() {
     .slice(0, 10);
 
   const iconUrl = `${SITE.website.replace(/\/$/, "")}/favicon.ico`;
-  const titleEscaped = SITE.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const titleEscaped = SITE.title
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
   return rss({
     title: SITE.title,

@@ -119,12 +119,10 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
 
 /** 用客户端当前时间更新所有带 data-published 的日期，避免首屏服务端“构建时 now”与部署环境时区/时间不一致 */
 function updateFeedsCardDates() {
-  document
-    .querySelectorAll(".feeds-card-date[data-published]")
-    .forEach((el) => {
-      const val = el.getAttribute("data-published");
-      if (val) el.textContent = getDisplayDate(val);
-    });
+  document.querySelectorAll(".feeds-card-date[data-published]").forEach(el => {
+    const val = el.getAttribute("data-published");
+    if (val) el.textContent = getDisplayDate(val);
+  });
 }
 
 export async function initFeeds(
