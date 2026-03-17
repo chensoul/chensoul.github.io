@@ -29,7 +29,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
     topTags.length > 0 && (
       <section class="tags-section">
         <h2 class="tags-heading">热门标签</h2>
-        <ul class="list-none pl-0">
+        <ul class="tags-list">
           {topTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}
@@ -41,7 +41,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
     otherTags.length > 0 && (
       <section class="tags-section">
         <h2 class="tags-heading">全部标签</h2>
-        <ul class="list-none pl-0">
+        <ul class="tags-list">
           {otherTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}
@@ -52,12 +52,33 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 </Layout>
 
 <style>
+  .tags-section {
+    margin-top: 0.5rem;
+  }
+
   .tags-section + .tags-section {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
   }
 
   .tags-heading {
     margin: 0 0 0.75rem;
     font-weight: 600;
+  }
+
+  .tags-list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+  }
+
+  .tags-section:first-of-type .tags-list {
+    gap: 0.35rem;
+  }
+
+  .tags-list li {
+    margin: 0;
   }
 </style>
