@@ -491,7 +491,11 @@ a.feeds-card-title:hover {
 
 .taxonomy-pill-tag:hover {
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 18%, var(--background-secondary));
+  background: color-mix(
+    in srgb,
+    var(--accent) 18%,
+    var(--background-secondary)
+  );
 }
 
 .taxonomy-pill-count--tag {

@@ -43,7 +43,9 @@ const { tag, tagName, count, size = "sm" } = Astro.props;
       <span>{tagName}</span>
       {
         count !== undefined && count !== null && (
-          <span class="taxonomy-pill-count taxonomy-pill-count--tag">{count}</span>
+          <span class="taxonomy-pill-count taxonomy-pill-count--tag">
+            {count}
+          </span>
         )
       }
     </span>
