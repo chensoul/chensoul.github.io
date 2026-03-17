@@ -40,22 +40,31 @@ function getFonts() {
 
 interface OgImageOptions {
   title: string;
-  date: Date;
+  date?: Date | null;
   author?: string;
   siteTitle?: string;
+  description?: string;
 }
 
 export async function generateOgImage({
   title,
   date,
   author,
+  siteTitle,
+  description,
 }: OgImageOptions): Promise<Buffer> {
   const fonts = await getFonts();
-  const dateStr = date.toLocaleDateString("zh-CN", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+
+  const titleText = title || siteTitle || "";
+
+  const dateStr = date
+    ? date.toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
+  const displayText = description || dateStr || "";
 
   const svg = await satori(
     {
@@ -136,7 +145,7 @@ export async function generateOgImage({
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                           },
-                          children: title,
+                          children: titleText,
                         },
                       },
                       {
@@ -172,7 +181,7 @@ export async function generateOgImage({
                                   color: "#2563eb",
                                   fontWeight: 400,
                                 },
-                                children: dateStr,
+                                children: displayText,
                               },
                             },
                           ],

@@ -31,9 +31,10 @@ export const GET: APIRoute = async ({ props }) => {
 
   const png = await generateOgImage({
     title,
-    date: date,
+    date,
     author,
     siteTitle: SITE.title,
+    description: SITE.desc
   });
 
   return new Response(Buffer.from(png), {
