@@ -176,7 +176,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
   </div>
 </Layout>
 
-<script is:inline src={SITE.lazyListJsUrl || "/lazy-list.js"}></script>
+{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
 <script is:inline>
   function boot() {
     if (typeof window.setupLazyList !== "function") return;

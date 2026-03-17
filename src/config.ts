@@ -218,8 +218,8 @@ export const SITE = {
   },
 
   /**
-   * 懒加载列表脚本 CDN 地址（文章列表、分类、标签页滚动加载）
-   * 留空则使用站点同源 /lazy-list.js
+   * 懒加载列表脚本地址（文章列表、分类、标签页滚动加载）
+   * 留空则不注入脚本，页面仅显示首屏数量
    */
   lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list/lazy-list.js",
 

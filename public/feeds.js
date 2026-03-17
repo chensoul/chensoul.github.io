@@ -126,7 +126,6 @@ function updateFeedsCardDates() {
 }
 
 export async function initFeeds(
-  _siteTimezone,
   fallbackOgImageGlobal,
   cosHost,
   initialItemCount,
@@ -250,7 +249,6 @@ function run() {
   try {
     const d = JSON.parse(dataElement.dataset.json);
     initFeeds(
-      d.siteTimezone,
       d.fallbackOgImage,
       d.cosHost || "",
       d.initialItemCount,
