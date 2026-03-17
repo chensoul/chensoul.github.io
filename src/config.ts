@@ -178,11 +178,11 @@ export const SITE = {
    */
   customFooterLink: {
     /** 是否启用自定义链接 */
-    enabled: false,
+    enabled: true,
     /** 链接显示文本 */
-    text: "Stats",
+    text: "status",
     /** 链接目标地址 */
-    url: "https://stats.chensoul.cc/blog.chensoul.cc",
+    url: "https://uptime.chensoul.cc/status/default",
   },
 
   /**
