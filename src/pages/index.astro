@@ -68,7 +68,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
                 post.data.timezone
               )}
             >
-              <b>{post.data.title}</b>
+              <h3>{post.data.title}</h3>
               <p>
                 {post.data.description?.trim() ||
                   PostUtils.getDescription(post.body ?? "")}
@@ -96,11 +96,18 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     border-radius: 1.25rem;
   }
 
-  .home-section-head h2,
+  .home-section-head h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
   .home-side-card h3 {
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: 0.9rem;
+    font-weight: 500;
     line-height: 1.45;
+    color: var(--accent);
   }
 
   .home-section-head p,

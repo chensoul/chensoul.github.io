@@ -527,26 +527,21 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     #sidebar {
       position: fixed;
       top: 10rem;
-      right: 4.5rem;
+      right: 5rem;
       z-index: 40;
       margin: 0;
       max-height: calc(100vh - 8rem);
-      width: 10rem;
+      width: 14rem;
       transform: translateX(0);
       border: none;
       box-shadow: none;
       border-radius: 0.5rem;
-      padding: 1rem;
+      padding: 1rem 0.75rem;
       background-color: color-mix(
         in srgb,
         var(--text-primary) 2%,
         var(--background)
       );
-    }
-    @media (min-width: 1280px) {
-      #sidebar {
-        width: 14rem;
-      }
     }
     :global(.toc > .toc-list) {
       padding-top: 0.5rem;
@@ -564,15 +559,22 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       margin-bottom: 0;
       padding-left: 0.75rem;
     }
+    :global(.toc-list) {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
     :global(.toc-list-item) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--text-primary);
-    }
-    :global(.toc-list .toc-list .toc-list-item) {
       margin-top: 0.25rem;
       margin-bottom: 0.25rem;
+    }
+    :global(.toc-list .toc-list .toc-list-item) {
+      margin-top: 0.125rem;
+      margin-bottom: 0.125rem;
     }
     :global(.toc-link) {
       font-size: 0.875rem;
@@ -589,11 +591,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       display: none !important;
       content: "";
     }
-    @media (max-width: 1023px) {
-      :global(.toc-list-item) {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-      }
+  }
+  @media (min-width: 1600px) {
+    #sidebar {
+      width: 16rem;
     }
   }
 

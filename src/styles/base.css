@@ -1,6 +1,6 @@
 /* 优先使用系统中文字体，避免首页加载大量 Noto Sans SC 子集字体 */
 @import "@fontsource/noto-sans/400.css";
-@import "@fontsource/roboto-mono/400.css";
+@import "@fontsource/roboto-mono/700.css";
 @font-face {
   font-family: "Fallback Sans";
   src:
@@ -80,10 +80,6 @@ a {
   color: var(--accent);
   text-decoration: none;
   transition: color 0.2s ease;
-}
-
-a:visited {
-  color: color-mix(in srgb, var(--accent) 72%, var(--text-secondary));
 }
 
 a:hover {
