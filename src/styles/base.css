@@ -1,12 +1,8 @@
+/* 仅保留常用字重以减轻首屏请求：SC 400/700、Noto Sans 400、Roboto Mono 400 */
 @import "@fontsource/noto-sans-sc/400.css";
 @import "@fontsource/noto-sans-sc/700.css";
-@import "@fontsource/noto-sans-sc/800.css";
 @import "@fontsource/noto-sans/400.css";
-@import "@fontsource/noto-sans/400-italic.css";
-@import "@fontsource/noto-sans/700.css";
 @import "@fontsource/roboto-mono/400.css";
-@import "@fontsource/roboto-mono/400-italic.css";
-@import "@fontsource/roboto-mono/600.css";
 @font-face {
   font-family: "Fallback Sans";
   src:

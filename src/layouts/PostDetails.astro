@@ -246,7 +246,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <link
         slot="head"
         rel="preload"
-        href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+        href="https://cos.chensoul.cc/dist/katex/0.16.38/dist/katex.min.css"
         as="style"
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
@@ -259,7 +259,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <noscript slot="head">
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.33/dist/katex.min.css"
+          href="https://cos.chensoul.cc/dist/katex/0.16.38/dist/katex.min.css"
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
         />
@@ -758,15 +758,22 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         });
       }
     }
-    if (window.tocbot) {
-      initTocbot();
-    } else if (tocbotJsUrl) {
-      const script = document.createElement("script");
-      script.src = tocbotJsUrl;
-      script.crossOrigin = "anonymous";
-      script.referrerPolicy = "no-referrer";
-      script.onload = initTocbot;
-      document.body.appendChild(script);
+    function loadTocbot() {
+      if (window.tocbot) {
+        initTocbot();
+      } else if (tocbotJsUrl) {
+        const script = document.createElement("script");
+        script.src = tocbotJsUrl;
+        script.crossOrigin = "anonymous";
+        script.referrerPolicy = "no-referrer";
+        script.onload = initTocbot;
+        document.body.appendChild(script);
+      }
+    }
+    if (typeof requestIdleCallback !== "undefined") {
+      requestIdleCallback(loadTocbot, { timeout: 2000 });
+    } else {
+      setTimeout(loadTocbot, 1);
     }
   })();
   document.addEventListener("astro:after-swap", () => {

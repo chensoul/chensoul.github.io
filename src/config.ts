@@ -32,7 +32,7 @@ export const SITE = {
    * 首页文章列表每页显示数量
    * 注意：index 表示首页或列表的第一页
    */
-  postPerIndex: 12,
+  postPerIndex: 10,
 
   // ========== 内容生成配置 ==========
   /**
