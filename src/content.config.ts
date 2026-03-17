@@ -217,6 +217,8 @@ const blog = defineCollection({
        * 仅用于文章详情页展示，不参与摘要/描述提取（getDescription 已通过正则剔除正文中的图片语法）。
        */
       "top-image": z.string().optional(),
+
+      slug: z.string().optional(),
     }),
 });
 

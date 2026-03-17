@@ -70,22 +70,6 @@ export const SITE = {
   showBackButton: true,
 
   /**
-   * 是否生成 OG 分享图
-   *
-   * true 时：构建阶段会生成 /og/.../slug.png，并在文章页输出对应的 og:image meta
-   */
-  ogImage: true,
-
-  /**
-   * 生成 OG 分享图的文章数量上限（按最近更新时间/发布时间倒序）
-   *
-   * 用于降低构建耗时：
-   * - 仅为最近 N 篇文章生成 /og/.../slug.png
-   * - 旧文章不再生成 og:image，避免构建时逐篇渲染图片
-   */
-  ogImageLimit: 400,
-
-  /**
    * HTML 页面的 lang 属性值
    *
    * 影响：

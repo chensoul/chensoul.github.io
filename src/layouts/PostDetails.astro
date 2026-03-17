@@ -60,25 +60,14 @@ const topImageSrc =
 const { Content } = await render(post);
 const hasInlineImages = /!\[[\s\S]*?\]\([^)]+\)|<img\s/i.test(post.body ?? "");
 
-const ogEligiblePostIds = SITE.ogImage
-  ? new Set(
-      PostUtils.sort(posts)
-        .slice(0, SITE.ogImageLimit)
-        .map(candidate => candidate.id)
-    )
-  : null;
+// Generate Hugo-style slug for OG image
+const year = date.getFullYear();
+const month = String(date.getMonth() + 1).padStart(2, "0");
+const day = String(date.getDate()).padStart(2, "0");
+const slugPart = post.data.slug;
+const hugoSlug = `${year}/${month}/${day}/${slugPart}`;
+const ogImage = `/og/${hugoSlug}.png`;
 
-// OG 图：仅最近文章输出 og:image，降低构建时逐篇生成图片的成本
-const ogSlug =
-  SITE.ogImage && ogEligiblePostIds?.has(post.id)
-    ? PostUtils.getPath(
-        post.id,
-        post.filePath,
-        false,
-        post.data.date,
-        post.data.timezone
-      )
-    : null;
 
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
@@ -133,7 +122,7 @@ const layoutProps = {
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,
-  ...(ogSlug && { ogImage: `og/${ogSlug}.png` }),
+  ogImage,
 };
 
 /* ========== Prev/Next Posts ========== */

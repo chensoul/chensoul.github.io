@@ -1,51 +1,31 @@
-/**
- * 动态 OG 图路由
- *
- * @fileoverview 为最近的非草稿文章生成 /og/yyyy/mm/dd/slug.png。GET 时调用 generateOgImage 返回 PNG 并带长期缓存头。
- *
- * @see utils/og-image.ts
- */
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { generateOgImage } from "@/utils/og-image";
-import { PostUtils } from "@/utils/postUtils";
-import { SITE } from "@/config";
+import { generateOgImage } from "../../utils/og-image";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if (!SITE.ogImage) return [];
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return PostUtils.sort(posts)
-    .slice(0, SITE.ogImageLimit)
-    .map(post => {
-      const slug = PostUtils.getPath(
-        post.id,
-        post.filePath,
-        false,
-        post.data.date,
-        post.data.timezone
-      );
-      const pubDate = new Date(post.data.date);
-      const author = (post.data as { author?: string }).author ?? SITE.author;
-      return {
-        params: { slug },
-        props: { title: post.data.title, pubDate, author },
-      };
-    });
+
+  return posts.map(post => {
+    const date = new Date(post.data.date);
+    const year = String(date.getFullYear());
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const slugPart = post.data.slug;
+    const fullSlug = `${year}/${month}/${day}/${slugPart}`;
+
+    return {
+      params: { slug: fullSlug },
+      props: { title: post.data.title, date: date },
+    };
+  });
 };
 
 export const GET: APIRoute = async ({ props }) => {
-  const { title, pubDate, author } = props as {
-    title: string;
-    pubDate: Date;
-    author: string;
-  };
-  const png = await generateOgImage({
-    title,
-    date: pubDate,
-    author,
-    siteTitle: SITE.title,
-  });
-  return new Response(new Uint8Array(png), {
+  const { title, date } = props as { title: string; date: Date };
+
+  const png = await generateOgImage({ title, date: date });
+
+  return new Response(Buffer.from(png), {
     headers: {
       "Content-Type": "image/png",
       "Cache-Control": "public, max-age=31536000, immutable",
