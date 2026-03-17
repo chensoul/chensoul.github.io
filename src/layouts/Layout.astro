@@ -262,6 +262,9 @@ const structuredData = resolvedSchemaType === "BlogPosting"
               localStorage.setItem("theme", nextTheme);
             } catch {}
           }
+          window.dispatchEvent(
+            new CustomEvent("themechange", { detail: { theme: nextTheme } })
+          );
           return nextTheme;
         }
 

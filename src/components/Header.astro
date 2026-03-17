@@ -109,6 +109,16 @@ const { pathname } = Astro.url;
   } else if (themeToggle) {
     themeToggle.dataset.bound = "1";
 
+    function updateThemeToggleLabel() {
+      if (!themeToggle) return;
+      const currentTheme =
+        document.documentElement.getAttribute("data-theme") || "light";
+      themeToggle.setAttribute(
+        "aria-label",
+        currentTheme === "dark" ? "切换到浅色模式" : "切换到深色模式"
+      );
+    }
+
     function toggleTheme() {
       const themeManager = (
         window as Window & {
@@ -126,8 +136,10 @@ const { pathname } = Astro.url;
       const newTheme = currentTheme === "light" ? "dark" : "light";
       html.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
+      updateThemeToggleLabel();
     }
 
+    updateThemeToggleLabel();
     themeToggle.addEventListener("click", toggleTheme);
 
     themeToggle.addEventListener("keydown", e => {
@@ -136,6 +148,20 @@ const { pathname } = Astro.url;
         toggleTheme();
       }
     });
+
+    if ((window as Window & { _themeToggleLabelHandler?: () => void })
+      ._themeToggleLabelHandler) {
+      window.removeEventListener(
+        "themechange",
+        (window as Window & { _themeToggleLabelHandler?: () => void })
+          ._themeToggleLabelHandler as EventListener
+      );
+    }
+
+    (
+      window as Window & { _themeToggleLabelHandler?: () => void }
+    )._themeToggleLabelHandler = updateThemeToggleLabel;
+    window.addEventListener("themechange", updateThemeToggleLabel);
   }
 </script>
 
