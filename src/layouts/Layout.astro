@@ -52,7 +52,7 @@ const fullDescription = descriptionProp?.trim() || SITE.desc;
 const robotsContent = robots?.trim() || "index,follow";
 
 // 使用当前 URL 的 host 构建 OG 图片地址，确保开发与生产环境都能正确引用
-const ogImage = ogImageProp ?? "avatar.png";
+const ogImage = ogImageProp ?? "images/og.webp";
 const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
 const socialImageURLString = new URL(ogImagePath, Astro.url.origin).href;
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
