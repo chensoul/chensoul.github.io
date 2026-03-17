@@ -297,6 +297,37 @@ import { SITE } from "@/config";
       });
     }
 
+    function setupLazyArtalk() {
+      const container = document.getElementById("Comments");
+      if (!container) return;
+
+      if (window._artalkLoadObserver) {
+        window._artalkLoadObserver.disconnect();
+        window._artalkLoadObserver = null;
+      }
+
+      if (typeof window.IntersectionObserver === "undefined") {
+        handlePageLoad();
+        return;
+      }
+
+      window._artalkLoadObserver = new IntersectionObserver(
+        entries => {
+          const entry = entries[0];
+          if (!entry?.isIntersecting) return;
+
+          window._artalkLoadObserver?.disconnect();
+          window._artalkLoadObserver = null;
+          handlePageLoad();
+        },
+        {
+          rootMargin: "320px 0px",
+        }
+      );
+
+      window._artalkLoadObserver.observe(container);
+    }
+
     /**
      * 单次设置事件监听
      *
@@ -306,13 +337,16 @@ import { SITE } from "@/config";
       if (window._artalkInitialized) return;
       window._artalkInitialized = true;
 
-      // 初始加载与整页刷新
-      if (document.readyState === "complete") {
-        handlePageLoad();
+      // 初始加载与整页刷新：接近评论区时再触发加载
+      if (
+        document.readyState === "interactive" ||
+        document.readyState === "complete"
+      ) {
+        setupLazyArtalk();
       } else {
-        document.addEventListener("DOMContentLoaded", handlePageLoad);
+        document.addEventListener("DOMContentLoaded", setupLazyArtalk);
       }
-      window.addEventListener("load", handlePageLoad);
+      window.addEventListener("load", setupLazyArtalk);
     }
 
     // 启动Artalk

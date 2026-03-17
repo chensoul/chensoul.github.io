@@ -2,7 +2,7 @@
 /**
  * 全站基础布局
  *
- * @fileoverview 提供 HTML 骨架、meta/OG/JSON-LD、主题脚本、Header、Footer、BackToTop、BackButton；子页通过 props 传入 title、description、canonicalURL、评论/TOC 等开关。
+ * @fileoverview 提供 HTML 骨架、meta/OG/JSON-LD、主题脚本、Header、Footer、BackToTop、BackButton；子页通过 props 传入 title、description、canonicalURL 等页面元信息。
  */
 import { SITE } from "@/config";
 import "@/styles/global.css";
@@ -20,11 +20,6 @@ import BackButton from "@/components/BackButton.astro";
  * @property canonicalURL - 规范链接
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间
- * @property scrollSmooth - 是否启用平滑滚动
- * @property toc - 是否启用目录
- * @property math - 是否启用数学公式
- * @property comments - 是否启用评论
- * @property mermaid - 是否启用 Mermaid 图表（仅文章启用时才加载脚本并渲染）
  * @property ogImage - 社交分享图路径（相对 public），如 "og.png" 或文章封面
  */
 export interface Props {
@@ -37,10 +32,6 @@ export interface Props {
   robots?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
-  toc?: boolean;
-  math?: boolean;
-  comments?: boolean;
-  mermaid?: boolean;
 }
 
 // 解构属性，设置默认值（title 未传或为空时用网站名称）
@@ -54,8 +45,6 @@ const {
   robots,
   pubDatetime,
   modDatetime,
-  toc = false,
-  mermaid: _mermaid = false, // 由子布局（如 PostDetails）传入，本布局仅透传不消费
 } = Astro.props;
 
 const title = titleProp?.trim() || SITE.title;
@@ -234,17 +223,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
 
     <meta name="msvalidate.01" content="5995FAD202DE5A364D652266E4C4E0E0" />
 
-    {toc && (
-      <>
-        <link
-          rel="stylesheet"
-          href={SITE.tocbot.cssUrl}
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-        />
-      </>
-    )}
-
     <!-- Theme initialization script to prevent flash；切换禁用时固定浅色 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
       (function () {
@@ -332,10 +310,8 @@ const structuredData = resolvedSchemaType === "BlogPosting"
               s.defer = true;
               document.head.appendChild(s);
             }
-            const delay = 3000;
-            if (document.readyState === "complete") setTimeout(load, delay);
-            else window.addEventListener("load", () => setTimeout(load, delay));
-            ["click", "scroll", "keydown"].forEach((ev) =>
+
+            ["click", "keydown", "touchstart"].forEach((ev) =>
               window.addEventListener(ev, load, { once: true, passive: true })
             );
           })();

@@ -72,9 +72,18 @@ export const SITE = {
   /**
    * 是否生成 OG 分享图
    *
-   * true 时：dev 与 prod 均生成 /og/.../slug.png 并在文章页输出 og:image meta
+   * true 时：构建阶段会生成 /og/.../slug.png，并在文章页输出对应的 og:image meta
    */
   ogImage: true,
+
+  /**
+   * 生成 OG 分享图的文章数量上限（按最近更新时间/发布时间倒序）
+   *
+   * 用于降低构建耗时：
+   * - 仅为最近 N 篇文章生成 /og/.../slug.png
+   * - 旧文章不再生成 og:image，避免构建时逐篇渲染图片
+   */
+  ogImageLimit: 400,
 
   /**
    * HTML 页面的 lang 属性值
@@ -197,7 +206,8 @@ export const SITE = {
   /**
    * Umami 统计
    *
-   * 生产环境且 websiteId、scriptUrl 均非空时才会注入脚本（首屏加载后再加载，减少对 LCP 影响）
+   * 生产环境且 websiteId、scriptUrl 均非空时才会注入脚本。
+   * 当前实现会在首次真实交互后再加载，尽量移出首屏关键路径。
    * 留空则关闭统计
    */
   umami: {

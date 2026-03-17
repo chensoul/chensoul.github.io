@@ -9,6 +9,7 @@ import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
+import PhotosuiteStyles from "@/components/PhotosuiteStyles.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { PostUtils } from "@/utils/postUtils";
 import { getCategoryMeta } from "@/utils/categoryMeta";
@@ -16,7 +17,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
 import { SITE } from "@/config";
-import "photosuite/dist/photosuite.css";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -36,7 +36,6 @@ const {
   toc,
   math,
   comments,
-  mermaid,
   description: postDescription,
   "top-image": topImageRaw,
   categories,
@@ -59,9 +58,18 @@ const topImageSrc =
 
 // 渲染文章内容
 const { Content } = await render(post);
+const hasInlineImages = /!\[[\s\S]*?\]\([^)]+\)|<img\s/i.test(post.body ?? "");
 
-// OG 图：SITE.ogImage 为 true 时传入（dev 与 prod 均生成并输出 og:image）
-const ogSlug = SITE.ogImage
+const ogEligiblePostIds = SITE.ogImage
+  ? new Set(
+      PostUtils.sort(posts)
+        .slice(0, SITE.ogImageLimit)
+        .map(candidate => candidate.id)
+    )
+  : null;
+
+// OG 图：仅最近文章输出 og:image，降低构建时逐篇生成图片的成本
+const ogSlug = SITE.ogImage && ogEligiblePostIds?.has(post.id)
   ? PostUtils.getPath(
       post.id,
       post.filePath,
@@ -124,11 +132,6 @@ const layoutProps = {
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,
-  scrollSmooth: true,
-  toc,
-  math,
-  comments,
-  mermaid: mermaid ?? false,
   ...(ogSlug && { ogImage: `og/${ogSlug}.png` }),
 };
 
@@ -229,6 +232,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
+  {hasInlineImages && <PhotosuiteStyles />}
   {
     tags.map((tag: string) => (
       <meta slot="head" property="article:tag" content={tag} />
@@ -268,7 +272,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
-  <article id="article" class="js-toc-content">
+  <article id="article" class="js-toc-content" data-pagefind-body>
     <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
     {topImageSrc && <img src={topImageSrc} alt={title} />}
 
@@ -733,18 +737,30 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 </style>
 
 <!-- Artalk 评论系统 -->
-<Artalk />
+{comments && <Artalk />}
 
 <script
   is:inline
   data-astro-rerun
-  define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl }}
+  define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl, tocbotCssUrl: SITE.tocbot.cssUrl }}
 >
-  /* Tocbot：与 astro-lhasa 一致内联，样式由 Layout 条件加载（tocbot CSS + 自定义） */
+  /* Tocbot：空闲时按需注入 CSS/JS，再初始化目录 */
   (function () {
     if (!document.getElementById("toc-container")) return;
     const headingOffset = 80;
     const scrollSmoothOffset = -headingOffset;
+    function ensureTocbotCSS() {
+      if (!tocbotCssUrl) return;
+      const selector = 'link[href="' + tocbotCssUrl + '"]';
+      if (document.querySelector(selector)) return;
+
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = tocbotCssUrl;
+      link.crossOrigin = "anonymous";
+      link.referrerPolicy = "no-referrer";
+      document.head.appendChild(link);
+    }
     function initTocbot() {
       if (typeof window !== "undefined" && window.tocbot) {
         window.tocbot.init({
@@ -759,6 +775,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       }
     }
     function loadTocbot() {
+      ensureTocbotCSS();
       if (window.tocbot) {
         initTocbot();
       } else if (tocbotJsUrl) {

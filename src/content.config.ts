@@ -139,7 +139,7 @@ const blog = defineCollection({
        * - 文章详情页显示分类
        * - 分类索引页 (/categories)
        * - 分类详情页 (/categories/[category])
-       * - 分类在索引页按字母顺序显示
+       * - 分类显示名、排序与封面图由 categoryMeta.ts 统一控制
        */
       categories: z.array(z.string()).default([]),
 
@@ -168,10 +168,10 @@ const blog = defineCollection({
       /**
        * 是否启用评论
        *
-       * 默认为 false（不显示评论）
+       * 默认为 true（显示评论）
        * 设为 true 后会根据配置的评论系统显示评论框
        */
-      comments: z.boolean().default(false),
+      comments: z.boolean().default(true),
 
       /**
        * 是否启用数学公式渲染

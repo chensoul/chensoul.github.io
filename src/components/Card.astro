@@ -80,14 +80,18 @@ const linkProps = {
  * - cover 为空：取首个分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg，再按下方规则解析
  * - 以 http:// 或 https:// 开头：原样返回（绝对地址）
  * - 其他（相对路径或 /images、/thumbs 等）：
- *   - 开发环境：统一为以 / 开头的站内路径，不拼接 CDN
- *   - 生产环境：若 SITE.imageConfig.imagesUrl 非空则拼接为完整 CDN URL，否则为站内路径
+ *   - /images、/thumbs：始终走站内同源资源，减少列表页的跨域图片请求
+ *   - 其余相对路径：开发环境走站内路径；生产环境若配置 CDN 则拼接完整地址
  *
  * @returns 用于 <img src> 的完整或相对 URL
  */
 const buildCoverSrc = (): string | undefined => {
   const resolveLocalSrc = (src: string): string => {
     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+
+    if (/^\/(images|thumbs)\//.test(normalizedSrc)) {
+      return normalizedSrc;
+    }
 
     if (import.meta.env.DEV) {
       return normalizedSrc;

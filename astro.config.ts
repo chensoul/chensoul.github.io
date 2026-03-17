@@ -9,7 +9,6 @@ import rehypeSlug from "rehype-slug";
 import rehypeRewrite, { type RehypeRewriteOptions } from "rehype-rewrite";
 import rehypeWrapAll from "rehype-wrap-all";
 import rehypeExternalLinks from "rehype-external-links";
-import mermaid from "astro-mermaid";
 import expressiveCode, {
   type AstroExpressiveCodeOptions,
 } from "astro-expressive-code";
@@ -19,6 +18,7 @@ import compressor from "astro-compressor";
 import { minify } from "@zokki/astro-minify";
 import critters from "@critters-rs/astro";
 import photosuite from "photosuite";
+import mermaid from "./src/integrations/quietAstroMermaid";
 
 // Expressive Code syntax highlighting, https://expressive-code.com/reference/configuration/
 const expressiveCodeOption: AstroExpressiveCodeOptions = {
@@ -86,6 +86,7 @@ export default defineConfig({
     photosuite({
       scope: "#article",
       imageBase: "https://cos.chensoul.cc/images",
+      exif: false,
     }),
     expressiveCode(expressiveCodeOption),
     mdx(),
@@ -149,7 +150,6 @@ export default defineConfig({
     },
     optimizeDeps: {
       include: [
-        "@pagefind/default-ui",
         "mermaid",
         "dayjs",
         "lodash.kebabcase",

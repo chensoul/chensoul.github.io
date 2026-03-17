@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev --host",
-    "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
+    "build": "astro check && astro build && pagefind --site dist --glob \"posts/**/*.html\"",
     "preview": "astro preview --host --allowed-hosts=blog.chensoul.cc",
     "sync": "astro sync",
     "astro": "astro",
@@ -33,8 +33,6 @@
     "@fontsource/noto-sans": "^5.2.10",
     "@fontsource/noto-sans-sc": "^5.2.8",
     "@fontsource/roboto-mono": "^5.2.8",
-    "@minify-html/node-darwin-arm64": "0.18.1",
-    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.8",
     "@zokki/astro-minify": "^1.1.0",
     "astro": "^6.0.0",
@@ -53,15 +51,12 @@
     "rehype-slug": "^6.0.0",
     "rehype-wrap-all": "^1.1.0",
     "remark-math": "^6.0.0",
-    "satori": "^0.25.0",
-    "sharp": "^0.34.2",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.8",
     "@critters-rs/astro": "^1.2.0",
-    "@pagefind/default-ui": "^1.3.0",
-    "@tailwindcss/typography": "^0.5.16",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/lodash.kebabcase": "^4.1.9",
     "@types/markdown-it": "^14.1.2",
     "eslint": "^10.0.0",
@@ -71,6 +66,8 @@
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.0",
+    "satori": "^0.25.0",
+    "sharp": "^0.34.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.1"
   }

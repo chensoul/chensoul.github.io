@@ -14,7 +14,9 @@ import { SITE } from "@/config";
 export const getStaticPaths: GetStaticPaths = async () => {
   if (!SITE.ogImage) return [];
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map(post => {
+  return PostUtils.sort(posts)
+    .slice(0, SITE.ogImageLimit)
+    .map(post => {
     const slug = PostUtils.getPath(
       post.id,
       post.filePath,
@@ -28,7 +30,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       params: { slug },
       props: { title: post.data.title, pubDate, author },
     };
-  });
+    });
 };
 
 export const GET: APIRoute = async ({ props }) => {

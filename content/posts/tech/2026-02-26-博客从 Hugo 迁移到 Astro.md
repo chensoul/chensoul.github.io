@@ -82,14 +82,11 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 #### 3. 分类逻辑
 
 - **上游**：使用 `config.ts` 中的 `categoryOrder` 对分类排序。
-- **当前**：移除 `categoryOrder`，分类在索引页按 **字母顺序**（`localeCompare(..., "zh-CN")`）显示，见
-  `getUniqueCategories.ts`。
+- **当前**：改为由 `categoryMeta.ts` 统一维护分类顺序、中文名称与封面图，分类页和归档页优先按该顺序显示。
 
 #### 4. 已删除的页面与功能
 
 - **删除页面**：
-  - `src/pages/posts/[...page].astro`（文章列表分页）
-  - `src/pages/posts/[...slug]/index.astro`（文章详情）
   - `src/pages/feeds/index.astro`（订阅/Feeds 页）
   - `src/pages/guestbook.astro`（留言板）
   - `src/pages/about.md`、`src/pages/favorites.md`（原 Markdown 页面）
@@ -121,6 +118,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - **genDescriptionMaxLines**：30 → 3。
 - **Stats 链接**：指向 `stats.chensoul.cc/blog.chensoul.cc`。
 - **imageConfig**：`imagesUrl` 改为 `https://blog.chensoul.cc`；移除 EXIF 相关配置（`exifUrl`、`exif`、缓存等）。
+- **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表缩略图中的 `/images`、`/thumbs` 会优先走站内同源路径。
 - **移除**：`displayOptions`（如评论数等）、Feeds 相关配置。
 
 #### 2. Astro 与集成（`astro.config.ts`）
@@ -132,7 +130,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - **Expressive Code**：
   - `wrap`：false → true。
   - `overridesByLang` 增加 `gradle,java` 的 `frame: "none"`。
-- **Vite**：`optimizeDeps.include` 增加 `@pagefind/default-ui`。
+- **Vite**：当前 `optimizeDeps.include` 主要保留 `mermaid`、`dayjs`、`lodash.kebabcase`、`markdown-it` 等实际使用项。
 
 #### 3. 内容 Schema（`src/content.config.ts`）
 

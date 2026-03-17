@@ -84,7 +84,7 @@ draft: false # true 则排除构建
 toc: true # 显示目录
 math: false # 启用 KaTeX
 mermaid: false # 启用 Mermaid
-comments: false # 启用 Artalk 评论
+comments: true # 默认启用 Artalk 评论；设为 false 可关闭
 cover: "/thumbs/cover.jpg" # 可选，封面图（列表缩略图 + OG 图）
 top-image: "/images/top-image.jpg" # 可选，正文上方配图
 ```
@@ -92,7 +92,7 @@ top-image: "/images/top-image.jpg" # 可选，正文上方配图
 ### 文章 URL 规则
 
 ```
-/posts/{year}/{month}/{day}/{slug}/
+/posts/{year}/{month}/{day}/{slug}
 ```
 
 ---
@@ -141,7 +141,7 @@ pnpm compress-images  # 压缩图片资源
 pnpm convert-to-webp  # 转换图片为 WebP 格式
 ```
 
-> `pnpm build` 依次执行：`astro check && astro build && pagefind --site dist`
+> `pnpm build` 依次执行：`astro check && astro build && pagefind --site dist --glob "posts/**/*.html"`
 
 ---
 

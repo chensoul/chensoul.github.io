@@ -1,6 +1,4 @@
-/* 仅保留常用字重以减轻首屏请求：SC 400/700、Noto Sans 400、Roboto Mono 400 */
-@import "@fontsource/noto-sans-sc/400.css";
-@import "@fontsource/noto-sans-sc/700.css";
+/* 优先使用系统中文字体，避免首页加载大量 Noto Sans SC 子集字体 */
 @import "@fontsource/noto-sans/400.css";
 @import "@fontsource/roboto-mono/400.css";
 @font-face {
@@ -52,7 +50,7 @@
 
 html {
   font-family:
-    "Noto Sans SC", "Noto Sans", "Fallback Sans", "Microsoft YaHei", sans-serif;
+    "Noto Sans", "Fallback Sans", "Microsoft YaHei", sans-serif;
   font-size: 15px;
   background: var(--background);
   color: var(--text-primary);
@@ -346,11 +344,6 @@ mark {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* 扩展 */
-.photosuite-item img {
-  margin: 1rem 0.5rem;
 }
 
 /* Feeds 页面样式 */

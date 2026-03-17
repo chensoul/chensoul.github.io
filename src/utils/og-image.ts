@@ -3,7 +3,7 @@
  *
  * @fileoverview 使用 Satori + Resvg 将文章标题、日期等渲染为 1200×630 PNG，供 og:image 使用
  *
- * 字体使用 @fontsource/noto-sans-sc（与 base.css 一致）；头像从 public/images/avatar.png 或 avatar.webp 读取，WebP 会转为 PNG 后以 data URL 嵌入。
+ * 页面正文已改用系统中文字体；OG 图仍从本地 @fontsource/noto-sans-sc 读取中文字库，确保分享图文字稳定渲染。头像从 public/images/avatar.png 或 avatar.webp 读取，WebP 会转为 PNG 后以 data URL 嵌入。
  *
  * @see pages/og/[...slug].png.ts
  */
@@ -15,7 +15,7 @@ import path from "path";
 import { createRequire } from "node:module";
 import sharp from "sharp";
 
-/** 与 src/styles/base.css 中 @import 的 @fontsource/noto-sans-sc 一致，OG 图与站点同字体 */
+/** OG 图单独使用本地 Noto Sans SC 字体文件，避免依赖系统字库差异 */
 const require = createRequire(import.meta.url);
 const notoSansScDir = path.dirname(
   require.resolve("@fontsource/noto-sans-sc/package.json")
@@ -61,7 +61,7 @@ async function getAvatarDataUrl(): Promise<string | null> {
   return avatarDataUrlPromise;
 }
 
-/** 从本地 @fontsource/noto-sans-sc 读取字体，无需访问 Google（避免翻墙） */
+/** 从本地 @fontsource/noto-sans-sc 读取字体，不依赖外部网络 */
 function bufferToArrayBuffer(buf: Buffer): ArrayBuffer {
   const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
   return ab as ArrayBuffer;

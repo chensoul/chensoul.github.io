@@ -31,21 +31,33 @@ import Layout from "../layouts/Layout.astro";
     const searchInput = document.getElementById("search-input");
     const searchButton = document.getElementById("search-button");
     const resultsContainer = document.getElementById("search-results");
+    const initialQuery = new URLSearchParams(window.location.search).get("q")?.trim() || "";
 
     let pagefind;
+    let loadingPagefind = false;
+    let pagefindReady = false;
 
-    try {
-      // 初始化 pagefind
-      pagefind = await import("/pagefind/pagefind.js");
-      await pagefind.init();
+    async function ensurePagefind() {
+      if (pagefindReady || loadingPagefind) return pagefindReady;
 
-      // 启用输入框
-      searchInput.placeholder = "搜索文章标题、内容...";
-      searchInput.disabled = false;
-    } catch {
-      resultsContainer.innerHTML =
-        '<p class="error">搜索功能加载失败，请刷新页面重试</p>';
-      return;
+      loadingPagefind = true;
+      searchInput.placeholder = "正在加载搜索功能...";
+
+      try {
+        pagefind = await import("/pagefind/pagefind.js");
+        await pagefind.init();
+        pagefindReady = true;
+        searchInput.placeholder = "搜索文章标题、内容...";
+        searchInput.disabled = false;
+        return true;
+      } catch {
+        resultsContainer.innerHTML =
+          '<p class="error">搜索功能加载失败，请刷新页面重试</p>';
+        searchInput.placeholder = "搜索功能加载失败";
+        return false;
+      } finally {
+        loadingPagefind = false;
+      }
     }
 
     async function performSearch() {
@@ -54,6 +66,9 @@ import Layout from "../layouts/Layout.astro";
         resultsContainer.innerHTML = "";
         return;
       }
+
+      const ready = await ensurePagefind();
+      if (!ready) return;
 
       resultsContainer.innerHTML = '<p class="loading">搜索中...</p>';
 
@@ -100,10 +115,24 @@ import Layout from "../layouts/Layout.astro";
       }
     }
 
+    async function warmupSearch() {
+      await ensurePagefind();
+    }
+
+    searchInput.disabled = false;
+    searchInput.placeholder = "输入关键词搜索...";
     searchButton.addEventListener("click", performSearch);
     searchInput.addEventListener("keypress", e => {
       if (e.key === "Enter") performSearch();
     });
+    searchInput.addEventListener("focus", warmupSearch, { once: true });
+    searchInput.addEventListener("pointerdown", warmupSearch, { once: true });
+    searchButton.addEventListener("pointerdown", warmupSearch, { once: true });
+
+    if (initialQuery) {
+      searchInput.value = initialQuery;
+      await performSearch();
+    }
   });
 </script>
 
