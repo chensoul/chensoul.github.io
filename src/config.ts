@@ -219,9 +219,8 @@ export const SITE = {
 
   /**
    * 懒加载列表脚本地址（文章列表、分类、标签页滚动加载）
-   * 留空则不注入脚本，页面仅显示首屏数量
    */
-  lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list/lazy-list.js",
+  lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list.js",
 
   /**
    * tocbot 目录：CSS/JS CDN（仅文章页启用 TOC 时按需加载）

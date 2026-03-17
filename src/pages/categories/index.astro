@@ -8,7 +8,7 @@
  * 1. 获取所有分类（使用 getUniqueCategories）
  * 2. 获取每个分类的最新文章标题（用于显示）
  * 3. 显示分类封面图、名称、文章数量
- * 4. 支持懒加载分页（使用 /lazy-list.js）
+ * 4. 支持懒加载分页（按配置注入 lazy-list 脚本）
  * 5. 悬停效果：图片放大
  *
  * 视觉设计：
@@ -114,13 +114,29 @@ categories.forEach(({ category, categoryName }) => {
 
 {SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
 <script is:inline>
+  let bootTimer;
   function boot() {
-    if (typeof window.setupLazyList !== "function") return;
+    if (typeof window.setupLazyList !== "function") return false;
+    if (bootTimer) {
+      clearTimeout(bootTimer);
+      bootTimer = undefined;
+    }
     window.setupLazyList({
       sentinelId: "categories-sentinel",
       itemSelector: ".categories-item",
     });
+    return true;
   }
-  document.addEventListener("DOMContentLoaded", boot);
-  window.addEventListener("load", boot);
+  function scheduleBoot() {
+    if (boot()) return;
+    if (bootTimer) clearTimeout(bootTimer);
+    bootTimer = setTimeout(scheduleBoot, 120);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleBoot, { once: true });
+  } else {
+    scheduleBoot();
+  }
+  window.addEventListener("load", scheduleBoot);
+  document.addEventListener("astro:page-load", scheduleBoot);
 </script>

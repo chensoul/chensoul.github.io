@@ -139,19 +139,23 @@ const { class: className } = Astro.props;
       }
     }
 
+    if (window._backToTopScrollHandler) {
+      window.removeEventListener("scroll", window._backToTopScrollHandler);
+    }
+    if (window._backToTopResizeHandler) {
+      window.removeEventListener("resize", window._backToTopResizeHandler);
+    }
+
+    window._backToTopScrollHandler = updateVisibility;
+    window._backToTopResizeHandler = debouncedUpdatePosition;
+
     // 监听滚动事件
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
-    window.addEventListener("resize", debouncedUpdatePosition, {
+    window.addEventListener("scroll", window._backToTopScrollHandler, {
       passive: true,
     });
-    document.addEventListener("DOMContentLoaded", () => {
-      updateVisibility();
-      updatePosition();
-    });
-    window.addEventListener("load", () => {
-      updateVisibility();
-      updatePosition();
+    // 监听窗口大小变化，更新按钮位置（使用防抖优化性能）
+    window.addEventListener("resize", window._backToTopResizeHandler, {
+      passive: true,
     });
     updateVisibility();
     updatePosition();

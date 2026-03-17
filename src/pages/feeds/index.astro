@@ -2,7 +2,7 @@
 /**
  * 邻居 / Feeds 页（友联博客最新文章聚合）
  *
- * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，其余由客户端加载更多。
+ * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，剩余条目由客户端滚动加载。
  */
 import fs from "node:fs";
 import path from "node:path";

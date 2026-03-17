@@ -27,10 +27,15 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script is:inline>
-  window.addEventListener("DOMContentLoaded", async () => {
+  async function initSearchPage() {
     const searchInput = document.getElementById("search-input");
     const searchButton = document.getElementById("search-button");
     const resultsContainer = document.getElementById("search-results");
+    if (!searchInput || !searchButton || !resultsContainer) return;
+    if (searchInput.dataset.bound === "1") return;
+
+    searchInput.dataset.bound = "1";
+
     const initialQuery =
       new URLSearchParams(window.location.search).get("q")?.trim() || "";
 
@@ -134,7 +139,16 @@ import Layout from "../layouts/Layout.astro";
       searchInput.value = initialQuery;
       await performSearch();
     }
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearchPage, {
+      once: true,
+    });
+  } else {
+    initSearchPage();
+  }
+  document.addEventListener("astro:page-load", initSearchPage);
 </script>
 
 <style>

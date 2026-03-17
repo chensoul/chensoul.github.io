@@ -798,12 +798,19 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       setTimeout(loadTocbot, 1);
     }
   })();
-  document.addEventListener("astro:after-swap", () => {
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
-  });
   function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   }
-  document.addEventListener("DOMContentLoaded", onPageReady);
-  window.addEventListener("load", onPageReady);
+  if (window._postDetailsAfterSwapHandler) {
+    document.removeEventListener(
+      "astro:after-swap",
+      window._postDetailsAfterSwapHandler
+    );
+  }
+  window._postDetailsAfterSwapHandler = onPageReady;
+  document.addEventListener(
+    "astro:after-swap",
+    window._postDetailsAfterSwapHandler
+  );
+  onPageReady();
 </script>

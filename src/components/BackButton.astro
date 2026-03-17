@@ -95,7 +95,13 @@ import { SITE } from "@/config";
     }
 
     // 防抖优化：resize 事件使用防抖，避免频繁计算
-    const debouncedUpdatePosition = debounce(updatePosition, 150);
+    const debouncedRefreshButton = debounce(() => {
+      updatePosition();
+      const backToTop = document.getElementById("back-to-top");
+      const isBackToTopVisible =
+        backToTop && !backToTop.classList.contains("opacity-0");
+      updateVerticalPosition(Boolean(isBackToTopVisible));
+    }, 150);
 
     /**
      * 更新返回按钮的显示状态和链接
@@ -138,17 +144,33 @@ import { SITE } from "@/config";
       }
     }
 
-    // 监听 BackToTop 可见性变化
-    window.addEventListener("backToTopVisibilityChange", e => {
+    const handleBackToTopVisibilityChange = e => {
       updateVerticalPosition(e.detail.visible);
-    });
+    };
+
+    if (window._backButtonVisibilityHandler) {
+      window.removeEventListener(
+        "backToTopVisibilityChange",
+        window._backButtonVisibilityHandler
+      );
+    }
+    if (window._backButtonResizeHandler) {
+      window.removeEventListener("resize", window._backButtonResizeHandler);
+    }
+
+    window._backButtonVisibilityHandler = handleBackToTopVisibilityChange;
+    window._backButtonResizeHandler = debouncedRefreshButton;
+
+    // 监听 BackToTop 可见性变化
+    window.addEventListener(
+      "backToTopVisibilityChange",
+      window._backButtonVisibilityHandler
+    );
 
     // 监听窗口大小变化（使用防抖优化性能）
-    window.addEventListener("resize", debouncedUpdatePosition, {
+    window.addEventListener("resize", window._backButtonResizeHandler, {
       passive: true,
     });
-    document.addEventListener("DOMContentLoaded", updateBackButton);
-    window.addEventListener("load", updateBackButton);
     updateBackButton();
   })();
 </script>

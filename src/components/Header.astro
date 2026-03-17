@@ -104,34 +104,39 @@ const { pathname } = Astro.url;
 
 <script>
   const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle?.dataset.bound === "1") {
+    // 避免脚本重复执行时重复绑定事件
+  } else if (themeToggle) {
+    themeToggle.dataset.bound = "1";
 
-  function toggleTheme() {
-    const themeManager = (
-      window as Window & {
-        __theme?: { toggleTheme?: () => string };
+    function toggleTheme() {
+      const themeManager = (
+        window as Window & {
+          __theme?: { toggleTheme?: () => string };
+        }
+      ).__theme;
+
+      if (themeManager?.toggleTheme) {
+        themeManager.toggleTheme();
+        return;
       }
-    ).__theme;
 
-    if (themeManager?.toggleTheme) {
-      themeManager.toggleTheme();
-      return;
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute("data-theme") || "light";
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
     }
 
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute("data-theme") || "light";
-    const newTheme = currentTheme === "light" ? "dark" : "light";
-    html.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
+    themeToggle.addEventListener("click", toggleTheme);
+
+    themeToggle.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleTheme();
+      }
+    });
   }
-
-  themeToggle?.addEventListener("click", toggleTheme);
-
-  themeToggle?.addEventListener("keydown", e => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggleTheme();
-    }
-  });
 </script>
 
 <style>

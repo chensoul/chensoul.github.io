@@ -62,12 +62,15 @@ const notFoundTitle = "404，您访问的页面不存在～";
 </Layout>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initNotFoundImage() {
     const container = document.getElementById("image-container");
     const staticImage = document.getElementById("static-image");
     const animatedImage = document.getElementById("animated-image");
 
     if (!container || !staticImage || !animatedImage) return;
+    if (container.dataset.bound === "1") return;
+
+    container.dataset.bound = "1";
 
     // 鼠标悬停时显示动画
     container.addEventListener("mouseenter", () => {
@@ -80,5 +83,14 @@ const notFoundTitle = "404，您访问的页面不存在～";
       staticImage.style.display = "block";
       animatedImage.classList.add("hidden");
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNotFoundImage, {
+      once: true,
+    });
+  } else {
+    initNotFoundImage();
+  }
+  document.addEventListener("astro:page-load", initNotFoundImage);
 </script>

@@ -104,15 +104,31 @@ const relatedCategories = topCategories.map(
 
 {SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
 <script is:inline>
+  let bootTimer;
   function boot() {
-    if (typeof window.setupLazyList !== "function") return;
+    if (typeof window.setupLazyList !== "function") return false;
+    if (bootTimer) {
+      clearTimeout(bootTimer);
+      bootTimer = undefined;
+    }
     window.setupLazyList({
       sentinelId: "tag-posts-sentinel",
       itemSelector: ".tag-post-item",
     });
+    return true;
   }
-  document.addEventListener("DOMContentLoaded", boot);
-  window.addEventListener("load", boot);
+  function scheduleBoot() {
+    if (boot()) return;
+    if (bootTimer) clearTimeout(bootTimer);
+    bootTimer = setTimeout(scheduleBoot, 120);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleBoot, { once: true });
+  } else {
+    scheduleBoot();
+  }
+  window.addEventListener("load", scheduleBoot);
+  document.addEventListener("astro:page-load", scheduleBoot);
 </script>
 
 <style>

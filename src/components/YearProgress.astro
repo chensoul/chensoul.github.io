@@ -216,6 +216,5 @@
   }
 
   init();
-  document.addEventListener("DOMContentLoaded", update);
-  window.addEventListener("load", update);
+  document.addEventListener("astro:after-swap", update);
 </script>

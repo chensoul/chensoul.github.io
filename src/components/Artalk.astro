@@ -12,7 +12,7 @@
  *
  * 依赖关系：
  * - 被文章详情页使用（当 comments=true 时）
- * - 依赖主题按钮的 ID (#theme-btn)
+ * - 依赖主题按钮的 ID (#theme-toggle)
  */
 import { SITE } from "@/config";
 ---
@@ -111,7 +111,7 @@ import { SITE } from "@/config";
       }
 
       // 备选方案：检查主题按钮状态
-      const themeBtn = document.querySelector("#theme-btn");
+      const themeBtn = document.querySelector("#theme-toggle");
       if (themeBtn) {
         const ariaLabel = themeBtn.getAttribute("aria-label");
         if (ariaLabel === "dark" || ariaLabel === "light") {
@@ -255,7 +255,7 @@ import { SITE } from "@/config";
       });
 
       // 额外监听主题按钮变化（作为备选方案）
-      const themeBtn = document.querySelector("#theme-btn");
+      const themeBtn = document.querySelector("#theme-toggle");
       if (themeBtn && !window._artalkBtnObserver) {
         window._artalkBtnObserver = new MutationObserver(mutations => {
           mutations.forEach(mutation => {
@@ -328,28 +328,39 @@ import { SITE } from "@/config";
       window._artalkLoadObserver.observe(container);
     }
 
-    /**
-     * 单次设置事件监听
-     *
-     * 避免重复绑定事件
-     */
-    function setupArtalk() {
-      if (window._artalkInitialized) return;
-      window._artalkInitialized = true;
-
-      // 初始加载与整页刷新：接近评论区时再触发加载
-      if (
-        document.readyState === "interactive" ||
-        document.readyState === "complete"
-      ) {
-        setupLazyArtalk();
-      } else {
-        document.addEventListener("DOMContentLoaded", setupLazyArtalk);
-      }
-      window.addEventListener("load", setupLazyArtalk);
+    if (window._artalkDomReadyHandler) {
+      document.removeEventListener(
+        "DOMContentLoaded",
+        window._artalkDomReadyHandler
+      );
+    }
+    if (window._artalkPageLoadHandler) {
+      document.removeEventListener(
+        "astro:page-load",
+        window._artalkPageLoadHandler
+      );
+    }
+    if (window._artalkWindowLoadHandler) {
+      window.removeEventListener("load", window._artalkWindowLoadHandler);
     }
 
-    // 启动Artalk
-    setupArtalk();
+    window._artalkDomReadyHandler = setupLazyArtalk;
+    window._artalkPageLoadHandler = setupLazyArtalk;
+    window._artalkWindowLoadHandler = setupLazyArtalk;
+
+    if (
+      document.readyState === "interactive" ||
+      document.readyState === "complete"
+    ) {
+      setupLazyArtalk();
+    } else {
+      document.addEventListener(
+        "DOMContentLoaded",
+        window._artalkDomReadyHandler,
+        { once: true }
+      );
+    }
+    document.addEventListener("astro:page-load", window._artalkPageLoadHandler);
+    window.addEventListener("load", window._artalkWindowLoadHandler);
   })();
 </script>

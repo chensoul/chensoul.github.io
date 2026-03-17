@@ -246,6 +246,10 @@ export async function initFeeds(
 function run() {
   const dataElement = document.getElementById("feeds-data-json-container");
   if (!dataElement || !dataElement.dataset.json) return;
+  if (dataElement.dataset.bound === "1") return;
+
+  dataElement.dataset.bound = "1";
+
   try {
     const d = JSON.parse(dataElement.dataset.json);
     initFeeds(
@@ -266,7 +270,7 @@ function run() {
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", run);
+  document.addEventListener("DOMContentLoaded", run, { once: true });
 } else {
   run();
 }
