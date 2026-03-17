@@ -536,7 +536,7 @@ ThingsBoardThreadFactory
 - ContactBased
 - UUIDBased
 
-TODO：
+后续准备继续补充这些模块的源码笔记：
 
 - actor
 - queue
