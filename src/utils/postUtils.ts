@@ -172,10 +172,10 @@ export class PostUtils {
    * 1. 过滤有效文章（非草稿、已发布）
    * 2. 展开所有文章的 categories 数组
    * 3. 统计每个分类出现的次数
-   * 4. 按分类名称字母顺序排序
+   * 4. 按分类显示名排序（当前为 zh-CN localeCompare）
    *
    * @param posts - 文章集合
-   * @returns 分类对象数组，已按字母顺序排序
+   * @returns 分类对象数组，已按显示名排序
    *
    * @example
    * const categories = PostUtils.getUniqueCategories(allPosts);

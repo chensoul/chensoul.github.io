@@ -31,7 +31,8 @@ import Layout from "../layouts/Layout.astro";
     const searchInput = document.getElementById("search-input");
     const searchButton = document.getElementById("search-button");
     const resultsContainer = document.getElementById("search-results");
-    const initialQuery = new URLSearchParams(window.location.search).get("q")?.trim() || "";
+    const initialQuery =
+      new URLSearchParams(window.location.search).get("q")?.trim() || "";
 
     let pagefind;
     let loadingPagefind = false;

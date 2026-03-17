@@ -33,7 +33,8 @@ git log --oneline -5
 1. 添加上游并拉取
 
 ```bash
-git remote add upstream https://github.com/achuanya/astro-lhasa.git 2>/dev/nullgit fetch upstream main 2>&1
+git remote add upstream https://github.com/achuanya/astro-lhasa.git 2>/dev/null
+git fetch upstream main 2>&1
 ```
 
 1. 和上游的差异统计（文件与行数）
@@ -51,13 +52,19 @@ git diff upstream/main --name-status
 1. 看几个关键文件的 diff
 
 ```bash
-git diff upstream/main -- src/content.config.ts | head -120git diff upstream/main -- src/config.ts | head -150git diff upstream/main -- astro.config.ts | head -80git diff upstream/main -- src/utils/getPath.ts | head -100git diff upstream/main -- src/pages/rss.xml.ts | head -80git diff upstream/main --stat -- src/layouts/PostDetails.astro src/layouts/AboutLayout.astro src/components/Header.astro
+git diff upstream/main -- src/content.config.ts | head -120
+git diff upstream/main -- src/config.ts | head -150
+git diff upstream/main -- astro.config.ts | head -80
+git diff upstream/main -- src/utils/getPath.ts | head -100
+git diff upstream/main -- src/pages/rss.xml.ts | head -80
+git diff upstream/main --stat -- src/layouts/PostDetails.astro src/components/Header.astro
 ```
 
 1. 确认当前页面结构
 
 ```bash
-find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sortls -la src/pages/posts 2>/dev/null || echo "No posts dir"
+find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sort
+ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 ```
 
 ## 主题修改汇总
@@ -91,7 +98,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
   - `src/pages/guestbook.astro`（留言板）
   - `src/pages/about.md`、`src/pages/favorites.md`（原 Markdown 页面）
 - **新增/迁移**：
-  - **关于**：`src/pages/about.astro` 从 `content/pages/about.md`（或 `_about.md`）读取，使用 AboutLayout。
+  - **关于**：`src/pages/about.astro` 从 `content/pages/about.md` 读取并渲染。
   - **链接**：`src/pages/links.astro` 替代原「收藏/订阅」页，数据来自 `content/pages/links.md`（或 `_links.md`），导航与 i18n
       为「链接 / Links」。
 - **配置**：移除 `feedsPerIndex`、`feedsPerPage` 等 Feeds 相关配置。
@@ -117,7 +124,6 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - **postPerIndex**：10 → 8。
 - **genDescriptionMaxLines**：30 → 3。
 - **Stats 链接**：指向 `stats.chensoul.cc/blog.chensoul.cc`。
-- **imageConfig**：`imagesUrl` 改为 `https://blog.chensoul.cc`；移除 EXIF 相关配置（`exifUrl`、`exif`、缓存等）。
 - **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表缩略图中的 `/images`、`/thumbs` 会优先走站内同源路径。
 - **移除**：`displayOptions`（如评论数等）、Feeds 相关配置。
 
@@ -135,7 +141,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 #### 3. 内容 Schema（`src/content.config.ts`）
 
 - **BLOG_PATH**：`"posts"` → `"content/posts"`。
-- **categories**：注释改为「分类在索引页按字母顺序显示」。
+- **categories**：分类显示名、排序与封面图由 `categoryMeta.ts` 统一控制。
 - **新增 frontmatter**：`mermaid: z.boolean().default(false)`。
 
 #### 4. 依赖与脚本（`package.json`、`pnpm-lock.yaml`）
@@ -149,16 +155,11 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 - 文章标题与发布日期移出 `<main>`，放在 Header 与 main 之间的独立 `<section>`。
 - 其余结构（正文、标签、上一篇/下一篇、评论）保留在 main 内。
 
-#### 2. 关于页布局（`AboutLayout.astro`）
-
-- 移除未用代码：Breadcrumb、`description` 等。
-- 移除博客统计动画及相关 HTML/JS，仅保留时间线等必要脚本。
-
-#### 3. 主布局（`Layout.astro`）
+#### 2. 主布局（`Layout.astro`）
 
 - 结构、样式或脚本有调整（约 176 行变更），与上述页面和配置变更一致。
 
-#### 4. 组件
+#### 3. 组件
 
 - **Header.astro**：较大调整（约 354 行变更），与导航、leadingTitle、站点标题等逻辑相关。
 - **Card.astro**、**Datetime.astro**、**Footer.astro**、**Tag.astro**、**YearProgress.astro**、**Artalk.astro**
@@ -184,7 +185,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 
 #### 1. RSS（`src/pages/rss.xml.ts`）
 
-- **内容**：不再输出全文 HTML；仅输出摘要（优先 `<!-- more -->` 前内容，否则前 N 字符），使用 `getDescription(body)`。
+- **内容**：输出摘要（优先 `<!-- more -->` 前内容，否则正文提要），使用 `getDescription(body)`。
 - **实现**：移除 markdown-it、sanitize-html；`pubDate` 使用 `data.updated ?? data.date`；`link` 使用
   `getPath(..., true, data.date)`。
 - **条数**：仅保留最近 20 篇；仅非草稿文章。
@@ -193,7 +194,7 @@ find src/pages -name "*.astro" -o -name "*.ts" -o -name "*.md" 2>/dev/null | sor
 
 - **getPath.ts**：重写以支持 `date` 参数及 `/posts/YYYY/MM/DD/slug`；slug 从文件名解析并支持去掉日期前缀。
 - **getDescription.ts**：用于 RSS 摘要生成。
-- **getUniqueCategories.ts**：按 `categoryName` 字母序（zh-CN）排序；移除对 SITE 的依赖。
+- **分类相关工具**：当前由 `PostUtils.getUniqueCategories()` 与 `categoryMeta.ts` 协同处理显示名与排序。
 - **getSortedPosts.ts**：有调整以配合新数据与路由。
 - **categoryImages.ts**：分类图片 URL 等有小幅修改。
 - **已删除**：`getBlogMetrics.ts`。

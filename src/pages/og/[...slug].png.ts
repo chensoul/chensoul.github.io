@@ -1,7 +1,7 @@
 /**
  * 动态 OG 图路由
  *
- * @fileoverview 为每篇非草稿文章生成 /og/yyyy/mm/dd/slug.png（dev 与 prod 均生成）。GET 时调用 generateOgImage 返回 PNG 并带长期缓存头。
+ * @fileoverview 为最近的非草稿文章生成 /og/yyyy/mm/dd/slug.png。GET 时调用 generateOgImage 返回 PNG 并带长期缓存头。
  *
  * @see utils/og-image.ts
  */
@@ -17,19 +17,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return PostUtils.sort(posts)
     .slice(0, SITE.ogImageLimit)
     .map(post => {
-    const slug = PostUtils.getPath(
-      post.id,
-      post.filePath,
-      false,
-      post.data.date,
-      post.data.timezone
-    );
-    const pubDate = new Date(post.data.date);
-    const author = (post.data as { author?: string }).author ?? SITE.author;
-    return {
-      params: { slug },
-      props: { title: post.data.title, pubDate, author },
-    };
+      const slug = PostUtils.getPath(
+        post.id,
+        post.filePath,
+        false,
+        post.data.date,
+        post.data.timezone
+      );
+      const pubDate = new Date(post.data.date);
+      const author = (post.data as { author?: string }).author ?? SITE.author;
+      return {
+        params: { slug },
+        props: { title: post.data.title, pubDate, author },
+      };
     });
 };
 

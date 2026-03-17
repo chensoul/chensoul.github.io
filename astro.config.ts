@@ -149,12 +149,7 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
-      include: [
-        "mermaid",
-        "dayjs",
-        "lodash.kebabcase",
-        "markdown-it",
-      ],
+      include: ["mermaid", "dayjs", "lodash.kebabcase", "markdown-it"],
       exclude: ["@resvg/resvg-js"],
     },
     // 开发时预编译常用模块，减轻首屏/热更延迟

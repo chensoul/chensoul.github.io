@@ -2,7 +2,7 @@
 /**
  * 文章详情布局
  *
- * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表、评论（Artalk）、TOC/数学公式/Mermaid 等按 frontmatter 启用。OG 图与 canonical 由本布局传给 Layout。
+ * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/TOC/数学公式等功能。OG 图与 canonical 由本布局传给 Layout。
  */
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
@@ -69,15 +69,16 @@ const ogEligiblePostIds = SITE.ogImage
   : null;
 
 // OG 图：仅最近文章输出 og:image，降低构建时逐篇生成图片的成本
-const ogSlug = SITE.ogImage && ogEligiblePostIds?.has(post.id)
-  ? PostUtils.getPath(
-      post.id,
-      post.filePath,
-      false,
-      post.data.date,
-      post.data.timezone
-    )
-  : null;
+const ogSlug =
+  SITE.ogImage && ogEligiblePostIds?.has(post.id)
+    ? PostUtils.getPath(
+        post.id,
+        post.filePath,
+        false,
+        post.data.date,
+        post.data.timezone
+      )
+    : null;
 
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
@@ -645,7 +646,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   .post-promo-title,
   .related-posts-title {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
   .post-promo-copy {
@@ -664,10 +665,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.5rem;
-    padding: 0.625rem 1rem;
+    min-height: 1.95rem;
+    padding: 0.4rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 999px;
+    font-size: 0.8125rem;
     color: var(--text-primary);
     background: var(--background);
     text-decoration: none;
@@ -712,7 +714,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   .related-post-card h3 {
     margin: 0;
-    font-size: 1.0625rem;
+    font-size: 1rem;
   }
 
   .related-post-card p:last-child {
@@ -742,7 +744,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 <script
   is:inline
   data-astro-rerun
-  define:vars={{ tocbotJsUrl: SITE.tocbot.jsUrl, tocbotCssUrl: SITE.tocbot.cssUrl }}
+  define:vars={{
+    tocbotJsUrl: SITE.tocbot.jsUrl,
+    tocbotCssUrl: SITE.tocbot.cssUrl,
+  }}
 >
   /* Tocbot：空闲时按需注入 CSS/JS，再初始化目录 */
   (function () {
