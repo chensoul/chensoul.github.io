@@ -67,7 +67,12 @@ const years = Object.keys(groupedByYear)
           </h2>
           <ul class="posts-list mt-2 list-none pl-0">
             {groupedByYear[year].map(post => (
-              <Card {...post} variant="h3" itemClass="posts-item" dateFormat="absolute" />
+              <Card
+                {...post}
+                variant="h3"
+                itemClass="posts-item"
+                dateFormat="absolute"
+              />
             ))}
           </ul>
         </div>

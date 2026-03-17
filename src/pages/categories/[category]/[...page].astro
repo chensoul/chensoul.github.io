@@ -76,7 +76,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
      */
     const categoryPosts = PostUtils.sort(
       posts.filter(post =>
-        post.data.categories.some(postCategory => slugifyStr(postCategory) === category)
+        post.data.categories.some(
+          postCategory => slugifyStr(postCategory) === category
+        )
       )
     );
 
@@ -144,10 +146,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
     <p class="mb-2 text-sm text-[var(--text-secondary)]">
       按时间倒序浏览分类「{categoryName}」下的 {totalPosts} 篇文章。
     </p>
-    <TaxonomySummary
-      title="相关标签"
-      items={relatedTags}
-    />
+    <TaxonomySummary title="相关标签" items={relatedTags} />
   </section>
   <ul class="category-posts-list list-none pl-0">
     {

@@ -25,16 +25,11 @@ const { title, items } = Astro.props;
       <p class="taxonomy-summary-text">
         <span class="taxonomy-summary-label">{title}：</span>
         {items.map(item => (
-          <a
-            href={item.href}
-            class="taxonomy-summary-link"
-          >
+          <a href={item.href} class="taxonomy-summary-link">
             {item.label}
-            {
-              item.count !== undefined && item.count !== null && (
-                <span class="taxonomy-summary-count">（{item.count}）</span>
-              )
-            }
+            {item.count !== undefined && item.count !== null && (
+              <span class="taxonomy-summary-count">（{item.count}）</span>
+            )}
           </a>
         ))}
       </p>

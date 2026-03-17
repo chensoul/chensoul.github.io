@@ -60,7 +60,9 @@ const { title, date, updated, timezone, cover, categories } = data;
 const primaryCategory = Array.isArray(categories) ? categories[0] : undefined;
 const primaryCategoryLabel =
   getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
-const primaryCategorySlug = primaryCategory ? slugifyStr(primaryCategory) : undefined;
+const primaryCategorySlug = primaryCategory
+  ? slugifyStr(primaryCategory)
+  : undefined;
 
 // 标题容器样式（处理溢出省略）
 const headerProps = {
@@ -179,10 +181,12 @@ const coverSrc = buildCoverSrc();
             {
               primaryCategoryLabel && (
                 <>
-                  <span class="mx-1 opacity-60" aria-hidden="true">·</span>
+                  <span class="mx-1 opacity-60" aria-hidden="true">
+                    ·
+                  </span>
                   <a
                     href={`/categories/${primaryCategorySlug}`}
-                    class="text-sm text-[var(--accent)] opacity-85 underline-offset-2 transition-colors hover:text-[var(--accent-dark)] hover:underline"
+                    class="text-sm text-[var(--accent)] underline-offset-2 opacity-85 transition-colors hover:text-[var(--accent-dark)] hover:underline"
                   >
                     {primaryCategoryLabel}
                   </a>
