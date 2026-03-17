@@ -65,7 +65,7 @@ const relatedCategories = topCategories.map(
 
 <Layout
   title={`${tagName} | ${SITE.title}`}
-  description={`查看标签「${tagName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
+  description={`按时间倒序浏览标签「${tagName}」下的 ${totalPosts} 篇文章。`}
   robots="noindex,follow"
 >
   <section class="tag-head mb-5">
@@ -102,7 +102,7 @@ const relatedCategories = topCategories.map(
   </div>
 </Layout>
 
-{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
+{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl} />}
 <script is:inline>
   let bootTimer;
   function boot() {

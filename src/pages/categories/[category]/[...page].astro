@@ -132,7 +132,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
 
 <Layout
   title={`${categoryName} | ${SITE.title}`}
-  description={`查看分类「${categoryName}」下的 ${totalPosts} 篇文章，按时间倒序浏览相关内容。`}
+  description={`按时间倒序浏览分类「${categoryName}」下的 ${totalPosts} 篇文章。`}
 >
   <section class="category-head mb-5">
     <nav class="taxonomy-breadcrumbs" aria-label="面包屑导航">
@@ -176,7 +176,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
   </div>
 </Layout>
 
-{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
+{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl} />}
 <script is:inline>
   let bootTimer;
   function boot() {

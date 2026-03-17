@@ -198,6 +198,64 @@ blockquote {
   margin-bottom: 1rem;
 }
 
+.taxonomy-summary {
+  margin-top: 1rem;
+}
+
+.taxonomy-summary-text {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  font-size: 0.95rem;
+}
+
+.taxonomy-summary-label {
+  font-weight: 600;
+  opacity: 0.78;
+}
+
+.taxonomy-summary-link {
+  text-decoration: none;
+}
+
+.taxonomy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.taxonomy-pill:hover {
+  border-color: var(--accent);
+  background: color-mix(
+    in srgb,
+    var(--accent) 12%,
+    var(--background-secondary)
+  );
+  color: var(--text-primary);
+}
+
+.taxonomy-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.taxonomy-pill-count {
+  font-weight: 600;
+  opacity: 0.88;
+}
+
 :where(ul),
 :where(menu) {
   list-style-type: disc;

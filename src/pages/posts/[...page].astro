@@ -10,6 +10,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
+import TaxonomySummary from "@/components/TaxonomySummary.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -28,6 +29,23 @@ const groupedByYear = PostUtils.groupBy(page.data, item =>
 const years = Object.keys(groupedByYear)
   .map(y => Number(y))
   .sort((a, b) => b - a);
+
+const yearsWithCounts = years.map(year => ({
+  year,
+  count: groupedByYear[year].length,
+}));
+
+const categoryItems = categories.map(({ category, categoryName, count }) => ({
+  href: `/categories/${category}`,
+  label: categoryName,
+  count,
+}));
+
+const yearItems = yearsWithCounts.map(({ year, count }) => ({
+  href: `#year-${year}`,
+  label: String(year),
+  count,
+}));
 ---
 
 <Layout
@@ -36,26 +54,8 @@ const years = Object.keys(groupedByYear)
   robots="noindex,follow"
 >
   <section class="archives-categories mb-4" aria-label="分类列表">
-    <p class="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
-      <span class="font-semibold opacity-80">分类：</span>
-      {
-        categories.map(({ category, categoryName, count }) => (
-          <a href={`/categories/${category}`} class="text-sm hover:underline">
-            {categoryName}（{count}）
-          </a>
-        ))
-      }
-    </p>
-    <p class="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-base">
-      <span class="font-semibold opacity-80">年份：</span>
-      {
-        years.map(year => (
-          <a href={`#year-${year}`} class="text-sm hover:underline">
-            {year}（{groupedByYear[year].length}）
-          </a>
-        ))
-      }
-    </p>
+    <TaxonomySummary title="分类" items={categoryItems} />
+    <TaxonomySummary title="年份" items={yearItems} />
   </section>
 
   <section class="archives-by-year" aria-label="按年归档">

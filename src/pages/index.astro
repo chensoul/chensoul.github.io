@@ -29,11 +29,19 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     <div class="home-main-panel">
       <div class="home-section-head">
         <h2>最近文章</h2>
+        <div class="home-section-head-action home-section-head-action--mobile">
+          <LinkButton
+            href="/posts"
+            class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            查看全部文章
+          </LinkButton>
+        </div>
       </div>
       <ul class="home-card-list">
         {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
-      <div class="home-section-action">
+      <div class="home-section-action home-section-action--desktop">
         <LinkButton
           href="/posts"
           class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -111,7 +119,8 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
+    flex-wrap: wrap;
   }
 
   .home-section-head p {
@@ -129,10 +138,20 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     margin-top: 0.5rem;
   }
 
+  .home-section-head-action {
+    margin-left: auto;
+    display: flex;
+  }
+
+  .home-section-head-action--mobile {
+    display: none;
+  }
+
   .home-split {
     display: grid;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    gap: 0.8rem;
+    margin: 0;
+    align-items: start;
   }
 
   .home-card-list {
@@ -141,12 +160,13 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     margin: 0;
   }
 
-  .home-main-panel {
-    min-width: 0;
-  }
-
+  .home-main-panel,
   .home-side-panel {
-    border-left: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.25rem;
+    background: var(--background);
   }
 
   .home-side-list {
@@ -164,9 +184,9 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
   .home-side-card b {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.45;
+    font-size: 0.825rem;
+    font-weight: 500;
+    line-height: 1.4;
   }
 
   .home-side-card p {
@@ -183,6 +203,14 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   }
 
   @media (max-width: 700px) {
+    .home-section-head-action--mobile {
+      display: flex;
+    }
+
+    .home-section-action.home-section-action--desktop {
+      display: none;
+    }
+
     .home-section-head {
       align-items: center;
       gap: 0.75rem;

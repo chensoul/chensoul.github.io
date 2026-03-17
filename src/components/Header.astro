@@ -149,8 +149,10 @@ const { pathname } = Astro.url;
       }
     });
 
-    if ((window as Window & { _themeToggleLabelHandler?: () => void })
-      ._themeToggleLabelHandler) {
+    if (
+      (window as Window & { _themeToggleLabelHandler?: () => void })
+        ._themeToggleLabelHandler
+    ) {
       window.removeEventListener(
         "themechange",
         (window as Window & { _themeToggleLabelHandler?: () => void })

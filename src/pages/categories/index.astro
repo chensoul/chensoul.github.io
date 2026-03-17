@@ -112,7 +112,7 @@ categories.forEach(({ category, categoryName }) => {
   </div>
 </Layout>
 
-{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl}></script>}
+{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl} />}
 <script is:inline>
   let bootTimer;
   function boot() {
