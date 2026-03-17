@@ -51,15 +51,10 @@ const title = titleProp?.trim() || SITE.title;
 const fullDescription = descriptionProp?.trim() || SITE.desc;
 const robotsContent = robots?.trim() || "index,follow";
 
-// 社交分享图：仅文章页传 ogImage 时有图（PostDetails 传 og/.../slug.png），非文章页不输出 og:image
-// 必须使用站点主域名的绝对 URL，否则分享时爬虫无法正确拉取图片（Facebook/LinkedIn 等要求）
-const ogImage = ogImageProp ?? "";
-const hasOgImage = Boolean(ogImage);
+// 使用当前 URL 的 host 构建 OG 图片地址，确保开发与生产环境都能正确引用
+const ogImage = ogImageProp ?? "avatar.png";
 const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
-const socialImageURL = hasOgImage
-  ? new URL(ogImagePath, SITE.website.endsWith("/") ? SITE.website : `${SITE.website}/`)
-  : null;
-const socialImageURLString = socialImageURL?.href ?? "";
+const socialImageURLString = new URL(ogImagePath, Astro.url.origin).href;
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;
@@ -93,7 +88,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       description: fullDescription,
       url: canonicalHref,
       mainEntityOfPage: canonicalHref,
-      ...(hasOgImage && socialImageURLString && { image: socialImageURLString }),
+      image: socialImageURLString,
       datePublished: pubDatetime?.toISOString(),
       ...(modDatetime && { dateModified: modDatetime.toISOString() }),
       author: [
@@ -147,21 +142,25 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <meta name="description" content={fullDescription} />
     <meta name="author" content={author} />
     <meta name="robots" content={robotsContent} />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={fullDescription} />
     <meta property="og:url" content={canonicalURL} />
-    {hasOgImage && socialImageURLString && (
-      <>
-        <meta property="og:image" content={socialImageURLString} />
-        <meta property="og:image:secure_url" content={socialImageURLString} />
-        <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
-        <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
-        <meta property="og:image:alt" content={title} />
-      </>
-    )}
+    <meta property="og:image" content={socialImageURLString} />
+    <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+    <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content={SITE.langOg} />
     <meta property="og:type" content={ogType} />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={fullDescription} />
+    <meta property="twitter:image" content={socialImageURLString} />
+    <meta property="twitter:image:alt" content={title} />
 
     <!-- Article Published/Modified time -->
     {
@@ -180,18 +179,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
         />
       )
     }
-
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content={hasOgImage ? "summary_large_image" : "summary"} />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={fullDescription} />
-    {hasOgImage && socialImageURLString && (
-      <>
-        <meta property="twitter:image" content={socialImageURLString} />
-        <meta property="twitter:image:alt" content={title} />
-      </>
-    )}
 
     <!-- Google JSON-LD Structured data -->
     <script

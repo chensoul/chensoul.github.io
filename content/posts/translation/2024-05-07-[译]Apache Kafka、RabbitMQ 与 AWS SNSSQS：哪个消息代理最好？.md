@@ -1,7 +1,7 @@
 ---
 title: "[译]Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最好？"
 date: 2024-05-07 08:00:00+08:00
-slug: /apache-kafka-vs-rabbitmq-vs-aws-sns-sqs
+slug: apache-kafka-vs-rabbitmq-vs-aws-sns-sqs
 categories: [ "translation" ]
 tags: ['kafka', 'rabbitmq']
 description: "原文链接：https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs ..."

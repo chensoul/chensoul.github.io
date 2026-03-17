@@ -68,7 +68,6 @@ const slugPart = post.data.slug;
 const hugoSlug = `${year}/${month}/${day}/${slugPart}`;
 const ogImage = `/og/${hugoSlug}.png`;
 
-
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
   postDescription?.trim() || PostUtils.getDescription(post.body ?? "");

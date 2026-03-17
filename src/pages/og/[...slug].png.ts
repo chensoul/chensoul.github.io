@@ -1,5 +1,6 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
+import { SITE } from "@/config";
 import { generateOgImage } from "../../utils/og-image";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -12,18 +13,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const day = String(date.getDate()).padStart(2, "0");
     const slugPart = post.data.slug;
     const fullSlug = `${year}/${month}/${day}/${slugPart}`;
+    const author = (post.data as { author?: string }).author ?? SITE.author;
 
     return {
       params: { slug: fullSlug },
-      props: { title: post.data.title, date: date },
+      props: { title: post.data.title, date: date, author },
     };
   });
 };
 
 export const GET: APIRoute = async ({ props }) => {
-  const { title, date } = props as { title: string; date: Date };
+  const { title, date, author } = props as {
+    title: string;
+    date: Date;
+    author: string;
+  };
 
-  const png = await generateOgImage({ title, date: date });
+  const png = await generateOgImage({
+    title,
+    date: date,
+    author,
+    siteTitle: SITE.title,
+  });
 
   return new Response(Buffer.from(png), {
     headers: {

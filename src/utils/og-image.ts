@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 
 const avatarBase64 = fs
-  .readFileSync(path.join(process.cwd(), "public/images/avatar.webp"))
+  .readFileSync(path.join(process.cwd(), "public/avatar.png"))
   .toString("base64");
 
 async function loadGoogleFont(
@@ -41,11 +41,14 @@ function getFonts() {
 interface OgImageOptions {
   title: string;
   date: Date;
+  author?: string;
+  siteTitle?: string;
 }
 
 export async function generateOgImage({
   title,
   date,
+  author,
 }: OgImageOptions): Promise<Buffer> {
   const fonts = await getFonts();
   const dateStr = date.toLocaleDateString("zh-CN", {
@@ -62,7 +65,8 @@ export async function generateOgImage({
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+          background:
+            "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%)",
           padding: "60px",
           fontFamily: "Noto Sans SC",
         },
@@ -75,39 +79,41 @@ export async function generateOgImage({
                 width: "100%",
                 height: "100%",
                 borderRadius: "20px",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.9)",
+                border: "1px solid rgba(15,23,42,0.08)",
                 padding: "50px",
                 alignItems: "center",
                 gap: "50px",
               },
               children: [
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    },
-                    children: [
-                      {
-                        type: "img",
-                        props: {
-                          src: `data:image/png;base64,${avatarBase64}`,
-                          width: 160,
-                          height: 160,
-                          style: {
-                            borderRadius: "80px",
-                            border: "4px solid rgba(96,165,250,0.6)",
+                [
+                  {
+                    type: "div",
+                    props: {
+                      style: {
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      },
+                      children: [
+                        {
+                          type: "img",
+                          props: {
+                            src: `data:image/png;base64,${avatarBase64}`,
+                            width: 160,
+                            height: 160,
+                            style: {
+                              borderRadius: "80px",
+                              border: "4px solid rgba(59,130,246,0.5)",
+                            },
                           },
                         },
-                      },
-                    ],
+                      ],
+                    },
                   },
-                },
+                ],
                 {
                   type: "div",
                   props: {
@@ -125,7 +131,7 @@ export async function generateOgImage({
                           style: {
                             fontSize: "46px",
                             fontWeight: 700,
-                            color: "#f8fafc",
+                            color: "#0f172a",
                             lineHeight: 1.3,
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -138,11 +144,38 @@ export async function generateOgImage({
                         props: {
                           style: {
                             marginTop: "24px",
-                            fontSize: "24px",
-                            color: "#60a5fa",
-                            fontWeight: 400,
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "8px",
                           },
-                          children: dateStr,
+                          children: [
+                            ...(author
+                              ? [
+                                  {
+                                    type: "div",
+                                    props: {
+                                      style: {
+                                        fontSize: "22px",
+                                        color: "#475569",
+                                        fontWeight: 400,
+                                      },
+                                      children: author,
+                                    },
+                                  },
+                                ]
+                              : []),
+                            {
+                              type: "div",
+                              props: {
+                                style: {
+                                  fontSize: "24px",
+                                  color: "#2563eb",
+                                  fontWeight: 400,
+                                },
+                                children: dateStr,
+                              },
+                            },
+                          ],
                         },
                       },
                     ],
