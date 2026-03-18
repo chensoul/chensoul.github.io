@@ -137,8 +137,8 @@ pnpm md:check         # Markdown Lint 检查
 pnpm md:fix           # Markdown 自动修复
 pnpm spell            # cspell 拼写检查
 
-pnpm compress-images  # 压缩图片资源
-pnpm convert-to-webp  # 转换图片为 WebP 格式
+pnpm compress-images  # 就地压缩 jpg/png/webp（scripts/convert-to-webp.mjs --compress）
+pnpm convert-to-webp  # jpg/png → webp（同脚本，默认模式）
 ```
 
 > `pnpm build` 依次执行：`astro check && astro build && pagefind --site dist --glob "posts/**/*.html"`

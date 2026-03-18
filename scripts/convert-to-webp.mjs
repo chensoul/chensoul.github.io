@@ -1,14 +1,17 @@
 /**
- * 将目录下的非 WebP 图片（jpg/png）转为 WebP 格式
- * 使用 sharp，输出同名的 .webp 文件；默认会删除原图以节省空间。
+ * 图片处理（sharp）
  *
- * 用法：node scripts/convert-to-webp.mjs [目录] [--keep]
+ * 1) 默认：将 jpg/png 转为同名 .webp（默认删原图，可用 --keep 保留）
+ * 2) --compress：就地压缩 jpg/png/webp（仅当体积变小才覆盖）
+ *
+ * 用法：
+ *   node scripts/convert-to-webp.mjs [目录] [--keep]
+ *   node scripts/convert-to-webp.mjs [目录] --compress
  * 默认目录：public/images
- * --keep：保留原图，不删除
  */
 /* eslint-disable no-console -- CLI 脚本需输出到控制台 */
 
-import { readdir, stat, unlink } from "fs/promises";
+import { readdir, stat, unlink, rename } from "fs/promises";
 import { join, extname } from "path";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
@@ -16,21 +19,28 @@ import sharp from "sharp";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const root = join(__dirname, "..");
 const defaultDir = join(root, "public", "images");
-const args = process.argv.slice(2).filter((a) => !a.startsWith("--"));
-const keepOriginal = process.argv.includes("--keep");
+
+const argv = process.argv.slice(2);
+const compressMode = argv.includes("--compress");
+const keepOriginal = argv.includes("--keep");
+const args = argv.filter((a) => !a.startsWith("--"));
 const dir = args[0] ? join(root, args[0]) : defaultDir;
 
 const NON_WEBP_EXTS = new Set([".jpg", ".jpeg", ".png"]);
+const COMPRESS_EXTS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const WEBP_QUALITY = 82;
+const JPG_OPTIONS = { mozjpeg: true, quality: 82 };
+const PNG_OPTIONS = { compressionLevel: 9 };
+const WEBP_OPTIONS = { quality: 82 };
 
-async function listNonWebpImages(dirPath) {
+async function walkImages(dirPath, extSet) {
   const entries = await readdir(dirPath, { withFileTypes: true });
   const files = [];
   for (const e of entries) {
     const full = join(dirPath, e.name);
     if (e.isDirectory()) {
-      files.push(...(await listNonWebpImages(full)));
-    } else if (NON_WEBP_EXTS.has(extname(e.name).toLowerCase())) {
+      files.push(...(await walkImages(full, extSet)));
+    } else if (extSet.has(extname(e.name).toLowerCase())) {
       files.push(full);
     }
   }
@@ -45,7 +55,10 @@ async function convertToWebp(filePath) {
   let pipeline = sharp(filePath);
   const meta = await pipeline.metadata();
   if (meta.width > 1920 || meta.height > 1920) {
-    pipeline = pipeline.resize(1920, 1920, { fit: "inside", withoutEnlargement: true });
+    pipeline = pipeline.resize(1920, 1920, {
+      fit: "inside",
+      withoutEnlargement: true,
+    });
   }
   await pipeline.webp({ quality: WEBP_QUALITY }).toFile(webpPath);
   const after = (await stat(webpPath)).size;
@@ -56,11 +69,49 @@ async function convertToWebp(filePath) {
 
   const pct = before ? (((before - after) / before) * 100).toFixed(1) : 0;
   const action = keepOriginal ? "→" : "→ (已删原图)";
-  console.log(`${filePath.replace(root, "")} ${(before / 1024).toFixed(1)}KB ${action} ${webpPath.replace(root, "")} ${(after / 1024).toFixed(1)}KB (-${pct}%)`);
+  console.log(
+    `${filePath.replace(root, "")} ${(before / 1024).toFixed(1)}KB ${action} ${webpPath.replace(root, "")} ${(after / 1024).toFixed(1)}KB (-${pct}%)`
+  );
 }
 
-async function main() {
-  const files = await listNonWebpImages(dir);
+async function compressInPlace(filePath) {
+  const ext = extname(filePath).toLowerCase();
+  const before = (await stat(filePath)).size;
+  let pipeline = sharp(filePath);
+  const meta = await pipeline.metadata();
+  if (meta.width > 1920 || meta.height > 1920) {
+    pipeline = pipeline.resize(1920, 1920, {
+      fit: "inside",
+      withoutEnlargement: true,
+    });
+  }
+  const tmp = filePath + ".tmp";
+  if (ext === ".jpg" || ext === ".jpeg") {
+    await pipeline.jpeg(JPG_OPTIONS).toFile(tmp);
+  } else if (ext === ".png") {
+    await pipeline.png(PNG_OPTIONS).toFile(tmp);
+  } else if (ext === ".webp") {
+    await pipeline.webp(WEBP_OPTIONS).toFile(tmp);
+  } else {
+    return;
+  }
+  const after = (await stat(tmp)).size;
+  if (after < before) {
+    await rename(tmp, filePath);
+    const pct = (((before - after) / before) * 100).toFixed(1);
+    console.log(
+      `${filePath.replace(root, "")} ${(before / 1024).toFixed(1)}KB → ${(after / 1024).toFixed(1)}KB (-${pct}%)`
+    );
+  } else {
+    await unlink(tmp);
+    console.log(
+      `${filePath.replace(root, "")} ${(before / 1024).toFixed(1)}KB (跳过，压缩后更大)`
+    );
+  }
+}
+
+async function mainConvert() {
+  const files = await walkImages(dir, NON_WEBP_EXTS);
   if (files.length === 0) {
     console.log("未找到 jpg/png 文件：", dir.replace(root, "") || "public/images");
     return;
@@ -78,6 +129,38 @@ async function main() {
     } catch (err) {
       console.error("Error:", f, err.message);
     }
+  }
+}
+
+async function mainCompress() {
+  const files = await walkImages(dir, COMPRESS_EXTS);
+  if (files.length === 0) {
+    console.log(
+      "No jpg/png/webp files in",
+      dir.replace(root, "") || "public/images"
+    );
+    return;
+  }
+  console.log(
+    "Compressing",
+    files.length,
+    "file(s) in",
+    dir.replace(root, "") || "public/images"
+  );
+  for (const f of files) {
+    try {
+      await compressInPlace(f);
+    } catch (err) {
+      console.error("Error:", f, err.message);
+    }
+  }
+}
+
+async function main() {
+  if (compressMode) {
+    await mainCompress();
+  } else {
+    await mainConvert();
   }
 }
 

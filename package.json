@@ -15,7 +15,7 @@
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "compress-images": "node scripts/compress-images.mjs",
+    "compress-images": "node scripts/convert-to-webp.mjs --compress",
     "convert-to-webp": "node scripts/convert-to-webp.mjs",
     "convert-to-svg": "node scripts/convert-to-svg.mjs",
     "spell": "pnpm dlx cspell --config cspell.yaml .",
