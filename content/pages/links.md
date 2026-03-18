@@ -41,5 +41,5 @@ title: "链接"
 - [iloveimg](https://www.iloveimg.com) - 没有它转不了的文件格式
 - [convertio](https://convertio.co) - 图片剪裁、压缩、转换。支持图片转为 SVG。
 - [SVG Viewer](https://www.svgviewer.dev/) - 在线查看、编辑 SVG
-- [Emoji 图标](https://emoji.muan.co/)
+- [Emoji](https://emoji.muan.co/) - Emoji 图标，可以直接复制
 

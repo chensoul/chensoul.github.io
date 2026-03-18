@@ -34,7 +34,7 @@ export const GET: APIRoute = async ({ props }) => {
     date,
     author,
     siteTitle: SITE.title,
-    description: SITE.desc
+    description: SITE.desc,
   });
 
   return new Response(Buffer.from(png), {

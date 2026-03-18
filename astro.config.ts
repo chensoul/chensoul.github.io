@@ -18,40 +18,18 @@ import compressor from "astro-compressor";
 import { minify } from "@zokki/astro-minify";
 import critters from "@critters-rs/astro";
 import photosuite from "photosuite";
-import mermaid from "./src/integrations/quietAstroMermaid";
+import mermaid from "./src/utils/quietAstroMermaid";
 
 // Expressive Code syntax highlighting, https://expressive-code.com/reference/configuration/
 const expressiveCodeOption: AstroExpressiveCodeOptions = {
   plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
-  themes: ["one-dark-pro", "one-light"],
-  themeCssSelector: theme => {
-    if (theme.name === "one-dark-pro") {
-      return "[data-theme='dark']";
-    }
-    return "[data-theme='light']";
-  },
+  themes: ["github-dark"],
   defaultProps: {
     wrap: true,
     showLineNumbers: false,
+    // Disable wrapped line indentation for terminal languages
     overridesByLang: {
-      "bash,cmd,powershell,ps,sh,shell,zsh": { frame: "none" },
-    },
-  },
-  styleOverrides: {
-    codeFontFamily: "var(--font-mono), var(--font-emoji)",
-    uiFontFamily: "var(--font-sans), var(--font-emoji)",
-    uiFontSize: "0.75rem",
-    uiPaddingBlock: "0.15rem",
-    uiPaddingInline: "0.4rem",
-    borderWidth: "0",
-    textMarkers: {
-      backgroundOpacity: "33%",
-      inlineMarkerBorderWidth: "0.1px",
-    },
-    frames: {
-      editorTabBarBackground: "transparent",
-      frameBoxShadowCssValue: "transparent",
-      tooltipSuccessBackground: "#6b7280",
+      "bash,ps,sh": { preserveIndent: false },
     },
   },
 };
