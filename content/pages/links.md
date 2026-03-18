@@ -1,7 +1,7 @@
 ---
 title: "链接"
 ---
- 
+
 本页面收集了一些我觉得有趣的博客、播客、书籍等资源链接，方便我无聊的时候时不时地看看。我觉得其他人可能也会感兴趣。
 
 ## 博客
@@ -41,4 +41,5 @@ title: "链接"
 - [iloveimg](https://www.iloveimg.com) - 没有它转不了的文件格式
 - [convertio](https://convertio.co) - 图片剪裁、压缩、转换。支持图片转为 SVG。
 - [SVG Viewer](https://www.svgviewer.dev/) - 在线查看、编辑 SVG
+- [Emoji 图标](https://emoji.muan.co/)
 
