@@ -9,24 +9,26 @@ title: "链接"
 以下是我平常关注的一些博客，更多关注请参看 [rss.txt](https://github.com/chensoul/chensoul.github.io/blob/main/public/data/rss.txt)
 文件。我写了一个程序定时抓取该文件的链接，制作了一个[邻居](/feeds)页面。
 
-- [Pseudoyu](https://www.pseudoyu.com/) - 一名 web3 爱好者、区块链开发者和独立黑客。
+- [Pseudoyu](https://www.pseudoyu.com/) - 一名 web3 爱好者、区块链开发者和独立黑客
 - [SivaLabs](https://www.sivalabs.in/blog/) - Java、Spring Boot、微服务、云计算和DevOps教程
 - [Piotr's TechBlog](https://piotrminkowski.com/) - Java, Spring, Kotlin, microservices, Kubernetes, containers
 - [Frost's Blog](https://frostming.com) - 一名 Python 开发工程师，坐标深圳
 - [游钓四方](https://blog.lhasa.icu/)
 - [拾月](https://www.skyue.com/) - PC互联网遗民
-- [Yiran's Blog](https://zdyxry.github.io/)
+- [Yiran's Blog](https://zdyxry.github.io/) - 每周阅读的文章、观看的影视作品、以及部分碎碎念
 - [Verne in GitHub](https://blog.einverne.info/)
 
 ## 文章
 
 以下是我觉得值得收藏、反复阅读的文章。
 
-- [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html)
-- [Get better at programming by learning how things work](https://jvns.ca/blog/learn-how-things-work/)
-- [Learn In Public](https://www.swyx.io/learn-in-public/)
-- [Software Engineering - The Soft Parts](https://addyosmani.com/blog/software-engineering-soft-parts/)
-- [How do I upskill myself, and what tools & techniques do I use?](https://www.youtube.com/watch?v=oOAaGvpQTCo)
+- [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html) - 十年自学编程
+- [Get better at programming by learning how things work](https://jvns.ca/blog/learn-how-things-work/) - 通过学习事物运作原理来提高编程技能。
+- [Learn In Public](https://www.swyx.io/learn-in-public/) - 公开你的学习
+- [Software Engineering - The Soft Parts](https://addyosmani.com/blog/software-engineering-soft-parts/) - 在软件工程领域学到的“软技能”
+- [How do I upskill myself, and what tools & techniques do I use?](https://www.youtube.com/watch?v=oOAaGvpQTCo) - 我该如何提升自己的技能？我需要使用哪些工具和技巧？
+- [Feeling Left Behind in Tech? This Is Your 90-Day Comeback Plan](https://www.sivalabs.in/feel-left-behind-in-tech-this-is-90-day-comeback-plan/) -
+  技术从业者 90 天逆袭计划
 
 ## 书籍
 
