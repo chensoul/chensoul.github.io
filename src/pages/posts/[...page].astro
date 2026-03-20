@@ -12,6 +12,9 @@ import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
 import TaxonomySummary from "@/components/TaxonomySummary.astro";
 
+export const pageSlug = "posts";
+export const pageTitle = `归档 | ${SITE.title}`;
+
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   const sortedPosts = PostUtils.sort(posts);
@@ -48,11 +51,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 }));
 ---
 
-<Layout
-  title={`归档 | ${SITE.title}`}
-  description="按时间浏览博客的全部文章，并可通过分类和年份快速定位到感兴趣的内容。"
-  robots="noindex,follow"
->
+<Layout title={pageTitle} robots="noindex,follow">
   <section class="archives-categories mb-4" aria-label="分类列表">
     <TaxonomySummary title="分类" items={categoryItems} />
     <TaxonomySummary title="年份" items={yearItems} />

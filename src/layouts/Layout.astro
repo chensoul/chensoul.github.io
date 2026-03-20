@@ -10,13 +10,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BackToTop from "@/components/BackToTop.astro";
 import BackButton from "@/components/BackButton.astro";
-
 /**
  * 组件属性接口
  *
  * @property title - 页面标题，可不传；未传或为空时使用 SITE.title（网站名称）
  * @property author - 作者名称
- * @property description - 页面描述，可不传；未传或为空时使用 SITE.desc（站点描述）
+ * @property description - 页面描述，可不传；未传或为空时使用 SITE.description（站点描述）
  * @property canonicalURL - 规范链接
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间
@@ -48,16 +47,8 @@ const {
 } = Astro.props;
 
 const title = titleProp?.trim() || SITE.title;
-const fullDescription = descriptionProp?.trim() || SITE.desc;
+const fullDescription = descriptionProp?.trim() || SITE.description;
 const robotsContent = robots?.trim() || "index,follow";
-
-// 使用当前 URL 的 host 构建 OG 图片地址，确保开发与生产环境都能正确引用
-const ogImage = ogImageProp ?? "images/og.webp";
-const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
-const socialImageURLString = new URL(ogImagePath, Astro.url.origin).href;
-/** OG 图尺寸（与 utils/og-image.ts 生成一致） */
-const OG_IMAGE_WIDTH = 1200;
-const OG_IMAGE_HEIGHT = 630;
 const pathname = Astro.url.pathname.replace(/\.html?$/, "") || "/";
 const canonicalHref = String(canonicalURL);
 const isArticlePage = Boolean(pubDatetime);
@@ -74,6 +65,35 @@ const defaultSchemaType = isArticlePage
       : "WebPage";
 const resolvedSchemaType = schemaType?.trim() || defaultSchemaType;
 
+const ogEnabled = SITE.og.enabled;
+const useDynamicOg = ogEnabled && SITE.og.dynamic;
+
+const normalizeOgDefaultPath = (p: string) => {
+  const t = p.trim();
+  if (!t) return "/images/og.webp";
+  return t.startsWith("/") ? t : `/${t}`;
+};
+
+const staticDefaultOgPath = normalizeOgDefaultPath(SITE.og.defaultImage);
+
+const pathForOg = pathname.replace(/^\/+/, "").replace(/\/+$/, "");
+const defaultOgFromUrl =
+  pathname === "/" || pathForOg === ""
+    ? "/og/index.png"
+    : pathForOg.startsWith("posts/")
+      ? `/og/${pathForOg.slice("posts/".length)}.png`
+      : `/og/${pathForOg}.png`;
+
+const defaultOgImage = useDynamicOg ? defaultOgFromUrl : staticDefaultOgPath;
+const ogImage = ogImageProp ?? defaultOgImage;
+const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
+const socialImageURLString = ogEnabled
+  ? new URL(ogImagePath, Astro.url.origin).href
+  : "";
+/** OG 图尺寸（与 utils/og-image.ts 生成一致） */
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
+
 /**
  * 结构化数据（JSON-LD）
  *
@@ -88,7 +108,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       description: fullDescription,
       url: canonicalHref,
       mainEntityOfPage: canonicalHref,
-      image: socialImageURLString,
+      ...(ogEnabled ? { image: socialImageURLString } : {}),
       datePublished: pubDatetime?.toISOString(),
       ...(modDatetime && { dateModified: modDatetime.toISOString() }),
       author: [
@@ -142,25 +162,41 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <meta name="description" content={fullDescription} />
     <meta name="author" content={author} />
     <meta name="robots" content={robotsContent} />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={fullDescription} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={socialImageURLString} />
-    <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
-    <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
-    <meta property="og:image:alt" content={title} />
+    {
+      ogEnabled && (
+        <>
+          <meta property="og:image" content={socialImageURLString} />
+          <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+          <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+          <meta property="og:image:alt" content={title} />
+        </>
+      )
+    }
     <meta property="og:locale" content={SITE.langOg} />
     <meta property="og:type" content={ogType} />
 
     <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:card"
+      content={ogEnabled ? "summary_large_image" : "summary"}
+    />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={fullDescription} />
-    <meta property="twitter:image" content={socialImageURLString} />
-    <meta property="twitter:image:alt" content={title} />
+    {
+      ogEnabled && (
+        <>
+          <meta property="twitter:image" content={socialImageURLString} />
+          <meta property="twitter:image:alt" content={title} />
+        </>
+      )
+    }
 
     <!-- Article Published/Modified time -->
     {
@@ -187,8 +223,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       set:html={JSON.stringify(structuredData)}
     />
 
-    <!-- Enable RSS feed auto-discovery  -->
-    <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -196,9 +230,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       href={new URL("rss.xml", Astro.site)}
     />
 
-    <meta name="theme-color" content="#ffffff" />
-
-    <!-- Google 站点验证（config.ts 中配置 googleSiteVerification） -->
     {
       SITE.googleSiteVerification && (
         <meta
@@ -207,8 +238,11 @@ const structuredData = resolvedSchemaType === "BlogPosting"
         />
       )
     }
-
-    <meta name="msvalidate.01" content="5995FAD202DE5A364D652266E4C4E0E0" />
+    {
+      SITE.bingSiteVerification && (
+        <meta name="msvalidate.01" content={SITE.bingSiteVerification} />
+      )
+    }
 
     <!-- Theme initialization script to prevent flash；切换禁用时固定浅色 -->
     <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
@@ -284,9 +318,11 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <BackToTop />
     <Footer/>
 
-    <!-- Umami 分析（config.ts 中配置 SITE.umami；首屏后再加载以减轻 LCP 影响） -->
     {
-      import.meta.env.PROD && SITE.umami?.websiteId && SITE.umami?.scriptUrl && (
+      import.meta.env.PROD &&
+      SITE.umami.enabled &&
+      SITE.umami?.websiteId &&
+      SITE.umami?.scriptUrl && (
         <script is:inline define:vars={{ websiteId: SITE.umami.websiteId, scriptUrl: SITE.umami.scriptUrl }}>
           (function () {
             if (!websiteId || !scriptUrl) return;

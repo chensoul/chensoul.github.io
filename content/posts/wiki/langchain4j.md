@@ -5,6 +5,7 @@ slug: "langchain4j"
 tags: ['langchain4j']
 draft: false
 categories: [ "wiki" ]
+description: "LangChain4j 学习索引：官方与中文文档、awesome 列表及示例仓库链接。"
 ---
 
 ## 文档

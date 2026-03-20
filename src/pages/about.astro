@@ -1,45 +1,15 @@
 ---
-/**
- * 关于页
- *
- * @fileoverview 从 content/pages/about.md 读取正文，解析 frontmatter 后使用 markdown-it 渲染（html + linkify，关闭 typographer），输出到 Layout 下的 page-content。
- */
-import fs from "node:fs";
-import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import MarkdownIt from "markdown-it";
 import { SITE } from "@/config";
+import { readContentPage } from "@/utils/contentPage";
 
-// 读取 about.md 文件（基于项目根目录，避免 CI 下 __dirname 指向 dist 导致 ENOENT）
-const filePath = path.join(process.cwd(), "content/pages/about.md");
-const fileContent = fs.readFileSync(filePath, "utf-8");
+const pageSlug = "about";
+const pageData = readContentPage(`${pageSlug}.md`);
+const pageTitle = pageData.frontmatter.title || SITE.title;
+const pageDescription = pageData.frontmatter.description || SITE.description;
 
-// 解析 frontmatter
-const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-if (!frontmatterMatch) {
-  return Astro.redirect("/404");
-}
-
-const frontmatterStr = frontmatterMatch[1];
-const content = frontmatterMatch[2];
-
-// 解析 frontmatter 为对象
-const frontmatter: Record<string, string> = {};
-frontmatterStr.split("\n").forEach(line => {
-  const match = line.match(/^(\w+):\s*(.+)$/);
-  if (match) {
-    const key = match[1];
-    let value = match[2].trim();
-    // 移除引号
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
-    }
-    frontmatter[key] = value;
-  }
-});
+export { pageDescription, pageSlug, pageTitle };
 
 // 使用 markdown-it 渲染 markdown（不启用 typographer，避免链接 URL 中的英文逗号被替换为中文逗号）
 const md = new MarkdownIt({
@@ -47,15 +17,10 @@ const md = new MarkdownIt({
   linkify: true, // 自动转换 URL 为链接
   typographer: false, // 关闭标点替换，保证链接里的英文逗号不变
 });
-const htmlContent = md.render(content);
+const htmlContent = md.render(pageData.content);
 ---
 
-<Layout
-  title={`关于 | ${SITE.title}`}
-  description={frontmatter.description ||
-    "关于 ChenSoul：开发背景、正在使用的工具、联系方式，以及这个博客的更新记录。"}
-  schemaType="AboutPage"
->
+<Layout title={pageTitle} description={pageDescription} schemaType="AboutPage">
   <div class="page-content">
     <Fragment set:html={htmlContent} />
   </div>

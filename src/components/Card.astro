@@ -1,27 +1,6 @@
 ---
-/**
- * 文章卡片组件
- *
- * @fileoverview 显示单篇文章的缩略信息，用于文章列表页
- *
- * 核心逻辑：
- * 1. 支持两种标题级别：h2（主列表）或 h3（次要列表）
- * 2. 自动处理封面图 URL（支持相对路径和绝对路径）
- * 3. 显示发布/更新时间
- * 4. 支持 View Transitions 动画
- * 6. 支持隐藏卡片（用于筛选功能）
- *
- * 依赖关系：
- * - 被首页、归档页、分类页、标签页等列表页面使用
- * - 依赖 Datetime.astro 显示日期
- * - 依赖 getPath 工具生成文章链接
- * - 依赖 config.ts 获取图片加载配置
- */
-
 import type { CollectionEntry } from "astro:content";
-import { PostUtils } from "@/utils/postUtils";
-import { getCategoryMeta } from "@/utils/categoryMeta";
-import { slugifyStr } from "@/utils/slugify";
+import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import Datetime from "./Datetime.astro";
 import { SITE } from "@/config";
 

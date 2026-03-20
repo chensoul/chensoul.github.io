@@ -10,8 +10,10 @@ import Layout from "@/layouts/Layout.astro";
 import FeedItem from "@/components/FeedItem.astro";
 import { SITE } from "@/config";
 
+export const pageSlug = "feeds";
+export const pageTitle = `${SITE.feeds.navLabel} | ${SITE.title}`;
+
 const feedsEnabled = SITE.feeds.enabled;
-const navLabel = SITE.feeds.navLabel;
 
 let feedItems: Array<{
   title: string;
@@ -49,12 +51,7 @@ const clientData = {
 };
 ---
 
-<Layout
-  title={`${navLabel} | ${SITE.title}`}
-  description="聚合我关注的邻居博客、播客和视频更新，按时间查看最近发布的内容。"
-  schemaType="CollectionPage"
-  robots="noindex,follow"
->
+<Layout title={pageTitle} schemaType="CollectionPage" robots="noindex,follow">
   <div class="page-content feeds-page">
     {
       !feedsEnabled ? (

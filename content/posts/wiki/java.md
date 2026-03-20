@@ -5,6 +5,7 @@ slug: "java"
 tags: ['java']
 draft: false
 categories: [ "wiki" ]
+description: "Java 开发环境与工具索引：SDKMAN 安装、IDE、常用库与参考资源链接。"
 ---
 
 ## Installation

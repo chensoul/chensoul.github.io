@@ -128,7 +128,12 @@ export default defineConfig({
     },
     optimizeDeps: {
       include: ["mermaid", "dayjs", "lodash.kebabcase", "markdown-it"],
-      exclude: ["@resvg/resvg-js"],
+      /**
+       * photosuite/client 内部对 fancybox、imageGrid 等为相对路径的动态 import；
+       * 打进 .vite/deps 后子 chunk 易在热更/重启后与 hash 失步，浏览器报 504 Outdated Optimize Dep。
+       * 排除后主入口仍被正常转换，子模块从包内 dist 直连，避免过时预构建片段。
+       */
+      exclude: ["@resvg/resvg-js", "photosuite/client"],
     },
     // 开发时预编译常用模块，减轻首屏/热更延迟
     server: {

@@ -11,8 +11,14 @@ import Card from "@/components/Card.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
-const posts = await getCollection("blog");
-const sortedPosts = PostUtils.sort(posts);
+/** 与 /og/index.png 一致 */
+export const pageSlug = "index";
+export const pageTitle = SITE.title;
+export const pageDescription =
+  "记录 Java、Spring、AI 编码工具、架构与个人周报的博客。这里可以快速浏览最近更新和最新周报。";
+
+const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
+const sortedPosts = PostUtils.sort(publishedPosts);
 
 const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
@@ -21,10 +27,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 );
 ---
 
-<Layout
-  title={SITE.title}
-  description="记录 Java、Spring、AI 编码工具、架构与个人周报的博客。这里可以快速浏览最近更新和最新周报。"
->
+<Layout title={pageTitle} description={pageDescription}>
   <section class="home-split">
     <div class="home-main-panel">
       <div class="home-section-head">

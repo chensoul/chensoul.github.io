@@ -315,7 +315,7 @@ module.exports = {
 };
 ```
 
-这种语法可能会令人困惑（幸运的是，这不是我们经常编辑的东西）。基本上，我们告诉 webpack 查找任何 .js 文件（不包括 `node_modules` 文件夹中的文件），并使用 `babel-loader` 和 `@babel/preset-env` 预设应用 babel 转译。您可以在[此处](http://webpack.github.io/docs/configuration.html)阅读有关 webpack 配置语法的更多信息。
+这种语法可能会令人困惑（幸运的是，这不是我们经常编辑的东西）。基本上，我们告诉 webpack 查找任何 .js 文件（不包括 `node_modules` 文件夹中的文件），并使用 `babel-loader` 和 `@babel/preset-env` 预设应用 babel 转译。您可以在[此处](https://webpack.js.org/configuration/)阅读有关 webpack 配置语法的更多信息。
 
 现在一切都设置好了，我们可以开始用我们的 JavaScript 编写 ES2015 功能了！下面是 `index.js` 文件中的 [ES2015 模板字符串](https://babeljs.io/learn-es2015/#ecmascript-2015-features-template-strings)示例：
 

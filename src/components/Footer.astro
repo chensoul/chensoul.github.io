@@ -59,22 +59,6 @@ function normalizeSocialHref(url: string): string {
         {SITE.author}. All rights reserved.
       </span>
       {
-        SITE.customFooterLink.enabled && (
-          <>
-            <span class="separator" aria-hidden="true">
-              |
-            </span>
-            <a
-              href={SITE.customFooterLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {SITE.customFooterLink.text}
-            </a>
-          </>
-        )
-      }
-      {
         SITE.icp && (
           <>
             <span class="separator" aria-hidden="true">

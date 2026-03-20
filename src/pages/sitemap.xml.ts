@@ -17,9 +17,10 @@ function formatLastmod(value: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const posts = await getCollection("blog");
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
   const sortedPosts = PostUtils.sort(posts);
   const categories = PostUtils.getUniqueCategories(posts);
+  const tags = PostUtils.getUniqueTags(posts);
 
   const latestPostUpdatedAt = sortedPosts[0]
     ? new Date(
@@ -33,9 +34,12 @@ export const GET: APIRoute = async () => {
     { path: "/links", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/posts", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/categories", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/tags", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/search", lastmod: latestPostUpdatedAt, priority: "0.64" },
+    { path: "/feeds", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/running", lastmod: latestPostUpdatedAt, priority: "0.80" },
-    { path: "/rss.xml", lastmod: latestPostUpdatedAt, priority: "0.64" },
-    { path: "/llms.txt", lastmod: latestPostUpdatedAt, priority: "0.64" },
+    { path: "/rss.xml", lastmod: latestPostUpdatedAt, priority: "0.48" },
+    { path: "/llms.txt", lastmod: latestPostUpdatedAt, priority: "0.48" },
   ];
 
   const categoryPages = categories.map(category => {
@@ -56,6 +60,21 @@ export const GET: APIRoute = async () => {
     };
   });
 
+  const tagPages = tags.map(tagItem => {
+    const tagPosts = PostUtils.getPostsByTag(posts, tagItem.tag);
+    const lastmod = tagPosts[0]
+      ? new Date(
+          tagPosts[0].data.updated ?? tagPosts[0].data.date
+        ).toISOString()
+      : latestPostUpdatedAt;
+
+    return {
+      path: `/tags/${tagItem.tag}`,
+      lastmod,
+      priority: "0.64",
+    };
+  });
+
   const postPages = sortedPosts.map(post => ({
     path: PostUtils.getPath(
       post.id,
@@ -68,7 +87,7 @@ export const GET: APIRoute = async () => {
     priority: "0.64",
   }));
 
-  const urls = [...staticPages, ...categoryPages, ...postPages];
+  const urls = [...staticPages, ...categoryPages, ...tagPages, ...postPages];
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

@@ -22,7 +22,7 @@ export async function GET() {
 
   return rss({
     title: SITE.title,
-    description: SITE.desc,
+    description: SITE.description,
     site: SITE.website,
     trailingSlash: false,
     customData: `<language>zh-CN</language><image><url>${iconUrl}</url><title>${titleEscaped}</title><link>${SITE.website}</link></image>`,

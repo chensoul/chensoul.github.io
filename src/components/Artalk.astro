@@ -11,7 +11,7 @@
  * 4. 配置来自 config.ts 的 SITE.artalk
  *
  * 依赖关系：
- * - 被文章详情页使用（当 comments=true 时）
+ * - 被文章详情页使用（当 comments=true 且 SITE.artalk.enabled 时）
  * - 依赖主题按钮的 ID (#theme-toggle)
  */
 import { SITE } from "@/config";
@@ -21,6 +21,7 @@ import { SITE } from "@/config";
   is:inline
   data-astro-rerun
   define:vars={{
+    artalkEnabled: SITE.artalk.enabled,
     ARTALK_SCRIPT_URL: SITE.artalk.scriptUrl,
     ARTALK_CSS_URL: SITE.artalk.cssUrl,
     artalkServer: SITE.artalk.server,
@@ -34,7 +35,7 @@ import { SITE } from "@/config";
    * 包含脚本动态加载、初始化、主题同步、页面切换处理等功能
    */
   (function () {
-    if (!artalkServer) return;
+    if (!artalkEnabled || !artalkServer) return;
 
     window.artalkInstance = window.artalkInstance || null;
 

@@ -7,6 +7,10 @@
 import Layout from "../layouts/Layout.astro";
 import { SITE } from "@/config";
 
+export const pageSlug = "running";
+export const pageTitle = `跑步 | ${SITE.title}`;
+export const pageDescription = SITE.description;
+
 // 加载跑步数据
 import runningJson from "../../public/data/running.json";
 
@@ -220,7 +224,7 @@ const hrZoneColors: Record<number, string> = {
 };
 ---
 
-<Layout title={`跑步 | ${SITE.title}`}>
+<Layout title={pageTitle} description={pageDescription}>
   <div class="running-page">
     <article>
       <div class="article-header">

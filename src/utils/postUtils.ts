@@ -1,131 +1,112 @@
 /**
- * 文章处理工具类
+ * 博客与文章集合相关工具（原多文件合并：摘要正则、slug、分类元数据、PostUtils、llms.txt 生成）
  *
- * @fileoverview 统一管理所有文章相关的处理逻辑
- *
- * 核心功能：
- * 1. 文章过滤：判断文章是否应该显示（草稿、发布时间）
- * 2. 文章排序：按更新时间或发布时间降序排列
- * 3. 标签提取：获取所有唯一标签及统计
- * 4. 分类提取：获取所有唯一分类及统计
- * 5. 按标签筛选：获取包含指定标签的文章
- * 6. 分组：按自定义条件分组文章
- *
- * 优势：
- * - 统一管理：所有文章处理逻辑集中在一个类中
- * - 减少重复：避免多次调用 filter
- * - 易于维护：修改逻辑只需改一处
- * - 类型安全：完整的 TypeScript 类型定义
- *
- * 依赖关系：
- * - 被所有需要处理文章的页面和组件调用
- * - 依赖 SITE 配置、slugify 工具函数
+ * @fileoverview 文章过滤/排序/路径、标签与分类、描述提取、分类显示与排序、LLMs 站点地图文案
  */
 
 import type { CollectionEntry } from "astro:content";
+import kebabcase from "lodash.kebabcase";
 import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
-import { getCategoryMeta } from "./categoryMeta";
-import { slugifyStr, slugifyAll } from "./slugify";
-import { tagMoreRegex, regexReplacers } from "./descriptionRegex";
 
-/**
- * 标签对象接口
- */
+// --- 描述提取（Markdown → 纯文本摘要）---
+
+/** 匹配 `<!-- more -->` 之前的内容，捕获组 $1 为摘要 */
+const tagMoreRegex = /^(.*?)<!--\s*more\s*-->/s;
+
+/** Markdown 语法替换规则，按顺序应用 */
+const regexReplacers: Record<string, [RegExp, string]> = {
+  header: [/#{1,6} (.*?)/g, "$1 "],
+  star: [/\*{1,3}(.*?)\*{1,3}/g, "$1"],
+  underscore: [/_{1,3}(.*?)_{1,3}/g, "$1"],
+  strikeout: [/~~~[\s\S]*?~~~/g, ""],
+  horizontalRule: [/^(-{3,}|\*{3,})$/gm, ""],
+  quote: [/> (.*?)/g, "$1"],
+  codeInline: [/`(.*?)`/g, "$1"],
+  codeBlock: [/```[\s\S]*?```/g, ""],
+  latexInline: [/\$(.*?)\$/g, ""],
+  latexBlock: [/\$\$[\s\S]*?\$\$/g, ""],
+  image1: [/!\[(.*?)\]\((.*?)\)/g, ""],
+  image2: [/!\[(.*?)\]\[(.*?)\]/g, ""],
+  link1: [/\[(.*?)\]\((.*?)\)/g, "$1 "],
+  link2: [/\[(.*?)\]\[(.*?)\]/g, "$1 "],
+  linkRef: [/\[(.*?)\]: (.*?)/g, ""],
+};
+
+// --- Slug（URL 路径）---
+
+export const slugifyStr = (str: string) =>
+  kebabcase(str).replace(/\b([a-z])-([0-9]+)-([a-z])\b/g, "$1$2$3");
+
+const slugifyAll = (arr: string[]) => arr.map(str => slugifyStr(str));
+
+// --- 分类元信息 ---
+
+export interface CategoryMeta {
+  slug: string;
+  name: string;
+  image?: string;
+  order?: number;
+}
+
+const CATEGORY_META: CategoryMeta[] = [
+  { slug: "tech", name: "技术", image: "", order: 1 },
+  { slug: "weekly", name: "周报", image: "", order: 2 },
+  { slug: "translation", name: "翻译", order: 3 },
+  { slug: "wiki", name: "知识库", order: 4 },
+];
+
+export function getCategoryMeta(nameOrSlug?: string): CategoryMeta | undefined {
+  if (!nameOrSlug) return undefined;
+
+  const slug = slugifyStr(nameOrSlug);
+  return CATEGORY_META.find(
+    item => item.slug === slug || item.name === nameOrSlug
+  );
+}
+
+export function getCategoryImageUrl(nameOrSlug?: string): string | undefined {
+  return getCategoryMeta(nameOrSlug)?.image;
+}
+
+export function getCategoryOrder(nameOrSlug?: string): number {
+  return getCategoryMeta(nameOrSlug)?.order ?? Number.MAX_SAFE_INTEGER;
+}
+
+// --- PostUtils ---
+
 export interface Tag {
-  /** URL 友好的 slug（用于标签页 URL） */
   tag: string;
-  /** 原始标签名称（用于显示） */
   tagName: string;
-  /** 使用该标签的文章数量 */
   count: number;
 }
 
-/**
- * 分类对象接口
- */
 export interface Category {
-  /** URL 友好的 slug（用于分类页 URL） */
   category: string;
-  /** 原始分类名称（用于显示） */
   categoryName: string;
-  /** 该分类下的文章数量 */
   count: number;
 }
 
-/**
- * 分组 key 的类型
- */
 type GroupKey = string | number | symbol;
 
-/**
- * 分组函数类型
- */
 interface GroupFunction<T> {
   (item: T, index?: number): GroupKey;
 }
 
-/**
- * 文章处理工具类
- *
- * 提供静态方法处理文章集合的各种操作
- */
 export class PostUtils {
-  /**
-   * 过滤文章
-   *
-   * 过滤规则：
-   * 1. draft = true 的文章会被过滤掉
-   * 2. 生产环境下，发布时间早于（当前时间 - 容差）的文章才会显示
-   * 3. 开发环境下（import.meta.env.DEV），忽略发布时间限制
-   *
-   * @param post - 文章对象
-   * @returns true 表示文章应该显示，false 表示应该过滤
-   */
   static filter(post: CollectionEntry<"blog">): boolean {
     const { data } = post;
-
-    // 计算文章发布时间是否已到达
-    // 当前时间 > 文章发布时间 - 容差（15分钟）
     const isPublishTimePassed =
       Date.now() > new Date(data.date).getTime() - SITE.scheduledPostMargin;
-
-    // 返回条件：
-    // 1. 文章不是草稿（!data.draft）
-    // 2. 且满足以下条件之一：
-    //    - 当前是开发环境（import.meta.env.DEV）
-    //    - 文章发布时间已到达（isPublishTimePassed）
     return !data.draft && (import.meta.env.DEV || isPublishTimePassed);
   }
 
-  /**
-   * 获取所有可公开访问的文章
-   *
-   * 等价于对文章集合执行统一发布过滤：
-   * - 排除草稿
-   * - 排除未到发布时间的文章（开发环境除外）
-   *
-   * @param posts - 原始文章集合
-   * @returns 可公开访问的文章数组
-   */
   static getPublishedPosts(
     posts: CollectionEntry<"blog">[]
   ): CollectionEntry<"blog">[] {
     return posts.filter(this.filter);
   }
 
-  /**
-   * 排序文章
-   *
-   * 排序规则：
-   * - 优先使用 updated 字段（更新时间）
-   * - 若没有 updated，则使用 date 字段（发布时间）
-   * - 降序排列（最新的在前）
-   * - 使用秒级时间戳避免毫秒级差异
-   *
-   * @param posts - 原始文章集合
-   * @returns 过滤并排序后的文章数组
-   */
   static sort(posts: CollectionEntry<"blog">[]): CollectionEntry<"blog">[] {
     return this.getPublishedPosts(posts).sort(
       (a, b) =>
@@ -134,25 +115,6 @@ export class PostUtils {
     );
   }
 
-  /**
-   * 获取唯一标签列表及统计
-   *
-   * 处理流程：
-   * 1. 过滤有效文章（非草稿、已发布）
-   * 2. 展开所有文章的 tags 数组
-   * 3. 统计每个标签出现的次数
-   * 4. 按标签字母顺序排序
-   *
-   * @param posts - 文章集合
-   * @returns 标签对象数组，已按字母顺序排序
-   *
-   * @example
-   * const tags = PostUtils.getUniqueTags(allPosts);
-   * // [
-   * //   { tag: "javascript", tagName: "JavaScript", count: 5 },
-   * //   { tag: "vue", tagName: "Vue.js", count: 3 }
-   * // ]
-   */
   static getUniqueTags(posts: CollectionEntry<"blog">[]): Tag[] {
     const tagCountMap = new Map<string, Tag>();
 
@@ -178,25 +140,6 @@ export class PostUtils {
     );
   }
 
-  /**
-   * 获取唯一分类列表及统计
-   *
-   * 处理流程：
-   * 1. 过滤有效文章（非草稿、已发布）
-   * 2. 展开所有文章的 categories 数组
-   * 3. 统计每个分类出现的次数
-   * 4. 按分类显示名排序（当前为 zh-CN localeCompare）
-   *
-   * @param posts - 文章集合
-   * @returns 分类对象数组，已按显示名排序
-   *
-   * @example
-   * const categories = PostUtils.getUniqueCategories(allPosts);
-   * // [
-   * //   { category: "ji-shu", categoryName: "技术", count: 10 },
-   * //   { category: "sheng-huo", categoryName: "生活", count: 5 }
-   * // ]
-   */
   static getUniqueCategories(posts: CollectionEntry<"blog">[]): Category[] {
     const catCountMap = new Map<string, Category>();
 
@@ -223,21 +166,6 @@ export class PostUtils {
     );
   }
 
-  /**
-   * 按标签筛选文章
-   *
-   * 处理流程：
-   * 1. 将每篇文章的 tags 数组转换为 slug 格式
-   * 2. 筛选出 slug 数组中包含目标标签的文章
-   * 3. 对结果进行过滤和排序
-   *
-   * @param posts - 文章集合
-   * @param tag - 目标标签的 slug（URL 格式）
-   * @returns 包含该标签的文章数组，已按时间排序
-   *
-   * @example
-   * const jsPosts = PostUtils.getPostsByTag(allPosts, "javascript");
-   */
   static getPostsByTag(
     posts: CollectionEntry<"blog">[],
     tag: string
@@ -247,16 +175,6 @@ export class PostUtils {
     );
   }
 
-  /**
-   * 按分类筛选文章
-   *
-   * @param posts - 文章集合
-   * @param category - 目标分类的 slug（URL 格式）
-   * @returns 该分类下的文章数组，已按时间排序
-   *
-   * @example
-   * const techPosts = PostUtils.getPostsByCategory(allPosts, "ji-shu");
-   */
   static getPostsByCategory(
     posts: CollectionEntry<"blog">[],
     category: string
@@ -266,25 +184,6 @@ export class PostUtils {
     );
   }
 
-  /**
-   * 按条件分组文章
-   *
-   * 使用场景：
-   * - 按年份分组：post => new Date(post.data.date).getFullYear()
-   * - 按月份分组：post => new Date(post.data.date).toLocaleString('default', { month: 'long' })
-   * - 按分类分组：post => post.data.categories[0]
-   *
-   * @param posts - 文章集合
-   * @param groupFunction - 分组函数，接收文章返回分组 key
-   * @returns 分组后的对象，key 为分组名，value 为文章数组
-   *
-   * @example
-   * // 按年份分组
-   * const grouped = PostUtils.groupBy(posts, (post) => {
-   *   return new Date(post.data.date).getFullYear();
-   * });
-   * // 返回：{ 2023: [...], 2024: [...] }
-   */
   static groupBy(
     posts: CollectionEntry<"blog">[],
     groupFunction: GroupFunction<CollectionEntry<"blog">>
@@ -305,14 +204,6 @@ export class PostUtils {
     return result;
   }
 
-  /**
-   * 按指定时区将 Date 格式化为 YYYY-MM-DD
-   *
-   * 避免使用 UTC/本地 getDate() 导致 +08:00 等日期显示为前一天
-   *
-   * @param date - 日期对象
-   * @param timeZone - IANA 时区（如 Asia/Shanghai），默认 SITE.timezone
-   */
   static getLocalDateString(
     date: Date,
     timeZone: string = SITE.timezone
@@ -330,16 +221,6 @@ export class PostUtils {
     return `${y}-${m}-${d}`;
   }
 
-  /**
-   * 获取博客文章的 URL 路径
-   *
-   * @param id - 文章 ID（如 "content/posts/article.md"）
-   * @param filePath - 文章完整文件路径（可选）
-   * @param includeBase - 是否包含 `/posts` 前缀，默认 true
-   * @param date - 发布日期（可选），提供则生成 /posts/YYYY/MM/DD/slug
-   * @param timeZone - 时区（可选），用于按该时区取日期，默认 SITE.timezone
-   * @returns 文章的 URL 路径
-   */
   static getPath(
     id: string,
     filePath: string | undefined,
@@ -378,14 +259,6 @@ export class PostUtils {
     return [basePath, ...pathSegments, slug].filter(Boolean).join("/");
   }
 
-  /**
-   * 从 Markdown 内容中提取文章描述（摘要）
-   *
-   * 优先使用 `<!-- more -->` 前的内容，否则取前 N 字符并移除 Markdown 语法。
-   *
-   * @param markdownContent - 原始 Markdown 内容
-   * @returns 纯文本描述
-   */
   static getDescription(markdownContent: string): string {
     const lines = markdownContent
       .split(/\r?\n/)
@@ -402,4 +275,82 @@ export class PostUtils {
     }
     return short;
   }
+}
+
+// --- llms.txt ---
+
+function toAbsoluteUrl(path: string): string {
+  return new URL(path, SITE.website).toString();
+}
+
+function getPostMarkdownUrl(post: CollectionEntry<"blog">): string {
+  const slugPath = PostUtils.getPath(
+    post.id,
+    post.filePath,
+    false,
+    post.data.date,
+    post.data.timezone
+  );
+  return toAbsoluteUrl(`/posts/${slugPath}.md`);
+}
+
+function getPostDescription(post: CollectionEntry<"blog">): string {
+  return (
+    post.data.description?.trim() ||
+    PostUtils.getDescription(post.body ?? "")
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+}
+
+function formatPostLine(post: CollectionEntry<"blog">): string {
+  return `- [${post.data.title}](${getPostMarkdownUrl(post)}): ${getPostDescription(post)}`;
+}
+
+function formatLinkLine(
+  label: string,
+  path: string,
+  description?: string
+): string {
+  const link = `[${label}](${toAbsoluteUrl(path)})`;
+  return description ? `- ${link}: ${description}` : `- ${link}`;
+}
+
+export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
+  const allPosts = PostUtils.sort(posts);
+  const categories = PostUtils.getUniqueCategories(posts).sort(
+    (a, b) =>
+      getCategoryOrder(a.category) - getCategoryOrder(b.category) ||
+      a.categoryName.localeCompare(b.categoryName, "zh-CN")
+  );
+
+  const lines = [
+    `# ${SITE.title}`,
+    "",
+    `> ${SITE.description}. Personal blog by ${SITE.author}.`,
+    "",
+    "## Site",
+    formatLinkLine("Home", "/", "Main entry point"),
+    formatLinkLine("About", "/about", "Author profile and site background"),
+    formatLinkLine("Posts", "/posts", "All canonical articles"),
+    formatLinkLine("Categories", "/categories", "Topic entry points"),
+    ...categories.map(category =>
+      formatLinkLine(category.categoryName, `/categories/${category.category}`)
+    ),
+    "",
+    "## All Posts",
+    ...allPosts.map(formatPostLine),
+    "",
+    "## Feeds",
+    formatLinkLine("RSS", "/rss.xml"),
+    formatLinkLine("Sitemap", "/sitemap.xml"),
+    formatLinkLine("Robots", "/robots.txt"),
+    "",
+    "## Notes For LLMs",
+    "- Prefer canonical post URLs under /posts/.",
+    "- Posts are the primary source of truth; tag, archive, feed, and search pages are navigational.",
+    "- Category pages provide useful topical entry points, especially /categories/tech and /categories/weekly.",
+  ];
+
+  return `${lines.join("\n")}\n`;
 }

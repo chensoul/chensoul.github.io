@@ -1,45 +1,15 @@
 ---
-/**
- * 链接页
- *
- * @fileoverview 从 content/pages/links.md 读取内容，用 markdown-it 渲染（html + linkify，关闭 typographer），输出到 Layout 下的 page-content 容器。
- */
-import fs from "node:fs";
-import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
 import MarkdownIt from "markdown-it";
 import { SITE } from "@/config";
+import { readContentPage } from "@/utils/contentPage";
 
-// 读取 links.md 文件（基于项目根目录，避免 CI 下 __dirname 指向 dist 导致 ENOENT）
-const filePath = path.join(process.cwd(), "content/pages/links.md");
-const fileContent = fs.readFileSync(filePath, "utf-8");
+const pageSlug = "links";
+const pageData = readContentPage(`${pageSlug}.md`);
+const pageTitle = pageData.frontmatter.title || SITE.title;
+const pageDescription = pageData.frontmatter.description || SITE.description;
 
-// 解析 frontmatter
-const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-if (!frontmatterMatch) {
-  return Astro.redirect("/404");
-}
-
-const frontmatterStr = frontmatterMatch[1];
-const content = frontmatterMatch[2];
-
-// 解析 frontmatter 为对象
-const frontmatter: Record<string, string> = {};
-frontmatterStr.split("\n").forEach(line => {
-  const match = line.match(/^(\w+):\s*(.+)$/);
-  if (match) {
-    const key = match[1];
-    let value = match[2].trim();
-    // 移除引号
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
-    }
-    frontmatter[key] = value;
-  }
-});
+export { pageDescription, pageSlug, pageTitle };
 
 // 使用 markdown-it 渲染 markdown（不启用 typographer，避免链接 URL 中的英文逗号被替换为中文逗号）
 const md = new MarkdownIt({
@@ -47,13 +17,12 @@ const md = new MarkdownIt({
   linkify: true, // 自动转换 URL 为链接
   typographer: false, // 关闭标点替换，保证链接里的英文逗号不变
 });
-const htmlContent = md.render(content);
+const htmlContent = md.render(pageData.content);
 ---
 
 <Layout
-  title={`链接 | ${SITE.title}`}
-  description={frontmatter.description ||
-    "收集博客、文章、书籍和工具等值得长期关注的链接，也包含邻居页面的数据来源说明。"}
+  title={pageTitle}
+  description={pageDescription}
   schemaType="CollectionPage"
 >
   <div class="page-content">

@@ -5,6 +5,7 @@ slug: "architecture"
 tags: ['architecture']
 draft: false
 categories: [ "wiki" ]
+description: "软件架构学习索引：六边形/整洁架构、分层与模块化单体、CQRS、相关文章与演讲链接。"
 ---
 
 ### Software Architecture

@@ -10,8 +10,11 @@ import Tag from "@/components/Tag.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
-const posts = await getCollection("blog");
-const tags = PostUtils.getUniqueTags(posts).sort(
+export const pageSlug = "tags";
+export const pageTitle = `标签 | ${SITE.title}`;
+
+const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
+const tags = PostUtils.getUniqueTags(publishedPosts).sort(
   (a, b) => b.count - a.count || a.tagName.localeCompare(b.tagName, "zh-CN")
 );
 const topTags = tags.slice(0, 10);
@@ -20,11 +23,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 );
 ---
 
-<Layout
-  title={`标签 | ${SITE.title}`}
-  description="浏览博客的全部标签。前 10 个高频标签优先展示，其余标签按名称排序，方便按主题查找文章。"
-  robots="noindex,follow"
->
+<Layout title={pageTitle} robots="noindex,follow">
   {
     topTags.length > 0 && (
       <section class="tags-section">

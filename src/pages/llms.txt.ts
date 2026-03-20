@@ -1,9 +1,9 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import { generateLlmsTxt } from "@/utils/llms";
+import { generateLlmsTxt, PostUtils } from "@/utils/postUtils";
 
 export const GET: APIRoute = async () => {
-  const posts = await getCollection("blog");
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
   const body = generateLlmsTxt(posts);
 
   return new Response(body, {

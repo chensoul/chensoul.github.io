@@ -4,37 +4,23 @@
  * @fileoverview 全站唯一配置入口，包含基础信息、分页、功能开关、第三方服务（评论、统计、CDN 等）。被 Layout、组件与工具函数引用。
  */
 export const SITE = {
-  // ========== 基础信息 ==========
-  /** 站点主域名 URL，用于生成绝对路径和 SEO */
   website: "https://blog.chensoul.cc",
-
-  /** 作者名称，显示在文章元数据和页脚 */
   author: "ChenSoul",
-
-  /** 站点描述，用于 SEO 和页面 meta 标签 */
-  desc: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
-
-  /** 站点标题，显示在浏览器标签和页眉 */
+  description: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
   title: "ChenSoul Blog",
 
-  /**
-   * Google Search Console 站点验证码
-   * 在 Search Console 添加资源时选择「HTML 标签」方式，将 content 值填在此处
-   * 留空则不输出 meta 标签
-   */
   googleSiteVerification: "702mzR8WJvXKVdS3ergTkQEIWAMuwniGMAIeE6wPRhc",
+  bingSiteVerification: "5995FAD202DE5A364D652266E4C4E0E0",
 
   /** 是否启用浅色/深色模式切换功能 */
   lightAndDarkMode: true,
 
-  // ========== 分页配置 ==========
   /**
    * 首页文章列表每页显示数量
    * 注意：index 表示首页或列表的第一页
    */
   postPerIndex: 10,
 
-  // ========== 内容生成配置 ==========
   /**
    * 定时文章发布的时间容差（毫秒）
    *
@@ -62,12 +48,6 @@ export const SITE = {
 
   /** 是否在顶栏下方显示年度进度条 */
   showYearProgress: true,
-
-  /**
-   * 是否在文章详情页显示"返回"按钮
-   * false 表示使用浏览器默认后退行为
-   */
-  showBackButton: true,
 
   /**
    * HTML 页面的 lang 属性值
@@ -104,7 +84,19 @@ export const SITE = {
    */
   icp: "",
 
-  // ========== UI 显示选项 ==========
+  /**
+   * Open Graph / Twitter 分享图
+   *
+   * - **enabled**：为 false 时不输出 og:image、twitter:image 及 JSON-LD 中的文章 image
+   * - **dynamic**：为 true 时在构建阶段用 Satori 生成 `/og/` 下各路由 PNG，且未传 `ogImage` 时默认图按当前页 URL 指向 `/og/...`；为 false 时不生成 PNG，默认一律用 **defaultImage**
+   * - **defaultImage**：相对 `public` 的静态图路径（可写 `images/og.webp` 或 `/images/og.webp`）
+   */
+  og: {
+    enabled: true,
+    dynamic: false,
+    defaultImage: "https://cos.chensoul.cc/images/og.webp",
+  },
+
   /**
    * 返回顶部按钮配置
    *
@@ -156,65 +148,37 @@ export const SITE = {
   ],
 
   /**
-   * 自定义页脚链接
-   *
-   * 可在页脚添加额外的自定义链接
-   */
-  customFooterLink: {
-    /** 是否启用自定义链接 */
-    enabled: true,
-    /** 链接显示文本 */
-    text: "status",
-    /** 链接目标地址 */
-    url: "https://uptime.chensoul.cc/status/default",
-  },
-
-  /**
    * Artalk 评论
    *
-   * server 留空则不初始化评论（不注入脚本）
+   * - **enabled**：为 false 时不渲染评论区、不加载 Artalk 脚本（与单篇 `comments: true` 无关，全局关则整站无评论）
+   * - **server** 留空时同样不初始化
    */
   artalk: {
-    /** 评论后端地址 */
+    enabled: false,
     server: "https://artalk.chensoul.cc",
-    /** 站点名称（Artalk 后台创建站点时填写） */
     site: "ChenSoul Blog",
-    /** 静态资源：Artalk.js 脚本 URL */
     scriptUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.js",
-    /** 静态资源：Artalk.css 样式 URL */
     cssUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.css",
-    /** 是否显示点赞 */
     vote: false,
   },
 
   /**
    * Umami 统计
    *
-   * 生产环境且 websiteId、scriptUrl 均非空时才会注入脚本。
-   * 当前实现会在首次真实交互后再加载，尽量移出首屏关键路径。
-   * 留空则关闭统计
    */
   umami: {
-    /** 站点 ID（Umami 后台创建网站后获得） */
+    enabled: false,
     websiteId: "2311be4b-ebe4-4a94-9c69-b2e841584d0d",
-    /** 统计脚本 URL */
     scriptUrl: "https://umami.chensoul.cc/random-string.js",
   },
 
-  /**
-   * 懒加载列表脚本地址（文章列表、分类、标签页滚动加载）
-   */
   lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list.js",
 
-  /**
-   * tocbot 目录：CSS/JS CDN（仅文章页启用 TOC 时按需加载）
-   */
   tocbot: {
     cssUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css",
     jsUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js",
   },
 
-  // ========== 图片组件配置 ==========
   /**
    * 图片相关配置
    *
@@ -229,24 +193,17 @@ export const SITE = {
 
   /**
    * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
-   *
-   * 由 enabled 控制是否启用：关闭后导航不显示、页面提示未开放。
-   * 数据源为 rss-lhasa 或自建服务产出的 JSON（格式：{ items: [{ title, link, published, name?, category?, avatar? }] }，avatar 可为裸文件名，会按 /favicons/ 解析）。
-   * @see https://github.com/achuanya/lhasaRSS
    */
   feeds: {
-    /** 是否启用邻居页（导航入口 + 页面内容） */
     enabled: true,
-    /** 导航与页面内显示名称，避免与「RSS 订阅地址」混淆 */
     navLabel: "邻居",
-    /** 聚合数据 JSON 的 URL（绝对地址或根相对路径如 /data/feeds.json），留空则列表无数据 */
     dataSourceUrl: "/data/feeds.json",
     /** 首屏展示条数 */
     initialCount: 10,
     /** 点击「加载更多」每次加载条数 */
     perPage: 10,
     /** 无头像时使用的默认图片 URL */
-    fallbackAvatarUrl: "/thumbs/rss.svg",
+    fallbackAvatarUrl: "https://cos.chensoul.cc/thumbs/rss.svg",
     /** 相对路径 avatar 使用的 host（如 COS/R2 公网域名），为空则用本站 SITE.website */
     cosHost: "https://cos.chensoul.cc/avatars",
   },

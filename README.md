@@ -2,8 +2,6 @@
 
 **ChenSoul Blog** 是一个基于 **Astro 6 + Tailwind CSS 4** 构建的个人技术博客，面向中文技术内容（Java、Spring、微服务、架构、Kubernetes、DevOps）。
 
-🌐 线上地址：[blog.chensoul.cc](https://blog.chensoul.cc)
-
 ---
 
 ## 技术栈
@@ -38,7 +36,7 @@ chensoul.github.io/
 │   │   └── PostDetails.astro     # 文章详情布局
 │   ├── pages/           # 路由页面
 │   ├── styles/          # CSS 样式
-│   └── utils/           # 工具函数
+│   └── utils/           # postUtils（文章/分类/llms）、contentPage、og-image、feedDate、quietAstroMermaid
 ├── public/              # 静态资源
 ├── scripts/             # 辅助脚本
 └── astro.config.ts      # 构建配置
@@ -84,7 +82,7 @@ draft: false # true 则排除构建
 toc: true # 显示目录
 math: false # 启用 KaTeX
 mermaid: false # 启用 Mermaid
-comments: true # 默认启用 Artalk 评论；设为 false 可关闭
+comments: true # 需 SITE.artalk.enabled 为 true 才显示评论；设为 false 可关单篇
 cover: "/thumbs/cover.jpg" # 可选，封面图（列表缩略图 + OG 图）
 top-image: "/images/top-image.jpg" # 可选，正文上方配图
 ```
@@ -99,12 +97,14 @@ top-image: "/images/top-image.jpg" # 可选，正文上方配图
 
 ## 第三方服务
 
-| 服务                          | 用途              |
-| ----------------------------- | ----------------- |
-| Artalk (`artalk.chensoul.cc`) | 评论系统          |
-| Umami (`umami.chensoul.cc`)   | 访问统计          |
-| Pagefind                      | 本地全文搜索      |
-| COS (`cos.chensoul.cc`)       | 图片/静态资源 CDN |
+| 服务                          | 用途         |
+| ----------------------------- | ------------ |
+| Artalk (`artalk.chensoul.cc`) | 评论系统     |
+| Umami (`umami.chensoul.cc`)   | 访问统计     |
+| Pagefind                      | 本地全文搜索 |
+
+在 [`src/config.ts`](./src/config.ts) 中可用 `SITE.artalk.enabled`、`SITE.umami.enabled` 全站开关（与单篇 `comments`、Umami 的 ID/脚本 URL 一并控制是否加载）。
+| COS (`cos.chensoul.cc`) | 图片/静态资源 CDN |
 
 ---
 
@@ -124,11 +124,7 @@ top-image: "/images/top-image.jpg" # 可选，正文上方配图
 pnpm dev              # 启动开发服务器（热重载，默认 --host 可局域网访问）
 pnpm build            # 类型检查 + 构建 + 生成 Pagefind 搜索索引
 pnpm preview          # 预览生产构建（构建后本地看效果，通常比 dev 快）
-```
 
-若 `pnpm dev` 较慢：项目已通过 `optimizeDeps.include` 和 `server.warmup` 做预编译；仅本机访问时可去掉 `--host`（在 `package.json` 里把 `"dev": "astro dev --host"` 改为 `"dev": "astro dev"`）可略减开销。需要快速看效果时可用 `pnpm build && pnpm preview`。
-
-```bash
 pnpm lint             # ESLint 检查
 pnpm format           # Prettier 格式化
 pnpm format:check     # 检查格式（不写入）
@@ -140,8 +136,6 @@ pnpm spell            # cspell 拼写检查
 pnpm compress-images  # 就地压缩 jpg/png/webp（scripts/convert-to-webp.mjs --compress）
 pnpm convert-to-webp  # jpg/png → webp（同脚本，默认模式）
 ```
-
-> `pnpm build` 依次执行：`astro check && astro build && pagefind --site dist --glob "posts/**/*.html"`
 
 ---
 

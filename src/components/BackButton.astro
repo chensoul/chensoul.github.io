@@ -1,26 +1,9 @@
 ---
-/**
- * 返回按钮组件
- *
- * @fileoverview 固定在右下角的返回按钮，位于返回顶部按钮上方
- *
- * 显示规则：
- * - 文章页面 /posts/xxx：显示，返回首页或 sessionStorage 中的 backUrl
- * - 分类详情页 /categories/xxx：显示，返回 /categories
- * - 标签详情页 /tags/xxx：显示，返回 /tags
- * - 其他页面：隐藏
- *
- * 依赖关系：
- * - 被 Layout.astro 导入，全局使用
- * - 依赖 config.ts 的 showBackButton 配置
- */
-
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
-import { SITE } from "@/config";
 ---
 
 {
-  SITE.showBackButton && (
+  (
     <a
       id="back-button"
       href="/"

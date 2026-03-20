@@ -1,8 +1,7 @@
 import type { GetStaticPaths, APIRoute } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE } from "@/config";
-import { getCategoryMeta } from "@/utils/categoryMeta";
-import { PostUtils } from "@/utils/postUtils";
+import { getCategoryMeta, PostUtils } from "@/utils/postUtils";
 
 interface Props {
   post: CollectionEntry<"blog">;

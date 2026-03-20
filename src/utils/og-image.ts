@@ -3,6 +3,8 @@ import { Resvg } from "@resvg/resvg-js";
 import fs from "fs";
 import path from "path";
 
+// ========== Satori 渲染 PNG ==========
+
 const avatarBase64 = fs
   .readFileSync(path.join(process.cwd(), "public/avatar.png"))
   .toString("base64");
@@ -40,7 +42,6 @@ function getFonts() {
 
 interface OgImageOptions {
   title: string;
-  date?: Date | null;
   author?: string;
   siteTitle?: string;
   description?: string;
@@ -48,7 +49,6 @@ interface OgImageOptions {
 
 export async function generateOgImage({
   title,
-  date,
   author,
   siteTitle,
   description,
@@ -57,14 +57,7 @@ export async function generateOgImage({
 
   const titleText = title || siteTitle || "";
 
-  const dateStr = date
-    ? date.toLocaleDateString("zh-CN", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
-  const displayText = description || dateStr || "";
+  const displayText = description?.trim() || "";
 
   const svg = await satori(
     {

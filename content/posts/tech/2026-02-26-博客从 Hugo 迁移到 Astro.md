@@ -89,7 +89,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 #### 3. 分类逻辑
 
 - **上游**：使用 `config.ts` 中的 `categoryOrder` 对分类排序。
-- **当前**：改为由 `categoryMeta.ts` 统一维护分类顺序、中文名称与封面图，分类页和归档页优先按该顺序显示。
+- **当前**：改为由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一维护分类顺序、中文名称与封面图，分类页和归档页优先按该顺序显示。
 
 #### 4. 已删除的页面与功能
 
@@ -118,7 +118,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 - **author**：`lhasa` → `chensoul`
 - **profile**：`https://github.com/achuanya` → `https://github.com/chensoul`
 - **title**：`游钓四方` → `ChenSoul Blog`
-- **desc**：改为技术向描述（Java、Spring、MicroServices 等）。
+- **description**：改为技术向描述（Java、Spring、MicroServices 等）。
 - **timezone**：`Asia/Taipei` → `Asia/Shanghai`
 - **icp**：移除备案号（设为空字符串）。
 - **postPerIndex**：10 → 8。
@@ -141,7 +141,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 #### 3. 内容 Schema（`src/content.config.ts`）
 
 - **BLOG_PATH**：`"posts"` → `"content/posts"`。
-- **categories**：分类显示名、排序与封面图由 `categoryMeta.ts` 统一控制。
+- **categories**：分类显示名、排序与封面图由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一控制。
 - **新增 frontmatter**：`mermaid: z.boolean().default(false)`。
 
 #### 4. 依赖与脚本（`package.json`、`pnpm-lock.yaml`）
@@ -194,7 +194,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 
 - **getPath.ts**：重写以支持 `date` 参数及 `/posts/YYYY/MM/DD/slug`；slug 从文件名解析并支持去掉日期前缀。
 - **getDescription.ts**：用于 RSS 摘要生成。
-- **分类相关工具**：当前由 `PostUtils.getUniqueCategories()` 与 `categoryMeta.ts` 协同处理显示名与排序。
+- **分类相关工具**：当前由 `PostUtils.getUniqueCategories()` 与同文件内的 `CATEGORY_META` / `getCategoryMeta` 协同处理显示名与排序。
 - **getSortedPosts.ts**：有调整以配合新数据与路由。
 - **categoryImages.ts**：分类图片 URL 等有小幅修改。
 - **已删除**：`getBlogMetrics.ts`。

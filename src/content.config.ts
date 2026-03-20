@@ -139,7 +139,7 @@ const blog = defineCollection({
        * - 文章详情页显示分类
        * - 分类索引页 (/categories)
        * - 分类详情页 (/categories/[category])
-       * - 分类显示名、排序与封面图由 categoryMeta.ts 统一控制
+       * - 分类显示名、排序与封面图由 utils/postUtils（CATEGORY_META）统一控制
        */
       categories: z.array(z.string()).default([]),
 

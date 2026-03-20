@@ -2,7 +2,7 @@
 /**
  * 文章详情布局
  *
- * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/TOC/数学公式等功能。OG 图与 canonical 由本布局传给 Layout。
+ * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/TOC/数学公式等功能。canonical 等元信息由本布局传给 Layout。
  */
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
@@ -10,9 +10,7 @@ import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import PhotosuiteStyles from "@/components/PhotosuiteStyles.astro";
-import { slugifyStr } from "@/utils/slugify";
-import { PostUtils } from "@/utils/postUtils";
-import { getCategoryMeta } from "@/utils/categoryMeta";
+import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
@@ -59,16 +57,6 @@ const topImageSrc =
 // 渲染文章内容
 const { Content } = await render(post);
 const hasInlineImages = /!\[[\s\S]*?\]\([^)]+\)|<img\s/i.test(post.body ?? "");
-
-// Generate timezone-safe slug for OG image
-const hugoSlug = PostUtils.getPath(
-  post.id,
-  post.filePath,
-  false,
-  post.data.date,
-  post.data.timezone
-);
-const ogImage = `/og/${hugoSlug}.png`;
 
 /** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
 const fullDescription =
@@ -123,19 +111,9 @@ const layoutProps = {
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,
-  ogImage,
 };
 
 /* ========== Prev/Next Posts ========== */
-
-/**
- * 生成上一篇/下一篇导航
- *
- * 逻辑：
- * 1. 提取所有文章的路径、标题和日期
- * 2. 找到当前文章的索引
- * 3. 获取上一篇（索引-1）和下一篇（索引+1）
- */
 const allPosts = posts.map(
   ({ data: { title, date, timezone }, id, filePath }) => ({
     path: PostUtils.getPath(id, filePath, true, date, timezone),
@@ -437,8 +415,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     }
   </div>
 
-  <!-- 评论容器 -->
-  <div id="Comments"></div>
+  <!-- 评论容器（全局关闭 Artalk 时不输出） -->
+  {comments && SITE.artalk.enabled && <div id="Comments" />}
 
   <!-- 侧边栏：文章目录（与 astro-lhasa 一致，内联实现） -->
   <aside
@@ -729,7 +707,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 </style>
 
 <!-- Artalk 评论系统 -->
-{comments && <Artalk />}
+{comments && SITE.artalk.enabled && <Artalk />}
 
 <script
   is:inline
