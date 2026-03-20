@@ -173,6 +173,9 @@ const { pathname } = Astro.url;
     position: sticky;
     top: 0;
     z-index: 100;
+    /* 减轻 sticky 底边与正文之间的亚像素漏缝（暗色下易呈一条细线） */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   nav {
@@ -215,7 +218,11 @@ const { pathname } = Astro.url;
       color 0.2s ease;
   }
 
-  .search-link:hover,
+  .search-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
   .search-link:focus-visible {
     border-color: var(--accent);
     color: var(--accent);
@@ -265,7 +272,11 @@ const { pathname } = Astro.url;
     justify-content: center;
   }
 
-  .theme-toggle:hover,
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
   .theme-toggle:focus-visible {
     border-color: var(--accent);
     color: var(--accent);

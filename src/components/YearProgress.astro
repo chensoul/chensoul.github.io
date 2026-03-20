@@ -14,13 +14,14 @@
  *
  * 依赖关系：
  * - 被 Header.astro 导入，在导航栏下方显示
- * - 轨道用主题色淡 mix，圆角 pill，避免像整宽 <hr> 文档分隔线
+ * - 无整宽灰色底轨（暗色下易被看成 header 底边的 hr）；仅渲染蓝色进度段，易点区域略加高
+ * - 交互仅绑定在 year-progress-track；外层 pointer-events-none
  */
 ---
 
 <div
   id="year-progress"
-  class="group relative mx-auto w-full max-w-[900px] border-0 pt-1.5 pb-1.5"
+  class="group pointer-events-none relative mx-auto w-full max-w-[900px] border-0 py-1"
   role="progressbar"
   aria-valuemin="0"
   aria-valuemax="100"
@@ -29,17 +30,19 @@
 >
   <div
     id="year-progress-track"
-    class="h-1 w-full overflow-hidden rounded-full border-0 bg-[color-mix(in_srgb,var(--border)_65%,transparent)]"
+    class="pointer-events-auto cursor-pointer py-1.5"
     aria-hidden="true"
   >
-    <div
-      id="year-progress-fill"
-      class="h-full w-0 rounded-full bg-blue-600 transition-[width] duration-300 ease-out"
-    ></div>
+    <div class="relative h-0.5 w-full">
+      <div
+        id="year-progress-fill"
+        class="h-0.5 w-0 max-w-full rounded-full bg-blue-600 transition-[width] duration-300 ease-out"
+      ></div>
+    </div>
   </div>
   <span
     id="year-progress-cover"
-    class="pointer-events-none absolute top-1/2 left-0 z-10 h-1 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--border)_65%,transparent)] opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="pointer-events-none absolute top-1/2 left-0 z-10 h-0.5 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--border)_55%,transparent)] opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <span
     id="year-progress-label"
@@ -63,6 +66,7 @@
 
   type YearProgressEls = {
     container: HTMLElement;
+    track: HTMLElement;
     fill: HTMLElement;
     label: HTMLElement;
     cover: HTMLElement;
@@ -84,6 +88,7 @@
 
   function getElements(): {
     container: HTMLElement | null;
+    track: HTMLElement | null;
     fill: HTMLElement | null;
     label: HTMLElement | null;
     cover: HTMLElement | null;
@@ -91,6 +96,7 @@
   } {
     return {
       container: document.getElementById("year-progress"),
+      track: document.getElementById("year-progress-track"),
       fill: document.getElementById("year-progress-fill"),
       label: document.getElementById("year-progress-label"),
       cover: document.getElementById("year-progress-cover"),
@@ -155,17 +161,17 @@
   let popupHideTimer: ReturnType<typeof setTimeout> | null = null;
 
   function bindEvents(els: YearProgressEls, getProgress: () => number): void {
-    if (els.container.dataset.bound) return;
+    if (els.track.dataset.bound) return;
     let hoverTimer: ReturnType<typeof setTimeout> | null = null;
 
-    els.container.addEventListener("mouseenter", () => {
+    els.track.addEventListener("mouseenter", () => {
       if (hoverTimer) clearTimeout(hoverTimer);
       show(els.label);
       show(els.cover);
       positionLabel(els, getProgress());
     });
 
-    els.container.addEventListener("mouseleave", () => {
+    els.track.addEventListener("mouseleave", () => {
       if (hoverTimer) clearTimeout(hoverTimer);
       hoverTimer = setTimeout(() => {
         hide(els.label);
@@ -173,7 +179,7 @@
       }, HOVER_HIDE_DELAY);
     });
 
-    els.container.addEventListener("click", () => {
+    els.track.addEventListener("click", () => {
       const now = new Date();
       const end = new Date(now.getFullYear() + 1, 0, 1);
       const daysLeft = Math.ceil((end.getTime() - now.getTime()) / 86400000);
@@ -184,12 +190,19 @@
       popupHideTimer = setTimeout(() => hide(els.popup), LABEL_HIDE_DELAY);
     });
 
-    els.container.dataset.bound = "1";
+    els.track.dataset.bound = "1";
   }
 
   function init(): void {
     const raw = getElements();
-    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup)
+    if (
+      !raw.container ||
+      !raw.track ||
+      !raw.fill ||
+      !raw.label ||
+      !raw.cover ||
+      !raw.popup
+    )
       return;
     const els: YearProgressEls = raw as YearProgressEls;
 
@@ -219,7 +232,14 @@
 
   function update(): void {
     const raw = getElements();
-    if (!raw.container || !raw.fill || !raw.label || !raw.cover || !raw.popup)
+    if (
+      !raw.container ||
+      !raw.track ||
+      !raw.fill ||
+      !raw.label ||
+      !raw.cover ||
+      !raw.popup
+    )
       return;
     const els: YearProgressEls = raw as YearProgressEls;
     const target = calcProgress();
