@@ -1,18 +1,21 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { SITE } from "@/config";
+import { PostUtils } from "@/utils/postUtils";
 import { generateOgImage } from "../../utils/og-image";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
 
   return posts.map(post => {
     const date = new Date(post.data.date);
-    const year = String(date.getFullYear());
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const slugPart = post.data.slug;
-    const fullSlug = `${year}/${month}/${day}/${slugPart}`;
+    const fullSlug = PostUtils.getPath(
+      post.id,
+      post.filePath,
+      false,
+      post.data.date,
+      post.data.timezone
+    );
     const author = (post.data as { author?: string }).author ?? SITE.author;
 
     return {

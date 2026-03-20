@@ -9,7 +9,7 @@ import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export async function GET() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
   const sortedPosts = posts
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
     .slice(0, 10);
@@ -33,7 +33,7 @@ export async function GET() {
         title: data.title,
         description,
         categories: data.categories,
-        pubDate: new Date(data.updated ?? data.date),
+        pubDate: new Date(data.date),
       };
     }),
   });

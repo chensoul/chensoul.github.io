@@ -26,7 +26,7 @@ function getCanonicalUrl(post: CollectionEntry<"blog">): string {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
 
   return posts.map(post => ({
     params: {

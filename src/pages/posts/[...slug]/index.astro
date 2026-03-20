@@ -40,8 +40,8 @@ export interface Props {
  * 为每篇非草稿文章生成独立的详情页路由
  */
 export async function getStaticPaths() {
-  // 获取所有非草稿文章
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  // 获取所有可公开访问的文章（过滤草稿和未到发布时间的文章）
+  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
 
   // 为每篇文章生成路由
   const postResult = posts.map(post => ({

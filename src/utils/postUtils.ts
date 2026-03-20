@@ -99,6 +99,22 @@ export class PostUtils {
   }
 
   /**
+   * 获取所有可公开访问的文章
+   *
+   * 等价于对文章集合执行统一发布过滤：
+   * - 排除草稿
+   * - 排除未到发布时间的文章（开发环境除外）
+   *
+   * @param posts - 原始文章集合
+   * @returns 可公开访问的文章数组
+   */
+  static getPublishedPosts(
+    posts: CollectionEntry<"blog">[]
+  ): CollectionEntry<"blog">[] {
+    return posts.filter(this.filter);
+  }
+
+  /**
    * 排序文章
    *
    * 排序规则：
@@ -111,13 +127,11 @@ export class PostUtils {
    * @returns 过滤并排序后的文章数组
    */
   static sort(posts: CollectionEntry<"blog">[]): CollectionEntry<"blog">[] {
-    return posts
-      .filter(this.filter)
-      .sort(
-        (a, b) =>
-          Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
-          Math.floor(new Date(a.data.updated ?? a.data.date).getTime() / 1000)
-      );
+    return this.getPublishedPosts(posts).sort(
+      (a, b) =>
+        Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
+        Math.floor(new Date(a.data.updated ?? a.data.date).getTime() / 1000)
+    );
   }
 
   /**
@@ -142,8 +156,7 @@ export class PostUtils {
   static getUniqueTags(posts: CollectionEntry<"blog">[]): Tag[] {
     const tagCountMap = new Map<string, Tag>();
 
-    posts
-      .filter(this.filter)
+    this.getPublishedPosts(posts)
       .flatMap(post => post.data.tags)
       .forEach(tag => {
         const slugTag = slugifyStr(tag);
@@ -187,8 +200,7 @@ export class PostUtils {
   static getUniqueCategories(posts: CollectionEntry<"blog">[]): Category[] {
     const catCountMap = new Map<string, Category>();
 
-    posts
-      .filter(this.filter)
+    this.getPublishedPosts(posts)
       .flatMap(post => post.data.categories)
       .forEach(cat => {
         const slugName = slugifyStr(cat);
