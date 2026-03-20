@@ -45,12 +45,12 @@ const primaryCategorySlug = primaryCategory
 
 // 标题容器样式（处理溢出省略）
 const headerProps = {
-  class: "!m-0 truncate overflow-hidden whitespace-nowrap min-w-0",
+  class: "!m-0 min-w-0",
 };
 
 const linkProps = {
   class:
-    "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
+    "block overflow-hidden text-ellipsis whitespace-nowrap text-[0.98rem] font-semibold leading-[1.45] hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
 };
 
 /**
@@ -124,7 +124,7 @@ const coverSrc = buildCoverSrc();
       <!-- 文章信息区 -->
       <div class="min-w-0 flex-1">
         <!-- 文章标题 -->
-        <div class="text-accent min-w-0 text-lg font-medium underline-offset-4">
+        <div class="text-accent min-w-0 underline-offset-4">
           {
             // 根据 variant 选择标题级别
             variant === "h2" ? (
@@ -151,9 +151,11 @@ const coverSrc = buildCoverSrc();
 
         <!-- 发布/更新时间 -->
         <div
-          class="mt-1 flex flex-row flex-nowrap items-center space-x-2 whitespace-nowrap"
+          class="mt-1.5 flex flex-row flex-wrap items-center gap-x-2 gap-y-0.5 text-[0.84rem] whitespace-nowrap"
         >
-          <div class="mr-1 flex items-center space-x-0.5">
+          <div
+            class="mr-1 flex items-center space-x-0.5 text-[var(--text-secondary)]"
+          >
             <Datetime
               pubDatetime={date}
               modDatetime={updated}

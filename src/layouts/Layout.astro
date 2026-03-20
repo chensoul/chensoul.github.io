@@ -50,6 +50,7 @@ const title = titleProp?.trim() || SITE.title;
 const fullDescription = descriptionProp?.trim() || SITE.description;
 const robotsContent = robots?.trim() || "index,follow";
 const pathname = Astro.url.pathname.replace(/\.html?$/, "") || "/";
+const hasAfterMain = Astro.slots.has("after-main");
 const canonicalHref = String(canonicalURL);
 const isArticlePage = Boolean(pubDatetime);
 const isHomePage = pathname === "/";
@@ -318,9 +319,12 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       跳转到主要内容
     </a>
     <Header />
-    <main id="main-content">
-      <slot />
-    </main>
+    <div class:list={["page-shell", { "page-shell--with-aside": hasAfterMain }]}>
+      <main id="main-content">
+        <slot />
+      </main>
+      {hasAfterMain && <slot name="after-main" />}
+    </div>
     <BackButton />
     <BackToTop />
     <Footer/>
@@ -353,3 +357,9 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     }
   </body>
 </html>
+
+<style>
+  .page-shell {
+    width: 100%;
+  }
+</style>

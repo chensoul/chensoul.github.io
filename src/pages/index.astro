@@ -20,10 +20,10 @@ export const pageDescription =
 const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
 const sortedPosts = PostUtils.sort(publishedPosts);
 
-const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
+const latestPosts = sortedPosts.slice(0, 6);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   0,
-  4
+  6
 );
 ---
 
@@ -31,7 +31,10 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   <section class="home-split">
     <div class="home-main-panel">
       <div class="home-section-head">
-        <h2>最近文章</h2>
+        <div>
+          <h2>最近文章</h2>
+          <p>优先展示最近更新的技术文章、知识库条目和翻译内容。</p>
+        </div>
         <div class="home-section-head-action home-section-head-action--mobile">
           <LinkButton
             href="/posts"
@@ -56,7 +59,10 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
     <aside class="home-side-panel">
       <div class="home-section-head">
-        <h2>最近周报</h2>
+        <div>
+          <h2>最近周报</h2>
+          <p>记录每周的开发进展、工具尝试和一些阶段性想法。</p>
+        </div>
       </div>
       <div class="home-side-list">
         {
@@ -95,20 +101,21 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 <style>
   .home-section,
   .home-side-card {
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
+    border: 0;
+    border-radius: 0;
   }
 
   .home-section-head h2 {
     margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.45;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.35;
   }
 
   .home-side-card h3 {
     margin: 0;
-    font-size: 0.86rem;
-    font-weight: 500;
+    font-size: 0.94rem;
+    font-weight: 600;
     line-height: 1.45;
     color: var(--accent);
   }
@@ -129,12 +136,14 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.65rem;
     flex-wrap: wrap;
   }
 
   .home-section-head p {
-    margin: 0.35rem 0 0;
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 
   .home-section-link {
@@ -145,7 +154,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   .home-section-action {
     display: flex;
     justify-content: flex-end;
-    margin-top: 0.5rem;
+    margin-top: 0.35rem;
   }
 
   .home-section-head-action {
@@ -159,8 +168,8 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
   .home-split {
     display: grid;
-    gap: 0.8rem;
-    margin: 0;
+    gap: 1rem;
+    margin: -0.15rem 0 0;
     align-items: start;
   }
 
@@ -168,6 +177,8 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     list-style: none;
     padding-left: 0;
     margin: 0;
+    display: grid;
+    gap: 0.15rem;
   }
 
   .home-main-panel,
@@ -175,21 +186,33 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     min-width: 0;
     display: flex;
     flex-direction: column;
-    border-radius: 1.25rem;
-    background: var(--background);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .home-side-list {
     display: grid;
-    gap: 0.875rem;
+    gap: 0;
   }
 
   .home-side-card {
     display: block;
-    padding: 1rem;
+    padding: 0.72rem 0;
     color: inherit;
     text-decoration: none;
-    background: var(--background-secondary);
+    background: transparent;
+    border-bottom: 1px solid var(--border);
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .home-side-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+    text-decoration: none;
   }
 
   .home-side-card b {
@@ -200,15 +223,14 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   }
 
   .home-side-card p {
-    margin: 0.6rem 0 0;
+    margin: 0.35rem 0 0;
     font-size: 0.875rem;
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 960px) {
     .home-split {
-      gap: 1rem;
-      grid-template-columns: minmax(0, 1.3fr) minmax(360px, 1.2fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 

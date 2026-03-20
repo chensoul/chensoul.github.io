@@ -240,204 +240,241 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
-  <article id="article" class="js-toc-content" data-pagefind-body>
-    <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
-    {topImageSrc && <img src={topImageSrc} alt={title} />}
+  <div class="post-shell">
+    <div class="post-primary">
+      <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
+      <article
+        id="article"
+        class="js-toc-content reading-content reading-wrap"
+        data-pagefind-body
+      >
+        <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
+        {topImageSrc && <img src={topImageSrc} alt={title} />}
 
-    <!-- 文章标题与发布日期 -->
-    <nav class="post-breadcrumbs" aria-label="面包屑导航">
-      <a href="/">首页</a>
-      <span>/</span>
-      <a href="/posts">文章</a>
+        <!-- 文章标题与发布日期 -->
+        <nav class="post-breadcrumbs" aria-label="面包屑导航">
+          <a href="/">首页</a>
+          <span>/</span>
+          <a href="/posts">文章</a>
+          {
+            primaryCategory && (
+              <>
+                <span>/</span>
+                <a href={`/categories/${slugifyStr(primaryCategory)}`}>
+                  {primaryCategoryLabel}
+                </a>
+              </>
+            )
+          }
+        </nav>
+
+        <section class="post-hero reading-wrap">
+          <h1>{title}</h1>
+          <div class="post-meta-strip">
+            {
+              categoryLinks.map(category => (
+                <a
+                  class="post-category-chip"
+                  href={`/categories/${category.slug}`}
+                >
+                  {category.name}
+                </a>
+              ))
+            }
+            <span class="post-meta-divider" aria-hidden="true">·</span>
+            <span>{readingMinutes} 分钟阅读</span>
+            <span class="post-meta-divider" aria-hidden="true">·</span>
+            <Datetime
+              pubDatetime={date}
+              modDatetime={updated}
+              timezone={post.data.timezone}
+              format="absolute"
+              class="inline-flex text-sm text-[var(--accent)]"
+            />
+          </div>
+        </section>
+
+        <Content />
+      </article>
+
+      <!-- 标签列表 -->
       {
-        primaryCategory && (
-          <>
-            <span>/</span>
-            <a href={`/categories/${slugifyStr(primaryCategory)}`}>
-              {primaryCategoryLabel}
-            </a>
-          </>
+        tags.length > 0 && (
+          <div class="post-tags-row reading-wrap mt-8 mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+            <span
+              class="post-tags-icon flex shrink-0 items-center"
+              aria-hidden="true"
+            >
+              <IconTag class="h-4 w-4 text-[var(--text-secondary)]" />
+            </span>
+            <ul
+              class="post-tags-list flex flex-wrap items-center gap-2"
+              role="list"
+            >
+              {tags.map((tag: string) => (
+                <Tag tag={slugifyStr(tag)} tagName={tag} />
+              ))}
+            </ul>
+          </div>
         )
       }
-    </nav>
 
-    <section class="mx-auto mt-4 mb-2 w-full max-w-4xl text-center">
-      <h1 class="text-2xl font-semibold">{title}</h1>
-      <div class="post-meta-strip">
-        {
-          categoryLinks.map(category => (
-            <a class="post-category-chip" href={`/categories/${category.slug}`}>
-              {category.name}
-            </a>
-          ))
-        }
-        <span class="post-meta-divider" aria-hidden="true">·</span>
-        <span>{readingMinutes} 分钟阅读</span>
-        <span class="post-meta-divider" aria-hidden="true">·</span>
-        <Datetime
-          pubDatetime={date}
-          modDatetime={updated}
-          timezone={post.data.timezone}
-          format="absolute"
-          class="inline-flex text-sm text-[var(--accent)]"
-        />
-      </div>
-    </section>
-
-    <Content />
-  </article>
-
-  <!-- 标签列表 -->
-  {
-    tags.length > 0 && (
-      <div class="post-tags-row mt-8 mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
-        <span
-          class="post-tags-icon flex shrink-0 items-center"
-          aria-hidden="true"
-        >
-          <IconTag class="h-4 w-4 text-[var(--text-secondary)]" />
-        </span>
-        <ul
-          class="post-tags-list flex flex-wrap items-center gap-2"
-          role="list"
-        >
-          {tags.map((tag: string) => (
-            <Tag tag={slugifyStr(tag)} tagName={tag} />
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
-  <section class="post-promo-grid mt-10 grid gap-4">
-    <div class="post-promo-card">
-      <p class="post-promo-eyebrow">订阅文章</p>
-      <h2 class="post-promo-title">订阅更新，不错过后续文章</h2>
-      <p class="post-promo-copy">直接通过 RSS 和 Telegram 订阅本站更新。</p>
-      <div class="post-promo-actions">
-        <a class="post-promo-button primary" href="/rss.xml">订阅 RSS</a>
-        <a class="post-promo-button" href="https://t.me/ichensoul"
-          >关注 Telegram</a
-        >
-      </div>
-    </div>
-
-    <div class="post-promo-card">
-      <p class="post-promo-eyebrow">分享文章</p>
-      <h2 class="post-promo-title">如果这篇有帮助，可以顺手转发</h2>
-      <p class="post-promo-copy">
-        直接分享给同事、朋友，或者发到你的社交平台。
-      </p>
-      <div class="post-promo-actions">
-        <a
-          class="post-promo-button"
-          href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          分享到 X
-        </a>
-        <a
-          class="post-promo-button"
-          href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          分享到 Telegram
-        </a>
-        <a
-          class="post-promo-button"
-          href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
-        >
-          邮件分享
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {
-    relatedPosts.length > 0 && (
-      <section class="related-posts-section mt-10">
-        <div class="related-posts-header">
-          <h2 class="related-posts-title">相关文章</h2>
+      <section class="post-promo-grid reading-wrap mt-10 grid gap-4">
+        <div class="post-promo-card">
+          <p class="post-promo-eyebrow">订阅文章</p>
+          <h2 class="post-promo-title">订阅更新，不错过后续文章</h2>
+          <p class="post-promo-copy">直接通过 RSS 和 Telegram 订阅本站更新。</p>
+          <div class="post-promo-actions">
+            <a class="post-promo-button primary" href="/rss.xml">订阅 RSS</a>
+            <a class="post-promo-button" href="https://t.me/ichensoul"
+              >关注 Telegram</a
+            >
+          </div>
         </div>
-        <div class="related-posts-grid">
-          {relatedPosts.map(({ post: relatedPost, path }) => (
-            <a href={path} class="related-post-card">
-              <p class="related-post-meta">
-                {relatedPost.data.categories
-                  .map(category => getCategoryMeta(category)?.name ?? category)
-                  .join(" / ")}
-              </p>
-              <h3>{relatedPost.data.title}</h3>
-              <p>
-                {relatedPost.data.description?.trim() ||
-                  PostUtils.getDescription(relatedPost.body ?? "")}
-              </p>
+
+        <div class="post-promo-card">
+          <p class="post-promo-eyebrow">分享文章</p>
+          <h2 class="post-promo-title">如果这篇有帮助，可以顺手转发</h2>
+          <p class="post-promo-copy">
+            直接分享给同事、朋友，或者发到你的社交平台。
+          </p>
+          <div class="post-promo-actions">
+            <a
+              class="post-promo-button"
+              href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              分享到 X
             </a>
-          ))}
+            <a
+              class="post-promo-button"
+              href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              分享到 Telegram
+            </a>
+            <a
+              class="post-promo-button"
+              href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
+            >
+              邮件分享
+            </a>
+          </div>
         </div>
       </section>
-    )
-  }
 
-  <!-- Previous/Next Post Buttons -->
-  <div data-pagefind-ignore class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-    <!-- 上一篇 -->
-    {
-      prevPost && (
-        <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
-          <IconChevronLeft class="inline-block flex-none" />
-          <div>
-            <div class="text-sm text-[var(--accent)] opacity-85">
-              {prevPost.title}
+      {
+        relatedPosts.length > 0 && (
+          <section class="related-posts-section reading-wrap mt-10">
+            <div class="related-posts-header">
+              <h2 class="related-posts-title">相关文章</h2>
             </div>
-          </div>
-        </a>
-      )
-    }
-    <!-- 下一篇 -->
-    {
-      nextPost && (
-        <a
-          href={nextPost.path}
-          class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
-        >
-          <div>
-            <div class="text-sm text-[var(--accent)] opacity-85">
-              {nextPost.title}
+            <div class="related-posts-grid">
+              {relatedPosts.map(({ post: relatedPost, path }) => (
+                <a href={path} class="related-post-card">
+                  <p class="related-post-meta">
+                    {relatedPost.data.categories
+                      .map(
+                        category => getCategoryMeta(category)?.name ?? category
+                      )
+                      .join(" / ")}
+                  </p>
+                  <h3>{relatedPost.data.title}</h3>
+                  <p>
+                    {relatedPost.data.description?.trim() ||
+                      PostUtils.getDescription(relatedPost.body ?? "")}
+                  </p>
+                </a>
+              ))}
             </div>
-          </div>
-          <IconChevronRight class="inline-block flex-none" />
-        </a>
-      )
-    }
+          </section>
+        )
+      }
+
+      <!-- Previous/Next Post Buttons -->
+      <div
+        data-pagefind-ignore
+        class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2"
+      >
+        <!-- 上一篇 -->
+        {
+          prevPost && (
+            <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
+              <IconChevronLeft class="inline-block flex-none" />
+              <div>
+                <div class="text-sm text-[var(--accent)] opacity-85">
+                  {prevPost.title}
+                </div>
+              </div>
+            </a>
+          )
+        }
+        <!-- 下一篇 -->
+        {
+          nextPost && (
+            <a
+              href={nextPost.path}
+              class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
+            >
+              <div>
+                <div class="text-sm text-[var(--accent)] opacity-85">
+                  {nextPost.title}
+                </div>
+              </div>
+              <IconChevronRight class="inline-block flex-none" />
+            </a>
+          )
+        }
+      </div>
+
+      <!-- 评论容器（全局关闭 Artalk 时不输出） -->
+      {comments && SITE.artalk.enabled && <div id="Comments" />}
+    </div>
+
   </div>
 
-  <!-- 评论容器（全局关闭 Artalk 时不输出） -->
-  {comments && SITE.artalk.enabled && <div id="Comments" />}
-
-  <!-- 侧边栏：文章目录（与 astro-lhasa 一致，内联实现） -->
   <aside
+    slot="after-main"
     id="sidebar"
-    class:list={["sidebar", "hidden lg:block", { "no-toc": !toc }]}
+    class:list={["sidebar", { "no-toc": !toc }]}
   >
     {toc && <div id="toc-container" class="js-toc" />}
-    <div
-      class="flex flex-col items-start space-y-0 truncate overflow-hidden whitespace-nowrap opacity-80"
-    >
-    </div>
   </aside>
 </Layout>
 
 <!-- 侧栏与 TOC 样式（tocbot 注入的 .toc 等类） -->
 <style>
+  .post-shell {
+    display: block;
+  }
+
+  .post-primary {
+    min-width: 0;
+  }
+
+  #article {
+    width: auto;
+  }
+
+  .post-hero {
+    margin: 0.9rem auto 1.15rem;
+    text-align: center;
+  }
+
+  .post-hero h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 2.4vw, 2.05rem);
+    line-height: 1.24;
+    letter-spacing: -0.02em;
+  }
+
   .post-breadcrumbs {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 0 0 1rem;
+    margin: 0 0 0.8rem;
     font-size: 0.875rem;
     color: var(--text-secondary);
   }
@@ -458,7 +495,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.75rem;
+    margin-top: 0.55rem;
     color: var(--text-secondary);
     font-size: 0.875rem;
   }
@@ -481,50 +518,45 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     color: var(--border);
   }
 
-  #article :global(h2[id]),
-  #article :global(h3[id]),
-  #article :global(h4[id]),
-  #article :global(h5[id]),
-  #article :global(h6[id]) {
-    /* 锚点跳转时预留 sticky header 高度，避免标题被遮挡 */
-    scroll-margin-top: 5rem;
+  .sidebar {
+    display: none;
   }
 
-  @media (min-width: 1300px) {
-    #sidebar {
+  @media (min-width: 1360px) {
+    .sidebar {
+      display: block;
       position: fixed;
-      top: 10rem;
-      right: 5rem;
+      top: 6.75rem;
+      max-height: calc(100vh - 8rem);
+      overflow: auto;
+    }
+
+    #sidebar {
       z-index: 40;
       margin: 0;
-      max-height: calc(100vh - 8rem);
-      width: 14rem;
-      transform: translateX(0);
-      border: none;
-      box-shadow: none;
-      border-radius: 0.5rem;
-      padding: 1rem 0.75rem;
-      background-color: color-mix(
-        in srgb,
-        var(--text-primary) 2%,
-        var(--background)
-      );
+      width: 240px;
+      left: calc(50% + (var(--reading-max-width) / 2) + 10rem);
+      padding: 0.1rem 0 0;
+      background: transparent;
+      opacity: 0.88;
     }
+
     :global(.toc > .toc-list) {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
+      padding-top: 0.15rem;
+      padding-bottom: 0.15rem;
     }
     :global(.toc > .toc-list > .toc-list-item) {
       margin-top: 0;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.35rem;
     }
     :global(.toc > .toc-list > .toc-list-item:last-child) {
       margin-bottom: 0;
     }
     :global(.toc > .toc-list > .toc-list-item > .toc-list) {
-      margin-top: 0.25rem;
+      margin-top: 0.05rem;
       margin-bottom: 0;
-      padding-left: 0.75rem;
+      padding-left: 0.6rem;
+      border-left: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
     }
     :global(.toc-list) {
       margin: 0;
@@ -535,36 +567,44 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      color: var(--text-primary);
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
+      color: var(--text-secondary);
+      margin-top: 0.08rem;
+      margin-bottom: 0.08rem;
     }
     :global(.toc-list .toc-list .toc-list-item) {
-      margin-top: 0.125rem;
-      margin-bottom: 0.125rem;
+      margin-top: 0.05rem;
+      margin-bottom: 0.05rem;
     }
     :global(.toc-link) {
-      font-size: 0.875rem;
-      color: var(--text-primary);
+      font-size: 0.79rem;
+      color: color-mix(in srgb, var(--text-secondary) 92%, transparent);
       display: block;
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
-      line-height: 1.5;
+      padding-top: 0.12rem;
+      padding-bottom: 0.12rem;
+      line-height: 1.35;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    :global(.toc-link:hover) {
+      color: var(--text-primary);
     }
     :global(.toc-link.is-active-link) {
       color: var(--accent);
+      font-weight: 500;
     }
     :global(.toc-link::before) {
       display: none !important;
       content: "";
     }
   }
-  @media (min-width: 1600px) {
-    #sidebar {
-      width: 16rem;
+
+  @media (min-width: 768px) {
+    .post-hero h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
-
   /* 标签行：图标与标签胶囊同一水平线 */
   .post-tags-row {
     align-items: center;
@@ -591,14 +631,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   .post-promo-card,
   .related-post-card {
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 1rem;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 7%, var(--background)),
-      var(--background)
-    );
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    padding: 0.85rem 0 0;
+    background: transparent;
   }
 
   .post-promo-eyebrow,
@@ -618,7 +655,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   .post-promo-copy {
-    margin: 0.75rem 0 0;
+    margin: 0.55rem 0 0;
     color: var(--text-secondary);
   }
 
@@ -626,7 +663,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
   }
 
   .post-promo-button {
@@ -635,11 +672,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     justify-content: center;
     min-height: 1.95rem;
     padding: 0.4rem 0.75rem;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
     border-radius: 999px;
     font-size: 0.8125rem;
     color: var(--text-primary);
-    background: var(--background);
+    background: transparent;
     text-decoration: none;
   }
 
@@ -671,13 +708,12 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     text-decoration: none;
     transition:
       border-color 0.2s ease,
-      transform 0.2s ease;
+      color 0.2s ease;
   }
 
   .related-post-card:hover {
     text-decoration: none;
     border-color: var(--accent);
-    transform: translateY(-2px);
   }
 
   .related-post-card h3 {

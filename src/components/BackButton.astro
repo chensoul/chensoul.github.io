@@ -17,9 +17,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 
 <script is:inline data-astro-rerun>
   (function () {
-    /**
-     * 防抖函数
-     */
     function debounce(func, wait) {
       let timeout = null;
       return function executedFunction(...args) {
@@ -33,24 +30,18 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
       };
     }
 
-    /**
-     * 判断当前页面是否需要显示返回按钮，并设置返回链接
-     */
     function getBackInfo() {
       const path = window.location.pathname;
 
-      // 文章页面 /posts/xxx
       if (/^\/posts\/[^/]+/.test(path)) {
         const backUrl = sessionStorage.getItem("backUrl");
         return { show: true, href: backUrl || "/" };
       }
 
-      // 分类详情页 /categories/xxx
       if (/^\/categories\/[^/]+/.test(path)) {
         return { show: true, href: "/categories" };
       }
 
-      // 标签详情页 /tags/xxx
       if (/^\/tags\/[^/]+/.test(path)) {
         return { show: true, href: "/tags" };
       }
@@ -58,9 +49,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
       return { show: false, href: "/" };
     }
 
-    /**
-     * 更新返回按钮位置，与 BackToTop 保持一致
-     */
     function updatePosition() {
       const btn = document.getElementById("back-button");
       const frame = document.getElementById("main-content");
@@ -77,7 +65,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
       }
     }
 
-    // 防抖优化：resize 事件使用防抖，避免频繁计算
     const debouncedRefreshButton = debounce(() => {
       updatePosition();
       const backToTop = document.getElementById("back-to-top");
@@ -86,9 +73,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
       updateVerticalPosition(Boolean(isBackToTopVisible));
     }, 150);
 
-    /**
-     * 更新返回按钮的显示状态和链接
-     */
     function updateBackButton() {
       const btn = document.getElementById("back-button");
       if (!btn) return;
@@ -100,7 +84,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
         btn.classList.remove("hidden");
         btn.classList.add("flex");
         updatePosition();
-        // 检查 BackToTop 当前状态并调整位置
         const backToTop = document.getElementById("back-to-top");
         const isBackToTopVisible =
           backToTop && !backToTop.classList.contains("opacity-0");
@@ -111,10 +94,6 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
       }
     }
 
-    /**
-     * 更新返回按钮的垂直位置
-     * @param {boolean} shiftUp - 是否向上移动让开位置
-     */
     function updateVerticalPosition(shiftUp) {
       const btn = document.getElementById("back-button");
       if (!btn) return;
@@ -144,13 +123,10 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
     window._backButtonVisibilityHandler = handleBackToTopVisibilityChange;
     window._backButtonResizeHandler = debouncedRefreshButton;
 
-    // 监听 BackToTop 可见性变化
     window.addEventListener(
       "backToTopVisibilityChange",
       window._backButtonVisibilityHandler
     );
-
-    // 监听窗口大小变化（使用防抖优化性能）
     window.addEventListener("resize", window._backButtonResizeHandler, {
       passive: true,
     });
