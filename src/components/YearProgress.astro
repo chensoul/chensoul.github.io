@@ -14,24 +14,32 @@
  *
  * 依赖关系：
  * - 被 Header.astro 导入，在导航栏下方显示
- * - 使用 Tailwind 固定色，不随主题切换
+ * - 轨道用主题色淡 mix，圆角 pill，避免像整宽 <hr> 文档分隔线
  */
 ---
 
 <div
   id="year-progress"
   class="group relative mx-auto w-full max-w-[900px] border-0 pt-1.5 pb-1.5"
+  role="progressbar"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-live="polite"
+  aria-label="本年度已过时间比例"
 >
   <div
     id="year-progress-track"
-    class="h-[3px] w-full rounded border-0 bg-black/[0.06]"
+    class="h-1 w-full overflow-hidden rounded-full border-0 bg-[color-mix(in_srgb,var(--border)_65%,transparent)]"
     aria-hidden="true"
   >
-    <div id="year-progress-fill" class="h-[3px] w-0 rounded bg-blue-600"></div>
+    <div
+      id="year-progress-fill"
+      class="h-full w-0 rounded-full bg-blue-600 transition-[width] duration-300 ease-out"
+    ></div>
   </div>
   <span
     id="year-progress-cover"
-    class="pointer-events-none absolute top-1/2 left-0 z-10 h-[3px] -translate-y-1/2 rounded bg-black/[0.06] opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="pointer-events-none absolute top-1/2 left-0 z-10 h-1 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--border)_65%,transparent)] opacity-0 transition-opacity duration-[1000ms] ease-out"
   ></span>
   <span
     id="year-progress-label"
@@ -115,6 +123,10 @@
     els.fill.style.width = text;
     els.label.textContent = text;
     els.container.setAttribute("title", text);
+    els.container.setAttribute(
+      "aria-valuenow",
+      String(Math.round(progress * 100))
+    );
     positionLabel(els, progress);
   }
 
