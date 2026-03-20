@@ -111,21 +111,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    css: {
-      postcss: {
-        plugins: [
-          // 自定义插件：替换 @fontsource 中的 font-display: swap → fallback
-          {
-            postcssPlugin: "postcss-font-display-fallback",
-            Declaration(decl: { prop: string; value: string }) {
-              if (decl.prop === "font-display" && decl.value === "swap") {
-                decl.value = "fallback";
-              }
-            },
-          },
-        ],
-      },
-    },
     optimizeDeps: {
       include: ["mermaid", "dayjs", "lodash.kebabcase", "markdown-it"],
       /**

@@ -6,8 +6,8 @@
  */
 import { SITE } from "@/config";
 import "@/styles/global.css";
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 import BackToTop from "@/components/BackToTop.astro";
 import BackButton from "@/components/BackButton.astro";
 /**
@@ -19,7 +19,7 @@ import BackButton from "@/components/BackButton.astro";
  * @property canonicalURL - 规范链接
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间
- * @property ogImage - 社交分享图路径（相对 public），如 "og.png" 或文章封面
+ * @property ogImage - 社交分享图：根相对路径（如 /images/x.webp）、或 https 绝对 URL；未传则用默认 OG
  */
 export interface Props {
   title?: string;
@@ -68,13 +68,15 @@ const resolvedSchemaType = schemaType?.trim() || defaultSchemaType;
 const ogEnabled = SITE.og.enabled;
 const useDynamicOg = ogEnabled && SITE.og.dynamic;
 
-const normalizeOgDefaultPath = (p: string) => {
+/** 默认 OG 静态图：支持根相对路径或绝对 URL（与 SITE.og.defaultImage 一致） */
+const normalizeStaticOgDefault = (p: string) => {
   const t = p.trim();
   if (!t) return "/images/og.webp";
+  if (/^https?:\/\//i.test(t)) return t;
   return t.startsWith("/") ? t : `/${t}`;
 };
 
-const staticDefaultOgPath = normalizeOgDefaultPath(SITE.og.defaultImage);
+const staticDefaultOgRef = normalizeStaticOgDefault(SITE.og.defaultImage);
 
 const pathForOg = pathname.replace(/^\/+/, "").replace(/\/+$/, "");
 const defaultOgFromUrl =
@@ -84,12 +86,17 @@ const defaultOgFromUrl =
       ? `/og/${pathForOg.slice("posts/".length)}.png`
       : `/og/${pathForOg}.png`;
 
-const defaultOgImage = useDynamicOg ? defaultOgFromUrl : staticDefaultOgPath;
+const defaultOgImage = useDynamicOg ? defaultOgFromUrl : staticDefaultOgRef;
 const ogImage = ogImageProp ?? defaultOgImage;
-const ogImagePath = ogImage.startsWith("/") ? ogImage.slice(1) : ogImage;
-const socialImageURLString = ogEnabled
-  ? new URL(ogImagePath, Astro.url.origin).href
-  : "";
+/** 分享图绝对地址（根相对、站外绝对 URL 均支持） */
+const socialImageURLString = (() => {
+  if (!ogEnabled) return "";
+  const ref = ogImage.trim();
+  if (!ref) return new URL("images/og.webp", Astro.url.origin).href;
+  if (/^https?:\/\//i.test(ref)) return ref;
+  const path = ref.startsWith("/") ? ref : `/${ref}`;
+  return new URL(path, Astro.url.origin).href;
+})();
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;

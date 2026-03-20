@@ -1,7 +1,7 @@
 /**
  * RSS 订阅端点
  *
- * @fileoverview 生成 RSS 2.0 订阅源，包含最近 10 篇非草稿文章；摘要优先取 <!-- more --> 前内容，否则由 PostUtils.getDescription 截取。
+ * @fileoverview 生成 RSS 2.0：条目按 frontmatter `date` 发布时间降序（非 `updated`）；最近 10 篇；摘要见 <!-- more --> / PostUtils.getDescription。
  */
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
@@ -9,10 +9,9 @@ import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export async function GET() {
-  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
-  const sortedPosts = posts
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-    .slice(0, 10);
+  const sortedPosts = PostUtils.sortByPublishedDate(
+    await getCollection("blog")
+  ).slice(0, 10);
 
   const iconUrl = `${SITE.website.replace(/\/$/, "")}/favicon.ico`;
   const titleEscaped = SITE.title

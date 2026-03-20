@@ -115,6 +115,19 @@ export class PostUtils {
     );
   }
 
+  /**
+   * 按发布时间 `date` 降序（不使用 `updated`），与文章列表「最近更新」逻辑区分。
+   * 用于 RSS 等需与 `pubDate` 一致的排序。
+   */
+  static sortByPublishedDate(
+    posts: CollectionEntry<"blog">[]
+  ): CollectionEntry<"blog">[] {
+    return this.getPublishedPosts(posts).sort(
+      (a, b) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    );
+  }
+
   static getUniqueTags(posts: CollectionEntry<"blog">[]): Tag[] {
     const tagCountMap = new Map<string, Tag>();
 
