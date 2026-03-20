@@ -138,6 +138,11 @@ p {
   margin-right: auto;
 }
 
+.post-tags-icon svg {
+  display: block;
+  vertical-align: middle;
+}
+
 .reading-content :where(p, ul, ol, blockquote, .responsive-table, pre) {
   margin-top: 0.85rem;
   margin-bottom: 0.85rem;
@@ -254,6 +259,72 @@ li {
 
 .responsive-table table {
   margin-bottom: 0;
+}
+
+#sidebar .toc > .toc-list {
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+}
+
+#sidebar .toc > .toc-list > .toc-list-item {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+}
+
+#sidebar .toc > .toc-list > .toc-list-item:last-child {
+  margin-bottom: 0;
+}
+
+#sidebar .toc > .toc-list > .toc-list-item > .toc-list {
+  margin-top: 0.05rem;
+  margin-bottom: 0;
+  padding-left: 0.6rem;
+  border-left: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+#sidebar .toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#sidebar .toc-list-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  margin-top: 0.08rem;
+  margin-bottom: 0.08rem;
+}
+
+#sidebar .toc-list .toc-list .toc-list-item {
+  margin-top: 0.05rem;
+  margin-bottom: 0.05rem;
+}
+
+#sidebar .toc-link {
+  display: block;
+  padding-top: 0.12rem;
+  padding-bottom: 0.12rem;
+  font-size: 0.79rem;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--text-secondary) 92%, transparent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#sidebar .toc-link:hover {
+  color: var(--text-primary);
+}
+
+#sidebar .toc-link.is-active-link {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+#sidebar .toc-link::before {
+  display: none !important;
+  content: "";
 }
 
 table {
@@ -539,4 +610,10 @@ a.feeds-card-title:hover {
 .taxonomy-pill-count {
   font-weight: 600;
   opacity: 0.88;
+}
+
+@media (max-width: 700px) {
+  .taxonomy-summary-text {
+    gap: 0.3rem 0.6rem;
+  }
 }

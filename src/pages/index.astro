@@ -28,47 +28,51 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class="home-split">
-    <div class="home-main-panel">
-      <div class="home-section-head">
+  <section class="mt-[-0.15rem] grid items-start gap-4 lg:grid-cols-2">
+    <div class="min-w-0">
+      <div class="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 max-[700px]:gap-3">
         <div>
-          <h2>最近文章</h2>
-          <p>优先展示最近更新的技术文章、知识库条目和翻译内容。</p>
+          <h2 class="m-0 text-[1.05rem] font-bold leading-[1.35]">最近文章</h2>
+          <p class="mt-1 text-[0.9rem] leading-[1.55] text-[var(--text-secondary)]">
+            优先展示最近更新的技术文章、知识库条目和翻译内容。
+          </p>
         </div>
-        <div class="home-section-head-action home-section-head-action--mobile">
+        <div class="ml-auto hidden max-[700px]:flex">
           <LinkButton
             href="/posts"
-            class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+            class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             查看全部文章
           </LinkButton>
         </div>
       </div>
-      <ul class="home-card-list">
+      <ul class="m-0 grid list-none gap-[0.15rem] pl-0">
         {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
-      <div class="home-section-action home-section-action--desktop">
+      <div class="mt-1.5 flex justify-end max-[700px]:hidden">
         <LinkButton
           href="/posts"
-          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+          class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           查看全部文章
         </LinkButton>
       </div>
     </div>
 
-    <aside class="home-side-panel">
-      <div class="home-section-head">
+    <aside class="min-w-0">
+      <div class="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 max-[700px]:gap-3">
         <div>
-          <h2>最近周报</h2>
-          <p>记录每周的开发进展、工具尝试和一些阶段性想法。</p>
+          <h2 class="m-0 text-[1.05rem] font-bold leading-[1.35]">最近周报</h2>
+          <p class="mt-1 text-[0.9rem] leading-[1.55] text-[var(--text-secondary)]">
+            记录每周的开发进展、工具尝试和一些阶段性想法。
+          </p>
         </div>
       </div>
-      <div class="home-side-list">
+      <div class="grid gap-0">
         {
           lifePosts.map(post => (
             <a
-              class="home-side-card"
+              class="block border-0 border-b border-[var(--border)] bg-transparent py-3 text-inherit no-underline transition-colors duration-200 hover:border-[color-mix(in_srgb,var(--accent)_28%,var(--border))] hover:no-underline"
               href={PostUtils.getPath(
                 post.id,
                 post.filePath,
@@ -77,8 +81,10 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
                 post.data.timezone
               )}
             >
-              <h3>{post.data.title}</h3>
-              <p>
+              <h3 class="m-0 text-[0.94rem] font-semibold leading-[1.45] text-[var(--accent)]">
+                {post.data.title}
+              </h3>
+              <p class="mt-1.5 text-[0.875rem] leading-[1.6] text-[var(--text-secondary)]">
                 {post.data.description?.trim() ||
                   PostUtils.getDescription(post.body ?? "")}
               </p>
@@ -86,10 +92,10 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
           ))
         }
       </div>
-      <div class="home-section-action">
+      <div class="mt-1.5 flex justify-end">
         <LinkButton
           href="/categories/weekly"
-          class="home-section-link inline-flex items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
+          class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           查看全部周报
         </LinkButton>
@@ -97,155 +103,3 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     </aside>
   </section>
 </Layout>
-
-<style>
-  .home-section,
-  .home-side-card {
-    border: 0;
-    border-radius: 0;
-  }
-
-  .home-section-head h2 {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  .home-side-card h3 {
-    margin: 0;
-    font-size: 0.94rem;
-    font-weight: 600;
-    line-height: 1.45;
-    color: var(--accent);
-  }
-
-  .home-section-head p,
-  .home-side-card p {
-    color: var(--text-secondary);
-  }
-
-  .home-section {
-    margin-bottom: 1.25rem;
-    padding: 1.25rem;
-    background: var(--background);
-  }
-
-  .home-section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.65rem;
-    flex-wrap: wrap;
-  }
-
-  .home-section-head p {
-    margin: 0.2rem 0 0;
-    font-size: 0.9rem;
-    line-height: 1.55;
-  }
-
-  .home-section-link {
-    flex-shrink: 0;
-    line-height: 1.45;
-  }
-
-  .home-section-action {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.35rem;
-  }
-
-  .home-section-head-action {
-    margin-left: auto;
-    display: flex;
-  }
-
-  .home-section-head-action--mobile {
-    display: none;
-  }
-
-  .home-split {
-    display: grid;
-    gap: 1rem;
-    margin: -0.15rem 0 0;
-    align-items: start;
-  }
-
-  .home-card-list {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-    display: grid;
-    gap: 0.15rem;
-  }
-
-  .home-main-panel,
-  .home-side-panel {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .home-side-list {
-    display: grid;
-    gap: 0;
-  }
-
-  .home-side-card {
-    display: block;
-    padding: 0.72rem 0;
-    color: inherit;
-    text-decoration: none;
-    background: transparent;
-    border-bottom: 1px solid var(--border);
-    transition:
-      border-color 0.2s ease,
-      color 0.2s ease;
-  }
-
-  .home-side-card:hover {
-    border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
-    text-decoration: none;
-  }
-
-  .home-side-card b {
-    display: block;
-    font-size: 0.825rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  .home-side-card p {
-    margin: 0.35rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-
-  @media (min-width: 960px) {
-    .home-split {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
-  }
-
-  @media (max-width: 700px) {
-    .home-section-head-action--mobile {
-      display: flex;
-    }
-
-    .home-section-action.home-section-action--desktop {
-      display: none;
-    }
-
-    .home-section-head {
-      align-items: center;
-      gap: 0.75rem;
-    }
-  }
-</style>

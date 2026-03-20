@@ -62,12 +62,12 @@ categories.forEach(({ category, categoryName }) => {
 
 <Layout title={pageTitle}>
   <ul
-    class="categories-list grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2"
+    class="grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2"
     aria-label="分类列表"
   >
     {
       categories.map(({ category, categoryName, count }, i) => (
-        <li class={`categories-item ${i >= SITE.postPerIndex ? "hidden" : ""}`}>
+        <li class:list={["categories-item", { hidden: i >= SITE.postPerIndex }]}>
           <a
             href={`/categories/${category}`}
             aria-label={`查看 ${categoryName} 分类`}
