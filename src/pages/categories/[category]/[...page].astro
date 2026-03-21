@@ -40,6 +40,8 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 // 从 Astro.props 中解构获取分页数据和分类显示名称
 const { page, categoryName } = Astro.props;
+const categoryParam = String(Astro.params.category ?? "");
+const cardListKind = categoryParam === "weekly" ? "weekly" : "article";
 const totalPosts = page.data.length;
 const tagCount = new Map<string, { tagName: string; count: number }>();
 page.data.forEach(post => {
@@ -68,7 +70,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class="category-header">
+  <section class="mb-6">
     <div class="breadcrumb" aria-label="面包屑导航">
       <a href="/">首页</a>
       <span class="breadcrumb-separator">/</span>
@@ -76,18 +78,15 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
       <span class="breadcrumb-separator">/</span>
       <span>{categoryName}</span>
     </div>
-    <h1 class="category-title">{categoryName}</h1>
-    <p class="category-description">
-      按时间倒序浏览分类「{categoryName}」下的 {totalPosts} 篇文章。
-    </p>
+    <h1 class="my-2 text-3xl font-semibold tracking-tight">{categoryName}</h1>
     <TaxonomySummary title="相关标签" items={relatedTags} />
   </section>
-  <ul class="category-posts-list">
+  <ul id="category-posts-list" class="post-cards-list m-0 list-none p-0">
     {
       page.data.map((data, i) => (
         <Card
           {...data}
-          itemClass="category-post-item"
+          listKind={cardListKind}
           hidden={i >= SITE.postPerIndex}
           dateFormat="absolute"
         />
@@ -114,7 +113,7 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
     }
     window.setupLazyList({
       sentinelId: "category-posts-sentinel",
-      itemSelector: ".category-post-item",
+      itemSelector: "#category-posts-list > li",
     });
     return true;
   }

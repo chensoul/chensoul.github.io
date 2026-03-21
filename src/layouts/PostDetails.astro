@@ -2,7 +2,7 @@
 /**
  * 文章详情布局
  *
- * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/TOC/数学公式等功能。canonical 等元信息由本布局传给 Layout。
+ * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/数学公式等功能。canonical 等元信息由本布局传给 Layout。
  */
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
@@ -10,6 +10,7 @@ import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import PhotosuiteStyles from "@/components/PhotosuiteStyles.astro";
+import PillSharedStyles from "@/components/PillSharedStyles.astro";
 import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -31,7 +32,6 @@ const {
   date,
   updated,
   tags,
-  toc,
   math,
   comments,
   description: postDescription,
@@ -201,6 +201,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
+  <PillSharedStyles />
   {hasInlineImages && <PhotosuiteStyles />}
   {
     tags.map((tag: string) => (
@@ -240,60 +241,57 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <!-- 文章内容（js-toc-content 供 tocbot 扫描 h2/h3/h4 生成目录） -->
-  <article
-    id="article"
-    class="js-toc-content reading-content reading-wrap"
-    data-pagefind-body
-  >
-        <!-- 文章主体上方配图（frontmatter top-image，不参与描述提取） -->
-        {topImageSrc && <img src={topImageSrc} alt={title} />}
+  <article id="article" data-pagefind-body>
+    <header>
+      {topImageSrc && <img src={topImageSrc} alt={title} />}
 
-        <!-- 文章标题与发布日期 -->
-        <div class="breadcrumb" aria-label="面包屑导航">
-          <a href="/">首页</a>
-          <span class="breadcrumb-separator">/</span>
-          <a href="/posts">文章</a>
+      <div class="breadcrumb" aria-label="面包屑导航">
+        <a href="/">首页</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="/posts">文章</a>
+        {
+          primaryCategory && (
+            <>
+              <span class="breadcrumb-separator">/</span>
+              <a href={`/categories/${slugifyStr(primaryCategory)}`}>
+                {primaryCategoryLabel}
+              </a>
+            </>
+          )
+        }
+      </div>
+
+      <section class="article-header">
+        <h1 class="article-title">
+          {title}
+        </h1>
+        <div class="article-meta">
           {
-            primaryCategory && (
-              <>
-                <span class="breadcrumb-separator">/</span>
-                <a href={`/categories/${slugifyStr(primaryCategory)}`}>
-                  {primaryCategoryLabel}
-                </a>
-              </>
-            )
+            categoryLinks.map(category => (
+              <a
+                class="no-underline"
+                href={`/categories/${category.slug}`}
+              >
+                {category.name}
+              </a>
+            ))
           }
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="reading-time">{readingMinutes} 分钟阅读</span>
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <Datetime
+            pubDatetime={date}
+            modDatetime={updated}
+            timezone={post.data.timezone}
+            format="absolute"
+          />
         </div>
+      </section>
+    </header>
 
-        <section class="article-header">
-          <h1 class="article-title">
-            {title}
-          </h1>
-          <div class="article-meta">
-            {
-              categoryLinks.map(category => (
-                <a
-                  class="category-badge"
-                  href={`/categories/${category.slug}`}
-                >
-                  {category.name}
-                </a>
-              ))
-            }
-            <span class="meta-separator" aria-hidden="true">·</span>
-            <span class="reading-time">{readingMinutes} 分钟阅读</span>
-            <span class="meta-separator" aria-hidden="true">·</span>
-            <Datetime
-              pubDatetime={date}
-              modDatetime={updated}
-              timezone={post.data.timezone}
-              format="absolute"
-            />
-          </div>
-        </section>
-
-        <Content />
+    <div class="post-article-body reading-content post-article-content">
+      <Content />
+    </div>
   </article>
 
   <!-- 标签列表 -->
@@ -415,74 +413,297 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   <!-- 评论容器（全局关闭 Artalk 时不输出） -->
   {comments && SITE.artalk.enabled && <div id="Comments" class="reading-wrap" />}
 
-  <aside
-    slot="after-main"
-    id="sidebar"
-  >
-    {toc && <div id="toc-container" class="js-toc" />}
-  </aside>
 </Layout>
+
+<style is:global>
+  #article {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #article > header {
+    width: 100%;
+  }
+
+  .post-article-content {
+    min-width: 0;
+  }
+  #article .post-article-content :where(h2, h3, h4) {
+    scroll-margin-top: 5.25rem;
+  }
+
+  .reading-wrap {
+    max-width: var(--reading-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .reading-content {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+
+  .reading-content img {
+    border-radius: 8px;
+  }
+
+  #article .post-article-content {
+    padding-bottom: 1rem;
+  }
+
+  .article-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .article-title {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-align: center;
+  }
+
+  .article-header .article-title {
+    margin-top: 0;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .meta-separator {
+    opacity: 0.5;
+  }
+
+  .reading-time {
+    white-space: nowrap;
+  }
+
+  .tags-section {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin: 2rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .tags-icon {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .action-section {
+    display: grid;
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (min-width: 640px) {
+    .action-section {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .action-card {
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--background-secondary);
+  }
+
+  .action-label {
+    margin: 0 0 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+
+  .action-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  .action-description {
+    margin: 0 0 1rem;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: white;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .related-section {
+    margin: 2.5rem 0;
+  }
+
+  .related-section h2 {
+    margin-bottom: 1rem;
+  }
+
+  .related-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .related-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .related-card {
+    display: block;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .related-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  .related-category {
+    margin: 0 0 0.35rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .related-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  .related-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-nav {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (min-width: 640px) {
+    .post-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .nav-link-prev,
+  .nav-link-next {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .nav-link-prev:hover,
+  .nav-link-next:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .nav-link-next {
+    justify-content: flex-end;
+    text-align: right;
+  }
+</style>
 
 <!-- Artalk 评论系统 -->
 {comments && SITE.artalk.enabled && <Artalk />}
 
-<script
-  is:inline
-  data-astro-rerun
-  define:vars={{
-    tocbotJsUrl: SITE.tocbot.jsUrl,
-    tocbotCssUrl: SITE.tocbot.cssUrl,
-  }}
->
-  /* Tocbot：空闲时按需注入 CSS/JS，再初始化目录 */
-  (function () {
-    if (!document.getElementById("toc-container")) return;
-    const headingOffset = 80;
-    const scrollSmoothOffset = -headingOffset;
-    function ensureTocbotCSS() {
-      if (!tocbotCssUrl) return;
-      const selector = 'link[href="' + tocbotCssUrl + '"]';
-      if (document.querySelector(selector)) return;
-
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = tocbotCssUrl;
-      link.crossOrigin = "anonymous";
-      link.referrerPolicy = "no-referrer";
-      document.head.appendChild(link);
-    }
-    function initTocbot() {
-      if (typeof window !== "undefined" && window.tocbot) {
-        window.tocbot.init({
-          tocSelector: ".js-toc",
-          contentSelector: ".js-toc-content",
-          headingSelector: "h2, h3, h4",
-          hasInnerContainers: true,
-          headingsOffset: headingOffset,
-          scrollSmoothDuration: 300,
-          scrollSmoothOffset,
-        });
-      }
-    }
-    function loadTocbot() {
-      ensureTocbotCSS();
-      if (window.tocbot) {
-        initTocbot();
-      } else if (tocbotJsUrl) {
-        const script = document.createElement("script");
-        script.src = tocbotJsUrl;
-        script.crossOrigin = "anonymous";
-        script.referrerPolicy = "no-referrer";
-        script.onload = initTocbot;
-        document.body.appendChild(script);
-      }
-    }
-    if (typeof requestIdleCallback !== "undefined") {
-      requestIdleCallback(loadTocbot, { timeout: 2000 });
-    } else {
-      setTimeout(loadTocbot, 1);
-    }
-  })();
+<script is:inline data-astro-rerun>
   function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   }

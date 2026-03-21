@@ -14,18 +14,22 @@ export const pageDescription = "搜索所有文章";
 ---
 
 <Layout title={pageTitle} description={pageDescription} robots="noindex,follow">
-  <div class="search-container">
+  <h2>搜索</h2>
+  <div class="w-full min-w-0 py-1">
     <div id="search">
-      <div class="search-box">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-stretch">
         <input
           type="text"
           id="search-input"
+          class="min-w-0 flex-1"
           placeholder="输入关键词搜索..."
           autocomplete="off"
         />
-        <button id="search-button">搜索</button>
+        <button id="search-button" type="button" class="shrink-0 sm:w-auto">
+          搜索
+        </button>
       </div>
-      <div id="search-results"></div>
+      <div id="search-results" class="mt-6"></div>
     </div>
   </div>
 </Layout>
@@ -62,7 +66,7 @@ export const pageDescription = "搜索所有文章";
         return true;
       } catch {
         resultsContainer.innerHTML =
-          '<p class="error">搜索功能加载失败，请刷新页面重试</p>';
+          '<p class="text-sm text-[var(--text-secondary)]">搜索功能加载失败，请刷新页面重试</p>';
         searchInput.placeholder = "搜索功能加载失败";
         return false;
       } finally {
@@ -80,33 +84,40 @@ export const pageDescription = "搜索所有文章";
       const ready = await ensurePagefind();
       if (!ready) return;
 
-      resultsContainer.innerHTML = '<p class="loading">搜索中...</p>';
+      resultsContainer.innerHTML =
+        '<p class="text-sm text-[var(--text-secondary)]">搜索中...</p>';
 
       try {
         const search = await pagefind.search(query);
 
         if (search.results.length === 0) {
           resultsContainer.innerHTML =
-            '<p class="no-results">未找到「' + query + "」的相关结果</p>";
+            '<p class="text-sm text-[var(--text-secondary)]">未找到「' +
+            query +
+            "」的相关结果</p>";
           return;
         }
 
         let html =
-          '<p class="result-count">找到 ' +
+          '<p class="mb-3 text-sm text-[var(--text-secondary)]">找到 ' +
           search.results.length +
           " 个结果</p>";
-        html += '<ul class="results-list">';
+        html +=
+          '<ul class="m-0 list-none space-y-4 border-t border-[var(--border)] p-0 pt-4">';
 
         for (const result of search.results.slice(0, 10)) {
           const data = await result.data();
-          html += '<li class="result-item">';
+          html += '<li class="border-b border-[var(--border)] pb-4 last:border-b-0">';
           html +=
             '<a href="' +
             data.url +
-            '" class="result-title">' +
+            '" class="text-base font-semibold text-[var(--text-primary)] no-underline hover:text-[var(--accent)] hover:underline">' +
             (data.meta.title || "无标题") +
             "</a>";
-          html += '<p class="result-excerpt">' + data.excerpt + "</p>";
+          html +=
+            '<p class="mt-1.5 mb-0 text-sm leading-relaxed text-[var(--text-secondary)]">' +
+            data.excerpt +
+            "</p>";
           html += "</li>";
         }
 
@@ -114,14 +125,15 @@ export const pageDescription = "搜索所有文章";
 
         if (search.results.length > 10) {
           html +=
-            '<p class="more-results">还有 ' +
+            '<p class="mt-4 text-sm text-[var(--text-secondary)]">还有 ' +
             (search.results.length - 10) +
             " 个结果...</p>";
         }
 
         resultsContainer.innerHTML = html;
       } catch {
-        resultsContainer.innerHTML = '<p class="error">搜索出错，请重试</p>';
+        resultsContainer.innerHTML =
+          '<p class="text-sm text-[var(--text-secondary)]">搜索出错，请重试</p>';
       }
     }
 

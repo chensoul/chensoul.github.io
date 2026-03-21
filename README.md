@@ -79,7 +79,6 @@ date: 2026-02-26 08:00:00+08:00 # 必填，决定 URL 日期前缀
 tags: [Java, Spring] # 默认 ["Others"]
 categories: [tech] # 默认空数组
 draft: false # true 则排除构建
-toc: true # 显示目录
 math: false # 启用 KaTeX
 mermaid: false # 启用 Mermaid
 comments: true # 需 SITE.artalk.enabled 为 true 才显示评论；设为 false 可关单篇

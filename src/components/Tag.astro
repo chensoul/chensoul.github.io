@@ -36,7 +36,7 @@ const { tag, tagName, count, size = "sm" } = Astro.props;
 
 <li class="tag-item">
   <a href={`/tags/${tag}`} class:list={["tag-link", `tag-link--${size}`]}>
-    <span class="taxonomy-pill taxonomy-pill-tag">
+    <span class="taxonomy-pill">
       <span>{tagName}</span>
       {
         count !== undefined && count !== null && (
@@ -48,3 +48,13 @@ const { tag, tagName, count, size = "sm" } = Astro.props;
     </span>
   </a>
 </li>
+
+<style is:global>
+  .tag-item {
+    list-style: none;
+  }
+
+  .tag-link {
+    text-decoration: none;
+  }
+</style>

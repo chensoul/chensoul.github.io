@@ -7,6 +7,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
+import PillSharedStyles from "@/components/PillSharedStyles.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
@@ -24,11 +25,12 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
+  <PillSharedStyles />
   {
     topTags.length > 0 && (
       <section>
         <h2>热门标签</h2>
-        <ul class="tags-cloud">
+        <ul class="m-0 flex flex-wrap gap-2 p-0 list-none">
           {topTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}
@@ -40,7 +42,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
     otherTags.length > 0 && (
       <section>
         <h2>全部标签</h2>
-        <ul class="tags-cloud">
+        <ul class="m-0 flex flex-wrap gap-2 p-0 list-none">
           {otherTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}

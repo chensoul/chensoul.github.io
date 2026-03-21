@@ -1,4 +1,6 @@
 ---
+import PillSharedStyles from "./PillSharedStyles.astro";
+
 /**
  * 关联导航摘要组件
  *
@@ -19,22 +21,29 @@ export interface Props {
 const { title, items } = Astro.props;
 ---
 
+<PillSharedStyles />
 {
   items.length > 0 && (
-    <section class="taxonomy-summary" aria-label={title}>
-      <p class="taxonomy-summary-text">
-        <span class="taxonomy-summary-label">{title}：</span>
+    <section class="taxonomy-summary my-4 first:mt-0" aria-label={title}>
+      <div
+        class="m-0 flex flex-wrap items-center gap-2 text-sm leading-relaxed text-[var(--text-secondary)]"
+      >
+        <span class="shrink-0 font-semibold text-[var(--text-primary)]">
+          {title}：
+        </span>
         {items.map(item => (
-          <a href={item.href} class="taxonomy-summary-link">
+          <a href={item.href} class="no-underline">
             <span class="taxonomy-pill">
               <span>{item.label}</span>
-              {(item.count || item.count === 0) && (
-                <span class="taxonomy-pill-count">（{item.count}）</span>
+              {(item.count !== undefined && item.count !== null) && (
+                <span class="taxonomy-pill-count taxonomy-pill-count--tag">
+                  {item.count}
+                </span>
               )}
             </span>
           </a>
         ))}
-      </p>
+      </div>
     </section>
   )
 }

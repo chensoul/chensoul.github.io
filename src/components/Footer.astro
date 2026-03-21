@@ -77,3 +77,43 @@ function normalizeSocialHref(url: string): string {
     </div>
   </div>
 </footer>
+
+<style is:global>
+  .footer-content {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 0 var(--content-gutter);
+  }
+
+  .footer-hr {
+    margin: 0 0 1rem;
+  }
+
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .social-links a {
+    color: var(--text-secondary);
+    display: inline-flex;
+  }
+
+  .social-links a:hover {
+    color: var(--accent);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-bottom .separator {
+    margin: 0 0.5rem;
+    color: var(--border);
+  }
+</style>

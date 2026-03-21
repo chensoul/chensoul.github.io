@@ -56,6 +56,82 @@
   </div>
 </div>
 
+<style is:global>
+  .year-progress {
+    position: relative;
+    width: 100%;
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 0 var(--content-gutter);
+    height: auto;
+    pointer-events: none;
+  }
+
+  .year-progress-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 14px;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .year-progress-bar-bg {
+    height: 3px;
+    width: 100%;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--border) 60%, transparent);
+    overflow: hidden;
+  }
+
+  .year-progress-bar-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    transition: width 0.1s linear;
+  }
+
+  .year-progress-label,
+  .year-progress-cover,
+  .year-progress-popup {
+    position: absolute;
+    top: 11px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .year-progress-visible {
+    opacity: 1;
+  }
+
+  .year-progress-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .year-progress-cover {
+    top: 9px;
+    height: 16px;
+  }
+
+  .year-progress-popup {
+    top: 30px;
+    left: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+    max-width: min(280px, 90vw);
+  }
+</style>
+
 <script>
   /**
    * 年度进度条：计算全年进度、动画、悬停/点击交互

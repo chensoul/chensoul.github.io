@@ -53,26 +53,24 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 
 <Layout title={pageTitle} robots="noindex,follow">
   <h2>归档</h2>
-  <section class="archives-taxonomy-section" aria-label="分类列表">
+  <section
+    class="my-5 grid gap-4 md:my-8 md:grid-cols-2 md:gap-6"
+    aria-label="分类列表"
+  >
     <TaxonomySummary title="分类" items={categoryItems} />
     <TaxonomySummary title="年份" items={yearItems} />
   </section>
 
-  <section class="archives-by-year" aria-label="按年归档">
+  <section class="flex flex-col gap-8" aria-label="按年归档">
     {
       years.map(year => (
-        <div id={`year-${year}`} class="archives-year-group" tabindex={-1}>
-          <h2 class="archives-year-title">
+        <div id={`year-${year}`} tabindex={-1}>
+          <h2 class="mb-4 border-b border-[var(--border)] pb-2">
             {year} ({groupedByYear[year].length})
           </h2>
-          <ul class="archives-posts-list">
+          <ul class="post-cards-list m-0 list-none p-0">
             {groupedByYear[year].map(post => (
-              <Card
-                {...post}
-                variant="h3"
-                itemClass="posts-item"
-                dateFormat="absolute"
-              />
+              <Card {...post} variant="h3" dateFormat="absolute" />
             ))}
           </ul>
         </div>

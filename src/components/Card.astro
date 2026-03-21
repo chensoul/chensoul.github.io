@@ -15,10 +15,12 @@ import { formatFeedDate } from "@/utils/feedDate";
  * @property hidden - 是否隐藏此卡片
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
  * @property priority - 是否为 LCP 优先资源（首屏首图时设为 true，使用 fetchpriority="high"）
+ * @property listKind - article：时间+分类链接；weekly：再加描述行；邻居订阅用 mode="feed"
  */
 interface BlogCardProps extends CollectionEntry<"blog"> {
   mode?: "post";
   variant?: "h2" | "h3";
+  listKind?: "article" | "weekly";
   itemClass?: string;
   hidden?: boolean;
   dateFormat?: "relative" | "absolute";
@@ -43,6 +45,7 @@ const blogProps = rawProps as BlogCardProps;
 const feedProps = rawProps as FeedCardProps;
 
 const variant = !isFeedCard ? blogProps.variant ?? "h2" : "h3";
+const listKind = !isFeedCard ? blogProps.listKind ?? "article" : "feed";
 const itemClass = !isFeedCard ? blogProps.itemClass : undefined;
 const hidden = !isFeedCard ? blogProps.hidden ?? false : false;
 const dateFormat = !isFeedCard ? blogProps.dateFormat ?? "relative" : "relative";
@@ -110,6 +113,14 @@ const buildCoverSrc = (): string | undefined => {
 
 const coverSrc = buildCoverSrc();
 
+const weeklyDescription =
+  !isFeedCard && listKind === "weekly"
+    ? (
+        data!.description?.trim() ||
+        PostUtils.getDescription(blogProps.body ?? "")
+      ).trim()
+    : "";
+
 const feedDate = isFeedCard ? formatFeedDate(feedProps.published) : "";
 const feedBlogName = isFeedCard ? feedProps.blogName?.trim() ?? "" : "";
 
@@ -130,11 +141,17 @@ if (isFeedCard) {
 }
 ---
 
-<li class:list={[isFeedCard ? "feeds-card-wrapper" : "post-item", itemClass, { hidden }]}>
-  <div class:list={[isFeedCard ? "feeds-card" : "post-item-inner"]}>
+<li
+  class:list={[
+    "post-item",
+    itemClass,
+    { hidden },
+  ]}
+>
+  <div class="post-item-inner">
     {isFeedCard ? (
       avatarSrc && (
-        <div class="feeds-card-avatar-wrap">
+        <div class="post-item-cover post-item-cover--avatar">
           <img
             src={avatarSrc}
             alt=""
@@ -143,7 +160,6 @@ if (isFeedCard) {
             loading={priority ? "eager" : "lazy"}
             fetchpriority={priority ? "high" : undefined}
             decoding="async"
-            class="feeds-card-avatar"
           />
         </div>
       )
@@ -153,6 +169,8 @@ if (isFeedCard) {
           <img
             src={coverSrc}
             alt={title}
+            width={40}
+            height={40}
             loading={
               priority
                 ? "eager"
@@ -166,71 +184,211 @@ if (isFeedCard) {
         </div>
       )
     )}
-    <div class:list={[isFeedCard ? "feeds-card-content" : "post-item-content"]}>
-      <div class:list={[isFeedCard ? "feeds-card-title-wrap" : "post-item-title-wrap"]}>
+    <div class="post-item-content">
+      <div class="post-item-title-wrap">
         {isFeedCard ? (
-          <h3 class="feeds-card-header">
+          <h3 class="post-item-title">
             {feedProps.link && feedProps.link !== "#" ? (
-              <a
-                href={feedProps.link}
-                class="feeds-card-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={feedProps.link} target="_blank" rel="noopener noreferrer">
                 {title || "无标题"}
               </a>
             ) : (
-              <span class="feeds-card-title-text">{title || "无标题"}</span>
+              <span>{title || "无标题"}</span>
             )}
           </h3>
+        ) : variant === "h2" ? (
+          <h2 class="post-item-title">
+            <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
+              {title}
+            </a>
+          </h2>
         ) : (
-          variant === "h2" ? (
-            <h2 class="post-item-title">
-              <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
-                {title}
-              </a>
-            </h2>
-          ) : (
-            <h3 class="post-item-title">
-              <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
-                {title}
-              </a>
-            </h3>
-          )
+          <h3 class="post-item-title">
+            <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
+              {title}
+            </a>
+          </h3>
         )}
       </div>
       {isFeedCard ? (
-        <div class="feeds-card-meta">
-          <span class="feeds-card-date" data-published={feedProps.published}>
-            {feedDate}
-          </span>
-          {feedBlogName && <span>{` · ${feedBlogName}`}</span>}
+        <div class="post-item-meta">
+          <span data-feed-published={feedProps.published}>{feedDate}</span>
+          {feedBlogName && (
+            <>
+              <span class="post-item-meta-separator" aria-hidden="true">
+                ·
+              </span>
+              <span>{feedBlogName}</span>
+            </>
+          )}
         </div>
       ) : (
-        <div class="post-item-meta">
-          <Datetime
-            pubDatetime={date!}
-            modDatetime={updated}
-            {timezone}
-            format={dateFormat}
-          />
+        <>
           {
-            primaryCategoryLabel && (
-              <>
-                <span class="post-item-meta-separator" aria-hidden="true">
-                  ·
-                </span>
-                <a
-                  href={`/categories/${primaryCategorySlug}`}
-                  class="post-item-category"
-                >
-                  {primaryCategoryLabel}
-                </a>
-              </>
+            listKind !== "weekly" && (
+              <div class="post-item-meta">
+                <Datetime
+                  class="post-item-datetime"
+                  pubDatetime={date!}
+                  modDatetime={updated}
+                  {timezone}
+                  format={dateFormat}
+                />
+                {
+                  primaryCategoryLabel && (
+                    <>
+                      <span class="post-item-meta-separator" aria-hidden="true">
+                        ·
+                      </span>
+                      <a
+                        href={`/categories/${primaryCategorySlug}`}
+                        class="post-item-category"
+                      >
+                        {primaryCategoryLabel}
+                      </a>
+                    </>
+                  )
+                }
+              </div>
             )
           }
-        </div>
+          {
+            listKind === "weekly" && weeklyDescription && (
+              <p class="post-item-description">{weeklyDescription}</p>
+            )
+          }
+        </>
       )}
     </div>
   </div>
 </li>
+
+<style is:global>
+  .post-item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .post-item.hidden {
+    display: none;
+  }
+
+  .post-item-inner {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding: 0.06rem 0.28rem;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    transition: background-color 0.2s ease;
+    /* 仅控制 .post-item-inner 最小高度；内容超出仍会自然撑高 */
+    min-height: calc(
+                      0.8rem * 1.2 * 2 +  0.7rem * 1.3 * 2
+                    );
+  }
+
+  .post-item-inner:hover {
+    background: color-mix(in srgb, var(--accent) 4%, transparent);
+  }
+
+  .post-item-cover {
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .post-item-cover:not(.post-item-cover--avatar) img {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .post-item-cover img {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .post-item-cover--avatar img {
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-item-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .post-item :where(ul, ol, menu) {
+    padding-left: 0;
+  }
+
+  .post-item-title {
+    margin: 0 0 0.08rem;
+    font-size: 0.875rem;
+    line-height: 1.28;
+    color: var(--text-primary);
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .post-item-title a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .post-item-title a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+  }
+
+  .post-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .post-item-meta .post-item-datetime {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Datetime 内 time 带 text-sm，与 meta 统一为同一字号 */
+  .post-item-meta :is(time, span, a) {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .post-item-category {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .post-item-category:hover {
+    text-decoration: underline;
+  }
+
+  .post-item-description {
+    margin: 0.16rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.42;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+</style>

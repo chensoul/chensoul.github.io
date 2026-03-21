@@ -318,12 +318,54 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       跳转到主要内容
     </a>
     <Header />
-      <main id="main-content">
-        <slot />
-      </main>
-      {hasAfterMain && <slot name="after-main" />}
+    <main id="main-content">
+      <slot />
+    </main>
+    {hasAfterMain && <slot name="after-main" />}
     <BackToTop />
     <Footer/>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: var(--accent);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0 0 0.5rem 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: top 0.2s ease;
+      }
+
+      .skip-link:focus-visible {
+        top: 0;
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .breadcrumb {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+      }
+
+      .breadcrumb a {
+        color: var(--text-secondary);
+      }
+
+      .breadcrumb a:hover {
+        color: var(--accent);
+      }
+
+      .breadcrumb-separator {
+        margin: 0 0.35rem;
+        opacity: 0.6;
+      }
+    </style>
 
     {
       import.meta.env.PROD &&

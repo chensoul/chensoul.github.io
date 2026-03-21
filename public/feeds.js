@@ -52,10 +52,6 @@ function getDisplayDate(value) {
 function createFeedCardHTML(item, fallbackOgImage, cosHost) {
   const title = escapeHtml(item.title || "无标题");
   const link = item.link || "#";
-  const published =
-    typeof item.published === "string" || typeof item.published === "number"
-      ? getDisplayDate(item.published)
-      : "日期未知";
   const blogName =
     typeof (item.name ?? item.blog_name) === "string"
       ? escapeHtml((item.name ?? item.blog_name).trim())
@@ -87,37 +83,42 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
     }
   }
 
-  const metaParts = [published];
-  if (blogName) metaParts.push(blogName);
-  const metaText = metaParts.join(" · ");
+  const publishedAttr = escapeHtml(
+    String(item.published != null ? item.published : "")
+  );
+  const dateDisplay = getDisplayDate(item.published);
 
   const avatarBlock = imgSrc
-    ? `<div class="h-[40px] w-[40px] shrink-0 overflow-hidden rounded-md"><img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" class="block h-full w-full object-cover" width="40" height="40" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} /></div>`
+    ? `<div class="post-item-cover post-item-cover--avatar"><img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" width="40" height="40" loading="lazy" decoding="async" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} /></div>`
     : "";
 
   const titleBlock =
     link && link !== "#"
-      ? `<div class="text-accent min-w-0 text-lg font-medium underline-offset-4"><h3 class="!m-0 truncate overflow-hidden whitespace-nowrap min-w-0"><a href="${link.replace(/"/g, "&quot;")}" class="text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0" target="_blank" rel="noopener noreferrer">${title}</a></h3></div>`
-      : `<div class="text-accent min-w-0 text-lg font-medium underline-offset-4"><h3 class="!m-0 truncate overflow-hidden whitespace-nowrap min-w-0"><span class="text-sm font-medium">${title}</span></h3></div>`;
+      ? `<h3 class="post-item-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></h3>`
+      : `<h3 class="post-item-title"><span>${title}</span></h3>`;
+
+  const metaBlog =
+    blogName &&
+    `<span class="post-item-meta-separator" aria-hidden="true">·</span><span>${blogName}</span>`;
 
   return `
-<li class="feeds-card-wrapper mb-4">
-  <div class="relative block">
-    <div class="feeds-card flex items-center gap-3">
-      ${avatarBlock}
-      <div class="min-w-0 flex-1">
+<li class="post-item">
+  <div class="post-item-inner">
+    ${avatarBlock}
+    <div class="post-item-content">
+      <div class="post-item-title-wrap">
         ${titleBlock}
-        <div class="feeds-card-meta mt-1 opacity-80 text-[var(--text-secondary)] text-sm">${metaText}</div>
       </div>
+      <div class="post-item-meta"><span data-feed-published="${publishedAttr}">${escapeHtml(dateDisplay)}</span>${metaBlog || ""}</div>
     </div>
   </div>
 </li>`;
 }
 
-/** 用客户端当前时间更新所有带 data-published 的日期，避免首屏服务端“构建时 now”与部署环境时区/时间不一致 */
+/** 用客户端当前时间更新所有带 data-feed-published 的日期，避免首屏服务端“构建时 now”与部署环境时区/时间不一致 */
 function updateFeedsCardDates() {
-  document.querySelectorAll(".feeds-card-date[data-published]").forEach(el => {
-    const val = el.getAttribute("data-published");
+  document.querySelectorAll("[data-feed-published]").forEach(el => {
+    const val = el.getAttribute("data-feed-published");
     if (val) el.textContent = getDisplayDate(val);
   });
 }

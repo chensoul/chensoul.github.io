@@ -66,7 +66,7 @@ const relatedCategories = topCategories.map(
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
-  <section class="tag-header">
+  <section class="mb-6">
     <div class="breadcrumb" aria-label="面包屑导航">
       <a href="/">首页</a>
       <span class="breadcrumb-separator">/</span>
@@ -74,18 +74,14 @@ const relatedCategories = topCategories.map(
       <span class="breadcrumb-separator">/</span>
       <span>{tagName}</span>
     </div>
-    <h1 class="tag-title">{tagName}</h1>
-    <p class="tag-description">
-      按时间倒序浏览标签「{tagName}」下的 {totalPosts} 篇文章。
-    </p>
+    <h1 class="my-2 text-3xl font-semibold tracking-tight">{tagName}</h1>
     <TaxonomySummary title="相关分类" items={relatedCategories} />
   </section>
-  <ul class="tag-posts-list">
+  <ul id="tag-posts-list" class="post-cards-list m-0 list-none p-0">
     {
       page.data.map((data, i) => (
         <Card
           {...data}
-          itemClass="tag-post-item"
           hidden={i >= SITE.postPerIndex}
           dateFormat="absolute"
         />
@@ -111,7 +107,7 @@ const relatedCategories = topCategories.map(
     }
     window.setupLazyList({
       sentinelId: "tag-posts-sentinel",
-      itemSelector: ".tag-post-item",
+      itemSelector: "#tag-posts-list > li",
     });
     return true;
   }

@@ -16,10 +16,12 @@ export const SITE = {
   lightAndDarkMode: true,
 
   /**
-   * 首页文章列表每页显示数量
-   * 注意：index 表示首页或列表的第一页
+   * 分类 / 标签 / 文章归档等列表首屏条数（及懒加载每批）
    */
   postPerIndex: 10,
+
+  /** 首页双栏「最近文章」展示条数 */
+  homeRecentPosts: 10,
 
   /**
    * 定时文章发布的时间容差（毫秒）
@@ -136,11 +138,6 @@ export const SITE = {
   },
 
   lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list.js",
-
-  tocbot: {
-    cssUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.css",
-    jsUrl: "https://cos.chensoul.cc/dist/tocbot/tocbot.min.js",
-  },
 
   /**
    * 图片相关配置

@@ -2,25 +2,8 @@
 /**
  * 分类索引页
  *
- * @fileoverview 显示所有分类及其文章数量
- *
- * 核心逻辑：
- * 1. 获取所有分类（使用 getUniqueCategories）
- * 2. 获取每个分类的最新文章标题（用于显示）
- * 3. 显示分类封面图、名称、文章数量
- * 4. 支持懒加载分页（按配置注入 lazy-list 脚本）
- * 5. 悬停效果：图片放大
- *
- * 视觉设计：
- * - 卡片式布局（移动端单列，桌面端双列）
- * - 16:9 宽高比的封面图
- * - 渐变遮罩 + 文字叠加
- *
- * 依赖关系：
- * - 被 /categories 路径访问
- * - 使用分类元信息获取封面图
+ * @fileoverview 显示所有分类及其文章数量；支持懒加载分批展示。
  */
-
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import {
@@ -33,22 +16,15 @@ import { SITE } from "@/config";
 export const pageSlug = "categories";
 export const pageTitle = `分类 | ${SITE.title}`;
 
-// 获取所有已公开文章并排序
 const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
 const sortedPosts = PostUtils.sort(publishedPosts);
 
-// 获取所有分类
 const categories = PostUtils.getUniqueCategories(publishedPosts).sort(
   (a, b) =>
     getCategoryOrder(a.category) - getCategoryOrder(b.category) ||
     a.categoryName.localeCompare(b.categoryName, "zh-CN")
 );
 
-/**
- * 获取每个分类的最新文章标题
- *
- * 用于在分类卡片上显示该分类的最新文章标题
- */
 const categoryLatestPost = new Map<string, string>();
 categories.forEach(({ category, categoryName }) => {
   const latestPost = sortedPosts.find(post =>
@@ -62,16 +38,20 @@ categories.forEach(({ category, categoryName }) => {
 
 <Layout title={pageTitle}>
   <h2>分类</h2>
-  <ul class="categories-grid" aria-label="分类列表">
+  <ul
+    id="categories-root"
+    class="m-0 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2"
+    aria-label="分类列表"
+  >
     {
       categories.map(({ category, categoryName, count }, i) => (
-        <li class:list={["categories-item", { hidden: i >= SITE.postPerIndex }]}>
+        <li class:list={[{ hidden: i >= SITE.postPerIndex }]}>
           <a
             href={`/categories/${category}`}
             aria-label={`查看 ${categoryName} 分类`}
-            class="categories-card"
+            class="relative block overflow-hidden rounded-xl border border-[var(--border)] text-white no-underline shadow-[0_2px_8px_rgb(0_0_0/0.06)] transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgb(0_0_0/0.12)]"
           >
-            <div class="categories-card-image" style="aspect-ratio: 16 / 9;">
+            <div class="relative aspect-video w-full overflow-hidden">
               {getCategoryImageUrl(category) ||
               getCategoryImageUrl(categoryName) ? (
                 <img
@@ -80,21 +60,25 @@ categories.forEach(({ category, categoryName }) => {
                     getCategoryImageUrl(categoryName)
                   }
                   alt={`${categoryName} 封面图`}
+                  class="block h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
                 />
               ) : (
-                <div class="categories-card-placeholder" />
+                <div class="min-h-[120px] w-full bg-gradient-to-br from-[var(--background-secondary)] to-[color-mix(in_srgb,var(--accent)_15%,var(--background-secondary))]" />
               )}
-            </div>
-            <div class="categories-card-overlay" />
-            <div class="categories-card-content">
-              <span class="categories-card-name">
-                {categoryName}（{count}篇）
-              </span>
-              <h3 class="categories-card-latest">
-                {categoryLatestPost.get(categoryName) || categoryName}
-              </h3>
+              <div
+                class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"
+                aria-hidden="true"
+              />
+              <div class="absolute bottom-0 left-0 right-0 z-[1] px-4 py-4 text-left">
+                <span class="mb-1 block text-sm opacity-90">
+                  {categoryName}（{count}篇）
+                </span>
+                <h3 class="m-0 text-base font-semibold leading-snug text-white">
+                  {categoryLatestPost.get(categoryName) || categoryName}
+                </h3>
+              </div>
             </div>
           </a>
         </li>
@@ -108,3 +92,32 @@ categories.forEach(({ category, categoryName }) => {
   >
   </div>
 </Layout>
+
+{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl} />}
+<script is:inline>
+  let bootTimer;
+  function boot() {
+    if (typeof window.setupLazyList !== "function") return false;
+    if (bootTimer) {
+      clearTimeout(bootTimer);
+      bootTimer = undefined;
+    }
+    window.setupLazyList({
+      sentinelId: "categories-sentinel",
+      itemSelector: "#categories-root > li",
+    });
+    return true;
+  }
+  function scheduleBoot() {
+    if (boot()) return;
+    if (bootTimer) clearTimeout(bootTimer);
+    bootTimer = setTimeout(scheduleBoot, 120);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleBoot, { once: true });
+  } else {
+    scheduleBoot();
+  }
+  window.addEventListener("load", scheduleBoot);
+  document.addEventListener("astro:page-load", scheduleBoot);
+</script>
