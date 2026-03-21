@@ -6,37 +6,26 @@
 [data-theme="light"] {
   --accent: #2563eb;
   --accent-dark: #1e40af;
-  --accent-soft: #dbeafe;
   --accent-surface: #f3f8ff;
-  --black: 15, 23, 42;
-  --gray: 100, 116, 139;
-  --gray-light: 241, 245, 249;
-  --gray-dark: 71, 85, 105;
   --background: #fcfdff;
   --background-secondary: #f4f8fc;
   --text-primary: #0f172a;
   --text-secondary: #5f6f85;
   --border: #dbe4f0;
-  --color-foreground: #0f172a;
-  --page-max-width: 1060px;
-  --content-gutter: 1.5rem;
+
+  /* 圆角：全站统一；特小/胶囊在局部写死 2px / 9999px */
+  --radius: 8px;
 }
 
 [data-theme="dark"] {
   --accent: #60a5fa;
   --accent-dark: #3b82f6;
-  --accent-soft: rgba(96, 165, 250, 0.2);
   --accent-surface: #0f172a;
-  --black: 248, 250, 252;
-  --gray: 148, 163, 184;
-  --gray-light: 30, 41, 59;
-  --gray-dark: 203, 213, 225;
   --background: #0b1220;
   --background-secondary: #111c2e;
   --text-primary: #e5edf8;
   --text-secondary: #9cb0c9;
   --border: #243246;
-  --color-foreground: #f8fafc;
 }
 
 /* ================================
@@ -103,6 +92,15 @@ a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* 标题内链接与全局 a 一致（避免与 h1–h6 字色规则叠在一起发灰） */
+:is(h1, h2, h3, h4, h5, h6) a {
+  color: var(--accent);
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:hover {
+  color: var(--accent-dark);
 }
 
 *:focus:not(:focus-visible) {
@@ -406,9 +404,9 @@ footer:not(.footer--no-margin-top) {
 main {
   flex: 1;
   width: 100%;
-  max-width: var(--page-max-width);
+  max-width: 1060px;
   margin: 0 auto;
-  padding: 0 var(--content-gutter) 2rem;
+  padding: 0 1.5rem 2rem;
 }
 
 section {
@@ -455,7 +453,7 @@ mark {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--gray), 0.5);
+  background: color-mix(in srgb, var(--text-secondary) 50%, transparent);
   border-radius: 4px;
 }
 
@@ -465,7 +463,8 @@ mark {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--gray), 0.5) transparent;
+  scrollbar-color: color-mix(in srgb, var(--text-secondary) 50%, transparent)
+    transparent;
 }
 
 /* ================================
@@ -473,12 +472,6 @@ mark {
    ================================ */
 
 @media (max-width: 768px) {
-  :root,
-  [data-theme="light"],
-  [data-theme="dark"] {
-    --content-gutter: 1rem;
-  }
-
   h1 {
     font-size: 1.75rem;
   }
@@ -496,7 +489,7 @@ mark {
   }
 
   main {
-    padding: 1.5rem var(--content-gutter);
+    padding: 1.5rem 1rem;
   }
 }
 

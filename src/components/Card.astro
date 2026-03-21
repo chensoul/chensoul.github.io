@@ -44,12 +44,14 @@ const isFeedCard = rawProps.mode === "feed";
 const blogProps = rawProps as BlogCardProps;
 const feedProps = rawProps as FeedCardProps;
 
-const variant = !isFeedCard ? blogProps.variant ?? "h2" : "h3";
-const listKind = !isFeedCard ? blogProps.listKind ?? "article" : "feed";
+const variant = !isFeedCard ? (blogProps.variant ?? "h2") : "h3";
+const listKind = !isFeedCard ? (blogProps.listKind ?? "article") : "feed";
 const itemClass = !isFeedCard ? blogProps.itemClass : undefined;
-const hidden = !isFeedCard ? blogProps.hidden ?? false : false;
-const dateFormat = !isFeedCard ? blogProps.dateFormat ?? "relative" : "relative";
-const priority = !isFeedCard ? blogProps.priority ?? false : false;
+const hidden = !isFeedCard ? (blogProps.hidden ?? false) : false;
+const dateFormat = !isFeedCard
+  ? (blogProps.dateFormat ?? "relative")
+  : "relative";
+const priority = !isFeedCard ? (blogProps.priority ?? false) : false;
 
 const data = !isFeedCard ? blogProps.data : undefined;
 const id = !isFeedCard ? blogProps.id : undefined;
@@ -64,7 +66,9 @@ const categories = !isFeedCard ? data!.categories : undefined;
 const primaryCategory = Array.isArray(categories) ? categories[0] : undefined;
 const primaryCategoryLabel =
   getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
-const primaryCategorySlug = primaryCategory ? slugifyStr(primaryCategory) : undefined;
+const primaryCategorySlug = primaryCategory
+  ? slugifyStr(primaryCategory)
+  : undefined;
 
 /**
  * 构建封面图 URL
@@ -122,7 +126,7 @@ const weeklyDescription =
     : "";
 
 const feedDate = isFeedCard ? formatFeedDate(feedProps.published) : "";
-const feedBlogName = isFeedCard ? feedProps.blogName?.trim() ?? "" : "";
+const feedBlogName = isFeedCard ? (feedProps.blogName?.trim() ?? "") : "";
 
 let avatarSrc = "";
 if (isFeedCard) {
@@ -141,91 +145,95 @@ if (isFeedCard) {
 }
 ---
 
-<li
-  class:list={[
-    "post-item",
-    itemClass,
-    { hidden },
-  ]}
->
+<li class:list={["post-item", itemClass, { hidden }]}>
   <div class="post-item-inner">
-    {isFeedCard ? (
-      avatarSrc && (
-        <div class="post-item-cover post-item-cover--avatar">
-          <img
-            src={avatarSrc}
-            alt=""
-            width={40}
-            height={40}
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority={priority ? "high" : undefined}
-            decoding="async"
-          />
-        </div>
-      )
-    ) : (
-      coverSrc && (
-        <div class="post-item-cover">
-          <img
-            src={coverSrc}
-            alt={title}
-            width={40}
-            height={40}
-            loading={
-              priority
-                ? "eager"
-                : SITE.imageConfig.loading.lazy
-                  ? "lazy"
-                  : "eager"
-            }
-            fetchpriority={priority ? "high" : undefined}
-            decoding="async"
-          />
-        </div>
-      )
-    )}
+    {
+      isFeedCard
+        ? avatarSrc && (
+            <div class="post-item-cover post-item-cover--avatar">
+              <img
+                src={avatarSrc}
+                alt=""
+                width={40}
+                height={40}
+                loading={priority ? "eager" : "lazy"}
+                fetchpriority={priority ? "high" : undefined}
+                decoding="async"
+              />
+            </div>
+          )
+        : coverSrc && (
+            <div class="post-item-cover">
+              <img
+                src={coverSrc}
+                alt={title}
+                width={40}
+                height={40}
+                loading={
+                  priority
+                    ? "eager"
+                    : SITE.imageConfig.loading.lazy
+                      ? "lazy"
+                      : "eager"
+                }
+                fetchpriority={priority ? "high" : undefined}
+                decoding="async"
+              />
+            </div>
+          )
+    }
     <div class="post-item-content">
       <div class="post-item-title-wrap">
-        {isFeedCard ? (
-          <h3 class="post-item-title">
-            {feedProps.link && feedProps.link !== "#" ? (
-              <a href={feedProps.link} target="_blank" rel="noopener noreferrer">
-                {title || "无标题"}
+        {
+          isFeedCard ? (
+            <h3 class="post-item-title">
+              {feedProps.link && feedProps.link !== "#" ? (
+                <a
+                  href={feedProps.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {title || "无标题"}
+                </a>
+              ) : (
+                <span>{title || "无标题"}</span>
+              )}
+            </h3>
+          ) : variant === "h2" ? (
+            <h2 class="post-item-title">
+              <a
+                href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}
+              >
+                {title}
               </a>
-            ) : (
-              <span>{title || "无标题"}</span>
-            )}
-          </h3>
-        ) : variant === "h2" ? (
-          <h2 class="post-item-title">
-            <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
-              {title}
-            </a>
-          </h2>
-        ) : (
-          <h3 class="post-item-title">
-            <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
-              {title}
-            </a>
-          </h3>
-        )}
+            </h2>
+          ) : (
+            <h3 class="post-item-title">
+              <a
+                href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}
+              >
+                {title}
+              </a>
+            </h3>
+          )
+        }
       </div>
-      {isFeedCard ? (
-        <div class="post-item-meta">
-          <span data-feed-published={feedProps.published}>{feedDate}</span>
-          {feedBlogName && (
-            <>
-              <span class="post-item-meta-separator" aria-hidden="true">
-                ·
-              </span>
-              <span>{feedBlogName}</span>
-            </>
-          )}
-        </div>
-      ) : (
-        <>
-          {
-            listKind !== "weekly" && (
+      {
+        isFeedCard ? (
+          <div class="post-item-meta">
+            <span data-feed-published={feedProps.published}>{feedDate}</span>
+            {feedBlogName && (
+              <>
+                <span class="post-item-meta-separator" aria-hidden="true">
+                  ·
+                </span>
+                <span>{feedBlogName}</span>
+              </>
+            )}
+          </div>
+        ) : (
+          <>
+            {listKind !== "weekly" && (
               <div class="post-item-meta">
                 <Datetime
                   class="post-item-datetime"
@@ -234,31 +242,27 @@ if (isFeedCard) {
                   {timezone}
                   format={dateFormat}
                 />
-                {
-                  primaryCategoryLabel && (
-                    <>
-                      <span class="post-item-meta-separator" aria-hidden="true">
-                        ·
-                      </span>
-                      <a
-                        href={`/categories/${primaryCategorySlug}`}
-                        class="post-item-category"
-                      >
-                        {primaryCategoryLabel}
-                      </a>
-                    </>
-                  )
-                }
+                {primaryCategoryLabel && (
+                  <>
+                    <span class="post-item-meta-separator" aria-hidden="true">
+                      ·
+                    </span>
+                    <a
+                      href={`/categories/${primaryCategorySlug}`}
+                      class="post-item-category"
+                    >
+                      {primaryCategoryLabel}
+                    </a>
+                  </>
+                )}
               </div>
-            )
-          }
-          {
-            listKind === "weekly" && weeklyDescription && (
+            )}
+            {listKind === "weekly" && weeklyDescription && (
               <p class="post-item-description">{weeklyDescription}</p>
-            )
-          }
-        </>
-      )}
+            )}
+          </>
+        )
+      }
     </div>
   </div>
 </li>
@@ -284,9 +288,7 @@ if (isFeedCard) {
     background: transparent;
     transition: background-color 0.2s ease;
     /* 仅控制 .post-item-inner 最小高度；内容超出仍会自然撑高 */
-    min-height: calc(
-                      0.8rem * 1.2 * 2 +  0.7rem * 1.3 * 2
-                    );
+    min-height: calc(0.8rem * 1.2 * 2 + 0.7rem * 1.3 * 2);
   }
 
   .post-item-inner:hover {

@@ -7,7 +7,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
-import PillSharedStyles from "@/components/PillSharedStyles.astro";
+import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
@@ -25,12 +25,12 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
-  <PillSharedStyles />
+  <TaxonomySummary items={[]} />
   {
     topTags.length > 0 && (
       <section>
         <h2>热门标签</h2>
-        <ul class="m-0 flex flex-wrap gap-2 p-0 list-none">
+        <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
           {topTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}
@@ -42,7 +42,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
     otherTags.length > 0 && (
       <section>
         <h2>全部标签</h2>
-        <ul class="m-0 flex flex-wrap gap-2 p-0 list-none">
+        <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
           {otherTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
           ))}

@@ -9,8 +9,8 @@ import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
-import PhotosuiteStyles from "@/components/PhotosuiteStyles.astro";
-import PillSharedStyles from "@/components/PillSharedStyles.astro";
+import Photosuite from "@/components/Photosuite.astro";
+import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -201,8 +201,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  <PillSharedStyles />
-  {hasInlineImages && <PhotosuiteStyles />}
+  <TaxonomySummary items={[]} />
+  {hasInlineImages && <Photosuite />}
   {
     tags.map((tag: string) => (
       <meta slot="head" property="article:tag" content={tag} />
@@ -268,10 +268,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         <div class="article-meta">
           {
             categoryLinks.map(category => (
-              <a
-                class="no-underline"
-                href={`/categories/${category.slug}`}
-              >
+              <a class="no-underline" href={`/categories/${category.slug}`}>
                 {category.name}
               </a>
             ))
@@ -297,11 +294,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   <!-- 标签列表 -->
   {
     tags.length > 0 && (
-      <div class="tags-section reading-wrap">
-        <span
-          class="tags-icon"
-          aria-hidden="true"
-        >
+      <div class="tags-section">
+        <span class="tags-icon" aria-hidden="true">
           <IconTag />
         </span>
         <ul class="tags-list" role="list">
@@ -313,14 +307,16 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <section class="action-section reading-wrap">
+  <section class="action-section">
     <div class="action-card">
       <p class="action-label">订阅文章</p>
       <h3>订阅更新，不错过后续文章</h3>
       <p class="action-description">直接通过 RSS 和 Telegram 订阅本站更新。</p>
       <div class="action-buttons">
         <a class="btn btn-primary" href="/rss.xml">订阅 RSS</a>
-        <a class="btn btn-secondary" href="https://t.me/ichensoul">关注 Telegram</a>
+        <a class="btn btn-secondary" href="https://t.me/ichensoul"
+          >关注 Telegram</a
+        >
       </div>
     </div>
 
@@ -359,26 +355,28 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   {
     relatedPosts.length > 0 && (
-      <section class="related-section reading-wrap">
+      <section class="related-section">
         <h2>相关文章</h2>
         <div class="related-grid">
           {relatedPosts.map(({ post: relatedPost, path }) => (
-            <a
-              href={path}
-              class="related-card"
-            >
+            <div class="related-card">
               <p class="related-category">
                 {relatedPost.data.categories
                   .map(category => getCategoryMeta(category)?.name ?? category)
                   .join(" / ")}
               </p>
-              <h3>{relatedPost.data.title}</h3>
-              <p>
+              <h3 class="related-card-title">
+                <a href={path} class="related-card-title-link">
+                  {relatedPost.data.title}
+                </a>
+              </h3>
+              <p class="related-card-excerpt">
                 {PostUtils.getPlainTextDescription(
-                  (relatedPost.data.description?.trim() || relatedPost.body) ?? ""
+                  (relatedPost.data.description?.trim() || relatedPost.body) ??
+                    ""
                 )}
               </p>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -386,7 +384,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   <!-- Previous/Next Post Buttons -->
-  <nav class="post-nav reading-wrap" aria-label="文章导航">
+  <nav class="post-nav" aria-label="文章导航">
     <!-- 上一篇 -->
     {
       prevPost && (
@@ -399,10 +397,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     <!-- 下一篇 -->
     {
       nextPost && (
-        <a
-          href={nextPost.path}
-          class="nav-link-next"
-        >
+        <a href={nextPost.path} class="nav-link-next">
           {nextPost.title}
           <IconChevronRight />
         </a>
@@ -411,8 +406,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   </nav>
 
   <!-- 评论容器（全局关闭 Artalk 时不输出） -->
-  {comments && SITE.artalk.enabled && <div id="Comments" class="reading-wrap" />}
-
+  {
+    comments && SITE.artalk.enabled && (
+      <div id="Comments" class="reading-wrap" />
+    )
+  }
 </Layout>
 
 <style is:global>
@@ -433,7 +431,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   .reading-wrap {
-    max-width: var(--reading-max-width);
+    max-width: 42rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -585,13 +583,13 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   .btn-secondary {
     background: transparent;
-    color: var(--text-primary);
+    color: var(--accent);
     border-color: var(--border);
   }
 
   .btn-secondary:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--accent-dark);
   }
 
   .related-section {
@@ -624,14 +622,13 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     padding: 1rem;
     border: 1px solid var(--border);
     border-radius: 10px;
-    text-decoration: none;
-    color: inherit;
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
   }
 
-  .related-card:hover {
+  .related-card:has(.related-card-title-link:hover),
+  .related-card:has(.related-card-title-link:focus-visible) {
     border-color: var(--accent);
     box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 10%, transparent);
   }
@@ -642,12 +639,24 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     color: var(--text-secondary);
   }
 
-  .related-card h3 {
+  .related-card-title {
     margin: 0 0 0.5rem;
     font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
   }
 
-  .related-card p {
+  .related-card-title-link {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .related-card-title-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .related-card-excerpt {
     margin: 0;
     font-size: 0.875rem;
     color: var(--text-secondary);
@@ -681,7 +690,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     border: 1px solid var(--border);
     border-radius: 10px;
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--accent);
     font-size: 0.9375rem;
     transition:
       border-color 0.2s ease,
@@ -691,7 +700,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   .nav-link-prev:hover,
   .nav-link-next:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--accent-dark);
   }
 
   .nav-link-next {

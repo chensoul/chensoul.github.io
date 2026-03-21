@@ -34,7 +34,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
       <header class="home-feed-col__head mb-2.5">
         <h3 class="home-feed-col__title mt-0">最近周报</h3>
         <p
-          class="home-feed-head-intro mb-0 mt-1 text-pretty text-sm leading-snug text-[var(--text-secondary)]"
+          class="home-feed-head-intro mt-1 mb-0 text-sm leading-snug text-pretty text-[var(--text-secondary)]"
         >
           记录每周的开发进展、工具尝试和一些阶段性想法。
           <a
@@ -46,7 +46,11 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
         </p>
       </header>
       <ul class="post-cards-list m-0 list-none p-0">
-        {lifePosts.map(post => <Card variant="h3" listKind="weekly" {...post} />)}
+        {
+          lifePosts.map(post => (
+            <Card variant="h3" listKind="weekly" {...post} />
+          ))
+        }
       </ul>
     </aside>
 
@@ -54,7 +58,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
       <header class="home-feed-col__head mb-2.5">
         <h3 class="home-feed-col__title mt-0">最近文章</h3>
         <p
-          class="home-feed-head-intro mb-0 mt-1 text-pretty text-sm leading-snug text-[var(--text-secondary)]"
+          class="home-feed-head-intro mt-1 mb-0 text-sm leading-snug text-pretty text-[var(--text-secondary)]"
         >
           优先展示最近更新的技术文章、知识库条目和翻译内容。
           <a

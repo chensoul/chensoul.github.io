@@ -42,7 +42,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page, categoryName } = Astro.props;
 const categoryParam = String(Astro.params.category ?? "");
 const cardListKind = categoryParam === "weekly" ? "weekly" : "article";
-const totalPosts = page.data.length;
 const tagCount = new Map<string, { tagName: string; count: number }>();
 page.data.forEach(post => {
   post.data.tags.forEach(tag => {

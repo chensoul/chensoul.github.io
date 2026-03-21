@@ -80,9 +80,16 @@ function normalizeSocialHref(url: string): string {
 
 <style is:global>
   .footer-content {
-    max-width: var(--page-max-width);
+    max-width: 1060px;
     margin: 0 auto;
-    padding: 0 var(--content-gutter);
+    padding: 0 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 
   .footer-hr {
@@ -98,12 +105,12 @@ function normalizeSocialHref(url: string): string {
   }
 
   .social-links a {
-    color: var(--text-secondary);
+    color: var(--accent);
     display: inline-flex;
   }
 
   .social-links a:hover {
-    color: var(--accent);
+    color: var(--accent-dark);
   }
 
   .footer-bottom {

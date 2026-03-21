@@ -1,10 +1,8 @@
 ---
-import PillSharedStyles from "./PillSharedStyles.astro";
-
 /**
- * 关联导航摘要组件
+ * 关联导航摘要 + 胶囊（taxonomy-pill）全局样式
  *
- * @fileoverview 在分类页、标签页头部展示一组关联入口。
+ * @fileoverview 在分类页、标签页头部展示一组关联入口；全局样式供标签云、归档页分类/年份、文章元信息分类等共用。仅需样式时可传 items={[]}。
  */
 
 export interface TaxonomySummaryItem {
@@ -14,20 +12,60 @@ export interface TaxonomySummaryItem {
 }
 
 export interface Props {
-  title: string;
+  /** 有 items 时展示在列表前；仅注入胶囊样式时可省略 */
+  title?: string;
   items: TaxonomySummaryItem[];
 }
 
-const { title, items } = Astro.props;
+const { title = "", items } = Astro.props;
 ---
 
-<PillSharedStyles />
+<style is:global>
+  .taxonomy-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    line-height: 1.25;
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  a:hover .taxonomy-pill {
+    border-color: var(--accent);
+    background: var(--accent-surface);
+  }
+
+  /* 胶囊内数字（标签次数、分类/年份文章数） */
+  .taxonomy-pill-count--tag {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent-dark);
+    padding: 0.05rem 0.35rem;
+    border-radius: 999px;
+  }
+
+  [data-theme="dark"] .taxonomy-pill-count--tag {
+    color: var(--accent);
+  }
+
+  .tag-link--lg .taxonomy-pill {
+    font-size: 0.9375rem;
+    padding: 0.35rem 0.85rem;
+  }
+</style>
 {
   items.length > 0 && (
     <section class="taxonomy-summary my-4 first:mt-0" aria-label={title}>
-      <div
-        class="m-0 flex flex-wrap items-center gap-2 text-sm leading-relaxed text-[var(--text-secondary)]"
-      >
+      <div class="m-0 flex flex-wrap items-center gap-2 text-sm leading-relaxed text-[var(--text-secondary)]">
         <span class="shrink-0 font-semibold text-[var(--text-primary)]">
           {title}：
         </span>
@@ -35,7 +73,7 @@ const { title, items } = Astro.props;
           <a href={item.href} class="no-underline">
             <span class="taxonomy-pill">
               <span>{item.label}</span>
-              {(item.count !== undefined && item.count !== null) && (
+              {item.count !== undefined && item.count !== null && (
                 <span class="taxonomy-pill-count taxonomy-pill-count--tag">
                   {item.count}
                 </span>

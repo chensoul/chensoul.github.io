@@ -107,11 +107,12 @@ export const pageDescription = "搜索所有文章";
 
         for (const result of search.results.slice(0, 10)) {
           const data = await result.data();
-          html += '<li class="border-b border-[var(--border)] pb-4 last:border-b-0">';
+          html +=
+            '<li class="border-b border-[var(--border)] pb-4 last:border-b-0">';
           html +=
             '<a href="' +
             data.url +
-            '" class="text-base font-semibold text-[var(--text-primary)] no-underline hover:text-[var(--accent)] hover:underline">' +
+            '" class="text-base font-semibold text-[var(--accent)] no-underline hover:text-[var(--accent-dark)] hover:underline">' +
             (data.meta.title || "无标题") +
             "</a>";
           html +=

@@ -28,43 +28,32 @@
   aria-live="polite"
   aria-label="本年度已过时间比例"
 >
-  <div
-    id="year-progress-track"
-    class="year-progress-track"
-    aria-hidden="true"
-  >
+  <div id="year-progress-track" class="year-progress-track" aria-hidden="true">
     <div class="year-progress-bar-bg">
-      <div
-        id="year-progress-fill"
-        class="year-progress-bar-fill"
-      >
-      </div>
+      <div id="year-progress-fill" class="year-progress-bar-fill"></div>
     </div>
   </div>
-  <span
-    id="year-progress-cover"
-    class="year-progress-cover"
-  ></span>
-  <span
-    id="year-progress-label"
-    class="year-progress-label"
-  ></span>
-  <div
-    id="year-progress-popup"
-    class="year-progress-popup"
-  >
-  </div>
+  <span id="year-progress-cover" class="year-progress-cover"></span>
+  <span id="year-progress-label" class="year-progress-label"></span>
+  <div id="year-progress-popup" class="year-progress-popup"></div>
 </div>
 
 <style is:global>
   .year-progress {
     position: relative;
     width: 100%;
-    max-width: var(--page-max-width);
+    max-width: 1060px;
     margin: 0 auto;
-    padding: 0 var(--content-gutter);
+    padding: 0 1.5rem;
     height: auto;
     pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .year-progress {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 
   .year-progress-track {

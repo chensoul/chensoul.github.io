@@ -32,7 +32,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page, tagName } = Astro.props;
-const totalPosts = page.data.length;
 const categoryCount = new Map<
   string,
   { categoryName: string; count: number }
@@ -80,11 +79,7 @@ const relatedCategories = topCategories.map(
   <ul id="tag-posts-list" class="post-cards-list m-0 list-none p-0">
     {
       page.data.map((data, i) => (
-        <Card
-          {...data}
-          hidden={i >= SITE.postPerIndex}
-          dateFormat="absolute"
-        />
+        <Card {...data} hidden={i >= SITE.postPerIndex} dateFormat="absolute" />
       ))
     }
   </ul>
