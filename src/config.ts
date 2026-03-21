@@ -1,8 +1,3 @@
-/**
- * 站点配置
- *
- * @fileoverview 全站唯一配置入口，包含基础信息、分页、功能开关、第三方服务（评论、统计、CDN 等）。被 Layout、组件与工具函数引用。
- */
 export const SITE = {
   website: "https://blog.chensoul.cc",
   author: "ChenSoul",
@@ -19,9 +14,6 @@ export const SITE = {
    * 分类 / 标签 / 文章归档等列表首屏条数（及懒加载每批）
    */
   postPerIndex: 10,
-
-  /** 首页双栏「最近文章」展示条数 */
-  homeRecentPosts: 10,
 
   /**
    * 定时文章发布的时间容差（毫秒）
@@ -119,7 +111,7 @@ export const SITE = {
    * - **server** 留空时同样不初始化
    */
   artalk: {
-    enabled: false,
+    enabled: true,
     server: "https://artalk.chensoul.cc",
     site: "ChenSoul Blog",
     scriptUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.js",
@@ -132,7 +124,7 @@ export const SITE = {
    *
    */
   umami: {
-    enabled: false,
+    enabled: true,
     websiteId: "2311be4b-ebe4-4a94-9c69-b2e841584d0d",
     scriptUrl: "https://umami.chensoul.cc/random-string.js",
   },

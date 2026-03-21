@@ -19,7 +19,7 @@ export const pageDescription =
 const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
 const sortedPosts = PostUtils.sort(publishedPosts);
 
-const latestPosts = sortedPosts.slice(0, SITE.homeRecentPosts);
+const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   0,
   6
