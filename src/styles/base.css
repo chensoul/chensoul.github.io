@@ -971,7 +971,7 @@ mark {
    ================================ */
 
 .taxonomy-summary {
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .taxonomy-summary-text {
@@ -1913,8 +1913,22 @@ a.feeds-card-title:hover {
 
 .link-button {
   display: inline-block;
+  color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
+}
+
+.link-button:hover {
+  color: var(--accent);
+}
+
+/* 当 link-button 与 text-link 一起使用时，使用 text-link 的颜色 */
+a.link-button.text-link {
+  color: var(--accent) !important;
+}
+
+a.link-button.text-link:hover {
+  color: var(--accent-dark) !important;
 }
 
 .link-button--disabled {
@@ -1937,10 +1951,7 @@ a.feeds-card-title:hover {
 }
 
 .archives-year-title {
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  margin-bottom: 0.5rem;
 }
 
 .archives-posts-list {
@@ -1957,25 +1968,6 @@ a.feeds-card-title:hover {
 /* ================================
    自定义 Class - 标签页
    ================================ */
-
-.tags-section {
-  margin-top: 0.5rem;
-}
-
-.tags-section:first-child {
-  margin-top: -0.15rem;
-}
-
-.tags-section + .tags-section {
-  margin-top: 1.25rem;
-}
-
-.tags-section-title {
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
 
 .tags-cloud {
   display: flex;
@@ -2158,15 +2150,6 @@ a.feeds-card-title:hover {
 }
 
 /* 标签区域 */
-.tags-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
 .tags-icon {
   display: flex;
   align-items: center;

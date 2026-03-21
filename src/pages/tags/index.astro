@@ -26,8 +26,8 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 <Layout title={pageTitle} robots="noindex,follow">
   {
     topTags.length > 0 && (
-      <section class="tags-section">
-        <h2 class="tags-section-title">热门标签</h2>
+      <section>
+        <h2>热门标签</h2>
         <ul class="tags-cloud">
           {topTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
@@ -38,8 +38,8 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
   }
   {
     otherTags.length > 0 && (
-      <section class="tags-section">
-        <h2 class="tags-section-title">全部标签</h2>
+      <section>
+        <h2>全部标签</h2>
         <ul class="tags-cloud">
           {otherTags.map(({ tag, tagName, count }) => (
             <Tag {tag} {tagName} {count} size="sm" />
