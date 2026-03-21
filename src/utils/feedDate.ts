@@ -1,5 +1,5 @@
 /**
- * 订阅条目的日期显示：与 feeds.js 的 getDisplayDate 逻辑一致，供 FeedItem.astro 等服务端使用。
+ * 订阅条目的日期显示：与 feeds.js 的 getDisplayDate 逻辑一致，供订阅卡片服务端渲染使用。
  */
 
 function formatDateYYYYMMDD(d: Date): string {

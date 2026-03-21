@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import Datetime from "./Datetime.astro";
 import { SITE } from "@/config";
+import { formatFeedDate } from "@/utils/feedDate";
 
 /**
  * 组件属性接口
@@ -15,7 +16,8 @@ import { SITE } from "@/config";
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
  * @property priority - 是否为 LCP 优先资源（首屏首图时设为 true，使用 fetchpriority="high"）
  */
-export interface Props extends CollectionEntry<"blog"> {
+interface BlogCardProps extends CollectionEntry<"blog"> {
+  mode?: "post";
   variant?: "h2" | "h3";
   itemClass?: string;
   hidden?: boolean;
@@ -23,25 +25,43 @@ export interface Props extends CollectionEntry<"blog"> {
   priority?: boolean;
 }
 
-const {
-  variant = "h2",
-  data,
-  id,
-  filePath,
-  itemClass,
-  hidden = false,
-  dateFormat = "relative",
-  priority = false,
-} = Astro.props;
+interface FeedCardProps {
+  mode: "feed";
+  title: string;
+  link: string;
+  published: string;
+  blogName?: string;
+  avatar?: string;
+}
 
-// 解构文章元数据
-const { title, date, updated, timezone, cover, categories } = data;
+export type Props = BlogCardProps | FeedCardProps;
+
+const rawProps = Astro.props as Props;
+const isFeedCard = rawProps.mode === "feed";
+
+const blogProps = rawProps as BlogCardProps;
+const feedProps = rawProps as FeedCardProps;
+
+const variant = !isFeedCard ? blogProps.variant ?? "h2" : "h3";
+const itemClass = !isFeedCard ? blogProps.itemClass : undefined;
+const hidden = !isFeedCard ? blogProps.hidden ?? false : false;
+const dateFormat = !isFeedCard ? blogProps.dateFormat ?? "relative" : "relative";
+const priority = !isFeedCard ? blogProps.priority ?? false : false;
+
+const data = !isFeedCard ? blogProps.data : undefined;
+const id = !isFeedCard ? blogProps.id : undefined;
+const filePath = !isFeedCard ? blogProps.filePath : undefined;
+
+const title = isFeedCard ? feedProps.title : data!.title;
+const date = !isFeedCard ? data!.date : undefined;
+const updated = !isFeedCard ? data!.updated : undefined;
+const timezone = !isFeedCard ? data!.timezone : undefined;
+const cover = !isFeedCard ? data!.cover : undefined;
+const categories = !isFeedCard ? data!.categories : undefined;
 const primaryCategory = Array.isArray(categories) ? categories[0] : undefined;
 const primaryCategoryLabel =
   getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
-const primaryCategorySlug = primaryCategory
-  ? slugifyStr(primaryCategory)
-  : undefined;
+const primaryCategorySlug = primaryCategory ? slugifyStr(primaryCategory) : undefined;
 
 /**
  * 构建封面图 URL
@@ -55,6 +75,8 @@ const primaryCategorySlug = primaryCategory
  * @returns 用于 <img src> 的完整或相对 URL
  */
 const buildCoverSrc = (): string | undefined => {
+  if (isFeedCard) return undefined;
+
   const resolveLocalSrc = (src: string): string => {
     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
 
@@ -87,11 +109,45 @@ const buildCoverSrc = (): string | undefined => {
 };
 
 const coverSrc = buildCoverSrc();
+
+const feedDate = isFeedCard ? formatFeedDate(feedProps.published) : "";
+const feedBlogName = isFeedCard ? feedProps.blogName?.trim() ?? "" : "";
+
+let avatarSrc = "";
+if (isFeedCard) {
+  avatarSrc = feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
+  if (
+    avatarSrc &&
+    !/^https?:\/\//.test(avatarSrc) &&
+    !avatarSrc.startsWith("//")
+  ) {
+    const avatarHost =
+      (SITE.feeds.cosHost && SITE.feeds.cosHost.trim()) || SITE.website;
+    avatarSrc =
+      avatarHost.replace(/\/$/, "") +
+      (avatarSrc.startsWith("/") ? avatarSrc : `/${avatarSrc}`);
+  }
+}
 ---
 
-<li class:list={["post-item", itemClass, { hidden }]}>
-  <div class="post-item-inner">
-    {
+<li class:list={[isFeedCard ? "feeds-card-wrapper" : "post-item", itemClass, { hidden }]}>
+  <div class:list={[isFeedCard ? "feeds-card" : "post-item-inner"]}>
+    {isFeedCard ? (
+      avatarSrc && (
+        <div class="feeds-card-avatar-wrap">
+          <img
+            src={avatarSrc}
+            alt=""
+            width={40}
+            height={40}
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : undefined}
+            decoding="async"
+            class="feeds-card-avatar"
+          />
+        </div>
+      )
+    ) : (
       coverSrc && (
         <div class="post-item-cover">
           <img
@@ -109,48 +165,72 @@ const coverSrc = buildCoverSrc();
           />
         </div>
       )
-    }
-    <div class="post-item-content">
-      <div class="post-item-title-wrap">
-        {
+    )}
+    <div class:list={[isFeedCard ? "feeds-card-content" : "post-item-content"]}>
+      <div class:list={[isFeedCard ? "feeds-card-title-wrap" : "post-item-title-wrap"]}>
+        {isFeedCard ? (
+          <h3 class="feeds-card-header">
+            {feedProps.link && feedProps.link !== "#" ? (
+              <a
+                href={feedProps.link}
+                class="feeds-card-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {title || "无标题"}
+              </a>
+            ) : (
+              <span class="feeds-card-title-text">{title || "无标题"}</span>
+            )}
+          </h3>
+        ) : (
           variant === "h2" ? (
             <h2 class="post-item-title">
-              <a href={PostUtils.getPath(id, filePath, true, date, timezone)}>
+              <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
                 {title}
               </a>
             </h2>
           ) : (
             <h3 class="post-item-title">
-              <a href={PostUtils.getPath(id, filePath, true, date, timezone)}>
+              <a href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}>
                 {title}
               </a>
             </h3>
           )
-        }
+        )}
       </div>
-      <div class="post-item-meta">
-        <Datetime
-          pubDatetime={date}
-          modDatetime={updated}
-          {timezone}
-          format={dateFormat}
-        />
-        {
-          primaryCategoryLabel && (
-            <>
-              <span class="post-item-meta-separator" aria-hidden="true">
-                ·
-              </span>
-              <a
-                href={`/categories/${primaryCategorySlug}`}
-                class="post-item-category"
-              >
-                {primaryCategoryLabel}
-              </a>
-            </>
-          )
-        }
-      </div>
+      {isFeedCard ? (
+        <div class="feeds-card-meta">
+          <span class="feeds-card-date" data-published={feedProps.published}>
+            {feedDate}
+          </span>
+          {feedBlogName && <span>{` · ${feedBlogName}`}</span>}
+        </div>
+      ) : (
+        <div class="post-item-meta">
+          <Datetime
+            pubDatetime={date!}
+            modDatetime={updated}
+            {timezone}
+            format={dateFormat}
+          />
+          {
+            primaryCategoryLabel && (
+              <>
+                <span class="post-item-meta-separator" aria-hidden="true">
+                  ·
+                </span>
+                <a
+                  href={`/categories/${primaryCategorySlug}`}
+                  class="post-item-category"
+                >
+                  {primaryCategoryLabel}
+                </a>
+              </>
+            )
+          }
+        </div>
+      )}
     </div>
   </div>
 </li>

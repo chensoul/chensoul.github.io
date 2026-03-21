@@ -30,14 +30,14 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 <Layout title={pageTitle} description={pageDescription}>
   <section class="home-section">
     <div class="home-column">
-      <div class="section-header">
+      <header>
         <div>
           <h3>最近文章</h3>
-          <p class="section-description">
+          <p>
             优先展示最近更新的技术文章、知识库条目和翻译内容。
           </p>
         </div>
-      </div>
+      </header>
       <ul class="post-list">
         {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
@@ -49,38 +49,39 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     </div>
 
     <aside class="home-column">
-      <div class="section-header">
+      <header>
         <div>
           <h3>最近周报</h3>
-          <p class="section-description">
+          <p>
             记录每周的开发进展、工具尝试和一些阶段性想法。
           </p>
         </div>
-      </div>
-      <div class="weekly-list">
+      </header>
+      <ul class="weekly-list">
         {
           lifePosts.map(post => (
-            <a
-              class="weekly-item"
-              href={PostUtils.getPath(
-                post.id,
-                post.filePath,
-                true,
-                post.data.date,
-                post.data.timezone
-              )}
-            >
-              <h3 class="weekly-title">
-                {post.data.title}
-              </h3>
-              <p class="weekly-description">
-                {post.data.description?.trim() ||
-                  PostUtils.getDescription(post.body ?? "")}
-              </p>
-            </a>
+            <li>
+              <a
+                href={PostUtils.getPath(
+                  post.id,
+                  post.filePath,
+                  true,
+                  post.data.date,
+                  post.data.timezone
+                )}
+              >
+                <h3>
+                  {post.data.title}
+                </h3>
+                <p>
+                  {post.data.description?.trim() ||
+                    PostUtils.getDescription(post.body ?? "")}
+                </p>
+              </a>
+            </li>
           ))
         }
-      </div>
+      </ul>
       <div class="section-action">
         <LinkButton href="/categories/weekly" class="text-link">
           查看全部周报

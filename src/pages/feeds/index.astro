@@ -2,12 +2,12 @@
 /**
  * 邻居 / Feeds 页（友联博客最新文章聚合）
  *
- * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 FeedItem 渲染首屏，剩余条目由客户端滚动加载。
+ * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 Card 渲染首屏，剩余条目由客户端滚动加载。
  */
 import fs from "node:fs";
 import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
-import FeedItem from "@/components/FeedItem.astro";
+import Card from "@/components/Card.astro";
 import { SITE } from "@/config";
 
 export const pageSlug = "feeds";
@@ -53,7 +53,7 @@ const clientData = {
 
 <Layout title={pageTitle} schemaType="CollectionPage" robots="noindex,follow">
   <div class="feeds-page">
-    <h2>邻居</h2>
+      <h2>邻居</h2>
     {
       !feedsEnabled ? (
         <p class="page-description">
@@ -99,15 +99,14 @@ const clientData = {
             class="feeds-list"
             aria-label="文章列表"
           >
-            {initialItems.map((item, index) => (
-              <FeedItem
+            {initialItems.map(item => (
+              <Card
+                mode="feed"
                 title={item.title}
                 link={item.link}
                 published={item.published}
                 blogName={item.name ?? item.blog_name}
-                category={item.category ?? undefined}
                 avatar={item.avatar}
-                priority={index === 0}
               />
             ))}
           </ul>

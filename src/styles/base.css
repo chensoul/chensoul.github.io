@@ -580,11 +580,6 @@ mark {
   margin-right: auto;
 }
 
-.post-tags-icon svg {
-  display: block;
-  vertical-align: middle;
-}
-
 .reading-content :where(p, ul, ol, blockquote, .responsive-table, pre) {
   margin-top: 0.85rem;
   margin-bottom: 0.85rem;
@@ -632,7 +627,7 @@ mark {
    ================================ */
 
 .breadcrumb {
-  display: block;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.25rem 0.5rem;
@@ -696,7 +691,9 @@ mark {
   min-width: 0;
 }
 
-.section-header {
+/* 通用 section 样式（可被首页、文章页等复用） */
+section .section-header,
+section > header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -706,21 +703,21 @@ mark {
 }
 
 @media (max-width: 700px) {
-  .section-header {
+  section .section-header,
+  section > header {
     gap: 0.75rem;
   }
 }
 
-
-.section-title-wrap {
-  margin-bottom: 0.5rem;
-}
-
-.section-title {
+section .section-header h2,
+section .section-header h3,
+section > header h2,
+section > header h3 {
   margin: 0;
 }
 
-.section-description {
+section .section-description,
+section > header p {
   margin-top: 0.25rem;
   font-size: 0.9rem;
   line-height: 1.55;
@@ -750,9 +747,12 @@ mark {
 .weekly-list {
   display: grid;
   gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.weekly-item {
+.weekly-list > li > a {
   display: block;
   border: 0;
   border-bottom: 1px solid var(--border);
@@ -760,16 +760,19 @@ mark {
   color: inherit;
   text-decoration: none;
   transition: border-color 0.2s ease;
-  margin-bottom: 1rem;
 }
 
-.weekly-title {
+.weekly-list > li > a:hover {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+}
+
+.weekly-list h3 {
   margin: 0;
   font-size: 0.94rem;
   color: var(--accent);
 }
 
-.weekly-description {
+.weekly-list p {
   margin-top: 0.375rem;
   font-size: 0.875rem;
   line-height: 1.6;
@@ -2128,6 +2131,14 @@ a.feeds-card-title:hover {
   letter-spacing: -0.02em;
 }
 
+@media (min-width: 768px) {
+  .article-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 .article-meta {
   display: flex;
   flex-wrap: wrap;
@@ -2143,11 +2154,42 @@ a.feeds-card-title:hover {
   color: var(--text-secondary);
 }
 
+#sidebar {
+  display: none;
+}
+
+@media (min-width: 1360px) {
+  #sidebar {
+    position: fixed;
+    top: 6.75rem;
+    left: calc(50% + (var(--reading-max-width) / 2) + 6.5rem);
+    z-index: 40;
+    display: block;
+    width: 240px;
+    max-height: calc(100vh - 8rem);
+    margin: 0;
+    overflow: auto;
+    padding-top: 0.1rem;
+    background: transparent;
+    opacity: 0.88;
+  }
+}
+
 /* 标签区域 */
+.tags-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
 .tags-icon {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  line-height: 0;
 }
 
 .tags-icon svg {
@@ -2194,7 +2236,7 @@ a.feeds-card-title:hover {
   color: var(--text-secondary);
 }
 
-.action-title {
+.action-card h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -2300,14 +2342,14 @@ a.feeds-card-title:hover {
   color: var(--text-secondary);
 }
 
-.related-title {
+.related-card h3 {
   margin: 0;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.related-description {
+.related-card p:last-child {
   margin-top: 0.75rem;
   font-size: 0.9rem;
   line-height: 1.6;
@@ -2329,7 +2371,7 @@ a.feeds-card-title:hover {
   }
 }
 
-.nav-link {
+.post-nav a {
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -2338,25 +2380,25 @@ a.feeds-card-title:hover {
   transition: opacity 0.2s ease;
 }
 
-.nav-link:hover {
+.post-nav a:hover {
   opacity: 0.75;
 }
 
-.nav-link-prev {
+.post-nav a.nav-link-prev {
   justify-content: flex-start;
 }
 
-.nav-link-next {
+.post-nav a.nav-link-next {
   justify-content: flex-end;
 }
 
 @media (min-width: 640px) {
-  .nav-link-next {
+  .post-nav a.nav-link-next {
     grid-column-start: 2;
   }
 }
 
-.nav-link svg {
+.post-nav a svg {
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;

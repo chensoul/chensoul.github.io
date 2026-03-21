@@ -318,12 +318,10 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       跳转到主要内容
     </a>
     <Header />
-    <div class:list={["page-shell", { "page-shell--with-aside": hasAfterMain }]}>
       <main id="main-content">
         <slot />
       </main>
       {hasAfterMain && <slot name="after-main" />}
-    </div>
     <BackToTop />
     <Footer/>
 
