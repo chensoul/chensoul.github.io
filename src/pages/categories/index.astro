@@ -61,19 +61,16 @@ categories.forEach(({ category, categoryName }) => {
 ---
 
 <Layout title={pageTitle}>
-  <ul
-    class="grid list-none grid-cols-1 gap-1 pl-0 sm:grid-cols-2"
-    aria-label="分类列表"
-  >
+  <ul class="categories-grid" aria-label="分类列表">
     {
       categories.map(({ category, categoryName, count }, i) => (
         <li class:list={["categories-item", { hidden: i >= SITE.postPerIndex }]}>
           <a
             href={`/categories/${category}`}
             aria-label={`查看 ${categoryName} 分类`}
-            class="group relative block overflow-hidden"
+            class="categories-card"
           >
-            <div class="w-full overflow-hidden" style="aspect-ratio: 16 / 9;">
+            <div class="categories-card-image" style="aspect-ratio: 16 / 9;">
               {getCategoryImageUrl(category) ||
               getCategoryImageUrl(categoryName) ? (
                 <img
@@ -84,21 +81,17 @@ categories.forEach(({ category, categoryName }) => {
                   alt={`${categoryName} 封面图`}
                   loading="lazy"
                   decoding="async"
-                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               ) : (
-                // 无封面图时显示占位背景
-                <div class="h-full w-full bg-black/20 dark:bg-white/20" />
+                <div class="categories-card-placeholder" />
               )}
             </div>
-            {/* 渐变遮罩 */}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            {/* 文字内容：叠层上固定白字，! 覆盖全局 a 颜色 */}
-            <div class="absolute right-0 bottom-0 left-0 p-4">
-              <span class="mb-1 block text-sm !text-white/85">
+            <div class="categories-card-overlay" />
+            <div class="categories-card-content">
+              <span class="categories-card-name">
                 {categoryName}（{count}篇）
               </span>
-              <h3 class="line-clamp-1 text-sm leading-tight !text-white">
+              <h3 class="categories-card-latest">
                 {categoryLatestPost.get(categoryName) || categoryName}
               </h3>
             </div>
@@ -114,32 +107,3 @@ categories.forEach(({ category, categoryName }) => {
   >
   </div>
 </Layout>
-
-{SITE.lazyListJsUrl && <script is:inline src={SITE.lazyListJsUrl} />}
-<script is:inline>
-  let bootTimer;
-  function boot() {
-    if (typeof window.setupLazyList !== "function") return false;
-    if (bootTimer) {
-      clearTimeout(bootTimer);
-      bootTimer = undefined;
-    }
-    window.setupLazyList({
-      sentinelId: "categories-sentinel",
-      itemSelector: ".categories-item",
-    });
-    return true;
-  }
-  function scheduleBoot() {
-    if (boot()) return;
-    if (bootTimer) clearTimeout(bootTimer);
-    bootTimer = setTimeout(scheduleBoot, 120);
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", scheduleBoot, { once: true });
-  } else {
-    scheduleBoot();
-  }
-  window.addEventListener("load", scheduleBoot);
-  document.addEventListener("astro:page-load", scheduleBoot);
-</script>

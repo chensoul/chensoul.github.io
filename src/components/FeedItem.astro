@@ -47,20 +47,19 @@ if (
 const hasLink = link && link !== "#";
 
 const headerProps = {
-  class: "!m-0 truncate overflow-hidden whitespace-nowrap min-w-0",
+  class: "feeds-card-header",
 };
 const linkProps = {
-  class:
-    "text-sm font-medium hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
+  class: "feeds-card-link",
 };
 ---
 
-<li class="feeds-card-wrapper mb-4">
+<li class="feeds-card-wrapper">
   <div class="relative block">
-    <div class="feeds-card flex items-center gap-3">
+    <div class="feeds-card">
       {
         avatarSrc && (
-          <div class="h-[40px] w-[40px] shrink-0 overflow-hidden rounded-md">
+          <div class="feeds-card-avatar-wrap">
             <img
               src={avatarSrc}
               alt=""
@@ -69,13 +68,13 @@ const linkProps = {
               loading={priority ? "eager" : "lazy"}
               fetchpriority={priority ? "high" : undefined}
               decoding="async"
-              class="block h-full w-full object-cover"
+              class="feeds-card-avatar"
             />
           </div>
         )
       }
-      <div class="min-w-0 flex-1">
-        <div class="text-accent min-w-0 text-lg font-medium underline-offset-4">
+      <div class="feeds-card-content">
+        <div class="feeds-card-title-wrap">
           <h3 {...headerProps}>
             {
               hasLink ? (
@@ -88,14 +87,12 @@ const linkProps = {
                   {title || "无标题"}
                 </a>
               ) : (
-                <span class="text-sm font-medium">{title || "无标题"}</span>
+                <span class="feeds-card-title-text">{title || "无标题"}</span>
               )
             }
           </h3>
         </div>
-        <div
-          class="feeds-card-meta mt-1 text-sm text-[var(--text-secondary)] opacity-80"
-        >
+        <div class="feeds-card-meta">
           <span class="feeds-card-date" data-published={published}>
             {displayDate}
           </span>

@@ -288,6 +288,45 @@ export class PostUtils {
     }
     return short;
   }
+
+  /**
+   * 获取纯文本描述（去除 HTML 标签）
+   * 用于相关文章卡片等场景
+   * @param markdownContent Markdown 内容
+   * @param maxLength 最大字符数，默认 80
+   */
+  static getPlainTextDescription(
+    markdownContent: string,
+    maxLength: number = 80
+  ): string {
+    const lines = markdownContent
+      .split(/\r?\n/)
+      .slice(0, SITE.genDescriptionMaxLines);
+    const processedContent = lines.join("");
+    const moreTagMatch = processedContent.match(tagMoreRegex);
+    let short = moreTagMatch
+      ? moreTagMatch[1]
+      : processedContent.substring(0, SITE.genDescriptionCount);
+
+    // 移除 HTML 标签
+    short = short.replace(/<[^>]+>/g, "");
+
+    // 移除 Markdown 语法
+    for (const patternKey in regexReplacers) {
+      const [pattern, replacement] = regexReplacers[patternKey];
+      short = short.replace(pattern, replacement);
+    }
+
+    // 清理多余空白
+    short = short.replace(/\s+/g, " ").trim();
+
+    // 截断
+    if (short.length > maxLength) {
+      short = short.slice(0, maxLength) + "…";
+    }
+
+    return short;
+  }
 }
 
 // --- llms.txt ---

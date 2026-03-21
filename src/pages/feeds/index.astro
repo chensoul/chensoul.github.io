@@ -52,20 +52,20 @@ const clientData = {
 ---
 
 <Layout title={pageTitle} schemaType="CollectionPage" robots="noindex,follow">
-  <div class="page-content feeds-page">
+  <div class="feeds-page">
     {
       !feedsEnabled ? (
-        <p class="mb-6 text-[var(--text-secondary)]">
+        <p class="page-description">
           本页暂未开放。若需展示邻居博客的最新文章聚合，请在站点配置中开启
           <code>SITE.feeds.enabled</code> 并配置数据源。
         </p>
       ) : (
         <>
-          <p class="feeds-intro mb-6 text-[var(--text-secondary)]">
+          <p class="page-description">
             以下列表是使用程序定时从我关注的 RSS
             订阅源抓取到的文章、视频和播客，我可以第一时间查看是否有更新，并阅读、观看和收听。
             {!clientData.dataSourceUrl && (
-              <span class="mt-2 block">
+              <span class="block">
                 请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合
                 JSON 地址以启用列表。
               </span>
@@ -95,7 +95,7 @@ const clientData = {
 
           <ul
             id="feeds-list"
-            class="feeds-list mt-4 list-none pl-0"
+            class="feeds-list"
             aria-label="文章列表"
           >
             {initialItems.map((item, index) => (
@@ -112,7 +112,7 @@ const clientData = {
           </ul>
           <div
             id="load-more-trigger"
-            class="load-more-trigger flex h-8 items-center justify-center text-sm text-[var(--text-secondary)]"
+            class="load-more-trigger"
             style="display: none"
             aria-hidden="true"
           >

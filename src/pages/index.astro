@@ -28,51 +28,40 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class="mt-[-0.15rem] grid items-start gap-4 lg:grid-cols-2">
-    <div class="min-w-0">
-      <div class="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 max-[700px]:gap-3">
+  <section class="home-section">
+    <div class="home-column">
+      <div class="section-header">
         <div>
-          <h2 class="m-0 text-[1.05rem] font-bold leading-[1.35]">最近文章</h2>
-          <p class="mt-1 text-[0.9rem] leading-[1.55] text-[var(--text-secondary)]">
+          <h2 class="section-title">最近文章</h2>
+          <p class="section-description">
             优先展示最近更新的技术文章、知识库条目和翻译内容。
           </p>
         </div>
-        <div class="ml-auto hidden max-[700px]:flex">
-          <LinkButton
-            href="/posts"
-            class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
-            查看全部文章
-          </LinkButton>
-        </div>
       </div>
-      <ul class="m-0 grid list-none gap-[0.15rem] pl-0">
+      <ul class="post-list">
         {latestPosts.map(post => <Card variant="h3" {...post} />)}
       </ul>
-      <div class="mt-1.5 flex justify-end max-[700px]:hidden">
-        <LinkButton
-          href="/posts"
-          class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
+      <div class="section-action action-mobile">
+        <LinkButton href="/posts" class="text-link">
           查看全部文章
         </LinkButton>
       </div>
     </div>
 
-    <aside class="min-w-0">
-      <div class="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 max-[700px]:gap-3">
+    <aside class="home-column">
+      <div class="section-header">
         <div>
-          <h2 class="m-0 text-[1.05rem] font-bold leading-[1.35]">最近周报</h2>
-          <p class="mt-1 text-[0.9rem] leading-[1.55] text-[var(--text-secondary)]">
+          <h2 class="section-title">最近周报</h2>
+          <p class="section-description">
             记录每周的开发进展、工具尝试和一些阶段性想法。
           </p>
         </div>
       </div>
-      <div class="grid gap-0">
+      <div class="weekly-list">
         {
           lifePosts.map(post => (
             <a
-              class="block border-0 border-b border-[var(--border)] bg-transparent py-3 text-inherit no-underline transition-colors duration-200 hover:border-[color-mix(in_srgb,var(--accent)_28%,var(--border))] hover:no-underline"
+              class="weekly-item"
               href={PostUtils.getPath(
                 post.id,
                 post.filePath,
@@ -81,10 +70,10 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
                 post.data.timezone
               )}
             >
-              <h3 class="m-0 text-[0.94rem] font-semibold leading-[1.45] text-[var(--accent)]">
+              <h3 class="weekly-title">
                 {post.data.title}
               </h3>
-              <p class="mt-1.5 text-[0.875rem] leading-[1.6] text-[var(--text-secondary)]">
+              <p class="weekly-description">
                 {post.data.description?.trim() ||
                   PostUtils.getDescription(post.body ?? "")}
               </p>
@@ -92,11 +81,8 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
           ))
         }
       </div>
-      <div class="mt-1.5 flex justify-end">
-        <LinkButton
-          href="/categories/weekly"
-          class="inline-flex shrink-0 items-center gap-1.5 border-0 bg-transparent px-0 py-0 text-sm leading-[1.45] text-[var(--accent)] no-underline outline-[var(--accent)] transition-colors hover:text-[var(--accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
+      <div class="section-action">
+        <LinkButton href="/categories/weekly" class="text-link">
           查看全部周报
         </LinkButton>
       </div>

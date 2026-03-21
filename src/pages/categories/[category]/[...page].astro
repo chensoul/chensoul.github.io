@@ -68,24 +68,21 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class="mb-5">
-    <nav
-      class="mb-3 flex flex-wrap items-center gap-[0.35rem] text-sm leading-6 text-[var(--text-secondary)]"
-      aria-label="面包屑导航"
-    >
+  <section class="category-header">
+    <div class="breadcrumb" aria-label="面包屑导航">
       <a href="/">首页</a>
-      <span>/</span>
+      <span class="breadcrumb-separator">/</span>
       <a href="/categories">分类</a>
-      <span>/</span>
+      <span class="breadcrumb-separator">/</span>
       <span>{categoryName}</span>
-    </nav>
-    <h1 class="mb-2 text-xl font-semibold">{categoryName}</h1>
-    <p class="mb-2 text-sm text-[var(--text-secondary)]">
+    </div>
+    <h1 class="category-title">{categoryName}</h1>
+    <p class="category-description">
       按时间倒序浏览分类「{categoryName}」下的 {totalPosts} 篇文章。
     </p>
     <TaxonomySummary title="相关标签" items={relatedTags} />
   </section>
-  <ul class="list-none pl-0">
+  <ul class="category-posts-list">
     {
       page.data.map((data, i) => (
         <Card

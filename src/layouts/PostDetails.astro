@@ -71,7 +71,7 @@ const plainText = (post.body ?? "")
   .replace(/\s+/g, " ")
   .trim();
 const latinWordCount = (
-  plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []
+  plainText.match(/[A-Za-z0-9]+(?:['' -][A-Za-z0-9]+)*/g) || []
 ).length;
 const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
 const estimatedWordCount = latinWordCount + cjkCharCount;
@@ -252,49 +252,45 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         {topImageSrc && <img src={topImageSrc} alt={title} />}
 
         <!-- 文章标题与发布日期 -->
-        <nav
-          class="mb-3 flex flex-wrap gap-2 text-sm text-[var(--text-secondary)]"
-          aria-label="面包屑导航"
-        >
+        <div class="breadcrumb" aria-label="面包屑导航">
           <a href="/">首页</a>
-          <span>/</span>
+          <span class="breadcrumb-separator">/</span>
           <a href="/posts">文章</a>
           {
             primaryCategory && (
               <>
-                <span>/</span>
+                <span class="breadcrumb-separator">/</span>
                 <a href={`/categories/${slugifyStr(primaryCategory)}`}>
                   {primaryCategoryLabel}
                 </a>
               </>
             )
           }
-        </nav>
+        </div>
 
-        <section class="reading-wrap mt-4 mb-[1.15rem] text-center">
-          <h1 class="m-0 text-[clamp(1.7rem,2.4vw,2.05rem)] leading-[1.24] tracking-[-0.02em] md:truncate md:whitespace-nowrap">
+        <section class="article-header">
+          <h1 class="article-title">
             {title}
           </h1>
-          <div class="mt-2 flex flex-wrap items-center justify-center gap-2 text-sm text-[var(--text-secondary)]">
+          <div class="article-meta">
             {
               categoryLinks.map(category => (
                 <a
-                  class="inline-flex items-center rounded-full bg-[var(--background-secondary)] px-2.5 py-1 no-underline hover:text-[var(--accent)] hover:no-underline"
+                  class="category-badge"
                   href={`/categories/${category.slug}`}
                 >
                   {category.name}
                 </a>
               ))
             }
-            <span class="text-[var(--border)]" aria-hidden="true">·</span>
-            <span>{readingMinutes} 分钟阅读</span>
-            <span class="text-[var(--border)]" aria-hidden="true">·</span>
+            <span class="meta-separator" aria-hidden="true">·</span>
+            <span class="reading-time">{readingMinutes} 分钟阅读</span>
+            <span class="meta-separator" aria-hidden="true">·</span>
             <Datetime
               pubDatetime={date}
               modDatetime={updated}
               timezone={post.data.timezone}
               format="absolute"
-              class="inline-flex text-sm text-[var(--accent)]"
             />
           </div>
         </section>
@@ -305,17 +301,14 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <!-- 标签列表 -->
       {
         tags.length > 0 && (
-          <div class="reading-wrap mt-8 mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+          <div class="tags-section">
             <span
-              class="post-tags-icon flex shrink-0 items-center"
+              class="tags-icon"
               aria-hidden="true"
             >
-              <IconTag class="h-4 w-4 text-[var(--text-secondary)]" />
+              <IconTag />
             </span>
-            <ul
-              class="m-0 flex list-none flex-wrap items-center gap-2 pl-0"
-              role="list"
-            >
+            <ul class="tags-list" role="list">
               {tags.map((tag: string) => (
                 <Tag tag={slugifyStr(tag)} tagName={tag} />
               ))}
@@ -324,32 +317,26 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         )
       }
 
-      <section class="reading-wrap mt-10 grid gap-4 md:grid-cols-2">
-        <div class="border-0 border-t border-[var(--border)] bg-transparent pt-3.5">
-          <p class="mb-2 text-[0.8125rem] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
-            订阅文章
-          </p>
-          <h2 class="m-0 text-base">订阅更新，不错过后续文章</h2>
-          <p class="mt-2 text-[var(--text-secondary)]">直接通过 RSS 和 Telegram 订阅本站更新。</p>
-          <div class="mt-3 flex flex-wrap gap-3">
-            <a class="inline-flex min-h-[1.95rem] items-center justify-center rounded-full border border-[var(--accent)] bg-[var(--accent)] px-3 py-1.5 text-[0.8125rem] text-white no-underline hover:no-underline" href="/rss.xml">订阅 RSS</a>
-            <a class="inline-flex min-h-[1.95rem] items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_88%,transparent)] bg-transparent px-3 py-1.5 text-[0.8125rem] text-[var(--text-primary)] no-underline hover:border-[var(--accent)] hover:text-[var(--accent)] hover:no-underline" href="https://t.me/ichensoul"
-              >关注 Telegram</a
-            >
+      <section class="action-section">
+        <div class="action-card">
+          <p class="action-label">订阅文章</p>
+          <h2 class="action-title">订阅更新，不错过后续文章</h2>
+          <p class="action-description">直接通过 RSS 和 Telegram 订阅本站更新。</p>
+          <div class="action-buttons">
+            <a class="btn btn-primary" href="/rss.xml">订阅 RSS</a>
+            <a class="btn btn-secondary" href="https://t.me/ichensoul">关注 Telegram</a>
           </div>
         </div>
 
-        <div class="border-0 border-t border-[var(--border)] bg-transparent pt-3.5">
-          <p class="mb-2 text-[0.8125rem] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
-            分享文章
-          </p>
-          <h2 class="m-0 text-base">如果这篇有帮助，可以顺手转发</h2>
-          <p class="mt-2 text-[var(--text-secondary)]">
+        <div class="action-card">
+          <p class="action-label">分享文章</p>
+          <h2 class="action-title">如果这篇有帮助，可以顺手转发</h2>
+          <p class="action-description">
             直接分享给同事、朋友，或者发到你的社交平台。
           </p>
-          <div class="mt-3 flex flex-wrap gap-3">
+          <div class="action-buttons">
             <a
-              class="inline-flex min-h-[1.95rem] items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_88%,transparent)] bg-transparent px-3 py-1.5 text-[0.8125rem] text-[var(--text-primary)] no-underline hover:border-[var(--accent)] hover:text-[var(--accent)] hover:no-underline"
+              class="btn btn-secondary"
               href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -357,7 +344,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
               分享到 X
             </a>
             <a
-              class="inline-flex min-h-[1.95rem] items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_88%,transparent)] bg-transparent px-3 py-1.5 text-[0.8125rem] text-[var(--text-primary)] no-underline hover:border-[var(--accent)] hover:text-[var(--accent)] hover:no-underline"
+              class="btn btn-secondary"
               href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -365,7 +352,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
               分享到 Telegram
             </a>
             <a
-              class="inline-flex min-h-[1.95rem] items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--border)_88%,transparent)] bg-transparent px-3 py-1.5 text-[0.8125rem] text-[var(--text-primary)] no-underline hover:border-[var(--accent)] hover:text-[var(--accent)] hover:no-underline"
+              class="btn btn-secondary"
               href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
             >
               邮件分享
@@ -376,27 +363,28 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
       {
         relatedPosts.length > 0 && (
-          <section class="reading-wrap mt-10 grid gap-4">
-            <div>
-              <h2 class="m-0 text-base">相关文章</h2>
+          <section class="related-section">
+            <div class="section-title-wrap">
+              <h2 class="section-title">相关文章</h2>
             </div>
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div class="related-grid">
               {relatedPosts.map(({ post: relatedPost, path }) => (
                 <a
                   href={path}
-                  class="block border-0 border-t border-[var(--border)] bg-transparent pt-3.5 text-inherit no-underline transition-colors duration-200 hover:border-[var(--accent)] hover:no-underline"
+                  class="related-card"
                 >
-                  <p class="mb-2 text-[0.8125rem] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
+                  <p class="related-category">
                     {relatedPost.data.categories
                       .map(
                         category => getCategoryMeta(category)?.name ?? category
                       )
                       .join(" / ")}
                   </p>
-                  <h3 class="m-0 text-[0.9rem]">{relatedPost.data.title}</h3>
-                  <p class="mt-3 text-[0.9rem] leading-[1.6] text-[var(--text-secondary)]">
-                    {relatedPost.data.description?.trim() ||
-                      PostUtils.getDescription(relatedPost.body ?? "")}
+                  <h3 class="related-title">{relatedPost.data.title}</h3>
+                  <p class="related-description">
+                    {PostUtils.getPlainTextDescription(
+                      (relatedPost.data.description?.trim() || relatedPost.body) ?? ""
+                    )}
                   </p>
                 </a>
               ))}
@@ -406,19 +394,16 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       }
 
       <!-- Previous/Next Post Buttons -->
-      <div
-        data-pagefind-ignore
-        class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2"
-      >
+      <div class="post-nav">
         <!-- 上一篇 -->
         {
           prevPost && (
-            <a href={prevPost.path} class="flex w-full gap-1 hover:opacity-75">
-              <IconChevronLeft class="inline-block flex-none" />
+            <a href={prevPost.path} class="nav-link nav-link-prev">
+              <IconChevronLeft />
               <div>
-                <div class="text-sm text-[var(--accent)] opacity-85">
+                <span class="nav-label">
                   {prevPost.title}
-                </div>
+                </span>
               </div>
             </a>
           )
@@ -428,14 +413,14 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           nextPost && (
             <a
               href={nextPost.path}
-              class="flex w-full justify-end gap-1 text-right hover:opacity-75 sm:col-start-2"
+              class="nav-link nav-link-next"
             >
               <div>
-                <div class="text-sm text-[var(--accent)] opacity-85">
+                <span class="nav-label">
                   {nextPost.title}
-                </div>
+                </span>
               </div>
-              <IconChevronRight class="inline-block flex-none" />
+              <IconChevronRight />
             </a>
           )
         }
@@ -498,6 +483,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     display: flex;
     align-items: center;
     line-height: 0;
+  }
+
+  .meta-separator {
+    color: var(--border);
   }
 </style>
 

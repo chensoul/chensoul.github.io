@@ -1,6 +1,5 @@
 ---
 import IconChevronUp from "@/assets/icons/IconChevronUp.svg";
-import { SITE } from "@/config";
 
 export interface Props {
   class?: string;
@@ -11,130 +10,52 @@ const { class: className } = Astro.props;
 
 <button
   id="back-to-top"
-  aria-label="Back To Top"
-  class={`fixed bottom-6 md:bottom-8 z-50 focus-outline w-10 h-10 whitespace-nowrap rounded-md bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border border-white/50 dark:border-gray-700/50 text-gray-700 dark:text-gray-200 shadow-sm hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-110 hover:shadow-lg hover:opacity-100 transition-all duration-300 ease-out translate-y-8 opacity-0 pointer-events-none text-xs sm:text-sm flex items-center justify-center gap-1 ${className || ""}`}
-  data-mobile-width={SITE.backToTop.mobileBreakpoint}
-  data-show-after-ratio={SITE.backToTop.showAfterRatio}
-  data-min-overflow={SITE.backToTop.minOverflowPx}
-  data-min-scroll-top={SITE.backToTop.minScrollTopPx}
+  aria-label="返回顶部"
+  class:list={["back-to-top-btn", className]}
+  data-scroll-threshold="300"
 >
-  <IconChevronUp class="h-4 w-4" />
+  <IconChevronUp />
 </button>
 
 <script is:inline data-astro-rerun>
   (function () {
-    const el = document.getElementById("back-to-top");
-    const mobileWidth = Number(el?.dataset.mobileWidth);
-    const showAfterRatio = Number(el?.dataset.showAfterRatio);
-    const minOverflow = Number(el?.dataset.minOverflow);
-    const minScrollTop = Number(el?.dataset.minScrollTop);
-    const isMobileDevice = () => window.innerWidth < mobileWidth;
+    const btn = document.getElementById("back-to-top");
+    const scrollThreshold = Number(btn?.dataset.scrollThreshold) || 300;
 
-    function debounce(func, wait) {
-      let timeout = null;
-      return function executedFunction(...args) {
-        if (timeout !== null) {
-          clearTimeout(timeout);
-        }
-        timeout = setTimeout(() => {
-          func(...args);
-          timeout = null;
-        }, wait);
-      };
-    }
+    if (!btn) return;
 
-    function updatePosition() {
-      const btn = document.getElementById("back-to-top");
-      const frame = document.getElementById("main-content");
-      if (!btn || !frame) return;
-
-      const frameRect = frame.getBoundingClientRect();
-      const rightOffset = window.innerWidth - frameRect.right;
-      const btnWidth = btn.offsetWidth;
-
-      if (rightOffset < btnWidth + 32) {
-        btn.style.right = "1rem";
-      } else {
-        btn.style.right = `${rightOffset - btnWidth - 16}px`;
-      }
-    }
-
-    const debouncedUpdatePosition = debounce(updatePosition, 150);
+    // 初始状态：隐藏
+    btn.classList.add("back-to-top-btn--hidden");
 
     function updateVisibility() {
-      const current = document.getElementById("back-to-top");
-      if (!current) return;
-      const doc = document.documentElement;
-      const scrollTop = doc.scrollTop || document.body.scrollTop || 0;
-      const overflow = doc.scrollHeight - doc.clientHeight;
-      const hasEnoughOverflow = overflow >= minOverflow;
-      const ratio = overflow > 0 ? scrollTop / overflow : 0;
-      const show =
-        hasEnoughOverflow &&
-        (ratio >= showAfterRatio || scrollTop >= minScrollTop);
-      const wasVisible = !current.classList.contains("opacity-0");
-      if (show) {
-        current.classList.remove(
-          "translate-y-8",
-          "opacity-0",
-          "pointer-events-none"
-        );
-        current.classList.add(
-          "translate-y-0",
-          "opacity-100",
-          "pointer-events-auto"
-        );
-      } else {
-        current.classList.add(
-          "translate-y-8",
-          "opacity-0",
-          "pointer-events-none"
-        );
-        current.classList.remove(
-          "translate-y-0",
-          "opacity-100",
-          "pointer-events-auto"
-        );
-      }
-      if (show !== wasVisible) {
-        window.dispatchEvent(
-          new CustomEvent("backToTopVisibilityChange", {
-            detail: { visible: show },
-          })
-        );
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const shouldShow = scrollTop >= scrollThreshold;
+
+      btn.classList.toggle("back-to-top-btn--hidden", !shouldShow);
+      btn.classList.toggle("back-to-top-btn--visible", shouldShow);
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateVisibility();
+          ticking = false;
+        });
+        ticking = true;
       }
     }
 
-    if (window._backToTopScrollHandler) {
-      window.removeEventListener("scroll", window._backToTopScrollHandler);
-    }
-    if (window._backToTopResizeHandler) {
-      window.removeEventListener("resize", window._backToTopResizeHandler);
-    }
-
-    window._backToTopScrollHandler = updateVisibility;
-    window._backToTopResizeHandler = debouncedUpdatePosition;
-
-    window.addEventListener("scroll", window._backToTopScrollHandler, {
-      passive: true,
-    });
-    window.addEventListener("resize", window._backToTopResizeHandler, {
-      passive: true,
-    });
+    window.addEventListener("scroll", onScroll, { passive: true });
     updateVisibility();
-    updatePosition();
 
-    document.getElementById("back-to-top")?.addEventListener("click", () => {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-
-      const sidebar = document.getElementById("sidebar");
-      const backdrop = document.getElementById("sidebar-backdrop");
-      if (isMobileDevice() && sidebar && backdrop) {
-        sidebar.classList.remove("mobile-open");
-        backdrop.classList.remove("opacity-100");
-        backdrop.classList.add("pointer-events-none");
-      }
+    // 点击平滑滚动到顶部
+    btn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
   })();
 </script>

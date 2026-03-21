@@ -9,7 +9,6 @@ import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import BackToTop from "@/components/BackToTop.astro";
-import BackButton from "@/components/BackButton.astro";
 /**
  * 组件属性接口
  *
@@ -314,7 +313,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
   <body>
     <a
       href="#main-content"
-      class="skip-link absolute -top-full left-1/2 z-[1000] -translate-x-1/2 rounded-b-xl bg-[var(--accent)] px-6 py-3 font-medium text-white no-underline transition-[top] duration-200 focus:top-0 focus:outline-none"
+      class="skip-link"
     >
       跳转到主要内容
     </a>
@@ -325,7 +324,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       </main>
       {hasAfterMain && <slot name="after-main" />}
     </div>
-    <BackButton />
     <BackToTop />
     <Footer/>
 
@@ -357,9 +355,3 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     }
   </body>
 </html>
-
-<style>
-  .page-shell {
-    width: 100%;
-  }
-</style>

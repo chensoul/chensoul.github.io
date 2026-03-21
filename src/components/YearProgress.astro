@@ -21,7 +21,7 @@
 
 <div
   id="year-progress"
-  class="group pointer-events-none relative mx-auto w-full max-w-[var(--page-max-width)] px-[var(--content-gutter)] pt-0 pb-0.5"
+  class="year-progress"
   role="progressbar"
   aria-valuemin="0"
   aria-valuemax="100"
@@ -30,28 +30,28 @@
 >
   <div
     id="year-progress-track"
-    class="pointer-events-auto cursor-pointer py-1.5"
+    class="year-progress-track"
     aria-hidden="true"
   >
-    <div class="relative h-0.5 w-full">
+    <div class="year-progress-bar-bg">
       <div
         id="year-progress-fill"
-        class="h-0.5 w-0 max-w-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-out"
+        class="year-progress-bar-fill"
       >
       </div>
     </div>
   </div>
   <span
     id="year-progress-cover"
-    class="pointer-events-none absolute top-1/2 left-0 z-10 h-0.5 -translate-y-1/2 rounded-full bg-[color-mix(in_srgb,var(--border)_55%,transparent)] opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="year-progress-cover"
   ></span>
   <span
     id="year-progress-label"
-    class="pointer-events-none absolute top-1/2 left-0 z-20 -translate-y-1/2 text-xs whitespace-nowrap text-[var(--accent)] opacity-0 transition-opacity duration-[1000ms] ease-out"
+    class="year-progress-label"
   ></span>
   <div
     id="year-progress-popup"
-    class="pointer-events-none absolute top-0 left-0 z-30 -translate-y-[calc(100%+8px)] rounded border border-[var(--border)] bg-[var(--background)] px-2 py-1 text-xs whitespace-nowrap text-[var(--text-primary)] opacity-0 shadow transition-opacity duration-[1000ms] ease-out"
+    class="year-progress-popup"
   >
   </div>
 </div>
@@ -107,11 +107,11 @@
 
   function show(el: HTMLElement | null): void {
     if (!el) return;
-    el.classList.add("duration-300", "opacity-100");
+    el.classList.add("year-progress-visible");
   }
   function hide(el: HTMLElement | null): void {
     if (!el) return;
-    el.classList.remove("duration-300", "opacity-100");
+    el.classList.remove("year-progress-visible");
   }
 
   function positionLabel(els: YearProgressEls, progress: number): void {

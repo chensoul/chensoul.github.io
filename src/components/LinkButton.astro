@@ -11,7 +11,7 @@
  * 4. 支持 View Transitions 控制（通过 reload 属性）
  *
  * 依赖关系：
- * - 被多个组件复用（如 BackButton 等）
+ * - 被多个组件复用（如 Footer、Header 等）
  * - 用于生成一致的导航链接样式
  */
 
@@ -55,7 +55,7 @@ const {
     // 禁用状态：使用 span
     <span
       id={id}
-      class:list={["group inline-block", className]}
+      class:list={["link-button", "link-button--disabled", className]}
       title={title}
       aria-disabled={disabled}
     >
@@ -66,7 +66,7 @@ const {
     <a
       id={id}
       {href}
-      class:list={["group hover:text-accent inline-block", className]}
+      class:list={["link-button", className]}
       aria-label={ariaLabel}
       title={title}
       target={external ? "_blank" : undefined}

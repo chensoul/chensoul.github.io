@@ -52,7 +52,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
-  <section class="archives-categories mb-4" aria-label="分类列表">
+  <section class="archives-taxonomy-section" aria-label="分类列表">
     <TaxonomySummary title="分类" items={categoryItems} />
     <TaxonomySummary title="年份" items={yearItems} />
   </section>
@@ -60,11 +60,11 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
   <section class="archives-by-year" aria-label="按年归档">
     {
       years.map(year => (
-        <div id={`year-${year}`} class="mb-8 scroll-mt-20" tabindex={-1}>
-          <h2 class="mb-1 text-base">
+        <div id={`year-${year}`} class="archives-year-group" tabindex={-1}>
+          <h2 class="archives-year-title">
             {year} ({groupedByYear[year].length})
           </h2>
-          <ul class="posts-list mt-2 list-none pl-0">
+          <ul class="archives-posts-list">
             {groupedByYear[year].map(post => (
               <Card
                 {...post}

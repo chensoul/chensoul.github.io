@@ -66,24 +66,21 @@ const relatedCategories = topCategories.map(
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
-  <section class="mb-5">
-    <nav
-      class="mb-3 flex flex-wrap items-center gap-[0.35rem] text-sm leading-6 text-[var(--text-secondary)]"
-      aria-label="面包屑导航"
-    >
+  <section class="tag-header">
+    <div class="breadcrumb" aria-label="面包屑导航">
       <a href="/">首页</a>
-      <span>/</span>
+      <span class="breadcrumb-separator">/</span>
       <a href="/tags">标签</a>
-      <span>/</span>
+      <span class="breadcrumb-separator">/</span>
       <span>{tagName}</span>
-    </nav>
-    <h1 class="mb-2 text-xl font-semibold">{tagName}</h1>
-    <p class="mb-2 text-sm text-[var(--text-secondary)]">
+    </div>
+    <h1 class="tag-title">{tagName}</h1>
+    <p class="tag-description">
       按时间倒序浏览标签「{tagName}」下的 {totalPosts} 篇文章。
     </p>
     <TaxonomySummary title="相关分类" items={relatedCategories} />
   </section>
-  <ul class="list-none pl-0">
+  <ul class="tag-posts-list">
     {
       page.data.map((data, i) => (
         <Card

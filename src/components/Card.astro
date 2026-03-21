@@ -43,16 +43,6 @@ const primaryCategorySlug = primaryCategory
   ? slugifyStr(primaryCategory)
   : undefined;
 
-// 标题容器样式（处理溢出省略）
-const headerProps = {
-  class: "!m-0 min-w-0",
-};
-
-const linkProps = {
-  class:
-    "block overflow-hidden text-ellipsis whitespace-nowrap text-[0.98rem] font-semibold leading-[1.45] hover:underline focus-visible:no-underline focus-visible:underline-offset-0",
-};
-
 /**
  * 构建封面图 URL
  *
@@ -99,12 +89,11 @@ const buildCoverSrc = (): string | undefined => {
 const coverSrc = buildCoverSrc();
 ---
 
-<li class={`mb-4 ${itemClass ?? ""} ${hidden ? "hidden" : ""}`}>
-  <div class="relative block">
-    <div class="flex items-center gap-3">
-      <!-- 封面图 -->
-      {
-        coverSrc && (
+<li class:list={["post-item", itemClass, { hidden }]}>
+  <div class="post-item-inner">
+    {
+      coverSrc && (
+        <div class="post-item-cover">
           <img
             src={coverSrc}
             alt={title}
@@ -117,69 +106,50 @@ const coverSrc = buildCoverSrc();
             }
             fetchpriority={priority ? "high" : undefined}
             decoding="async"
-            class="h-[40px] w-[40px] shrink-0 rounded-md object-cover"
           />
-        )
-      }
-      <!-- 文章信息区 -->
-      <div class="min-w-0 flex-1">
-        <!-- 文章标题 -->
-        <div class="text-accent min-w-0 underline-offset-4">
-          {
-            // 根据 variant 选择标题级别
-            variant === "h2" ? (
-              <h2 {...headerProps}>
-                <a
-                  href={PostUtils.getPath(id, filePath, true, date, timezone)}
-                  {...linkProps}
-                >
-                  {title}
-                </a>
-              </h2>
-            ) : (
-              <h3 {...headerProps}>
-                <a
-                  href={PostUtils.getPath(id, filePath, true, date, timezone)}
-                  {...linkProps}
-                >
-                  {title}
-                </a>
-              </h3>
-            )
-          }
         </div>
-
-        <!-- 发布/更新时间 -->
-        <div
-          class="mt-1.5 flex flex-row flex-wrap items-center gap-x-2 gap-y-0.5 text-[0.84rem] whitespace-nowrap"
-        >
-          <div
-            class="mr-1 flex items-center space-x-0.5 text-[var(--text-secondary)]"
-          >
-            <Datetime
-              pubDatetime={date}
-              modDatetime={updated}
-              {timezone}
-              format={dateFormat}
-              class="opacity-80"
-            />
-            {
-              primaryCategoryLabel && (
-                <>
-                  <span class="mx-1 opacity-60" aria-hidden="true">
-                    ·
-                  </span>
-                  <a
-                    href={`/categories/${primaryCategorySlug}`}
-                    class="text-sm text-[var(--accent)] underline-offset-2 opacity-85 transition-colors hover:text-[var(--accent-dark)] hover:underline"
-                  >
-                    {primaryCategoryLabel}
-                  </a>
-                </>
-              )
-            }
-          </div>
-        </div>
+      )
+    }
+    <div class="post-item-content">
+      <div class="post-item-title-wrap">
+        {
+          variant === "h2" ? (
+            <h2 class="post-item-title">
+              <a href={PostUtils.getPath(id, filePath, true, date, timezone)}>
+                {title}
+              </a>
+            </h2>
+          ) : (
+            <h3 class="post-item-title">
+              <a href={PostUtils.getPath(id, filePath, true, date, timezone)}>
+                {title}
+              </a>
+            </h3>
+          )
+        }
+      </div>
+      <div class="post-item-meta">
+        <Datetime
+          pubDatetime={date}
+          modDatetime={updated}
+          {timezone}
+          format={dateFormat}
+        />
+        {
+          primaryCategoryLabel && (
+            <>
+              <span class="post-item-meta-separator" aria-hidden="true">
+                ·
+              </span>
+              <a
+                href={`/categories/${primaryCategorySlug}`}
+                class="post-item-category"
+              >
+                {primaryCategoryLabel}
+              </a>
+            </>
+          )
+        }
       </div>
     </div>
   </div>

@@ -34,11 +34,8 @@ export interface Props {
 const { tag, tagName, count, size = "sm" } = Astro.props;
 ---
 
-<li class="mr-2 inline-flex items-center last:mr-0">
-  <a
-    href={`/tags/${tag}`}
-    class={`${size === "sm" ? "text-sm" : "text-lg"} group relative inline-flex items-center rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]`}
-  >
+<li class="tag-item">
+  <a href={`/tags/${tag}`} class:list={["tag-link", `tag-link--${size}`]}>
     <span class="taxonomy-pill taxonomy-pill-tag">
       <span>{tagName}</span>
       {

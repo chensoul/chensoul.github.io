@@ -98,43 +98,6 @@ export const SITE = {
   },
 
   /**
-   * 返回顶部按钮配置
-   *
-   * 控制按钮的显示时机和滚动行为
-   */
-  backToTop: {
-    /**
-     * 移动端断点（像素）
-     *
-     * <= 此宽度时使用移动端优化样式
-     */
-    mobileBreakpoint: 1024,
-
-    /**
-     * 滚动比例阈值
-     *
-     * 当页面滚动超过此比例（0-1）时显示按钮
-     * 0.1 表示滚动 10% 后显示
-     */
-    showAfterRatio: 0.1,
-
-    /**
-     * 最小溢出高度（像素）
-     *
-     * 当内容超出视口此高度时才启用返回顶部功能
-     * 避免在短页面上显示无意义的按钮
-     */
-    minOverflowPx: 200,
-
-    /**
-     * 最小滚动距离（像素）
-     *
-     * 从顶部向下滚动超过此距离后显示按钮
-     */
-    minScrollTopPx: 300,
-  },
-
-  /**
    * 页脚社交链接（图标 + 链接）
    *
    * icon 需与 SocialIcon 支持的 name 一致：github | rss | twitter | x | linkedin | facebook | mail | telegram | whatsapp | pinterest
