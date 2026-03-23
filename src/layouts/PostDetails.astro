@@ -410,11 +410,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   </nav>
 
   <!-- 评论容器：与主栏同宽（不用 reading-wrap 窄栏） -->
-  {
-    comments && SITE.artalk.enabled && (
-      <div id="Comments" />
-    )
-  }
+  {comments && SITE.artalk.enabled && <div id="Comments" />}
 </Layout>
 
 <style is:global>
@@ -450,7 +446,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       align-items: flex-start;
       gap: var(--article-toc-aside-gap);
       box-sizing: border-box;
-      width: calc(100% + var(--article-toc-aside-w) + var(--article-toc-aside-gap));
+      width: calc(
+        100% + var(--article-toc-aside-w) + var(--article-toc-aside-gap)
+      );
       max-width: none;
       margin-right: calc(
         -1 * (var(--article-toc-aside-w) + var(--article-toc-aside-gap))
@@ -460,9 +458,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     /* 100% 相对本 flex 容器：容器宽 = 正文旧宽 + 目录 + gap → 此项 = 正文旧宽，flex-shrink: 0 不压窄 */
     .article-main-layout .post-article-content {
       flex: 0 0
-        calc(
-          100% - var(--article-toc-aside-w) - var(--article-toc-aside-gap)
-        );
+        calc(100% - var(--article-toc-aside-w) - var(--article-toc-aside-gap));
       min-width: 0;
     }
 

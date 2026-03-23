@@ -5,13 +5,7 @@
  */
 ---
 
-<nav
-  class="article-toc"
-  id="article-toc"
-  aria-label="本页目录"
-  hidden
->
-</nav>
+<nav class="article-toc" id="article-toc" aria-label="本页目录" hidden></nav>
 
 <style is:global>
   .article-toc {
@@ -201,14 +195,21 @@
     const tocEvents = new AbortController();
     const { signal } = tocEvents;
 
-    window.addEventListener("scroll", scheduleSyncFromScroll, { passive: true, signal });
-    window.addEventListener("resize", () => {
-      if (scrollSyncTimer != null) {
-        window.clearTimeout(scrollSyncTimer);
-        scrollSyncTimer = null;
-      }
-      syncActiveFromScrollPosition();
-    }, { signal });
+    window.addEventListener("scroll", scheduleSyncFromScroll, {
+      passive: true,
+      signal,
+    });
+    window.addEventListener(
+      "resize",
+      () => {
+        if (scrollSyncTimer != null) {
+          window.clearTimeout(scrollSyncTimer);
+          scrollSyncTimer = null;
+        }
+        syncActiveFromScrollPosition();
+      },
+      { signal }
+    );
     window.addEventListener("hashchange", scheduleSyncFromScroll, { signal });
 
     for (const h of headingEls) {

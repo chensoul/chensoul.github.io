@@ -21,8 +21,7 @@ const sortedPosts = PostUtils.sort(publishedPosts);
 
 const latestPosts = sortedPosts
   .filter(
-    post =>
-      !post.data.categories.some(cat => slugifyStr(cat) === "weekly")
+    post => !post.data.categories.some(cat => slugifyStr(cat) === "weekly")
   )
   .slice(0, SITE.postPerIndex);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
