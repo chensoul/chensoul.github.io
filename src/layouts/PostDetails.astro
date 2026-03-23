@@ -10,6 +10,7 @@ import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import Photosuite from "@/components/Photosuite.astro";
+import ArticleToc from "@/components/ArticleToc.astro";
 import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
@@ -286,8 +287,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       </section>
     </header>
 
-    <div class="post-article-body reading-content post-article-content">
-      <Content />
+    <div class="article-main-layout">
+      <div class="post-article-body reading-content post-article-content">
+        <Content />
+      </div>
+      <ArticleToc />
     </div>
   </article>
 
@@ -405,10 +409,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     }
   </nav>
 
-  <!-- 评论容器（全局关闭 Artalk 时不输出） -->
+  <!-- 评论容器：与主栏同宽（不用 reading-wrap 窄栏） -->
   {
     comments && SITE.artalk.enabled && (
-      <div id="Comments" class="reading-wrap" />
+      <div id="Comments" />
     )
   }
 </Layout>
@@ -423,11 +427,64 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     width: 100%;
   }
 
+  /**
+   * 正文 + 目录：正文宽度 = 无目录时整段正文的宽度（#article 内容区 100%），不被 flex 压缩。
+   * 容器加宽 + 负 margin 占用主栏右侧空间；目录列固定宽度 + sticky。
+   */
+  .article-main-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .article-main-layout .article-toc {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .article-main-layout {
+      --article-toc-aside-w: 12rem;
+      --article-toc-aside-gap: 2rem;
+
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--article-toc-aside-gap);
+      box-sizing: border-box;
+      width: calc(100% + var(--article-toc-aside-w) + var(--article-toc-aside-gap));
+      max-width: none;
+      margin-right: calc(
+        -1 * (var(--article-toc-aside-w) + var(--article-toc-aside-gap))
+      );
+    }
+
+    /* 100% 相对本 flex 容器：容器宽 = 正文旧宽 + 目录 + gap → 此项 = 正文旧宽，flex-shrink: 0 不压窄 */
+    .article-main-layout .post-article-content {
+      flex: 0 0
+        calc(
+          100% - var(--article-toc-aside-w) - var(--article-toc-aside-gap)
+        );
+      min-width: 0;
+    }
+
+    .article-main-layout .article-toc {
+      display: block;
+      flex: 0 0 var(--article-toc-aside-w);
+      position: sticky;
+      top: var(--site-header-sticky-offset);
+      max-height: min(
+        calc(100vh - var(--site-header-sticky-offset) - 1rem),
+        85vh
+      );
+      overflow-y: auto;
+      margin: 0;
+    }
+  }
+
   .post-article-content {
     min-width: 0;
   }
   #article .post-article-content :where(h2, h3, h4) {
-    scroll-margin-top: 5.25rem;
+    scroll-margin-top: var(--site-header-sticky-offset);
   }
 
   .reading-wrap {
@@ -435,6 +492,13 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+  }
+
+  #Comments {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .reading-content {
