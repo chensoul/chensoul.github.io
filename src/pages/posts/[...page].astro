@@ -64,7 +64,11 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
   <section class="flex flex-col gap-8" aria-label="按年归档">
     {
       years.map(year => (
-        <div id={`year-${year}`} tabindex={-1}>
+        <div
+          class="archive-year-section"
+          id={`year-${year}`}
+          tabindex={-1}
+        >
           <h2 class="mb-4 border-b border-[var(--border)] pb-2">
             {year} ({groupedByYear[year].length})
           </h2>
@@ -78,3 +82,10 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
     }
   </section>
 </Layout>
+
+<style>
+  /* 与站点吸顶顶栏对齐，避免 #year-… 锚点滚入后被遮挡 */
+  .archive-year-section {
+    scroll-margin-top: var(--site-header-sticky-offset);
+  }
+</style>
