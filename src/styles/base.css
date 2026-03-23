@@ -169,7 +169,9 @@ ol {
   list-style-type: decimal;
 }
 
-
+li {
+    margin-bottom: .3rem;
+}
 
 /* 主容器下的列表：无符号、无缩进 */
 main > ul,
@@ -249,11 +251,11 @@ pre {
    ================================ */
 
 blockquote {
-  margin: 0 0 1.5em;
-  padding-left: 1.25em;
-  border-left: 3px solid var(--accent);
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+    margin: 0.5em 0;
+    padding: 0.5em 0 0.5rem 0.5em;
+    border-left: 3px solid var(--accent);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
   background: color-mix(in srgb, var(--accent) 5%, transparent);
 }
 
