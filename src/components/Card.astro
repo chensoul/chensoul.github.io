@@ -150,25 +150,22 @@ if (isFeedCard) {
     {
       isFeedCard
         ? avatarSrc && (
-            <div class="post-item-cover post-item-cover--avatar">
               <img
                 src={avatarSrc}
                 alt=""
-                width={40}
-                height={40}
+                width={46}
+                height={46}
                 loading={priority ? "eager" : "lazy"}
                 fetchpriority={priority ? "high" : undefined}
                 decoding="async"
               />
-            </div>
           )
         : coverSrc && (
-            <div class="post-item-cover">
               <img
                 src={coverSrc}
                 alt={title}
-                width={40}
-                height={40}
+                width={46}
+                height={46}
                 loading={
                   priority
                     ? "eager"
@@ -179,7 +176,6 @@ if (isFeedCard) {
                 fetchpriority={priority ? "high" : undefined}
                 decoding="async"
               />
-            </div>
           )
     }
     <div class="post-item-content">
@@ -295,28 +291,6 @@ if (isFeedCard) {
     background: color-mix(in srgb, var(--accent) 4%, transparent);
   }
 
-  .post-item-cover {
-    flex-shrink: 0;
-    width: 40px;
-  }
-
-  .post-item-cover:not(.post-item-cover--avatar) img {
-    aspect-ratio: 1;
-    object-fit: cover;
-  }
-
-  .post-item-cover img {
-    width: 100%;
-    border-radius: 4px;
-    display: block;
-  }
-
-  .post-item-cover--avatar img {
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-  }
-
   .post-item-content {
     flex: 1;
     min-width: 0;
@@ -384,7 +358,7 @@ if (isFeedCard) {
 
   .post-item-description {
     margin: 0.16rem 0 0;
-    font-size: 0.8125rem;
+    font-size: 0.85rem;
     line-height: 1.42;
     color: var(--text-secondary);
     display: -webkit-box;
@@ -393,4 +367,15 @@ if (isFeedCard) {
     line-clamp: 2;
     overflow: hidden;
   }
+
+    /* 包裹 Card 的列表（含首页 section > div > ul 等嵌套，主选择器匹配不到） */
+    .post-cards-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      padding-inline-start: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
 </style>

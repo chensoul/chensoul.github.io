@@ -169,9 +169,7 @@ ol {
   list-style-type: decimal;
 }
 
-li {
-  margin-bottom: 0.5rem;
-}
+
 
 /* 主容器下的列表：无符号、无缩进 */
 main > ul,
@@ -179,17 +177,6 @@ main > section > ul {
   list-style: none;
   padding-left: 0;
   padding-inline-start: 0;
-}
-
-/* 包裹 Card 的列表（含首页 section > div > ul 等嵌套，主选择器匹配不到） */
-ul.post-cards-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  padding-inline-start: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.12rem;
 }
 
 /* ================================
@@ -275,7 +262,7 @@ blockquote {
    ================================ */
 
 img {
-  max-width: 100%;
+  max-width: 75%;
   height: auto;
   display: block;
 }
@@ -289,15 +276,6 @@ figcaption {
   font-size: 0.875rem;
   color: var(--text-secondary);
   text-align: center;
-}
-
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-audio {
-  max-width: 100%;
 }
 
 /* ================================
