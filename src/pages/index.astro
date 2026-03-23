@@ -2,12 +2,12 @@
 /**
  * 首页
  *
- * @fileoverview 聚合站点入口：首屏双栏为最近周报（左/上）与最近文章（右/下）。
+ * @fileoverview 聚合站点入口：首屏双栏为最近周报（左/上）与最近文章（右/下）；最近文章不含周报分类。
  */
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import { PostUtils } from "@/utils/postUtils";
+import { PostUtils, slugifyStr } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 /** 与 /og/index.png 一致 */
@@ -19,7 +19,12 @@ export const pageDescription =
 const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
 const sortedPosts = PostUtils.sort(publishedPosts);
 
-const latestPosts = sortedPosts.slice(0, SITE.postPerIndex);
+const latestPosts = sortedPosts
+  .filter(
+    post =>
+      !post.data.categories.some(cat => slugifyStr(cat) === "weekly")
+  )
+  .slice(0, SITE.postPerIndex);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   0,
   6
