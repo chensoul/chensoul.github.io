@@ -371,11 +371,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
                   .map(category => getCategoryMeta(category)?.name ?? category)
                   .join(" / ")}
               </p>
-              <h3 class="related-card-title">
+              <p>
                 <a href={path} class="related-card-title-link">
                   {relatedPost.data.title}
                 </a>
-              </h3>
+              </p>
               <p class="related-card-excerpt">
                 {PostUtils.getPlainTextDescription(
                   (relatedPost.data.description?.trim() || relatedPost.body) ??
@@ -698,13 +698,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     margin: 0 0 0.35rem;
     font-size: 0.75rem;
     color: var(--text-secondary);
-  }
-
-  .related-card-title {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.35;
   }
 
   .related-card-title-link {
