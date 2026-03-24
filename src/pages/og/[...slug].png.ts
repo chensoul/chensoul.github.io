@@ -71,7 +71,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         post.filePath,
         false,
         post.data.date,
-        post.data.timezone
+        post.data.timezone,
+        post.data.slug
       );
       const author = (post.data as { author?: string }).author ?? SITE.author;
 

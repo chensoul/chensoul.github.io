@@ -18,7 +18,8 @@ function getCanonicalUrl(post: CollectionEntry<"blog">): string {
       post.filePath,
       true,
       post.data.date,
-      post.data.timezone
+      post.data.timezone,
+      post.data.slug
     ),
     SITE.website
   ).toString();
@@ -34,7 +35,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         post.filePath,
         false,
         post.data.date,
-        post.data.timezone
+        post.data.timezone,
+        post.data.slug
       ),
     },
     props: { post },

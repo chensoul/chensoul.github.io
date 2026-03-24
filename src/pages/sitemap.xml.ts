@@ -81,7 +81,8 @@ export const GET: APIRoute = async () => {
       post.filePath,
       true,
       post.data.date,
-      post.data.timezone
+      post.data.timezone,
+      post.data.slug
     ),
     lastmod: new Date(post.data.updated ?? post.data.date).toISOString(),
     priority: "0.64",

@@ -14,7 +14,6 @@ import { formatFeedDate } from "@/utils/feedDate";
  * @property itemClass - 额外的 CSS 类名
  * @property hidden - 是否隐藏此卡片
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
- * @property priority - 是否为 LCP 优先资源（首屏首图时设为 true，使用 fetchpriority="high"）
  * @property listKind - article：时间+分类链接；weekly：再加描述行；邻居订阅用 mode="feed"
  */
 interface BlogCardProps extends CollectionEntry<"blog"> {
@@ -24,7 +23,6 @@ interface BlogCardProps extends CollectionEntry<"blog"> {
   itemClass?: string;
   hidden?: boolean;
   dateFormat?: "relative" | "absolute";
-  priority?: boolean;
 }
 
 interface FeedCardProps {
@@ -51,8 +49,6 @@ const hidden = !isFeedCard ? (blogProps.hidden ?? false) : false;
 const dateFormat = !isFeedCard
   ? (blogProps.dateFormat ?? "relative")
   : "relative";
-const priority = !isFeedCard ? (blogProps.priority ?? false) : false;
-
 const data = !isFeedCard ? blogProps.data : undefined;
 const id = !isFeedCard ? blogProps.id : undefined;
 const filePath = !isFeedCard ? blogProps.filePath : undefined;
@@ -155,8 +151,7 @@ if (isFeedCard) {
               alt=""
               width={46}
               height={46}
-              loading={priority ? "eager" : "lazy"}
-              fetchpriority={priority ? "high" : undefined}
+              loading="lazy"
               decoding="async"
             />
           )
@@ -166,14 +161,7 @@ if (isFeedCard) {
               alt={title}
               width={46}
               height={46}
-              loading={
-                priority
-                  ? "eager"
-                  : SITE.imageConfig.loading.lazy
-                    ? "lazy"
-                    : "eager"
-              }
-              fetchpriority={priority ? "high" : undefined}
+              loading="lazy"
               decoding="async"
             />
           )
@@ -198,7 +186,14 @@ if (isFeedCard) {
           ) : (
             <p class="post-item-title">
               <a
-                href={PostUtils.getPath(id!, filePath!, true, date!, timezone)}
+                href={PostUtils.getPath(
+                  id!,
+                  filePath!,
+                  true,
+                  date!,
+                  timezone,
+                  data?.slug
+                )}
                 target={openInNewTab ? "_blank" : undefined}
                 rel={openInNewTab ? "noopener noreferrer" : undefined}
               >

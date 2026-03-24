@@ -234,12 +234,16 @@ export class PostUtils {
     return `${y}-${m}-${d}`;
   }
 
+  /**
+   * @param explicitSlug - frontmatter `slug`，非空时优先生成 URL 末段（经 slugify），便于短链与 ASCII 路径
+   */
   static getPath(
     id: string,
     filePath: string | undefined,
     includeBase = true,
     date?: Date,
-    timeZone?: string
+    timeZone?: string,
+    explicitSlug?: string | null
   ): string {
     const basePath = includeBase ? "/posts" : "";
     const blogId = id.split("/");
@@ -248,6 +252,12 @@ export class PostUtils {
     const datePrefixMatch = slug.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/);
     if (datePrefixMatch) {
       slug = datePrefixMatch[2];
+    }
+
+    const fromFrontmatter = explicitSlug?.trim();
+    if (fromFrontmatter) {
+      const slugified = slugifyStr(fromFrontmatter);
+      if (slugified) slug = slugified;
     }
 
     if (date) {
@@ -341,7 +351,8 @@ function getPostMarkdownUrl(post: CollectionEntry<"blog">): string {
     post.filePath,
     false,
     post.data.date,
-    post.data.timezone
+    post.data.timezone,
+    post.data.slug
   );
   return toAbsoluteUrl(`/posts/${slugPath}.md`);
 }

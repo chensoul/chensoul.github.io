@@ -28,7 +28,14 @@ export async function GET() {
     items: sortedPosts.map(({ data, id, body, filePath }) => {
       const description = PostUtils.getDescription(body ?? "");
       return {
-        link: PostUtils.getPath(id, filePath, true, data.date, data.timezone),
+        link: PostUtils.getPath(
+          id,
+          filePath,
+          true,
+          data.date,
+          data.timezone,
+          data.slug
+        ),
         title: data.title,
         description,
         categories: data.categories,

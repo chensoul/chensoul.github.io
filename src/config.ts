@@ -132,15 +132,10 @@ export const SITE = {
   lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list.js",
 
   /**
-   * 图片相关配置
-   *
-   * 控制项目中所有图片的加载和显示
+   * 图片相关配置（CDN 前缀等；列表 Card 缩略图固定 loading="lazy" + decoding="async"）
    */
   imageConfig: {
     imagesUrl: "https://cos.chensoul.cc",
-    loading: {
-      lazy: true,
-    },
   },
 
   /**
