@@ -94,8 +94,8 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
 
   const titleBlock =
     link && link !== "#"
-      ? `<h3 class="post-item-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></h3>`
-      : `<h3 class="post-item-title"><span>${title}</span></h3>`;
+      ? `<p class="post-item-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></p>`
+      : `<p class="post-item-title"><span>${title}</span></p>`;
 
   const metaBlog =
     blogName &&

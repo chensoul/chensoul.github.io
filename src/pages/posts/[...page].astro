@@ -70,7 +70,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
           </h2>
           <ul class="post-cards-list m-0 list-none p-0">
             {groupedByYear[year].map(post => (
-              <Card {...post} variant="h3" dateFormat="absolute" />
+              <Card {...post} openInNewTab={false} dateFormat="absolute" />
             ))}
           </ul>
         </div>

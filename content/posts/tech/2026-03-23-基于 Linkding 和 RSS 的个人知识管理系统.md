@@ -1,5 +1,5 @@
 ---
-title: "基于 Linkding 和 RSS 的个人知识管理系统：轻量收藏、快速找回、持续输出"
+title: "基于 Linkding 和 RSS 的个人知识管理系统"
 date: 2026-03-23 18:40:00+08:00
 slug: linkding-rss-personal-knowledge-management-system
 categories: [ "tech" ]

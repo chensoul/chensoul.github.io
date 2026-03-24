@@ -43,7 +43,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
           记录每周的开发进展、工具尝试和一些阶段性想法。
           <a
             href="/categories/weekly"
-            class="home-feed-more font-medium text-[var(--accent)] no-underline hover:underline"
+            class="text-[var(--accent)] no-underline hover:underline"
           >
             查看全部周报
           </a>
@@ -52,7 +52,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
       <ul class="post-cards-list m-0 list-none p-0">
         {
           lifePosts.map(post => (
-            <Card variant="h3" listKind="weekly" {...post} />
+            <Card openInNewTab={false} listKind="weekly" {...post} />
           ))
         }
       </ul>
@@ -67,26 +67,19 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
           优先展示最近更新的技术文章、知识库条目和翻译内容。
           <a
             href="/posts"
-            class="home-feed-more font-medium text-[var(--accent)] no-underline hover:underline"
+            class="text-[var(--accent)] no-underline hover:underline"
           >
             查看全部文章
           </a>
         </p>
       </header>
       <ul class="post-cards-list m-0 list-none p-0">
-        {latestPosts.map(post => <Card variant="h3" {...post} />)}
+        {latestPosts.map(post => <Card openInNewTab={false} {...post} />)}
       </ul>
     </div>
   </section>
 
   <style>
-    /* 「查看全部」紧接在说明文字后，不换行显示链接文案 */
-    .home-feed-more {
-      margin-inline-start: 0.35rem;
-      white-space: nowrap;
-      vertical-align: baseline;
-    }
-
     /* 覆盖 base.css h3 的 margin，标题与说明紧贴 */
     .home-feed-col__title {
       margin-bottom: 0.25rem;

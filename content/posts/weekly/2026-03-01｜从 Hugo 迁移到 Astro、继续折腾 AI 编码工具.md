@@ -1,11 +1,12 @@
 ---
-title: "2026-03-01｜从 Hugo 迁移到 Astro、继续折腾 AI 编码工具"
+title: "2026-03-01｜从 Hugo 迁移到 Astro、AI 编码工具"
 date: 2026-03-05 21:00:00+08:00
 slug: "20260301-week-review"
 tags: ['astro','openclaw','hugo']
 draft: false
 categories: [ "weekly" ]
 description: 这周主要在两条线上投入时间：把博客从 Hugo 迁移到 Astro，也继续试用了 Codex CLI、Gemini CLI、Claude Code 和 OpenClaw。
+cover: /thumbs/astro.svg
 ---
 
 本篇博客介绍最近一周（2026-02-23 ～ 2026-03-01）的记录与思考。
