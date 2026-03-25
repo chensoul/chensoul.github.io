@@ -53,7 +53,7 @@ export default defineConfig({
     photosuite({
       scope: "#article",
       /**
-       * 桶前缀见 `getImagesAssetBase`（`blogImages/cdnUrls`）；子目录由 `remarkInjectImageDir` 从 `slug` 补全
+       * 桶前缀见 `getImagesAssetBase`（`blogImages/cdnUrls`）；子目录由 `remarkInjectImageDir` 从 frontmatter `slug` 注入
        */
       imageBase: getImagesAssetBase(),
       exif: false,
@@ -109,7 +109,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ["mermaid", "dayjs", "lodash.kebabcase", "markdown-it"],
+      include: ["mermaid", "dayjs", "markdown-it"],
       /**
        * photosuite/client 内部对 fancybox、imageGrid 等为相对路径的动态 import；
        * 打进 .vite/deps 后子 chunk 易在热更/重启后与 hash 失步，浏览器报 504 Outdated Optimize Dep。

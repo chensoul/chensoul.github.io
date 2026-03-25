@@ -83,7 +83,7 @@ math: false # 启用 KaTeX
 mermaid: false # 启用 Mermaid
 comments: true # 需 SITE.artalk.enabled 为 true 才显示评论；设为 false 可关单篇
 favicon: "tech.svg" # 可选，列表/归档用图标（public/images/_favicons/；无 banner 且解析为 /images 实图且非 _favicons 时可作 OG 备选）
-banner: "01.webp" # 可选，正文横幅图（拼到 public/images/{getPostImageDirName}/；也可写完整 /images/... 或 URL）
+banner: "01.webp" # 可选，正文横幅图（拼到 public/images/{slug}/，与文章 URL 末段一致；也可写完整 /images/... 或 URL）
 ```
 
 ### 文章 URL 规则

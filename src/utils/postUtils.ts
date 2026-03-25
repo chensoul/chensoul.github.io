@@ -8,8 +8,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { CollectionEntry } from "astro:content";
+
 import { SITE } from "@/config";
-import { slugifyStr } from "./slugifyStr";
 
 // --- 描述提取（Markdown → 纯文本摘要）---
 
@@ -37,9 +37,14 @@ const regexReplacers: Record<string, [RegExp, string]> = {
 
 // --- Slug（URL 路径）---
 
-export { slugifyStr };
+/**
+ * 标签/分类 URL 段、索引用键等：与 frontmatter 字面一致，仅 `trim`（不做 kebab-case 等变换）。
+ */
+export function trimUrlSegment(str: string): string {
+  return String(str).trim();
+}
 
-const slugifyAll = (arr: string[]) => arr.map(str => slugifyStr(str));
+const trimAll = (arr: string[]) => arr.map(s => trimUrlSegment(s));
 
 // --- 分类元信息 ---
 
@@ -61,9 +66,9 @@ const CATEGORY_META: CategoryMeta[] = [
 export function getCategoryMeta(nameOrSlug?: string): CategoryMeta | undefined {
   if (!nameOrSlug) return undefined;
 
-  const slug = slugifyStr(nameOrSlug);
+  const key = trimUrlSegment(nameOrSlug);
   return CATEGORY_META.find(
-    item => item.slug === slug || item.name === nameOrSlug
+    item => item.slug === key || item.name === nameOrSlug
   );
 }
 
@@ -136,14 +141,14 @@ export class PostUtils {
     this.getPublishedPosts(posts)
       .flatMap(post => post.data.tags)
       .forEach(tag => {
-        const slugTag = slugifyStr(tag);
+        const tagKey = trimUrlSegment(tag);
 
-        if (tagCountMap.has(slugTag)) {
-          const existingTag = tagCountMap.get(slugTag)!;
+        if (tagCountMap.has(tagKey)) {
+          const existingTag = tagCountMap.get(tagKey)!;
           existingTag.count += 1;
         } else {
-          tagCountMap.set(slugTag, {
-            tag: slugTag,
+          tagCountMap.set(tagKey, {
+            tag: tagKey,
             tagName: tag,
             count: 1,
           });
@@ -161,15 +166,15 @@ export class PostUtils {
     this.getPublishedPosts(posts)
       .flatMap(post => post.data.categories)
       .forEach(cat => {
-        const slugName = slugifyStr(cat);
+        const catKey = trimUrlSegment(cat);
         const displayName = getCategoryMeta(cat)?.name ?? cat;
 
-        if (catCountMap.has(slugName)) {
-          const existing = catCountMap.get(slugName)!;
+        if (catCountMap.has(catKey)) {
+          const existing = catCountMap.get(catKey)!;
           existing.count += 1;
         } else {
-          catCountMap.set(slugName, {
-            category: slugName,
+          catCountMap.set(catKey, {
+            category: catKey,
             categoryName: displayName,
             count: 1,
           });
@@ -186,7 +191,7 @@ export class PostUtils {
     tag: string
   ): CollectionEntry<"blog">[] {
     return this.sort(
-      posts.filter(post => slugifyAll(post.data.tags).includes(tag))
+      posts.filter(post => trimAll(post.data.tags).includes(tag))
     );
   }
 
@@ -195,7 +200,7 @@ export class PostUtils {
     category: string
   ): CollectionEntry<"blog">[] {
     return this.sort(
-      posts.filter(post => slugifyAll(post.data.categories).includes(category))
+      posts.filter(post => trimAll(post.data.categories).includes(category))
     );
   }
 
@@ -237,7 +242,7 @@ export class PostUtils {
   }
 
   /**
-   * 文章 URL：`/posts/{slug}`。slug 优先 frontmatter `slug`（经 slugify），否则文件名去掉 `YYYY-MM-DD-` 前缀与扩展名。
+   * 文章 URL：`/posts/{slug}`。frontmatter `slug` 按元数据原样使用（仅 trim）；未指定时由文件名去掉 `YYYY-MM-DD-` 前缀，整段再 trim（不作 kebab-case）。
    *
    * @param explicitSlug - frontmatter `slug`
    * @param _date - 保留参数（排序/展示仍用）；不再参与 URL，避免破坏既有调用签名
@@ -254,25 +259,23 @@ export class PostUtils {
     const basePath = includeBase ? "/posts" : "";
     const blogId = id.split("/");
     const fileName = blogId.length > 0 ? blogId.slice(-1)[0] : id;
-    let slug = fileName.replace(/\.(md|mdx)$/, "");
+    let slug = fileName.replace(/\.(md|mdx)$/, "").trim();
     const datePrefixMatch = slug.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/);
     if (datePrefixMatch) {
-      slug = datePrefixMatch[2];
+      slug = datePrefixMatch[2].trim();
     }
 
     const fromFrontmatter = explicitSlug?.trim();
     if (fromFrontmatter) {
-      const slugified = slugifyStr(fromFrontmatter);
-      if (slugified) slug = slugified;
+      slug = fromFrontmatter;
     }
 
-    return [basePath, slugifyStr(slug)].filter(Boolean).join("/");
+    return [basePath, slug].filter(Boolean).join("/");
   }
 
   /**
-   * 文章配图在 `public/images/{目录}/` 下的目录名。
+   * 文章配图在 `public/images/{目录}/` 下的目录名（与 {@link PostUtils.getPath} 末段相同，即 `slug` 语义）。
    *
-   * 优先 `imageDir`（schema 中已默认与 `slug` 一致），否则回退为 {@link PostUtils.getPath} 末段。
    * 对外 URL：`astro dev` 同源 `/images/...`，生产 CDN，见 `src/utils/blogImages/`。
    */
   static getPostImageDirName(
@@ -280,14 +283,8 @@ export class PostUtils {
     filePath: string | undefined,
     date?: Date,
     timeZone?: string,
-    explicitSlug?: string | null,
-    imageDir?: string | null
+    explicitSlug?: string | null
   ): string {
-    const resolved = imageDir?.trim();
-    if (resolved) {
-      const s = slugifyStr(resolved);
-      if (s) return s;
-    }
     const pathNoPosts = PostUtils.getPath(
       id,
       filePath,

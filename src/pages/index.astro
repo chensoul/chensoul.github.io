@@ -7,7 +7,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import { PostUtils, slugifyStr } from "@/utils/postUtils";
+import { PostUtils, trimUrlSegment } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 /** 与 /og/index.png 一致 */
@@ -20,7 +20,7 @@ const sortedPosts = PostUtils.sort(publishedPosts);
 
 const latestPosts = sortedPosts
   .filter(
-    post => !post.data.categories.some(cat => slugifyStr(cat) === "weekly")
+    post => !post.data.categories.some(cat => trimUrlSegment(cat) === "weekly")
   )
   .slice(0, SITE.postPerIndex);
 const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(

@@ -11,7 +11,7 @@ import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import Photosuite from "@/components/Photosuite.astro";
 import ArticleToc from "@/components/ArticleToc.astro";
-import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
+import { getCategoryMeta, PostUtils, trimUrlSegment } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
@@ -45,8 +45,7 @@ const imageDirName = PostUtils.getPostImageDirName(
   post.filePath,
   date,
   post.data.timezone,
-  post.data.slug ?? null,
-  post.data.imageDir ?? null
+  post.data.slug ?? null
 );
 const bannerPath = PostUtils.resolveBlogImageRef(bannerRaw, imageDirName);
 const faviconPath = PostUtils.resolveFaviconRef(post.data.favicon);
@@ -107,7 +106,7 @@ const primaryCategoryLabel =
   getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
 const categoryLinks = categories.map(category => ({
   name: getCategoryMeta(category)?.name ?? category,
-  slug: slugifyStr(category),
+  slug: trimUrlSegment(category),
 }));
 const breadcrumbItems = [
   { name: "首页", item: SITE.website },
@@ -117,7 +116,7 @@ const breadcrumbItems = [
         {
           name: primaryCategoryLabel,
           item: new URL(
-            `/categories/${slugifyStr(primaryCategory)}`,
+            `/categories/${trimUrlSegment(primaryCategory)}`,
             SITE.website
           ).toString(),
         },
@@ -320,7 +319,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
               <span class="mx-1.5 opacity-60" aria-hidden="true">
                 /
               </span>
-              <a href={`/categories/${slugifyStr(primaryCategory)}`}>
+              <a href={`/categories/${trimUrlSegment(primaryCategory)}`}>
                 {primaryCategoryLabel}
               </a>
             </>
@@ -379,7 +378,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
           </span>
           <ul class="m-0 flex list-none flex-wrap gap-2 p-0" role="list">
             {tags.map((tag: string) => (
-              <Tag tag={slugifyStr(tag)} tagName={tag} />
+              <Tag tag={trimUrlSegment(tag)} tagName={tag} />
             ))}
           </ul>
         </div>

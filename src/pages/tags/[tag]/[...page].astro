@@ -9,7 +9,7 @@ import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
 import TaxonomySummary from "@/components/TaxonomySummary.astro";
-import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
+import { getCategoryMeta, PostUtils, trimUrlSegment } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export const pageTitle = `标签 | ${SITE.title}`;
@@ -38,7 +38,7 @@ const categoryCount = new Map<
 >();
 page.data.forEach(post => {
   post.data.categories.forEach(category => {
-    const slug = slugifyStr(category);
+    const slug = trimUrlSegment(category);
     const categoryLabel = getCategoryMeta(category)?.name ?? category;
     const existing = categoryCount.get(slug);
     if (existing) {

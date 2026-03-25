@@ -25,7 +25,7 @@ function imageCdnOrigin(): string {
 export const LOCAL_IMAGES_PUBLIC_BASE = "/images";
 
 /**
- * Photosuite `imageBase`：仅桶前缀；子目录由 remark + frontmatter `imageDir` + Photosuite `join`。
+ * Photosuite `imageBase`：仅桶前缀；子目录由 remark 从 `slug` 注入的 `imageDir` + Photosuite `join`。
  */
 export function getImagesAssetBase(): string {
   return shouldUseCdnForPublicImagePaths()

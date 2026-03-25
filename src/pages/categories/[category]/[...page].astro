@@ -9,7 +9,7 @@ import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
 import TaxonomySummary from "@/components/TaxonomySummary.astro";
-import { PostUtils, slugifyStr } from "@/utils/postUtils";
+import { PostUtils, trimUrlSegment } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export const pageTitle = `分类 | ${SITE.title}`;
@@ -26,7 +26,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const categoryPosts = PostUtils.sort(
       publishedPosts.filter(post =>
         post.data.categories.some(
-          postCategory => slugifyStr(postCategory) === category
+          postCategory => trimUrlSegment(postCategory) === category
         )
       )
     );
@@ -45,7 +45,7 @@ const cardListKind = categoryParam === "weekly" ? "weekly" : "article";
 const tagCount = new Map<string, { tagName: string; count: number }>();
 page.data.forEach(post => {
   post.data.tags.forEach(tag => {
-    const slug = slugifyStr(tag);
+    const slug = trimUrlSegment(tag);
     const existing = tagCount.get(slug);
     if (existing) {
       existing.count += 1;

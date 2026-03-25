@@ -205,27 +205,15 @@ const blog = defineCollection({
         /**
          * 正文横幅图（banner）
          *
-         * 可写 `01.webp`（与 `imageDir` / `slug` 拼为 `/images/{slug}/01.webp`）、或 `/images/...`、或 https。仅在详情页标题上方展示。
+         * 可写 `01.webp`（与 `slug` 拼为 `/images/{slug}/01.webp`）、或 `/images/...`、或 https。仅在详情页标题上方展示。
          */
         banner: z.string().optional(),
 
         /**
-         * 文章 URL 末段（ASCII），并与正文配图目录统一：`public/images/{slug}/`。
+         * 文章 URL 末段；按 frontmatter 原样使用（不经过 slugify）。配图目录与之一致：`public/images/{slug}/`。
          */
         slug: z.string().optional(),
-
-        /**
-         * Photosuite / 配图子目录；省略时与 `slug` 相同。若配图目录必须与 URL 不同可单独设置。
-         */
-        imageDir: z.string().optional(),
-      })
-      .transform(data => ({
-        ...data,
-        imageDir:
-          (data.imageDir && data.imageDir.trim()) ||
-          (data.slug && data.slug.trim()) ||
-          undefined,
-      })),
+      }),
 });
 
 /**

@@ -1,8 +1,6 @@
 /**
- * Remark：`imageDir` 注入与 Markdown 图片路径去重。
+ * Remark：由 `slug` 注入 `imageDir`（Photosuite 内部用）并做 Markdown 图片路径去重。
  */
-
-import { slugifyStr } from "../slugifyStr";
 
 type VfileLike = {
   data?: {
@@ -12,19 +10,15 @@ type VfileLike = {
 };
 
 /**
- * 补全 `frontmatter.imageDir`（显式优先，否则 `slug`），供 Photosuite。
+ * 按 `slug` 补全处理期 `frontmatter.imageDir`，供 Photosuite（frontmatter 本身不要求 `imageDir`）。
  */
 export function remarkInjectImageDir() {
   return (_tree: unknown, file: VfileLike) => {
     const apply = (fm: Record<string, unknown> | undefined) => {
       if (!fm || typeof fm !== "object") return;
-      const explicit =
-        typeof fm.imageDir === "string" ? fm.imageDir.trim() : "";
       const slug = typeof fm.slug === "string" ? fm.slug.trim() : "";
-      const raw = explicit || slug;
-      if (!raw) return;
-      const dir = slugifyStr(raw);
-      if (dir) fm.imageDir = dir;
+      if (!slug) return;
+      fm.imageDir = slug;
     };
     apply(file.data?.astro?.frontmatter);
     apply(file.data?.frontmatter as Record<string, unknown> | undefined);

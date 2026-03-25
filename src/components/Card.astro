@@ -4,7 +4,7 @@ import {
   formatFeedDate,
   getCategoryMeta,
   PostUtils,
-  slugifyStr,
+  trimUrlSegment,
 } from "@/utils/postUtils";
 import Datetime from "./Datetime.astro";
 import { SITE } from "@/config";
@@ -68,7 +68,7 @@ const primaryCategory = Array.isArray(categories) ? categories[0] : undefined;
 const primaryCategoryLabel =
   getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
 const primaryCategorySlug = primaryCategory
-  ? slugifyStr(primaryCategory)
+  ? trimUrlSegment(primaryCategory)
   : undefined;
 
 /**
