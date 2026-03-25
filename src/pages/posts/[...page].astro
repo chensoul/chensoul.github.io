@@ -141,6 +141,8 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 
     window.addEventListener("hashchange", scheduleAnchorCorrection);
     window.addEventListener("load", scheduleAnchorCorrection, { once: true });
-    requestAnimationFrame(() => requestAnimationFrame(scheduleAnchorCorrection));
+    requestAnimationFrame(() =>
+      requestAnimationFrame(scheduleAnchorCorrection)
+    );
   })();
 </script>

@@ -97,8 +97,9 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
       ? `<p class="pcard-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></p>`
       : `<p class="pcard-title"><span>${title}</span></p>`;
 
-  const metaBlog =
-    blogName ? `<span aria-hidden="true">·</span><span>${blogName}</span>` : "";
+  const metaBlog = blogName
+    ? `<span aria-hidden="true">·</span><span>${blogName}</span>`
+    : "";
 
   return `
 <li class="pcard">

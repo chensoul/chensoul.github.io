@@ -27,6 +27,9 @@ const htmlContent = md.render(pageData.content);
         <h1>{pageTitle}</h1>
       </section>
     </header>
-    <div class="post-content page-content w-full min-w-0" set:html={htmlContent} />
+    <div
+      class="post-content page-content w-full min-w-0"
+      set:html={htmlContent}
+    />
   </article>
 </Layout>
