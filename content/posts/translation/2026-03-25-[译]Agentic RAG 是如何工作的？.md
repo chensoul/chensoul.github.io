@@ -15,8 +15,6 @@ canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
 > 版权归原作者或原刊登方所有；若权利方认为本文处理方式不妥，请联系删除。
 > 本文并非原文官方版本，也不是经权利方授权的正式中文译本。
 
-原文：<https://blog.bytebytego.com/p/how-agentic-rag-works>
-
 标准 RAG 系统的主要问题，其实不在检索，也不在生成。
 
 问题在于，在生成发生之前，中间没有任何机制去判断这次检索是否真的已经足够好了。
