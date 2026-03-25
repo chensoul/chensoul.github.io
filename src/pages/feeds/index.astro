@@ -52,26 +52,35 @@ const clientData = {
 ---
 
 <Layout title={pageTitle} schemaType="CollectionPage" robots="noindex,follow">
-  <div class="min-w-0">
-    <h2>邻居</h2>
+  <article class="post">
+    <header class="post-header">
+      <section class="post-header__main">
+        <h2>{SITE.feeds.navLabel}</h2>
+      </section>
+    </header>
+
     {
       !feedsEnabled ? (
-        <p>
-          本页暂未开放。若需展示邻居博客的最新文章聚合，请在站点配置中开启
-          <code>SITE.feeds.enabled</code> 并配置数据源。
-        </p>
+        <div class="post-content page-content min-w-0">
+          <p>
+            本页暂未开放。若需展示邻居博客的最新文章聚合，请在站点配置中开启
+            <code>SITE.feeds.enabled</code> 并配置数据源。
+          </p>
+        </div>
       ) : (
         <>
-          <p>
-            以下列表是使用程序定时从我关注的 RSS
-            订阅源抓取到的文章、视频和播客，我可以第一时间查看是否有更新，并阅读、观看和收听。
+          <div class="post-content page-content min-w-0">
+            <p>
+              以下列表是使用程序定时从我关注的 RSS
+              订阅源抓取到的文章、视频和播客，我可以第一时间查看是否有更新，并阅读、观看和收听。
+            </p>
             {!clientData.dataSourceUrl && (
-              <span class="mt-2 block">
+              <p>
                 请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合
                 JSON 地址以启用列表。
-              </span>
+              </p>
             )}
-          </p>
+          </div>
 
           <div
             id="feeds-data-json-container"
@@ -129,5 +138,5 @@ const clientData = {
         </>
       )
     }
-  </div>
+  </article>
 </Layout>

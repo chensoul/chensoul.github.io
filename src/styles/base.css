@@ -452,6 +452,26 @@ main {
   padding: 0 1.5rem 2rem;
 }
 
+.post {
+  width: 100%;
+  min-width: 0;
+}
+
+.post > .post-header {
+  width: 100%;
+}
+
+.post-header__main {
+  margin-bottom: 1.5rem;
+}
+
+.post-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.15;
+  text-align: center;
+}
+
 /* ================================
    选择与高亮
    ================================ */

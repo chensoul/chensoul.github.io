@@ -21,6 +21,12 @@ const htmlContent = md.render(pageData.content);
 ---
 
 <Layout title={pageTitle} description={pageDescription} schemaType="AboutPage">
-  <article class="w-full min-w-0" set:html={htmlContent} />
+  <article class="post">
+    <header class="post-header">
+      <section class="post-header__main">
+        <h2 >{pageTitle}</h2>
+      </section>
+    </header>
+    <div class="post-content page-content w-full min-w-0" set:html={htmlContent} />
+  </article>
 </Layout>
-

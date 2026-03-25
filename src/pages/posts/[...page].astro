@@ -54,7 +54,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 <Layout title={pageTitle} robots="noindex,follow">
   <h2>归档</h2>
   <section
-    class="archive-taxonomy my-5 flex flex-col gap-4 md:my-8"
+    class="archive-taxonomy my-3 flex flex-col gap-3 md:my-0"
     aria-label="分类列表"
   >
     <TaxonomySummary title="分类" items={categoryItems} />
@@ -84,16 +84,63 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
     margin: 0;
   }
 
-  @media (min-width: 1024px) {
-    .archive-taxonomy {
-      width: calc(100% + 5rem);
-      max-width: none;
-      margin-right: -5rem;
-    }
+  .archive-taxonomy :global(.taxonomy-summary > div) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .archive-taxonomy :global(.taxonomy-summary > div > span:first-child) {
+    min-width: 3rem;
+    line-height: 2rem;
+  }
+
+  .archive-taxonomy :global(.taxonomy-summary a) {
+    display: inline-flex;
   }
 
   /* 与站点吸顶顶栏对齐，避免 #year-… 锚点滚入后被遮挡 */
   .archive-year-section {
-    scroll-margin-top: calc(var(--site-header-sticky-offset) + 1rem);
+    scroll-margin-top: calc(var(--site-header-sticky-offset) + 0.35rem);
+  }
+
+  .archive-year-section:last-child {
+    padding-bottom: max(calc(var(--site-header-sticky-offset) + 3rem), 36rem);
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const getAnchorOffset = () => {
+      const stickyOffset = getComputedStyle(document.documentElement)
+        .getPropertyValue("--site-header-sticky-offset")
+        .trim();
+      const parsed = Number.parseFloat(stickyOffset);
+      return Number.isFinite(parsed) ? parsed * 16 : 84;
+    };
+
+    const scrollToYearAnchor = () => {
+      const { hash } = window.location;
+      if (!hash.startsWith("#year-")) return;
+
+      const target = document.querySelector(hash);
+      if (!(target instanceof HTMLElement)) return;
+
+      const top =
+        window.scrollY + target.getBoundingClientRect().top - getAnchorOffset();
+      window.scrollTo({ top: Math.max(top, 0), behavior: "auto" });
+    };
+
+    const scheduleAnchorCorrection = () => {
+      scrollToYearAnchor();
+      setTimeout(scrollToYearAnchor, 0);
+      setTimeout(scrollToYearAnchor, 120);
+      setTimeout(scrollToYearAnchor, 360);
+    };
+
+    window.addEventListener("hashchange", scheduleAnchorCorrection);
+    window.addEventListener("load", scheduleAnchorCorrection, { once: true });
+    requestAnimationFrame(() => requestAnimationFrame(scheduleAnchorCorrection));
+  })();
+</script>
