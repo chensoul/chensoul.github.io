@@ -11,7 +11,6 @@ import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import Photosuite from "@/components/Photosuite.astro";
 import ArticleToc from "@/components/ArticleToc.astro";
-import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
@@ -204,7 +203,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 ---
 
 <Layout {...layoutProps}>
-  <TaxonomySummary items={[]} />
   {hasInlineImages && <Photosuite />}
   {
     tags.map((tag: string) => (
@@ -489,13 +487,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     }
     .post-content :where(h2, h3, h4) {
       scroll-margin-top: var(--site-header-sticky-offset);
-    }
-
-    .reading-wrap {
-      max-width: 42rem;
-      margin-left: auto;
-      margin-right: auto;
-      width: 100%;
     }
 
     #Comments {

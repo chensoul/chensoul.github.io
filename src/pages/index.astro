@@ -35,7 +35,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     class="home-dual-feed flex w-full min-w-0 flex-col gap-12 md:flex-row md:items-start md:gap-x-8 md:gap-y-0 lg:gap-x-10"
   >
     <div
-      class="home-feed-col home-feed-col--articles min-w-0 md:basis-[56%] lg:basis-[56%]"
+      class="home-feed-col home-feed-col--articles min-w-0 md:basis-[52%] lg:basis-[52%]"
     >
       <header class="home-feed-col__head mb-2.5">
         <h3 class="home-feed-col__title mt-0">最近文章</h3>
@@ -57,7 +57,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     </div>
 
     <aside
-      class="home-feed-col home-feed-col--weekly min-w-0 md:basis-[44%] lg:basis-[44%]"
+      class="home-feed-col home-feed-col--weekly min-w-0 md:basis-[48%] lg:basis-[48%]"
     >
       <header class="home-feed-col__head mb-2.5">
         <h3 class="home-feed-col__title mt-0">最近周报</h3>
@@ -91,11 +91,11 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
     @media (min-width: 768px) {
       .home-feed-col--weekly {
-        flex: 0 1 44%;
+        flex: 0 1 48%;
       }
 
       .home-feed-col--articles {
-        flex: 0 1 56%;
+        flex: 0 1 52%;
       }
 
       .home-feed-col__head {

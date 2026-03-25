@@ -7,7 +7,6 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
-import TaxonomySummary from "@/components/TaxonomySummary.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
@@ -26,7 +25,6 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 
 <Layout title={pageTitle} robots="noindex,follow">
   <h1>标签</h1>
-  <TaxonomySummary items={[]} />
   {
     topTags.length > 0 && (
       <section>

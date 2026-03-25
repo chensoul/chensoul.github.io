@@ -141,7 +141,18 @@ if (isFeedCard) {
 }
 ---
 
-<li class:list={["pcard", itemClass, { hidden }]}>
+<li
+  class:list={[
+    "pcard",
+    itemClass,
+    {
+      hidden,
+      "pcard--feed": isFeedCard,
+      "pcard--weekly": !isFeedCard && listKind === "weekly",
+      "pcard--article": !isFeedCard && listKind !== "weekly",
+    },
+  ]}
+>
   <div class="pcard-inner">
     {
       isFeedCard
@@ -232,8 +243,10 @@ if (isFeedCard) {
                 )}
               </div>
             )}
-            {listKind === "weekly" && weeklyDescription && (
-              <p class="pcard-desc">{weeklyDescription}</p>
+            {listKind === "weekly" && (
+              <>
+                {weeklyDescription && <p class="pcard-desc">{weeklyDescription}</p>}
+              </>
             )}
           </>
         )
@@ -245,13 +258,13 @@ if (isFeedCard) {
 <style is:global>
   .pcard {
     --pcard-thumb-size: 44px;
-    --pcard-padding-y: 0.24rem;
-    --pcard-title-size: 0.84rem;
-    --pcard-title-line-height: 1.3;
+    --pcard-padding-y: 0.28rem;
+    --pcard-title-size: 0.86rem;
+    --pcard-title-line-height: 1.34;
     --pcard-title-lines: 2;
-    --pcard-title-gap: 0.08rem;
-    --pcard-meta-size: 0.8rem;
-    --pcard-meta-line-height: 1.3;
+    --pcard-title-gap: 0.12rem;
+    --pcard-meta-size: 0.82rem;
+    --pcard-meta-line-height: 1.34;
   }
 
   .pcard {
@@ -340,6 +353,34 @@ if (isFeedCard) {
     text-decoration: underline;
   }
 
+  .pcard--article .pcard-inner {
+    padding-top: 0.46rem;
+    padding-bottom: 0.46rem;
+    gap: 0.62rem;
+    min-height: max(
+      calc(var(--pcard-thumb-size) + 1rem),
+      calc(
+        var(--pcard-title-size) * var(--pcard-title-line-height) *
+          var(--pcard-title-lines) + var(--pcard-meta-size) *
+          var(--pcard-meta-line-height) + 0.5rem
+      )
+    );
+  }
+
+  .pcard--article .pcard-title {
+    margin-bottom: 0.14rem;
+    line-height: 1.36;
+  }
+
+  .pcard--article .pcard-meta {
+    font-size: 0.83rem;
+    line-height: 1.36;
+  }
+
+  .pcard--weekly .pcard-title {
+    margin-bottom: 0.12rem;
+  }
+
   .pcard-meta {
     display: flex;
     flex-wrap: nowrap;
@@ -387,9 +428,14 @@ if (isFeedCard) {
     text-decoration: underline;
   }
 
+  .pcard--weekly .pcard-meta {
+    font-size: 0.76rem;
+    color: color-mix(in srgb, var(--text-secondary) 92%, var(--text-primary));
+  }
+
   .pcard-desc {
     margin: 0.14rem 0 0;
-    font-size: 0.76rem;
+    font-size: 0.83rem;
     line-height: 1.42;
     color: var(--text-secondary);
     display: -webkit-box;
@@ -397,6 +443,15 @@ if (isFeedCard) {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     overflow: hidden;
+  }
+
+  .pcard--weekly .pcard-desc {
+    margin-top: 0.14rem;
+    font-size: 0.83rem;
+    line-height: 1.48;
+    color: color-mix(in srgb, var(--text-secondary) 88%, var(--text-primary));
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
   }
 
   .pcard-meta > [aria-hidden="true"] {
@@ -418,10 +473,10 @@ if (isFeedCard) {
   @media (max-width: 640px) {
     .pcard {
       --pcard-thumb-size: 40px;
-      --pcard-padding-y: 0.28rem;
-      --pcard-title-size: 0.82rem;
-      --pcard-title-gap: 0.12rem;
-      --pcard-meta-size: 0.78rem;
+      --pcard-padding-y: 0.32rem;
+      --pcard-title-size: 0.83rem;
+      --pcard-title-gap: 0.14rem;
+      --pcard-meta-size: 0.8rem;
     }
 
     .pcard-inner {
@@ -441,9 +496,20 @@ if (isFeedCard) {
       line-height: 1.35;
     }
 
+    .pcard--article .pcard-inner {
+      gap: 0.64rem;
+      padding-top: 0.48rem;
+      padding-bottom: 0.48rem;
+    }
+
     .pcard-desc {
       margin-top: 0.16rem;
       line-height: 1.5;
+    }
+
+    .pcard--weekly .pcard-desc {
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
 
     .post-cards-list {

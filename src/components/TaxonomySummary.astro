@@ -1,4 +1,6 @@
 ---
+import "@/styles/taxonomy-pill.css";
+
 /**
  * 关联导航摘要 + 胶囊（taxonomy-pill）全局样式
  *
@@ -19,50 +21,6 @@ export interface Props {
 
 const { title = "", items } = Astro.props;
 ---
-
-<style is:global>
-  .taxonomy-pill {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2rem;
-    gap: 0.35rem;
-    padding: 0.2rem 0.65rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    line-height: 1.25;
-    background: var(--background-secondary);
-    border: 1px solid var(--border);
-    color: var(--accent);
-    transition:
-      border-color 0.2s ease,
-      background 0.2s ease;
-  }
-
-  a:hover .taxonomy-pill {
-    border-color: var(--accent);
-    background: var(--accent-surface);
-  }
-
-  /* 胶囊内数字（标签次数、分类/年份文章数） */
-  .taxonomy-pill-count--tag {
-    font-size: 0.75rem;
-    line-height: 1.2;
-    font-variant-numeric: tabular-nums;
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    color: var(--accent-dark);
-    padding: 0.05rem 0.35rem;
-    border-radius: 999px;
-  }
-
-  [data-theme="dark"] .taxonomy-pill-count--tag {
-    color: var(--accent);
-  }
-
-  .tag-link--lg .taxonomy-pill {
-    font-size: 0.875rem;
-    padding: 0.35rem 0.85rem;
-  }
-</style>
 {
   items.length > 0 && (
     <section class="taxonomy-summary my-4 first:mt-0" aria-label={title}>

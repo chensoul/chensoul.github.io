@@ -62,14 +62,10 @@ const { class: className } = Astro.props;
 
     if (!btn) return;
 
-    // 初始状态：隐藏
-    btn.classList.add("back-to-top-btn--hidden");
-
     function updateVisibility() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const shouldShow = scrollTop >= scrollThreshold;
 
-      btn.classList.toggle("back-to-top-btn--hidden", !shouldShow);
       btn.classList.toggle("back-to-top-btn--visible", shouldShow);
     }
 
