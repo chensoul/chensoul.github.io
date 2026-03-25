@@ -14,7 +14,8 @@ export const CDN_KATEX_STYLESHEET = `${CDN_ORIGIN}/dist/katex/0.16.38/dist/katex
 export const SITE = {
   website: "https://blog.chensoul.cc",
   author: "ChenSoul",
-  description: "记录 Java、Spring、MicroServices、Architecture、Kubernetes、DevOps、AI 编码工具、架构与个人周报的博客",
+  description:
+    "记录 Java、Spring、MicroServices、Architecture、Kubernetes、DevOps、AI 编码工具、架构与个人周报的博客",
   title: "ChenSoul Blog",
 
   googleSiteVerification: "702mzR8WJvXKVdS3ergTkQEIWAMuwniGMAIeE6wPRhc",

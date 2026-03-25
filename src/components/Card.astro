@@ -117,8 +117,7 @@ const feedBlogName = isFeedCard ? (feedProps.blogName?.trim() ?? "") : "";
 
 let avatarSrc = "";
 if (isFeedCard) {
-  avatarSrc =
-    feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
+  avatarSrc = feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
   if (
     avatarSrc &&
     !/^https?:\/\//.test(avatarSrc) &&
@@ -237,7 +236,9 @@ if (isFeedCard) {
             )}
             {listKind === "weekly" && (
               <>
-                {weeklyDescription && <p class="pcard-desc">{weeklyDescription}</p>}
+                {weeklyDescription && (
+                  <p class="pcard-desc">{weeklyDescription}</p>
+                )}
               </>
             )}
           </>

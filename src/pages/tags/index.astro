@@ -26,29 +26,29 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 <Layout title={pageTitle} robots="noindex,follow">
   <h1>标签</h1>
   <div class="space-y-8">
-  {
-    topTags.length > 0 && (
-      <section>
-        <h2>热门标签</h2>
-        <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
-          {topTags.map(({ tag, tagName, count }) => (
-            <Tag {tag} {tagName} {count} size="sm" />
-          ))}
-        </ul>
-      </section>
-    )
-  }
-  {
-    otherTags.length > 0 && (
-      <section>
-        <h2>全部标签</h2>
-        <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
-          {otherTags.map(({ tag, tagName, count }) => (
-            <Tag {tag} {tagName} {count} size="sm" />
-          ))}
-        </ul>
-      </section>
-    )
-  }
+    {
+      topTags.length > 0 && (
+        <section>
+          <h2>热门标签</h2>
+          <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+            {topTags.map(({ tag, tagName, count }) => (
+              <Tag {tag} {tagName} {count} size="sm" />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+    {
+      otherTags.length > 0 && (
+        <section>
+          <h2>全部标签</h2>
+          <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+            {otherTags.map(({ tag, tagName, count }) => (
+              <Tag {tag} {tagName} {count} size="sm" />
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </Layout>

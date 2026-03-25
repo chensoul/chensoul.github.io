@@ -317,7 +317,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         {
           primaryCategory && (
             <>
-              <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
+              <span class="mx-1.5 opacity-60" aria-hidden="true">
+                /
+              </span>
               <a href={`/categories/${slugifyStr(primaryCategory)}`}>
                 {primaryCategoryLabel}
               </a>
@@ -328,7 +330,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
       <section class="mb-6">
         <h1
-          class="mb-3 mt-0 text-center text-[clamp(1.5rem,4vw,2rem)] font-semibold leading-tight text-foreground"
+          class="mt-0 mb-3 text-center text-[clamp(1.5rem,4vw,2rem)] leading-tight font-semibold text-foreground"
         >
           {title}
         </h1>
@@ -343,7 +345,9 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             ))
           }
           <span class="opacity-50" aria-hidden="true">·</span>
-          <span class="whitespace-nowrap tabular-nums">{readingMinutes} 分钟阅读</span>
+          <span class="whitespace-nowrap tabular-nums"
+            >{readingMinutes} 分钟阅读</span
+          >
           <span class="opacity-50" aria-hidden="true">·</span>
           <Datetime
             pubDatetime={date}
@@ -383,163 +387,149 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       )
     }
 
-    <section
-      class="action-section w-full min-w-0"
-      aria-label="订阅与分享"
-    >
-    <div class="mb-4 block w-full min-w-0">
-      <h3 class="m-0 text-base font-medium">订阅与分享</h3>
-    </div>
-
-    <div class="action-grid grid w-full min-w-0 gap-4 sm:grid-cols-2">
-      <div class={postActionCardClass}>
-        <p class={postActionEyebrowClass}>
-          订阅文章
-        </p>
-        <h3 class="m-0 text-[0.98rem] leading-[1.35]">
-          订阅更新，不错过后续文章
-        </h3>
-        <p class="m-0 text-sm leading-relaxed text-muted">
-          直接通过 RSS 和 Telegram 订阅本站更新。
-        </p>
-        <div
-          class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
-        >
-          <a
-            class="btn btn-primary inline-flex min-h-10 items-center justify-center rounded-lg border border-transparent bg-accent px-4 py-2 text-sm font-medium text-background no-underline transition-colors hover:bg-accent-strong hover:text-background"
-            href="/rss.xml"
-          >
-            订阅 RSS
-          </a>
-          <a
-            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-            href="https://t.me/ichensoul"
-          >
-            关注 Telegram
-          </a>
-        </div>
+    <section class="action-section w-full min-w-0" aria-label="订阅与分享">
+      <div class="mb-4 block w-full min-w-0">
+        <h3 class="m-0 text-base font-medium">订阅与分享</h3>
       </div>
 
-      <div class={postActionCardClass}>
-        <p class={postActionEyebrowClass}>
-          分享文章
-        </p>
-        <h3 class="m-0 text-[0.98rem] leading-[1.35]">
-          如果这篇有帮助，可以顺手转发
-        </h3>
-        <p class="m-0 text-sm leading-relaxed text-muted">
-          直接分享给同事、朋友，或者发到你的社交平台。
-        </p>
-        <div
-          class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
-        >
-          <a
-            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-            href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
+      <div class="action-grid grid w-full min-w-0 gap-4 sm:grid-cols-2">
+        <div class={postActionCardClass}>
+          <p class={postActionEyebrowClass}>订阅文章</p>
+          <h3 class="m-0 text-[0.98rem] leading-[1.35]">
+            订阅更新，不错过后续文章
+          </h3>
+          <p class="m-0 text-sm leading-relaxed text-muted">
+            直接通过 RSS 和 Telegram 订阅本站更新。
+          </p>
+          <div
+            class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
           >
-            分享到 X
-          </a>
-          <a
-            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-            href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            <a
+              class="btn btn-primary inline-flex min-h-10 items-center justify-center rounded-lg border border-transparent bg-accent px-4 py-2 text-sm font-medium text-background no-underline transition-colors hover:bg-accent-strong hover:text-background"
+              href="/rss.xml"
+            >
+              订阅 RSS
+            </a>
+            <a
+              class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+              href="https://t.me/ichensoul"
+            >
+              关注 Telegram
+            </a>
+          </div>
+        </div>
+
+        <div class={postActionCardClass}>
+          <p class={postActionEyebrowClass}>分享文章</p>
+          <h3 class="m-0 text-[0.98rem] leading-[1.35]">
+            如果这篇有帮助，可以顺手转发
+          </h3>
+          <p class="m-0 text-sm leading-relaxed text-muted">
+            直接分享给同事、朋友，或者发到你的社交平台。
+          </p>
+          <div
+            class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
           >
-            分享到 Telegram
-          </a>
-          <a
-            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-            href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
-          >
-            邮件分享
-          </a>
+            <a
+              class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+              href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              分享到 X
+            </a>
+            <a
+              class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+              href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              分享到 Telegram
+            </a>
+            <a
+              class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+              href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
+            >
+              邮件分享
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  {
-    relatedPosts.length > 0 && (
-      <section
-        class="related-section w-full min-w-0"
-        aria-label="相关文章"
-      >
-        <div class="mb-4 block w-full min-w-0">
-          <h3 class="m-0 text-base font-medium">相关文章</h3>
-        </div>
-        <div
-          class="related-grid grid w-full min-w-0 gap-4 sm:grid-cols-2 min-[960px]:grid-cols-3"
-        >
-          {relatedPosts.map(({ post: relatedPost, path }) => (
-            <div class={postRelatedCardClass}>
-              <p
-                class="m-0 text-[0.72rem] font-semibold uppercase tracking-[0.04em] text-muted"
-              >
-                {relatedPost.data.categories
-                  .map(category => getCategoryMeta(category)?.name ?? category)
-                  .join(" / ")}
-              </p>
-              <p class="m-0">
-                <a
-                  href={path}
-                  class="leading-[1.42] text-accent no-underline hover:text-accent-strong hover:underline hover:underline-offset-[0.15em] focus-visible:text-accent-strong focus-visible:underline focus-visible:underline-offset-[0.15em]"
-                >
-                  {relatedPost.data.title}
-                </a>
-              </p>
-              <p
-                class="m-0 line-clamp-3 text-[0.82rem] leading-relaxed text-muted"
-              >
-                {PostUtils.getPlainTextDescription(
-                  (relatedPost.data.description?.trim() || relatedPost.body) ??
-                    ""
-                )}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-    )
-  }
-
-  <!-- Previous/Next Post Buttons -->
-  <nav
-    class="post-nav mb-8 grid gap-4 sm:grid-cols-2"
-    aria-label="文章导航"
-  >
-    <!-- 上一篇 -->
     {
-      prevPost && (
-        <a
-          href={prevPost.path}
-          class="nav-link-prev flex items-center gap-2 rounded-[10px] border border-border px-4 py-3 text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-        >
-          <IconChevronLeft />
-          {prevPost.title}
-        </a>
+      relatedPosts.length > 0 && (
+        <section class="related-section w-full min-w-0" aria-label="相关文章">
+          <div class="mb-4 block w-full min-w-0">
+            <h3 class="m-0 text-base font-medium">相关文章</h3>
+          </div>
+          <div class="related-grid grid w-full min-w-0 gap-4 min-[960px]:grid-cols-3 sm:grid-cols-2">
+            {relatedPosts.map(({ post: relatedPost, path }) => (
+              <div class={postRelatedCardClass}>
+                <p class="m-0 text-[0.72rem] font-semibold tracking-[0.04em] text-muted uppercase">
+                  {relatedPost.data.categories
+                    .map(
+                      category => getCategoryMeta(category)?.name ?? category
+                    )
+                    .join(" / ")}
+                </p>
+                <p class="m-0">
+                  <a
+                    href={path}
+                    class="leading-[1.42] text-accent no-underline hover:text-accent-strong hover:underline hover:underline-offset-[0.15em] focus-visible:text-accent-strong focus-visible:underline focus-visible:underline-offset-[0.15em]"
+                  >
+                    {relatedPost.data.title}
+                  </a>
+                </p>
+                <p class="m-0 line-clamp-3 text-[0.82rem] leading-relaxed text-muted">
+                  {PostUtils.getPlainTextDescription(
+                    (relatedPost.data.description?.trim() ||
+                      relatedPost.body) ??
+                      ""
+                  )}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       )
     }
-    <!-- 下一篇 -->
-    {
-      nextPost && (
-        <a
-          href={nextPost.path}
-          class="nav-link-next flex items-center justify-end gap-2 text-right rounded-[10px] border border-border px-4 py-3 text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
-        >
-          {nextPost.title}
-          <IconChevronRight />
-        </a>
-      )
-    }
-  </nav>
+
+    <!-- Previous/Next Post Buttons -->
+    <nav class="post-nav mb-8 grid gap-4 sm:grid-cols-2" aria-label="文章导航">
+      <!-- 上一篇 -->
+      {
+        prevPost && (
+          <a
+            href={prevPost.path}
+            class="nav-link-prev flex items-center gap-2 rounded-[10px] border border-border px-4 py-3 text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+          >
+            <IconChevronLeft />
+            {prevPost.title}
+          </a>
+        )
+      }
+      <!-- 下一篇 -->
+      {
+        nextPost && (
+          <a
+            href={nextPost.path}
+            class="nav-link-next flex items-center justify-end gap-2 rounded-[10px] border border-border px-4 py-3 text-right text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+          >
+            {nextPost.title}
+            <IconChevronRight />
+          </a>
+        )
+      }
+    </nav>
   </div>
 
   <!-- 评论容器：与主栏同宽（不用 reading-wrap 窄栏） -->
-  {comments && SITE.artalk.enabled && (
-    <div id="Comments" class="mx-0 w-full max-w-none" />
-  )}
+  {
+    comments && SITE.artalk.enabled && (
+      <div id="Comments" class="mx-0 w-full max-w-none" />
+    )
+  }
   <style is:global>
     /**
      * 正文 + 目录（≥lg）：负 margin 拉宽容器；正文 flex-basis 用 calc；目录 sticky。

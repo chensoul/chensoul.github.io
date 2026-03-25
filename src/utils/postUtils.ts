@@ -332,10 +332,7 @@ export class PostUtils {
     if (t.startsWith("http://") || t.startsWith("https://")) return t;
     if (t.startsWith("/")) return t;
     const rel = t.replace(/\\/g, "/").replace(/^(\.\/)+/, "");
-    if (
-      !rel ||
-      rel.split("/").some(s => s === ".." || s === "")
-    ) {
+    if (!rel || rel.split("/").some(s => s === ".." || s === "")) {
       return undefined;
     }
     const dir = imageDirName.trim() || "post";
