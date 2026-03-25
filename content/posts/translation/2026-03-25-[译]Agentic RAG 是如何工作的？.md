@@ -9,6 +9,14 @@ description: "介绍 Agentic RAG 如何把标准 RAG 的一次性检索流程改
 canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
 ---
 
+## 翻译与转载说明
+
+本文为学习目的的个人编译 / 摘译，并附少量译者简注，便于中文读者理解原文脉络与关键概念。
+原文标题为《How Agentic RAG Works?》，本文标题作中文转写为《Agentic RAG 是如何工作的？》。
+原文链接：[How Agentic RAG Works?](https://blog.bytebytego.com/p/how-agentic-rag-works)
+原文著作权归原作者或原刊登方所有；如果权利方认为本文处理方式不妥，请联系删除。
+本文并非原文官方版本，也不是经权利方授权的正式中文译本。
+
 原文：<https://blog.bytebytego.com/p/how-agentic-rag-works>
 
 标准 RAG 系统的主要问题，其实不在检索，也不在生成。
