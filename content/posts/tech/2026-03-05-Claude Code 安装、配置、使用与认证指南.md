@@ -5,7 +5,7 @@ slug: claude-code-guide
 draft: false
 categories: [ "tech" ]
 tags: ['claude', 'anthropic', 'ai']
-cover: /thumbs/claude.svg
+favicon: "claude.svg"
 description: "全面介绍 Claude Code 的安装、配置、使用与认证方式，并补充订阅方案和通过 OpenRouter 接入的实践路径。"
 ---
 

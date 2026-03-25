@@ -2,7 +2,7 @@
  * 订阅 / Feeds 页客户端逻辑
  *
  * 从 dataSourceUrl 拉取 JSON（格式：{ items: [{ title, link, published, name?, avatar? }] }），
- * 渲染列表并支持滚动加载更多。参考 astro-lhasa + rss-lhasa。
+ * 渲染列表并支持滚动加载更多。头像：http(s) 原样；以 `/images/` 开头为根相对；否则视为 `_favicons` 下文件名。
  */
 
 function escapeHtml(s) {
@@ -10,6 +10,12 @@ function escapeHtml(s) {
   const div = document.createElement("div");
   div.textContent = s;
   return div.innerHTML;
+}
+
+/** 与 Tailwind `hidden` 配合，避免混用 style.display */
+function setLoadMoreVisible(el, visible) {
+  if (!el) return;
+  el.classList.toggle("hidden", !visible);
 }
 
 /** 将日期格式化为 YYYY-MM-DD */
@@ -20,7 +26,10 @@ function formatDateYYYYMMDD(d) {
   return `${y}-${m}-${day}`;
 }
 
-/** 今年内返回相对时间（中文），否则返回 YYYY-MM-DD */
+/**
+ * 今年内返回相对时间（中文），否则返回 YYYY-MM-DD。
+ * 与 src/utils/postUtils.ts 的 formatFeedDate 保持一致；改动时请两边同步。
+ */
 function getDisplayDate(value) {
   if (value == null || value === "") return "日期未知";
   const d = new Date(value);
@@ -49,7 +58,10 @@ function getDisplayDate(value) {
   return Math.floor(diffMs / (24 * 60 * 60 * 1000)) + " 天前";
 }
 
-function createFeedCardHTML(item, fallbackOgImage, cosHost) {
+/** 与 `public/images/_favicons`、RSS 聚合 `avatar-public-prefix` 一致 */
+const FEED_AVATAR_DIR = "/images/_favicons";
+
+function createFeedCardHTML(item, fallbackOgImage, imagesUrl) {
   const title = escapeHtml(item.title || "无标题");
   const link = item.link || "#";
   const blogName =
@@ -58,14 +70,13 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
       : "";
   let imgSrc = (item.avatar && item.avatar.trim()) || fallbackOgImage || "";
   if (imgSrc && !/^https?:\/\//i.test(imgSrc) && !imgSrc.startsWith("//")) {
-    const pathPart = imgSrc;
-    const base =
-      cosHost && cosHost.trim()
-        ? cosHost.replace(/\/$/, "")
-        : typeof location !== "undefined"
-          ? location.origin
-          : "";
-    imgSrc = base + (pathPart.startsWith("/") ? pathPart : "/" + pathPart);
+    if (!imgSrc.startsWith("/images/")) {
+      const name = imgSrc.replace(/^\//, "");
+      imgSrc = `${FEED_AVATAR_DIR}/${name}`;
+    }
+    const ib =
+      imagesUrl && imagesUrl.trim() ? imagesUrl.replace(/\/$/, "") : "";
+    if (ib && imgSrc.startsWith("/images/")) imgSrc = `${ib}${imgSrc}`;
   }
   const fallbackSrc = fallbackOgImage
     ? fallbackOgImage.replace(/'/g, "\\'")
@@ -123,7 +134,7 @@ function updateFeedsCardDates() {
 
 export async function initFeeds(
   fallbackOgImageGlobal,
-  cosHost,
+  imagesUrl,
   initialItemCount,
   itemsPerPage,
   dataSourceUrl,
@@ -156,7 +167,7 @@ export async function initFeeds(
     currentIndex = initialItemCount;
     loadingContainer.classList.add("hidden");
     if (loadMoreTrigger && allFeeds.length > initialItemCount) {
-      loadMoreTrigger.style.display = "flex";
+      setLoadMoreVisible(loadMoreTrigger, true);
       observer = new IntersectionObserver(
         entries => {
           if (entries[0].isIntersecting) loadMoreItems(itemsPerPage);
@@ -165,7 +176,7 @@ export async function initFeeds(
       );
       observer.observe(loadMoreTrigger);
     } else if (loadMoreTrigger) {
-      loadMoreTrigger.style.display = "none";
+      setLoadMoreVisible(loadMoreTrigger, false);
     }
     return;
   }
@@ -174,7 +185,7 @@ export async function initFeeds(
     if (!dataSourceUrl || !dataSourceUrl.trim()) {
       loadingContainer.classList.add("hidden");
       errorContainer.classList.remove("hidden");
-      if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
+      if (loadMoreTrigger) setLoadMoreVisible(loadMoreTrigger, false);
       return;
     }
     try {
@@ -188,14 +199,14 @@ export async function initFeeds(
 
       if (allFeeds.length === 0) {
         noContentContainer.classList.remove("hidden");
-        if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
+        if (loadMoreTrigger) setLoadMoreVisible(loadMoreTrigger, false);
         return;
       }
 
       loadMoreItems(initialItemCount);
 
       if (loadMoreTrigger && allFeeds.length > initialItemCount) {
-        loadMoreTrigger.style.display = "flex";
+        setLoadMoreVisible(loadMoreTrigger, true);
         observer = new IntersectionObserver(
           entries => {
             if (entries[0].isIntersecting) loadMoreItems(itemsPerPage);
@@ -204,12 +215,12 @@ export async function initFeeds(
         );
         observer.observe(loadMoreTrigger);
       } else if (loadMoreTrigger) {
-        loadMoreTrigger.style.display = "none";
+        setLoadMoreVisible(loadMoreTrigger, false);
       }
     } catch {
       loadingContainer.classList.add("hidden");
       errorContainer.classList.remove("hidden");
-      if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
+      if (loadMoreTrigger) setLoadMoreVisible(loadMoreTrigger, false);
     }
   }
 
@@ -218,20 +229,20 @@ export async function initFeeds(
     const itemsToLoad = allFeeds.slice(currentIndex, currentIndex + count);
 
     if (itemsToLoad.length === 0) {
-      if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
+      if (loadMoreTrigger) setLoadMoreVisible(loadMoreTrigger, false);
       if (observer) observer.disconnect();
       return;
     }
 
     let html = "";
     itemsToLoad.forEach(item => {
-      html += createFeedCardHTML(item, fallbackOgImageGlobal, cosHost);
+      html += createFeedCardHTML(item, fallbackOgImageGlobal, imagesUrl);
     });
     feedsListElement.insertAdjacentHTML("beforeend", html);
     currentIndex += itemsToLoad.length;
 
     if (currentIndex >= allFeeds.length) {
-      if (loadMoreTrigger) loadMoreTrigger.style.display = "none";
+      if (loadMoreTrigger) setLoadMoreVisible(loadMoreTrigger, false);
       if (observer) observer.disconnect();
     }
   }
@@ -250,7 +261,7 @@ function run() {
     const d = JSON.parse(dataElement.dataset.json);
     initFeeds(
       d.fallbackOgImage,
-      d.cosHost || "",
+      d.imagesUrl || "",
       d.initialItemCount,
       d.itemsPerPage,
       d.dataSourceUrl,

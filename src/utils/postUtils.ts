@@ -1,13 +1,16 @@
 /**
  * 博客与文章集合相关工具（原多文件合并：摘要正则、slug、分类元数据、PostUtils、llms.txt 生成）
  *
- * @fileoverview 文章过滤/排序/路径、标签与分类、描述提取、分类显示与排序、LLMs 站点地图文案
+ * @fileoverview 文章过滤/排序/路径、标签与分类、描述提取、分类显示与排序、LLMs 站点地图文案；订阅卡片日期、content/pages 极简 frontmatter 读取
  */
 
+import fs from "node:fs";
+import path from "node:path";
+
 import type { CollectionEntry } from "astro:content";
-import kebabcase from "lodash.kebabcase";
 import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
+import { slugifyStr } from "./slugifyStr";
 
 // --- 描述提取（Markdown → 纯文本摘要）---
 
@@ -35,8 +38,7 @@ const regexReplacers: Record<string, [RegExp, string]> = {
 
 // --- Slug（URL 路径）---
 
-export const slugifyStr = (str: string) =>
-  kebabcase(str).replace(/\b([a-z])-([0-9]+)-([a-z])\b/g, "$1$2$3");
+export { slugifyStr };
 
 const slugifyAll = (arr: string[]) => arr.map(str => slugifyStr(str));
 
@@ -45,6 +47,7 @@ const slugifyAll = (arr: string[]) => arr.map(str => slugifyStr(str));
 export interface CategoryMeta {
   slug: string;
   name: string;
+  /** 分类索引卡片用的小图 URL（可与文章 `favicon` 一样指向 `/images/_favicons/...`） */
   image?: string;
   order?: number;
 }
@@ -282,6 +285,87 @@ export class PostUtils {
     return [basePath, ...pathSegments, slug].filter(Boolean).join("/");
   }
 
+  /**
+   * 文章配图在 `public/images/{目录}/` 下的目录名。
+   *
+   * 优先 `imageDir`（schema 中已默认与 `slug` 一致），否则回退为 {@link PostUtils.getPath} 末段。
+   * 对外 URL：`astro dev` 同源 `/images/...`，生产 CDN，见 `src/utils/blogImages/`。
+   */
+  static getPostImageDirName(
+    id: string,
+    filePath: string | undefined,
+    date?: Date,
+    timeZone?: string,
+    explicitSlug?: string | null,
+    imageDir?: string | null
+  ): string {
+    const resolved = imageDir?.trim();
+    if (resolved) {
+      const s = slugifyStr(resolved);
+      if (s) return s;
+    }
+    const pathNoPosts = PostUtils.getPath(
+      id,
+      filePath,
+      false,
+      date,
+      timeZone,
+      explicitSlug
+    );
+    const segments = pathNoPosts.split("/").filter(Boolean);
+    return segments[segments.length - 1] ?? "post";
+  }
+
+  /**
+   * 将 frontmatter 中的图片引用解析为根相对 URL。
+   *
+   * - `http(s)://...`：原样返回
+   * - 以 `/` 开头：根相对路径原样返回（旧式 `/images/foo/01.webp` 等）
+   * - 否则视为相对文章配图目录的文件名（可含子路径段），解析为 `/images/{imageDirName}/{ref}`
+   */
+  static resolveBlogImageRef(
+    raw: string | undefined | null,
+    imageDirName: string
+  ): string | undefined {
+    const t = typeof raw === "string" ? raw.trim() : "";
+    if (!t) return undefined;
+    if (t.startsWith("http://") || t.startsWith("https://")) return t;
+    if (t.startsWith("/")) return t;
+    const rel = t.replace(/\\/g, "/").replace(/^(\.\/)+/, "");
+    if (
+      !rel ||
+      rel.split("/").some(s => s === ".." || s === "")
+    ) {
+      return undefined;
+    }
+    const dir = imageDirName.trim() || "post";
+    return `/images/${dir}/${rel}`;
+  }
+
+  /**
+   * 列表卡片用站点/分类图标：`public/images/_favicons/`。
+   *
+   * - `http(s)://...`：原样
+   * - 以 `/` 开头：根相对原样；`/images/_thumbnails/` 历史路径会改为 `/images/_favicons/`
+   * - 否则视为 `_favicons` 内文件名（可含子路径段），解析为 `/images/_favicons/{ref}`
+   */
+  static resolveFaviconRef(raw: string | undefined | null): string | undefined {
+    const t = typeof raw === "string" ? raw.trim() : "";
+    if (!t) return undefined;
+    if (t.startsWith("http://") || t.startsWith("https://")) return t;
+    if (t.startsWith("/")) {
+      if (t.startsWith("/images/_thumbnails/")) {
+        return t.replace(/^\/images\/_thumbnails\//, "/images/_favicons/");
+      }
+      return t;
+    }
+    const rel = t.replace(/\\/g, "/").replace(/^(\.\/)+/, "");
+    if (!rel || rel.split("/").some(s => s === ".." || s === "")) {
+      return undefined;
+    }
+    return `/images/_favicons/${rel}`;
+  }
+
   static getDescription(markdownContent: string): string {
     const lines = markdownContent
       .split(/\r?\n/)
@@ -416,4 +500,83 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
   ];
 
   return `${lines.join("\n")}\n`;
+}
+
+// --- 订阅条目日期（与 public/feeds.js 的 getDisplayDate 保持一致；改动时请两边同步）---
+
+function formatDateYYYYMMDD(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/** 今年内返回相对时间（中文），否则返回 YYYY-MM-DD */
+export function formatFeedDate(
+  value: string | number | null | undefined
+): string {
+  if (value == null || value === "") return "日期未知";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime()))
+    return typeof value === "string" ? value : "日期未知";
+  const now = new Date();
+  if (d.getFullYear() !== now.getFullYear()) return formatDateYYYYMMDD(d);
+  const diffMs = now.getTime() - d.getTime();
+  if (diffMs < 0) return formatDateYYYYMMDD(d);
+  if (diffMs < 60 * 1000) return "刚刚";
+  if (diffMs < 60 * 60 * 1000)
+    return `${Math.floor(diffMs / (60 * 1000))} 分钟前`;
+  if (diffMs < 24 * 60 * 60 * 1000)
+    return `${Math.floor(diffMs / (60 * 60 * 1000))} 小时前`;
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (
+    d.getFullYear() === yesterday.getFullYear() &&
+    d.getMonth() === yesterday.getMonth() &&
+    d.getDate() === yesterday.getDate()
+  ) {
+    return "昨天";
+  }
+  return `${Math.floor(diffMs / (24 * 60 * 60 * 1000))} 天前`;
+}
+
+// --- content/pages（about、links 等静态 Markdown 页）---
+
+export interface ContentPageData {
+  frontmatter: Record<string, string>;
+  content: string;
+}
+
+/** 读取 `content/pages/{fileName}`，解析单行 `key: value` frontmatter（与 about/links 页约定一致） */
+export function readContentPage(fileName: string): ContentPageData {
+  const filePath = path.join(process.cwd(), "content/pages", fileName);
+  const fileContent = fs.readFileSync(filePath, "utf-8");
+  const frontmatterMatch = fileContent.match(
+    /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
+  );
+
+  if (!frontmatterMatch) {
+    throw new Error(`Invalid content page frontmatter: ${fileName}`);
+  }
+
+  const frontmatterStr = frontmatterMatch[1];
+  const content = frontmatterMatch[2];
+  const frontmatter: Record<string, string> = {};
+
+  frontmatterStr.split("\n").forEach(line => {
+    const match = line.match(/^(\w+):\s*(.+)$/);
+    if (!match) return;
+
+    const key = match[1];
+    let value = match[2].trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    frontmatter[key] = value;
+  });
+
+  return { frontmatter, content };
 }

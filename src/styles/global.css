@@ -1,3 +1,18 @@
 @import "./base.css";
 @import "./pages/running.css";
 @import "tailwindcss";
+
+/**
+ * 与 base.css 中 :root 变量对齐，便于全站使用常规 Tailwind 类（少写 arbitrary）。
+ * 深浅色仍由 html[data-theme] 下的变量切换驱动。
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-dark);
+  --color-accent-surface: var(--accent-surface);
+}

@@ -5,6 +5,10 @@
  * @fileoverview 提供 HTML 骨架、meta/OG/JSON-LD、主题脚本、Header、Footer、BackToTop、BackButton；子页通过 props 传入 title、description、canonicalURL 等页面元信息。
  */
 import { SITE } from "@/config";
+import {
+  devLocalImageRef,
+  publicImageAbsoluteUrl,
+} from "@/utils/blogImages";
 import "@/styles/global.css";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -19,12 +23,15 @@ import BackToTop from "@/components/BackToTop.astro";
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间
  * @property ogImage - 社交分享图：根相对路径（如 /images/x.webp）、或 https 绝对 URL；未传则用默认 OG
+ * @property ogImageAlt - og:image / twitter:image 与 JSON-LD 图片说明；未传则用标题
  */
 export interface Props {
   title?: string;
   author?: string;
   description?: string;
   ogImage?: string;
+  /** 分享图替代文案（SEO 与无障碍摘要） */
+  ogImageAlt?: string;
   canonicalURL?: string;
   schemaType?: string;
   robots?: string;
@@ -38,6 +45,7 @@ const {
   author = SITE.author,
   description: descriptionProp,
   ogImage: ogImageProp,
+  ogImageAlt: ogImageAltProp,
   canonicalURL = new URL(Astro.url.pathname.replace(/\.html?$/, ""), Astro.url),
   schemaType,
   robots,
@@ -87,15 +95,21 @@ const defaultOgFromUrl =
       : `/og/${pathForOg}.png`;
 
 const defaultOgImage = useDynamicOg ? defaultOgFromUrl : staticDefaultOgRef;
-const ogImage = ogImageProp ?? defaultOgImage;
-/** 分享图绝对地址（根相对、站外绝对 URL 均支持） */
+const ogImage = devLocalImageRef(ogImageProp ?? defaultOgImage);
+const ogImageAlt = ogImageAltProp?.trim() || title;
+/** 自定义文章配图时尺寸多非 1200×630，不输出误导性的 og:image 宽高 */
+const useOgImageDimensions = !ogImageProp?.trim();
+/** 根相对 OG 图拼绝对 URL：开发用当前 dev 机，构建/预览用配置的 SITE.website */
+const siteOrigin = import.meta.env.DEV
+  ? Astro.url.origin
+  : (Astro.site?.origin ?? Astro.url.origin);
+/** 分享图绝对地址：见 {@link publicImageAbsoluteUrl} */
 const socialImageURLString = (() => {
   if (!ogEnabled) return "";
   const ref = ogImage.trim();
-  if (!ref) return new URL("images/og.webp", Astro.url.origin).href;
+  if (!ref) return publicImageAbsoluteUrl("/images/og.webp", siteOrigin);
   if (/^https?:\/\//i.test(ref)) return ref;
-  const path = ref.startsWith("/") ? ref : `/${ref}`;
-  return new URL(path, Astro.url.origin).href;
+  return publicImageAbsoluteUrl(ref, siteOrigin);
 })();
 /** OG 图尺寸（与 utils/og-image.ts 生成一致） */
 const OG_IMAGE_WIDTH = 1200;
@@ -115,7 +129,18 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       description: fullDescription,
       url: canonicalHref,
       mainEntityOfPage: canonicalHref,
-      ...(ogEnabled ? { image: socialImageURLString } : {}),
+      ...(ogEnabled && socialImageURLString
+        ? {
+            image: {
+              "@type": "ImageObject",
+              url: socialImageURLString,
+              ...(useOgImageDimensions
+                ? { width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT }
+                : {}),
+              caption: ogImageAlt,
+            },
+          }
+        : {}),
       datePublished: pubDatetime?.toISOString(),
       ...(modDatetime && { dateModified: modDatetime.toISOString() }),
       author: [
@@ -179,9 +204,16 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       ogEnabled && (
         <>
           <meta property="og:image" content={socialImageURLString} />
-          <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
-          <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
-          <meta property="og:image:alt" content={title} />
+          {useOgImageDimensions && (
+            <>
+              <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+              <meta
+                property="og:image:height"
+                content={String(OG_IMAGE_HEIGHT)}
+              />
+            </>
+          )}
+          <meta property="og:image:alt" content={ogImageAlt} />
         </>
       )
     }
@@ -200,7 +232,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
       ogEnabled && (
         <>
           <meta property="twitter:image" content={socialImageURLString} />
-          <meta property="twitter:image:alt" content={title} />
+          <meta property="twitter:image:alt" content={ogImageAlt} />
         </>
       )
     }
@@ -313,7 +345,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
   <body>
     <a
       href="#main-content"
-      class="skip-link"
+      class="absolute -top-full left-1/2 z-50 -translate-x-1/2 rounded-b-lg bg-accent px-6 py-3 font-medium text-white no-underline transition-[top] duration-200 ease-out focus-visible:top-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
       跳转到主要内容
     </a>
@@ -325,47 +357,6 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <BackToTop />
     <Footer/>
 
-    <style is:global>
-      .skip-link {
-        position: absolute;
-        top: -100%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        background: var(--accent);
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0 0 0.5rem 0.5rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: top 0.2s ease;
-      }
-
-      .skip-link:focus-visible {
-        top: 0;
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-      }
-
-      .breadcrumb {
-        font-size: 0.875rem;
-        color: var(--text-secondary);
-        margin-bottom: 1rem;
-      }
-
-      .breadcrumb a {
-        color: var(--text-secondary);
-      }
-
-      .breadcrumb a:hover {
-        color: var(--accent);
-      }
-
-      .breadcrumb-separator {
-        margin: 0 0.35rem;
-        opacity: 0.6;
-      }
-    </style>
 
     {
       import.meta.env.PROD &&

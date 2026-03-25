@@ -4,7 +4,7 @@ date: 2025-09-26 08:00:00+08:00
 slug: spring-ai-restaurant-showcase-rag
 categories: [ "tech" ]
 tags: ['spring-boot','spring-ai']
-cover: /thumbs/spring-ai.svg
+favicon: "spring-ai.svg"
 description: "通过智能餐厅推荐系统示例，介绍如何用 Spring AI 实现 RAG 应用，让模型基于真实餐厅数据生成更准确的推荐结果。"
 ---
 

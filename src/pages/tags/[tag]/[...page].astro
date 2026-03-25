@@ -66,11 +66,14 @@ const relatedCategories = topCategories.map(
 
 <Layout title={pageTitle} robots="noindex,follow">
   <section class="mb-6">
-    <div class="breadcrumb" aria-label="面包屑导航">
+    <div
+      class="mb-4 text-sm text-muted [&_a]:text-muted [&_a:hover]:text-accent"
+      aria-label="面包屑导航"
+    >
       <a href="/">首页</a>
-      <span class="breadcrumb-separator">/</span>
+      <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
       <a href="/tags">标签</a>
-      <span class="breadcrumb-separator">/</span>
+      <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
       <span>{tagName}</span>
     </div>
     <h1 class="my-2 text-3xl font-semibold tracking-tight">{tagName}</h1>

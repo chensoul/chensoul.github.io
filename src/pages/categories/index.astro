@@ -37,7 +37,7 @@ categories.forEach(({ category, categoryName }) => {
 ---
 
 <Layout title={pageTitle}>
-  <h2>分类</h2>
+  <h1>分类</h1>
   <ul
     id="categories-root"
     class="m-0 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2"
@@ -49,7 +49,7 @@ categories.forEach(({ category, categoryName }) => {
           <a
             href={`/categories/${category}`}
             aria-label={`查看 ${categoryName} 分类`}
-            class="relative block overflow-hidden rounded-xl border border-[var(--border)] text-white no-underline shadow-[0_2px_8px_rgb(0_0_0/0.06)] transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgb(0_0_0/0.12)]"
+            class="relative block overflow-hidden rounded-lg border border-border text-white no-underline shadow-sm transition-shadow hover:shadow-md"
           >
             <div class="relative aspect-video w-full overflow-hidden">
               {getCategoryImageUrl(category) ||
@@ -59,13 +59,13 @@ categories.forEach(({ category, categoryName }) => {
                     getCategoryImageUrl(category) ||
                     getCategoryImageUrl(categoryName)
                   }
-                  alt={`${categoryName} 封面图`}
+                  alt={`${categoryName} 分类缩略图`}
                   class="block h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
                 />
               ) : (
-                <div class="min-h-[120px] w-full bg-gradient-to-br from-[var(--background-secondary)] to-[color-mix(in_srgb,var(--accent)_15%,var(--background-secondary))]" />
+                <div class="min-h-[120px] w-full bg-gradient-to-br from-background-secondary to-accent/15" />
               )}
               <div
                 class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"

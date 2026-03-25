@@ -53,19 +53,20 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 
 <Layout title={pageTitle} robots="noindex,follow">
   <h1>归档</h1>
-  <section
-    class="archive-taxonomy my-3 flex flex-col gap-3 md:my-0"
-    aria-label="分类列表"
-  >
-    <TaxonomySummary title="分类" items={categoryItems} />
-    <TaxonomySummary title="年份" items={yearItems} />
+  <section class="my-3 flex flex-col gap-3 md:my-0" aria-label="分类列表">
+    <TaxonomySummary class="my-0" title="分类" items={categoryItems} />
+    <TaxonomySummary class="my-0" title="年份" items={yearItems} />
   </section>
 
   <section class="flex flex-col gap-8" aria-label="按年归档">
     {
       years.map(year => (
-        <div class="archive-year-section" id={`year-${year}`} tabindex={-1}>
-          <h2 class="mb-4 border-b border-[var(--border)] pb-2">
+        <div
+          class="scroll-mt-[calc(var(--site-header-sticky-offset)+0.35rem)] last:pb-[max(calc(var(--site-header-sticky-offset)+3rem),36rem)]"
+          id={`year-${year}`}
+          tabindex={-1}
+        >
+          <h2 class="mb-4 border-b border-border pb-2">
             {year} ({groupedByYear[year].length})
           </h2>
           <ul class="post-cards-list m-0 list-none p-0">
@@ -78,37 +79,6 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
     }
   </section>
 </Layout>
-
-<style>
-  .archive-taxonomy :global(.taxonomy-summary) {
-    margin: 0;
-  }
-
-  .archive-taxonomy :global(.taxonomy-summary > div) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 0.5rem 0.75rem;
-  }
-
-  .archive-taxonomy :global(.taxonomy-summary > div > span:first-child) {
-    min-width: 3rem;
-    line-height: 2rem;
-  }
-
-  .archive-taxonomy :global(.taxonomy-summary a) {
-    display: inline-flex;
-  }
-
-  /* 与站点吸顶顶栏对齐，避免 #year-… 锚点滚入后被遮挡 */
-  .archive-year-section {
-    scroll-margin-top: calc(var(--site-header-sticky-offset) + 0.35rem);
-  }
-
-  .archive-year-section:last-child {
-    padding-bottom: max(calc(var(--site-header-sticky-offset) + 3rem), 36rem);
-  }
-</style>
 
 <script is:inline>
   (() => {

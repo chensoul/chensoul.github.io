@@ -4,7 +4,7 @@ date: 2025-09-29 08:00:00+08:00
 slug: spec-kit-with-cursor
 categories: [ "tech" ]
 tags: ['spring-ai', 'cursor', 'spec-kit']
-cover: /thumbs/openai.svg
+favicon: "openai.svg"
 description: "介绍如何在 Cursor 中安装和使用 Spec-Kit，借助规范驱动开发流程把需求定义、实现与 AI 编码协作串联起来。"
 ---
 

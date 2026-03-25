@@ -7,7 +7,7 @@ tags: ['spring-boot', 'security']
 description: "..."
 ---
 
-![img](Thymeleaf_SpringSecurity-1.webp)
+![img](how-to-implement-security-in-spring-boot-2-using-userdetailsservice/01.webp)
 
 继续上一篇[关于实现 Spring Security 的两种不同方法](https://javatechonline.com/how-to-implement-security-in-spring-boot-project/)的文章，在本文中，我们将学习第三种方法“如何使用 UserDetailsService 在 Spring Boot 中实现 Security？”。经过上一篇文章后，我希望我们都非常熟悉安全性的基础知识，甚至是 Spring Boot 应用程序中的安全性基础知识。这次我们将创建一个用户注册表并将用户及其角色保存到数据库中。
 
@@ -110,7 +110,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 ## UserDetailsService 在 Spring Security 应用程序内部如何工作？
 
-![How to implement UserDetailsService](SpringSecurity_UserDetailsService_2-1-1.webp)
+![How to implement UserDetailsService](how-to-implement-security-in-spring-boot-2-using-userdetailsservice/02.webp)
 
 一旦用户输入用户名和密码并单击“登录”按钮，就会调用 WebSecurityConfigurerAdapter，该适配器在内部调用 UserServiceImpl.java（实现类，由程序员提供）。此外，UserServiceImpl.java 中实现的 loadUserByUserName()方法将我们的 User 对象转换为 Spring 提供的 User 对象。此外，我们的 SecurityConfig.java 扩展了 WebSecurityConfigurerAdapter 并通过两种方法提供了身份验证和授权逻辑的实现；分别配置（AuthenticationManagerBuilder）和配置（HttpSecurity），如下面的代码所示。
 
@@ -231,7 +231,7 @@ public class SecurityConfig {
 
 同样重要的是，公司将有一个用户注册页面，即使没有登录，所有用户也必须可以访问该页面。现在让我们创建一个标准用户注册流程，如下所示。
 
-![User Registration MVC Flow Design](UserRegistrationFlow-1.webp)
+![User Registration MVC Flow Design](shared/UserRegistrationFlow-1.webp)
 
 ### 步骤#1：在 STS(Spring Tool Suite)中创建一个 Spring Boot Starter 项目
 

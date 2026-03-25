@@ -5,7 +5,8 @@ slug: merge-linkding-cn-to-linkding
 categories: [ "tech" ]
 tags: [ 'linkding' ]
 description: "本文将详细介绍如何将 linkding-cn 的优秀功能迁移到最新的 Linkding 项目中，包括项目对比、可行性分析、迁移过程以及最终的"
-cover: /thumbs/linkding.svg
+favicon: "linkding.svg
+"
 ---
 
 本文将详细介绍如何将 linkding-cn 的优秀功能迁移到最新的 Linkding 项目（1.45.0 版本)中，包括项目对比、可行性分析、迁移过程以及最终的

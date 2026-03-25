@@ -29,7 +29,7 @@ description: "原文链接：https://ably.com/topic/websocket-vs-rest ..."
 
 表述性状态传输 (REST) 是一组原则，定义了通过 HTTP 构建 API 的一种方法。这很容易被忽视，但 REST 不是一种协议，这意味着您可以非常灵活地根据您的需求来塑造它。它的流行很大程度上是由于它的简单性以及它重用了已经用于网络的方法和技术。这在很大程度上定义了它表现良好的用例以及您需要寻找替代方案的用例。
 
-![img](client-server-communication-over-rest.webp)
+![img](websocket-vs-rest/01.webp)
 
 让我们快速了解一下 REST 与其他方法的区别。
 
@@ -45,7 +45,7 @@ description: "原文链接：https://ably.com/topic/websocket-vs-rest ..."
 
 REST 适用于短暂、无状态的通信，而 WebSocket 则提供持续、低延迟的双向通信通道。这意味着您与 WebSocket 交互的方式是不同的。因此，您无需使用特定端点构建“WebSocket API”，而是打开一个连接，双方可以在需要时交换消息。这使其成为实时应用程序的理想选择，例如聊天、体育或金融数据的实时流媒体，以及 Figma、Miro 和 Google Docs 等交互式实时协作环境。
 
-![img](websockets.webp)
+![img](shared/websockets.webp)
 
 ### WebSocket 关键特性
 

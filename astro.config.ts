@@ -1,4 +1,10 @@
 import { SITE } from "./src/config";
+import {
+  getImagesAssetBase,
+  rehypeArticleContentImages,
+  remarkInjectImageDir,
+  remarkStripLeadImageDirDup,
+} from "./src/utils/blogImages";
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
@@ -6,7 +12,6 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
-import rehypeRewrite, { type RehypeRewriteOptions } from "rehype-rewrite";
 import rehypeWrapAll from "rehype-wrap-all";
 import rehypeExternalLinks from "rehype-external-links";
 import expressiveCode, {
@@ -34,22 +39,6 @@ const expressiveCodeOption: AstroExpressiveCodeOptions = {
   },
 };
 
-// Rehype rewrite options, https://github.com/jaywcjlove/rehype-rewrite
-const rehypeRewriteOption: RehypeRewriteOptions = {
-  rewrite: node => {
-    if (node.type !== "element" || !node.properties) return;
-    // 图片：懒加载
-    if (node.tagName === "img") {
-      node.properties = {
-        ...node.properties,
-        loading: "lazy",
-        decoding: "async",
-      };
-      return;
-    }
-  },
-};
-
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
@@ -63,7 +52,10 @@ export default defineConfig({
     }),
     photosuite({
       scope: "#article",
-      imageBase: "https://cos.chensoul.cc/images",
+      /**
+       * 桶前缀见 `getImagesAssetBase`（`blogImages/cdnUrls`）；子目录由 `remarkInjectImageDir` 从 `slug` 补全
+       */
+      imageBase: getImagesAssetBase(),
       exif: false,
     }),
     expressiveCode(expressiveCodeOption),
@@ -86,7 +78,12 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkMath],
+    /** `blogImages` remark → Photosuite `imageUrl`（integration 追加） */
+    remarkPlugins: [
+      remarkMath,
+      remarkInjectImageDir,
+      remarkStripLeadImageDirDup,
+    ],
     rehypePlugins: [
       rehypeKatex,
       rehypeSlug,
@@ -99,7 +96,7 @@ export default defineConfig({
           wrapper: "div.responsive-table",
         },
       ],
-      [rehypeRewrite, rehypeRewriteOption],
+      rehypeArticleContentImages,
     ],
     // Use ExpressiveCode instead of shiki
     syntaxHighlight: false,
@@ -125,6 +122,7 @@ export default defineConfig({
       warmup: {
         ssrFiles: [
           "./src/layouts/Layout.astro",
+          "./src/utils/blogImages/index.ts",
           "./src/utils/postUtils.ts",
           "./src/config.ts",
         ],

@@ -6,7 +6,7 @@ categories: [ "tech" ]
 tags: [ 'openclaw','claude']
 draft: true
 description: ""
-cover: /thumbs/claude.svg
+favicon: "claude.svg"
 ---
 
 

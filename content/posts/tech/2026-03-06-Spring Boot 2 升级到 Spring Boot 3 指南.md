@@ -5,7 +5,7 @@ slug: spring-boot-2-to-3-upgrade-guide
 categories: [ "tech" ]
 tags: ['spring-boot', 'openrewrite', 'migration']
 description: "本文介绍如何使用 OpenRewrite 自动化迁移 Spring Boot 2.7.x 应用到 Spring Boot 3.x，以及如何使用 spring-boot-2-to-3 这个 AI Agent Skill 来简化升级流程。"
-cover: /thumbs/spring.svg
+favicon: "spring.svg"
 ---
 
 最近在升级一个老项目，需要把 Spring Boot 2.7.x 迁移到 Spring Boot 3.5.x。这个过程中踩了不少坑，也学到了一些好用的工具，这里记录一下经验。

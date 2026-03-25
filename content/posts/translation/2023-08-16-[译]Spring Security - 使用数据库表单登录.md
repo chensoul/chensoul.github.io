@@ -36,7 +36,7 @@ description: "内容 ..."
 
 ## Spring Security 架构的组件
 
-![Components of Spring Security Architecture](components_of_spring_security_architecture.webp)
+![Components of Spring Security Architecture](spring-security-form-login-with-database/01.webp)
 
 正如我们在上图中看到的那样，Spring Security 的基本组件如下所示。我们将在讨论过程中简要讨论它们。我们还将讨论它们在身份验证和授权过程中的角色。
 
@@ -135,7 +135,7 @@ VALUES ('user','12345', true);
 
 像往常一样，我们将使用 Spring 初始化程序来设置我们的项目。我们将使用 Spring Boot 版本 2.3.2 创建一个 Maven 项目。让我们将项目命名为 formlogin（我们可以选择任何我们想要的名称）和组 id 为 com.tutorial.spring.security。此外，我们将在该项目中使用 Java 版本 8。
 
-![Project Setup](project_setup.webp)
+![Project Setup](spring-security-form-login-with-database/02.webp)
 
 ### 依赖关系
 
@@ -799,25 +799,25 @@ public class HelloController {
 
 我们最终的项目结构应该与此类似。
 
-![Form Login](form_login.webp)
+![Form Login](spring-security-form-login-with-database/03.webp)
 
 **运行应用程序**
 
 然后我们可以将应用程序作为 SpringBootApp 运行。当我们在浏览器上访问 localhost:8080 时，它会将我们重定向回登录页面。
 
-![Running the Application](running_the_application.webp)
+![Running the Application](spring-security-form-login-with-database/04.webp)
 
 身份验证成功后，它将带我们进入带有问候语的索引视图。
 
-![Hello Users](hello_users.webp)
+![Hello Users](spring-security-form-login-with-database/05.webp)
 
 因为，在帐户被锁定之前，我们只允许三次失败的尝试，因此在第三次失败的身份验证中，用户将被锁定，并且该消息会显示在屏幕上。
 
-![Third Failed Authentication](third_failed_authentication.webp)
+![Third Failed Authentication](spring-security-form-login-with-database/06.webp)
 
 在点击 /register 端点时，我们还可以注册一个新用户。
 
-![Register](register.webp)
+![Register](spring-security-form-login-with-database/07.webp)
 
 ## **结论**
 

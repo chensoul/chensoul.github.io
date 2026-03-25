@@ -6,7 +6,7 @@ import path from "path";
 // ========== Satori 渲染 PNG ==========
 
 const avatarBase64 = fs
-  .readFileSync(path.join(process.cwd(), "public/avatar.png"))
+  .readFileSync(path.join(process.cwd(), "public/images/avatar.png"))
   .toString("base64");
 
 async function loadGoogleFont(

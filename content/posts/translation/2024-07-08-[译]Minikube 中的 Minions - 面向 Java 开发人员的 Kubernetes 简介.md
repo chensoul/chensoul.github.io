@@ -17,7 +17,7 @@ description: "我们希望我们的微服务是可复制、可替换的工作程
 
 我们的仆从大军将是 Java 微服务。我们希望我们的大军中有不同类型的仆从，这样我们才能看到 Kubernetes 能为我们做些什么。因此，我们的目标是让每个微服务都响应一个简单的 http 请求，响应如下：
 
-![img](minions-in-minikube-01.webp)
+![img](minions-in-minikube-a-kubernetes-intro-for-java-de/01.webp)
 
 我们将使用 ASCII 艺术来代表仆从类型。
 
@@ -25,7 +25,7 @@ description: "我们希望我们的微服务是可复制、可替换的工作程
 
 我们可以使用带有 Web starter 依赖项的[Spring Initializr](https://start.spring.io/)将我们的微服务作为 Spring Boot Web 应用程序启动：
 
-![img](minions-in-minikube-02.webp)
+![img](minions-in-minikube-a-kubernetes-intro-for-java-de/02.webp)
 
 在项目中，我们将创建一个带注释的控制器来 `@RestController` 处理请求。我们将使用 `@RequestMapping(method=GET)` 来提供响应主体。因此，首先我们可以执行以下操作：
 
@@ -194,19 +194,19 @@ open http://$(minikube ip):30083
 
 `kubectl get pods` 我们可以通过执行“ ”或执行“ `minikube dashboard`”并进入 Pods 页面来查看整个军队 ：
 
-![img](minions-in-minikube-03.webp)
+![img](minions-in-minikube-a-kubernetes-intro-for-java-de/03.webp)
 
 ## 创造更多部队
 
 我们可以在 minikube 仪表板的 Deployments 部分下创建更多特定类型的 minions：
 
-![img](minions-in-minikube-04.webp)
+![img](minions-in-minikube-a-kubernetes-intro-for-java-de/04.webp)
 
 ## 一个小兵倒下，另一个小兵接替他的位置
 
 假设当我们从浏览器访问 Happy Minion 服务时，我们得到了以下结果：
 
-![img](minions-in-minikube-05.webp)
+![img](minions-in-minikube-a-kubernetes-intro-for-java-de/05.webp)
 
 如果我们杀死“happy-minion-58c9c46d67-j84s9”会发生什么？我们可以尝试从仪表板的 Pods 部分删除，或者：
 

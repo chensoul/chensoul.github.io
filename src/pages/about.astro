@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import MarkdownIt from "markdown-it";
 import { SITE } from "@/config";
-import { readContentPage } from "@/utils/contentPage";
+import { readContentPage } from "@/utils/postUtils";
 
 const pageSlug = "about";
 const pageData = readContentPage(`${pageSlug}.md`);

@@ -70,11 +70,14 @@ const relatedTags = topTags.map(([tag, { tagName, count }]) => ({
 
 <Layout title={pageTitle} description={pageDescription}>
   <section class="mb-6">
-    <div class="breadcrumb" aria-label="面包屑导航">
+    <div
+      class="mb-4 text-sm text-muted [&_a]:text-muted [&_a:hover]:text-accent"
+      aria-label="面包屑导航"
+    >
       <a href="/">首页</a>
-      <span class="breadcrumb-separator">/</span>
+      <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
       <a href="/categories">分类</a>
-      <span class="breadcrumb-separator">/</span>
+      <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
       <span>{categoryName}</span>
     </div>
     <h1 class="my-2 text-3xl font-semibold tracking-tight">{categoryName}</h1>

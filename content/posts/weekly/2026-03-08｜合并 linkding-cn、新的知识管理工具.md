@@ -6,7 +6,7 @@ tags: ['memos', 'vps', 'linking']
 draft: false
 categories: [ "weekly" ]
 description: 这周一边用 AI Agent 合并 linkding-cn 代码、整理 Spring Boot 2 升 3 的方案，一边也在琢磨一款面向输入驱动用户的极简知识管理工具。
-cover: /thumbs/linkding.svg
+favicon: "linkding.svg"
 
 ---
 

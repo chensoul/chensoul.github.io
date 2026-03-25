@@ -5,7 +5,7 @@ slug: install-openclaw-in-github-codespace
 categories: [ "tech" ]
 tags: [ 'openclaw','github', 'codespace' ]
 description: "本文介绍在 Codespaces 中从安装到正常使用的完整步骤。"
-cover: /thumbs/openclaw.svg
+favicon: "openclaw.svg"
 ---
 
 本文介绍在 Codespaces 中从安装到正常使用的完整步骤。
@@ -16,17 +16,17 @@ cover: /thumbs/openclaw.svg
 
 创建成功之后，点击 Create a Codespace 按钮。
 
-![install-openclaw-in-github-codespace-01](install-openclaw-in-github-codespace-01.webp)
+![install-openclaw-in-github-codespace-01](01.webp)
 
 进入到 codespace 创建页面，点击 Create new codespace 按钮。
 
-![install-openclaw-in-github-codespace-02](install-openclaw-in-github-codespace-02.webp)
+![install-openclaw-in-github-codespace-02](02.webp)
 
 ## 在 codespace 中安装 openclaw
 
 进入到 codespace ide 页面
 
-![install-openclaw-in-github-codespace-03](install-openclaw-in-github-codespace-03.webp)
+![install-openclaw-in-github-codespace-03](03.webp)
 
 在终端输入 openclaw 安装命令：
 
@@ -42,23 +42,23 @@ curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -
 
 稍等片刻，安装成功之后会进入安装向导。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-04.webp)
+![install-openclaw-in-github-codespace](04.webp)
 
 选择 Yes，回车进入下一步。选择 QuickStart，继续回车。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-05.webp)
+![install-openclaw-in-github-codespace](05.webp)
 
 上下移动光标，选择一个模型。我这里选择的是阿里的千问模型。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-06.webp)
+![install-openclaw-in-github-codespace](06.webp)
 
 按住 cmd 键 + 单击千问授权地址 https://chat.qwen.ai/authorize?user_code=CFS1OI1Y&client=qwen-code ，并完成认证。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-07.webp)
+![install-openclaw-in-github-codespace](07.webp)
 
 选择一个模型，继续回车。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-08.webp)
+![install-openclaw-in-github-codespace](08.webp)
 
 注意：使用 qwen portal oauth2 登录的方式，可以选择的模型有限，而且还容易限流。如果想使用阿里的bailian Coding Plan，建议手动配置，并且再使用过程中切换模型到 bailian 的模型。
 
@@ -66,11 +66,11 @@ curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -
 
 配置 skills，选择 Yes，回车。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-09.webp)
+![install-openclaw-in-github-codespace](09.webp)
 
 使用 space 按键选择你想安装的 skills，回车。比如，可以安装 blogwatcher 这个skill。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-10.webp)
+![install-openclaw-in-github-codespace](10.webp)
 
 启用全部 hooks，回车。openclaw 就安装好了。
 
@@ -113,13 +113,13 @@ openclaw status
 
 以下是，在codespace 终端输入 openclaw gateway 启动网关：
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-11.webp)
+![install-openclaw-in-github-codespace](11.webp)
 
 ## 和 openclaw 聊天
 
 在电报里打开机器人，输入消息。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-12.webp)
+![install-openclaw-in-github-codespace](12.webp)
 
 提示需要配对。这时候回到 codespace 页面，点击 + 按钮，打开一个新的终端，输入配对命令：
 
@@ -127,7 +127,7 @@ openclaw status
 openclaw pairing approve telegram DH4Q43VM
 ```
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-13.webp)
+![install-openclaw-in-github-codespace](13.webp)
 
 配对成功之后，再回到电报和机器人对话。发送消息。机器人会回复。
 
@@ -151,7 +151,7 @@ openclaw pairing approve telegram DH4Q43VM
 请记住你现在运行在 github codespace 上，你的项目路径是 /workspaces/test-openclaw
 ```
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-14.webp)
+![install-openclaw-in-github-codespace](14.webp)
 
 接下来，我们需要在当前项目路径开发一个应用。让机器人**记住这个项目中使用的技术栈**。
 
@@ -181,7 +181,7 @@ openclaw pairing approve telegram DH4Q43VM
 
 公网地址在 codespace 端口 tab 页面可以找到
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-15.webp)
+![install-openclaw-in-github-codespace](15.webp)
 
 让机器人开发一个 Todo List 应用。
 
@@ -191,11 +191,11 @@ openclaw pairing approve telegram DH4Q43VM
 
 稍等，Todo List 应用已创建完成并且代码也会提交到 github。
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-16.webp)
+![install-openclaw-in-github-codespace](16.webp)
 
 打开浏览器访问 todo 应用：
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-17.webp)
+![install-openclaw-in-github-codespace](17.webp)
 
 如果你对样式不满意或者想添加新的功能，直接在电报应用里发送消息给机器人修改即可。
 
@@ -207,7 +207,7 @@ openclaw pairing approve telegram DH4Q43VM
 为我设置一个定时任务，每隔一个小时告诉我武汉的天气预报
 ```
 
-![install-openclaw-in-github-codespace](install-openclaw-in-github-codespace-18.webp)
+![install-openclaw-in-github-codespace](18.webp)
 
 ## 总结
 

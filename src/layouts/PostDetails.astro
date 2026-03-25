@@ -15,7 +15,8 @@ import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
-import { SITE } from "@/config";
+import { CDN_KATEX_STYLESHEET, SITE } from "@/config";
+import { siteImageHref } from "@/utils/blogImages";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -35,30 +36,55 @@ const {
   math,
   comments,
   description: postDescription,
-  "top-image": topImageRaw,
+  banner: bannerRaw,
   categories,
 } = post.data;
 
-/** 解析 top-image 的完整 URL：绝对地址原样返回，相对路径在生产环境拼接 CDN 前缀 */
-const topImageSrc =
-  topImageRaw && topImageRaw.trim()
-    ? (() => {
-        const src = topImageRaw.trim();
-        if (src.startsWith("http://") || src.startsWith("https://")) return src;
-        const normalized = src.startsWith("/") ? src : `/${src}`;
-        if (import.meta.env.DEV) return normalized;
-        const base = (SITE.imageConfig.imagesUrl ?? "")
-          .trim()
-          .replace(/\/$/, "");
-        return base ? `${base}${normalized}` : normalized;
-      })()
-    : undefined;
+const imageDirName = PostUtils.getPostImageDirName(
+  post.id,
+  post.filePath,
+  date,
+  post.data.timezone,
+  post.data.slug ?? null,
+  post.data.imageDir ?? null
+);
+const bannerPath = PostUtils.resolveBlogImageRef(bannerRaw, imageDirName);
+const faviconPath = PostUtils.resolveFaviconRef(post.data.favicon);
+const hasBanner = Boolean(bannerRaw?.trim());
+
+/** 解析 banner：`astro dev` 根相对；生产 `/images/...` 走 CDN（与 Photosuite） */
+const bannerSrc = bannerPath
+  ? (() => {
+      const src = bannerPath;
+      if (src.startsWith("http://") || src.startsWith("https://")) return src;
+      const normalized = src.startsWith("/") ? src : `/${src}`;
+      return siteImageHref(normalized);
+    })()
+  : undefined;
+
+/** OG / JSON-LD：优先横幅图；否则若 `favicon` 为 `/images/` 且非 `_favicons/` 则用其作分享图 */
+let articleOgImage: string | undefined;
+if (bannerPath) {
+  articleOgImage = bannerSrc;
+} else if (
+  faviconPath &&
+  /^\/images\//.test(faviconPath) &&
+  !/\/images\/_favicons\//.test(faviconPath)
+) {
+  articleOgImage = siteImageHref(faviconPath);
+}
+let ogImageAltForLayout: string | undefined;
+if (articleOgImage) {
+  ogImageAltForLayout = hasBanner ? `${title} — 横幅` : `${title} — 列表图标`;
+}
+
+const bannerAltText = `${title} — 横幅`;
 
 // 渲染文章内容
 const { Content } = await render(post);
 const hasInlineImages = /!\[[\s\S]*?\]\([^)]+\)|<img\s/i.test(post.body ?? "");
 
-/** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 top-image） */
+/** 文章描述：优先 frontmatter description，否则从正文提取（与 RSS 摘要逻辑一致，不含 banner） */
 const fullDescription =
   postDescription?.trim() || PostUtils.getDescription(post.body ?? "");
 const plainText = (post.body ?? "")
@@ -111,6 +137,8 @@ const layoutProps = {
   pubDatetime: date,
   modDatetime: updated,
   canonicalURL,
+  ...(articleOgImage ? { ogImage: articleOgImage } : {}),
+  ...(ogImageAltForLayout ? { ogImageAlt: ogImageAltForLayout } : {}),
 };
 
 /* ========== Prev/Next Posts ========== */
@@ -190,6 +218,17 @@ const shareUrl = encodeURIComponent(canonicalHref);
 const shareTitle = encodeURIComponent(shareText);
 const shareDescription = encodeURIComponent(fullDescription);
 
+/** 订阅/分享卡片：仅用 @theme 映射色，不手写 color-mix */
+const postActionCardClass =
+  "flex h-full min-w-0 flex-col gap-[0.55rem] rounded-xl border border-border/90 bg-background-secondary/40 p-[0.95rem_1rem] transition-colors duration-200 ease-out hover:border-accent/30 hover:bg-accent/5";
+
+const postActionEyebrowClass =
+  "m-0 inline-flex items-center self-start rounded-full bg-accent/8 px-2 py-[0.14rem] text-[0.72rem] font-semibold uppercase tracking-[0.04em] text-accent";
+
+/** 相关文章卡片：内链 hover/focus 时抬高边框与底色 */
+const postRelatedCardClass =
+  "flex h-full min-w-0 flex-col gap-[0.45rem] rounded-[10px] border border-border/90 bg-background-secondary/30 px-[0.95rem] pb-[0.95rem] pt-[0.9rem] transition-colors duration-200 ease-out [&:has(a:hover)]:border-accent/30 [&:has(a:hover)]:bg-accent/5 [&:has(a:focus-visible)]:border-accent/30 [&:has(a:focus-visible)]:bg-accent/5";
+
 const currentPostIndex = allPosts.findIndex(a => a.path === currentPostPath);
 
 const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
@@ -204,6 +243,17 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
 <Layout {...layoutProps}>
   {hasInlineImages && <Photosuite />}
+  {
+    bannerSrc && (
+      <link
+        slot="head"
+        rel="preload"
+        as="image"
+        href={bannerSrc}
+        fetchpriority="high"
+      />
+    )
+  }
   {
     tags.map((tag: string) => (
       <meta slot="head" property="article:tag" content={tag} />
@@ -221,7 +271,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <link
         slot="head"
         rel="preload"
-        href="https://cos.chensoul.cc/dist/katex/0.16.38/dist/katex.min.css"
+        href={CDN_KATEX_STYLESHEET}
         as="style"
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
@@ -234,7 +284,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       <noscript slot="head">
         <link
           rel="stylesheet"
-          href="https://cos.chensoul.cc/dist/katex/0.16.38/dist/katex.min.css"
+          href={CDN_KATEX_STYLESHEET}
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
         />
@@ -242,18 +292,32 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <article class="post" data-pagefind-body>
-    <header class="post-header">
-      {topImageSrc && <img src={topImageSrc} alt={title} />}
+  <article class="post w-full min-w-0" data-pagefind-body>
+    <header class="w-full">
+      {
+        bannerSrc && (
+          <img
+            class="mx-auto mb-5 block h-auto w-full max-w-[min(100%,56rem)] rounded-lg"
+            src={bannerSrc}
+            alt={bannerAltText}
+            fetchpriority="high"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, min(100%, 56rem)"
+          />
+        )
+      }
 
-      <div class="breadcrumb" aria-label="面包屑导航">
+      <div
+        class="mb-4 text-sm text-muted [&_a]:text-muted [&_a:hover]:text-accent"
+        aria-label="面包屑导航"
+      >
         <a href="/">首页</a>
-        <span class="breadcrumb-separator">/</span>
+        <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
         <a href="/posts">文章</a>
         {
           primaryCategory && (
             <>
-              <span class="breadcrumb-separator">/</span>
+              <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
               <a href={`/categories/${slugifyStr(primaryCategory)}`}>
                 {primaryCategoryLabel}
               </a>
@@ -262,11 +326,15 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         }
       </div>
 
-      <section class="post-header__main">
-        <h1 class="post-title">
+      <section class="mb-6">
+        <h1
+          class="mb-3 mt-0 text-center text-[clamp(1.5rem,4vw,2rem)] font-semibold leading-tight text-foreground"
+        >
           {title}
         </h1>
-        <div class="post-meta">
+        <div
+          class="post-meta flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-center text-sm text-muted"
+        >
           {
             categoryLinks.map(category => (
               <a class="no-underline" href={`/categories/${category.slug}`}>
@@ -274,72 +342,99 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
               </a>
             ))
           }
-          <span class="meta-separator" aria-hidden="true">·</span>
-          <span class="reading-time">{readingMinutes} 分钟阅读</span>
-          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="opacity-50" aria-hidden="true">·</span>
+          <span class="whitespace-nowrap tabular-nums">{readingMinutes} 分钟阅读</span>
+          <span class="opacity-50" aria-hidden="true">·</span>
           <Datetime
             pubDatetime={date}
             modDatetime={updated}
             timezone={post.data.timezone}
             format="absolute"
+            size="lg"
           />
         </div>
       </section>
     </header>
 
-    <div class="post-layout">
-      <div class="post-content">
+    <div class="post-layout flex min-w-0 flex-col gap-5">
+      <div class="post-content min-w-0 pb-4">
         <Content />
       </div>
       <ArticleToc />
     </div>
   </article>
 
-  <!-- 标签列表 -->
-  {
-    tags.length > 0 && (
-      <div class="tags-section">
-        <span class="tags-icon" aria-hidden="true">
-          <IconTag />
-        </span>
-        <ul class="tags-list" role="list">
-          {tags.map((tag: string) => (
-            <Tag tag={slugifyStr(tag)} tagName={tag} />
-          ))}
-        </ul>
-      </div>
-    )
-  }
+  <!-- 正文以下：共用一条顶部分割线，子块之间只用间距，避免多条「横线」叠在一起 -->
+  <div
+    class="post-footer-stack clear-both w-full min-w-0 space-y-10 border-t border-border/80 pt-6 max-sm:space-y-9 max-sm:pt-5"
+  >
+    {
+      tags.length > 0 && (
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 shrink-0 text-muted" aria-hidden="true">
+            <IconTag />
+          </span>
+          <ul class="m-0 flex list-none flex-wrap gap-2 p-0" role="list">
+            {tags.map((tag: string) => (
+              <Tag tag={slugifyStr(tag)} tagName={tag} />
+            ))}
+          </ul>
+        </div>
+      )
+    }
 
-  <section class="action-section" aria-label="订阅与分享">
-    <div class="section-head">
-      <h3>订阅与分享</h3>
+    <section
+      class="action-section w-full min-w-0"
+      aria-label="订阅与分享"
+    >
+    <div class="mb-4 block w-full min-w-0">
+      <h3 class="m-0 text-base font-medium">订阅与分享</h3>
     </div>
 
-    <div class="action-grid">
-      <div class="action-card">
-        <p class="action-label">订阅文章</p>
-        <h3>订阅更新，不错过后续文章</h3>
-        <p class="action-description">
+    <div class="action-grid grid w-full min-w-0 gap-4 sm:grid-cols-2">
+      <div class={postActionCardClass}>
+        <p class={postActionEyebrowClass}>
+          订阅文章
+        </p>
+        <h3 class="m-0 text-[0.98rem] leading-[1.35]">
+          订阅更新，不错过后续文章
+        </h3>
+        <p class="m-0 text-sm leading-relaxed text-muted">
           直接通过 RSS 和 Telegram 订阅本站更新。
         </p>
-        <div class="action-buttons">
-          <a class="btn btn-primary" href="/rss.xml">订阅 RSS</a>
-          <a class="btn btn-secondary" href="https://t.me/ichensoul"
-            >关注 Telegram</a
+        <div
+          class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
+        >
+          <a
+            class="btn btn-primary inline-flex min-h-10 items-center justify-center rounded-lg border border-transparent bg-accent px-4 py-2 text-sm font-medium text-background no-underline transition-colors hover:bg-accent-strong hover:text-background"
+            href="/rss.xml"
           >
+            订阅 RSS
+          </a>
+          <a
+            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+            href="https://t.me/ichensoul"
+          >
+            关注 Telegram
+          </a>
         </div>
       </div>
 
-      <div class="action-card">
-        <p class="action-label">分享文章</p>
-        <h3>如果这篇有帮助，可以顺手转发</h3>
-        <p class="action-description">
+      <div class={postActionCardClass}>
+        <p class={postActionEyebrowClass}>
+          分享文章
+        </p>
+        <h3 class="m-0 text-[0.98rem] leading-[1.35]">
+          如果这篇有帮助，可以顺手转发
+        </h3>
+        <p class="m-0 text-sm leading-relaxed text-muted">
           直接分享给同事、朋友，或者发到你的社交平台。
         </p>
-        <div class="action-buttons">
+        <div
+          class="action-buttons mt-auto flex flex-wrap gap-2 pt-1 max-sm:flex-col max-sm:[&>.btn]:w-full"
+        >
           <a
-            class="btn btn-secondary"
+            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
             href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -347,7 +442,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             分享到 X
           </a>
           <a
-            class="btn btn-secondary"
+            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
             href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -355,7 +450,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             分享到 Telegram
           </a>
           <a
-            class="btn btn-secondary"
+            class="btn btn-secondary inline-flex min-h-10 items-center justify-center rounded-lg border border-border bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
             href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
           >
             邮件分享
@@ -367,24 +462,36 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   {
     relatedPosts.length > 0 && (
-      <section class="related-section" aria-label="相关文章">
-        <div class="section-head">
-          <h3>相关文章</h3>
+      <section
+        class="related-section w-full min-w-0"
+        aria-label="相关文章"
+      >
+        <div class="mb-4 block w-full min-w-0">
+          <h3 class="m-0 text-base font-medium">相关文章</h3>
         </div>
-        <div class="related-grid">
+        <div
+          class="related-grid grid w-full min-w-0 gap-4 sm:grid-cols-2 min-[960px]:grid-cols-3"
+        >
           {relatedPosts.map(({ post: relatedPost, path }) => (
-            <div class="related-card">
-              <p class="related-category">
+            <div class={postRelatedCardClass}>
+              <p
+                class="m-0 text-[0.72rem] font-semibold uppercase tracking-[0.04em] text-muted"
+              >
                 {relatedPost.data.categories
                   .map(category => getCategoryMeta(category)?.name ?? category)
                   .join(" / ")}
               </p>
-              <p>
-                <a href={path} class="related-card-title-link">
+              <p class="m-0">
+                <a
+                  href={path}
+                  class="leading-[1.42] text-accent no-underline hover:text-accent-strong hover:underline hover:underline-offset-[0.15em] focus-visible:text-accent-strong focus-visible:underline focus-visible:underline-offset-[0.15em]"
+                >
                   {relatedPost.data.title}
                 </a>
               </p>
-              <p class="related-card-excerpt">
+              <p
+                class="m-0 line-clamp-3 text-[0.82rem] leading-relaxed text-muted"
+              >
                 {PostUtils.getPlainTextDescription(
                   (relatedPost.data.description?.trim() || relatedPost.body) ??
                     ""
@@ -398,11 +505,17 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   <!-- Previous/Next Post Buttons -->
-  <nav class="post-nav" aria-label="文章导航">
+  <nav
+    class="post-nav mb-8 grid gap-4 sm:grid-cols-2"
+    aria-label="文章导航"
+  >
     <!-- 上一篇 -->
     {
       prevPost && (
-        <a href={prevPost.path} class="nav-link-prev">
+        <a
+          href={prevPost.path}
+          class="nav-link-prev flex items-center gap-2 rounded-[10px] border border-border px-4 py-3 text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+        >
           <IconChevronLeft />
           {prevPost.title}
         </a>
@@ -411,36 +524,27 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     <!-- 下一篇 -->
     {
       nextPost && (
-        <a href={nextPost.path} class="nav-link-next">
+        <a
+          href={nextPost.path}
+          class="nav-link-next flex items-center justify-end gap-2 text-right rounded-[10px] border border-border px-4 py-3 text-base text-accent no-underline transition-colors hover:border-accent hover:text-accent-strong"
+        >
           {nextPost.title}
           <IconChevronRight />
         </a>
       )
     }
   </nav>
+  </div>
 
   <!-- 评论容器：与主栏同宽（不用 reading-wrap 窄栏） -->
-  {comments && SITE.artalk.enabled && <div id="Comments" />}
+  {comments && SITE.artalk.enabled && (
+    <div id="Comments" class="mx-0 w-full max-w-none" />
+  )}
   <style is:global>
-    .post {
-      width: 100%;
-      min-width: 0;
-    }
-
-    .post > .post-header {
-      width: 100%;
-    }
-
     /**
-   * 正文 + 目录：正文宽度 = 无目录时整段正文的宽度（文章主容器内容区 100%），不被 flex 压缩。
-   * 容器加宽 + 负 margin 占用主栏右侧空间；目录列固定宽度 + sticky。
-   */
-    .post-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
+     * 正文 + 目录（≥lg）：负 margin 拉宽容器；正文 flex-basis 用 calc；目录 sticky。
+     * 移动端布局由 HTML 上 flex / gap 工具类负责。
+     */
     .post-layout .post-toc {
       display: none;
     }
@@ -461,7 +565,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         );
       }
 
-      /* 100% 相对本 flex 容器：容器宽 = 正文旧宽 + 目录 + gap → 此项 = 正文旧宽，flex-shrink: 0 不压窄 */
       .post-layout .post-content {
         flex: 0 0
           calc(100% - var(--post-toc-aside-w) - var(--post-toc-aside-gap));
@@ -482,18 +585,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       }
     }
 
-    .post-content {
-      min-width: 0;
-    }
     .post-content :where(h2, h3, h4) {
       scroll-margin-top: var(--site-header-sticky-offset);
-    }
-
-    #Comments {
-      width: 100%;
-      max-width: none;
-      margin-left: 0;
-      margin-right: 0;
     }
 
     #main-content .post-content {
@@ -502,355 +595,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
     #main-content .post-content img {
       border-radius: 8px;
-    }
-
-    .post .post-content {
-      padding-bottom: 1rem;
-    }
-
-    .post-header__main {
-      margin-bottom: 1.5rem;
-    }
-
-    .post-title {
-      margin: 0 0 0.75rem;
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      text-align: center;
-    }
-
-    .post-header__main .post-title {
-      margin-top: 0;
-    }
-
-    .post-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem 0.5rem;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      text-align: center;
-    }
-
-    .meta-separator {
-      opacity: 0.5;
-    }
-
-    .reading-time {
-      white-space: nowrap;
-    }
-
-    .tags-section {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-      margin: 1.75rem 0;
-      padding-top: 0.9rem;
-      border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-    }
-
-    .tags-icon {
-      flex-shrink: 0;
-      color: var(--text-secondary);
-      margin-top: 0.2rem;
-    }
-
-    .tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .section-head {
-      display: block;
-      width: 100%;
-      min-width: 0;
-      margin-bottom: 0.85rem;
-    }
-
-    .section-head h3 {
-      margin: 0;
-      font-size: 1.05rem;
-    }
-
-    .action-section {
-      display: block;
-      width: 100%;
-      min-width: 0;
-      clear: both;
-      margin: 2.25rem 0 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-    }
-
-    .action-grid {
-      display: grid;
-      width: 100%;
-      min-width: 0;
-      gap: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .action-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      }
-    }
-
-    .action-card {
-      display: flex;
-      min-width: 0;
-      flex-direction: column;
-      gap: 0.55rem;
-      height: 100%;
-      padding: 0.95rem 1rem;
-      border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
-      border-radius: 12px;
-      background: color-mix(
-        in srgb,
-        var(--background-secondary) 42%,
-        transparent
-      );
-      transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .action-card:hover {
-      border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
-      background: color-mix(in srgb, var(--accent) 3%, var(--background));
-    }
-
-    .action-label {
-      display: inline-flex;
-      align-items: center;
-      align-self: flex-start;
-      margin: 0;
-      padding: 0.14rem 0.5rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--accent) 8%, transparent);
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--accent);
-    }
-
-    .action-card h3 {
-      margin: 0;
-      font-size: 0.98rem;
-      line-height: 1.35;
-    }
-
-    .action-description {
-      margin: 0;
-      font-size: 0.875rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-    }
-
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: auto;
-      padding-top: 0.25rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2.5rem;
-      padding: 0.5rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      border-radius: 8px;
-      text-decoration: none;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-dark);
-      border-color: var(--accent-dark);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--accent);
-      border-color: var(--border);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent-dark);
-    }
-
-    .related-section {
-      display: block;
-      width: 100%;
-      min-width: 0;
-      clear: both;
-      margin: 2.25rem 0;
-      padding-top: 1rem;
-      border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-    }
-
-    .related-grid {
-      display: grid;
-      width: 100%;
-      min-width: 0;
-      gap: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .related-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 960px) {
-      .related-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .related-card {
-      display: flex;
-      min-width: 0;
-      flex-direction: column;
-      gap: 0.45rem;
-      height: 100%;
-      padding: 0.9rem 0.95rem 0.95rem;
-      border: 1px solid color-mix(in srgb, var(--border) 92%, transparent);
-      border-radius: 10px;
-      background: color-mix(
-        in srgb,
-        var(--background-secondary) 32%,
-        transparent
-      );
-      transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-    }
-
-    .related-card:has(.related-card-title-link:hover),
-    .related-card:has(.related-card-title-link:focus-visible) {
-      border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
-      background: color-mix(in srgb, var(--accent) 3%, var(--background));
-    }
-
-    .related-category {
-      margin: 0;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-    }
-
-    .related-card > p:not(.related-category):not(.related-card-excerpt) {
-      margin: 0;
-    }
-
-    .related-card-title-link {
-      color: var(--accent);
-      text-decoration: none;
-      line-height: 1.42;
-    }
-
-    .related-card-title-link:hover {
-      text-decoration: underline;
-      text-underline-offset: 0.15em;
-    }
-
-    .related-card-excerpt {
-      margin: 0;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .post-nav {
-      display: grid;
-      gap: 1rem;
-      margin: 1.75rem 0 2rem;
-      padding-top: 1.1rem;
-      border-top: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-    }
-
-    @media (min-width: 640px) {
-      .post-nav {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .action-section {
-        margin-top: 2rem;
-      }
-
-      .action-card,
-      .related-card {
-        padding-left: 0.95rem;
-        padding-right: 0.95rem;
-      }
-
-      .action-buttons > .btn {
-        flex: 1 1 100%;
-      }
-
-      .related-section {
-        margin-top: 2rem;
-        padding-top: 0.95rem;
-      }
-    }
-
-    .nav-link-prev,
-    .nav-link-next {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      text-decoration: none;
-      color: var(--accent);
-      font-size: 0.9375rem;
-      transition:
-        border-color 0.2s ease,
-        color 0.2s ease;
-    }
-
-    .nav-link-prev:hover,
-    .nav-link-next:hover {
-      border-color: var(--accent);
-      color: var(--accent-dark);
-    }
-
-    .nav-link-next {
-      justify-content: flex-end;
-      text-align: right;
     }
   </style>
 

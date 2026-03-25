@@ -6,7 +6,7 @@ tags: ['astro','openclaw','hugo']
 draft: false
 categories: [ "weekly" ]
 description: 这周主要在两条线上投入时间：把博客从 Hugo 迁移到 Astro，也继续试用了 Codex CLI、Gemini CLI、Claude Code 和 OpenClaw。
-cover: /thumbs/astro.svg
+favicon: "astro.svg"
 ---
 
 本篇博客介绍最近一周（2026-02-23 ～ 2026-03-01）的记录与思考。
@@ -17,7 +17,7 @@ cover: /thumbs/astro.svg
 
 初始的 Hugo 搭建的博客如下图，使用的是 [rose-hugo](https://github.com/chensoul/rose-hugo) 主题，这个主题是我基于 [Mainroad](https://github.com/Vimux/Mainroad) 主题做了一些修改。
 
-![blog-hugo-rose-theme](/images/blog-hugo-rose-theme.webp)
+![blog-hugo-rose-theme](/images/20260301-week-review/01.webp)
 
 后来看到了 [Frost's Blog](https://frostming.com/)，发现该博客风格比较简洁，于是想使用该主题，但是找不到该博客主题的源码，于是使用 AI 复刻了该主题。再后来，看到 [游钓四方](https://blog.lhasa.icu/) 之后，发现该博客访问速度快、样式美规紧凑、主题源码开源，于是就有了 [博客从 Hugo 迁移到了 Astro](/posts/2026/02/26/from-hugo-to-astro-blog) 这篇文章。
 
@@ -25,7 +25,7 @@ cover: /thumbs/astro.svg
 
 再后来看到 [Yiran's Blog](https://zdyxry.github.io/) 之后，参考该网站，将导航修改为固定模式、Footer 部分添加了社交链接、重构了 Astro 布局、去掉了分类页面（将分类列表添加到了归档页面上方，同时添加了按年份导航）。
 
-![blog-astro-archives](/images/blog-astro-archives.webp)
+![blog-astro-archives](/images/20260301-week-review/02.webp)
 
 总结一下，花在博客主题改造和排错的时间太多了，有点因小失大。毕竟铁打的营盘流水的兵，三十年河东三十年河西。博客只是一个记录文字的工具，博客构建工具层出不穷，博客主题也会随着时间流逝让人出现审美疲劳，说不定以后的哪天又换了一个博客生成器和主题。所以，完全不应该在博客主题上花费太多时间了，而应该把时间花在学习有用、回报率高的事情上，比如说 AI、大模型等等。
 
@@ -33,7 +33,7 @@ cover: /thumbs/astro.svg
 
 一直在使用 Cursor 作为 vibe coding 的主力工具，因为账号是公司开通的，不用担心费用问题。奈何20美元的额度总是早早用完了，导致只能使用免费在模型。以下是最近一个月 Curosr 的提交代码统计。
 
-![cursor-dashboard-20260305](/images/cursor-dashboard-20260305.webp)
+![cursor-dashboard-20260305](/images/20260301-week-review/03.webp)
 
 为了解决这个问题，于是尝试了 Codex CLI（[Codex CLI 安装、配置、使用与认证指南](/posts/2026/03/03/codex-cli-guide)）和 Gemini（[Gemini CLI 安装、配置、使用与认证指南](/posts/2026/03/02/gemini-cli-guide)）以及 Claude Code（[Claude Code 安装、配置、使用与认证指南](/posts/2026/03/05/claude-code-guide)）。
 

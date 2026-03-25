@@ -141,7 +141,7 @@ No ECDSA host key is known for github.houston.softwaregrp.net and you have reque
 
 可以采用下面的方法解决：
 
-![img](jenkins-ssh-key.webp)
+![img](install-jenkins/01.webp)
 
 ### 配置SSH登录
 

@@ -22,7 +22,9 @@
     "md:check": "pnpm dlx markdownlint-cli2 ./content/posts/**",
     "md:fix": "pnpm dlx markdownlint-cli2 --fix ./content/posts/**",
     "md:add-descriptions": "node scripts/add-descriptions.mjs",
-    "md:add-descriptions:dry": "node scripts/add-descriptions.mjs --dry"
+    "md:add-descriptions:dry": "node scripts/add-descriptions.mjs --dry",
+    "restructure-post-images:dry": "node scripts/restructure-post-images.mjs --dry-run",
+    "restructure-post-images": "node scripts/restructure-post-images.mjs --apply"
   },
   "dependencies": {
     "@astrojs/mdx": "5.0.2",

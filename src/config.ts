@@ -1,7 +1,20 @@
+/**
+ * 对象存储自定义域名（R2 / COS，无末尾斜杠）。
+ * - **dist**：Artalk、KaTeX、lazy-list 等 CSS/JS
+ * - **图片**：dev/prod 与 CDN 开关见 `src/utils/blogImages/`（`shouldUseCdnForPublicImagePaths`、`siteImageHref` 等）
+ */
+export const CDN_ORIGIN = "https://cos.chensoul.cc";
+
+/** 桶内 `images/` 在 CDN 上的基址（与 Photosuite 生产环境 `imageBase` 一致） */
+export const CDN_IMAGES_BASE = `${CDN_ORIGIN}/images`;
+
+/** KaTeX 与 `public/dist/katex` 同步上传后的样式表 URL */
+export const CDN_KATEX_STYLESHEET = `${CDN_ORIGIN}/dist/katex/0.16.38/dist/katex.min.css`;
+
 export const SITE = {
   website: "https://blog.chensoul.cc",
   author: "ChenSoul",
-  description: "Java、Spring、MicroServices、Architecture、Kubernetes、DevOps",
+  description: "记录 Java、Spring、MicroServices、Architecture、Kubernetes、DevOps、AI 编码工具、架构与个人周报的博客",
   title: "ChenSoul Blog",
 
   googleSiteVerification: "702mzR8WJvXKVdS3ergTkQEIWAMuwniGMAIeE6wPRhc",
@@ -83,12 +96,12 @@ export const SITE = {
    *
    * - **enabled**：为 false 时不输出 og:image、twitter:image 及 JSON-LD 中的文章 image
    * - **dynamic**：为 true 时在构建阶段用 Satori 生成 `/og/` 下各路由 PNG，且未传 `ogImage` 时默认图按当前页 URL 指向 `/og/...`；为 false 时不生成 PNG，默认一律用 **defaultImage**
-   * - **defaultImage**：相对 `public` 的静态图路径（可写 `images/og.webp` 或 `/images/og.webp`）
+   * - **defaultImage**：根相对路径（如 `/images/og.webp`，对应 `public/images/og.webp`）；Layout 会结合站点 origin 生成 og 绝对 URL，开发环境用当前 dev 域名
    */
   og: {
     enabled: true,
     dynamic: false,
-    defaultImage: "https://cos.chensoul.cc/images/og.webp",
+    defaultImage: "/images/og.webp",
   },
 
   /**
@@ -114,8 +127,8 @@ export const SITE = {
     enabled: true,
     server: "https://artalk.chensoul.cc",
     site: "ChenSoul Blog",
-    scriptUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.js",
-    cssUrl: "https://cos.chensoul.cc/dist/artalk/Artalk.css",
+    scriptUrl: `${CDN_ORIGIN}/dist/artalk/Artalk.js`,
+    cssUrl: `${CDN_ORIGIN}/dist/artalk/Artalk.css`,
     vote: false,
   },
 
@@ -129,14 +142,7 @@ export const SITE = {
     scriptUrl: "https://umami.chensoul.cc/random-string.js",
   },
 
-  lazyListJsUrl: "https://cos.chensoul.cc/dist/lazy-list.js",
-
-  /**
-   * 图片相关配置（CDN 前缀等；列表 Card 缩略图固定 loading="lazy" + decoding="async"）
-   */
-  imageConfig: {
-    imagesUrl: "https://cos.chensoul.cc",
-  },
+  lazyListJsUrl: `${CDN_ORIGIN}/dist/lazy-list.js`,
 
   /**
    * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
@@ -149,9 +155,7 @@ export const SITE = {
     initialCount: 10,
     /** 点击「加载更多」每次加载条数 */
     perPage: 10,
-    /** 无头像时使用的默认图片 URL */
-    fallbackAvatarUrl: "https://cos.chensoul.cc/thumbs/rss.svg",
-    /** 相对路径 avatar 使用的 host（如 COS/R2 公网域名），为空则用本站 SITE.website */
-    cosHost: "https://cos.chensoul.cc/avatars",
+    /** 无头像时使用的默认图（根相对，对应 `public/images/_favicons/rss.svg`） */
+    fallbackAvatarUrl: "/images/_favicons/rss.svg",
   },
 } as const;

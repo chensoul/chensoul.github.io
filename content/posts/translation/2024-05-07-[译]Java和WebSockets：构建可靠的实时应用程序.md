@@ -136,7 +136,7 @@ wss://realtime.ably.com/?key=MY_API_KEY&format=json&heartbeats=true&v=1.1&lib=js
 
 **基于令牌的身份验证**是另一种广泛使用的身份验证机制。最流行的基于令牌的身份验证方法之一称为[JSON Web 令牌](https://tools.ietf.org/html/rfc7519)(JWT)。它是一种开放且灵活的格式，已成为行业标准。在基本层面上，JWT 的工作原理如下图所示：
 
-![img](jwt-diagram-v1.1_2x.webp)
+![img](websockets-java/01.webp)
 
 1. 客户端向授权服务器发送授权请求。
 2. 授权服务器向客户端返回访问令牌。

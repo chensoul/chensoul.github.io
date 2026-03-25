@@ -4,7 +4,7 @@ date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "tech" ]
 tags: [ 'astro' ]
-cover: /thumbs/astro.svg
+favicon: "astro.svg"
 description: "记录博客从 Hugo 迁移到 Astro 的过程，以及基于 astro-lhasa 主题做过的结构与样式调整，方便后续复盘与参考。"
 ---
 
@@ -89,7 +89,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 #### 3. 分类逻辑
 
 - **上游**：使用 `config.ts` 中的 `categoryOrder` 对分类排序。
-- **当前**：改为由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一维护分类顺序、中文名称与封面图，分类页和归档页优先按该顺序显示。
+- **当前**：改为由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一维护分类顺序、中文名称与分类卡片缩略图，分类页和归档页优先按该顺序显示。
 
 #### 4. 已删除的页面与功能
 
@@ -124,7 +124,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 - **postPerIndex**：10 → 8。
 - **genDescriptionMaxLines**：30 → 3。
 - **Stats 链接**：指向 `stats.chensoul.cc/blog.chensoul.cc`。
-- **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表缩略图中的 `/images`、`/thumbs` 会优先走站内同源路径。
+- **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表用 `favicon` 字段指向 `/images/_favicons/`，与文章图同属 `/images/` 前缀、优先走站内同源路径。
 - **移除**：`displayOptions`（如评论数等）、Feeds 相关配置。
 
 #### 2. Astro 与集成（`astro.config.ts`）
@@ -141,7 +141,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 #### 3. 内容 Schema（`src/content.config.ts`）
 
 - **BLOG_PATH**：`"posts"` → `"content/posts"`。
-- **categories**：分类显示名、排序与封面图由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一控制。
+- **categories**：分类显示名、排序与分类卡片缩略图由 `postUtils.ts`（分类元数据 `CATEGORY_META`） 统一控制。
 - **新增 frontmatter**：`mermaid: z.boolean().default(false)`。
 
 #### 4. 依赖与脚本（`package.json`、`pnpm-lock.yaml`）

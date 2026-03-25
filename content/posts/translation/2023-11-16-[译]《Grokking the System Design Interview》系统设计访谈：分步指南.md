@@ -141,7 +141,7 @@ For Twitter, at a high-level, we will need multiple application servers to serve
 
 > 对于 Twitter，在较高层面上，我们需要多个应用程序服务器来服务所有读/写请求，并在它们前面提供负载均衡器以进行流量分配。如果我们假设我们将有更多的读取流量（与写入相比），我们可以决定使用单独的服务器来处理这些场景。在后端，我们需要一个高效的数据库来存储所有的推文，并且可以支持海量读取。我们还需要一个分布式文件存储系统来存储照片和视频。
 
-![20231116_image-20231116072253280](sdi-a-step-by-step-guide-01.webp)
+![20231116_image-20231116072253280](sdi-a-step-by-step-guide/01.webp)
 
 ## Step 6: Detailed design
 

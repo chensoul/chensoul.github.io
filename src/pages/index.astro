@@ -13,8 +13,7 @@ import { SITE } from "@/config";
 /** 与 /og/index.png 一致 */
 export const pageSlug = "index";
 export const pageTitle = SITE.title;
-export const pageDescription =
-  "记录 Java、Spring、AI 编码工具、架构与个人周报的博客。这里可以快速浏览最近更新和最新周报。";
+export const pageDescription = SITE.description;
 
 const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
 const sortedPosts = PostUtils.sort(publishedPosts);
@@ -32,20 +31,16 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
 
 <Layout title={pageTitle} description={pageDescription}>
   <section
-    class="home-dual-feed flex w-full min-w-0 flex-col gap-12 md:flex-row md:items-start md:gap-x-8 md:gap-y-0 lg:gap-x-10"
+    class="flex w-full min-w-0 flex-col gap-12 md:flex-row md:items-start md:gap-x-8 md:gap-y-0 lg:gap-x-10"
   >
-    <div
-      class="home-feed-col home-feed-col--articles min-w-0 md:basis-[52%] lg:basis-[52%]"
-    >
-      <header class="home-feed-col__head mb-2.5">
-        <h3 class="home-feed-col__title mt-0">最近文章</h3>
-        <p
-          class="home-feed-head-intro mt-1 mb-0 text-sm leading-snug text-pretty text-[var(--text-secondary)]"
-        >
+    <div class="min-w-0 md:basis-[52%] lg:basis-[52%]">
+      <header class="mb-2.5">
+        <h3 class="mt-0 mb-1">最近文章</h3>
+        <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
           优先展示最近更新的技术文章、知识库条目和翻译内容。
           <a
             href="/posts"
-            class="text-[var(--accent)] no-underline hover:underline"
+            class="text-accent no-underline hover:underline"
           >
             查看全部
           </a>
@@ -56,18 +51,14 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
       </ul>
     </div>
 
-    <aside
-      class="home-feed-col home-feed-col--weekly min-w-0 md:basis-[48%] lg:basis-[48%]"
-    >
-      <header class="home-feed-col__head mb-2.5">
-        <h3 class="home-feed-col__title mt-0">最近周报</h3>
-        <p
-          class="home-feed-head-intro mt-1 mb-0 text-sm leading-snug text-pretty text-[var(--text-secondary)]"
-        >
+    <aside class="min-w-0 md:basis-[48%] lg:basis-[48%]">
+      <header class="mb-2.5">
+        <h3 class="mt-0 mb-1">最近周报</h3>
+        <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
           记录每周开发进展、工具尝试和一些阶段性想法。
           <a
             href="/categories/weekly"
-            class="text-[var(--accent)] no-underline hover:underline"
+            class="text-accent no-underline hover:underline"
           >
             查看全部
           </a>
@@ -83,24 +74,4 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
     </aside>
   </section>
 
-  <style>
-    /* 覆盖 base.css h3 的 margin，标题与说明紧贴 */
-    .home-feed-col__title {
-      margin-bottom: 0.25rem;
-    }
-
-    @media (min-width: 768px) {
-      .home-feed-col--weekly {
-        flex: 0 1 48%;
-      }
-
-      .home-feed-col--articles {
-        flex: 0 1 52%;
-      }
-
-      .home-feed-col__head {
-        min-height: 0;
-      }
-    }
-  </style>
 </Layout>

@@ -139,7 +139,7 @@ const blog = defineCollection({
        * - 文章详情页显示分类
        * - 分类索引页 (/categories)
        * - 分类详情页 (/categories/[category])
-       * - 分类显示名、排序与封面图由 utils/postUtils（CATEGORY_META）统一控制
+       * - 分类显示名、排序与分类卡片缩略图由 utils/postUtils（CATEGORY_META）统一控制
        */
       categories: z.array(z.string()).default([]),
 
@@ -192,25 +192,37 @@ const blog = defineCollection({
       canonicalURL: z.string().optional(),
 
       /**
-       * 文章封面图
+       * 列表/卡片用站点或分类图标（favicon）
        *
-       * 可选字段，用于：
-       * - 文章详情页的头部封面
-       * - 文章列表的缩略图
-       * - OG 图片生成（如果启用了动态 OG 图片）
+       * 资源位于 `public/images/_favicons/`。可写短文件名（如 `tech.svg`）、完整根路径或 URL。与正文 `banner` 分工不同。
+       * 解析后为站内 `/images/...` 且路径不在 `_favicons/` 时，可在无 `banner` 时作 OG 分享图备选（见 PostDetails）。
        */
-      cover: z.string().optional(),
+      favicon: z.string().optional(),
 
       /**
-       * 文章主体上方配图
+       * 正文横幅图（banner）
        *
-       * 可选字段，用于在正文上方单独展示一张图片（如头图、配图）。
-       * 仅用于文章详情页展示，不参与摘要/描述提取（getDescription 已通过正则剔除正文中的图片语法）。
+       * 可写 `01.webp`（与 `imageDir` / `slug` 拼为 `/images/{slug}/01.webp`）、或 `/images/...`、或 https。仅在详情页标题上方展示。
        */
-      "top-image": z.string().optional(),
+      banner: z.string().optional(),
 
+      /**
+       * 文章 URL 末段（ASCII），并与正文配图目录统一：`public/images/{slug}/`。
+       */
       slug: z.string().optional(),
-    }),
+
+      /**
+       * Photosuite / 配图子目录；省略时与 `slug` 相同。若配图目录必须与 URL 不同可单独设置。
+       */
+      imageDir: z.string().optional(),
+    })
+      .transform(data => ({
+        ...data,
+        imageDir:
+          (data.imageDir && data.imageDir.trim()) ||
+          (data.slug && data.slug.trim()) ||
+          undefined,
+      })),
 });
 
 /**

@@ -41,7 +41,7 @@ mvn clean site
 chrome target/site/index.html
 ```
 
-![maven-my-app-index](maven-my-app-index.webp)
+![maven-my-app-index](publishing-a-maven-site-to-github-pages/01.webp)
 
 ## 创建 github 项目
 
@@ -70,7 +70,7 @@ git add . && git commit -m "initial site content" && git push origin gh-pages
 
 相应的网站将发布在你的 GitHub 项目的相应 URL 中；访问地址：<https://chensoul.github.io/maven-site-github-example：>
 
-![maven-my-app-github-page-index](maven-my-app-github-page-index.webp)
+![maven-my-app-github-page-index](publishing-a-maven-site-to-github-pages/02.webp)
 
 现在我们可以回到 **主**分支：
 
@@ -266,7 +266,7 @@ mvn clean site scm-publish:publish-scm
 
 现在该网站位于 GitHub Pages 上：
 
-![maven-my-app-github-index](maven-my-app-github-index.webp)
+![maven-my-app-github-index](publishing-a-maven-site-to-github-pages/03.webp)
 
 如果不配置  `project.distributionManagement.site` ，注释 distributionManagement 节点，这需要配置 scmpublish.pubScmUrl，可以在 pom.xml 中设置：
 
@@ -393,11 +393,11 @@ mvn clean site scm-publish:publish-scm
 
 稍等片刻，等待 github page 部署成功之后，可以看到网站：
 
-![maven-my-app-github-skin-index](maven-my-app-github-skin-index.webp)
+![maven-my-app-github-skin-index](publishing-a-maven-site-to-github-pages/04.webp)
 
 可以在 <https://github.com/chensoul/maven-site-github-example/actions> 查看网站的部署：
 
-![maven-my-app-github-page-deploy](maven-my-app-github-page-deploy.webp)
+![maven-my-app-github-page-deploy](publishing-a-maven-site-to-github-pages/05.webp)
 
 现在，可以通过添加/更改/删除目录 src/site 的内容，然后通过 Maven 再次发布该网站。
 
@@ -537,7 +537,7 @@ and the repository exists.
 
 再次打开网站，发现存在 I18N 没有替换成功的问题。
 
-![maven-my-app-github-i18n-index](maven-my-app-github-i18n-index.webp)
+![maven-my-app-github-i18n-index](publishing-a-maven-site-to-github-pages/06.webp)
 
 解决办法：
 
@@ -563,4 +563,4 @@ and the repository exists.
   
 再次发布并打开网站，则正常显示：
 
-![maven-my-app-github-i18n-index-ok](maven-my-app-github-i18n-index-ok.webp)
+![maven-my-app-github-i18n-index-ok](publishing-a-maven-site-to-github-pages/07.webp)

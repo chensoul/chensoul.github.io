@@ -4,7 +4,7 @@ date: 2026-01-04 08:00:00+08:00
 slug: spring-ai-chat-memory-sse
 categories: [ "tech" ]
 tags: ['spring-ai', 'sse']
-cover: /thumbs/memory.svg
+favicon: "memory.svg"
 description: "在 《Spring AI 对话记忆 》中我们用 MessageChatMemoryAdvisor + JDBC 实现了多轮对话记忆。本文基于同一套记忆能力，升级为 Server-Sent Events (SSE) 流式输出，并配上自定义前端让 DeepSeek 的回复实时逐字出现。"
 ---
 

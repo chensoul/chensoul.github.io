@@ -1,9 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getCategoryMeta, PostUtils, slugifyStr } from "@/utils/postUtils";
+import {
+  formatFeedDate,
+  getCategoryMeta,
+  PostUtils,
+  slugifyStr,
+} from "@/utils/postUtils";
 import Datetime from "./Datetime.astro";
 import { SITE } from "@/config";
-import { formatFeedDate } from "@/utils/feedDate";
+import { siteImageHref } from "@/utils/blogImages";
 
 /**
  * 组件属性接口
@@ -57,7 +62,7 @@ const title = isFeedCard ? feedProps.title : data!.title;
 const date = !isFeedCard ? data!.date : undefined;
 const updated = !isFeedCard ? data!.updated : undefined;
 const timezone = !isFeedCard ? data!.timezone : undefined;
-const cover = !isFeedCard ? data!.cover : undefined;
+const listFavicon = !isFeedCard ? data!.favicon : undefined;
 const categories = !isFeedCard ? data!.categories : undefined;
 const primaryCategory = Array.isArray(categories) ? categories[0] : undefined;
 const primaryCategoryLabel =
@@ -67,51 +72,37 @@ const primaryCategorySlug = primaryCategory
   : undefined;
 
 /**
- * 构建封面图 URL
+ * 构建列表卡片 favicon URL（`public/images/_favicons/`）
  *
- * - cover 为空：取首个分类对应缩略图 /thumbs/{category}.svg，无分类则 /thumbs/blank.svg，再按下方规则解析
- * - 以 http:// 或 https:// 开头：原样返回（绝对地址）
- * - 其他（相对路径或 /images、/thumbs 等）：
- *   - /images、/thumbs：始终走站内同源资源，减少列表页的跨域图片请求
- *   - 其余相对路径：开发环境走站内路径；生产环境若配置 CDN 则拼接完整地址
+ * - favicon 为空：取首个分类对应图标 `/images/_favicons/{category}.svg`，无分类则 .../blank.svg
+ * - 以 http(s):// 开头：原样
+ * - 以 / 开头：根相对路径；同源 `/images/` 走站内
+ * - 仅文件名：见 PostUtils.resolveFaviconRef
  *
  * @returns 用于 <img src> 的完整或相对 URL
  */
-const buildCoverSrc = (): string | undefined => {
+const buildListFaviconSrc = (): string | undefined => {
   if (isFeedCard) return undefined;
 
-  const resolveLocalSrc = (src: string): string => {
-    const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+  const resolveLocalSrc = (src: string): string =>
+    siteImageHref(src.startsWith("/") ? src : `/${src}`);
 
-    if (/^\/(images|thumbs)\//.test(normalizedSrc)) {
-      return normalizedSrc;
-    }
-
-    if (import.meta.env.DEV) {
-      return normalizedSrc;
-    }
-
-    const imagesBase = (SITE.imageConfig.imagesUrl ?? "")
-      .trim()
-      .replace(/\/$/, "");
-    return imagesBase ? `${imagesBase}${normalizedSrc}` : normalizedSrc;
-  };
-
-  const rawImage = typeof cover === "string" ? cover.trim() : "";
+  const rawImage = typeof listFavicon === "string" ? listFavicon.trim() : "";
 
   if (rawImage) {
     if (rawImage.startsWith("http://") || rawImage.startsWith("https://")) {
       return rawImage;
     }
-    return resolveLocalSrc(rawImage);
+    const resolved = PostUtils.resolveFaviconRef(rawImage) ?? rawImage;
+    return resolveLocalSrc(resolved);
   }
 
   const firstCategory = Array.isArray(categories) ? categories[0] : undefined;
   const filename = firstCategory || "blank";
-  return resolveLocalSrc(`/thumbs/${filename}.svg`);
+  return resolveLocalSrc(`/images/_favicons/${filename}.svg`);
 };
 
-const coverSrc = buildCoverSrc();
+const listFaviconSrc = buildListFaviconSrc();
 
 const weeklyDescription =
   !isFeedCard && listKind === "weekly"
@@ -126,17 +117,18 @@ const feedBlogName = isFeedCard ? (feedProps.blogName?.trim() ?? "") : "";
 
 let avatarSrc = "";
 if (isFeedCard) {
-  avatarSrc = feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
+  avatarSrc =
+    feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
   if (
     avatarSrc &&
     !/^https?:\/\//.test(avatarSrc) &&
     !avatarSrc.startsWith("//")
   ) {
-    const avatarHost =
-      (SITE.feeds.cosHost && SITE.feeds.cosHost.trim()) || SITE.website;
-    avatarSrc =
-      avatarHost.replace(/\/$/, "") +
-      (avatarSrc.startsWith("/") ? avatarSrc : `/${avatarSrc}`);
+    if (!avatarSrc.startsWith("/images/")) {
+      const name = avatarSrc.replace(/^\//, "");
+      avatarSrc = `/images/_favicons/${name}`;
+    }
+    avatarSrc = siteImageHref(avatarSrc);
   }
 }
 ---
@@ -166,9 +158,9 @@ if (isFeedCard) {
               decoding="async"
             />
           )
-        : coverSrc && (
+        : listFaviconSrc && (
             <img
-              src={coverSrc}
+              src={listFaviconSrc}
               alt={title}
               width={46}
               height={46}
@@ -263,7 +255,7 @@ if (isFeedCard) {
     --pcard-title-line-height: 1.34;
     --pcard-title-lines: 2;
     --pcard-title-gap: 0.12rem;
-    --pcard-meta-size: 0.82rem;
+    --pcard-meta-size: var(--text-sm);
     --pcard-meta-line-height: 1.34;
   }
 
@@ -373,7 +365,6 @@ if (isFeedCard) {
   }
 
   .pcard--article .pcard-meta {
-    font-size: 0.83rem;
     line-height: 1.36;
   }
 
@@ -394,8 +385,8 @@ if (isFeedCard) {
     white-space: nowrap;
   }
 
-  /* Datetime 内 time 带 text-sm，与 meta 统一为同一字号 */
-  .pcard-meta :is(time, span, a) {
+  /* 日期由 Datetime 自持字号；分隔符与分类链继承 meta */
+  .pcard-meta :is(span, a) {
     font-size: inherit;
     line-height: inherit;
   }
@@ -476,7 +467,6 @@ if (isFeedCard) {
       --pcard-padding-y: 0.32rem;
       --pcard-title-size: 0.83rem;
       --pcard-title-gap: 0.14rem;
-      --pcard-meta-size: 0.8rem;
     }
 
     .pcard-inner {

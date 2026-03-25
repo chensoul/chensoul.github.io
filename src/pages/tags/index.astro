@@ -25,6 +25,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
 
 <Layout title={pageTitle} robots="noindex,follow">
   <h1>标签</h1>
+  <div class="space-y-8">
   {
     topTags.length > 0 && (
       <section>
@@ -49,4 +50,5 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
       </section>
     )
   }
+  </div>
 </Layout>

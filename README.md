@@ -36,7 +36,7 @@ chensoul.github.io/
 │   │   └── PostDetails.astro     # 文章详情布局
 │   ├── pages/           # 路由页面
 │   ├── styles/          # CSS 样式
-│   └── utils/           # postUtils（文章/分类/llms）、contentPage、og-image、feedDate、quietAstroMermaid
+│   └── utils/           # postUtils（文章/分类/llms/订阅日期/content/pages）、og-image、quietAstroMermaid
 ├── public/              # 静态资源
 ├── scripts/             # 辅助脚本
 └── astro.config.ts      # 构建配置
@@ -82,8 +82,8 @@ draft: false # true 则排除构建
 math: false # 启用 KaTeX
 mermaid: false # 启用 Mermaid
 comments: true # 需 SITE.artalk.enabled 为 true 才显示评论；设为 false 可关单篇
-cover: "/thumbs/cover.jpg" # 可选，封面图（列表缩略图 + OG 图）
-top-image: "/images/top-image.jpg" # 可选，正文上方配图
+favicon: "tech.svg" # 可选，列表/归档用图标（public/images/_favicons/；无 banner 且解析为 /images 实图且非 _favicons 时可作 OG 备选）
+banner: "01.webp" # 可选，正文横幅图（拼到 public/images/{getPostImageDirName}/；也可写完整 /images/... 或 URL）
 ```
 
 ### 文章 URL 规则

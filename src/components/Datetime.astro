@@ -35,8 +35,8 @@ const SHORT_FORMAT = "YYYY-MM-DD";
 /**
  * 组件属性接口
  *
- * @property class - 额外的 CSS 类名
- * @property size - 尺寸：sm（小）或 lg（大）
+ * @property class - 可选外层类名（排版默认用 Tailwind）
+ * @property size - `sm` → `text-sm`，`lg` → `text-base`
  * @property timezone - 时区（可选，如 Asia/Shanghai）
  * @property pubDatetime - 发布时间
  * @property modDatetime - 更新时间（可选）
@@ -71,11 +71,19 @@ const pubInTz = dayjs.utc(pub.toDate()).tz(tz);
 const title = pubInTz.format(FULL_FORMAT);
 const displayTime =
   format === "absolute" ? latestInTz.format(SHORT_FORMAT) : latest.fromNow();
+
+const timeSizeClass = size === "lg" ? "text-base" : "text-sm";
 ---
 
-<div class:list={["flex items-end space-x-1", className]} title={title}>
+<div
+  class:list={["inline-flex min-w-0 items-baseline gap-0.5", className]}
+  title={title}
+>
   <time
-    class:list={["text-xs", { "sm:text-base": size === "lg" }]}
+    class:list={[
+      "font-normal tabular-nums tracking-wide text-muted",
+      timeSizeClass,
+    ]}
     datetime={iso}
     data-date-format={format}
   >
