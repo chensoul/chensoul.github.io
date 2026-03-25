@@ -17,8 +17,8 @@ const navLinks = [
 const { pathname } = Astro.url;
 ---
 
-<header>
-  <nav>
+<header class="site-header">
+  <nav class="site-nav">
     <a href="/" class="logo">{SITE.title}</a>
     <div class="nav-right">
       <ul class="nav-links">
@@ -103,7 +103,7 @@ const { pathname } = Astro.url;
 </header>
 
 <style is:global>
-  header nav {
+  .site-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -115,7 +115,7 @@ const { pathname } = Astro.url;
   }
 
   @media (max-width: 768px) {
-    header nav {
+    .site-nav {
       padding-left: 1rem;
       padding-right: 1rem;
     }

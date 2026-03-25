@@ -48,9 +48,9 @@
 
 html {
   font-family:
-    Roboto, Helvetica, Tahoma, Arial, "LXGW WenKai Screen", "Droid Serif",
-    Georgia, "Times New Roman", "PingFang SC", "Hiragino Sans GB",
-    "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei", serif;
+    "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN",
+    "Noto Sans CJK SC", "Microsoft YaHei", Roboto, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
   background: var(--background);
   color: var(--text-primary);
   scroll-behavior: smooth;
@@ -64,7 +64,7 @@ body {
   flex-direction: column;
   background: var(--background);
   color: var(--text-primary);
-  overflow-x: hidden;
+  line-height: 1.65;
 }
 
 /* ================================
@@ -120,7 +120,7 @@ h6 {
   color: var(--text-primary);
   font-weight: 650;
   line-height: 1.25;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
@@ -149,7 +149,7 @@ h6 {
 }
 
 p {
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 /* ================================
@@ -159,28 +159,64 @@ p {
 ul,
 ol,
 menu {
-  list-style-position: outside;
-  padding-left: 1em;
-  margin: 1rem;
+  margin: 0;
+  padding-left: 1.25rem;
 }
 
-ul,
-menu {
+#main-content :is(.post-content, .page-content) :where(ul, ol, menu) {
+  list-style-position: outside;
+  padding-left: 1em;
+  margin: 1rem 0 1.15rem;
+}
+
+#main-content :is(.post-content, .page-content) :where(ul, menu) {
   list-style-type: disc;
 }
 
-ol {
+#main-content :is(.post-content, .page-content) :where(ol) {
   list-style-type: decimal;
 }
 
-li {
-  margin-bottom: 0.3rem;
+#main-content :is(.post-content, .page-content) :where(li) {
+  margin-bottom: 0.45rem;
 }
 
-/* 主容器下的列表：无符号、无缩进 */
+#main-content :is(.post-content, .page-content) > :first-child {
+  margin-top: 0;
+}
+
+#main-content :is(.post-content, .page-content) > :last-child {
+  margin-bottom: 0;
+}
+
+#main-content :is(.post-content, .page-content) p {
+  margin: 0.85rem 0;
+}
+
+#main-content :is(.post-content, .page-content) :where(h2, h3, h4) {
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.32;
+  letter-spacing: -0.005em;
+}
+
+#main-content :is(.post-content, .page-content) h2 {
+  font-size: 1.55rem;
+}
+
+#main-content :is(.post-content, .page-content) h3 {
+  font-size: 1.28rem;
+}
+
+#main-content :is(.post-content, .page-content) h4 {
+  font-size: 1.08rem;
+}
+
+/* 主容器下的导航/卡片列表默认不加缩进 */
 main > ul,
 main > section > ul {
   list-style: none;
+  margin: 0;
   padding-left: 0;
   padding-inline-start: 0;
 }
@@ -255,12 +291,22 @@ pre {
    ================================ */
 
 blockquote {
-  margin: 0.5em 0;
-  padding: 0.2em 0 0.2rem 0.5em;
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
   border-left: 3px solid var(--accent);
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  color: color-mix(in srgb, var(--text-primary) 82%, var(--text-secondary));
+  font-size: 0.98rem;
+  line-height: 1.75;
+  background: color-mix(in srgb, var(--accent) 4%, var(--background));
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 /* ================================
@@ -268,9 +314,15 @@ blockquote {
    ================================ */
 
 img {
-  max-width: 75%;
+  max-width: 100%;
   height: auto;
   display: block;
+}
+
+#main-content :is(.post-content, .page-content) img {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 figure {
@@ -282,6 +334,7 @@ figcaption {
   font-size: 0.875rem;
   color: var(--text-secondary);
   text-align: center;
+  line-height: 1.6;
 }
 
 /* ================================
@@ -292,6 +345,16 @@ hr {
   margin: 1.5rem 0;
   border: 0;
   border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  #main-content :is(.post-content, .page-content) :where(h2, h3, h4) {
+    margin-top: 1.75rem;
+  }
+
+  #main-content :is(.post-content, .page-content) img {
+    max-width: 100%;
+  }
 }
 
 /* ================================
@@ -387,18 +450,6 @@ main {
   max-width: 1060px;
   margin: 0 auto;
   padding: 0 1.5rem 2rem;
-}
-
-section {
-  display: block;
-}
-
-article {
-  display: block;
-}
-
-aside {
-  display: block;
 }
 
 /* ================================

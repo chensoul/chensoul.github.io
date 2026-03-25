@@ -5,40 +5,40 @@
  */
 ---
 
-<nav class="article-toc" id="article-toc" aria-label="本页目录" hidden></nav>
+<nav class="post-toc" id="article-toc" aria-label="本页目录" hidden></nav>
 
 <style is:global>
-  .article-toc {
+  .post-toc {
     margin: 0 0 1rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border);
+    padding: 0.55rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
     border-radius: var(--radius);
-    background: var(--background-secondary);
+    background: color-mix(in srgb, var(--background-secondary) 72%, transparent);
   }
 
   .article-toc__title {
-    margin: 0 0 0.5rem;
-    font-size: 0.75rem;
+    margin: 0 0 0.4rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-secondary);
   }
 
-  .article-toc ul {
+  .post-toc ul {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .article-toc li {
+  .post-toc li {
     margin: 0.2rem 0;
     line-height: 1.35;
   }
 
-  .article-toc li.article-toc__sub {
-    padding-left: 0.85rem;
-    border-left: 2px solid color-mix(in srgb, var(--border) 80%, transparent);
+  .post-toc li.article-toc__sub {
+    padding-left: 0.7rem;
+    border-left: 2px solid color-mix(in srgb, var(--border) 68%, transparent);
     margin-left: 0.15rem;
   }
 
@@ -48,8 +48,8 @@
     text-decoration: none;
     color: var(--text-secondary);
     border-radius: calc(var(--radius) - 2px);
-    padding: 0.2rem 0.4rem;
-    margin: 0 -0.4rem;
+    padding: 0.18rem 0.36rem;
+    margin: 0 -0.36rem;
     transition:
       color 0.15s ease,
       background-color 0.15s ease,
@@ -65,8 +65,8 @@
   .article-toc__link.article-toc__link--active {
     color: var(--text-primary);
     font-weight: 600;
-    background: var(--accent-surface);
-    box-shadow: inset 3px 0 0 0 var(--accent);
+    background: color-mix(in srgb, var(--accent-surface) 58%, transparent);
+    box-shadow: inset 2px 0 0 0 var(--accent);
     text-decoration: none;
   }
 
@@ -111,7 +111,7 @@
     articleTocCleanup = null;
 
     const nav = document.getElementById("article-toc");
-    const root = document.querySelector("#article .post-article-content");
+    const root = document.querySelector(".post .post-content");
     if (!nav || !root) return;
 
     nav.replaceChildren();

@@ -244,8 +244,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <article id="article" data-pagefind-body>
-    <header>
+  <article class="post" data-pagefind-body>
+    <header class="post-header">
       {topImageSrc && <img src={topImageSrc} alt={title} />}
 
       <div class="breadcrumb" aria-label="面包屑导航">
@@ -264,11 +264,11 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         }
       </div>
 
-      <section class="article-header">
-        <h1 class="article-title">
+      <section class="post-header__main">
+        <h1 class="post-title">
           {title}
         </h1>
-        <div class="article-meta">
+        <div class="post-meta">
           {
             categoryLinks.map(category => (
               <a class="no-underline" href={`/categories/${category.slug}`}>
@@ -289,8 +289,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       </section>
     </header>
 
-    <div class="article-main-layout">
-      <div class="post-article-body reading-content post-article-content">
+    <div class="post-layout">
+      <div class="post-content">
         <Content />
       </div>
       <ArticleToc />
@@ -313,56 +313,64 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     )
   }
 
-  <section class="action-section">
-    <div class="action-card">
-      <p class="action-label">订阅文章</p>
-      <h3>订阅更新，不错过后续文章</h3>
-      <p class="action-description">直接通过 RSS 和 Telegram 订阅本站更新。</p>
-      <div class="action-buttons">
-        <a class="btn btn-primary" href="/rss.xml">订阅 RSS</a>
-        <a class="btn btn-secondary" href="https://t.me/ichensoul"
-          >关注 Telegram</a
-        >
-      </div>
+  <section class="action-section" aria-label="订阅与分享">
+    <div class="section-head">
+      <h3>订阅与分享</h3>
     </div>
 
-    <div class="action-card">
-      <p class="action-label">分享文章</p>
-      <h3>如果这篇有帮助，可以顺手转发</h3>
-      <p class="action-description">
-        直接分享给同事、朋友，或者发到你的社交平台。
-      </p>
-      <div class="action-buttons">
-        <a
-          class="btn btn-secondary"
-          href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          分享到 X
-        </a>
-        <a
-          class="btn btn-secondary"
-          href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          分享到 Telegram
-        </a>
-        <a
-          class="btn btn-secondary"
-          href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
-        >
-          邮件分享
-        </a>
+    <div class="action-grid">
+      <div class="action-card">
+        <p class="action-label">订阅文章</p>
+        <h3>订阅更新，不错过后续文章</h3>
+        <p class="action-description">直接通过 RSS 和 Telegram 订阅本站更新。</p>
+        <div class="action-buttons">
+          <a class="btn btn-primary" href="/rss.xml">订阅 RSS</a>
+          <a class="btn btn-secondary" href="https://t.me/ichensoul"
+            >关注 Telegram</a
+          >
+        </div>
+      </div>
+
+      <div class="action-card">
+        <p class="action-label">分享文章</p>
+        <h3>如果这篇有帮助，可以顺手转发</h3>
+        <p class="action-description">
+          直接分享给同事、朋友，或者发到你的社交平台。
+        </p>
+        <div class="action-buttons">
+          <a
+            class="btn btn-secondary"
+            href={`https://x.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            分享到 X
+          </a>
+          <a
+            class="btn btn-secondary"
+            href={`https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            分享到 Telegram
+          </a>
+          <a
+            class="btn btn-secondary"
+            href={`mailto:?subject=${shareTitle}&body=${shareDescription}%0A%0A${shareUrl}`}
+          >
+            邮件分享
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   {
     relatedPosts.length > 0 && (
-      <section class="related-section">
-        <h2>相关文章</h2>
+      <section class="related-section" aria-label="相关文章">
+        <div class="section-head">
+          <h3>相关文章</h3>
+        </div>
         <div class="related-grid">
           {relatedPosts.map(({ post: relatedPost, path }) => (
             <div class="related-card">
@@ -413,60 +421,53 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   <!-- 评论容器：与主栏同宽（不用 reading-wrap 窄栏） -->
   {comments && SITE.artalk.enabled && <div id="Comments" />}
-</Layout>
-
-<style is:global>
-  #article {
+  <style is:global>
+  .post {
     width: 100%;
     min-width: 0;
   }
 
-  #article > header {
+  .post > .post-header {
     width: 100%;
   }
 
   /**
-   * 正文 + 目录：正文宽度 = 无目录时整段正文的宽度（#article 内容区 100%），不被 flex 压缩。
+   * 正文 + 目录：正文宽度 = 无目录时整段正文的宽度（文章主容器内容区 100%），不被 flex 压缩。
    * 容器加宽 + 负 margin 占用主栏右侧空间；目录列固定宽度 + sticky。
    */
-  .article-main-layout {
+  .post-layout {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
 
-  .article-main-layout .article-toc {
+  .post-layout .post-toc {
     display: none;
   }
 
   @media (min-width: 1024px) {
-    .article-main-layout {
-      --article-toc-aside-w: 16rem;
-      --article-toc-aside-gap: 2rem;
+    .post-layout {
+      --post-toc-aside-w: 16rem;
+      --post-toc-aside-gap: 2rem;
 
       flex-direction: row;
       align-items: flex-start;
-      gap: var(--article-toc-aside-gap);
+      gap: var(--post-toc-aside-gap);
       box-sizing: border-box;
-      width: calc(
-        100% + var(--article-toc-aside-w) + var(--article-toc-aside-gap)
-      );
+      width: calc(100% + var(--post-toc-aside-w) + var(--post-toc-aside-gap));
       max-width: none;
-      margin-right: calc(
-        -1 * (var(--article-toc-aside-w) + var(--article-toc-aside-gap))
-      );
+      margin-right: calc(-1 * (var(--post-toc-aside-w) + var(--post-toc-aside-gap)));
     }
 
     /* 100% 相对本 flex 容器：容器宽 = 正文旧宽 + 目录 + gap → 此项 = 正文旧宽，flex-shrink: 0 不压窄 */
-    .article-main-layout .post-article-content {
-      flex: 0 0
-        calc(100% - var(--article-toc-aside-w) - var(--article-toc-aside-gap));
+    .post-layout .post-content {
+      flex: 0 0 calc(100% - var(--post-toc-aside-w) - var(--post-toc-aside-gap));
       min-width: 0;
     }
 
-    .article-main-layout .article-toc {
+    .post-layout .post-toc {
       display: block;
-      flex: 0 0 var(--article-toc-aside-w);
+      flex: 0 0 var(--post-toc-aside-w);
       position: sticky;
       top: var(--site-header-sticky-offset);
       max-height: min(
@@ -478,10 +479,10 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     }
   }
 
-  .post-article-content {
+  .post-content {
     min-width: 0;
   }
-  #article .post-article-content :where(h2, h3, h4) {
+  .post-content :where(h2, h3, h4) {
     scroll-margin-top: var(--site-header-sticky-offset);
   }
 
@@ -499,33 +500,33 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     margin-right: 0;
   }
 
-  .reading-content {
+  #main-content .post-content {
     line-height: 1.8;
   }
 
-  .reading-content img {
+  #main-content .post-content img {
     border-radius: 8px;
   }
 
-  #article .post-article-content {
+  .post .post-content {
     padding-bottom: 1rem;
   }
 
-  .article-header {
+  .post-header__main {
     margin-bottom: 1.5rem;
   }
 
-  .article-title {
+  .post-title {
     margin: 0 0 0.75rem;
     font-size: clamp(1.5rem, 4vw, 2rem);
     text-align: center;
   }
 
-  .article-header .article-title {
+  .post-header__main .post-title {
     margin-top: 0;
   }
 
-  .article-meta {
+  .post-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -568,28 +569,77 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     padding: 0;
   }
 
+  .section-head {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 1rem;
+  }
+
+  .section-head h3 {
+    margin: 0;
+  }
+
   .action-section {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    clear: both;
+    margin: 2.75rem 0 2.5rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  }
+
+  .action-grid {
     display: grid;
-    gap: 1.25rem;
-    margin: 2.5rem 0;
+    width: 100%;
+    min-width: 0;
+    gap: 1rem;
   }
 
   @media (min-width: 640px) {
-    .action-section {
-      grid-template-columns: 1fr 1fr;
+    .action-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
   }
 
   .action-card {
-    padding: 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--background-secondary);
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.65rem;
+    height: 100%;
+    padding: 1.05rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+    border-radius: 14px;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--background) 82%, var(--background-secondary)),
+        color-mix(in srgb, var(--background-secondary) 92%, transparent)
+      );
+    box-shadow: 0 16px 32px -28px color-mix(in srgb, var(--text-primary) 26%, transparent);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .action-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+    box-shadow: 0 22px 36px -30px color-mix(in srgb, var(--accent) 22%, transparent);
+    transform: translateY(-1px);
   }
 
   .action-label {
-    margin: 0 0 0.35rem;
-    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0.14rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -597,13 +647,15 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   .action-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.125rem;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.35;
   }
 
   .action-description {
-    margin: 0 0 1rem;
-    font-size: 0.9375rem;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
     color: var(--text-secondary);
   }
 
@@ -611,12 +663,15 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.25rem;
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 2.5rem;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     font-weight: 500;
@@ -654,15 +709,19 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   .related-section {
-    margin: 2.5rem 0;
-  }
-
-  .related-section h2 {
-    margin-bottom: 1rem;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    clear: both;
+    margin: 2.75rem 0;
+    padding-top: 1.15rem;
+    border-top: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
   }
 
   .related-grid {
     display: grid;
+    width: 100%;
+    min-width: 0;
     gap: 1rem;
   }
 
@@ -679,30 +738,50 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   }
 
   .related-card {
-    display: block;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 1rem 1rem 1.05rem;
+    border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+    border-radius: 12px;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--background-secondary) 72%, transparent),
+        color-mix(in srgb, var(--background) 96%, transparent)
+      );
     transition:
       border-color 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
   .related-card:has(.related-card-title-link:hover),
   .related-card:has(.related-card-title-link:focus-visible) {
     border-color: var(--accent);
-    box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 10%, transparent);
+    box-shadow: 0 16px 28px -26px color-mix(in srgb, var(--accent) 22%, transparent);
+    transform: translateY(-1px);
   }
 
   .related-category {
-    margin: 0 0 0.35rem;
-    font-size: 0.75rem;
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-secondary);
+  }
+
+  .related-card > p:not(.related-category):not(.related-card-excerpt) {
+    margin: 0;
   }
 
   .related-card-title-link {
     color: var(--accent);
     text-decoration: none;
+    line-height: 1.42;
   }
 
   .related-card-title-link:hover {
@@ -712,7 +791,8 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
 
   .related-card-excerpt {
     margin: 0;
-    font-size: 0.875rem;
+    font-size: 0.84rem;
+    line-height: 1.6;
     color: var(--text-secondary);
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -732,6 +812,27 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
   @media (min-width: 640px) {
     .post-nav {
       grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .action-section {
+      margin-top: 2.25rem;
+    }
+
+    .action-card,
+    .related-card {
+      padding-left: 0.95rem;
+      padding-right: 0.95rem;
+    }
+
+    .action-buttons > .btn {
+      flex: 1 1 100%;
+    }
+
+    .related-section {
+      margin-top: 2.25rem;
+      padding-top: 1rem;
     }
   }
 
@@ -761,12 +862,12 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     justify-content: flex-end;
     text-align: right;
   }
-</style>
+  </style>
 
-<!-- Artalk 评论系统 -->
-{comments && SITE.artalk.enabled && <Artalk />}
+  <!-- Artalk 评论系统 -->
+  {comments && SITE.artalk.enabled && <Artalk />}
 
-<script is:inline data-astro-rerun>
+  <script is:inline data-astro-rerun>
   function onPageReady() {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   }
@@ -782,4 +883,5 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
     window._postDetailsAfterSwapHandler
   );
   onPageReady();
-</script>
+  </script>
+</Layout>

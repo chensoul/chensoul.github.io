@@ -13,7 +13,7 @@ export const SITE = {
   /**
    * 分类 / 标签 / 文章归档等列表首屏条数（及懒加载每批）
    */
-  postPerIndex: 10,
+  postPerIndex: 8,
 
   /**
    * 定时文章发布的时间容差（毫秒）

@@ -25,15 +25,5 @@ const htmlContent = md.render(pageData.content);
   description={pageDescription}
   schemaType="CollectionPage"
 >
-  <article class="markdown-page w-full min-w-0" set:html={htmlContent} />
+  <article class="w-full min-w-0" set:html={htmlContent} />
 </Layout>
-
-<style>
-  article.markdown-page {
-    box-sizing: border-box;
-  }
-
-  article.markdown-page :first-child {
-    margin-top: 0;
-  }
-</style>

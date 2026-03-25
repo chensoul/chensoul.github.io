@@ -54,7 +54,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 <Layout title={pageTitle} robots="noindex,follow">
   <h2>归档</h2>
   <section
-    class="my-5 grid gap-4 md:my-8 md:grid-cols-2 md:gap-6"
+    class="archive-taxonomy my-5 flex flex-col gap-4 md:my-8"
     aria-label="分类列表"
   >
     <TaxonomySummary title="分类" items={categoryItems} />
@@ -80,8 +80,20 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 </Layout>
 
 <style>
+  .archive-taxonomy :global(.taxonomy-summary) {
+    margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .archive-taxonomy {
+      width: calc(100% + 5rem);
+      max-width: none;
+      margin-right: -5rem;
+    }
+  }
+
   /* 与站点吸顶顶栏对齐，避免 #year-… 锚点滚入后被遮挡 */
   .archive-year-section {
-    scroll-margin-top: var(--site-header-sticky-offset);
+    scroll-margin-top: calc(var(--site-header-sticky-offset) + 1rem);
   }
 </style>
