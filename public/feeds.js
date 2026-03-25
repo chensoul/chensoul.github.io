@@ -89,27 +89,24 @@ function createFeedCardHTML(item, fallbackOgImage, cosHost) {
   const dateDisplay = getDisplayDate(item.published);
 
   const avatarBlock = imgSrc
-    ? `<div class="post-item-cover post-item-cover--avatar"><img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" width="40" height="40" loading="lazy" decoding="async" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} /></div>`
+    ? `<img src="${imgSrc.replace(/"/g, "&quot;")}" alt="" width="40" height="40" loading="lazy" decoding="async" ${onerror ? `onerror="${onerror.replace(/"/g, "&quot;")}"` : ""} />`
     : "";
 
   const titleBlock =
     link && link !== "#"
-      ? `<p class="post-item-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></p>`
-      : `<p class="post-item-title"><span>${title}</span></p>`;
+      ? `<p class="pcard-title"><a href="${link.replace(/"/g, "&quot;")}" target="_blank" rel="noopener noreferrer">${title}</a></p>`
+      : `<p class="pcard-title"><span>${title}</span></p>`;
 
   const metaBlog =
-    blogName &&
-    `<span class="post-item-meta-separator" aria-hidden="true">·</span><span>${blogName}</span>`;
+    blogName ? `<span aria-hidden="true">·</span><span>${blogName}</span>` : "";
 
   return `
-<li class="post-item">
-  <div class="post-item-inner">
+<li class="pcard">
+  <div class="pcard-inner">
     ${avatarBlock}
-    <div class="post-item-content">
-      <div class="post-item-title-wrap">
-        ${titleBlock}
-      </div>
-      <div class="post-item-meta"><span data-feed-published="${publishedAttr}">${escapeHtml(dateDisplay)}</span>${metaBlog || ""}</div>
+    <div class="pcard-body">
+      ${titleBlock}
+      <div class="pcard-meta"><span data-feed-published="${publishedAttr}">${escapeHtml(dateDisplay)}</span>${metaBlog}</div>
     </div>
   </div>
 </li>`;
