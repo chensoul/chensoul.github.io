@@ -9,7 +9,7 @@ description: "介绍 Agentic RAG 如何把标准 RAG 的一次性检索流程改
 canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
 ---
 
-> 本文为学习目的的个人编译，译文及后文「译者解读」仅供参考。
+> 本文为学习目的的个人翻译，译文及后文「译者解读」仅供参考。
 >
 > 原文链接：[How Agentic RAG Works?](https://blog.bytebytego.com/p/how-agentic-rag-works)。
 >
