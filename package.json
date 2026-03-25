@@ -15,7 +15,7 @@
     "format:check": "pnpm exec prettier --check .",
     "format": "pnpm exec prettier --write .",
     "lint": "eslint .",
-    "convert-to-webp": "node scripts/convert-to-webp.mjs --compress",
+    "convert-to-webp": "node scripts/convert-to-webp.mjs",
     "spell": "pnpm dlx cspell --config cspell.yaml .",
     "md:check": "pnpm dlx markdownlint-cli2 ./content/posts/**",
     "md:fix": "pnpm dlx markdownlint-cli2 --fix ./content/posts/**"

@@ -208,8 +208,10 @@ const blog = defineCollection({
 
       /**
        * 文章 URL 末段；按 frontmatter 原样使用（不经过 slugify）。配图目录与之一致：`public/images/{slug}/`。
+       *
+       * 必填：相对路径正文图依赖 remark 注入的 `imageDir`；缺省会与 Photosuite 解析不一致。
        */
-      slug: z.string().optional(),
+      slug: z.string().trim().min(1, "slug 不能为空"),
     }),
 });
 

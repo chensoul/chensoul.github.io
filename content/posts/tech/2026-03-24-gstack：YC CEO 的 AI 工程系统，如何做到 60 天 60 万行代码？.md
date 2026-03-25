@@ -15,7 +15,7 @@ Karpathy 说他很久没敲代码了。
 
 但另一个人，用 AI 每天写 1-2 万行代码。
 
-![gstack：Garry Tan 面向 Claude Code 的 AI 工程技能系统（封面）](gstack-skill/01.webp)
+![gstack：Garry Tan 面向 Claude Code 的 AI 工程技能系统（封面）](01.webp)
 
 这个人是 Garry Tan，Y Combinator 的总裁兼 CEO。
 
@@ -69,7 +69,7 @@ gstack 的架构可以用一个矩阵表示：
 - **20+ 专业角色**：office-hours、plan-ceo、review、qa、ship、retro 等
 - **8 个效率工具**：browse、codex、careful、freeze、guard 等
 
-![核心架构：两层判断机制](gstack-skill/02.webp)
+![核心架构：两层判断机制](02.webp)
 
 ### 第一层：20+ 专业角色
 
@@ -156,7 +156,7 @@ You:    /ship
 
 **8 条命令，端到端完成。** 这不是 Copilot，这是一个团队。
 
-![Sprint 工作流](gstack-skill/03.webp)
+![Sprint 工作流](03.webp)
 
 ---
 
@@ -216,7 +216,7 @@ OWASP Top 10 + STRIDE 威胁建模。
 
 每个发现必须包含具体的利用场景，不是泛泛而谈的"可能存在 XSS"。
 
-![关键技能深度拆解](gstack-skill/04.webp)
+![关键技能深度拆解](04.webp)
 
 ---
 
@@ -359,7 +359,7 @@ gstack 代表的不是"更好的编程工具"。
 
 关键是：你准备好接受这个范式的转变了吗？
 
-![一人公司时代](gstack-skill/05.webp)
+![一人公司时代](05.webp)
 
 ---
 
