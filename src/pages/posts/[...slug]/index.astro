@@ -11,8 +11,7 @@
  * 4. PostDetails 负责渲染文章内容、导航、评论等
  *
  * 路由生成规则：
- * - content/posts/2026-02-09-spring-ai.md (date: 2026-02-09) → /posts/2026/02/09/spring-ai
- * - content/posts/tech/deep-dive.md (无日期) → /posts/tech/deep-dive
+ * - URL 为 `/posts/{slug}`；slug 优先 frontmatter `slug`，否则为文件名去掉 `YYYY-MM-DD-` 前缀（见 PostUtils.getPath）
  * - 以下划线开头的文件被排除（草稿）
  *
  * 依赖关系：

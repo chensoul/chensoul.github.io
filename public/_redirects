@@ -1,4 +1,7 @@
-# Cloudflare Pages redirects config
-# https://developers.cloudflare.com/pages/configuration/redirects/
+# Cloudflare Pages — https://developers.cloudflare.com/pages/configuration/redirects/
 
 /index.xml  /rss.xml  301
+
+# /posts/年/月/日/slug → /posts/slug（Cloudflare :placeholder，非正则）
+/posts/:year/:month/:day/:slug  /posts/:slug  301
+/posts/:year/:month/:day/:slug/  /posts/:slug  301

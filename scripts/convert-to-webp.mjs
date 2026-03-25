@@ -1,30 +1,47 @@
 /**
- * 图片处理（sharp）
+ * 图片处理（sharp），仅遍历 public/images 下子目录。
+ * 不处理 .svg / .ico / .webp（转换模式只处理 jpg/png；压缩模式含 webp，仍不碰 svg/ico）。
  *
  * 1) 默认：将 jpg/png 转为同名 .webp（默认删原图，可用 --keep 保留）
  * 2) --compress：就地压缩 jpg/png/webp（仅当体积变小才覆盖）
  *
  * 用法：
- *   node scripts/convert-to-webp.mjs [目录] [--keep]
+ *   node scripts/convert-to-webp.mjs [public/images 下的相对路径] [--keep]
  *   node scripts/convert-to-webp.mjs [目录] --compress
- * 默认目录：public/images
+ * 默认目录：public/images；若传入路径超出该目录则退出。
  */
 /* eslint-disable no-console -- CLI 脚本需输出到控制台 */
 
 import { readdir, stat, unlink, rename } from "fs/promises";
-import { join, extname } from "path";
+import { join, extname, resolve, sep } from "path";
 import { fileURLToPath } from "url";
 import sharp from "sharp";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const root = join(__dirname, "..");
-const defaultDir = join(root, "public", "images");
+const imagesRoot = resolve(root, "public", "images");
 
 const argv = process.argv.slice(2);
 const compressMode = argv.includes("--compress");
 const keepOriginal = argv.includes("--keep");
 const args = argv.filter((a) => !a.startsWith("--"));
-const dir = args[0] ? join(root, args[0]) : defaultDir;
+
+function resolveDirUnderImages(userArg) {
+  const target = userArg ? resolve(root, userArg) : imagesRoot;
+  if (target !== imagesRoot) {
+    const prefix = imagesRoot.endsWith(sep) ? imagesRoot : imagesRoot + sep;
+    if (!target.startsWith(prefix)) {
+      console.error("仅允许 public/images 下的路径，收到:", userArg);
+      process.exit(1);
+    }
+  }
+  return target;
+}
+
+const dir = resolveDirUnderImages(args[0]);
+
+/** 永不转为/压缩为 webp（即使日后扩展输入格式也不处理矢量与 ico） */
+const SKIP_WEBP_EXTS = new Set([".svg", ".ico"]);
 
 const NON_WEBP_EXTS = new Set([".jpg", ".jpeg", ".png"]);
 const COMPRESS_EXTS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
@@ -40,8 +57,11 @@ async function walkImages(dirPath, extSet) {
     const full = join(dirPath, e.name);
     if (e.isDirectory()) {
       files.push(...(await walkImages(full, extSet)));
-    } else if (extSet.has(extname(e.name).toLowerCase())) {
-      files.push(full);
+    } else {
+      const ext = extname(e.name).toLowerCase();
+      if (extSet.has(ext) && !SKIP_WEBP_EXTS.has(ext)) {
+        files.push(full);
+      }
     }
   }
   return files;

@@ -1,5 +1,5 @@
-# Cloudflare Pages headers
-# https://developers.cloudflare.com/pages/configuration/headers/
+# Cloudflare Pages — https://developers.cloudflare.com/pages/configuration/headers/
 
-/data/running.json
-  Cache-Control: public, max-age=43200
+# public/data 下 JSON/文本：与原先 running.json 一致 12h；允许过期后短时复用（SWR）再校验
+/data/*
+  Cache-Control: public, max-age=43200, stale-while-revalidate=86400

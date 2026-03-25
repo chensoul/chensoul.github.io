@@ -8,7 +8,6 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { CollectionEntry } from "astro:content";
-import { BLOG_PATH } from "@/content.config";
 import { SITE } from "@/config";
 import { slugifyStr } from "./slugifyStr";
 
@@ -238,14 +237,18 @@ export class PostUtils {
   }
 
   /**
-   * @param explicitSlug - frontmatter `slug`，非空时优先生成 URL 末段（经 slugify），便于短链与 ASCII 路径
+   * 文章 URL：`/posts/{slug}`。slug 优先 frontmatter `slug`（经 slugify），否则文件名去掉 `YYYY-MM-DD-` 前缀与扩展名。
+   *
+   * @param explicitSlug - frontmatter `slug`
+   * @param _date - 保留参数（排序/展示仍用）；不再参与 URL，避免破坏既有调用签名
+   * @param _timeZone - 同上
    */
   static getPath(
     id: string,
-    filePath: string | undefined,
+    _filePath: string | undefined,
     includeBase = true,
-    date?: Date,
-    timeZone?: string,
+    _date?: Date,
+    _timeZone?: string,
     explicitSlug?: string | null
   ): string {
     const basePath = includeBase ? "/posts" : "";
@@ -263,26 +266,7 @@ export class PostUtils {
       if (slugified) slug = slugified;
     }
 
-    if (date) {
-      const [yyyy, mm, dd] = PostUtils.getLocalDateString(
-        new Date(date),
-        timeZone ?? SITE.timezone
-      ).split("-");
-      return [basePath, yyyy, mm, dd, slug].filter(Boolean).join("/");
-    }
-
-    const pathSegments = filePath
-      ?.replace(BLOG_PATH, "")
-      .split("/")
-      .filter(path => path !== "")
-      .filter(path => !path.startsWith("_"))
-      .slice(0, -1)
-      .map(segment => slugifyStr(segment));
-
-    if (!pathSegments || pathSegments.length < 1) {
-      return [basePath, slug].filter(Boolean).join("/");
-    }
-    return [basePath, ...pathSegments, slug].filter(Boolean).join("/");
+    return [basePath, slugifyStr(slug)].filter(Boolean).join("/");
   }
 
   /**
