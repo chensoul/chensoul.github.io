@@ -61,6 +61,7 @@ const CATEGORY_META: CategoryMeta[] = [
   { slug: "weekly", name: "周报", image: "", order: 2 },
   { slug: "translation", name: "翻译", order: 3 },
   { slug: "wiki", name: "知识库", order: 4 },
+  { slug: "life", name: "生活", order: 5 },
 ];
 
 export function getCategoryMeta(nameOrSlug?: string): CategoryMeta | undefined {

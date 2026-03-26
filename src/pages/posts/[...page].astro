@@ -53,7 +53,7 @@ const yearItems = yearsWithCounts.map(({ year, count }) => ({
 
 <Layout title={pageTitle} robots="noindex,follow">
   <h1>归档</h1>
-  <section class="my-3 flex flex-col gap-3 md:my-0" aria-label="分类列表">
+  <section class="my-3 flex flex-col gap-2 md:my-0" aria-label="分类列表">
     <TaxonomySummary class="my-0" title="分类" items={categoryItems} />
     <TaxonomySummary class="my-0" title="年份" items={yearItems} />
   </section>

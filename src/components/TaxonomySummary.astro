@@ -30,8 +30,8 @@ const { title = "", items, class: className = "" } = Astro.props;
       class:list={["taxonomy-summary my-0 first:mt-0", className]}
       aria-label={title}
     >
-      <div class="m-0 flex flex-wrap items-start gap-x-3 gap-y-2 text-sm leading-relaxed text-muted">
-        <span class="min-w-12 shrink-0 leading-8 font-semibold text-foreground">
+      <div class="m-0 flex flex-wrap items-start gap-x-2 gap-y-2 text-sm leading-relaxed text-muted">
+        <span class="min-w-1 shrink-0 leading-8 font-semibold text-foreground">
           {title}：
         </span>
         {items.map(item => (
