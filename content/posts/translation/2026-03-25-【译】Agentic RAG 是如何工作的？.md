@@ -1,6 +1,6 @@
 ---
 title: "【译】Agentic RAG 是如何工作的？"
-date: 2026-03-27 12:02:00+08:00
+date: 2026-03-25 12:02:00+08:00
 draft: false
 slug: "how-agentic-rag-works"
 categories: [ "translation" ]
