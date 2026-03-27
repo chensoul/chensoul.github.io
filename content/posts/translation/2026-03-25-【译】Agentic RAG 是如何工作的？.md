@@ -13,7 +13,7 @@ canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
 >
 > 原文链接：[How Agentic RAG Works?](https://blog.bytebytego.com/p/how-agentic-rag-works)。
 >
-> 版权归原作者或原刊登方所有；若认为不妥，请联系删除。本文为非官方译本。
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。
 
 标准 RAG 系统的主要问题，其实不在检索，也不在生成。
 

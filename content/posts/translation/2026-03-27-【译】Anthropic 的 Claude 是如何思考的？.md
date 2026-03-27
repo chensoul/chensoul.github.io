@@ -1,7 +1,7 @@
 ---
 title: "【译】 Anthropic 的 Claude 是如何思考的？"
 date: 2026-03-27 10:16:00+08:00
-draft: true
+draft: false
 slug: "how-anthropics-claude-thinks"
 categories: [ "translation" ]
 tags: [ "anthropic", "claude", "interpretability" ]
@@ -13,7 +13,7 @@ canonicalURL: "https://blog.bytebytego.com/p/how-anthropics-claude-thinks"
 >
 > 原文链接：[How Anthropic’s Claude Thinks](https://blog.bytebytego.com/p/how-anthropics-claude-thinks)。
 >
-> 版权归原作者或原刊登方所有；若认为不妥，请联系删除。本文为非官方译本。
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。
 
 没有人给 Claude 预先编写某种特定的思考方式。他们用数据训练它，而它在数十亿次计算中发展出了自己的策略，这些策略隐藏在内部。对构建它的人来说，这难免会让它显得像一个令人不安的黑箱。因此，他们决定打造某种类似 AI 显微镜的工具，让他们能够追踪 Claude 在给出答案时实际经历的计算步骤。
 
