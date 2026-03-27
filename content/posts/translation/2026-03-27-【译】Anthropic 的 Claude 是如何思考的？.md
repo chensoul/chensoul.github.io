@@ -1,7 +1,7 @@
 ---
 title: "【译】Anthropic 的 Claude 是如何思考的？"
-date: 2026-03-27 11:33:00+08:00
-draft: true
+date: 2026-03-27 11:30:00+08:00
+draft: false
 slug: "how-anthropics-claude-thinks"
 categories: [ "translation" ]
 tags: [ "anthropic", "claude", "interpretability" ]
