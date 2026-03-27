@@ -1,6 +1,6 @@
 ---
 name: url-to-translation-markdown
-description: Generate a Chinese translation blog post in Markdown from a source article URL. Use when the user provides a URL and wants a full Markdown article with YAML frontmatter, translated body, translator notes, and article image handling for an Astro blog.
+description: Generate a Chinese translation blog post in Markdown from a source article URL. Use when the user provides a URL and wants a full Markdown article with YAML frontmatter, translated body, translator summary, and article image handling for an Astro blog.
 ---
 
 # URL To Translation Markdown
@@ -14,7 +14,7 @@ Produce one complete Markdown article suitable for an Astro blog post:
 1. YAML frontmatter
 2. Opening copyright/disclaimer blockquote
 3. Chinese translated body
-4. `## 译者解读`
+4. `## 译者总结`
 5. Optional glossary
 
 Do not output setup notes, save-path suggestions, git commands, HTML comments, or image inventory inside the Markdown body.
@@ -33,7 +33,7 @@ Do not ask the user for slug, tags, date, image directory, or file name unless t
 2. Exclude navigation, footer, comments, related posts, ads, sponsored blocks, popups, email capture blocks, and other site chrome.
 3. Translate the article into natural Simplified Chinese.
 4. Preserve the original argument order, heading hierarchy, code, commands, API names, paths, versions, and product/protocol names where appropriate.
-5. Add `## 译者解读` to make the original easier to understand. It may be more explicit than the original, but it must still explain the original rather than turning into a second article.
+5. Add `## 译者总结` to help readers understand the original. It may be more explicit than the original, but it must still serve the original rather than turning into a second article.
 6. Keep article images in body order and reference them as `NN.webp`.
 
 If content extraction is unreliable, do not invent content. Explain the failure and ask the user for the full text or an accessible mirror.
@@ -92,12 +92,29 @@ Rules:
 - `canonicalURL`
   - Must equal the input URL exactly
 
+## Translation Fidelity
+
+- Prefer paragraph-by-paragraph faithful translation.
+- Do not proactively apply editorial smoothing.
+- Unless the Chinese would otherwise become clearly awkward or unreadable, do not rewrite the author's sentence progression just to make it feel smoother.
+- Keep the author's rhetorical pacing, transitions, and local emphasis whenever Chinese can still carry them.
+- Split long sentences only when needed for clarity or grammatical correctness in Chinese.
+
+## Heading Rules
+
+- The original heading hierarchy must be preserved.
+- Heading text must be translated into Chinese.
+- Generic headings such as `Introduction`, `Conclusion`, and `References` must not be left in English.
+- English may remain in headings only for proper nouns, product names, protocol names, or fixed technical terms.
+- Do not add new headings that do not exist in the original.
+- Do not collapse, merge, or reorder headings just to make the article feel cleaner.
+
 ## Opening Blockquote
 
 Immediately after frontmatter, insert this blockquote pattern:
 
 ```md
-> 本文为学习目的的个人翻译，译文及后文「译者解读」仅供参考。
+> 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。
 >
 > 原文链接：[原文标题](https://example.com/article)。
 >
@@ -138,29 +155,29 @@ Do not keep ads, sponsor images, or decorative images unrelated to the article b
 
 If stable image URLs cannot be obtained, say so outside the Markdown article body.
 
-## Translator Notes Rules
+## Translator Summary Rules
 
 Use heading:
 
 ```md
-## 译者解读
+## 译者总结
 ```
 
 Requirements:
 
-- 3 to 6 items or short paragraphs
 - each point must directly help readers understand the original
 - allowed:
-  - clarify terminology
-  - surface hidden assumptions
-  - explain why a conclusion follows
-  - restate abstract passages in plainer language
-  - point out likely time-sensitive claims
+  - briefly summarize the original's core argument
+  - remind readers of key assumptions, scope limits, or easy-to-misread passages
+  - add a small glossary when it materially helps understanding
+  - add highly relevant further reading when needed
 - not allowed:
-  - unrelated background essays
-  - large topic expansion
-  - inventing arguments the author never made
-  - presenting your own opinion as the author’s view
+  - recommendation copy
+  - review-style commentary
+  - guidebook-style lead-in
+  - a second standalone article
+  - replacing the original body with the summary
+  - presenting the translator's own view as the author's view
 
 ## Failure Mode
 
@@ -179,7 +196,7 @@ Before responding, verify:
 - headings were preserved instead of re-authored
 - logic, negation, conditions, and numbers stayed intact
 - images use `NN.webp`
-- translator notes explain the article rather than replacing it
+- translator summary helps readers understand the article without replacing it
 - tags are 1 to 3 English items tied to the article
 
 ## Reference

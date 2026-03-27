@@ -9,7 +9,7 @@ Return one complete Markdown document that contains:
 1. frontmatter
 2. opening copyright/disclaimer blockquote
 3. translated article body
-4. `## 译者解读`
+4. `## 译者总结`
 5. optional glossary
 
 Do not include image inventories, save-path notes, git commands, or operations notes in the saved Markdown.
@@ -45,7 +45,7 @@ Rules:
 Use:
 
 ```md
-> 本文为学习目的的个人翻译，译文及后文「译者解读」仅供参考。
+> 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。
 >
 > 原文链接：[原文标题](https://example.com/article)。
 >
@@ -84,7 +84,14 @@ When the boundary is ambiguous, drop the content instead of mixing junk into the
 
 - preserve logic, conditions, negation, and numbers
 - preserve heading hierarchy
+- translate heading text into Chinese
+- generic headings such as `Introduction`, `Conclusion`, and `References` must not remain in English
+- only proper nouns, product names, protocol names, and fixed technical terms may remain in English in headings
 - keep code, commands, paths, API names, versions, and protocol names in English where appropriate
+- prefer paragraph-by-paragraph faithful translation
+- do not proactively add editorial smoothing
+- unless Chinese would become clearly awkward, do not rewrite the author's sentence progression just to make it read more smoothly
+- keep the author's rhetorical pacing and local emphasis whenever Chinese can still carry them
 - write restrained, natural Simplified Chinese
 - avoid marketing tone and obvious AI phrasing
 
@@ -112,28 +119,30 @@ Number by first appearance:
 
 If a stable image URL cannot be obtained, mention that outside the Markdown body instead of inventing it.
 
-## Translator Notes
+## Translator Summary
 
-`## 译者解读` exists only to help readers understand the original.
+`## 译者总结` exists only to help readers understand the original.
 
 Allowed:
 
-- clarify terms
-- explain hidden assumptions
-- restate hard passages more plainly
-- connect the argument across sections
-- point out likely time-sensitive claims
+- briefly summarize the original's core argument
+- remind readers of key assumptions, scope limits, or easy-to-misread passages
+- add a small glossary when it materially helps understanding
+- add highly relevant further reading when needed
 
 Not allowed:
 
+- recommendation copy
+- review-style commentary
+- guidebook-style lead-in
 - turning it into a second article
-- unrelated expansion
+- replacing the original body with the summary
 - invented arguments
 - masking your own opinions as the author’s
 
 Recommended size:
 
-- 3 to 6 items
+- a short section only, sized by necessity rather than a fixed quota
 
 ## Failure Handling
 
