@@ -6,6 +6,7 @@ tags: ['github']
 draft: false
 categories: [ "wiki" ]
 description: "GitHub Actions 实践索引：Maven 发布、多版本构建、集成测试与 release 工作流示例链接。"
+favicon: "github.svg"
 ---
 
 ## Github Action

@@ -143,9 +143,9 @@ Have a productive day! 🦞
 
 因为有了 OpenClaw，我卸载了 Linkding IOS 端的 APP，现在想保存书签，只需要将链接发送给电报机器人即可。如果 OpenClaw 可以每天给我推送我订阅的 RSS 信息，那手机上的 Folo APP 也可以删除了。没有了 RSS APP，可以参考 [游钓四方](https://blog.lhasa.icu/) 的 [订阅](https://blog.lhasa.icu/feeds) 页面在我的博客添加一个 RSS 订阅页面。
 
-## 总结
+## 本周分享
 
-虽然大部分有意思的输入会在 「[ChenSoul Share](https://t.me/s/ichensoul)」 Telegram 频道里自动同步，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+我使用 [Linkding](https://linkding.chensoul.cc/) 书签来保存我认为不错的资源，包括文章、视频等等。虽然大部分有意思的输入都会自动同步到「[ChenSoul Share](https://t.me/s/ichensoul)」Telegram 频道，但我还是想在这里额外挑一部分出来。单独列出来之后，这篇周报就更像一份 newsletter 了。
 
 ### 文章
 

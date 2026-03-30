@@ -121,9 +121,9 @@ Next.js (App Router) + TypeScript + Tailwind CSS；Zustand + React Query；Supab
 > - **有机会**：若能在细分人群、中文市场、AI 能力或隐私/本地化上做出清晰优势，有机会找到自己的市场空间。  
 >- **建议**：先验证「输入驱动 + 流式 + 标签」是否真的解决目标用户的「存而不看」问题，再围绕验证结果强化 1–2 个核心卖点。
 
-## 总结
+## 本周分享
 
-虽然大部分有意思的输入会在 「[ChenSoul Share](https://t.me/s/ichensoul)」 Telegram 频道里自动同步，不过还是挑选一部分在这里列举一下，感觉更像一个 newsletter 了。
+我使用 [Linkding](https://linkding.chensoul.cc/) 书签来保存我认为不错的资源，包括文章、视频等等。虽然大部分有意思的输入都会自动同步到「[ChenSoul Share](https://t.me/s/ichensoul)」Telegram 频道，但我还是想在这里额外挑一部分出来。单独列出来之后，这篇周报就更像一份 newsletter 了。
 
 ### 文章
 

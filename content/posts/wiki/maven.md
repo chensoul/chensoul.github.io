@@ -6,6 +6,7 @@ tags: ['maven']
 draft: false
 categories: [ "wiki" ]
 description: "Maven 插件与仓库实践笔记：常用插件、格式化与 BOM、参考 pom 与父 POM 链接。"
+favicon: "maven.svg"
 ---
 
 ## Maven 插件使用
