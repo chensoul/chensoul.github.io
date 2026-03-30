@@ -1,46 +1,46 @@
 ---
 name: url-to-translation-markdown
-description: Generate a Chinese translation blog post in Markdown from a source article URL. Use when the user provides a URL and wants a full Markdown article with YAML frontmatter, translated body, translator summary, and article image handling for an Astro blog.
+description: 根据原文 URL 生成适合 Astro 博客的中文译文 Markdown：含 YAML frontmatter、开篇版权说明引用块、译文正文、译者总结与正文配图规则。在用户给出文章链接并希望产出完整译稿时使用。
 ---
 
-# URL To Translation Markdown
+# 从 URL 到译文 Markdown
 
-Use this skill when the user gives a source article URL and wants a complete Chinese translation post that can be stored as a Markdown file in the blog.
+当用户提供**源文章 URL**，并希望获得可保存为博客文章的**完整中文译本**时使用本技能。
 
-## What To Produce
+## 产出内容
 
-Produce one complete Markdown article suitable for an Astro blog post:
+生成一篇可直接用于 Astro 文章页面的 **Markdown 全文**，包含：
 
-1. YAML frontmatter
-2. Opening copyright/disclaimer blockquote
-3. Chinese translated body
+1. YAML frontmatter（元数据）
+2. 开篇版权与免责声明（blockquote）
+3. 简体中文译文正文
 4. `## 译者总结`
-5. Optional glossary
+5. 可选的术语表（glossary）
 
-Do not output setup notes, save-path suggestions, git commands, HTML comments, or image inventory inside the Markdown body.
+不要在 Markdown 正文中输出环境说明、保存路径建议、git 命令、HTML 注释或配图清单类说明。
 
-## Input Contract
+## 输入约定
 
-Default input is:
+默认输入为：
 
-- one source article URL
+- **一个**源文章 URL
 
-Do not ask the user for slug, tags, date, image directory, or file name unless the user explicitly wants to override them.
+除非用户明确要求覆盖，否则不要向用户索要 slug、tags、date、图片目录或文件名。
 
-## Core Workflow
+## 核心流程
 
-1. Fetch only the author’s main article content.
-2. Exclude navigation, footer, comments, related posts, ads, sponsored blocks, popups, email capture blocks, and other site chrome.
-3. Translate the article into natural Simplified Chinese.
-4. Preserve the original argument order, heading hierarchy, code, commands, API names, paths, versions, and product/protocol names where appropriate.
-5. Add `## 译者总结` to help readers understand the original. It may be more explicit than the original, but it must still serve the original rather than turning into a second article.
-6. Keep article images in body order and reference them as `NN.webp`.
+1. 只抓取作者**正文主体**内容。
+2. 排除导航、页脚、评论、相关文章、广告、赞助区块、弹窗、邮箱订阅等站点装饰性内容。
+3. 将文章译为自然、流畅的**简体中文**。
+4. 在合适范围内保留原文的论证顺序、标题层级、代码、命令、API 名、路径、版本号以及产品/协议名称。
+5. 增加 `## 译者总结`，帮助读者理解原文；可以比原文略直白，但必须**服务于原文**，不能改成第二篇文章。
+6. 正文配图按出现顺序保留，在 Markdown 中用 `NN.webp` 引用。
 
-If content extraction is unreliable, do not invent content. Explain the failure and ask the user for the full text or an accessible mirror.
+若正文抽取不可靠，**不要编造内容**；说明失败原因，并请用户提供全文或可访问镜像。
 
-## Frontmatter Rules
+## Frontmatter 规则
 
-Use this structure:
+使用如下结构：
 
 ```yaml
 ---
@@ -55,63 +55,63 @@ canonicalURL: "https://original-url"
 ---
 ```
 
-Rules:
+字段说明：
 
 - `title`
-  - Start with `【译】`
-  - Use natural Chinese
-  - Preserve original tone
-  - Keep product names and technical proper nouns in English when useful
+  - 以 `【译】` 开头
+  - 使用自然中文
+  - 贴近原文语气
+  - 产品名、技术专名在需要时可保留英文
 
 - `date`
-  - Use current `Asia/Shanghai` time
-  - Format as `YYYY-MM-DD HH:mm:00+08:00`
-  - If current time cannot be obtained reliably, say so instead of guessing
+  - 使用当前 `Asia/Shanghai` 时间
+  - 格式为 `YYYY-MM-DD HH:mm:00+08:00`
+  - 若无法可靠取得当前时间，应说明情况，不要瞎猜
 
 - `draft`
-  - Always `true` unless the user explicitly asks otherwise
+  - 默认一律为 `true`，除非用户明确要求否则
 
 - `slug`
-  - Prefer the last meaningful URL path segment
-  - Remove noise such as `.html`, `.htm`, `index`, date prefixes, or meaningless suffixes
-  - Fall back to title-derived kebab-case if needed
-  - Must be lowercase ASCII with hyphens
+  - 优先取 URL 路径里最后一段有意义的片段
+  - 去掉 `.html`、`.htm`、`index`、日期前缀等噪音或无意义后缀
+  - 必要时可从标题推导 kebab-case
+  - 必须为小写 ASCII，单词间用连字符
 
 - `categories`
-  - Always `[ "translation" ]`
+  - 固定为 `[ "translation" ]`
 
 - `tags`
-  - Use 1 to 3 English tags
-  - Prefer concrete technical topics from the article
-  - Avoid vague tags
+  - 1～3 个**英文**标签
+  - 优先使用与文章主题直接相关的具体技术词
+  - 避免空洞标签
 
 - `description`
-  - Write 1 to 2 Chinese sentences
-  - Keep it factual and concise
+  - 1～2 句中文
+  - 克制、写实
 
 - `canonicalURL`
-  - Must equal the input URL exactly
+  - 必须与用户输入的原文 URL **完全一致**
 
-## Translation Fidelity
+## 译文忠实度
 
-- Prefer paragraph-by-paragraph faithful translation.
-- Do not proactively apply editorial smoothing.
-- Unless the Chinese would otherwise become clearly awkward or unreadable, do not rewrite the author's sentence progression just to make it feel smoother.
-- Keep the author's rhetorical pacing, transitions, and local emphasis whenever Chinese can still carry them.
-- Split long sentences only when needed for clarity or grammatical correctness in Chinese.
+- 以**逐段忠实翻译**为优先。
+- 不要主动做编辑式「润色」重写。
+- 除非不调整会导致中文明显拗口或难读，否则不要仅为「更顺」而改写作者的句序与推进方式。
+- 在中文仍能承载的前提下，保留作者的修辞节奏、过渡与局部强调。
+- 仅在为了中文清晰或语法正确时拆分长句。
 
-## Heading Rules
+## 标题规则
 
-- The original heading hierarchy must be preserved.
-- Heading text must be translated into Chinese.
-- Generic headings such as `Introduction`, `Conclusion`, and `References` must not be left in English.
-- English may remain in headings only for proper nouns, product names, protocol names, or fixed technical terms.
-- Do not add new headings that do not exist in the original.
-- Do not collapse, merge, or reorder headings just to make the article feel cleaner.
+- 必须保留原文**标题层级结构**。
+- 标题文字译为中文。
+- `Introduction`、`Conclusion`、`References` 这类通用标题**不要**留在英文。
+- 标题中仅专名、产品名、协议名或固定技术术语可保留英文。
+- 不要添加原文不存在的标题。
+- 不要仅为「版面好看」而合并、打乱或重排标题。
 
-## Opening Blockquote
+## 开篇引用块
 
-Immediately after frontmatter, insert this blockquote pattern:
+在 frontmatter **之后**立即插入如下引用块：
 
 ```md
 > 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。
@@ -121,86 +121,90 @@ Immediately after frontmatter, insert this blockquote pattern:
 > 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。
 ```
 
-Keep the tone restrained. Do not add a heading like `## 翻译说明`.
+语气保持克制。不要额外加 `## 翻译说明` 一类标题。
 
-## Image Rules
+## 配图规则
 
-For images that belong to the main article body:
+属于正文主体的配图：
 
-- keep all of them
-- preserve original body order
-- reference them in Markdown as:
+- 全部保留
+- 保持正文中的出现顺序
+- Markdown 中写为：
 
 ```md
 ![说明](01.webp)
 ![说明](02.webp)
 ```
 
-- use filenames only in Markdown
-- do not use leading `/`
-- do not embed the original hotlinked image URL as the long-term article URL
+- Markdown 里**只写文件名**
+- 路径**不要**以 `/` 开头
+- **不要**把原文 hotlink 当作文章长期使用的图片地址
 
-Expected storage path:
+预期存放路径：
 
 ```text
 public/images/{slug}/
 ```
 
-Numbering:
+编号：
 
-- `01.webp`, `02.webp`, `03.webp`, ...
-- if the same image appears again, reuse the same filename instead of renumbering it
+- `01.webp`、`02.webp`、`03.webp`…
+- 同一张图再次出现时**复用**同一文件名，不要重新编号
 
-Do not keep ads, sponsor images, or decorative images unrelated to the article body.
+正文广告图、赞助图或与正文无关的装饰图不要保留。
 
-If stable image URLs cannot be obtained, say so outside the Markdown article body.
+若拿不到稳定可用的图片地址，在 **Markdown 正文之外**说明，不要虚构。
 
-## Translator Summary Rules
+## 译者总结规则
 
-Use heading:
+使用标题：
 
 ```md
 ## 译者总结
 ```
 
-Requirements:
+要求：
 
-- each point must directly help readers understand the original
-- allowed:
-  - briefly summarize the original's core argument
-  - remind readers of key assumptions, scope limits, or easy-to-misread passages
-  - add a small glossary when it materially helps understanding
-  - add highly relevant further reading when needed
-- not allowed:
-  - recommendation copy
-  - review-style commentary
-  - guidebook-style lead-in
-  - a second standalone article
-  - replacing the original body with the summary
-  - presenting the translator's own view as the author's view
+- 每一条都必须**直接**帮助读者理解原文
+- **允许**：
+  - 简要概括原文核心论点
+  - 提示关键假设、适用范围限制或易读偏的段落
+  - 在明显有助于理解时附一小块术语表
+  - 在确实需要时补充与原文高度相关的延伸阅读
+- **禁止**：
+  - 推广文案腔
+  - 书评式褒贬
+  - 导览书式的引子
+  - 独立成篇的第二篇文章
+  - 用总结替代正文
+  - 把译者本人观点说成作者观点
 
-## Failure Mode
+### 执行用提示词（仅写「译者总结」时）
 
-If extraction fails because of a paywall, login wall, anti-bot protection, low-quality page structure, or lack of a reliable main article:
+只写译者总结时，打开 [`references/prompt.md`](references/prompt.md) 中的 **「译者总结 · 执行用提示词（全文）」**，将该段整段作为 **system 或前置说明**。长提示词只在 `prompt.md` 维护一份，避免与 SKILL 重复改动。
 
-- do not fabricate anything
-- output only the failure explanation and the next-step request
-- ask the user to paste the full text or provide an accessible mirror
-- do not output fake frontmatter or partial article content
+## 失败时的处理
 
-## Quality Bar
+若因付费墙、登录墙、反爬、页面结构劣质或无法定位可靠正文而导致抽取失败：
 
-Before responding, verify:
+- 不要编造任何内容
+- 只输出失败说明与下一步需要什么
+- 请用户粘贴全文或提供可访问镜像
+- 不要输出虚假 frontmatter 或半成品正文
 
-- the body really comes from the main article
-- headings were preserved instead of re-authored
-- logic, negation, conditions, and numbers stayed intact
-- images use `NN.webp`
-- translator summary helps readers understand the article without replacing it
-- tags are 1 to 3 English items tied to the article
+## 质量自检清单
 
-## Reference
+回应前确认：
 
-For the full house style and the latest wording details, read:
+- 正文确实来自原文主体，而非混入了站外模块
+- 标题层级是保留而非另起炉灶
+- 逻辑、否定、条件与数字未被扭曲
+- 图片引用使用 `NN.webp`
+- 译者总结帮助理解文章，且没有代替正文
+- tags 为 1～3 个与文章直接相关的英文词
 
-- [prompt.md](references/prompt.md)
+## 参考
+
+细则补充（正文抽取粒度）与「译者总结」执行用提示词全文见：
+
+- [references/prompt.md](references/prompt.md)

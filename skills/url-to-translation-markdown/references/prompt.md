@@ -1,154 +1,83 @@
-# Translation To Blog Markdown Reference
+# 参考：细则补充与译者总结提示词
 
-This reference mirrors the current house rules for turning a source article URL into a Chinese translation post for the blog.
+本文件与 [SKILL.md](../SKILL.md) 的分工如下：
 
-## Output Shape
+- **SKILL.md**：面向执行者的主入口——流程、Frontmatter、译文与标题规则、配图、译者总结的允许/禁止、失败处理与质量自检等**完整规则**均在其中。
+- **本文**：只做两件事——（1）**更细的正文抽取边界**（哪些保留、哪些丢弃）；（2）**「译者总结」执行用提示词的全文**（单点维护，不与 SKILL 重复粘贴）。
 
-Return one complete Markdown document that contains:
+若只愿速查流程，只读 SKILL.md 即可；需要抠正文边界或复制长提示词时，再打开本文。
 
-1. frontmatter
-2. opening copyright/disclaimer blockquote
-3. translated article body
-4. `## 译者总结`
-5. optional glossary
-
-Do not include image inventories, save-path notes, git commands, or operations notes in the saved Markdown.
-
-## Frontmatter
-
-```yaml
 ---
-title: "【译】中文标题"
-date: YYYY-MM-DD HH:mm:00+08:00
-draft: true
-slug: "derived-slug"
-categories: [ "translation" ]
-tags: [ "tag1", "tag2" ]
-description: "一两句中文摘要"
-canonicalURL: "https://original-url"
+
+## 正文抽取：建议保留的主体内容
+
+仅保留作者**正文主体**中的：
+
+- 标题
+- 引言/导语
+- 各级标题
+- 段落
+- 列表
+- 引用块
+- 代码块
+- 正文插图
+- 插图说明及**紧挨插图**的解释性文字
+
+## 正文抽取：建议排除的内容
+
+排除以下内容（勿混入译文）：
+
+- 站点导航、页眉、页脚
+- 评论区
+- 「相关文章」「推荐阅读」等侧栏或列表
+- 广告、赞助区块
+- 弹窗、浮层
+- 邮件订阅/引流文案
+- 联盟营销、导购段落
+- 与正文论证无关的装饰性图片或素材
+
+边界模糊时，**宁可删掉也不要把垃圾混进正文**。
+
 ---
-```
 
-Rules:
+## 译者总结 · 执行用提示词（全文）
 
-- `title`: start with `【译】`; use natural Chinese; preserve technical names where useful
-- `date`: current `Asia/Shanghai` time, minute precision, seconds fixed as `00`
-- `draft`: `true`
-- `slug`: lowercase kebab-case; prefer the last useful URL segment
-- `categories`: `[ "translation" ]`
-- `tags`: 1 to 3 English tags tied to the article topic
-- `description`: 1 to 2 Chinese summary sentences
-- `canonicalURL`: exactly the input URL
-
-## Opening Blockquote
-
-Use:
-
-```md
-> 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。
->
-> 原文链接：[原文标题](https://example.com/article)。
->
-> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。
-```
-
-## Scope Of Extraction
-
-Keep only main-article content:
-
-- title
-- intro
-- headings
-- paragraphs
-- lists
-- blockquotes
-- code blocks
-- body images
-- image captions and explanatory text tied to those images
-
-Exclude:
-
-- navigation
-- headers and footers
-- comments
-- related posts
-- ads and sponsored blocks
-- popups
-- email capture prompts
-- affiliate sections
-- unrelated decorative material
-
-When the boundary is ambiguous, drop the content instead of mixing junk into the article.
-
-## Translation Rules
-
-- preserve logic, conditions, negation, and numbers
-- preserve heading hierarchy
-- translate heading text into Chinese
-- generic headings such as `Introduction`, `Conclusion`, and `References` must not remain in English
-- only proper nouns, product names, protocol names, and fixed technical terms may remain in English in headings
-- keep code, commands, paths, API names, versions, and protocol names in English where appropriate
-- prefer paragraph-by-paragraph faithful translation
-- do not proactively add editorial smoothing
-- unless Chinese would become clearly awkward, do not rewrite the author's sentence progression just to make it read more smoothly
-- keep the author's rhetorical pacing and local emphasis whenever Chinese can still carry them
-- write restrained, natural Simplified Chinese
-- avoid marketing tone and obvious AI phrasing
-
-## Images
-
-Keep all body images that belong to the author’s main article.
-
-Markdown form:
-
-```md
-![说明](01.webp)
-```
-
-Storage path:
+仅撰写 `## 译者总结` 小节时，可将下面整段作为 **system 或对话前置说明**（由结构化长文分析习惯提炼：一句话核心、有限要点、范围与误读检查；**不含**打分、领域分类、营销话术）。
 
 ```text
-public/images/{slug}/
+你是「译者总结」作者。你已有完整译文正文（及对应的原文语义）。你的唯一任务是撰写 Markdown 小节 `## 译者总结` 下的内容，帮助读者在读完译文后更快把握：原文在论证什么、结论边界在哪里、哪些地方容易被读偏。
+
+【输出结构】（全部为简体中文；小节标题使用下面给出的固定中文标题）
+
+### 一句话核心
+仅用一句话概括原文中心论点或主要结论（建议 ≤50 字）。必须是正文中可直接支持的说法；禁止拔高、禁止补充文中未出现的重要论断。若原文只是资料汇编、发布说明、以列举为主而无单一论点，则本句改为说明「原文性质 + 读者应从正文关注的重点」，仍须克制、可核验。
+
+### 要点回顾（3–5 条）
+用无序列表，每条 1～2 句。只写读者抓住原文所必需的信息：背景或问题、关键步骤/方法、主要数据或结论、实现/使用上的要点。禁止展开成长期论证或教程式步骤。
+
+### 边界与易误读（可选）
+若存在则写 1～3 条：适用前提、范围限制、版本/环境依赖、否定句或条件句容易被误解之处。若无可写则省略整个三级标题。
+
+### 术语与延伸（可选）
+仅当对理解正文有明显帮助时：极短术语对照（词 — 一句说明），或 1～2 条与原文直接相关的延伸阅读标题+链接说明。不写推荐语、不写「强推」。
+
+【风格】
+专业、客观、克制。用词精准，避免空泛形容词与营销腔。中英文混排时保留必要英文专名，中文与英文/数字之间加空格。
+
+**去 AI 腔（译者总结专用）：** 禁止使用「值得一提的是」「总而言之」「综上所述」「在……背景下」「不难发现」「赋能」「深度好文」「值得一读」等模板句；不要排比三句式「不仅……更……还……」堆满一小段；不要用「读者」「笔者」人设开场。读起来要像人话短评，不像模型生成大纲。
+
+【硬禁止】
+- 不对文章做书评式褒贬；不写「本文深度如何」「值得一读」等。
+- 不写成可单独发表的第二篇长文；总篇幅保持「短节」，以必要性为限。
+- 不捏造正文没有的事实、数据或链接；不确定则不写或标明「文中未展开」。
+- 不把译者个人观点包装成作者观点。
+
+【自检】（写完在内心核对，勿输出此列表）
+每条要点是否都能指着正文对应段落？一句话核心是否过宽或过窄？是否出现原文未支持的推断？
 ```
 
-Number by first appearance:
+---
 
-- `01.webp`
-- `02.webp`
-- `03.webp`
+## 是否还需要本文件？
 
-If a stable image URL cannot be obtained, mention that outside the Markdown body instead of inventing it.
-
-## Translator Summary
-
-`## 译者总结` exists only to help readers understand the original.
-
-Allowed:
-
-- briefly summarize the original's core argument
-- remind readers of key assumptions, scope limits, or easy-to-misread passages
-- add a small glossary when it materially helps understanding
-- add highly relevant further reading when needed
-
-Not allowed:
-
-- recommendation copy
-- review-style commentary
-- guidebook-style lead-in
-- turning it into a second article
-- replacing the original body with the summary
-- invented arguments
-- masking your own opinions as the author’s
-
-Recommended size:
-
-- a short section only, sized by necessity rather than a fixed quota
-
-## Failure Handling
-
-If reliable extraction is impossible due to a paywall, login wall, anti-bot measures, or lack of a reliable main article:
-
-- do not fabricate content
-- explain the failure clearly
-- ask for pasted text or an accessible mirror
-- do not output placeholder frontmatter or half-finished article text
+**需要（推荐保留）**，前提是采用当前分工：SKILL 保持自用洽的完整规则，**长提示词只在此处维护一份**。若将来希望**完全单文件**，可把上节提示词移回 SKILL.md 并删除本文件——代价是 SKILL 更长、(diff) 噪音更大。
