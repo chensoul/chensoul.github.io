@@ -24,8 +24,9 @@ import "photosuite/dist/photosuite.css";
     }
   }
 
-  /* 套件把 img 的圆角用 !important 清零，与正文其它配图对齐 */
+  /* 覆盖正文 img 的 max-width:80%，使图宽与 .photosuite-item / caption 一致 */
   #main-content .post-content .photosuite-item img {
+    max-width: 100%;
     border-radius: 8px !important;
   }
 </style>
