@@ -7,6 +7,7 @@ categories: [ "translation" ]
 tags: [ "anthropic", "claude", "interpretability" ]
 description: "这篇文章介绍了 Anthropic 如何追踪 Claude 的内部计算过程，并总结了其在概念表征、规划、数学推理、幻觉与越狱等问题上的关键观察与局限。"
 canonicalURL: "https://blog.bytebytego.com/p/how-anthropics-claude-thinks"
+favicon: "claude.svg"
 ---
 
 > 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。
