@@ -527,9 +527,9 @@ export interface ContentPageData {
   content: string;
 }
 
-/** 读取 `content/pages/{fileName}`，解析单行 `key: value` frontmatter（与 about/links 页约定一致） */
+/** 读取 `content/{fileName}`，解析单行 `key: value` frontmatter（与 about/links 页约定一致） */
 export function readContentPage(fileName: string): ContentPageData {
-  const filePath = path.join(process.cwd(), "content/pages", fileName);
+  const filePath = path.join(process.cwd(), "content", fileName);
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const frontmatterMatch = fileContent.match(
     /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
