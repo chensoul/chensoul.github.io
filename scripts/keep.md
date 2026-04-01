@@ -3,7 +3,7 @@
 ## 依赖
 
 ```bash
-pip install -r scripts/requirements-running.txt
+pip install -r scripts/requirements-keep.txt
 ```
 
 ## 本地执行
