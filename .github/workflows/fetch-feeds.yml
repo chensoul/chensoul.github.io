@@ -1,8 +1,8 @@
-name: Sync feeds
+name: Fetch feeds
 
 on:
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "10 */2 * * *"
   workflow_dispatch:
   push:
     paths:
