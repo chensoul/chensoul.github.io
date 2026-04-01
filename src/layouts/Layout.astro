@@ -192,7 +192,11 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     <meta name="description" content={fullDescription} />
     <meta name="author" content={author} />
     <meta name="robots" content={robotsContent} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="theme-color"
+      id="meta-theme-color"
+      content="#fcfdff"
+    />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
@@ -282,9 +286,23 @@ const structuredData = resolvedSchemaType === "BlogPosting"
     }
 
     <!-- Theme initialization script to prevent flash；切换禁用时固定浅色 -->
-    <script is:inline define:vars={{ lightAndDarkMode: SITE.lightAndDarkMode }}>
+    <script
+      is:inline
+      define:vars={{
+        lightAndDarkMode: SITE.lightAndDarkMode,
+        themeColorLight: "#fcfdff",
+        themeColorDark: "#0b1220",
+      }}
+    >
       (function () {
         const html = document.documentElement;
+
+        function syncThemeColor(theme) {
+          const meta = document.getElementById("meta-theme-color");
+          if (!meta) return;
+          const next = theme === "dark" ? themeColorDark : themeColorLight;
+          meta.setAttribute("content", next);
+        }
 
         function readStoredTheme() {
           try {
@@ -315,6 +333,7 @@ const structuredData = resolvedSchemaType === "BlogPosting"
         function setTheme(theme) {
           const nextTheme = theme === "dark" ? "dark" : "light";
           html.setAttribute("data-theme", nextTheme);
+          syncThemeColor(nextTheme);
           if (lightAndDarkMode) {
             try {
               localStorage.setItem("theme", nextTheme);

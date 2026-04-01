@@ -1,7 +1,7 @@
 ---
 import type { BlogLikeEntry } from "@/utils/contentCollections";
-import { formatFeedDate, PostUtils, trimUrlSegment } from "@/utils/postUtils";
-import Datetime from "./Datetime.astro";
+import { ArticleTime } from "@/utils/articleTime";
+import { formatFeedDate, PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 import { siteImageHref } from "@/utils/blogImages";
 
@@ -14,7 +14,7 @@ import { siteImageHref } from "@/utils/blogImages";
  * @property itemClass - 额外的 CSS 类名
  * @property hidden - 是否隐藏此卡片
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
- * @property listKind - article：时间行；weekly：再加描述行；邻居订阅用 mode="feed"
+ * @property listKind - article：第二行为时间；weekly：第二行为摘要（.pcard-desc）；聚合用 mode="feed"
  */
 type BlogCardProps = BlogLikeEntry & {
   mode?: "post";
@@ -58,42 +58,9 @@ const title = isFeedCard ? feedProps.title : data!.title;
 const date = !isFeedCard ? data!.date : undefined;
 const updated = !isFeedCard ? data!.updated : undefined;
 const timezone = !isFeedCard ? data!.timezone : undefined;
-const listFavicon = !isFeedCard ? data!.favicon : undefined;
-const tagList = !isFeedCard ? (data!.tags ?? []) : [];
-
-/**
- * 构建列表卡片 favicon URL（`public/images/_favicons/`）
- *
- * - favicon 为空：取首个标签对应图标 `/images/_favicons/{tag}.svg`（跳过 Others），无则 .../blank.svg
- * - 以 http(s):// 开头：原样
- * - 以 / 开头：根相对路径；同源 `/images/` 走站内
- * - 仅文件名：见 PostUtils.resolveFaviconRef
- *
- * @returns 用于 <img src> 的完整或相对 URL
- */
-const buildListFaviconSrc = (): string | undefined => {
-  if (isFeedCard) return undefined;
-
-  const resolveLocalSrc = (src: string): string =>
-    siteImageHref(src.startsWith("/") ? src : `/${src}`);
-
-  const rawImage = typeof listFavicon === "string" ? listFavicon.trim() : "";
-
-  if (rawImage) {
-    if (rawImage.startsWith("http://") || rawImage.startsWith("https://")) {
-      return rawImage;
-    }
-    const resolved = PostUtils.resolveFaviconRef(rawImage) ?? rawImage;
-    return resolveLocalSrc(resolved);
-  }
-
-  const firstTagForIcon =
-    tagList.find(t => trimUrlSegment(t) !== "Others") ?? tagList[0];
-  const filename = firstTagForIcon ? trimUrlSegment(firstTagForIcon) : "blank";
-  return resolveLocalSrc(`/images/_favicons/${filename}.svg`);
-};
-
-const listFaviconSrc = buildListFaviconSrc();
+const listFaviconSrc = isFeedCard
+  ? undefined
+  : PostUtils.resolveArticleListFaviconImgSrc(data!.favicon, data!.categories);
 
 const weeklyDescription =
   !isFeedCard && listKind === "weekly"
@@ -105,6 +72,11 @@ const weeklyDescription =
 
 const feedDate = isFeedCard ? formatFeedDate(feedProps.published) : "";
 const feedBlogName = isFeedCard ? (feedProps.blogName?.trim() ?? "") : "";
+
+const articleListTime =
+  !isFeedCard && listKind !== "weekly"
+    ? ArticleTime.getDisplay(date!, updated, timezone, dateFormat)
+    : null;
 
 let avatarSrc = "";
 if (isFeedCard) {
@@ -123,18 +95,7 @@ if (isFeedCard) {
 }
 ---
 
-<li
-  class:list={[
-    "pcard",
-    itemClass,
-    {
-      hidden,
-      "pcard--feed": isFeedCard,
-      "pcard--weekly": !isFeedCard && listKind === "weekly",
-      "pcard--article": !isFeedCard && listKind !== "weekly",
-    },
-  ]}
->
+<li class:list={["pcard", itemClass, { hidden }]}>
   <div class="pcard-inner">
     {
       isFeedCard
@@ -142,8 +103,8 @@ if (isFeedCard) {
             <img
               src={avatarSrc}
               alt=""
-              width={46}
-              height={46}
+              width={40}
+              height={40}
               loading="lazy"
               decoding="async"
             />
@@ -152,8 +113,8 @@ if (isFeedCard) {
             <img
               src={listFaviconSrc}
               alt={title}
-              width={46}
-              height={46}
+              width={40}
+              height={40}
               loading="lazy"
               decoding="async"
             />
@@ -208,14 +169,16 @@ if (isFeedCard) {
           </div>
         ) : (
           <>
-            {listKind !== "weekly" && (
+            {listKind !== "weekly" && articleListTime && (
               <div class="pcard-meta">
-                <Datetime
-                  pubDatetime={date!}
-                  modDatetime={updated}
-                  {timezone}
-                  format={dateFormat}
-                />
+                <time
+                  class="pcard-meta__time"
+                  datetime={articleListTime.iso}
+                  title={articleListTime.titleAttr}
+                  data-date-format={dateFormat}
+                >
+                  {articleListTime.display}
+                </time>
               </div>
             )}
             {listKind === "weekly" && (
@@ -234,14 +197,24 @@ if (isFeedCard) {
 
 <style is:global>
   .pcard {
-    --pcard-thumb-size: 44px;
-    --pcard-padding-y: 0.2rem;
+    --pcard-thumb-size: 40px;
+    /* 条与条之间的垂直留白（首页与列表页共用） */
+    --pcard-padding-y: 0.06rem;
+    /* 相邻两条之间的收紧量（负 margin-top，仅作用于 .post-cards-list 内第二条起） */
+    --pcard-list-tighten: -0.1rem;
+    --pcard-inner-gap: 0.45rem;
     --pcard-title-size: 0.86rem;
-    --pcard-title-line-height: 1.34;
+    --pcard-title-line-height: 1.36;
     --pcard-title-lines: 2;
-    --pcard-title-gap: 0.12rem;
-    --pcard-meta-size: var(--text-sm);
-    --pcard-meta-line-height: 1.34;
+    --pcard-title-gap: 0.05rem;
+    /* 第二行：日期 / 聚合元信息 / 周报摘要 — 共用字号与行高 */
+    --pcard-meta-size: 0.72rem;
+    --pcard-meta-line-height: 1.36;
+    /*
+     * min-height 第一路：至少包住缩略图 + 上下留白（原写死 1rem，现可调）
+     * 第二路：标题两行 + 第二行 + padding；max() 取二者较大
+     */
+    --pcard-inner-min-thumb-slack: 0.35rem;
   }
 
   .pcard {
@@ -256,7 +229,7 @@ if (isFeedCard) {
 
   .pcard-inner {
     display: flex;
-    gap: 0.55rem;
+    gap: var(--pcard-inner-gap);
     align-items: flex-start;
     border: none;
     border-radius: 8px;
@@ -266,7 +239,9 @@ if (isFeedCard) {
       background-color 0.2s ease,
       transform 0.2s ease;
     min-height: max(
-      calc(var(--pcard-thumb-size) + var(--pcard-padding-y) * 2),
+      calc(
+        var(--pcard-thumb-size) + var(--pcard-inner-min-thumb-slack)
+      ),
       calc(
         var(--pcard-title-size) * var(--pcard-title-line-height) *
           var(--pcard-title-lines) + var(--pcard-title-gap) +
@@ -290,7 +265,7 @@ if (isFeedCard) {
     flex-shrink: 0;
     align-self: flex-start;
     display: block;
-    border-radius: 10px;
+    border-radius: 9px;
     object-fit: cover;
   }
 
@@ -330,33 +305,6 @@ if (isFeedCard) {
     text-decoration: underline;
   }
 
-  .pcard--article .pcard-inner {
-    padding-top: 0.28rem;
-    padding-bottom: 0.28rem;
-    gap: 0.5rem;
-    min-height: max(
-      calc(var(--pcard-thumb-size) + 1rem),
-      calc(
-        var(--pcard-title-size) * var(--pcard-title-line-height) *
-          var(--pcard-title-lines) + var(--pcard-meta-size) *
-          var(--pcard-meta-line-height) + 0.5rem
-      )
-    );
-  }
-
-  .pcard--article .pcard-title {
-    margin-bottom: 0.08rem;
-    line-height: 1.36;
-  }
-
-  .pcard--article .pcard-meta {
-    line-height: 1.36;
-  }
-
-  .pcard--weekly .pcard-title {
-    margin-bottom: 0.12rem;
-  }
-
   .pcard-meta {
     display: flex;
     flex-wrap: nowrap;
@@ -370,7 +318,13 @@ if (isFeedCard) {
     white-space: nowrap;
   }
 
-  /* 日期由 Datetime 自持字号；分隔符与分类链继承 meta */
+  .pcard-meta__time {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+  }
+
   .pcard-meta :is(span, a) {
     font-size: inherit;
     line-height: inherit;
@@ -404,30 +358,17 @@ if (isFeedCard) {
     text-decoration: underline;
   }
 
-  .pcard--weekly .pcard-meta {
-    font-size: 0.76rem;
-    color: color-mix(in srgb, var(--text-secondary) 92%, var(--text-primary));
-  }
-
+  /* 仅周报用：第二行摘要，单行省略（仅 briefs + listKind=weekly 会渲染 .pcard-desc） */
   .pcard-desc {
-    margin: 0.14rem 0 0;
-    font-size: 0.83rem;
-    line-height: 1.42;
+    margin: 0;
+    font-size: var(--pcard-meta-size);
+    line-height: var(--pcard-meta-line-height);
     color: var(--text-secondary);
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-  }
-
-  .pcard--weekly .pcard-desc {
-    margin-top: 0.14rem;
-    font-size: 0.83rem;
-    line-height: 1.48;
-    color: color-mix(in srgb, var(--text-secondary) 88%, var(--text-primary));
     -webkit-line-clamp: 1;
     line-clamp: 1;
+    overflow: hidden;
   }
 
   .pcard-meta > [aria-hidden="true"] {
@@ -446,45 +387,26 @@ if (isFeedCard) {
     gap: 0;
   }
 
+  .post-cards-list > .pcard + .pcard {
+    margin-top: var(--pcard-list-tighten);
+  }
+
   @media (max-width: 640px) {
     .pcard {
-      --pcard-thumb-size: 40px;
-      --pcard-padding-y: 0.22rem;
+      --pcard-inner-min-thumb-slack: 0.32rem;
+      --pcard-padding-y: 0.1rem;
+      --pcard-list-tighten: -0.08rem;
+      --pcard-inner-gap: 0.48rem;
       --pcard-title-size: 0.83rem;
-      --pcard-title-gap: 0.14rem;
-    }
-
-    .pcard-inner {
-      gap: 0.6rem;
+      --pcard-meta-size: 0.7rem;
+      --pcard-title-gap: 0.07rem;
+      --pcard-title-line-height: 1.35;
+      --pcard-meta-line-height: 1.35;
     }
 
     .pcard-inner > img {
       flex-shrink: 0;
-      border-radius: 9px;
-    }
-
-    .pcard-title {
-      line-height: 1.35;
-    }
-
-    .pcard-meta {
-      line-height: 1.35;
-    }
-
-    .pcard--article .pcard-inner {
-      gap: 0.52rem;
-      padding-top: 0.3rem;
-      padding-bottom: 0.3rem;
-    }
-
-    .pcard-desc {
-      margin-top: 0.16rem;
-      line-height: 1.5;
-    }
-
-    .pcard--weekly .pcard-desc {
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
+      border-radius: 8px;
     }
 
     .post-cards-list {

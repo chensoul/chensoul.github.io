@@ -4,6 +4,7 @@
  */
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import ListLayout from "@/layouts/ListLayout.astro";
 import Card from "@/components/Card.astro";
 import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
@@ -15,16 +16,16 @@ const sorted = PostUtils.sort(await getCollection("translation"));
 ---
 
 <Layout title={pageTitle}>
-  <h1>翻译</h1>
-  <p class="mt-2 mb-6 text-sm leading-snug text-pretty text-muted">
-    外文技术文章的译文与笔记。
-  </p>
-
-  <ul class="post-cards-list m-0 list-none p-0" aria-label="译文列表">
-    {
-      sorted.map(post => (
-        <Card openInNewTab={false} dateFormat="absolute" {...post} />
-      ))
-    }
-  </ul>
+  <ListLayout
+    title="翻译"
+    description="外文技术文章的译文与笔记。"
+  >
+    <ul class="post-cards-list m-0 list-none p-0" aria-label="译文列表">
+      {
+        sorted.map(post => (
+          <Card openInNewTab={false} dateFormat="absolute" {...post} />
+        ))
+      }
+    </ul>
+  </ListLayout>
 </Layout>

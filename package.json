@@ -17,8 +17,8 @@
     "lint": "eslint .",
     "convert-to-webp": "node scripts/convert-to-webp.mjs",
     "spell": "pnpm dlx cspell --config cspell.yaml .",
-    "md:check": "pnpm dlx markdownlint-cli2 ./content/posts/**",
-    "md:fix": "pnpm dlx markdownlint-cli2 --fix ./content/posts/**"
+    "md:check": "pnpm dlx markdownlint-cli2 \"./content/**/*.md\"",
+    "md:fix": "pnpm dlx markdownlint-cli2 --fix \"./content/**/*.md\""
   },
   "dependencies": {
     "@astrojs/mdx": "5.0.3",

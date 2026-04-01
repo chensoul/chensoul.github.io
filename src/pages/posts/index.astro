@@ -4,6 +4,7 @@
  */
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import ListLayout from "@/layouts/ListLayout.astro";
 import Card from "@/components/Card.astro";
 import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
@@ -15,16 +16,16 @@ const sorted = PostUtils.sort(await getCollection("posts"));
 ---
 
 <Layout title={pageTitle}>
-  <h1>博客</h1>
-  <p class="mt-2 mb-6 text-sm leading-snug text-pretty text-muted">
-    技术、生活等发布在博客目录下的长文，按最近更新排序。
-  </p>
-
-  <ul class="post-cards-list m-0 list-none p-0" aria-label="博客列表">
-    {
-      sorted.map(post => (
-        <Card openInNewTab={false} dateFormat="absolute" {...post} />
-      ))
-    }
-  </ul>
+  <ListLayout
+    title="博客"
+    description="技术、生活等发布在博客目录下的长文，按最近更新排序。"
+  >
+    <ul class="post-cards-list m-0 list-none p-0" aria-label="博客列表">
+      {
+        sorted.map(post => (
+          <Card openInNewTab={false} dateFormat="absolute" {...post} />
+        ))
+      }
+    </ul>
+  </ListLayout>
 </Layout>

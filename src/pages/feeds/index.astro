@@ -1,15 +1,16 @@
 ---
 /**
- * 邻居 / Feeds 页（友联博客最新文章聚合）
+ * 聚合 / Feeds 页（友联博客最新文章聚合）
  *
- * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时若存在 public/data/feeds.json 则用 Card 渲染首屏，剩余条目由客户端滚动加载。
+ * @fileoverview 由 SITE.feeds.enabled 控制是否开放；构建时读取 public/data/feeds.json，
+ * 使用 ListLayout 一次性渲染全部列表项。
  */
 import fs from "node:fs";
 import path from "node:path";
 import Layout from "@/layouts/Layout.astro";
+import ListLayout from "@/layouts/ListLayout.astro";
 import Card from "@/components/Card.astro";
 import { SITE } from "@/config";
-import { getClientImagesHostPrefix } from "@/utils/blogImages";
 
 export const pageSlug = "feeds";
 export const pageTitle = `${SITE.feeds.navLabel} | ${SITE.title}`;
@@ -37,80 +38,36 @@ if (feedsEnabled) {
   }
 }
 
-const initialCount = SITE.feeds.initialCount;
-const initialItems = feedItems.slice(0, initialCount);
-const hasInitialItems = feedItems.length > 0;
-
-const clientData = {
-  fallbackOgImage: SITE.feeds.fallbackAvatarUrl,
-  /** 生产环境下为 `/images/` 头像拼 CDN；dev 为空保持根相对 */
-  imagesUrl: getClientImagesHostPrefix(),
-  initialItemCount: initialCount,
-  itemsPerPage: SITE.feeds.perPage,
-  dataSourceUrl: SITE.feeds.dataSourceUrl || "",
-  hasInitialItems,
-  items: feedItems,
-};
+const pageDescription = feedsEnabled
+  ? "以下列表是使用程序定时从我关注的 RSS 订阅源抓取到的文章、视频和播客。"
+  : "";
 ---
 
 <Layout title={pageTitle} schemaType="CollectionPage" robots="noindex,follow">
-  <article class="post">
-    <header class="post-header">
-      <section class="post-header__main">
-        <h1>{SITE.feeds.navLabel}</h1>
-      </section>
-    </header>
-
-    {
-      !feedsEnabled ? (
-        <div class="post-content page-content min-w-0">
-          <p>
-            本页暂未开放。若需展示邻居博客的最新文章聚合，请在站点配置中开启
-            <code>SITE.feeds.enabled</code> 并配置数据源。
+  {
+    !feedsEnabled ? (
+      <ListLayout title={SITE.feeds.navLabel}>
+        <p class="mb-0 text-sm leading-snug text-muted">
+          本页暂未开放。若需展示友链博客的最新文章聚合，请在站点配置中开启
+          <code>SITE.feeds.enabled</code> 并配置数据源。
+        </p>
+      </ListLayout>
+    ) : (
+      <ListLayout
+        title={SITE.feeds.navLabel}
+        description={pageDescription}
+      >
+        {feedItems.length === 0 ? (
+          <p class="mb-0 text-sm text-muted">
+            暂无内容。请确认已生成{" "}
+            <code>public/data/feeds.json</code>（例如通过 CI 同步 RSS）。
           </p>
-        </div>
-      ) : (
-        <>
-          <div class="post-content page-content min-w-0">
-            <p>
-              以下列表是使用程序定时从我关注的 RSS
-              订阅源抓取到的文章、视频和播客，我可以第一时间查看是否有更新，并阅读、观看和收听。
-            </p>
-            {!clientData.dataSourceUrl && (
-              <p>
-                请在站点配置（<code>SITE.feeds.dataSourceUrl</code>）中填写聚合
-                JSON 地址以启用列表。
-              </p>
-            )}
-          </div>
-
-          <div
-            id="feeds-data-json-container"
-            data-json={JSON.stringify(clientData)}
-            class="hidden"
-            aria-hidden="true"
-          />
-
-          <div
-            id="feeds-loading"
-            class="py-4 text-sm text-muted"
-            class:list={[hasInitialItems && "hidden"]}
-          >
-            加载中…
-          </div>
-          <div id="feeds-error" class="hidden py-4 text-sm text-muted">
-            加载失败，请稍后重试或检查网络连接。
-          </div>
-          <div id="feeds-no-content" class="hidden py-4 text-sm text-muted">
-            暂无内容。
-          </div>
-
+        ) : (
           <ul
-            id="feeds-list"
             class="post-cards-list m-0 list-none p-0"
-            aria-label="文章列表"
+            aria-label="聚合文章列表"
           >
-            {initialItems.map(item => (
+            {feedItems.map(item => (
               <Card
                 mode="feed"
                 title={item.title}
@@ -121,15 +78,8 @@ const clientData = {
               />
             ))}
           </ul>
-          <div id="load-more-trigger" class="mt-6 hidden" aria-hidden="true">
-            <div class="flex justify-center text-sm text-muted">
-              <span>加载更多</span>
-            </div>
-          </div>
-
-          <script is:inline type="module" src="/feeds.js" />
-        </>
-      )
-    }
-  </article>
+        )}
+      </ListLayout>
+    )
+  }
 </Layout>

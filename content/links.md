@@ -1,14 +1,11 @@
 ---
 title: "链接"
-description: 收集博客、文章、书籍和工具等值得长期关注的链接，也包含邻居页面的数据来源说明。
+description: 收集博客、文章、书籍和工具等值得长期关注的链接，也包含聚合页的数据来源说明。
 ---
-
-本页面收集了一些我觉得有趣的博客、播客、书籍等资源链接，方便我无聊的时候时不时地看看。我觉得其他人可能也会感兴趣。
 
 ## 博客
 
-以下是我平常关注的一些博客，更多关注请参看 [rss.txt](https://github.com/chensoul/chensoul.github.io/blob/main/public/data/rss.txt)
-文件。我写了一个程序定时抓取该文件的链接，制作了一个[邻居](/feeds)页面。
+以下是我平常关注的一些博客。
 
 - [Pseudoyu](https://www.pseudoyu.com/) - 一名 web3 爱好者、区块链开发者和独立黑客
 - [SivaLabs](https://www.sivalabs.in/blog/) - Java、Spring Boot、微服务、云计算和DevOps教程

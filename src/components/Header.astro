@@ -131,8 +131,10 @@ const { pathname } = Astro.url;
     text-decoration: none;
   }
 
-  .logo:hover {
+  .logo:hover,
+  .logo:focus-visible {
     color: var(--accent);
+    text-decoration: none;
   }
 
   .nav-right {

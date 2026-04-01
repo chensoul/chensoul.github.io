@@ -10,8 +10,12 @@ import path from "node:path";
 import type { BlogLikeCollection, BlogLikeEntry } from "@/utils/contentCollections";
 
 import { SITE } from "@/config";
+import { siteImageHref } from "@/utils/blogImages";
 
 // --- 描述提取（Markdown → 纯文本摘要）---
+
+/** 列表 favicon 无分类或回退（`public/images/_favicons/blank.svg`） */
+const FAVICON_BLANK_PATH = "/images/_favicons/blank.svg";
 
 /** 匹配 `<!-- more -->` 之前的内容，捕获组 $1 为摘要 */
 const tagMoreRegex = /^(.*?)<!--\s*more\s*-->/s;
@@ -61,6 +65,11 @@ interface GroupFunction<T> {
 }
 
 export class PostUtils {
+  /** `http://` 或 `https://` 开头 */
+  static isHttpUrl(url: string): boolean {
+    return url.startsWith("http://") || url.startsWith("https://");
+  }
+
   static filter(post: BlogLikeEntry): boolean {
     const { data } = post;
     const isPublishTimePassed =
@@ -232,7 +241,7 @@ export class PostUtils {
   ): string | undefined {
     const t = typeof raw === "string" ? raw.trim() : "";
     if (!t) return undefined;
-    if (t.startsWith("http://") || t.startsWith("https://")) return t;
+    if (PostUtils.isHttpUrl(t)) return t;
     if (t.startsWith("/")) return t;
     const rel = t.replace(/\\/g, "/").replace(/^(\.\/)+/, "");
     if (!rel || rel.split("/").some(s => s === ".." || s === "")) {
@@ -252,7 +261,7 @@ export class PostUtils {
   static resolveFaviconRef(raw: string | undefined | null): string | undefined {
     const t = typeof raw === "string" ? raw.trim() : "";
     if (!t) return undefined;
-    if (t.startsWith("http://") || t.startsWith("https://")) return t;
+    if (PostUtils.isHttpUrl(t)) return t;
     if (t.startsWith("/")) {
       if (t.startsWith("/images/_thumbnails/")) {
         return t.replace(/^\/images\/_thumbnails\//, "/images/_favicons/");
@@ -264,6 +273,72 @@ export class PostUtils {
       return undefined;
     }
     return `/images/_favicons/${rel}`;
+  }
+
+  /**
+   * 根相对路径（如 `/images/_favicons/x.svg`）是否在仓库 `public/` 下存在对应文件（构建时 `fs` 校验）。
+   */
+  static publicRootFileExists(rootRelative: string): boolean {
+    const t = rootRelative.trim();
+    if (!t.startsWith("/")) return false;
+    const rel = t.replace(/^\/+/, "");
+    if (!rel || rel.split("/").some(s => s === ".." || s === "")) {
+      return false;
+    }
+    const abs = path.join(process.cwd(), "public", rel);
+    try {
+      return fs.existsSync(abs) && fs.statSync(abs).isFile();
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * 文章列表/详情：`favicon` 优先（外链或站内且 `public/` 存在）；否则首个有效 `categories` 对应 `/images/_favicons/{slug}.svg`；
+   * **未设置分类或全部为空** → `/images/_favicons/blank.svg`；分类 svg 不存在则回退 `blank.svg`。
+   */
+  static resolveArticleListFaviconPath(
+    favicon: string | undefined | null,
+    categories: string[] | undefined | null
+  ): string {
+    const raw = typeof favicon === "string" ? favicon.trim() : "";
+    if (raw) {
+      const resolved = PostUtils.resolveFaviconRef(raw);
+      if (resolved) {
+        if (PostUtils.isHttpUrl(resolved)) {
+          return resolved;
+        }
+        if (resolved.startsWith("/") && PostUtils.publicRootFileExists(resolved)) {
+          return resolved;
+        }
+      }
+    }
+
+    let slug: string | null = null;
+    for (const c of categories ?? []) {
+      const s = trimUrlSegment(c);
+      if (s) {
+        slug = s;
+        break;
+      }
+    }
+    if (!slug) {
+      return FAVICON_BLANK_PATH;
+    }
+
+    const candidate = `/images/_favicons/${slug}.svg`;
+    return PostUtils.publicRootFileExists(candidate) ? candidate : FAVICON_BLANK_PATH;
+  }
+
+  /**
+   * 列表 Card `<img src>`：外链原样，站内根相对经 {@link siteImageHref}。
+   */
+  static resolveArticleListFaviconImgSrc(
+    favicon: string | undefined | null,
+    categories: string[] | undefined | null
+  ): string {
+    const p = PostUtils.resolveArticleListFaviconPath(favicon, categories);
+    return PostUtils.isHttpUrl(p) ? p : siteImageHref(p);
   }
 
   static getDescription(markdownContent: string): string {
@@ -398,7 +473,7 @@ export function generateLlmsTxt(posts: BlogLikeEntry[]): string {
   return `${lines.join("\n")}\n`;
 }
 
-// --- 订阅条目日期（与 public/feeds.js 的 getDisplayDate 保持一致；改动时请两边同步）---
+// --- 聚合条目日期（Card mode=feed 与 formatFeedDate；构建时相对「当前」时间）---
 
 function formatDateYYYYMMDD(d: Date): string {
   const y = d.getFullYear();

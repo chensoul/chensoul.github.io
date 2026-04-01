@@ -25,7 +25,7 @@ export const SITE = {
   lightAndDarkMode: true,
 
   /**
-   * 分类 / 标签 / 文章归档等列表首屏条数（及懒加载每批）
+   * 首页各栏（博客 / 周报 / 译文 / Wiki）展示的最近条目数
    */
   postPerIndex: 6,
 
@@ -146,16 +146,14 @@ export const SITE = {
   lazyListJsUrl: `${CDN_ORIGIN}/dist/lazy-list.js`,
 
   /**
-   * 邻居 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）
+   * 聚合 / Feeds 页（友联博客最新文章聚合，非本站 RSS 订阅地址）。
+   * 构建时读取 `public/data/feeds.json`，列表一次性输出全部条目。
    */
   feeds: {
     enabled: true,
-    navLabel: "邻居",
+    navLabel: "聚合",
+    /** 聚合 JSON 路径（CI 写入；页面构建时读取） */
     dataSourceUrl: "/data/feeds.json",
-    /** 首屏展示条数 */
-    initialCount: 10,
-    /** 点击「加载更多」每次加载条数 */
-    perPage: 10,
     /** 无头像时使用的默认图（根相对，对应 `public/images/_favicons/rss.svg`） */
     fallbackAvatarUrl: "/images/_favicons/rss.svg",
   },

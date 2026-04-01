@@ -162,7 +162,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 #### 3. 组件
 
 - **Header.astro**：较大调整（约 354 行变更），与导航、leadingTitle、站点标题等逻辑相关。
-- **Card.astro**、**Datetime.astro**、**Footer.astro**、**Tag.astro**、**YearProgress.astro**、**Artalk.astro**
+- **Card.astro**、**Footer.astro**、**Tag.astro**、**YearProgress.astro**、**Artalk.astro**
   ：均有修改，以配合新路由、链接和样式。
 
 ### 四、样式

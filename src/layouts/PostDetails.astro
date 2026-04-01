@@ -6,9 +6,9 @@
  */
 import { render } from "astro:content";
 import type { BlogLikeEntry } from "@/utils/contentCollections";
+import { ArticleTime } from "@/utils/articleTime";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
-import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import Photosuite from "@/components/Photosuite.astro";
 import ArticleToc from "@/components/ArticleToc.astro";
@@ -49,17 +49,17 @@ const imageDirName = PostUtils.getPostImageDirName(
   post.collection
 );
 const bannerPath = PostUtils.resolveBlogImageRef(bannerRaw, imageDirName);
-const faviconPath = PostUtils.resolveFaviconRef(post.data.favicon);
+const faviconPath = PostUtils.resolveArticleListFaviconPath(
+  post.data.favicon,
+  post.data.categories
+);
 const hasBanner = Boolean(bannerRaw?.trim());
 
 /** 解析 banner：`astro dev` 根相对；生产 `/images/...` 走 CDN（与 Photosuite） */
 const bannerSrc = bannerPath
-  ? (() => {
-      const src = bannerPath;
-      if (src.startsWith("http://") || src.startsWith("https://")) return src;
-      const normalized = src.startsWith("/") ? src : `/${src}`;
-      return siteImageHref(normalized);
-    })()
+  ? PostUtils.isHttpUrl(bannerPath)
+    ? bannerPath
+    : siteImageHref(bannerPath.startsWith("/") ? bannerPath : `/${bannerPath}`)
   : undefined;
 
 /** OG / JSON-LD：优先横幅图；否则若 `favicon` 为 `/images/` 且非 `_favicons/` 则用其作分享图 */
@@ -102,6 +102,10 @@ const latinWordCount = (
 const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
 const estimatedWordCount = latinWordCount + cjkCharCount;
 const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
+
+/** 标题区发布/更新时间（与列表卡片同一套语义，详情页固定绝对日期） */
+const headerTime = ArticleTime.forDetailHeader(date, updated, post.data.timezone);
+
 const breadcrumbItems = [
   { name: "首页", item: SITE.website },
   { name: "博客", item: new URL("/posts", SITE.website).toString() },
@@ -315,12 +319,18 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             >{readingMinutes} 分钟阅读</span
           >
           <span class="opacity-50" aria-hidden="true">·</span>
-          <Datetime
-            pubDatetime={date}
-            modDatetime={updated}
-            timezone={post.data.timezone}
-            format="absolute"
-          />
+          <div
+            class="inline-flex min-w-0 items-baseline gap-0.5"
+            title={headerTime.titleAttr}
+          >
+            <time
+              class="text-sm font-normal tracking-wide text-muted tabular-nums"
+              datetime={headerTime.iso}
+              data-date-format="absolute"
+            >
+              {headerTime.display}
+            </time>
+          </div>
         </div>
       </section>
     </header>
