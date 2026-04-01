@@ -8,8 +8,7 @@ import { getAllBlogLike } from "@/utils/contentCollections";
 import type { GetStaticPathsOptions } from "astro";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import TaxonomySummary from "@/components/TaxonomySummary.astro";
-import { getCategoryMeta, PostUtils, trimUrlSegment } from "@/utils/postUtils";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export const pageTitle = `标签 | ${SITE.title}`;
@@ -30,36 +29,6 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 const { page, tagName } = Astro.props;
-const categoryCount = new Map<
-  string,
-  { categoryName: string; count: number }
->();
-page.data.forEach(post => {
-  post.data.categories.forEach(category => {
-    const slug = trimUrlSegment(category);
-    const categoryLabel = getCategoryMeta(category)?.name ?? category;
-    const existing = categoryCount.get(slug);
-    if (existing) {
-      existing.count += 1;
-    } else {
-      categoryCount.set(slug, { categoryName: categoryLabel, count: 1 });
-    }
-  });
-});
-const topCategories = Array.from(categoryCount.entries())
-  .sort(
-    (a, b) =>
-      b[1].count - a[1].count ||
-      a[1].categoryName.localeCompare(b[1].categoryName, "zh-CN")
-  )
-  .slice(0, 6);
-const relatedCategories = topCategories.map(
-  ([category, { categoryName, count }]) => ({
-    href: `/categories/${category}`,
-    label: categoryName,
-    count,
-  })
-);
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
@@ -75,7 +44,6 @@ const relatedCategories = topCategories.map(
       <span>{tagName}</span>
     </div>
     <h1 class="my-2 text-3xl font-semibold tracking-tight">{tagName}</h1>
-    <TaxonomySummary title="相关分类" items={relatedCategories} />
   </section>
   <ul id="tag-posts-list" class="post-cards-list m-0 list-none p-0">
     {

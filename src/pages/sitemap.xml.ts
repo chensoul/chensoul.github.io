@@ -19,7 +19,6 @@ function formatLastmod(value: string): string {
 export const GET: APIRoute = async () => {
   const posts = PostUtils.getPublishedPosts(await getAllBlogLike());
   const sortedPosts = PostUtils.sort(posts);
-  const categories = PostUtils.getUniqueCategories(posts);
   const tags = PostUtils.getUniqueTags(posts);
 
   const latestPostUpdatedAt = sortedPosts[0]
@@ -36,7 +35,6 @@ export const GET: APIRoute = async () => {
     { path: "/briefs", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/translation", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/wiki", lastmod: latestPostUpdatedAt, priority: "0.80" },
-    { path: "/categories", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/tags", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/search", lastmod: latestPostUpdatedAt, priority: "0.64" },
     { path: "/feeds", lastmod: latestPostUpdatedAt, priority: "0.80" },
@@ -44,24 +42,6 @@ export const GET: APIRoute = async () => {
     { path: "/rss.xml", lastmod: latestPostUpdatedAt, priority: "0.48" },
     { path: "/llms.txt", lastmod: latestPostUpdatedAt, priority: "0.48" },
   ];
-
-  const categoryPages = categories.map(category => {
-    const categoryPosts = PostUtils.getPostsByCategory(
-      posts,
-      category.category
-    );
-    const lastmod = categoryPosts[0]
-      ? new Date(
-          categoryPosts[0].data.updated ?? categoryPosts[0].data.date
-        ).toISOString()
-      : latestPostUpdatedAt;
-
-    return {
-      path: `/categories/${category.category}`,
-      lastmod,
-      priority: "0.64",
-    };
-  });
 
   const tagPages = tags.map(tagItem => {
     const tagPosts = PostUtils.getPostsByTag(posts, tagItem.tag);
@@ -92,7 +72,7 @@ export const GET: APIRoute = async () => {
     priority: "0.64",
   }));
 
-  const urls = [...staticPages, ...categoryPages, ...tagPages, ...postPages];
+  const urls = [...staticPages, ...tagPages, ...postPages];
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

@@ -21,7 +21,10 @@ function slugFromFilename(filename: string, explicit?: string): string {
 }
 
 export function buildLegacyPostsRedirects(): Record<string, string> {
-  const redirects: Record<string, string> = {};
+  /** 原分类索引已下线，统一跳到标签页 */
+  const redirects: Record<string, string> = {
+    "/categories": "/tags",
+  };
   const roots: { dir: string; section: string }[] = [
     { dir: "content/briefs", section: "briefs" },
     { dir: "content/translation", section: "translation" },

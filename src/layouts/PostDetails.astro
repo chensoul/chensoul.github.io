@@ -12,7 +12,7 @@ import Datetime from "@/components/Datetime.astro";
 import Artalk from "@/components/Artalk.astro";
 import Photosuite from "@/components/Photosuite.astro";
 import ArticleToc from "@/components/ArticleToc.astro";
-import { getCategoryMeta, PostUtils, trimUrlSegment } from "@/utils/postUtils";
+import { PostUtils, trimUrlSegment } from "@/utils/postUtils";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import IconTag from "@/assets/icons/IconTag.svg";
@@ -38,7 +38,6 @@ const {
   comments,
   description: postDescription,
   banner: bannerRaw,
-  categories,
 } = post.data;
 
 const imageDirName = PostUtils.getPostImageDirName(
@@ -103,27 +102,9 @@ const latinWordCount = (
 const cjkCharCount = (plainText.match(/[\u3400-\u9FFF]/g) || []).length;
 const estimatedWordCount = latinWordCount + cjkCharCount;
 const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
-const primaryCategory = categories?.[0];
-const primaryCategoryLabel =
-  getCategoryMeta(primaryCategory)?.name ?? primaryCategory;
-const categoryLinks = categories.map(category => ({
-  name: getCategoryMeta(category)?.name ?? category,
-  slug: trimUrlSegment(category),
-}));
 const breadcrumbItems = [
   { name: "首页", item: SITE.website },
   { name: "博客", item: new URL("/posts", SITE.website).toString() },
-  ...(primaryCategory
-    ? [
-        {
-          name: primaryCategoryLabel,
-          item: new URL(
-            `/categories/${trimUrlSegment(primaryCategory)}`,
-            SITE.website
-          ).toString(),
-        },
-      ]
-    : []),
   { name: title, item: canonicalHrefPlaceholder() },
 ];
 
@@ -188,10 +169,7 @@ const scoredRelatedPosts = posts
     const sharedTags = candidate.data.tags.filter(tag =>
       tags.includes(tag)
     ).length;
-    const sharedCategories = candidate.data.categories.filter(category =>
-      post.data.categories.includes(category)
-    ).length;
-    const score = sharedCategories * 4 + sharedTags * 2;
+    const score = sharedTags * 2;
 
     return {
       post: candidate,
@@ -322,18 +300,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         <a href="/">首页</a>
         <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
         <a href="/posts">博客</a>
-        {
-          primaryCategory && (
-            <>
-              <span class="mx-1.5 opacity-60" aria-hidden="true">
-                /
-              </span>
-              <a href={`/categories/${trimUrlSegment(primaryCategory)}`}>
-                {primaryCategoryLabel}
-              </a>
-            </>
-          )
-        }
       </div>
 
       <section class="mb-6">
@@ -345,14 +311,6 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
         <div
           class="post-meta flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-center text-sm text-muted"
         >
-          {
-            categoryLinks.map(category => (
-              <a class="no-underline" href={`/categories/${category.slug}`}>
-                {category.name}
-              </a>
-            ))
-          }
-          <span class="opacity-50" aria-hidden="true">·</span>
           <span class="whitespace-nowrap tabular-nums"
             >{readingMinutes} 分钟阅读</span
           >
@@ -474,11 +432,12 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
             {relatedPosts.map(({ post: relatedPost, path }) => (
               <div class={postRelatedCardClass}>
                 <p class="m-0 text-[0.72rem] font-semibold tracking-[0.04em] text-muted uppercase">
-                  {relatedPost.data.categories
-                    .map(
-                      category => getCategoryMeta(category)?.name ?? category
+                  {relatedPost.data.tags
+                    .filter(
+                      (t: string) => trimUrlSegment(t) !== "Others"
                     )
-                    .join(" / ")}
+                    .slice(0, 3)
+                    .join(" / ") || "—"}
                 </p>
                 <p class="m-0">
                   <a

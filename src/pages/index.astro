@@ -2,12 +2,12 @@
 /**
  * 首页
  *
- * @fileoverview 聚合站点入口：首屏双栏为最近周报（左/上）与最近文章（右/下）；最近文章不含周报分类。
+ * @fileoverview 聚合站点入口：最近博客仅 `posts` 集合；最近周报仅 `briefs` 集合。
  */
-import { getAllBlogLike } from "@/utils/contentCollections";
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import { PostUtils, trimUrlSegment } from "@/utils/postUtils";
+import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 /** 与 /og/index.png 一致 */
@@ -15,18 +15,11 @@ export const pageSlug = "index";
 export const pageTitle = SITE.title;
 export const pageDescription = SITE.description;
 
-const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
-const sortedPosts = PostUtils.sort(publishedPosts);
-
-const latestPosts = sortedPosts
-  .filter(
-    post => !post.data.categories.some(cat => trimUrlSegment(cat) === "weekly")
-  )
-  .slice(0, SITE.postPerIndex);
-const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
+const latestPosts = PostUtils.sort(await getCollection("posts")).slice(
   0,
-  6
+  SITE.postPerIndex
 );
+const lifePosts = PostUtils.sort(await getCollection("briefs")).slice(0, 6);
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -35,9 +28,9 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
   >
     <div class="min-w-0 md:basis-[52%] lg:basis-[52%]">
       <header class="mb-2.5">
-        <h3 class="mt-0 mb-1">最近文章</h3>
+        <h3 class="mt-0 mb-1">最近博客</h3>
         <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
-          优先展示最近更新的技术文章、知识库条目和翻译内容。
+          仅包含发布在博客目录下的长文（技术、生活等）。
           <a href="/posts" class="text-accent no-underline hover:underline">
             查看全部
           </a>

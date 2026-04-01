@@ -1,7 +1,7 @@
 /**
  * 博客与文章集合相关工具（原多文件合并：摘要正则、slug、分类元数据、PostUtils、llms.txt 生成）
  *
- * @fileoverview 文章过滤/排序/路径、标签与分类、描述提取、分类显示与排序、LLMs 站点地图文案；订阅卡片日期、content/pages 极简 frontmatter 读取
+ * @fileoverview 文章过滤/排序/路径、标签、描述提取、LLMs 站点地图文案；订阅卡片日期、content/pages 极简 frontmatter 读取
  */
 
 import fs from "node:fs";
@@ -46,52 +46,11 @@ export function trimUrlSegment(str: string): string {
 
 const trimAll = (arr: string[]) => arr.map(s => trimUrlSegment(s));
 
-// --- 分类元信息 ---
-
-export interface CategoryMeta {
-  slug: string;
-  name: string;
-  /** 分类索引卡片用的小图 URL（可与文章 `favicon` 一样指向 `/images/_favicons/...`） */
-  image?: string;
-  order?: number;
-}
-
-const CATEGORY_META: CategoryMeta[] = [
-  { slug: "tech", name: "技术", image: "", order: 1 },
-  { slug: "weekly", name: "周报", image: "", order: 2 },
-  { slug: "translation", name: "翻译", order: 3 },
-  { slug: "wiki", name: "知识库", order: 4 },
-  { slug: "life", name: "生活", order: 5 },
-];
-
-export function getCategoryMeta(nameOrSlug?: string): CategoryMeta | undefined {
-  if (!nameOrSlug) return undefined;
-
-  const key = trimUrlSegment(nameOrSlug);
-  return CATEGORY_META.find(
-    item => item.slug === key || item.name === nameOrSlug
-  );
-}
-
-export function getCategoryImageUrl(nameOrSlug?: string): string | undefined {
-  return getCategoryMeta(nameOrSlug)?.image;
-}
-
-export function getCategoryOrder(nameOrSlug?: string): number {
-  return getCategoryMeta(nameOrSlug)?.order ?? Number.MAX_SAFE_INTEGER;
-}
-
 // --- PostUtils ---
 
 export interface Tag {
   tag: string;
   tagName: string;
-  count: number;
-}
-
-export interface Category {
-  category: string;
-  categoryName: string;
   count: number;
 }
 
@@ -157,44 +116,9 @@ export class PostUtils {
     );
   }
 
-  static getUniqueCategories(posts: BlogLikeEntry[]): Category[] {
-    const catCountMap = new Map<string, Category>();
-
-    this.getPublishedPosts(posts)
-      .flatMap(post => post.data.categories)
-      .forEach(cat => {
-        const catKey = trimUrlSegment(cat);
-        const displayName = getCategoryMeta(cat)?.name ?? cat;
-
-        if (catCountMap.has(catKey)) {
-          const existing = catCountMap.get(catKey)!;
-          existing.count += 1;
-        } else {
-          catCountMap.set(catKey, {
-            category: catKey,
-            categoryName: displayName,
-            count: 1,
-          });
-        }
-      });
-
-    return Array.from(catCountMap.values()).sort((catA, catB) =>
-      catA.categoryName.localeCompare(catB.categoryName, "zh-CN")
-    );
-  }
-
   static getPostsByTag(posts: BlogLikeEntry[], tag: string): BlogLikeEntry[] {
     return this.sort(
       posts.filter(post => trimAll(post.data.tags).includes(tag))
-    );
-  }
-
-  static getPostsByCategory(
-    posts: BlogLikeEntry[],
-    category: string
-  ): BlogLikeEntry[] {
-    return this.sort(
-      posts.filter(post => trimAll(post.data.categories).includes(category))
     );
   }
 
@@ -442,11 +366,6 @@ function formatLinkLine(
 
 export function generateLlmsTxt(posts: BlogLikeEntry[]): string {
   const allPosts = PostUtils.sort(posts);
-  const categories = PostUtils.getUniqueCategories(posts).sort(
-    (a, b) =>
-      getCategoryOrder(a.category) - getCategoryOrder(b.category) ||
-      a.categoryName.localeCompare(b.categoryName, "zh-CN")
-  );
 
   const lines = [
     `# ${SITE.title}`,
@@ -456,14 +375,11 @@ export function generateLlmsTxt(posts: BlogLikeEntry[]): string {
     "## Site",
     formatLinkLine("Home", "/", "Main entry point"),
     formatLinkLine("About", "/about", "Author profile and site background"),
-    formatLinkLine("博客", "/posts", "全站内容时间线"),
+    formatLinkLine("博客", "/posts", "博客目录长文时间线（content/posts）"),
     formatLinkLine("周报", "/briefs", "Weekly notes listing"),
     formatLinkLine("翻译", "/translation", "Translated articles listing"),
     formatLinkLine("Wiki", "/wiki", "Wiki notes listing"),
-    formatLinkLine("Categories", "/categories", "Topic entry points"),
-    ...categories.map(category =>
-      formatLinkLine(category.categoryName, `/categories/${category.category}`)
-    ),
+    formatLinkLine("Tags", "/tags", "Tag index"),
     "",
     "## All entries",
     ...allPosts.map(formatPostLine),
@@ -476,7 +392,7 @@ export function generateLlmsTxt(posts: BlogLikeEntry[]): string {
     "## Notes For LLMs",
     "- Canonical article URLs use top-level prefixes: /posts/, /briefs/, /translation/, /wiki/ (match content type).",
     "- These pages are the primary source of truth; tag, archive, feed, and search pages are navigational.",
-    "- Category pages provide useful topical entry points, especially /categories/tech and /categories/weekly.",
+    "- Use /tags/ for topical browsing; there is no separate category taxonomy.",
   ];
 
   return `${lines.join("\n")}\n`;

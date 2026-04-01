@@ -1,102 +1,30 @@
 ---
 /**
- * 博客页（全站文章时间线）
- *
- * @fileoverview 博客页：按年分组展示全站内容；与 `/posts/{slug}` 等详情路由区分。
+ * 博客列表（content/posts 长文）
  */
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
 import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
-import TaxonomySummary from "@/components/TaxonomySummary.astro";
-import { getAllBlogLike } from "@/utils/contentCollections";
 
 export const pageSlug = "posts";
 export const pageTitle = `博客 | ${SITE.title}`;
 
-const sortedPosts = PostUtils.sort(await getAllBlogLike());
-
-const groupedByYear = PostUtils.groupBy(sortedPosts, item =>
-  new Date(item.data.updated ?? item.data.date).getFullYear()
-);
-
-const years = Object.keys(groupedByYear)
-  .map(y => Number(y))
-  .sort((a, b) => b - a);
-
-const yearsWithCounts = years.map(year => ({
-  year,
-  count: groupedByYear[year].length,
-}));
-
-const yearItems = yearsWithCounts.map(({ year, count }) => ({
-  href: `#year-${year}`,
-  label: String(year),
-  count,
-}));
+const sorted = PostUtils.sort(await getCollection("posts"));
 ---
 
-<Layout title={pageTitle} robots="noindex,follow">
+<Layout title={pageTitle}>
   <h1>博客</h1>
-  <section class="my-3 flex flex-col gap-2 md:my-0" aria-label="按年份跳转">
-    <TaxonomySummary class="my-0" title="年份" items={yearItems} />
-  </section>
+  <p class="mt-2 mb-6 text-sm leading-snug text-pretty text-muted">
+    技术、生活等发布在博客目录下的长文，按最近更新排序。
+  </p>
 
-  <section class="flex flex-col gap-8" aria-label="按年归档">
+  <ul class="post-cards-list m-0 list-none p-0" aria-label="博客列表">
     {
-      years.map(year => (
-        <div
-          class="scroll-mt-[calc(var(--site-header-sticky-offset)+0.35rem)] last:pb-[max(calc(var(--site-header-sticky-offset)+3rem),36rem)]"
-          id={`year-${year}`}
-          tabindex={-1}
-        >
-          <h2 class="mb-4 border-b border-border pb-2">
-            {year} ({groupedByYear[year].length})
-          </h2>
-          <ul class="post-cards-list m-0 list-none p-0">
-            {groupedByYear[year].map(post => (
-              <Card {...post} openInNewTab={false} dateFormat="absolute" />
-            ))}
-          </ul>
-        </div>
+      sorted.map(post => (
+        <Card openInNewTab={false} dateFormat="absolute" {...post} />
       ))
     }
-  </section>
+  </ul>
 </Layout>
-
-<script is:inline>
-  (() => {
-    const getAnchorOffset = () => {
-      const stickyOffset = getComputedStyle(document.documentElement)
-        .getPropertyValue("--site-header-sticky-offset")
-        .trim();
-      const parsed = Number.parseFloat(stickyOffset);
-      return Number.isFinite(parsed) ? parsed * 16 : 84;
-    };
-
-    const scrollToYearAnchor = () => {
-      const { hash } = window.location;
-      if (!hash.startsWith("#year-")) return;
-
-      const target = document.querySelector(hash);
-      if (!(target instanceof HTMLElement)) return;
-
-      const top =
-        window.scrollY + target.getBoundingClientRect().top - getAnchorOffset();
-      window.scrollTo({ top: Math.max(top, 0), behavior: "auto" });
-    };
-
-    const scheduleAnchorCorrection = () => {
-      scrollToYearAnchor();
-      setTimeout(scrollToYearAnchor, 0);
-      setTimeout(scrollToYearAnchor, 120);
-      setTimeout(scrollToYearAnchor, 360);
-    };
-
-    window.addEventListener("hashchange", scheduleAnchorCorrection);
-    window.addEventListener("load", scheduleAnchorCorrection, { once: true });
-    requestAnimationFrame(() =>
-      requestAnimationFrame(scheduleAnchorCorrection)
-    );
-  })();
-</script>

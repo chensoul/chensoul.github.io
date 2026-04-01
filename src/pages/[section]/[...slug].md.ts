@@ -1,6 +1,6 @@
 import type { GetStaticPaths, APIRoute } from "astro";
 import { SITE } from "@/config";
-import { getCategoryMeta, PostUtils } from "@/utils/postUtils";
+import { PostUtils } from "@/utils/postUtils";
 import type { BlogLikeEntry } from "@/utils/contentCollections";
 import { getAllBlogLike } from "@/utils/contentCollections";
 
@@ -49,12 +49,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute<Props> = ({ props }) => {
   const { post } = props;
-  const categories =
-    post.data.categories.length > 0
-      ? post.data.categories
-          .map(category => getCategoryMeta(category)?.name ?? category)
-          .join(", ")
-      : "Uncategorized";
   const tags = post.data.tags.length > 0 ? post.data.tags.join(", ") : "None";
   const description =
     post.data.description?.trim() || PostUtils.getDescription(post.body ?? "");
@@ -64,7 +58,6 @@ export const GET: APIRoute<Props> = ({ props }) => {
     "",
     `Canonical URL: ${getCanonicalUrl(post)}`,
     `Published At: ${new Date(post.data.date).toISOString()}`,
-    `Categories: ${categories}`,
     `Tags: ${tags}`,
     `Description: ${description}`,
     "",

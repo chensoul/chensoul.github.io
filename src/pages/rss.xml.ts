@@ -40,7 +40,7 @@ export async function GET() {
         ),
         title: data.title,
         description,
-        categories: data.categories,
+        categories: data.tags,
         pubDate: new Date(data.date),
       };
     }),

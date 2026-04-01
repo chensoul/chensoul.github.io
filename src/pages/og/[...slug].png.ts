@@ -1,7 +1,7 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 import { getAllBlogLike } from "@/utils/contentCollections";
 import { SITE } from "@/config";
-import { getCategoryOrder, PostUtils } from "@/utils/postUtils";
+import { PostUtils } from "@/utils/postUtils";
 import { generateOgImage } from "@/utils/og-image";
 
 interface StaticPageMetaModule {
@@ -21,11 +21,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const posts = PostUtils.getPublishedPosts(await getAllBlogLike());
   const articlePosts = posts.filter(post => post.data.date);
-  const categories = PostUtils.getUniqueCategories(posts).sort(
-    (a, b) =>
-      getCategoryOrder(a.category) - getCategoryOrder(b.category) ||
-      a.categoryName.localeCompare(b.categoryName, "zh-CN")
-  );
   const tags = PostUtils.getUniqueTags(posts).sort(
     (a, b) => b.count - a.count || a.tagName.localeCompare(b.tagName, "zh-CN")
   );
@@ -51,11 +46,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const pageEntries = [
     ...staticPages,
-    ...categories.map(category => ({
-      title: category.categoryName,
-      description: SITE.description,
-      slug: `categories/${category.category}`,
-    })),
     ...tags.map(tag => ({
       title: tag.tagName,
       description: SITE.description,
