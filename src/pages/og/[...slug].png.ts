@@ -1,5 +1,5 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { getAllBlogLike } from "@/utils/contentCollections";
 import { SITE } from "@/config";
 import { getCategoryOrder, PostUtils } from "@/utils/postUtils";
 import { generateOgImage } from "@/utils/og-image";
@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return [];
   }
 
-  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
+  const posts = PostUtils.getPublishedPosts(await getAllBlogLike());
   const articlePosts = posts.filter(post => post.data.date);
   const categories = PostUtils.getUniqueCategories(posts).sort(
     (a, b) =>
@@ -66,14 +66,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return [
     ...articlePosts.map(post => {
       const date = new Date(post.data.date);
-      const fullSlug = PostUtils.getPath(
+      const fullSlug = `${post.collection}/${PostUtils.getPath(
         post.id,
         post.filePath,
         false,
         post.data.date,
         post.data.timezone,
-        post.data.slug
-      );
+        post.data.slug,
+        post.collection
+      )}`;
       const author = (post.data as { author?: string }).author ?? SITE.author;
 
       return {

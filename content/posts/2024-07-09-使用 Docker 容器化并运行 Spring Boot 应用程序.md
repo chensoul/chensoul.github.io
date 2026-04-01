@@ -246,7 +246,7 @@ ENTRYPOINT [ "java", "-Dspring.profiles.active=postgres", "org.springframework.b
 services:
   server:
     build:
-      context: .
+      context: tech
       target: development
     ports:
       - 8080:8080

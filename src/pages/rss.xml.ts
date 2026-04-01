@@ -4,13 +4,13 @@
  * @fileoverview 生成 RSS 2.0：条目按 frontmatter `date` 发布时间降序（非 `updated`）；最近 10 篇；摘要见 <!-- more --> / PostUtils.getDescription。
  */
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
+import { getAllBlogLike } from "@/utils/contentCollections";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
 export async function GET() {
   const sortedPosts = PostUtils.sortByPublishedDate(
-    await getCollection("blog")
+    await getAllBlogLike()
   ).slice(0, 10);
 
   const iconUrl = `${SITE.website.replace(/\/$/, "")}/favicon.ico`;
@@ -25,7 +25,8 @@ export async function GET() {
     site: SITE.website,
     trailingSlash: false,
     customData: `<language>zh-CN</language><image><url>${iconUrl}</url><title>${titleEscaped}</title><link>${SITE.website}</link></image>`,
-    items: sortedPosts.map(({ data, id, body, filePath }) => {
+    items: sortedPosts.map(post => {
+      const { data, id, body, filePath } = post;
       const description = PostUtils.getDescription(body ?? "");
       return {
         link: PostUtils.getPath(
@@ -34,7 +35,8 @@ export async function GET() {
           true,
           data.date,
           data.timezone,
-          data.slug
+          data.slug,
+          post.collection
         ),
         title: data.title,
         description,

@@ -4,7 +4,7 @@
  *
  * @fileoverview 显示所有分类及其文章数量；支持懒加载分批展示。
  */
-import { getCollection } from "astro:content";
+import { getAllBlogLike } from "@/utils/contentCollections";
 import Layout from "@/layouts/Layout.astro";
 import {
   getCategoryImageUrl,
@@ -16,7 +16,7 @@ import { SITE } from "@/config";
 export const pageSlug = "categories";
 export const pageTitle = `分类 | ${SITE.title}`;
 
-const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
+const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
 const sortedPosts = PostUtils.sort(publishedPosts);
 
 const categories = PostUtils.getUniqueCategories(publishedPosts).sort(

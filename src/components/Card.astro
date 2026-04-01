@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { BlogLikeEntry } from "@/utils/contentCollections";
 import {
   formatFeedDate,
   getCategoryMeta,
@@ -13,7 +13,7 @@ import { siteImageHref } from "@/utils/blogImages";
 /**
  * 组件属性接口
  *
- * 扩展自 CollectionEntry<"blog">，包含文章的所有元数据
+ * 扩展自 {@link BlogLikeEntry}，包含文章的所有元数据
  *
  * @property openInNewTab - 标题链接是否新标签打开（默认 true）
  * @property itemClass - 额外的 CSS 类名
@@ -21,14 +21,14 @@ import { siteImageHref } from "@/utils/blogImages";
  * @property dateFormat - 日期显示格式：relative（相对时间）或 absolute（绝对时间 YYYY-MM-DD）
  * @property listKind - article：时间+分类链接；weekly：再加描述行；邻居订阅用 mode="feed"
  */
-interface BlogCardProps extends CollectionEntry<"blog"> {
+type BlogCardProps = BlogLikeEntry & {
   mode?: "post";
   openInNewTab?: boolean;
   listKind?: "article" | "weekly";
   itemClass?: string;
   hidden?: boolean;
   dateFormat?: "relative" | "absolute";
-}
+};
 
 interface FeedCardProps {
   mode: "feed";
@@ -57,6 +57,7 @@ const dateFormat = !isFeedCard
 const data = !isFeedCard ? blogProps.data : undefined;
 const id = !isFeedCard ? blogProps.id : undefined;
 const filePath = !isFeedCard ? blogProps.filePath : undefined;
+const collection = !isFeedCard ? blogProps.collection : undefined;
 
 const title = isFeedCard ? feedProps.title : data!.title;
 const date = !isFeedCard ? data!.date : undefined;
@@ -193,7 +194,8 @@ if (isFeedCard) {
                 true,
                 date!,
                 timezone,
-                data?.slug
+                data?.slug,
+                collection!
               )}
               target={openInNewTab ? "_blank" : undefined}
               rel={openInNewTab ? "noopener noreferrer" : undefined}

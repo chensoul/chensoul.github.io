@@ -7,7 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import type { CollectionEntry } from "astro:content";
+import type { BlogLikeCollection, BlogLikeEntry } from "@/utils/contentCollections";
 
 import { SITE } from "@/config";
 
@@ -102,20 +102,18 @@ interface GroupFunction<T> {
 }
 
 export class PostUtils {
-  static filter(post: CollectionEntry<"blog">): boolean {
+  static filter(post: BlogLikeEntry): boolean {
     const { data } = post;
     const isPublishTimePassed =
       Date.now() > new Date(data.date).getTime() - SITE.scheduledPostMargin;
     return !data.draft && (import.meta.env.DEV || isPublishTimePassed);
   }
 
-  static getPublishedPosts(
-    posts: CollectionEntry<"blog">[]
-  ): CollectionEntry<"blog">[] {
+  static getPublishedPosts(posts: BlogLikeEntry[]): BlogLikeEntry[] {
     return posts.filter(this.filter);
   }
 
-  static sort(posts: CollectionEntry<"blog">[]): CollectionEntry<"blog">[] {
+  static sort(posts: BlogLikeEntry[]): BlogLikeEntry[] {
     return this.getPublishedPosts(posts).sort(
       (a, b) =>
         Math.floor(new Date(b.data.updated ?? b.data.date).getTime() / 1000) -
@@ -127,16 +125,14 @@ export class PostUtils {
    * 按发布时间 `date` 降序（不使用 `updated`），与文章列表「最近更新」逻辑区分。
    * 用于 RSS 等需与 `pubDate` 一致的排序。
    */
-  static sortByPublishedDate(
-    posts: CollectionEntry<"blog">[]
-  ): CollectionEntry<"blog">[] {
+  static sortByPublishedDate(posts: BlogLikeEntry[]): BlogLikeEntry[] {
     return this.getPublishedPosts(posts).sort(
       (a, b) =>
         new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
     );
   }
 
-  static getUniqueTags(posts: CollectionEntry<"blog">[]): Tag[] {
+  static getUniqueTags(posts: BlogLikeEntry[]): Tag[] {
     const tagCountMap = new Map<string, Tag>();
 
     this.getPublishedPosts(posts)
@@ -161,7 +157,7 @@ export class PostUtils {
     );
   }
 
-  static getUniqueCategories(posts: CollectionEntry<"blog">[]): Category[] {
+  static getUniqueCategories(posts: BlogLikeEntry[]): Category[] {
     const catCountMap = new Map<string, Category>();
 
     this.getPublishedPosts(posts)
@@ -187,29 +183,26 @@ export class PostUtils {
     );
   }
 
-  static getPostsByTag(
-    posts: CollectionEntry<"blog">[],
-    tag: string
-  ): CollectionEntry<"blog">[] {
+  static getPostsByTag(posts: BlogLikeEntry[], tag: string): BlogLikeEntry[] {
     return this.sort(
       posts.filter(post => trimAll(post.data.tags).includes(tag))
     );
   }
 
   static getPostsByCategory(
-    posts: CollectionEntry<"blog">[],
+    posts: BlogLikeEntry[],
     category: string
-  ): CollectionEntry<"blog">[] {
+  ): BlogLikeEntry[] {
     return this.sort(
       posts.filter(post => trimAll(post.data.categories).includes(category))
     );
   }
 
   static groupBy(
-    posts: CollectionEntry<"blog">[],
-    groupFunction: GroupFunction<CollectionEntry<"blog">>
-  ): Record<GroupKey, CollectionEntry<"blog">[]> {
-    const result: Record<GroupKey, CollectionEntry<"blog">[]> = {};
+    posts: BlogLikeEntry[],
+    groupFunction: GroupFunction<BlogLikeEntry>
+  ): Record<GroupKey, BlogLikeEntry[]> {
+    const result: Record<GroupKey, BlogLikeEntry[]> = {};
 
     for (let i = 0; i < posts.length; i++) {
       const item = posts[i];
@@ -243,11 +236,12 @@ export class PostUtils {
   }
 
   /**
-   * 文章 URL：`/posts/{slug}`。frontmatter `slug` 按元数据原样使用（仅 trim）；未指定时由文件名去掉 `YYYY-MM-DD-` 前缀，整段再 trim（不作 kebab-case）。
+   * 文章 URL：`/{collection}/{slug}`（如 `/posts/...`、`/briefs/...`）。frontmatter `slug` 按元数据原样使用（仅 trim）；未指定时由文件名去掉 `YYYY-MM-DD-` 前缀，整段再 trim（不作 kebab-case）。
    *
    * @param explicitSlug - frontmatter `slug`
    * @param _date - 保留参数（排序/展示仍用）；不再参与 URL，避免破坏既有调用签名
    * @param _timeZone - 同上
+   * @param collection - 内容集合名，与 URL 首段一致
    */
   static getPath(
     id: string,
@@ -255,9 +249,10 @@ export class PostUtils {
     includeBase = true,
     _date?: Date,
     _timeZone?: string,
-    explicitSlug?: string | null
+    explicitSlug?: string | null,
+    collection: BlogLikeCollection = "posts"
   ): string {
-    const basePath = includeBase ? "/posts" : "";
+    const basePath = includeBase ? `/${collection}` : "";
     const blogId = id.split("/");
     const fileName = blogId.length > 0 ? blogId.slice(-1)[0] : id;
     let slug = fileName.replace(/\.(md|mdx)$/, "").trim();
@@ -284,7 +279,8 @@ export class PostUtils {
     filePath: string | undefined,
     date?: Date,
     timeZone?: string,
-    explicitSlug?: string | null
+    explicitSlug?: string | null,
+    collection: BlogLikeCollection = "posts"
   ): string {
     const pathNoPosts = PostUtils.getPath(
       id,
@@ -292,7 +288,8 @@ export class PostUtils {
       false,
       date,
       timeZone,
-      explicitSlug
+      explicitSlug,
+      collection
     );
     const segments = pathNoPosts.split("/").filter(Boolean);
     return segments[segments.length - 1] ?? "post";
@@ -408,19 +405,20 @@ function toAbsoluteUrl(path: string): string {
   return new URL(path, SITE.website).toString();
 }
 
-function getPostMarkdownUrl(post: CollectionEntry<"blog">): string {
+function getPostMarkdownUrl(post: BlogLikeEntry): string {
   const slugPath = PostUtils.getPath(
     post.id,
     post.filePath,
     false,
     post.data.date,
     post.data.timezone,
-    post.data.slug
+    post.data.slug,
+    post.collection
   );
-  return toAbsoluteUrl(`/posts/${slugPath}.md`);
+  return toAbsoluteUrl(`/${post.collection}/${slugPath}.md`);
 }
 
-function getPostDescription(post: CollectionEntry<"blog">): string {
+function getPostDescription(post: BlogLikeEntry): string {
   return (
     post.data.description?.trim() ||
     PostUtils.getDescription(post.body ?? "")
@@ -429,7 +427,7 @@ function getPostDescription(post: CollectionEntry<"blog">): string {
   );
 }
 
-function formatPostLine(post: CollectionEntry<"blog">): string {
+function formatPostLine(post: BlogLikeEntry): string {
   return `- [${post.data.title}](${getPostMarkdownUrl(post)}): ${getPostDescription(post)}`;
 }
 
@@ -442,7 +440,7 @@ function formatLinkLine(
   return description ? `- ${link}: ${description}` : `- ${link}`;
 }
 
-export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
+export function generateLlmsTxt(posts: BlogLikeEntry[]): string {
   const allPosts = PostUtils.sort(posts);
   const categories = PostUtils.getUniqueCategories(posts).sort(
     (a, b) =>
@@ -458,13 +456,16 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
     "## Site",
     formatLinkLine("Home", "/", "Main entry point"),
     formatLinkLine("About", "/about", "Author profile and site background"),
-    formatLinkLine("Posts", "/posts", "All canonical articles"),
+    formatLinkLine("博客", "/posts", "全站内容时间线"),
+    formatLinkLine("周报", "/briefs", "Weekly notes listing"),
+    formatLinkLine("翻译", "/translation", "Translated articles listing"),
+    formatLinkLine("Wiki", "/wiki", "Wiki notes listing"),
     formatLinkLine("Categories", "/categories", "Topic entry points"),
     ...categories.map(category =>
       formatLinkLine(category.categoryName, `/categories/${category.category}`)
     ),
     "",
-    "## All Posts",
+    "## All entries",
     ...allPosts.map(formatPostLine),
     "",
     "## Feeds",
@@ -473,8 +474,8 @@ export function generateLlmsTxt(posts: CollectionEntry<"blog">[]): string {
     formatLinkLine("Robots", "/robots.txt"),
     "",
     "## Notes For LLMs",
-    "- Prefer canonical post URLs under /posts/.",
-    "- Posts are the primary source of truth; tag, archive, feed, and search pages are navigational.",
+    "- Canonical article URLs use top-level prefixes: /posts/, /briefs/, /translation/, /wiki/ (match content type).",
+    "- These pages are the primary source of truth; tag, archive, feed, and search pages are navigational.",
     "- Category pages provide useful topical entry points, especially /categories/tech and /categories/weekly.",
   ];
 

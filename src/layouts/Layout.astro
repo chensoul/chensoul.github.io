@@ -62,7 +62,9 @@ const canonicalHref = String(canonicalURL);
 const isArticlePage = Boolean(pubDatetime);
 const isHomePage = pathname === "/";
 const isCollectionPage =
-  /^\/(posts|archives|categories|tags)(\/|$)/.test(pathname);
+  /^\/(posts|briefs|translation|wiki|archives|categories|tags)(\/|$)/.test(
+    pathname
+  );
 const ogType = isArticlePage ? "article" : "website";
 const defaultSchemaType = isArticlePage
   ? "BlogPosting"
@@ -90,9 +92,7 @@ const pathForOg = pathname.replace(/^\/+/, "").replace(/\/+$/, "");
 const defaultOgFromUrl =
   pathname === "/" || pathForOg === ""
     ? "/og/index.png"
-    : pathForOg.startsWith("posts/")
-      ? `/og/${pathForOg.slice("posts/".length)}.png`
-      : `/og/${pathForOg}.png`;
+    : `/og/${pathForOg}.png`;
 
 const defaultOgImage = useDynamicOg ? defaultOgFromUrl : staticDefaultOgRef;
 const ogImage = devLocalImageRef(ogImageProp ?? defaultOgImage);
