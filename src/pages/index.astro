@@ -4,7 +4,7 @@
  *
  * @fileoverview 聚合站点入口：首屏双栏为最近周报（左/上）与最近文章（右/下）；最近文章不含周报分类。
  */
-import { getCollection } from "astro:content";
+import { getAllBlogLike } from "@/utils/contentCollections";
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
 import { PostUtils, trimUrlSegment } from "@/utils/postUtils";
@@ -15,7 +15,7 @@ export const pageSlug = "index";
 export const pageTitle = SITE.title;
 export const pageDescription = SITE.description;
 
-const publishedPosts = PostUtils.getPublishedPosts(await getCollection("blog"));
+const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
 const sortedPosts = PostUtils.sort(publishedPosts);
 
 const latestPosts = sortedPosts
@@ -53,10 +53,7 @@ const lifePosts = PostUtils.getPostsByCategory(sortedPosts, "weekly").slice(
         <h3 class="mt-0 mb-1">最近周报</h3>
         <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
           记录每周开发进展、工具尝试和一些阶段性想法。
-          <a
-            href="/categories/weekly"
-            class="text-accent no-underline hover:underline"
-          >
+          <a href="/briefs" class="text-accent no-underline hover:underline">
             查看全部
           </a>
         </p>

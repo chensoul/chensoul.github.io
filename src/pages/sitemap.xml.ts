@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import { getAllBlogLike } from "@/utils/contentCollections";
 import { SITE } from "@/config";
 import { PostUtils } from "@/utils/postUtils";
 
@@ -17,7 +17,7 @@ function formatLastmod(value: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const posts = PostUtils.getPublishedPosts(await getCollection("blog"));
+  const posts = PostUtils.getPublishedPosts(await getAllBlogLike());
   const sortedPosts = PostUtils.sort(posts);
   const categories = PostUtils.getUniqueCategories(posts);
   const tags = PostUtils.getUniqueTags(posts);
@@ -33,6 +33,9 @@ export const GET: APIRoute = async () => {
     { path: "/about", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/links", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/posts", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/briefs", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/translation", lastmod: latestPostUpdatedAt, priority: "0.80" },
+    { path: "/wiki", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/categories", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/tags", lastmod: latestPostUpdatedAt, priority: "0.80" },
     { path: "/search", lastmod: latestPostUpdatedAt, priority: "0.64" },
@@ -82,7 +85,8 @@ export const GET: APIRoute = async () => {
       true,
       post.data.date,
       post.data.timezone,
-      post.data.slug
+      post.data.slug,
+      post.collection
     ),
     lastmod: new Date(post.data.updated ?? post.data.date).toISOString(),
     priority: "0.64",

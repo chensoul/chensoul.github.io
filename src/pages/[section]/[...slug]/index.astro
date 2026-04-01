@@ -1,0 +1,38 @@
+---
+/**
+ * 文章详情：四类内容共用路由，URL 为 `/{section}/{slug}`。
+ */
+import type { GetStaticPaths } from "astro";
+import PostDetails from "@/layouts/PostDetails.astro";
+import { PostUtils } from "@/utils/postUtils";
+import { getAllBlogLike } from "@/utils/contentCollections";
+
+export interface Props {
+  post: import("@/utils/contentCollections").BlogLikeEntry;
+}
+
+export const getStaticPaths = (async () => {
+  const posts = PostUtils.getPublishedPosts(await getAllBlogLike());
+
+  return posts.map(post => ({
+    params: {
+      section: post.collection,
+      slug: PostUtils.getPath(
+        post.id,
+        post.filePath,
+        false,
+        post.data.date,
+        post.data.timezone,
+        post.data.slug,
+        post.collection
+      ),
+    },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const allSorted = PostUtils.sort(await getAllBlogLike());
+---
+
+<PostDetails post={post} posts={allSorted} />

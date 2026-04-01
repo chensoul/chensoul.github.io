@@ -4,7 +4,8 @@
  *
  * @fileoverview 渲染单篇文章：标题、元数据、正文（Content）、前后篇导航、标签列表，以及按 frontmatter 控制的评论/数学公式等功能。canonical 等元信息由本布局传给 Layout。
  */
-import { render, type CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import type { BlogLikeEntry } from "@/utils/contentCollections";
 import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
@@ -19,8 +20,8 @@ import { CDN_KATEX_STYLESHEET, SITE } from "@/config";
 import { siteImageHref } from "@/utils/blogImages";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
-  posts: CollectionEntry<"blog">[];
+  post: BlogLikeEntry;
+  posts: BlogLikeEntry[];
 }
 
 const { post, posts } = Astro.props;
@@ -45,7 +46,8 @@ const imageDirName = PostUtils.getPostImageDirName(
   post.filePath,
   date,
   post.data.timezone,
-  post.data.slug ?? null
+  post.data.slug ?? null,
+  post.collection
 );
 const bannerPath = PostUtils.resolveBlogImageRef(bannerRaw, imageDirName);
 const faviconPath = PostUtils.resolveFaviconRef(post.data.favicon);
@@ -110,7 +112,7 @@ const categoryLinks = categories.map(category => ({
 }));
 const breadcrumbItems = [
   { name: "首页", item: SITE.website },
-  { name: "文章", item: new URL("/posts", SITE.website).toString() },
+  { name: "博客", item: new URL("/posts", SITE.website).toString() },
   ...(primaryCategory
     ? [
         {
@@ -142,8 +144,13 @@ const layoutProps = {
 
 /* ========== Prev/Next Posts ========== */
 const allPosts = posts.map(
-  ({ data: { title, date, timezone, slug }, id, filePath }) => ({
-    path: PostUtils.getPath(id, filePath, true, date, timezone, slug),
+  ({
+    data: { title, date, timezone, slug },
+    id,
+    filePath,
+    collection,
+  }) => ({
+    path: PostUtils.getPath(id, filePath, true, date, timezone, slug, collection),
     title,
   })
 );
@@ -154,7 +161,8 @@ const currentPostPath = PostUtils.getPath(
   true,
   post.data.date,
   post.data.timezone,
-  post.data.slug
+  post.data.slug,
+  post.collection
 );
 
 const canonicalHref =
@@ -194,7 +202,8 @@ const scoredRelatedPosts = posts
         true,
         candidate.data.date,
         candidate.data.timezone,
-        candidate.data.slug
+        candidate.data.slug,
+        candidate.collection
       ),
     };
   })
@@ -312,7 +321,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
       >
         <a href="/">首页</a>
         <span class="mx-1.5 opacity-60" aria-hidden="true">/</span>
-        <a href="/posts">文章</a>
+        <a href="/posts">博客</a>
         {
           primaryCategory && (
             <>

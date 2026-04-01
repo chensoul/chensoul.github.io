@@ -1,0 +1,35 @@
+---
+/**
+ * 周报列表
+ */
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Card from "@/components/Card.astro";
+import { SITE } from "@/config";
+import { PostUtils } from "@/utils/postUtils";
+
+export const pageSlug = "briefs";
+export const pageTitle = `周报 | ${SITE.title}`;
+
+const sorted = PostUtils.sort(await getCollection("briefs"));
+---
+
+<Layout title={pageTitle}>
+  <h1>周报</h1>
+  <p class="mt-2 mb-6 text-sm leading-snug text-pretty text-muted">
+    每周开发进展、工具尝试与阶段性想法。
+  </p>
+
+  <ul class="post-cards-list m-0 list-none p-0" aria-label="周报列表">
+    {
+      sorted.map(post => (
+        <Card
+          openInNewTab={false}
+          listKind="weekly"
+          dateFormat="absolute"
+          {...post}
+        />
+      ))
+    }
+  </ul>
+</Layout>
