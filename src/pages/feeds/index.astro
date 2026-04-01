@@ -23,8 +23,7 @@ let feedItems: Array<{
   published: string;
   name?: string;
   blog_name?: string;
-  category?: string | null;
-  avatar?: string;
+  favicon?: string | null;
 }> = [];
 if (feedsEnabled) {
   try {
@@ -71,7 +70,7 @@ const pageDescription = feedsEnabled
                 link={item.link}
                 published={item.published}
                 blogName={item.name ?? item.blog_name}
-                avatar={item.avatar}
+                favicon={item.favicon}
               />
             ))}
           </ul>

@@ -23,8 +23,8 @@ jobs:
         with:
           sources: public/data/rss.txt
           output: public/data/feeds.json
-          avatar-dir: public/feeds
-          avatar-public-prefix: /feeds
+          favicon-dir: public/feeds
+          favicon-public-prefix: /feeds
 
       - name: sync images to R2
         env:

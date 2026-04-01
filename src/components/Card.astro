@@ -31,7 +31,7 @@ interface FeedCardProps {
   link: string;
   published: string;
   blogName?: string;
-  avatar?: string;
+  favicon?: string;
 }
 
 export type Props = BlogCardProps | FeedCardProps;
@@ -80,7 +80,7 @@ const articleListTime =
 
 let avatarSrc = "";
 if (isFeedCard) {
-  avatarSrc = feedProps.avatar?.trim() || SITE.feeds.fallbackAvatarUrl || "";
+  avatarSrc = feedProps.favicon?.trim() || SITE.feeds.fallbackAvatarUrl || "";
   if (
     avatarSrc &&
     !/^https?:\/\//.test(avatarSrc) &&
