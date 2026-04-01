@@ -2,7 +2,7 @@
 /**
  * 首页
  *
- * @fileoverview 聚合站点入口：最近博客仅 `posts` 集合；最近周报仅 `briefs` 集合。
+ * @fileoverview 四宫格：最近博客、最近周报、最近翻译、最近 Wiki（各取自对应集合）。
  */
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
@@ -15,49 +15,154 @@ export const pageSlug = "index";
 export const pageTitle = SITE.title;
 export const pageDescription = SITE.description;
 
-const latestPosts = PostUtils.sort(await getCollection("posts")).slice(
-  0,
-  SITE.postPerIndex
-);
+const n = SITE.postPerIndex;
+
+const latestPosts = PostUtils.sort(await getCollection("posts")).slice(0, n);
 const lifePosts = PostUtils.sort(await getCollection("briefs")).slice(0, 6);
+const latestTranslation = PostUtils.sort(
+  await getCollection("translation")
+).slice(0, n);
+const latestWiki = PostUtils.sort(await getCollection("wiki")).slice(0, n);
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
   <section
-    class="flex w-full min-w-0 flex-col gap-12 md:flex-row md:items-start md:gap-x-8 md:gap-y-0 lg:gap-x-10"
+    class="home-index home-index--grid grid w-full min-w-0 grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-8 md:gap-y-7 lg:gap-x-10 lg:gap-y-1"
   >
-    <div class="min-w-0 md:basis-[52%] lg:basis-[52%]">
-      <header class="mb-2.5">
-        <h3 class="mt-0 mb-1">最近博客</h3>
-        <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
+    <div class="min-w-0">
+      <header class="mb-1.5">
+        <h3 class="mt-0 mb-0.5 text-base">最近博客</h3>
+        <p class="mt-0.5 mb-0 text-sm leading-snug text-pretty text-muted">
           仅包含发布在博客目录下的长文（技术、生活等）。
           <a href="/posts" class="text-accent no-underline hover:underline">
-            查看全部
+            全部博客
           </a>
         </p>
       </header>
-      <ul class="post-cards-list m-0 list-none p-0">
+      <ul class="home-index__cards post-cards-list m-0 list-none p-0">
         {latestPosts.map(post => <Card openInNewTab={false} {...post} />)}
       </ul>
     </div>
 
-    <aside class="min-w-0 md:basis-[48%] lg:basis-[48%]">
-      <header class="mb-2.5">
-        <h3 class="mt-0 mb-1">最近周报</h3>
-        <p class="mt-1 mb-0 text-sm leading-snug text-pretty text-muted">
+    <div class="min-w-0">
+      <header class="mb-1.5">
+        <h3 class="mt-0 mb-0.5 text-base">最近周报</h3>
+        <p class="mt-0.5 mb-0 text-sm leading-snug text-pretty text-muted">
           记录每周开发进展、工具尝试和一些阶段性想法。
           <a href="/briefs" class="text-accent no-underline hover:underline">
-            查看全部
+            全部周报
           </a>
         </p>
       </header>
-      <ul class="post-cards-list m-0 list-none p-0">
+      <ul class="home-index__cards post-cards-list m-0 list-none p-0">
         {
           lifePosts.map(post => (
             <Card openInNewTab={false} listKind="weekly" {...post} />
           ))
         }
       </ul>
-    </aside>
+    </div>
+
+    <div class="min-w-0">
+      <header class="mb-1.5">
+        <h3 class="mt-0 mb-0.5 text-base">最近翻译</h3>
+        <p class="mt-0.5 mb-0 text-sm leading-snug text-pretty text-muted">
+          外文技术文章的译文与笔记。
+          <a
+            href="/translation"
+            class="text-accent no-underline hover:underline"
+          >
+            全部翻译
+          </a>
+        </p>
+      </header>
+      <ul class="home-index__cards post-cards-list m-0 list-none p-0">
+        {
+          latestTranslation.map(post => (
+            <Card openInNewTab={false} dateFormat="absolute" {...post} />
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="min-w-0">
+      <header class="mb-1.5">
+        <h3 class="mt-0 mb-0.5 text-base">最近 Wiki</h3>
+        <p class="mt-0.5 mb-0 text-sm leading-snug text-pretty text-muted">
+          主题索引与长期维护的笔记条目。
+          <a href="/wiki" class="text-accent no-underline hover:underline">
+            全部 Wiki
+          </a>
+        </p>
+      </header>
+      <ul class="home-index__cards post-cards-list m-0 list-none p-0">
+        {
+          latestWiki.map(post => (
+            <Card openInNewTab={false} dateFormat="absolute" {...post} />
+          ))
+        }
+      </ul>
+    </div>
   </section>
 </Layout>
+
+<style is:global>
+  /* 首页四栏：列表与卡片行高收紧，仅作用于 .home-index 内 */
+  .home-index__cards.post-cards-list {
+    gap: 0;
+  }
+
+  .home-index .pcard {
+    --pcard-thumb-size: 36px;
+    --pcard-title-size: 0.84rem;
+    --pcard-padding-y: 0.1rem;
+  }
+
+  .home-index .pcard-inner {
+    gap: 0.45rem;
+    padding-top: 0.12rem;
+    padding-bottom: 0.12rem;
+  }
+
+  .home-index .pcard-inner > img {
+    width: var(--pcard-thumb-size);
+    min-width: var(--pcard-thumb-size);
+    height: var(--pcard-thumb-size);
+    flex-basis: var(--pcard-thumb-size);
+  }
+
+  .home-index .pcard--article .pcard-inner {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    gap: 0.48rem;
+    min-height: 0;
+  }
+
+  .home-index .pcard--article .pcard-title {
+    margin-bottom: 0.06rem;
+  }
+
+  .home-index .pcard--weekly .pcard-inner {
+    padding-top: 0.18rem;
+    padding-bottom: 0.18rem;
+  }
+
+  .home-index .pcard--weekly .pcard-desc {
+    margin-top: 0.08rem;
+  }
+
+  @media (max-width: 640px) {
+    .home-index .pcard {
+      --pcard-thumb-size: 34px;
+    }
+
+    .home-index .pcard-inner {
+      gap: 0.5rem;
+    }
+
+    .home-index .pcard--article .pcard-inner {
+      padding-top: 0.22rem;
+      padding-bottom: 0.22rem;
+    }
+  }
+</style>

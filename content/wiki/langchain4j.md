@@ -1,5 +1,5 @@
 ---
-title: "Wiki 笔记｜Langchain4j"
+title: "Langchain4j"
 date: 2026-03-11 10:30:00+08:00
 slug: "langchain4j"
 tags: ['langchain4j']

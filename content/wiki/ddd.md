@@ -1,5 +1,5 @@
 ---
-title: "Wiki 笔记｜DDD"
+title: "DDD"
 date: 2026-03-11 10:30:00+08:00
 slug: "ddd"
 tags: ['ddd']

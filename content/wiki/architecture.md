@@ -1,5 +1,5 @@
 ---
-title: "Wiki 笔记｜Architecture"
+title: "Architecture"
 date: 2026-03-11 10:30:00+08:00
 slug: "architecture"
 tags: ['architecture']

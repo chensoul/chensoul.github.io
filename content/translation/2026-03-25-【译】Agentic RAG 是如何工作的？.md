@@ -7,6 +7,7 @@ categories: [ "translation" ]
 tags: [ "agentic-rag", "rag", "llm" ]
 description: "这篇文章介绍了 Agentic RAG 如何把标准 RAG 的单次检索流程改造成带反馈的控制循环，并分析了它在复杂查询场景下的优势、成本与适用边界。"
 canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
+favicon: "ai.svg"
 ---
 
 > 本文为学习目的的个人翻译，译文及后文「译者总结」仅供参考。

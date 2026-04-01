@@ -1,5 +1,5 @@
 ---
-title: "Wiki 笔记｜Github"
+title: "Github"
 date: 2026-03-11 10:30:00+08:00
 slug: "github"
 tags: ['github']
