@@ -154,7 +154,7 @@ export const SITE = {
     navLabel: "聚合",
     /** 聚合 JSON 路径（CI 写入；页面构建时读取） */
     dataSourceUrl: "/data/feeds.json",
-    /** 无头像时使用的默认图（根相对，对应 `public/images/_favicons/rss.svg`） */
-    fallbackAvatarUrl: "/images/_favicons/rss.svg",
+    /** 无头像时使用的默认图（根相对，对应 `public/favicons/rss.svg`） */
+    fallbackAvatarUrl: "/favicons/rss.svg",
   },
 } as const;

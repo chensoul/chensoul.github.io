@@ -62,15 +62,11 @@ const bannerSrc = bannerPath
     : siteImageHref(bannerPath.startsWith("/") ? bannerPath : `/${bannerPath}`)
   : undefined;
 
-/** OG / JSON-LD：优先横幅图；否则若 `favicon` 为 `/images/` 且非 `_favicons/` 则用其作分享图 */
+/** OG / JSON-LD：优先横幅图；否则若 `favicon` 为文章配图类 `/images/...`（非列表小图标路径）则用其作分享图 */
 let articleOgImage: string | undefined;
 if (bannerPath) {
   articleOgImage = bannerSrc;
-} else if (
-  faviconPath &&
-  /^\/images\//.test(faviconPath) &&
-  !/\/images\/_favicons\//.test(faviconPath)
-) {
+} else if (faviconPath && /^\/images\//.test(faviconPath)) {
   articleOgImage = siteImageHref(faviconPath);
 }
 let ogImageAltForLayout: string | undefined;

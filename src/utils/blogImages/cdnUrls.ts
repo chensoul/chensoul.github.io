@@ -56,16 +56,23 @@ export function devLocalImageRef(href: string): string {
   return t;
 }
 
-/** `<img src>` 等：外链原样；`/images/...` 在生产改为 CDN 绝对 URL */
+/** `<img src>` 等：外链原样；`/images/`、`/favicons/`、`/feeds/` 在生产改为 CDN 绝对 URL */
 export function siteImageHref(pathOrUrl: string): string {
   const t = (pathOrUrl ?? "").trim();
   if (!t) return t;
   if (/^https?:\/\//i.test(t) || t.startsWith("//")) return t;
   const path = t.startsWith("/") ? t : `/${t}`;
-  if (!shouldUseCdnForPublicImagePaths() || !path.startsWith("/images/")) {
+  if (!shouldUseCdnForPublicImagePaths()) {
     return path;
   }
-  return `${normalizeCdnOrigin()}${path}`;
+  if (
+    path.startsWith("/images/") ||
+    path.startsWith("/favicons/") ||
+    path.startsWith("/feeds/")
+  ) {
+    return `${normalizeCdnOrigin()}${path}`;
+  }
+  return path;
 }
 
 /** OG / JSON-LD：绝对 URL；`/images/...` 在 dev 用 siteOrigin，prod 用 CDN */
@@ -77,7 +84,11 @@ export function publicImageAbsoluteUrl(
   if (!t) return "";
   if (/^https?:\/\//i.test(t)) return t;
   const path = t.startsWith("/") ? t : `/${t}`;
-  if (path.startsWith("/images/")) {
+  if (
+    path.startsWith("/images/") ||
+    path.startsWith("/favicons/") ||
+    path.startsWith("/feeds/")
+  ) {
     if (!shouldUseCdnForPublicImagePaths()) {
       return new URL(path, siteOrigin).href;
     }

@@ -23,10 +23,10 @@ jobs:
         with:
           sources: public/data/rss.txt
           output: public/data/feeds.json
-          avatar-dir: public/images/_favicons
-          avatar-public-prefix: /images/_favicons
+          avatar-dir: public/feeds
+          avatar-public-prefix: /feeds
 
-      - name: sync images (incl. favicons) to R2
+      - name: sync images to R2
         env:
           RCLONE_CONFIG_R2_TYPE: s3
           RCLONE_CONFIG_R2_PROVIDER: Cloudflare
@@ -36,6 +36,8 @@ jobs:
         run: |
           curl -OfsS https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip -oq rclone-current-linux-amd64.zip && mv rclone-*-linux-amd64/rclone /usr/local/bin/ && chmod +x /usr/local/bin/rclone
           rclone sync public/images r2:cos/images -P
+          rclone sync public/favicons r2:cos/favicons -P
+          rclone sync public/feeds r2:cos/feeds -P
           rm -rf rclone-*
 
       - name: Commit and push

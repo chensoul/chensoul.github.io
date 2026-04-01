@@ -17,8 +17,8 @@ import { siteImageHref } from "@/utils/blogImages";
 
 // --- 描述提取（Markdown → 纯文本摘要）---
 
-/** 列表 favicon 无分类或回退（`public/images/_favicons/blank.svg`） */
-const FAVICON_BLANK_PATH = "/images/_favicons/blank.svg";
+/** 列表 favicon 无分类或回退（`public/favicons/blank.svg`） */
+const FAVICON_BLANK_PATH = "/favicons/blank.svg";
 
 /** 匹配 `<!-- more -->` 之前的内容，捕获组 $1 为摘要 */
 const tagMoreRegex = /^(.*?)<!--\s*more\s*-->/s;
@@ -255,31 +255,27 @@ export class PostUtils {
   }
 
   /**
-   * 列表卡片用站点/分类图标：`public/images/_favicons/`。
+   * 列表卡片用站点/分类图标：`public/favicons/`。
    *
    * - `http(s)://...`：原样
-   * - 以 `/` 开头：根相对原样；`/images/_thumbnails/` 历史路径会改为 `/images/_favicons/`
-   * - 否则视为 `_favicons` 内文件名（可含子路径段），解析为 `/images/_favicons/{ref}`
+   * - 否则视为 `favicons` 内文件名（可含子路径段），解析为 `/favicons/{ref}`
    */
   static resolveFaviconRef(raw: string | undefined | null): string | undefined {
     const t = typeof raw === "string" ? raw.trim() : "";
     if (!t) return undefined;
     if (PostUtils.isHttpUrl(t)) return t;
     if (t.startsWith("/")) {
-      if (t.startsWith("/images/_thumbnails/")) {
-        return t.replace(/^\/images\/_thumbnails\//, "/images/_favicons/");
-      }
       return t;
     }
     const rel = t.replace(/\\/g, "/").replace(/^(\.\/)+/, "");
     if (!rel || rel.split("/").some(s => s === ".." || s === "")) {
       return undefined;
     }
-    return `/images/_favicons/${rel}`;
+    return `/favicons/${rel}`;
   }
 
   /**
-   * 根相对路径（如 `/images/_favicons/x.svg`）是否在仓库 `public/` 下存在对应文件（构建时 `fs` 校验）。
+   * 根相对路径（如 `/favicons/x.svg`）是否在仓库 `public/` 下存在对应文件（构建时 `fs` 校验）。
    */
   static publicRootFileExists(rootRelative: string): boolean {
     const t = rootRelative.trim();
@@ -297,8 +293,8 @@ export class PostUtils {
   }
 
   /**
-   * 文章列表/详情：`favicon` 优先（外链或站内且 `public/` 存在）；否则首个有效 `categories` 对应 `/images/_favicons/{slug}.svg`；
-   * **未设置分类或全部为空** → `/images/_favicons/blank.svg`；分类 svg 不存在则回退 `blank.svg`。
+   * 文章列表/详情：`favicon` 优先（外链或站内且 `public/` 存在）；否则首个有效 `categories` 对应 `/favicons/{slug}.svg`；
+   * **未设置分类或全部为空** → `/favicons/blank.svg`；分类 svg 不存在则回退 `blank.svg`。
    */
   static resolveArticleListFaviconPath(
     favicon: string | undefined | null,
@@ -332,7 +328,7 @@ export class PostUtils {
       return FAVICON_BLANK_PATH;
     }
 
-    const candidate = `/images/_favicons/${slug}.svg`;
+    const candidate = `/favicons/${slug}.svg`;
     return PostUtils.publicRootFileExists(candidate)
       ? candidate
       : FAVICON_BLANK_PATH;

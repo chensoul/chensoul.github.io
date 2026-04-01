@@ -124,7 +124,7 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
 - **postPerIndex**：10 → 8。
 - **genDescriptionMaxLines**：30 → 3。
 - **Stats 链接**：指向 `stats.chensoul.cc/blog.chensoul.cc`。
-- **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表用 `favicon` 字段指向 `/images/_favicons/`，与文章图同属 `/images/` 前缀、优先走站内同源路径。
+- **imageConfig**：当前使用 `https://cos.chensoul.cc` 作为图片 CDN；列表用 `favicon` 字段指向 `/favicons/`，与文章图同属 `/images/` 前缀、优先走站内同源路径。
 - **移除**：`displayOptions`（如评论数等）、Feeds 相关配置。
 
 #### 2. Astro 与集成（`astro.config.ts`）
