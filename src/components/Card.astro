@@ -239,9 +239,7 @@ if (isFeedCard) {
       background-color 0.2s ease,
       transform 0.2s ease;
     min-height: max(
-      calc(
-        var(--pcard-thumb-size) + var(--pcard-inner-min-thumb-slack)
-      ),
+      calc(var(--pcard-thumb-size) + var(--pcard-inner-min-thumb-slack)),
       calc(
         var(--pcard-title-size) * var(--pcard-title-line-height) *
           var(--pcard-title-lines) + var(--pcard-title-gap) +

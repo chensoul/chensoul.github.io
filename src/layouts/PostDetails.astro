@@ -104,7 +104,11 @@ const estimatedWordCount = latinWordCount + cjkCharCount;
 const readingMinutes = Math.max(1, Math.ceil(estimatedWordCount / 300));
 
 /** 标题区发布/更新时间（与列表卡片同一套语义，详情页固定绝对日期） */
-const headerTime = ArticleTime.forDetailHeader(date, updated, post.data.timezone);
+const headerTime = ArticleTime.forDetailHeader(
+  date,
+  updated,
+  post.data.timezone
+);
 
 const breadcrumbItems = [
   { name: "首页", item: SITE.website },
@@ -129,13 +133,16 @@ const layoutProps = {
 
 /* ========== Prev/Next Posts ========== */
 const allPosts = posts.map(
-  ({
-    data: { title, date, timezone, slug },
-    id,
-    filePath,
-    collection,
-  }) => ({
-    path: PostUtils.getPath(id, filePath, true, date, timezone, slug, collection),
+  ({ data: { title, date, timezone, slug }, id, filePath, collection }) => ({
+    path: PostUtils.getPath(
+      id,
+      filePath,
+      true,
+      date,
+      timezone,
+      slug,
+      collection
+    ),
     title,
   })
 );
@@ -443,9 +450,7 @@ const linkPreloadOnLoad = "this.onload=null;this.rel='stylesheet'";
               <div class={postRelatedCardClass}>
                 <p class="m-0 text-[0.72rem] font-semibold tracking-[0.04em] text-muted uppercase">
                   {relatedPost.data.tags
-                    .filter(
-                      (t: string) => trimUrlSegment(t) !== "Others"
-                    )
+                    .filter((t: string) => trimUrlSegment(t) !== "Others")
                     .slice(0, 3)
                     .join(" / ") || "—"}
                 </p>

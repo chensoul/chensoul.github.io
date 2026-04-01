@@ -7,7 +7,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import type { BlogLikeCollection, BlogLikeEntry } from "@/utils/contentCollections";
+import type {
+  BlogLikeCollection,
+  BlogLikeEntry,
+} from "@/utils/contentCollections";
 
 import { SITE } from "@/config";
 import { siteImageHref } from "@/utils/blogImages";
@@ -308,7 +311,10 @@ export class PostUtils {
         if (PostUtils.isHttpUrl(resolved)) {
           return resolved;
         }
-        if (resolved.startsWith("/") && PostUtils.publicRootFileExists(resolved)) {
+        if (
+          resolved.startsWith("/") &&
+          PostUtils.publicRootFileExists(resolved)
+        ) {
           return resolved;
         }
       }
@@ -327,7 +333,9 @@ export class PostUtils {
     }
 
     const candidate = `/images/_favicons/${slug}.svg`;
-    return PostUtils.publicRootFileExists(candidate) ? candidate : FAVICON_BLANK_PATH;
+    return PostUtils.publicRootFileExists(candidate)
+      ? candidate
+      : FAVICON_BLANK_PATH;
   }
 
   /**

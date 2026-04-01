@@ -16,10 +16,7 @@ const sorted = PostUtils.sort(await getCollection("translation"));
 ---
 
 <Layout title={pageTitle}>
-  <ListLayout
-    title="翻译"
-    description="外文技术文章的译文与笔记。"
-  >
+  <ListLayout title="翻译" description="外文技术文章的译文与笔记。">
     <ul class="post-cards-list m-0 list-none p-0" aria-label="译文列表">
       {
         sorted.map(post => (

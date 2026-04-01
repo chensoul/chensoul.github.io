@@ -13,13 +13,13 @@ pip install -r scripts/requirements-running.txt
 ```bash
 export KEEP_MOBILE="手机号"
 export KEEP_PASSWORD="密码"
-python scripts/fetch_keep_run.py
+python scripts/fetch-keep-run.py
 ```
 
 默认写入 `public/data/running.json`（路径相对 `scripts/`）。自定义输出：
 
 ```bash
-python scripts/fetch_keep_run.py --output ../public/data/running.json --limit 3
+python scripts/fetch-keep-run.py --output ../public/data/running.json --limit 3
 ```
 
 ## GitHub Actions

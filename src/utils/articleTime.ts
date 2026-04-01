@@ -59,6 +59,11 @@ export class ArticleTime {
     modDatetime: Date | string | null | undefined,
     timezoneProp: string | undefined
   ): ArticleTimeFields {
-    return ArticleTime.getDisplay(pubDatetime, modDatetime, timezoneProp, "absolute");
+    return ArticleTime.getDisplay(
+      pubDatetime,
+      modDatetime,
+      timezoneProp,
+      "absolute"
+    );
   }
 }

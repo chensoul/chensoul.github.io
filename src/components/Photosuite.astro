@@ -7,8 +7,7 @@ import "photosuite/dist/photosuite.css";
    * Photosuite 对 img 写了 margin:0 !important，会盖掉 base.css 里用 margin:auto 的居中。
    * 在容器上居中；拼图内的 .photosuite-grid-member 由套件自己排版，不套这条。
    */
-  #main-content .post-content
-    .photosuite-item:not(.photosuite-grid-member) {
+  #main-content .post-content .photosuite-item:not(.photosuite-grid-member) {
     display: block;
     width: fit-content;
     max-width: 70%;
@@ -18,8 +17,7 @@ import "photosuite/dist/photosuite.css";
   }
 
   @media (max-width: 768px) {
-    #main-content .post-content
-      .photosuite-item:not(.photosuite-grid-member) {
+    #main-content .post-content .photosuite-item:not(.photosuite-grid-member) {
       max-width: 100%;
     }
   }
