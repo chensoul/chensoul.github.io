@@ -258,6 +258,7 @@ export class PostUtils {
    * 列表卡片用站点/分类图标：`public/favicons/`。
    *
    * - `http(s)://...`：原样
+   * - 以 `/` 开头：根相对原样
    * - 否则视为 `favicons` 内文件名（可含子路径段），解析为 `/favicons/{ref}`
    */
   static resolveFaviconRef(raw: string | undefined | null): string | undefined {
