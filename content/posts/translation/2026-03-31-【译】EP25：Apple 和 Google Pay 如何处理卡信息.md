@@ -28,7 +28,7 @@ canonicalURL: "https://blog.bytebytego.com/p/ep25-how-applegoogle-pay-handle-car
 1. 注册信用卡流程
 2. 基本支付流程
 
-![01.webp](../../../public/images/ep25-how-applegoogle-pay-handle-card/01.webp)
+![01.webp](01.webp)
 
 ### 1. 注册流程
 
@@ -66,7 +66,7 @@ canonicalURL: "https://blog.bytebytego.com/p/ep25-how-applegoogle-pay-handle-car
 
 此外，生成的图表可以下载为图像。
 
-![02.webp](../../../public/images/ep25-how-applegoogle-pay-handle-card/02.webp)
+![02.webp](02.webp)
 
 ## 印度 UPI（统一支付接口）
 
@@ -78,17 +78,17 @@ canonicalURL: "https://blog.bytebytego.com/p/ep25-how-applegoogle-pay-handle-car
 
 流程包括：
 - 注册并链接银行账户
-![03.webp](../../../public/images/ep25-how-applegoogle-pay-handle-card/03.webp)
+![03.webp](03.webp)
 
 - 直接支付
 
-![04.webp](../../../public/images/ep25-how-applegoogle-pay-handle-card/04.webp)
+![04.webp](04.webp)
 
 ## 谷歌/苹果地图如何在街景视图中模糊车牌和人脸
 
 下图展示了一种可能适用于面试环境的解决方案。
 
-![05.webp](../../../public/images/ep25-how-applegoogle-pay-handle-card/05.webp)
+![05.webp](05.webp)
 
 高级架构分为三个阶段：
 
