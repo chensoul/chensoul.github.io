@@ -21,30 +21,33 @@
 
 ```
 chensoul.github.io/
-├── content/
-│   └── posts/           # 文章内容
-│       ├── tech/     # 技术日志
-│       ├── translation/ # 翻译文章
-│       ├── weekly/   # 周报
-│       └── wiki/     # 知识整理
+├── content/                 # 四类内容集合（见 src/content.config.ts）
+│   ├── posts/               # 普通长文
+│   ├── briefs/              # 周报
+│   ├── translation/         # 译文
+│   └── wiki/                # 知识库
 ├── src/
-│   ├── config.ts        # 站点唯一配置入口
-│   ├── content.config.ts # Zod schema 内容集合定义
-│   ├── components/      # Astro 组件
-│   ├── layouts/         # 布局
-│   │   ├── Layout.astro          # 根 HTML 布局
-│   │   └── PostDetails.astro     # 文章详情布局
-│   ├── pages/           # 路由页面
-│   ├── styles/          # CSS 样式
-│   └── utils/           # postUtils（文章/分类/llms/订阅日期/content/pages）、og-image、quietAstroMermaid
+│   ├── assets/              # 图标等构建内资源
+│   ├── components/
+│   ├── layouts/
+│   ├── pages/               # 路由与端点
+│   ├── styles/
+│   ├── utils/               # postUtils、blogImages/、og-image、articleTime 等
+│   ├── config.ts
+│   ├── content.config.ts    # 集合与 Zod schema
+│   └── legacyRedirects.ts   # 旧 URL 重定向表
 ├── public/
-│   ├── favicons/        # 列表/分类用 SVG 等小图标（frontmatter `favicon`）
-│   ├── feeds/           # RSS 聚合抓取的站点 favicon 等资源
-│   ├── images/          # 文章配图等
-│   └── data/
-│       └── feeds.json   # 聚合页数据（CI 生成）
-├── scripts/             # 辅助脚本（含 rclone 同步示例）
-└── astro.config.ts      # 构建配置
+│   ├── favicons/            # 列表/分类图标（frontmatter `favicon`）
+│   ├── feeds/               # 聚合下载的站点 favicon
+│   ├── images/              # 文章配图等
+│   ├── data/
+│   │   └── feeds.json       # 聚合页数据（CI 生成）
+│   ├── _headers
+│   └── _redirects
+├── scripts/                 # 辅助脚本（如 rclone、转 webp）
+├── .github/workflows/       # CI（含 fetch-feeds）
+├── astro.config.ts
+└── package.json
 ```
 
 ---
