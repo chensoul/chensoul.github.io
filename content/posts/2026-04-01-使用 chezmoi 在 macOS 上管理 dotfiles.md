@@ -79,7 +79,7 @@ chezmoi add ~/.zshrc
 chezmoi edit ~/.zshrc
 ```
 
-看看chezmoi会做出哪些改变：
+看看 chezmoi 会做出哪些改变：
 
 ```bash
 chezmoi diff
@@ -89,6 +89,12 @@ chezmoi diff
 
 ```bash
 chezmoi -v apply
+```
+
+查看由 chezmoi 管理的文件：
+
+```bash
+chezmoi managed --include=files
 ```
 
 接下来，进入源代码目录 `~/.local/share/chezmoi`：
@@ -281,6 +287,9 @@ chezmoi add ~/.ssh/id_ed25519.pub
 
 chezmoi add --encrypt ~/.myrc
 chezmoi add --encrypt ~/.wakatime.cfg
+
+chezmoi add --encrypt ~/.m2/settings.xml
+chezmoi add --encrypt ~/.config/rclone/rclone.conf
 
 # 提交代码
 git add .
