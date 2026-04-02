@@ -135,6 +135,8 @@ claude -p "分析依赖" --output-format json
 | `--permission-mode plan` | 以「计划模式」启动，先规划再执行 |
 | `--tools "Bash,Edit,Read"` | 限制可用工具 |
 | `--append-system-prompt "规则"` | 在默认系统提示后追加说明 |
+| `--chrome` | 直接将 Claude 连接到你的浏览器 |
+| `--dangerously-skip-permissions` | 跳过权限确认模式 |
 
 交互界面内输入 **`/help`** 可查看斜杠命令，**`/config`** 打开设置界面。
 
@@ -236,7 +238,86 @@ claude
 
 若此前已用 Anthropic 账号登录，建议先执行 **`/logout`** 或 **`claude auth logout`** 清除本地凭据，再重新运行 `claude`。在会话内输入 **`/status`** 可查看当前 API 地址与模型信息；也可在 OpenRouter 后台的 Activity 中确认是否有请求。
 
-## 八、参考链接
+## 八、使用技巧
+
+### Agents
+
+ 什么是 Agents？ 并行处理——同时处理许多相似任务，而不是一个一个地做。
+
+  使用 agents 当：
+  - 你有很多相似的文件
+  - 可并行化的任务
+  - 跨多个来源的研究
+
+  不要使用 agents 当：
+  - 你有一个复杂任务
+  - 顺序工作
+  - 相互依赖的事情
+
+ 比如以下场景适合使用：
+
+  - 10 个你考虑的职位招聘——同时分析所有，比较要求
+  - 5 个你评估的供应商——并行研究每个，综合成比较
+  - 20 篇你保存的文章——让 agents 总结每篇，然后综合关键洞察
+  - 找公寓——8 个房源同时分析优缺点
+  - 竞争分析——同时研究 6 个竞争对手
+  - 计划旅行——agents 同时研究机票、酒店、活动、餐厅
+
+### 自定义 Sub-agents
+
+1. Agents 和 子 Agents 有什么区别？
+
+把 Agents 想象成临时工。你为某个任务启动它们，然后它们就消失了。子 Agents 是永久团队成员。它们在有持久个性和视角的文件中定义。
+
+当你需要它们时，它们随时可用。当然，你可以随时在进化系统中更新或改进它们。
+
+这就像建立你自己的顾问委员会。一个怀疑论者、一个乐观主义者、一个技术专家、一个客户倡导者——无论你需要什么视角，你都可以创建它们，一次创建 ，永远使用。
+
+2. 子 Agents 如何工作？
+
+子 agents 定义在 .claude/agents/ 目录中。每个文件有：
+
+- YAML frontmatter，包含名称和描述
+- 定义它们视角的系统提示词
+
+示例文件：
+
+```markdown
+---
+name: Agent Name
+description: One-line description
+---
+ 
+# System prompt
+ 
+You are... [personality and perspective]
+```
+
+  你可以为自己需要的任何视角创建自己的子 agents。
+
+3. 创建您自己的子 Agent
+
+创建自己的子 agents 很简单：只需使用 /agents 命令。
+
+你可以让 agent 只为这个项目工作（Project），或者在你电脑上的任何项目中工作（Personal）。claude 会帮你创建 agent。
+
+4. Agents 与子 Agents 的决策
+
+何时使用子 agents vs 常规 agents：
+
+- Agents = 临时工，用于并行任务（处理这 10 个文件）
+- 子 Agents = 永久团队成员，有定义的视角（随时可用用于审查/反馈）
+
+agents 是为了数量，子 agents 是为了智慧。需要处理 50 个文档？Agents。需要从不同视角获得深思熟虑的反馈？子 agents。
+
+5. 其他资源
+
+- [Awesome Claude Code Sub-Agents](https://github.com/VoltAgent/awesome-claude-code-subagents) - Community templates
+- [Sub-Agent Examples](https://github.com/wshobson/agents) - Real-world configurations
+- [SubAgents.cc](https://www.subagents.cc/) - Template generator and browser
+- [Official Docs: Sub-agents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) - Anthropic documentation
+
+## 九、参考链接
 
 - [Claude Code 概览与安装](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview)
 - [Claude Code 设置](https://docs.anthropic.com/en/docs/claude-code/settings)
