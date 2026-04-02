@@ -112,6 +112,7 @@ claude -p "分析依赖" --output-format json
 | 命令 | 说明 |
 |------|------|
 | `claude` | 启动交互会话 |
+| `claude doctor` | 运行系统诊断 |
 | `claude "query"` | 带初始提示启动 |
 | `claude -p "query"` | 单次提问后退出（print 模式） |
 | `claude -c` | 继续当前目录最近会话 |
@@ -136,6 +137,18 @@ claude -p "分析依赖" --output-format json
 | `--append-system-prompt "规则"` | 在默认系统提示后追加说明 |
 
 交互界面内输入 **`/help`** 可查看斜杠命令，**`/config`** 打开设置界面。
+
+### 命令
+
+只需输入 / 就能看到所有命令。以下是关键的几个：
+
+  - /model - 在 Claude 模型之间切换（Sonnet 快，Opus 聪明）
+  - /context - 查看 Claude 知道哪些文件
+  - /clear - 重新开始对话
+  - /compact - 压缩对话以节省上下文
+  - /usage - 查看使用了多少
+  - /resume - 继续上一次会话的进度
+  - /btw - 
 
 ## 五、配置
 
