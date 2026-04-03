@@ -17,3 +17,5 @@
 - https://blog.bytebytego.com/p/ep153-database-index-types-every-developer
 - https://blog.bytebytego.com/p/ep152-the-ai-agent-learning-roadmap
 - https://blog.bytebytego.com/p/ep151-the-generative-ai-tech-stack
+- https://blog.bytebytego.com/p/ep142-how-oauth-2-works
+- https://blog.bytebytego.com/p/ep141-how-java-hashmaps-work
