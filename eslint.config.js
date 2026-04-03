@@ -23,6 +23,12 @@ export default [
     },
   },
   {
+    files: ["scripts/**/*.{js,mjs,cjs}"],
+    rules: {
+      "no-console": "off",
+    },
+  },
+  {
     ignores: ["dist/**", ".astro", "public/pagefind/**"],
   },
 ];

@@ -9,7 +9,6 @@
  *   node scripts/convert-to-webp.mjs [public/images 下的相对路径] [--keep]
  * 默认目录：public/images；若传入路径超出该目录则退出。
  */
-/* eslint-disable no-console -- CLI 脚本需输出到控制台 */
 
 import { readdir, stat, unlink } from "fs/promises";
 import { join, extname, resolve, sep } from "path";
