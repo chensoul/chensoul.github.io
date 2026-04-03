@@ -12,3 +12,8 @@
 - https://blog.bytebytego.com/p/how-transformers-architecture-works
 - https://blog.bytebytego.com/p/top-youtube-channels-and-blogs-for-ai
 - https://blog.bytebytego.com/p/what-is-an-ai-agent
+- https://blog.bytebytego.com/p/ep155-what-is-mcp
+- https://blog.bytebytego.com/p/ep154-jwt-vs-paseto
+- https://blog.bytebytego.com/p/ep153-database-index-types-every-developer
+- https://blog.bytebytego.com/p/ep152-the-ai-agent-learning-roadmap
+- https://blog.bytebytego.com/p/ep151-the-generative-ai-tech-stack

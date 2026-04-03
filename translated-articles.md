@@ -12,3 +12,4 @@
 - https://blog.bytebytego.com/p/ep161-how-does-mongodb-work
 - https://blog.bytebytego.com/p/ep157-12-architectural-concepts-developers
 - https://blog.bytebytego.com/p/ep156-cloud-load-balancer-cheat-sheet
+- https://blog.bytebytego.com/p/ep150-12-algorithms-for-system-design
