@@ -3,33 +3,33 @@ title: "【译】Spring Events"
 date: 2014-11-10 21:59:00+08:00
 draft: true
 slug: spring-events
-categories: [ "translation" ]
-tags: [ "spring", "events" ]
-description: "在 Spring 中发布与监听应用事件：自定义事件、异步多路广播、@EventListener、泛型条件监听与 @TransactionalEventListener。"
+categories: ["translation"]
+tags: ["spring", "events"]
+description: "Spring 中的事件机制：自定义事件、异步处理、@EventListener 注解、泛型支持和事务绑定事件。"
 canonicalURL: "https://www.baeldung.com/spring-events"
 ---
 
 ## 1. 概述
 
-本教程介绍如何在 Spring 中使用**应用事件（application events）**。
+本教程将讨论**如何在 Spring 中使用事件**。
 
-事件是框架里最容易被忽视、却又非常实用的能力之一。与 Spring 的许多其它能力一样，**事件发布**由 `ApplicationContext` 提供。
+事件是框架中最容易被忽视的功能之一，尽管它们也是最实用的功能之一。与 Spring 中的许多其他功能一样，事件发布是由 `ApplicationContext` 提供的功能之一。
 
-可以遵循几条简单约定：
+有几条简单的指导原则需要遵循：
 
-- 若使用 **Spring Framework 4.2 之前**的版本，事件类应继承 `ApplicationEvent`；自 **4.2** 起，事件类**不再必须**继承 `ApplicationEvent`。
-- **发布方**应注入 `ApplicationEventPublisher`。
-- **监听器**应实现 `ApplicationListener` 接口。
+*   如果在 Spring Framework 4.2 之前的版本中使用，事件类应该继承 `ApplicationEvent`。[从 4.2 版本开始](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html#publishEvent-java.lang.Object-)，事件类不再需要继承 `ApplicationEvent` 类。
+*   发布者应该注入一个 `ApplicationEventPublisher` 对象。
+*   监听器应该实现 `ApplicationListener` 接口。
 
 ## 2. 自定义事件
 
-Spring 允许创建并发布**默认同步**的自定义事件。这样做的好处之一，是监听器可以参与到**发布方所在的事务**上下文中。
+Spring 允许我们创建和发布自定义事件，默认情况下**这些事件是同步的**。这有一些优点，例如监听器能够参与到发布者的事务上下文中。
 
 ### 2.1. 一个简单的应用事件
 
-先定义一个极简的事件类，仅作为承载数据的占位类型。
+让我们**创建一个简单的事件类**——只是一个占位符来存储事件数据。
 
-下面的示例中，事件里保存一条字符串消息：
+在本例中，事件类包含一个 String 消息：
 
 ```java
 public class CustomSpringEvent extends ApplicationEvent {
@@ -47,9 +47,9 @@ public class CustomSpringEvent extends ApplicationEvent {
 
 ### 2.2. 发布者
 
-接下来实现该事件的发布者：构造事件对象，并向所有监听者广播。
+现在让我们**创建该事件的发布者**。发布者构建事件对象并将其发布给任何监听者。
 
-发布者只需注入 `ApplicationEventPublisher`，调用 `publishEvent()` 即可：
+要发布事件，发布者可以简单地注入 `ApplicationEventPublisher` 并使用 `publishEvent()` API：
 
 ```java
 @Component
@@ -65,15 +65,15 @@ public class CustomSpringEventPublisher {
 }
 ```
 
-另一种做法是让发布者类实现 `ApplicationEventPublisherAware`，由容器在启动时注入发布器；实践中直接用 `@Autowired` 注入通常更简单。
+或者，发布者类可以实现 `ApplicationEventPublisherAware` 接口，这也会在应用程序启动时注入事件发布者。通常，直接使用 `@Autowire` 注入发布者更简单。
 
-自 **Spring Framework 4.2** 起，`ApplicationEventPublisher` 为 `publishEvent(Object event)` 增加了可接受**任意对象**作为事件的重载，因此事件**不必**再继承 `ApplicationEvent`。
+从 Spring Framework 4.2 开始，`ApplicationEventPublisher` 接口为 [`publishEvent(Object event)`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html#publishEvent-java.lang.Object-) 方法提供了一个新的重载，可以接受任何对象作为事件。**因此，Spring 事件不再需要继承 `ApplicationEvent` 类。**
 
 ### 2.3. 监听器
 
-最后编写监听器。
+最后，让我们创建监听器。
 
-监听器只需是一个 **bean**，并实现 `ApplicationListener`：
+监听器的唯一要求是成为一个 bean 并实现 `ApplicationListener` 接口：
 
 ```java
 @Component
@@ -85,17 +85,19 @@ public class CustomSpringEventListener implements ApplicationListener<CustomSpri
 }
 ```
 
-自定义监听器通过**泛型参数**指定事件类型，使 `onApplicationEvent` **类型安全**，也省去了手动 `instanceof` 与强制转换。
+注意我们的自定义监听器是如何用自定义事件的泛型类型参数化的，这使得 `onApplicationEvent()` 方法是类型安全的。这也避免了检查对象是否是特定事件类的实例并进行强制转换。
 
-另外，如前所述（Spring 事件默认**同步**），若发布路径上会调用 `doStuffAndPublishAnEvent()` 之类方法，它会**阻塞**，直到所有监听器处理完毕。
+正如已经讨论过的（默认情况下**Spring 事件是同步的**），`publishCustomEvent()` 方法会阻塞直到所有监听器完成事件处理。
 
-## 3. 异步事件
+## 3. 创建异步事件
 
-有时我们并不希望同步发布——而需要**异步**处理事件。
+在某些情况下，同步发布事件并不是我们真正想要的——**我们可能需要异步处理事件。**
 
-可在配置里声明带 **TaskExecutor** 的 `ApplicationEventMulticaster` bean 来开启异步派发。
+### 3.1. 使用 `ApplicationEventMulticaster`
 
-示例中使用 `SimpleAsyncTaskExecutor`：
+我们可以通过创建一个带有执行器的 `ApplicationEventMulticaster` bean 来在配置中开启异步事件处理。
+
+出于我们的目的，`SimpleAsyncTaskExecutor` 可以很好地工作：
 
 ```java
 @Configuration
@@ -104,25 +106,64 @@ public class AsynchronousSpringEventsConfig {
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         SimpleApplicationEventMulticaster eventMulticaster =
           new SimpleApplicationEventMulticaster();
-
+        
         eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
         return eventMulticaster;
     }
 }
 ```
 
-事件类、发布者与监听器的写法可与前文相同，但监听器会在**独立线程**中异步执行。
+事件、发布者和监听器的实现与之前相同，但现在**监听器将在单独的线程中异步处理事件**。
 
-## 4. Spring 内置事件
+然而，有些时候我们无法使用 multicaster，或者更愿意让某些事件异步运行而不是其他事件。
 
-Spring 自身也会发布多种框架级事件。例如 `ApplicationContext` 会触发 `ContextRefreshedEvent`、`ContextStartedEvent`、`RequestHandledEvent` 等。
+### 3.2. 使用 `@Async`
 
-应用开发者可以监听这些钩子，在应用或上下文生命周期的合适时机插入自定义逻辑。
-
-下面是一个监听**上下文刷新**的示例：
+为此，我们可以添加 Spring 的 `@Async` 注解来识别和标注应该异步处理事件的单个监听器：
 
 ```java
-public class ContextRefreshedListener
+@EventListener
+@Async
+public void handleAsyncEvent(CustomSpringEvent event) {
+    System.out.println("Handle event asynchronously: " + event.getMessage());
+}
+```
+
+这会在单独的线程中处理事件。此外，我们可以使用 `@Async` 注解的 `value` 属性来指示应该使用除默认值之外的执行器，例如：
+
+```java
+@Async("nonDefaultExecutor")
+void handleAsyncEvent(CustomSpringEvent event) {
+    // 由 "nonDefaultExecutor" 异步运行
+}
+```
+
+要启用对 `@Async` 注解的支持，我们可以在 `@Configuration` 或 `@SpringBootApplication` 类上添加 [`@EnableAsync`](https://www.baeldung.com/spring-async)：
+
+```java
+@Configuration
+@EnableAsync
+public class AppConfig {
+}
+```
+
+`@EnableAsync` 注解开启了 Spring 在后台线程池中运行 `@Async` 方法的能力。它还自定义了使用的 `Executor`。Spring 会搜索关联的线程池定义。它会查找：
+
+*   上下文中的唯一 `TaskExecutor` bean，或
+*   名为 `"taskExecutor"` 的 `Executor` bean
+
+如果都找不到，将使用 `SimpleAsyncTaskExecutor` 来异步调用事件监听器。
+
+## 4. 现有的框架事件
+
+Spring 本身会发布各种各样的事件。例如，`ApplicationContext` 会触发各种框架事件：`ContextRefreshedEvent`、`ContextStartedEvent`、`RequestHandledEvent` 等。
+
+这些事件为应用程序开发人员提供了一个选项，可以钩入应用程序和上下文的生命周期，并在需要的地方添加自己的自定义逻辑。
+
+这是一个监听器监听上下文刷新的快速示例：
+
+```java
+public class ContextRefreshedListener 
   implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent cse) {
@@ -131,9 +172,11 @@ public class ContextRefreshedListener
 }
 ```
 
-## 5. 基于注解的事件监听器
+要了解更多关于现有框架事件的信息，请查看[我们的下一篇教程](https://www.baeldung.com/spring-context-events)。
 
-自 **Spring 4.2** 起，监听器**不必**再写成实现 `ApplicationListener` 的 bean；可在任意托管 bean 的**公共方法**上使用 `@EventListener` 注册：
+## 5. 注解驱动的事件监听器
+
+从 Spring 4.2 开始，事件监听器不需要是实现 `ApplicationListener` 接口的 bean——它可以通过 `@EventListener` 注解注册在托管 bean 的任何 `public` 方法上：
 
 ```java
 @Component
@@ -145,19 +188,19 @@ public class AnnotationDrivenEventListener {
 }
 ```
 
-方法签名即声明所消费的事件类型，与前面写法一致。
+如前所述，方法签名声明了它消费的事件类型。
 
-默认情况下，这类监听仍是**同步**调用的；若在方法上再加 `@Async`，即可异步执行——前提是已在应用中开启异步支持（例如 `@EnableAsync`）。
+默认情况下，监听器是同步调用的。然而，我们可以通过添加 `@Async` 注解轻松地使其异步。我们只需要记住在应用程序中[`启用 Async 支持`](https://www.baeldung.com/spring-async#enable-async-support)。
 
-## 6. 泛型事件
+## 6. 泛型支持
 
-还可以利用事件类型上的**泛型信息**来分发事件。
+也可以在事件类型中使用泛型信息来分发事件。
 
-### 6.1. 泛型应用事件
+### 6.1. 一个泛型应用事件
 
-先定义一个泛型事件类。
+**让我们创建一个泛型事件类型。**
 
-下例中，事件携带任意类型的载荷 `what`，以及一个表示是否成功的布尔字段：
+在我们的示例中，事件类包含任何内容和一个 `success` 状态指示器：
 
 ```java
 public class GenericSpringEvent<T> {
@@ -168,30 +211,21 @@ public class GenericSpringEvent<T> {
         this.what = what;
         this.success = success;
     }
-
-    public T getWhat() {
-        return what;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
+    // ... 标准 getters
 }
 ```
 
-注意它与前面的 `CustomSpringEvent` 不同：我们可以更灵活地发布**任意 POJO 事件**，**无需**再继承 `ApplicationEvent`。
+注意 `GenericSpringEvent` 和 `CustomSpringEvent` 之间的区别。我们现在有了发布任何任意事件的灵活性，不再需要继承 `ApplicationEvent`。
 
-### 6.2. 监听器
+### 6.2. 一个监听器
 
-为上述事件编写监听器。
+现在让我们**创建该事件的监听器**。
 
-一种写法仍是实现 `ApplicationListener`：
+我们可以像以前一样通过实现 `ApplicationListener` 接口来定义监听器：
 
 ```java
-import org.springframework.lang.NonNull;
-
 @Component
-public class GenericSpringEventListener
+public class GenericSpringEventListener 
   implements ApplicationListener<GenericSpringEvent<String>> {
     @Override
     public void onApplicationEvent(@NonNull GenericSpringEvent<String> event) {
@@ -200,11 +234,11 @@ public class GenericSpringEventListener
 }
 ```
 
-但在泛型事件场景下，若还要配合 **SpEL 条件**、或避免类型擦除带来的琐碎样板，实践中更常采用下一小节的 **`@EventListener`** 写法。
+但这个定义不幸地要求我们让 `GenericSpringEvent` 继承 `ApplicationEvent` 类。所以在本教程中，让我们使用前面讨论过的注解驱动事件监听器。
 
-也可以借助 `@EventListener` 上的布尔 **SpEL** 表达式，写出**带条件**的监听器。
+也可以通过在 `@EventListener` 注解上定义一个布尔 SpEL 表达式来**使事件监听器有条件地执行**。
 
-例如，仅当 `GenericSpringEvent<String>` 的 `success` 为真时才处理：
+在这种情况下，事件处理器将只为成功的 `String` 类型 `GenericSpringEvent` 调用：
 
 ```java
 @Component
@@ -216,45 +250,63 @@ public class AnnotationDrivenEventListener {
 }
 ```
 
-**Spring 表达式语言（SpEL）**能力很强，独立教程中有更细讲解。
+[Spring Expression Language (SpEL)](https://www.baeldung.com/spring-expression-language) 是一个强大的表达式语言，在另一个教程中有详细介绍。
 
-### 6.3. 发布者
+### 6.3. 一个发布者
 
-发布方式与前面类似。由于**类型擦除**，若要对泛型参数做区分，有时需要发布**具体的子类**事件，例如 `class GenericStringSpringEvent extends GenericSpringEvent<String>`，以便框架正确解析泛型。
+事件发布者与上面描述的类似。但是由于类型擦除，我们需要发布一个解析泛型参数的事件，例如 `class GenericStringSpringEvent extends GenericSpringEvent<String>`。
 
-另外：若 `@EventListener` 方法返回**非空**值，Spring 会把该返回值当作**新事件**再次发布；若返回集合，也可一次性发布多个后续事件。
+另外，**还有一种发布事件的替代方法**。如果我们从用 `@EventListener` 注解的方法返回一个非空值作为结果，Spring Framework 会将该结果作为新事件发送给我们。此外，我们可以通过在事件处理的结果中以集合形式返回多个新事件来发布它们。
 
-## 7. 与事务绑定的事件
+## 7. 事务绑定事件
 
-本节介绍 `@TransactionalEventListener`。更多事务与 JPA 配置见 [Transactions With Spring and JPA](https://www.baeldung.com/transaction-configuration-with-jpa-and-spring)。
+本节是关于使用 `@TransactionalEventListener` 注解的。要了解更多关于事务管理的信息，请查看[使用 Spring 和 JPA 的事务配置](https://www.baeldung.com/transaction-configuration-with-jpa-and-spring)。
 
-自 **Spring 4.2** 起，框架提供 `@TransactionalEventListener`。它在 `@EventListener` 基础上，允许把监听逻辑绑定到事务的特定阶段。
+从 Spring 4.2 开始，框架提供了一个新的 `@TransactionalEventListener` 注解，这是 `@EventListener` 的扩展，允许将事件的监听器绑定到事务的一个阶段。
 
-可绑定阶段包括：
+可以绑定到四个事务阶段之一：
 
-- **`AFTER_COMMIT`（默认）**：事务**成功提交**之后触发。
-- **`AFTER_ROLLBACK`**：事务已**回滚**。
-- **`AFTER_COMPLETION`**：事务已**结束**（无论提交或回滚，相当于 `AFTER_COMMIT` 与 `AFTER_ROLLBACK` 的并集）。
-- **`BEFORE_COMMIT`**：在事务**提交前**触发。
+*   `AFTER_COMMIT`（默认）——用于在事务**成功完成**时触发事件
+*   `AFTER_ROLLBACK`——如果事务**回滚**
+*   `AFTER_COMPLETION`——如果事务**完成**（`AFTER_COMMIT` 和 `AFTER_ROLLBACK` 的别名）
+*   `BEFORE_COMMIT`——用于在事务**提交之前**触发事件
 
-简单示例：
+默认情况下，只有当 `CustomSpringEvent` 在现已完成的事务中发布时，才会调用此监听器：
 
 ```java
-@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+@TransactionalEventListener
 public void handleCustom(CustomSpringEvent event) {
-    System.out.println("Handling event inside a transaction BEFORE COMMIT.");
+    System.out.println("Handling event only when a transaction successfully completes.");
 }
 ```
 
-仅当**事件发布方运行在即将提交的事务中**时，该监听器才会被调用。
+重要的是要理解，**与普通的 `@EventListener` 方法不同，`@TransactionalEventListener` 不会通过 `ApplicationEventMulticaster` 分发事件处理。** 相反，`@TransactionalEventListener` 通过 [`TransactionSynchronizationManager#registerSynchronization`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/support/TransactionSynchronizationManager.html#registerSynchronization(org.springframework.transaction.support.TransactionSynchronization)) 注册一个事务同步回调，允许在指定的事务阶段处理事件。
 
-若当前**没有活动事务**，默认**不会**派发事件；除非将 **`fallbackExecution`** 设为 `true`，在无事务时仍执行监听逻辑。
+因此，**默认情况下，`@TransactionalEventListener` 方法在与发布事件相同的线程中执行**，无论在 multicaster 中应用了哪个 `TaskExecutor`，因为 multicaster 根本没有被使用。
 
-## 8. 小结
+这引出了一个常见的问题：我们如何让 `@TransactionalEventListener` 异步处理事件？
 
-本文梳理了 Spring 中的事件机制：如何定义自定义事件、发布并在监听器中处理；如何配置**异步** `ApplicationEventMulticaster`；以及 **Spring 4.2** 引入的 `@EventListener`、更好的**泛型**支持，和与**事务阶段**绑定的 `@TransactionalEventListener`。
+答案是使用 `@Async` 注解，例如：
 
-示例工程见 [GitHub（spring-core-2）](https://github.com/eugenp/tutorials/tree/master/spring-core-2)，基于 Maven，可直接导入运行。
+```java
+@Async
+@TransactionalEventListener
+void handleCustom(CustomSpringEvent event) { 
+    System.out.println("Handling event only when a transaction successfully completes.");
+}
+```
+
+在上面的示例中，我们结合了 `@Async` 和 `@TransactionalEventListener` 注解。这样，**当原始事务成功完成时，`handleCustom()` 方法将在单独的线程中异步运行**。
+
+虽然这是一种方便地异步处理事务事件的方式，但重要的是要谨慎使用它。**Spring 将事务绑定到当前线程**。当监听器在单独的线程中运行时（由于 `@Async`），它无法访问原始事务上下文。这意味着**如果我们的事件处理器依赖于原始事务的上下文**，例如延迟加载的实体、共享的数据库状态或事务回滚逻辑，**我们不应该使用 `@Async + @TransactionalEventListener`**。
+
+当然，当我们使用 `@Async` 时，让我们记住添加 `@EnableAsync` 支持。
+
+## 8. 总结
+
+在这篇简短的文章中，我们介绍了**处理 Spring 事件**的基础知识，包括创建一个简单的自定义事件，发布它然后在监听器中处理它。我们还简要了解了如何在配置中启用事件的异步处理。
+
+然后我们了解了 Spring 4.2 中引入的改进，例如注解驱动的监听器、更好的泛型支持以及绑定到事务阶段的事件。
 
 > 本文为学习目的的个人翻译，译文仅供参考。
 >
