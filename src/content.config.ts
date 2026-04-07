@@ -11,16 +11,16 @@ import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import { SITE } from "@/config";
 
-/** 普通长文（原 `content/posts/` 下除已迁出子树外的文章） */
+/** 普通长文 */
 export const POSTS_CONTENT_PATH = "content/posts";
 
-/** 周报（原 `posts/weekly/`） */
+/** 周报 */
 export const BRIEFS_CONTENT_PATH = "content/briefs";
 
-/** 译文（原 `posts/translation/`） */
+/** 译文 */
 export const TRANSLATION_CONTENT_PATH = "content/translation";
 
-/** 知识库（原 `posts/wiki/`） */
+/** 知识库*/
 export const WIKI_CONTENT_PATH = "content/wiki";
 
 /** @deprecated 使用 {@link POSTS_CONTENT_PATH} */
@@ -52,15 +52,6 @@ const articleSchema = () =>
     math: z.boolean().default(false),
     mermaid: z.boolean().default(false),
     canonicalURL: z.string().optional(),
-    /** 原文首次发布时间（东八区），格式 `YYYY-MM-DD HH:mm:00+08:00`；与本站 `date`（译文）区分 */
-    originalPublishedAt: z
-      .union([z.date(), z.string()])
-      .optional()
-      .nullable()
-      .transform(v => {
-        if (v == null) return v;
-        return v instanceof Date ? v : new Date(String(v).replace(" ", "T"));
-      }),
     favicon: z.string().optional(),
     banner: z.string().optional(),
     slug: z.string().trim().min(1, "slug 不能为空"),

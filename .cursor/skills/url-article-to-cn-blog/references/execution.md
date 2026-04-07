@@ -1,6 +1,12 @@
 # 辅助：命令备忘
 
-路径、slug、配图规则见 [`../SKILL.md`](../SKILL.md)。
+通用译稿流程（**不限定**某一博客或平台）。路径、slug、**文件名 `{YYYY-MM-DD}-【译】…`**、**`date`（原文时间优先，否则当前时间，上海时区）**、**不写 `originalPublishedAt`**、配图规则见 [`../SKILL.md`](../SKILL.md)。
+
+## 翻译完成后
+
+**不要执行任何 `pnpm` 命令**（包括 `pnpm astro check`、`pnpm build` 等），除非用户明确要求。
+
+若用户单独要求本地校验，可自行运行仓库脚本，本技能流程不默认包含。
 
 ## 配图
 
@@ -23,13 +29,6 @@ mkdir -p public/images/{slug}
 **典型流程**：从原文 HTML 得到正文图片 URL（按阅读顺序、已去掉赞助等）→ `curl -fsSL <url> -o /tmp/img` → `cwebp -q 85 /tmp/img -o public/images/{slug}/01.webp`（多张则 `02.webp`…）。
 
 单张下载并转码：[`../scripts/fetch-image.example.sh`](../scripts/fetch-image.example.sh)
-
-## 校验
-
-```bash
-pnpm astro check
-pnpm build
-```
 
 ## Git（先同步再提交）
 

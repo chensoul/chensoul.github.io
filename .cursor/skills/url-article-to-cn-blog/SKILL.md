@@ -1,29 +1,36 @@
 ---
 name: url-article-to-cn-blog
 description: >-
-  Translate an English canonical article URL into a Chinese Markdown post for this Astro blog:
+  Translate an English canonical article URL (any site—blogs, docs, newsletters, etc.—not limited to
+  a specific publisher) into a Chinese Markdown post for this Astro blog:
   slug = last path segment of the URL (kebab-case); dedupe by slug in content/translation/ before
-  translating; write content/translation/【译】{title}.md with frontmatter (draft true by default),
+  translating; write content/translation/{YYYY-MM-DD}-【译】{title}.md (date prefix from frontmatter date)
+  with frontmatter (draft true by default),
   prose body, and a copyright / source-link blockquote at the end only; save images as
   public/images/{slug}/01.webp, 02.webp… in reading order and do not download images that belong to
   removed blocks (ads, sponsorship, promotion). No translator-summary section (no 译者总结).
   Frontmatter date: prefer original article publish/creation time from the source page; if unavailable
-  use current time; always Asia/Shanghai (+08:00). Download body images from source HTML (skip ad/sponsor
-  assets), cwebp to public/images/{slug}/NN.webp. Optional pnpm check and git steps in
-  references/execution.md. Use for chensoul.github.io translation layout or the same conventions.
+  use current time; always Asia/Shanghai (+08:00). Do not add frontmatter field originalPublishedAt.
+  Download body images from source HTML (skip ad/sponsor
+  assets), cwebp to public/images/{slug}/NN.webp. Git steps optional in references/execution.md;
+  do not run pnpm commands after translation unless the user explicitly asks. Use for chensoul.github.io
+  translation layout or the same conventions.
 ---
 
 # 翻译英文文章保存为博客 md 文件
 
 英文 canonical URL → 生成 `content/translation/` 译文、`public/images/{slug}/` 配图，可选 git 同步。
 
+**适用范围**：面向**任意来源**的单篇英文原文（博客、技术文档、通讯稿、媒体站点等均可）。**不**专用于某一站点（例如 ByteByteGo）；不同站点的 HTML 结构、元数据、配图方式可能不同，执行时以用户给出的 **canonical URL** 对应页面为准，并遵守下表与本仓库版式约定。
+
 ## 仓库约定
 
 | 项 | 约定 |
 | --- | --- |
-| 路径 / 文件名 | `content/translation/【译】{中文标题}.md`；**无**日期前缀；日期只用 frontmatter `date` |
+| 路径 / 文件名 | `content/translation/{YYYY-MM-DD}-【译】{中文标题}.md`；**`YYYY-MM-DD`** 取自本文件 frontmatter **`date`** 的日历日（上海时区换算后取年-月-日）；与 `date` 一致、可排序 |
 | slug | 从 canonical URL **路径取最后一段**（去掉 `?query` 与 `#hash`）；小写 **kebab-case** ASCII；与 `canonicalURL`、frontmatter `slug` 一致；禁止按中文标题自造 |
 | 去重 | 检索 `slug:`；已存在则停（除非用户要求覆盖） |
+| frontmatter | **不要**写入 `originalPublishedAt`；原文时间只体现在 **`date`**（见下） |
 | draft | 默认 `true` |
 | 配图 | `public/images/{slug}/`；正文 `![alt](01.webp)` 仅文件名；**文中首次出现**依次为 `01`、`02`…；同源复用同号；磁盘与引用一致；**不译区块**（见下「正文」）里的图**不下载、不保存**；落盘应为**真实 WebP**，若本机无 `cwebp` **先安装**再转码（见 [`references/execution.md`](references/execution.md)），勿用 PNG/JPEG 冒充 `.webp` |
 
@@ -52,7 +59,7 @@ description: >-
 
 ### 步骤 3：输出文件
 
-1. 将内容保存到 `content/translation/【译】{中文标题}.md`。文件**开头**仅为 Frontmatter：
+1. 将内容保存到 `content/translation/{YYYY-MM-DD}-【译】{中文标题}.md`（**日期前缀**规则见上表）。文件**开头**仅为 Frontmatter：
 
 ```yaml
 ---
@@ -67,7 +74,14 @@ canonicalURL: "https://exact-source-url"
 ---
 ```
 
-`date`：`Asia/Shanghai`。**tags**：1～3 个英文技术词。
+（**勿**写入 `originalPublishedAt`。）
+
+**`date`（必填）**：时区固定为 **Asia/Shanghai（东八区）**，写入 ISO 风格字符串 **`YYYY-MM-DD HH:mm:00+08:00`**（秒固定为 `00` 即可）。
+
+- **优先**：从**原文页面**解析首次发布或创建时间（例如 `article:published_time` / `og:published_time`、JSON-LD `datePublished`、`time[datetime]`、文章元数据中的可见日期等），换算为上海时区后写入 `date`。若来源仅有**日期**没有时刻，可用当日 **`00:00:00`** 或 **`08:00:00`**，与仓库既有译文保持一致即可。
+- **回退**：若无法从页面可靠解析，则使用**生成该 Markdown 时**的**当前时间**（同样按上海时区），格式同上。
+
+**tags**：1～3 个英文技术词。
 
 2. Frontmatter 之后接**译文正文**（标题、段落、列表、配图引用等与翻译结果一致）。
 
@@ -80,6 +94,8 @@ canonicalURL: "https://exact-source-url"
 
 ### 步骤 4：审核
 
+**不要**在本流程末尾自动执行 `pnpm`（含 `pnpm astro`、`pnpm build` 等）；除非用户明确要求，否则省略校验命令。
+
 请检查以下内容：
 - slug / canonicalURL 与用户 URL 一致；slug 为路径最后一段
 - 代码与原文一致
@@ -89,5 +105,5 @@ canonicalURL: "https://exact-source-url"
 
 ## 参考文件
 
-- [`references/execution.md`](references/execution.md) — pull、pnpm、git 命令
+- [`references/execution.md`](references/execution.md) — git 备忘；**默认不跑 pnpm**
 - [`scripts/fetch-image.example.sh`](scripts/fetch-image.example.sh) — 单张图下载示例
