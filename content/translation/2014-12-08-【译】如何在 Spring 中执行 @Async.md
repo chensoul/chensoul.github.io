@@ -1,5 +1,5 @@
 ---
-title: "【译】如何在 Spring 中执行@Async"
+title: "【译】如何在 Spring 中执行 @Async"
 date: 2014-12-08 00:00:00+08:00
 draft: true
 slug: spring-async

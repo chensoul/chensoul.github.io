@@ -1,5 +1,5 @@
 ---
-title: "【译】使用@Async进行Spring Security上下文传播"
+title: "【译】使用 @Async 进行 Spring Security 上下文传播"
 date: 2016-12-31 08:16:00+08:00
 draft: true
 slug: spring-security-async-principal-propagation

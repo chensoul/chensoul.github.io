@@ -99,14 +99,12 @@ ls -la src/pages/posts 2>/dev/null || echo "No posts dir"
   - `src/pages/about.md`、`src/pages/favorites.md`（原 Markdown 页面）
 - **新增/迁移**：
   - **关于**：`src/pages/about.astro` 从 `content/pages/about.md` 读取并渲染。
-  - **链接**：`src/pages/links.astro` 替代原「收藏/订阅」页，数据来自 `content/pages/links.md`（或 `_links.md`），导航与 i18n
-      为「链接 / Links」。
 - **配置**：移除 `feedsPerIndex`、`feedsPerPage` 等 Feeds 相关配置。
 
 #### 5. 新增页面与资源
 
 - **`src/pages/running.astro`**：跑步/数据页，使用 `public/data/running.json`。
-- **`content/pages/about.md`**、**`content/pages/links.md`**：关于与链接的正文内容。
+- **`content/pages/about.md`**：关于的正文内容。
 - **`public/_headers`**：自定义响应头（如部署用）。
 - **`public/data/running.json`**：跑步数据。
 

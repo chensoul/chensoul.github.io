@@ -516,14 +516,14 @@ export function formatFeedDate(
   return `${Math.floor(diffMs / (24 * 60 * 60 * 1000))} 天前`;
 }
 
-// --- content/pages（about、links 等静态 Markdown 页）---
+// --- content/pages（about 等静态 Markdown 页）---
 
 export interface ContentPageData {
   frontmatter: Record<string, string>;
   content: string;
 }
 
-/** 读取 `content/{fileName}`，解析单行 `key: value` frontmatter（与 about/links 页约定一致） */
+/** 读取 `content/{fileName}`，解析单行 `key: value` frontmatter（与 about 页约定一致） */
 export function readContentPage(fileName: string): ContentPageData {
   const filePath = path.join(process.cwd(), "content", fileName);
   const fileContent = fs.readFileSync(filePath, "utf-8");
