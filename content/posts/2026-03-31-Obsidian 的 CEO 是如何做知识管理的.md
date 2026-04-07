@@ -51,23 +51,23 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 他写过自己用的组合（具体安装以原文为准）：
 
-- [Minimal](https://stephango.com/minimal) 主题 + [Flexoki](https://stephango.com/flexoki) 配色  
-- [Obsidian Web Clipper](https://stephango.com/obsidian-web-clipper) 剪网页；针对不同站点有 [clipper templates](https://github.com/kepano/clipper-templates)  
-- [Obsidian Sync](https://obsidian.md/sync) 做桌面、手机、平板同步  
-- [Obsidian Bases](https://help.obsidian.md/bases) 按类别浏览、总览笔记  
-- [Obsidian Maps](https://help.obsidian.md/bases/views/map) 配合部分模板里的地图需求  
+- [Minimal](https://stephango.com/minimal) 主题 + [Flexoki](https://stephango.com/flexoki) 配色
+- [Obsidian Web Clipper](https://stephango.com/obsidian-web-clipper) 剪网页；针对不同站点有 [clipper templates](https://github.com/kepano/clipper-templates)
+- [Obsidian Sync](https://obsidian.md/sync) 做桌面、手机、平板同步
+- [Obsidian Bases](https://help.obsidian.md/bases) 按类别浏览、总览笔记
+- [Obsidian Maps](https://help.obsidian.md/bases/views/map) 配合部分模板里的地图需求
 
 ### 他给自己立的规矩
 
 在个人库里他坚持几件事（和模板里能看到的风格一致）：
 
-- **不**把内容拆成很多个 vault（下面写网站时会破一次例）  
-- **尽量不用文件夹**当主要组织方式  
-- **不用**非标准 Markdown  
-- 分类、标签**一律复数**，省得以后纠结命名  
-- **内链尽量多**：第一次提到就链上  
-- 日期统一 **`YYYY-MM-DD`**  
-- 需要打分时用 **1～7 分**那套刻度（下面单列一节）  
+- **不**把内容拆成很多个 vault（下面写网站时会破一次例）
+- **尽量不用文件夹**当主要组织方式
+- **不用**非标准 Markdown
+- 分类、标签**一律复数**，省得以后纠结命名
+- **内链尽量多**：第一次提到就链上
+- 日期统一 **`YYYY-MM-DD`**
+- 需要打分时用 **1～7 分**那套刻度（下面单列一节）
 - 待办按 [每周一张清单](https://stephango.com/todos) 做，而且他通常会**每周从头写一遍**，不先看上周列表；想不起来的任务，大概率就没那么重要
 
 这些规则背后的逻辑，和 [Style is consistent constraint](https://stephango.com/style) 是一套东西：先定一组自己愿意长期复用的约束，把后面成百上千个小决定折叠掉。比如标签永远用复数，以后就不用每次重新想命名。
@@ -82,14 +82,14 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 两个「外向」资料夹：
 
-- **References**：书、电影、地点、人、播客等“存在于我之外”的对象；文件名直接用标题  
-- **Clippings**：别人写的文章、随笔、资料剪藏  
+- **References**：书、电影、地点、人、播客等“存在于我之外”的对象；文件名直接用标题
+- **Clippings**：别人写的文章、随笔、资料剪藏
 
 三个偏「后台」、不想让内容挡住主视图的夹：
 
-- **Attachments**：图、音频、视频、PDF 等  
-- **Daily**：每日一页，文件名 `YYYY-MM-DD.md`；他通常不在里面写正文，主要是给别的笔记提供日期落点  
-- **Templates**：模板稿  
+- **Attachments**：图、音频、视频、PDF 等
+- **Daily**：每日一页，文件名 `YYYY-MM-DD.md`；他通常不在里面写正文，主要是给别的笔记提供日期落点
+- **Templates**：模板稿
 
 公开下载的示例库里还有 **Categories**、**Notes** 两个文件夹，只是为了让结构更容易看懂；在他自己的库里，这些内容其实也更接近放在根目录。
 
@@ -115,10 +115,10 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 几条明确写出来的偏好：
 
-- 属性名尽量**跨类别复用**，例如 `genre` 同时用于书影音，就能在一个视图里捞出「所有科幻」  
-- 模板可**组合**（例如 Person 和 Author 叠用）  
-- 属性名**打短**，`start` 优于拖长的 `start-date`  
-- 如果将来可能出现多个值，默认先用 **list**，不要急着把字段做成单值 text  
+- 属性名尽量**跨类别复用**，例如 `genre` 同时用于书影音，就能在一个视图里捞出「所有科幻」
+- 模板可**组合**（例如 Person 和 Author 叠用）
+- 属性名**打短**，`start` 优于拖长的 `start-date`
+- 如果将来可能出现多个值，默认先用 **list**，不要急着把字段做成单值 text
 
 类型表在仓库的 `.obsidian/types.json` 里对齐。
 
@@ -254,50 +254,42 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 有意思的不是某一年答得多漂亮，而是**连续多年用同一套题**之后，能看到自己的变化轨迹。
 
----
-
-读完这些归档文章，我脑子里剩下三样——
-
-能带走的东西最好是**文件**。结构少靠深层目录，多靠**链接和几条守得住的习惯**。整理旧笔记这一步，**别全扔给工具**，自己还得多摸几遍。
-
-以上都是根据归档 Markdown 转述；若有理解偏差，以原文为准。
-
 ## 六、如何实践
 
 下面按「新手能直接动手」的顺序，把 [kepano-obsidian](https://github.com/kepano/kepano-obsidian) 和原文 [How I use Obsidian](https://stephango.com/vault) 里的思路收成一份**入门用法说明**。
 
 ### 1. Obsidian 是什么
 
-- **Vault（库）= 电脑上的一个普通文件夹**，里面是一堆 Markdown（`.md`）等文件。  
-- Obsidian 是这个文件夹的**编辑器 + 浏览 + 图谱 + 插件**外壳；数据在你本机（或你自己选的同步方式），不是「锁在云端格式」那一类。  
+- **Vault（库）= 电脑上的一个普通文件夹**，里面是一堆 Markdown（`.md`）等文件。
+- Obsidian 是这个文件夹的**编辑器 + 浏览 + 图谱 + 插件**外壳；数据在你本机（或你自己选的同步方式），不是「锁在云端格式」那一类。
 - kepano 的仓库是他的**个人库模板**，可下载后当起点，**不必全盘照抄**。
 
 ### 2. 把模板跑起来
 
 1. 打开 [kepano/kepano-obsidian](https://github.com/kepano/kepano-obsidian)，用 **Code → Download ZIP**，或 `git clone` 到本地。 
 
-   ```bash 
-   cd ~/Documents
-   git clone git@github.com:kepano/kepano-obsidian.git
-   mv kepano-obsidian notes
-   ```
+ ```bash 
+ cd ~/Documents
+ git clone git@github.com:kepano/kepano-obsidian.git
+ mv kepano-obsidian notes
+ ```
 
-2. 解压到**任意目录**（路径里尽量**不要**奇怪符号，避免以后同步/Git 出问题）。  
+2. 解压到**任意目录**（路径里尽量**不要**奇怪符号，避免以后同步/Git 出问题）。
 
-3. 安装 [Obsidian](https://obsidian.md/)，启动后选 **「打开本地库」**，指向**刚才那个文件夹**。  
+3. 安装 [Obsidian](https://obsidian.md/)，启动后选 **「打开本地库」**，指向**刚才那个文件夹**。
 
 4. 先到处点开看看：`Notes`、`Categories` 里多半是**示例**；`Templates`、`References`、`Clippings` 等是结构示范。详细设计说明以 [How I use Obsidian](https://stephango.com/vault) 为准。
 
 
 ### 3. 新手建议
 
-| 概念               | 你可以这样理解                                               |
+| 概念 | 你可以这样理解 |
 | ------------------ | ------------------------------------------------------------ |
-| **笔记就是文件**   | 关掉 Obsidian，用记事本也能打开同一个 `.md`，这就是「文件优先」。 |
+| **笔记就是文件** | 关掉 Obsidian，用记事本也能打开同一个 `.md`，这就是「文件优先」。 |
 | **`[[双向链接]]`** | 在正文里写 `[[某篇标题]]` 链到另一篇；还没建篇目的叫「未解析链接」，可当**待写清单**。 |
-| **Daily**          | 每天一页（常命名为 `YYYY-MM-DD.md`）。kepano 的用法里，Daily **甚至可以几乎不写正文**，主要给别的笔记**链过来**当日期锚点。 |
+| **Daily**| 每天一页（常命名为 `YYYY-MM-DD.md`）。kepano 的用法里，Daily **甚至可以几乎不写正文**，主要给别的笔记**链过来**当日期锚点。 |
 | **文件夹少而固定** | 模板里有 `References`（书影音人等）、`Clippings`（剪藏）、`Attachments`、`Templates` 等；**大量内容在「库根目录」**，用链接和属性组织，而不是深目录。 |
-| **模板**           | 新建某类笔记时从模板起稿，顶部 **Properties（YAML）** 帮你统一字段，方便以后搜索、用 Bases 等视图。 |
+| **模板** | 新建某类笔记时从模板起稿，顶部 **Properties（YAML）** 帮你统一字段，方便以后搜索、用 Bases 等视图。 |
 
 先把 **新建笔记、写 `[[链接]]`、用模板建一条、在库里搜一句话** 练熟，再考虑插件。
 
@@ -306,10 +298,10 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 来自 [vault 文](https://stephango.com/vault)，新手可**先选 2～3 条**坚持住：
 
-- 尽量用**标准 Markdown**，少用只有某软件才认的语法。  
-- 需要分类时，**标签/类目用复数**等一致命名（减少以后纠结）。  
-- 日期统一 **`YYYY-MM-DD`**。  
-- **内链多用**：第一次提到就 `[[链上]]`。  
+- 尽量用**标准 Markdown**，少用只有某软件才认的语法。
+- 需要分类时，**标签/类目用复数**等一致命名（减少以后纠结）。
+- 日期统一 **`YYYY-MM-DD`**。 
+- **内链多用**：第一次提到就 `[[链上]]`。
 - 评分若要用，他采用 **1～7 分**（文中有每档含义）。
 
 
@@ -317,10 +309,10 @@ Steph Ango 反复在讲一件事：软件会过时，文件才更有机会留下
 
 原文提到的工具链（按需安装）：
 
-- **主题**：如 Minimal + Flexoki。  
-- **Obsidian Sync**（官方多端同步，付费）或你自己用 Git/iCloud 等。  
-- **Web Clipper**：剪网页进 `Clippings`。  
-- **Bases**：按属性/类别看一批笔记。  
+- **主题**：如 Minimal + Flexoki。
+- **Obsidian Sync**（官方多端同步，付费）或你自己用 Git/iCloud 等。
+- **Web Clipper**：剪网页进 `Clippings`。
+- **Bases**：按属性/类别看一批笔记。
 
 新手**不必第一天全装**；先默认编辑体验 + 链接习惯，再补插件。
 
@@ -332,9 +324,9 @@ kepano 个人站是**单独一个库** + 静态站生成器（如 Jekyll）+ Git
 
 ### 7. 建议的「第一周」小任务
 
-1. 每天用 **1 条 Daily** 或一篇**根目录随笔**，写 3～5 个 `[[概念]]`，空的也别删。  
-2. 从模板新建 **1 条 References**（例如一本书或一部电影），填几项属性。  
-3. 用 **Web Clipper**（若已装）剪 **1 篇文章** 到 `Clippings`，并在别处 `[[链到]]` 它。  
+1. 每天用 **1 条 Daily** 或一篇**根目录随笔**，写 3～5 个 `[[概念]]`，空的也别删。
+2. 从模板新建 **1 条 References**（例如一本书或一部电影），填几项属性。
+3. 用 **Web Clipper**（若已装）剪 **1 篇文章** 到 `Clippings`，并在别处 `[[链到]]` 它。
 4. 读一遍 [How I use Obsidian](https://stephango.com/vault)，只圈出**你愿意试的两段**（例如分形日记、random note），下周再试。
 
 
@@ -344,70 +336,70 @@ Obsidian 的核心是 **「文件夹里的 Markdown + 链接」**；[kepano-obsi
 
 **作者**
 
-- Steph Ango（kepano）个人站  
-  https://stephango.com
+- Steph Ango（kepano）个人站
+https://stephango.com
 
 **文章（stephango.com）**
 
-- 《File over app》  
-  https://stephango.com/file-over-app
-- 《Self-guaranteeing promises》  
-  https://stephango.com/self-guarantee
-- 《How I use Obsidian》（Vault 用法）  
-  https://stephango.com/vault
-- 《Don't delegate understanding》  
-  https://stephango.com/understand
-- 《Evergreen notes》  
-  https://stephango.com/evergreen-notes
-- 《Style is consistent constraint》  
-  https://stephango.com/style
-- 《Concise explanations》  
-  https://stephango.com/concise
-- 《If you're remote, ramble》  
-  https://stephango.com/ramblings
-- 《40 问》（年终复盘）  
-  https://stephango.com/40-questions
-- 《十年 40 问》  
-  https://stephango.com/40-questions-decade
+- 《File over app》
+https://stephango.com/file-over-app
+- 《Self-guaranteeing promises》
+https://stephango.com/self-guarantee
+- 《How I use Obsidian》（Vault 用法）
+https://stephango.com/vault
+- 《Don't delegate understanding》
+https://stephango.com/understand
+- 《Evergreen notes》
+https://stephango.com/evergreen-notes
+- 《Style is consistent constraint》
+https://stephango.com/style
+- 《Concise explanations》
+https://stephango.com/concise
+- 《If you're remote, ramble》
+https://stephango.com/ramblings
+- 《40 问》（年终复盘）
+https://stephango.com/40-questions
+- 《十年 40 问》
+https://stephango.com/40-questions-decade
 
 **模板**
 
-- Obsidian 库模板 kepano-obsidian  
-  https://github.com/kepano/kepano-obsidian  
+- Obsidian 库模板 kepano-obsidian
+https://github.com/kepano/kepano-obsidian
 
 **主题、剪藏与待办（文中提到）**
 
-- Minimal 主题说明  
-  https://stephango.com/minimal  
-- Flexoki 配色  
-  https://stephango.com/flexoki  
-- Obsidian Web Clipper  
-  https://stephango.com/obsidian-web-clipper  
-- Clipper 模板仓库  
-  https://github.com/kepano/clipper-templates  
-- 每周待办怎么做（How I do my to-dos）  
-  https://stephango.com/todos  
-- Permalink Opener  
-  https://stephango.com/permalink-opener  
+- Minimal 主题说明
+https://stephango.com/minimal
+- Flexoki 配色
+https://stephango.com/flexoki
+- Obsidian Web Clipper
+https://stephango.com/obsidian-web-clipper
+- Clipper 模板仓库
+https://github.com/kepano/clipper-templates
+- 每周待办怎么做（How I do my to-dos）
+https://stephango.com/todos
+- Permalink Opener
+https://stephango.com/permalink-opener
 
 **Obsidian 官方文档**
 
-- Bases  
-  https://help.obsidian.md/bases  
-- Bases：地图视图  
-  https://help.obsidian.md/bases/views/map  
-- Properties（属性）  
-  https://help.obsidian.md/properties  
-- Obsidian Sync  
-  https://obsidian.md/sync  
-- Obsidian Publish  
-  https://obsidian.md/publish  
+- Bases
+https://help.obsidian.md/bases
+- Bases：地图视图
+https://help.obsidian.md/bases/views/map
+- Properties（属性）
+https://help.obsidian.md/properties
+- Obsidian Sync
+https://obsidian.md/sync
+- Obsidian Publish
+https://obsidian.md/publish
 
 **静态站工具（发稿流程里点名）**
 
-- Jekyll  
-  https://jekyllrb.com/  
-- Digital garden 模板（Maxime Vaillancourt）  
-  https://github.com/maximevaillancourt/digital-garden-jekyll-template  
-- Quartz / Astro / Eleventy / Hugo  
-  https://quartz.jzhao.xyz/ / https://astro.build/ / https://www.11ty.dev/ / https://gohugo.io/  
+- Jekyll
+https://jekyllrb.com/
+- Digital garden 模板（Maxime Vaillancourt）
+https://github.com/maximevaillancourt/digital-garden-jekyll-template
+- Quartz / Astro / Eleventy / Hugo
+https://quartz.jzhao.xyz/ / https://astro.build/ / https://www.11ty.dev/ / https://gohugo.io/
