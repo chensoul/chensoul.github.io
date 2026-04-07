@@ -5,6 +5,7 @@ slug: spring-boot-null-safety-annotations
 categories: [ "translation" ]
 tags: ['spring-boot']
 description: "NullPointerExceptions （通常缩写为“NPE”）对于每个 Java 程序员来说都是一场噩梦。 ..."
+canonicalURL: "https://www.baeldung.com/spring-boot-null-safety-annotations"
 ---
 
 `NullPointerExceptions` （通常缩写为“NPE”）对于每个 Java 程序员来说都是一场噩梦。

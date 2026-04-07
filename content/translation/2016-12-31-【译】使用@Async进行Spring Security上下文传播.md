@@ -6,6 +6,7 @@ slug: spring-security-async-principal-propagation
 categories: [ "translation" ]
 tags: [ "spring-security", "async" ]
 description: "在 @Async 线程中传播 Spring Security 的 Authentication：为何默认丢失，以及如何用 DelegatingSecurityContextAsyncTaskExecutor 恢复上下文。"
+canonicalURL: "https://www.baeldung.com/spring-security-async-principal-propagation"
 ---
 
 ## 1. 简介

@@ -5,6 +5,7 @@ slug: spring-boot-info-endpoint
 categories: [ "translation" ]
 tags: ['spring-boot']
 description: "在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。 ..."
+canonicalURL: "https://www.baeldung.com/spring-boot-info-endpoint"
 ---
 
 在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。

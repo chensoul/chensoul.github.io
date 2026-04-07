@@ -6,6 +6,7 @@ slug: spring-async
 categories: [ "translation" ]
 tags: [ "spring", "async" ]
 description: "Spring 中启用 @EnableAsync、使用 @Async 与自定义 Executor，以及异步 void 方法的异常处理。"
+canonicalURL: "https://www.baeldung.com/spring-async"
 ---
 
 ## 1. 概述

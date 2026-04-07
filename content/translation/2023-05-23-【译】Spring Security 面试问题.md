@@ -5,6 +5,7 @@ slug: spring-security-interview-questions
 categories: [ "translation" ]
 tags: ['spring-boot','security','jwt']
 description: "本面试准备指南将讨论一些常见的 Spring Security 面试问题。无论您是准备面试还是只是想增强对 Spring Security 的了解，这些问题都将帮助您理解关键概念并指导您设计常见安全问题的解决方案。 ..."
+canonicalURL: "https://www.baeldung.com/spring-security-interview-questions"
 ---
 
 本面试准备指南将讨论一些常见的 Spring Security 面试问题。无论您是准备面试还是只是想增强对 Spring Security 的了解，这些问题都将帮助您理解关键概念并指导您设计常见安全问题的解决方案。

@@ -5,6 +5,7 @@ slug: spring-security-without-websecurityconfigureradapter
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
 description: "..."
+canonicalURL: "https://www.baeldung.com/spring-security-without-websecurityconfigureradapter"
 ---
 
 ![WebSecurityConfigurerAdapter Deprecated](spring-security-without-websecurityconfigureradapter/01.webp)
