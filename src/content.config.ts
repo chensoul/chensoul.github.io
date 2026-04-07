@@ -52,6 +52,15 @@ const articleSchema = () =>
     math: z.boolean().default(false),
     mermaid: z.boolean().default(false),
     canonicalURL: z.string().optional(),
+    /** 原文首次发布时间（东八区），格式 `YYYY-MM-DD HH:mm:00+08:00`；与本站 `date`（译文）区分 */
+    originalPublishedAt: z
+      .union([z.date(), z.string()])
+      .optional()
+      .nullable()
+      .transform(v => {
+        if (v == null) return v;
+        return v instanceof Date ? v : new Date(String(v).replace(" ", "T"));
+      }),
     favicon: z.string().optional(),
     banner: z.string().optional(),
     slug: z.string().trim().min(1, "slug 不能为空"),
