@@ -1,0 +1,628 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e6]:
+      - link "Reflectoring - Where the HOW meets the WHY" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Reflectoring - Where the HOW meets the WHY" [ref=e9]
+      - text:  
+      - generic [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - button "Books " [ref=e13] [cursor=pointer]
+          - listitem [ref=e14]:
+            - link "Simplify" [ref=e15] [cursor=pointer]:
+              - /url: /simplify
+          - listitem [ref=e16]:
+            - button "Contribute " [ref=e17] [cursor=pointer]
+          - listitem [ref=e18]:
+            - button "Services " [ref=e19] [cursor=pointer]
+          - listitem [ref=e20]:
+            - button "Categories " [ref=e21] [cursor=pointer]
+        - text:    
+        - list [ref=e22]:
+          - listitem [ref=e23]:
+            - button "" [ref=e24] [cursor=pointer]:
+              - generic [ref=e25]: 
+  - main [ref=e26]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Creating Optimized Docker Images for a Spring Boot Application" [level=1] [ref=e31]
+        - list [ref=e32]:
+          - listitem [ref=e33]:
+            - generic [ref=e34]: 
+            - generic [ref=e35]: September 5, 2020
+          - listitem [ref=e36]:
+            - generic [ref=e37]: 
+            - list [ref=e38]:
+              - listitem [ref=e39]:
+                - link "Spring Boot" [ref=e40] [cursor=pointer]:
+                  - /url: /categories/spring-boot
+        - group [ref=e41]:
+          - generic "Table Of Contents" [ref=e42] [cursor=pointer]
+        - generic [ref=e43]:
+          - paragraph [ref=e44]: Containers have emerged as the preferred means of packaging an application with all the software and operating system dependencies and then shipping that across to different environments.
+          - paragraph [ref=e45]: "This article looks at different ways of containerizing a Spring Boot application:"
+          - list [ref=e46]:
+            - listitem [ref=e47]: building a Docker image using a Docker file,
+            - listitem [ref=e48]: building an OCI image from source code with Cloud-Native Buildpack,
+            - listitem [ref=e49]: and optimizing the image at runtime by splitting parts of the JAR into different layers using layered tools.
+          - heading " Example Code" [level=2] [ref=e50]:
+            - generic [ref=e51]: 
+            - text: Example Code
+          - text: This article is accompanied by a working code example
+          - link "on GitHub" [ref=e52] [cursor=pointer]:
+            - /url: https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker
+          - text: .
+          - heading "Container Terminology" [level=2] [ref=e53]
+          - paragraph [ref=e54]: "We will start with the container terminologies used throughout the article:"
+          - list [ref=e55]:
+            - listitem [ref=e56]:
+              - paragraph [ref=e57]:
+                - strong [ref=e58]: Container image
+                - text: ": a file with a specific format. We convert our application into a container image by running a build tool."
+            - listitem [ref=e59]:
+              - paragraph [ref=e60]:
+                - strong [ref=e61]: Container
+                - text: ": the runtime instance of a container image."
+            - listitem [ref=e62]:
+              - paragraph [ref=e63]:
+                - strong [ref=e64]: Container engine
+                - text: ": the daemon process responsible for running the Container."
+            - listitem [ref=e65]:
+              - paragraph [ref=e66]:
+                - strong [ref=e67]: Container host
+                - text: ": the host machine on which the container engine runs."
+            - listitem [ref=e68]:
+              - paragraph [ref=e69]:
+                - strong [ref=e70]: Container registry
+                - text: ": the shared location that is used for publishing and distributing the container image."
+            - listitem [ref=e71]:
+              - paragraph [ref=e72]:
+                - strong [ref=e73]: OCI Standard
+                - text: ": the"
+                - link "Open Container Initiative (OCI)" [ref=e74] [cursor=pointer]:
+                  - /url: https://opencontainers.org/about/overview/
+                - text: is a lightweight, open governance structure formed under the Linux Foundation. The OCI Image Specification defines industry standards for container image formats and runtimes to ensure that all container engines can run container images produced by any build tool.
+          - paragraph [ref=e75]:
+            - strong [ref=e76]: To containerize an application, we enclose our application inside a container image and publish that image to a shared registry. The container runtime pulls this image from the registry, unpacks the image, and runs the application inside it.
+          - paragraph [ref=e77]: The 2.3 release of Spring Boot provides plugins for building OCI images.
+          - paragraph [ref=e78]:
+            - link "Docker" [ref=e79] [cursor=pointer]:
+              - /url: https://docs.docker.com/get-started/#docker-concepts
+            - text: happens to be the most commonly used container implementation and we are using Docker in our examples, so all subsequent reference to a container in this article will mean Docker.
+          - heading "Building a Container Image the Conventional Way" [level=2] [ref=e80]
+          - paragraph [ref=e81]: It is very easy to create Docker images of Spring Boot applications by adding a few instructions to a Docker file.
+          - paragraph [ref=e82]: We first build an executable JAR and as part of the Docker file instructions, copy the executable JAR over a base JRE image after applying necessary customizations.
+          - paragraph [ref=e83]:
+            - text: Let us create our Spring Boot application from
+            - link "Spring Initializr" [ref=e84] [cursor=pointer]:
+              - /url: https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.3.3.RELEASE&packaging=jar&jvmVersion=11&groupId=io.pratik.users&artifactId=usersignup&name=usersignup&description=Demo%20project%20for%20Spring%20Boot%20Container&packageName=io.pratik.users&dependencies=web,actuator,lombok
+            - text: with dependencies for
+            - code [ref=e85]: web
+            - text: ","
+            - code [ref=e86]: lombok
+            - text: ", and"
+            - code [ref=e87]: actuator
+            - text: . We also add a rest controller to expose an API with the
+            - code [ref=e88]: GET
+            - text: method.
+          - heading "Creating a Docker File" [level=3] [ref=e89]
+          - paragraph [ref=e90]:
+            - text: Next, we containerize this application by adding a
+            - code [ref=e91]: Dockerfile
+            - text: ":"
+          - code [ref=e94]: "FROM adoptopenjdk:11-jre-hotspot ARG JAR_FILE=target/*.jar COPY ${JAR_FILE} application.jar EXPOSE 8080 ENTRYPOINT [\"java\",\"-jar\",\"/application.jar\"]"
+          - paragraph [ref=e95]:
+            - text: Our Docker file contains a base image from
+            - code [ref=e96]: adoptopenjdk
+            - text: over which we copy our JAR file and then expose the port
+            - code [ref=e97]: "8080"
+            - text: which will listen for requests.
+          - heading "Building the Application" [level=3] [ref=e98]
+          - paragraph [ref=e99]: "We first build the application with Maven or Gradle. We are using Maven here:"
+          - code [ref=e102]: mvn clean package
+          - paragraph [ref=e103]: This creates an executable JAR of the application. We need to convert this executable JAR into a Docker image for running in a Docker engine.
+          - heading "Building the Container Image" [level=3] [ref=e104]
+          - paragraph [ref=e105]:
+            - text: Next, we put this executable JAR in a Docker image by running the
+            - code [ref=e106]: docker build
+            - text: "command from the root project directory containing the Docker file created earlier:"
+          - code [ref=e109]: docker build -t usersignup:v1 .
+          - paragraph [ref=e110]: "We can see our image listed with the command:"
+          - code [ref=e113]: docker images
+          - paragraph [ref=e114]:
+            - text: The output of the above command includes our image
+            - code [ref=e115]: usersignup
+            - text: along with the base image
+            - code [ref=e116]: adoptopenjdk
+            - text: specified in our Docker file.
+          - code [ref=e119]: REPOSITORY TAG SIZE usersignup v1 249MB adoptopenjdk 11-jre-hotspot 229MB
+          - heading "Viewing the Layers Inside the Container Image" [level=3] [ref=e120]
+          - paragraph [ref=e121]:
+            - text: Let us see the stack of layers inside the image. We will use the
+            - link "dive tool" [ref=e122] [cursor=pointer]:
+              - /url: https://github.com/wagoodman/dive
+            - text: "to view those layers:"
+          - code [ref=e125]: dive usersignup:v1
+          - paragraph [ref=e126]: "Here is part of the output from running the Dive command:"
+          - img "dive screenshot" [ref=e127]
+          - paragraph [ref=e128]: As we can see the application layer forms a significant part of the image size. We will aim to reduce the size of this layer in the following sections as part of our optimization.
+          - heading "Building a Container Image with Buildpack" [level=2] [ref=e129]
+          - paragraph [ref=e130]:
+            - link "Buildpacks" [ref=e131] [cursor=pointer]:
+              - /url: https://buildpacks.io/
+            - text: is a generic term used by various Platform as a Service(PAAS) offerings to build a container image from source code. It was started by Heroku in 2011 and has since been adopted by Cloud Foundry, Google App Engine, Gitlab, Knative, and some others.
+          - img "dive screenshot" [ref=e132]
+          - heading "Advantage of Cloud-Native Buildpacks" [level=3] [ref=e133]
+          - paragraph [ref=e134]:
+            - text: One main advantage of using Buildpack for building images is that
+            - strong [ref=e135]: changes to the image configuration can be managed in a centralized place (the builder) and propagated to all applications which are using the builder.
+          - paragraph [ref=e136]:
+            - text: Buildpacks were tightly coupled to the platform.
+            - strong [ref=e137]: Cloud-Native Buildpacks bring standardization across platforms by supporting the OCI image format which ensures the image can be run by a Docker engine.
+          - heading "Using the Spring Boot Plugin" [level=3] [ref=e138]
+          - paragraph [ref=e139]:
+            - text: The Spring Boot plugin creates OCI images from the source code using a Buildpack. Images are built using the
+            - code [ref=e140]: bootBuildImage
+            - text: task (Gradle) or the
+            - code [ref=e141]: spring-boot:build-image
+            - text: goal (Maven) and a local Docker installation.
+          - paragraph [ref=e142]:
+            - text: We can customize the name of the image required for pushing to the Docker Registry by specifying the name in the
+            - code [ref=e143]: image tag
+            - text: ":"
+          - code [ref=e146]: "<plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> <configuration> <image> <name>docker.io/pratikdas/${project.artifactId}:v1</name> </image> </configuration> </plugin>"
+          - paragraph [ref=e147]:
+            - text: Let us use Maven to run the
+            - code [ref=e148]: build-image
+            - text: goal to build the application and create the container image. We are not using any Docker file now.
+          - code [ref=e151]: mvn spring-boot:build-image
+          - paragraph [ref=e152]: "Running this will produce an output similar to:"
+          - code [ref=e155]: "[INFO] --- spring-boot-maven-plugin:2.3.3.RELEASE:build-image (default-cli) @ usersignup --- [INFO] Building image 'docker.io/pratikdas/usersignup:v1' [INFO] [INFO] > Pulling builder image 'gcr.io/paketo-buildpacks/builder:base-platform-api-0.3' 0% . . .. [creator] Adding label 'org.springframework.boot.version' .. [creator] *** Images (c311fe74ec73): .. [creator] docker.io/pratikdas/usersignup:v1 [INFO] [INFO] Successfully built image 'docker.io/pratikdas/usersignup:v1'"
+          - paragraph [ref=e156]:
+            - text: From the output, we can see the
+            - code [ref=e157]: paketo Cloud-Native buildpack
+            - text: "being used to build a runnable OCI image. As we did earlier, we can see the image listed as a Docker image by running the command:"
+          - code [ref=e160]: docker images
+          - paragraph [ref=e161]: "Output:"
+          - code [ref=e164]: REPOSITORY SIZE paketobuildpacks/run 84.3MB gcr.io/paketo-buildpacks/builder 652MB pratikdas/usersignup 257MB
+          - heading "Building a Container Image with Jib" [level=2] [ref=e165]
+          - paragraph [ref=e166]: Jib is an image builder plugin from Google and provides an alternate method of building a container image from source code.
+          - paragraph [ref=e167]:
+            - text: We configure the
+            - code [ref=e168]: jib-maven-plugin
+            - text: "in pom.xml:"
+          - code [ref=e171]: <plugin> <groupId>com.google.cloud.tools</groupId> <artifactId>jib-maven-plugin</artifactId> <version>2.5.2</version> </plugin>
+          - paragraph [ref=e172]: "Next, we trigger the Jib plugin with the Maven command to build the application and create the container image. As before, we are not using any Docker file here:"
+          - code [ref=e175]: mvn compile jib:build -Dimage=<docker registry name>/usersignup:v1
+          - paragraph [ref=e176]: "We get the following output after running the above Maven command:"
+          - code [ref=e179]: "[INFO] Containerizing application to pratikdas/usersignup:v1... . . [INFO] Container entrypoint set to [java, -cp, /app/resources:/app/classes:/app/libs/*, io.pratik.users.UsersignupApplication] [INFO] [INFO] Built and pushed image as pratikdas/usersignup:v1 [INFO] Executing tasks: [INFO] [==============================] 100.0% complete"
+          - paragraph [ref=e180]: The output shows that the container image is built and pushed to the registry.
+          - heading "Motivations and Techniques for Building Optimized Images" [level=2] [ref=e181]
+          - paragraph [ref=e182]: "We have two main motivations for optimization:"
+          - list [ref=e183]:
+            - listitem [ref=e184]:
+              - strong [ref=e185]: Performance
+              - text: ": in a container orchestration system, the container image is pulled from the image registry to a host running a container engine. This process is called scheduling. Pulling large-sized images from the registry result in long scheduling times in container orchestration systems and long build times in CI pipelines."
+            - listitem [ref=e186]:
+              - strong [ref=e187]: Security
+              - text: ": large-sized images also have a greater surface area for vulnerabilities."
+          - paragraph [ref=e188]:
+            - strong [ref=e189]: A Docker image is composed of a stack of layers each representing an instruction in our Dockerfile.
+            - text: Each layer is a delta of the changes over the underlying layer. When we pull the Docker image from the registry, it is pulled by layers and cached in the host.
+          - paragraph [ref=e190]:
+            - text: Spring Boot uses a
+            - link "“fat JAR”" [ref=e191] [cursor=pointer]:
+              - /url: https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-executable-jar-format.html#executable-jar-jar-file-structure
+            - text: as its default packaging format. When we inspect the fat JAR, we can see that the application forms a very small part of the entire JAR. This is the part that changes most frequently. The remaining part is composed of the Spring Framework dependencies.
+          - paragraph [ref=e192]: The optimization formula centers around isolating the application into a separate layer from the Spring Framework dependencies.
+          - paragraph [ref=e193]: The dependencies layer forming the bulk of the fat JAR is downloaded only once and cached in the host system.
+          - paragraph [ref=e194]:
+            - strong [ref=e195]: Only the thin layer of application is pulled during application updates and container scheduling
+            - text: "as illustrated in this diagram:"
+          - img "dive screenshot" [ref=e196]
+          - paragraph [ref=e197]: Let’s have a look at how to build those optimized images for a Spring Boot application in the next sections.
+          - heading "Building an Optimized Container Image for a Spring Boot Application with Buildpack" [level=2] [ref=e198]
+          - paragraph [ref=e199]: "Spring Boot 2.3 supports layering by extracting parts of the fat JAR into separate layers. The layering feature is turned off by default and needs to be explicitly enabled with the Spring Boot Maven plugin:"
+          - code [ref=e202]: <plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> <configuration> <layers> <enabled>true</enabled> </layers> </configuration> </plugin>
+          - paragraph [ref=e203]: We will use this configuration to generate our container image first with Buildpack and then with Docker in the following sections.
+          - paragraph [ref=e204]:
+            - text: Let us run the Maven
+            - code [ref=e205]: build-image
+            - text: "goal to create the container image: images/stock/-1200x628-branded.jpg"
+          - code [ref=e208]: mvn spring-boot:build-image
+          - paragraph [ref=e209]: "If we run Dive to see the layers in the resulting image, we can see the application layer (encircled in red) is much smaller in the range of kilobytes compared to what we had obtained by using the fat JAR format:"
+          - img "dive screenshot" [ref=e210]
+          - heading "Building an Optimized Container Image for a Spring Boot Application with Docker" [level=2] [ref=e211]
+          - paragraph [ref=e212]: Instead of using the Maven or Gradle plugin, we can also create a layered JAR Docker image with a Docker file.
+          - paragraph [ref=e213]: When we are using Docker, we need to perform two additional steps for extracting the layers and copying those in the final image.
+          - paragraph [ref=e214]: "The contents of the resulting JAR after building with Maven with the layering feature turned on will look like this:"
+          - code [ref=e217]: META-INF/ . BOOT-INF/lib/ . BOOT-INF/lib/spring-boot-jarmode-layertools-2.3.3.RELEASE.jar BOOT-INF/classpath.idx BOOT-INF/layers.idx
+          - paragraph [ref=e218]:
+            - text: The output shows an additional JAR named
+            - code [ref=e219]: spring-boot-jarmode-layertools
+            - text: and a
+            - code [ref=e220]: layersfle.idx
+            - text: file. The layering feature is provided by this additional JAR as explained in the next section.
+          - heading "Extracting the Dependencies in Separate Layers" [level=3] [ref=e221]
+          - paragraph [ref=e222]:
+            - text: To view and extract the layers from our layered JAR, we use a system property
+            - code [ref=e223]: "-Djarmode=layertools"
+            - text: to launch the
+            - code [ref=e224]: spring-boot-jarmode-layertools
+            - text: "JAR instead of the application:"
+          - code [ref=e227]: java -Djarmode=layertools -jar target/usersignup-0.0.1-SNAPSHOT.jar
+          - paragraph [ref=e228]: "Running this command produces the output containing available command options:"
+          - code [ref=e231]: "Usage: java -Djarmode=layertools -jar usersignup-0.0.1-SNAPSHOT.jar Available commands: list List layers from the jar that can be extracted extract Extracts layers from the jar for image creation help Help about any command"
+          - paragraph [ref=e232]:
+            - text: The output shows the commands
+            - code [ref=e233]: list
+            - text: ","
+            - code [ref=e234]: extract
+            - text: ", and"
+            - code [ref=e235]: help
+            - text: with
+            - code [ref=e236]: help
+            - text: being the default. Let us run the command with the
+            - code [ref=e237]: list
+            - text: "option:"
+          - code [ref=e240]: java -Djarmode=layertools -jar target/usersignup-0.0.1-SNAPSHOT.jar list
+          - code [ref=e243]: dependencies spring-boot-loader snapshot-dependencies application
+          - paragraph [ref=e244]: We can see the list of dependencies that can be added as layers.
+          - paragraph [ref=e245]: "The default layers are:"
+          - table [ref=e246]:
+            - rowgroup [ref=e247]:
+              - row "Layer name Contents" [ref=e248]:
+                - columnheader "Layer name" [ref=e249]
+                - columnheader "Contents" [ref=e250]
+            - rowgroup [ref=e251]:
+              - row "dependencies any dependency whose version does not contain SNAPSHOT" [ref=e252]:
+                - cell "dependencies" [ref=e253]:
+                  - code [ref=e254]: dependencies
+                - cell "any dependency whose version does not contain SNAPSHOT" [ref=e255]
+              - row "spring-boot-loader JAR loader classes" [ref=e256]:
+                - cell "spring-boot-loader" [ref=e257]:
+                  - code [ref=e258]: spring-boot-loader
+                - cell "JAR loader classes" [ref=e259]
+              - row "snapshot-dependencies any dependency whose version contains SNAPSHOT" [ref=e260]:
+                - cell "snapshot-dependencies" [ref=e261]:
+                  - code [ref=e262]: snapshot-dependencies
+                - cell "any dependency whose version contains SNAPSHOT" [ref=e263]
+              - row "application application classes and resources" [ref=e264]:
+                - cell "application" [ref=e265]:
+                  - code [ref=e266]: application
+                - cell "application classes and resources" [ref=e267]
+          - paragraph [ref=e268]:
+            - text: The layers are defined in a
+            - code [ref=e269]: layers.idx
+            - text: file in the order that they should be added to the Docker image. These layers get cached in the host after the first pull since they do not change.
+            - strong [ref=e270]: Only the updated application layer is downloaded to the host which is faster because of the reduced size
+            - text: .
+          - heading "Building the Image with Dependencies Extracted in Separate Layers" [level=3] [ref=e271]
+          - paragraph [ref=e272]:
+            - text: We will build the final image in two stages using a method called
+            - link "multi-stage build" [ref=e273] [cursor=pointer]:
+              - /url: https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
+            - text: . In the first stage, we will extract the dependencies and in the second stage, we will copy the extracted dependencies to the final image.
+          - paragraph [ref=e274]: "Let us modify our Docker file for multi-stage build:"
+          - code [ref=e277]: "# the first stage of our build will extract the layers FROM adoptopenjdk:14-jre-hotspot as builder WORKDIR application ARG JAR_FILE=target/*.jar COPY ${JAR_FILE} application.jar RUN java -Djarmode=layertools -jar application.jar extract # the second stage of our build will copy the extracted layers FROM adoptopenjdk:14-jre-hotspot WORKDIR application COPY --from=builder application/dependencies/ ./ COPY --from=builder application/spring-boot-loader/ ./ COPY --from=builder application/snapshot-dependencies/ ./ COPY --from=builder application/application/ ./ ENTRYPOINT [\"java\", \"org.springframework.boot.loader.JarLauncher\"]"
+          - paragraph [ref=e278]:
+            - text: We save this configuration in a separate file -
+            - code [ref=e279]: Dockerfile2
+            - text: .
+          - paragraph [ref=e280]: "We build the Docker image using the command:"
+          - code [ref=e283]: docker build -f Dockerfile2 -t usersignup:v1 .
+          - paragraph [ref=e284]: "After running this command, we get this output:"
+          - code [ref=e287]: "Sending build context to Docker daemon 20.41MB Step 1/12 : FROM adoptopenjdk:14-jre-hotspot as builder 14-jre-hotspot: Pulling from library/adoptopenjdk . . Successfully built a9ebf6970841 Successfully tagged userssignup:v1"
+          - paragraph [ref=e288]: We can see the Docker image is created with an Image ID and then tagged.
+          - paragraph [ref=e289]: "We finally run the Dive command as before to check the layers inside the generated Docker image. We can specify either the Image ID or tag as input to the Dive command:"
+          - code [ref=e292]: dive userssignup:v1
+          - paragraph [ref=e293]: As we can see in the output, the layer containing the application is only 11 kB now with the dependencies cached in separate layers.
+          - img "dive screenshot" [ref=e294]
+          - heading "Extracting Internal Dependencies in Separate Layers" [level=3] [ref=e295]
+          - paragraph [ref=e296]:
+            - text: We can further reduce the application layer size by extracting any of our custom dependencies in a separate layer instead of packaging them with the application by declaring them in a
+            - code [ref=e297]: yml
+            - text: like file named
+            - code [ref=e298]: layers.idx
+            - text: ":"
+          - code [ref=e300]: "- \"dependencies\": - \"BOOT-INF/lib/\" - \"spring-boot-loader\": - \"org/\" - \"snapshot-dependencies\": - \"custom-dependencies\": - \"io/myorg/\" - \"application\": - \"BOOT-INF/classes/\" - \"BOOT-INF/classpath.idx\" - \"BOOT-INF/layers.idx\" - \"META-INF/\""
+          - paragraph [ref=e301]:
+            - text: In this file -
+            - code [ref=e302]: layers.idx
+            - text: we have added a custom dependency with the name
+            - code [ref=e303]: io.myorg
+            - text: containing organization dependencies pulled from a shared repository.
+          - heading "Conclusion" [level=2] [ref=e304]
+          - paragraph [ref=e305]: In this article, we looked at using Cloud-Native Buildpacks to create the container image directly from source code. This is an alternative to using Docker for building the container image using the conventional way, by first building the fat executable JAR and then packaging it in a container image by specifying the instructions in a Dockerfile.
+          - paragraph [ref=e306]: We also looked at optimizing our container by enabling the layering feature which extracts the dependencies in separate layers that get cached in the host and the thin layer of application is downloaded during scheduling in container runtime engines.
+          - paragraph [ref=e307]:
+            - text: You can refer to all the source code used in the article on
+            - link "Github" [ref=e308] [cursor=pointer]:
+              - /url: https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-docker
+            - text: .
+          - heading "Command Reference" [level=2] [ref=e309]
+          - paragraph [ref=e310]: Here is a summary of commands which we used throughout this article for quick reference.
+          - paragraph [ref=e311]: "Clean our environment:"
+          - code [ref=e314]: docker system prune -a
+          - paragraph [ref=e315]: "Build container image with Docker file:"
+          - code [ref=e318]: docker build -f <Docker file name> -t <tag> .
+          - paragraph [ref=e319]: "Build container image from source (without Dockerfile):"
+          - code [ref=e322]: mvn spring-boot:build-image
+          - paragraph [ref=e323]: "View layers of dependencies. Ensure the layering feature is enabled in spring-boot-maven-plugin before building the application JAR:"
+          - code [ref=e326]: java -Djarmode=layertools -jar application.jar list
+          - paragraph [ref=e327]: "Extract layers of dependencies. Ensure the layering feature is enabled in spring-boot-maven-plugin before building the application JAR:"
+          - code [ref=e329]: java -Djarmode=layertools -jar application.jar extract
+          - paragraph [ref=e330]: View list of container images
+          - code [ref=e333]: docker images
+          - paragraph [ref=e334]: "View layers inside container image (Ensure dive tool is installed):"
+          - code [ref=e337]: dive <image ID or image tag>
+        - generic [ref=e341]:
+          - generic [ref=e342]:
+            - text: "Written By:"
+            - heading "Pratik Das" [level=2] [ref=e343]
+          - paragraph [ref=e344]: Software Engineer, Consultant and Architect with current expertise in Enterprise and Cloud Architecture, serverless technologies, Microservices, and Devops.
+          - list [ref=e345]:
+            - listitem [ref=e346]:
+              - link "" [ref=e347] [cursor=pointer]:
+                - /url: https://www.twitter.com/pratikd2020
+                - generic [ref=e348]: 
+            - listitem [ref=e349]:
+              - link "" [ref=e350] [cursor=pointer]:
+                - /url: https://www.github.com/pratikdas
+                - generic [ref=e351]: 
+            - listitem [ref=e352]:
+              - link "" [ref=e353] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/pratik-das-80345114/
+                - generic [ref=e354]: 
+      - complementary [ref=e355]:
+        - generic [ref=e356]:
+          - heading "Simplify! Newsletter" [level=3] [ref=e358]
+          - paragraph [ref=e359]:
+            - emphasis [ref=e360]:
+              - text: "\"You can't just"
+              - strong [ref=e361]: keep
+              - text: it simple.
+              - strong [ref=e362]: Make
+              - text: it simple, then it's easy."
+          - paragraph [ref=e363]:
+            - text: Join more than 6,000 software engineers to get
+            - strong [ref=e364]: exclusive productivity and growth tips
+            - text: directly to your inbox.
+          - paragraph [ref=e365]:
+            - link "Check out the Wall of Love!" [ref=e366] [cursor=pointer]:
+              - /url: /simplify#wall-of-love
+          - generic [ref=e371]:
+            - textbox "email" [ref=e375]:
+              - /placeholder: Enter your email
+            - button "Subscribe" [ref=e377] [cursor=pointer]
+          - paragraph [ref=e378]:
+            - text: No spam. Your email address is safe with us. Your data will be used according to the
+            - link "privacy policy" [ref=e379] [cursor=pointer]:
+              - /url: /privacy
+            - text: .
+        - generic [ref=e380]:
+          - link [ref=e381] [cursor=pointer]:
+            - /url: https://stratospheric.dev?utm_source=reflectoring&utm_content=sidebar
+          - paragraph [ref=e383]:
+            - text: Join more than 1200
+            - link "happy readers" [ref=e384] [cursor=pointer]:
+              - /url: https://stratospheric.dev/#testimonials?utm_source=reflectoring&utm_content=sidebar
+            - text: .
+          - paragraph [ref=e385]:
+            - strong [ref=e386]: Save $12.00
+            - text: by joining the
+            - link "Stratospheric newsletter" [ref=e387] [cursor=pointer]:
+              - /url: https://stratospheric.dev/#mailing-list?utm_source=reflectoring&utm_content=sidebar
+            - text: .
+          - link "Learn Spring Boot & AWS" [ref=e388] [cursor=pointer]:
+            - /url: https://leanpub.com/stratospheric?utm_source=reflectoring&utm_content=sidebar
+        - generic [ref=e389]:
+          - link [ref=e390] [cursor=pointer]:
+            - /url: /book/
+          - paragraph [ref=e392]:
+            - text: Join more than 6,500
+            - link "happy readers" [ref=e393] [cursor=pointer]:
+              - /url: /book/#what-readers-say
+            - text: .
+          - paragraph [ref=e394]:
+            - generic [ref=e395]: 
+            - generic [ref=e396]: 
+            - generic [ref=e397]: 
+            - generic [ref=e398]: 
+            - generic [ref=e399]: 
+            - text: more than 150 reviews on
+            - link "Amazon" [ref=e400] [cursor=pointer]:
+              - /url: https://www.amazon.com/gp/product/1839211962/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1839211962&linkCode=as2&tag=reflectorin0c-20&linkId=559e54b6599c4213252259df28d1d3e3
+            - text: and
+            - link "Goodreads" [ref=e401] [cursor=pointer]:
+              - /url: https://www.goodreads.com/book/show/49238827-get-your-hands-dirty-on-clean-architecture
+            - text: .
+          - paragraph [ref=e402]:
+            - strong [ref=e403]: Save $10
+            - text: by joining the
+            - link "Simplify! newsletter" [ref=e404] [cursor=pointer]:
+              - /url: /simplify
+            - text: .
+          - link "Get Your Hands Dirty" [ref=e405] [cursor=pointer]:
+            - /url: https://gum.co/gyhdoca
+    - generic [ref=e407]:
+      - heading "Recent Posts" [level=2] [ref=e411]
+      - generic [ref=e412]:
+        - generic [ref=e414]:
+          - generic [ref=e415]:
+            - img "Guide to JUnit 5 Functional Interfaces" [ref=e417]
+            - list [ref=e418]:
+              - listitem [ref=e419]:
+                - link "Java" [ref=e420] [cursor=pointer]:
+                  - /url: /categories/java
+          - generic [ref=e421]:
+            - heading "Guide to JUnit 5 Functional Interfaces" [level=3] [ref=e422]:
+              - link "Guide to JUnit 5 Functional Interfaces" [ref=e423] [cursor=pointer]:
+                - /url: /junit5-functional-interfaces/
+            - list [ref=e424]:
+              - listitem [ref=e425]:
+                - img "Sachin Raverkar" [ref=e426]
+                - link "Sachin Raverkar" [ref=e427] [cursor=pointer]:
+                  - /url: /authors/sagaofsilence
+              - listitem [ref=e428]:
+                - generic [ref=e429]: 
+                - generic [ref=e430]: July 12, 2024
+            - paragraph [ref=e431]: In this article, we will get familiar with JUnit 5 functional interfaces. JUnit 5 significantly advanced from its predecessors. Features like functional interfaces can greatly simplify our work once we grasp their functionality.
+            - link "Read more" [ref=e432] [cursor=pointer]:
+              - /url: /junit5-functional-interfaces/
+        - generic [ref=e434]:
+          - generic [ref=e435]:
+            - img "Getting Started with Spring Security and JWT" [ref=e437]
+            - list [ref=e438]:
+              - listitem [ref=e439]:
+                - link "Spring" [ref=e440] [cursor=pointer]:
+                  - /url: /categories/spring
+          - generic [ref=e441]:
+            - heading "Getting Started with Spring Security and JWT" [level=3] [ref=e442]:
+              - link "Getting Started with Spring Security and JWT" [ref=e443] [cursor=pointer]:
+                - /url: /spring-security-jwt/
+            - list [ref=e444]:
+              - listitem [ref=e445]:
+                - img "Ranjani Harish" [ref=e446]
+                - link "Ranjani Harish" [ref=e447] [cursor=pointer]:
+                  - /url: /authors/ranjani
+              - listitem [ref=e448]:
+                - generic [ref=e449]: 
+                - generic [ref=e450]: June 19, 2024
+            - paragraph [ref=e451]: Spring Security provides a comprehensive set of security features for Java applications, covering authentication, authorization, session management, and protection against common security threats such as CSRF (Cross-Site Request Forgery).
+            - link "Read more" [ref=e452] [cursor=pointer]:
+              - /url: /spring-security-jwt/
+        - generic [ref=e454]:
+          - generic [ref=e455]:
+            - img "Creating and Publishing an NPM Package with Automated Versioning and Deployment" [ref=e457]
+            - list [ref=e458]:
+              - listitem [ref=e459]:
+                - link "Node" [ref=e460] [cursor=pointer]:
+                  - /url: /categories/node
+          - generic [ref=e461]:
+            - heading "Creating and Publishing an NPM Package with Automated Versioning and Deployment" [level=3] [ref=e462]:
+              - link "Creating and Publishing an NPM Package with Automated Versioning and Deployment" [ref=e463] [cursor=pointer]:
+                - /url: /create-and-publish-npm-package/
+            - list [ref=e464]:
+              - listitem [ref=e465]:
+                - img "Olaoluwa Ajibade" [ref=e466]
+                - link "Olaoluwa Ajibade" [ref=e467] [cursor=pointer]:
+                  - /url: /authors/ajibade
+              - listitem [ref=e468]:
+                - generic [ref=e469]: 
+                - generic [ref=e470]: June 16, 2024
+            - paragraph [ref=e471]: In this step-by-step guide, we’ll create, publish, and manage an NPM package using TypeScript for better code readability and scalability. We’ll write test cases with Jest and automate our NPM package versioning and publishing process using Changesets and GitHub Actions.
+            - link "Read more" [ref=e472] [cursor=pointer]:
+              - /url: /create-and-publish-npm-package/
+  - generic [ref=e473]:
+    - text: This site uses cookies to track analytics. By continuing to use this website, you agree to their use.
+    - generic [ref=e474] [cursor=pointer]: Accept
+  - contentinfo [ref=e475]:
+    - generic [ref=e478]:
+      - link:
+        - /url: /
+      - generic [ref=e479]:
+        - link:
+          - /url: /
+        - link "Reflectoring - Where the HOW meets the WHY" [ref=e480] [cursor=pointer]:
+          - /url: /
+          - img "Reflectoring - Where the HOW meets the WHY" [ref=e481]
+      - paragraph [ref=e482]: Where the HOW meets the WHY.
+      - generic [ref=e483]:
+        - generic [ref=e485]:
+          - heading "Content" [level=5] [ref=e486]
+          - list [ref=e487]:
+            - listitem [ref=e488]:
+              - link "Spring Boot" [ref=e489] [cursor=pointer]:
+                - /url: /categories/spring-boot/
+            - listitem [ref=e490]:
+              - link "Java" [ref=e491] [cursor=pointer]:
+                - /url: /categories/java/
+            - listitem [ref=e492]:
+              - link "Node" [ref=e493] [cursor=pointer]:
+                - /url: /categories/node/
+            - listitem [ref=e494]:
+              - link "AWS" [ref=e495] [cursor=pointer]:
+                - /url: /categories/aws/
+            - listitem [ref=e496]:
+              - link "Software Craft" [ref=e497] [cursor=pointer]:
+                - /url: /categories/software-craft/
+            - listitem [ref=e498]:
+              - link "Simplify!" [ref=e499] [cursor=pointer]:
+                - /url: /categories/simplify/
+            - listitem [ref=e500]:
+              - link "Meta" [ref=e501] [cursor=pointer]:
+                - /url: /categories/meta/
+            - listitem [ref=e502]:
+              - link "Book Reviews" [ref=e503] [cursor=pointer]:
+                - /url: /categories/book-notes/
+        - generic [ref=e505]:
+          - heading "Products" [level=5] [ref=e506]
+          - list [ref=e507]:
+            - listitem [ref=e508]:
+              - link "Get Your Hands Dirty on Clean Architecture" [ref=e509] [cursor=pointer]:
+                - /url: /book
+            - listitem [ref=e510]:
+              - link "Simplify! Newsletter" [ref=e511] [cursor=pointer]:
+                - /url: /simplify
+            - listitem [ref=e512]:
+              - link "Stratospheric" [ref=e513] [cursor=pointer]:
+                - /url: https://stratospheric.dev?utm_source=reflectoring&utm_content=sidebar
+        - generic [ref=e515]:
+          - heading "Contribute" [level=5] [ref=e516]
+          - list [ref=e517]:
+            - listitem [ref=e518]:
+              - link "Become an Author" [ref=e519] [cursor=pointer]:
+                - /url: /contribute/become-an-author
+            - listitem [ref=e520]:
+              - link "Writing Guide" [ref=e521] [cursor=pointer]:
+                - /url: /contribute/writing-guide
+            - listitem [ref=e522]:
+              - link "Author Workflow" [ref=e523] [cursor=pointer]:
+                - /url: /contribute/author-workflow
+            - listitem [ref=e524]:
+              - link "Author Payment" [ref=e525] [cursor=pointer]:
+                - /url: /contribute/author-payment
+        - generic [ref=e527]:
+          - heading "Reflectoring" [level=5] [ref=e528]
+          - list [ref=e529]:
+            - listitem [ref=e530]:
+              - link "About" [ref=e531] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e532]:
+              - link "Atom Feed" [ref=e533] [cursor=pointer]:
+                - /url: /feed.xml
+            - listitem [ref=e534]:
+              - link "Advertise" [ref=e535] [cursor=pointer]:
+                - /url: /advertise
+            - listitem [ref=e536]:
+              - link "Book me" [ref=e537] [cursor=pointer]:
+                - /url: /book-me
+            - listitem [ref=e538]:
+              - link "Privacy" [ref=e539] [cursor=pointer]:
+                - /url: /privacy
+      - list [ref=e540]:
+        - listitem [ref=e541]:
+          - link "" [ref=e542] [cursor=pointer]:
+            - /url: https://facebook.com/reflectoring
+            - generic [ref=e543]: 
+        - listitem [ref=e544]:
+          - link "" [ref=e545] [cursor=pointer]:
+            - /url: https://twitter.com/TomHombergs
+            - generic [ref=e546]: 
+        - listitem [ref=e547]:
+          - link "" [ref=e548] [cursor=pointer]:
+            - /url: https://github.com/thombergs/code-examples
+            - generic [ref=e549]: 
+        - listitem [ref=e550]:
+          - link "" [ref=e551] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/tom-hombergs-74048777
+            - generic [ref=e552]: 
+      - paragraph [ref=e553]:
+        - text: Built upon
+        - link "Geeky Hugo" [ref=e554] [cursor=pointer]:
+          - /url: https://statichunt.com/themes/hugo-geeky
+        - text: theme by
+        - link "Statichunt" [ref=e555] [cursor=pointer]:
+          - /url: https://statichunt.com/

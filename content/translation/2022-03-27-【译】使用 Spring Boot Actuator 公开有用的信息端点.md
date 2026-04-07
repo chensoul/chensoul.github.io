@@ -1,5 +1,5 @@
 ---
-title: "【译】使用Spring Boot Actuator公开有用的信息端点"
+title: "【译】使用 Spring Boot Actuator 公开有用的信息端点"
 date: 2022-03-27 21:00:00+08:00
 slug: spring-boot-info-endpoint
 categories: [ "translation" ]

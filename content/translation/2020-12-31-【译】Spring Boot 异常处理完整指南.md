@@ -1,5 +1,5 @@
 ---
-title: "【译】Spring Boot异常处理完整指南"
+title: "【译】Spring Boot 异常处理完整指南"
 date: 2020-12-31 08:00:00+08:00
 slug: spring-boot-exception-handling
 categories: [ "translation" ]

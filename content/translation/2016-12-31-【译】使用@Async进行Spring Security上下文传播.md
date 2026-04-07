@@ -1,22 +1,24 @@
 ---
 title: "【译】使用@Async进行Spring Security上下文传播"
 date: 2016-12-31 08:16:00+08:00
+draft: true
 slug: spring-security-async-principal-propagation
 categories: [ "translation" ]
-tags: ['spring-boot']
-description: "1. 简介 ..."
+tags: [ "spring-security", "async" ]
+description: "在 @Async 线程中传播 Spring Security 的 Authentication：为何默认丢失，以及如何用 DelegatingSecurityContextAsyncTaskExecutor 恢复上下文。"
 ---
 
 ## 1. 简介
 
-在本教程中，我们将重点关注使用 `@Async` 传播 Spring Security 主体
-默认情况下，Spring Security 身份验证绑定到 `ThreadLocal` - 因此，当执行流在带有 `@Async` 的新线程中运行时，它不会是经过身份验证的上下文。
+本教程关注：在使用 **`@Async`** 时，如何把 **Spring Security** 的认证信息（**principal**）一并带到异步线程里。
 
-这并不理想——让我们解决它。
+默认情况下，认证信息存放在 **`ThreadLocal`** 中；当执行流进入 **`@Async`** 新开出的线程时，那里**并没有**已认证的 **`SecurityContext`**。
 
-## 2.Maven 依赖
+这显然不理想——下面给出解决办法。
 
-为了在 Spring Security 中使用异步集成，我们需要在 pom.xml 的依赖项中包含以下部分：
+## 2. Maven 依赖
+
+若要在 Spring Security 中配合异步使用，请在 `pom.xml` 中加入 **`spring-security-config`**（版本需与项目其余 Spring Security 组件一致），例如：
 
 ```xml
 <dependency>
@@ -26,11 +28,11 @@ description: "1. 简介 ..."
 </dependency>
 ```
 
-可以在[此处](https://search.maven.org/classic/#search|ga|1|g%3A%22org.springframework.security%22)找到最新版本的 Spring Security 依赖项。
+可在 [Maven Central](https://search.maven.org/classic/#search|ga|1|g%3A%22org.springframework.security%22) 查询与你环境匹配的版本。
 
-## 3.使用@Async 进行 Spring Security 传播
+## 3. 在 `@Async` 中传播 Security 上下文
 
-我们先写一个简单的例子：
+先看一个最小示例。控制器方法：
 
 ```java
 @RequestMapping(method = RequestMethod.GET, value = "/async")
@@ -48,7 +50,7 @@ public Object standardProcessing() throws Exception {
 }
 ```
 
-我们想要检查 Spring `SecurityContext` 是否传播到新线程。首先，我们在异步调用之前记录上下文，接下来我们运行异步方法，最后再次记录上下文。`asyncCall()` 方法具有以下实现：
+我们希望在异步调用**前后**都能看到 **`SecurityContext`** 是否一致。异步方法实现如下：
 
 ```java
 @Async
@@ -59,13 +61,13 @@ public void asyncCall() {
 }
 ```
 
-正如我们所看到的，只有一行代码将输出异步方法的新线程内的上下文。
+异步线程里只有这一行日志，用来观察 **`Authentication`**。
 
-## 4. 默认配置
+## 4. 默认行为
 
-默认情况下，`@Async` 方法内的安全上下文将具有空值。
+在默认配置下，**`@Async` 方法内部**拿到的安全上下文往往是**空**的。
 
-特别是，如果我们运行异步逻辑，我们将能够在主程序中记录 `Authentication` 对象，但是当我们将其记录在 `@Async` 中时，它将为 null。这是日志输出的示例：
+也就是说：在**发起调用的线程**上还能打印出 **`Authentication`**；一旦进入 **`@Async`** 方法，**`Authentication`** 可能为 **`null`**。典型日志类似：
 
 ```plaintext
 web - 2016-12-30 22:41:58,916 [http-nio-8081-exec-3] INFO
@@ -87,11 +89,11 @@ web - 2016-12-30 22:41:58,921 [http-nio-8081-exec-3] INFO
   java.lang.NullPointerException: null
 ```
 
-因此，正如您所看到的，在执行程序线程内，我们的调用失败并出现 NPE，正如预期的那样——因为主体在那里不可用。
+可见在 **SimpleAsyncTaskExecutor** 线程里，因 **`Authentication`** 为空而触发 **NPE**——这与「异步线程里没有当前用户上下文」的预期一致。
 
-## 5. 异步安全上下文配置
+## 5. 配置：委托型异步执行器
 
-如果我们想要访问异步线程内部的主体，就像我们可以在外部访问它一样，我们需要创建 `DelegatingSecurityContextAsyncTaskExecutor` bean：
+若希望异步线程里也能访问与调用线程**相同**的 **`SecurityContext`**，需要注册 **`DelegatingSecurityContextAsyncTaskExecutor`**，把 **`SecurityContext`** 委托给异步 **Executor**：
 
 ```java
 @Bean
@@ -100,9 +102,9 @@ public DelegatingSecurityContextAsyncTaskExecutor taskExecutor(ThreadPoolTaskExe
 }
 ```
 
-通过这样做，Spring 将在每个 `@Async` 调用中使用当前的 `SecurityContext`。
+这样 Spring 会在每次 **`@Async` 调用**时复制当前的 **`SecurityContext`**。
 
-现在，让我们再次运行该应用程序并查看日志信息以确保情况确实如此：
+启用后再观察日志，异步线程中应能打印出与 Web 线程一致的 **`User`**：
 
 ```plaintext
 web - 2016-12-30 22:45:18,013 [http-nio-8081-exec-3] INFO
@@ -124,22 +126,24 @@ web - 2016-12-30 22:45:18,019 [SimpleAsyncTaskExecutor-1] INFO
   Username: temporary; ...
 ```
 
-正如我们所期望的，我们在异步执行器线程中看到了相同的原理。
+## 6. 典型场景
 
-## 6. 使用案例
+下列情况常会需要显式传播 **`SecurityContext`**：
 
-有一些有趣的用例，我们可能希望确保 `SecurityContext` 像这样传播：
+- 并行发起多个可能较慢的外部请求；
+- 本地计算与外部请求希望**并行**推进；
+- 「发后即忘」类任务（例如发邮件），但仍需在异步逻辑中知道**当前用户**。
 
-- 我们想要发出多个可以并行运行并且可能需要大量时间来执行的外部请求
-- 我们需要在本地进行一些重要的处理，并且我们的外部请求可以与该处理并行执行
-- 其他代表即发即忘场景，例如发送电子邮件
+## 7. 小结
 
-## 7.结论
+本文说明 Spring Security 如何支持在 **`@Async`** 调用中携带 **`SecurityContext`**；从 API 上看只是多配一个 **`DelegatingSecurityContextAsyncTaskExecutor`**，十分轻量。
 
-在本快速教程中，我们介绍了 Spring 对使用传播的 `SecurityContext` 发送异步请求的支持。从编程模型的角度来看，新功能看似简单。
+请注意：若原先多个方法是**同步串联**、且依赖彼此的返回值，改成异步后往往要重新设计**结果汇总**方式。
 
-请注意，如果先前以同步方式将多个方法调用链接在一起，则转换为异步方法可能需要同步结果。
+示例工程见 [GitHub（spring-security-web-rest 模块）](https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest)。
 
-此 [示例](https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-web-rest) 也可作为 Github 上的 Maven 项目提供。
-
-原文链接：[https://www.baeldung.com/spring-security-async-principal-propagation](https://www.baeldung.com/spring-security-async-principal-propagation)
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[Spring Security with Async Principal Propagation](https://www.baeldung.com/spring-security-async-principal-propagation)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。

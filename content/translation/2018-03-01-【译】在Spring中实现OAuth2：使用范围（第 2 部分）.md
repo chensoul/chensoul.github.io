@@ -1,25 +1,27 @@
 ---
 title: "【译】在 Spring 中实现 OAuth2：使用范围（第 2 部分）"
 date: 2018-03-01 00:00:00+08:00
+draft: true
 slug: using-oauth2-in-spring-scopes
 categories: [ "translation" ]
-tags: ['spring-boot', 'oauth2']
-description: "我们在上一篇文章 中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。 ..."
+tags: [ "spring-boot", "oauth2" ]
+description: "OAuth2 的 scope：在 Spring OAuth 中为资源端点划分读写等权限，并配置客户端可申请的 scope。"
+canonicalURL: "http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/"
 ---
 
-我们在[上一篇文章](/posts/2023/07/26/using-oauth2-in-spring/)中了解了基本的 OAuth2 概念以及如何在 Spring 中实现和执行不同的授权。在这篇文章中，我们将介绍 OAuth2 的另一个重要概念：范围。
+在[上一篇：在 Spring 中实现 OAuth2（第 1 部分）](/translation/using-oauth2-in-spring/)中，我们已了解 OAuth2 的基本概念，以及如何在 Spring 中配置多种授权许可类型。本篇聚焦 OAuth2 的另一个核心概念：**scope（范围）**。
 
-## OAuth 范围
+## 为何需要 scope
 
-保护对应用程序的访问通常分两个步骤进行：身份验证和授权。要理解这两个概念，假设您在绝密政府大楼工作。在开始之前，你会得到一张卡片，可以让你进入建筑物。 OAuth 令牌可以看作是允许您访问的卡片。
+保护应用访问通常分两步：**认证（authentication）**与**授权（authorization）**。可以类比：你拿到一张能刷开大楼闸机的工牌——这相当于 **OAuth 令牌**；但能否进入某一楼层，还取决于**权限策略**。
 
-一旦你进去，你决定去三楼见你的一位同事，在尝试使用你的卡打开三楼的门后，你听到一声嘟嘟声，告诉你你没有被授权。在 OAuth 中，范围是一种定义令牌可以访问哪些资源以及不能访问哪些资源的方法。范围允许访问控制，并且可以被视为相当于传统身份验证中的用户角色。
+OAuth 里的 **scope** 就是用来描述「这张令牌**允许操作哪些资源**、**不允许哪些**」；它提供比「有令牌 / 没令牌」更细的一层访问控制，作用上接近传统系统里的**角色**，但粒度由资源所有者与授权服务器约定。
 
 ## 实现
 
-为了演示范围，我们将使用第 1 部分中的[示例](https://github.com/zak905/oauth2-example)。
+示例仍基于第 1 部分的仓库：[zak905/oauth2-example](https://github.com/zak905/oauth2-example)。
 
-在[资源服务器](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceController.java)的控制器中，我们有以下端点：
+资源服务器中的 [ResourceController](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceController.java) 如下（为演示 HTTP 动词与 scope 的映射，部分路由改为 POST/DELETE）：
 
 ```java
 @RestController("/")
@@ -47,7 +49,7 @@ public class ResourceController {
 }
 ```
 
-第一步是使用所需的范围配置[授权服务器](https://github.com/zak905/oauth2-example/blob/master/authorization-server/src/main/java/com/gwidgets/examples/authorizationserver/AuthorizationSecurityConfig.java#L34)：
+先在 [授权服务器配置](https://github.com/zak905/oauth2-example/blob/master/authorization-server/src/main/java/com/gwidgets/examples/authorizationserver/AuthorizationSecurityConfig.java#L34)里声明客户端可用的 **scopes**（与第 1 部分一致）：
 
 ```java
  clients.inMemory().withClient("my-trusted-client")
@@ -62,9 +64,9 @@ public class ResourceController {
 
 ```
 
-要在资源服务器中启用范围检查，我们有两个选项：使用安全配置或使用方法安全性。
+在资源服务器侧校验 scope，有两种常见做法：**URL 级安全配置**，或 **方法级安全注解**。
 
-- 使用安全配置：
+### 方式一：在 `HttpSecurity` 中写 SpEL
 
 ```java
  @Override
@@ -81,7 +83,7 @@ public class ResourceController {
 
 ```
 
-- 使用方法安全性：
+### 方式二：`@PreAuthorize` 等方法级注解
 
 ```java
     @PreAuthorize("#oauth2.hasScope('read')")
@@ -109,19 +111,17 @@ public class ResourceController {
     }
 ```
 
-另外，我们需要将 `@EnableGlobalMethodSecurity(prePostEnabled = true)` 添加到 Spring 可以获取的任何类（ `@Configuration` 、 `@Service` 等）。在我们的示例中，我们已将其添加到 [ResourceSecurityConfiguration](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18) 类中。 `prePostEnabled = true` 告诉 Spring 启用前注解和后注解，例如 `@PreAuthorize` 、 `@PostFilter` 等......
+若使用第二种方式，需在某一配置类上启用 **`@EnableGlobalMethodSecurity(prePostEnabled = true)`**（示例见 [ResourceSecurityConfiguration](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18)）。**`prePostEnabled = true`** 会启用 **`@PreAuthorize` / `@PostAuthorize`** 等前置/后置方法安全。
 
-对于那些想了解 `#oauth2.hasScope('trust')` 这样的表达式的人来说，它们是使用 [Spring 表达式语言](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)（SpEL）构建的。
+`#oauth2.hasScope('trust')` 一类表达式基于 **Spring 表达式语言（SpEL）**，详见 [Spring Framework 文档](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)。
 
-## 行动范围
+## 按 scope 申请令牌
 
-默认情况下，如果令牌请求中不存在范围，Spring 会假定令牌具有所有配置的范围。让我们首先请求一个具有 `read` 范围的令牌：
+若请求令牌时**未显式指定 scope**，Spring 默认认为令牌拥有**客户端配置中的全部 scopes**。先只申请 **`read`**：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client&scope=read' -H "Accept: application/json"
 ```
-
-回复：
 
 ```json
 {
@@ -132,7 +132,7 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'gr
 }
 ```
 
-现在，我们可以使用令牌来访问具有 `read` 范围访问权限的端点：
+用该令牌访问需要 **`read` scope** 的端点应成功：
 
 ```bash
  curl -XGET localhost:8989/hello -H "Authorization: Bearer acadbb31-f126-411d-ae5b-6a278cee2ed6"
@@ -144,13 +144,11 @@ curl -XGET localhost:8989/foo -H "Authorization: Bearer acadbb31-f126-411d-ae5b-
  foo
 ```
 
-现在，让我们尝试在仅接受 `write` 范围的端点上使用此令牌：
+若拿 **`read` 令牌**去调用需要 **`write`** 的接口，会被拒绝：
 
 ```bash
 curl -XPOST localhost:8989/bar -H "Authorization: Bearer acadbb31-f126-411d-ae5b-6a278cee2ed6"
 ```
-
-回复：
 
 ```json
 {
@@ -159,13 +157,11 @@ curl -XPOST localhost:8989/bar -H "Authorization: Bearer acadbb31-f126-411d-ae5b
 }
 ```
 
-由于令牌不具有所需的范围，因此访问被拒绝。让我们尝试获取一个具有 `write` 范围的新令牌，然后重试：
+换发只含 **`write`** 的令牌再试：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client&scope=write' -H "Accept: application/json"
 ```
-
-回复：
 
 ```json
 {
@@ -182,8 +178,12 @@ curl -XPOST localhost:8989/bar -H "Authorization: Bearer bf0fa83a-23bd-4633-ac6c
 bar
 ```
 
-## 总结
+## 小结
 
-范围是 OAuth 的一个重要方面，因为令牌不携带有关其用户或请求者的信息。范围允许限制对资源的访问，以实现更好的访问控制和安全性。在下一篇文章中，我们将了解如何将 Google 和 Facebook 等外部 OAuth 提供商集成到流程中。
+**scope** 很重要：访问令牌本身往往**不携带**终端用户画像的完整信息，**scope** 负责在资源侧做**最小权限**约束。后续还可把 Google、Facebook 等**外部授权服务器**接入同一流程（作者原计划的下文主题）。
 
-原文链接：[http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/](http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/)
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[Using OAuth2 in Spring, Scopes, Part 2](http://www.zakariaamine.com/2018-03-01/using-oauth2-in-spring-scopes/)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。

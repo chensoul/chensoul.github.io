@@ -1,0 +1,260 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e8]:
+        - link "Jstobigdata Logo" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img "Jstobigdata Logo" [ref=e11]
+        - navigation "Main Menu" [ref=e12]:
+          - list:
+            - listitem [ref=e13] [cursor=pointer]:
+              - link "Java™" [ref=e14]:
+                - /url: ../../topics/java/
+                - generic [ref=e16]: 
+                - generic [ref=e17]: Java™
+                - generic [ref=e19]: 
+            - listitem [ref=e20] [cursor=pointer]:
+              - link "ML" [ref=e21]:
+                - /url: "#"
+                - generic [ref=e23]: 
+                - generic [ref=e24]: ML
+                - generic [ref=e26]: 
+            - listitem [ref=e27] [cursor=pointer]:
+              - link "JavaScript" [ref=e28]:
+                - /url: ../../topics/js/
+                - generic [ref=e30]: 
+                - generic [ref=e31]: JavaScript
+                - generic [ref=e33]: 
+            - listitem [ref=e34] [cursor=pointer]:
+              - link "Product Engineering" [ref=e35]:
+                - /url: "#"
+                - generic [ref=e37]: 
+                - generic [ref=e38]: Product Engineering
+                - generic [ref=e40]: 
+            - listitem [ref=e41] [cursor=pointer]:
+              - link "DevOps" [ref=e42]:
+                - /url: ../../topics/tools/
+                - generic [ref=e44]: 
+                - generic [ref=e45]: DevOps
+                - generic [ref=e47]: 
+            - listitem [ref=e48] [cursor=pointer]:
+              - link "YouTube" [ref=e49]:
+                - /url: https://www.youtube.com/@Jstobigdata/featured
+                - generic [ref=e50]:
+                  - generic [ref=e52]: 
+                  - generic [ref=e53]: YouTube
+            - listitem [ref=e54] [cursor=pointer]:
+              - button "Search" [ref=e55]: 
+        - text:  
+    - region "Page Title Bar" [ref=e56]:
+      - generic [ref=e59]:
+        - heading "JMS Prioritize Messages" [level=1] [ref=e61]
+        - navigation [ref=e63]:
+          - list [ref=e64]:
+            - listitem [ref=e65]:
+              - link "Home" [ref=e66] [cursor=pointer]:
+                - /url: /
+              - text: /
+            - listitem [ref=e67]:
+              - link "Java™" [ref=e68] [cursor=pointer]:
+                - /url: ../../topics/java/
+              - text: ","
+            - listitem [ref=e69]:
+              - link "JMS" [ref=e70] [cursor=pointer]:
+                - /url: ../../topics/jms/
+              - text: /
+            - listitem [ref=e71]: JMS Prioritize Messages
+    - main [ref=e72]:
+      - generic [ref=e78]:
+        - navigation [ref=e79]:
+          - navigation "JMS 2.0" [ref=e81]:
+            - text:  
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "JMS 2.0 Tutorial Homehome" [ref=e86] [cursor=pointer]:
+                  - /url: ../../jms/a-complete-jms-2-0-tutorial/
+                  - generic [ref=e87]: JMS 2.0 Tutorial Homehome
+                - button "Open submenu of JMS 2.0 Tutorial Home" [ref=e88] [cursor=pointer]: 
+                - list [ref=e89]:
+                  - listitem [ref=e90]:
+                    - link "JMS introduction – Java Message Service" [ref=e91] [cursor=pointer]:
+                      - /url: ../../jms/jms-introduction-java-message-service/
+                      - generic [ref=e92]: JMS introduction – Java Message Service
+                  - listitem [ref=e93]:
+                    - link "Install and Setup Glassfish for JMS" [ref=e94] [cursor=pointer]:
+                      - /url: ../../jms/install-and-setup-glassfish-for-jms/
+                      - generic [ref=e95]: Install and Setup Glassfish for JMS
+                  - listitem [ref=e96]:
+                    - link "Send and Receive a message in JMS" [ref=e97] [cursor=pointer]:
+                      - /url: ../../jms/send-and-receive-message-in-jms/
+                      - generic [ref=e98]: Send and Receive a message in JMS
+                  - listitem [ref=e99]:
+                    - link "JMS Message Model" [ref=e100] [cursor=pointer]:
+                      - /url: ../../jms/jms-message-model/
+                      - generic [ref=e101]: JMS Message Model
+                  - listitem [ref=e102]:
+                    - link "JMS Prioritize Messages" [ref=e103] [cursor=pointer]:
+                      - /url: ../../jms/jms-prioritize-messages/
+                      - generic [ref=e104]: JMS Prioritize Messages
+                  - listitem [ref=e105]:
+                    - link "JMS Point-to-point messaging in Action" [ref=e106] [cursor=pointer]:
+                      - /url: ../../jms/jms-point-to-point-messaging-in-action/
+                      - generic [ref=e107]: JMS Point-to-point messaging in Action
+                  - listitem [ref=e108]:
+                    - link "JMS pub-sub messaging model" [ref=e109] [cursor=pointer]:
+                      - /url: ../../jms/jms-pub-sub-messaging-model/
+                      - generic [ref=e110]: JMS pub-sub messaging model
+                  - listitem [ref=e111]:
+                    - link "JMS Message Selectors in Action to Filter Messages" [ref=e112] [cursor=pointer]:
+                      - /url: ../../jms/jms-message-selectors-in-action-to-filter-messages/
+                      - generic [ref=e113]: JMS Message Selectors in Action to Filter Messages
+                  - listitem [ref=e114]:
+                    - link "Guaranteed Delivery using JMS Message Acknowledgement" [ref=e115] [cursor=pointer]:
+                      - /url: ../../jms/guaranteed-delivery-using-jms-message-acknowledgement/
+                      - generic [ref=e116]: Guaranteed Delivery using JMS Message Acknowledgement
+                  - listitem [ref=e117]:
+                    - link "JMS Transactions in Action" [ref=e118] [cursor=pointer]:
+                      - /url: ../../jms/jms-transactions-in-action/
+                      - generic [ref=e119]: JMS Transactions in Action
+        - generic [ref=e127]:
+          - generic [ref=e130]:
+            - insertion
+          - generic [ref=e131]:
+            - paragraph [ref=e132]:
+              - text: We will discuss JMS Prioritize messages in detail with examples. The
+              - code [ref=e133]: JMSPriority
+              - text: header field of each message represents its priority. I have talked about prioritizing messages in
+              - strong [ref=e134]: Message Model Tutorial.
+            - paragraph [ref=e135]: JMS has 10 priority levels, 0 to 9. 0 is the lowest priority and 9 is the highest priority. As per the JMS standard, a message with priority 0-4 is the normal priority and 5-9 is considered as an expedited priority.
+            - heading "JMS Priority example" [level=2] [ref=e136]
+            - paragraph [ref=e137]: In the below example, messages with different priorities are sent to the receiver. However, the one with the highest priority (9) arrives first and similarly, the least priority arrives in the end.
+            - generic [ref=e138]:
+              - generic [ref=e139]: Java
+              - button "Copy" [ref=e140] [cursor=pointer]:
+                - img [ref=e141]
+              - code [ref=e144]:
+                - generic [ref=e145]: package lab01.message.model;
+                - generic [ref=e146]: import labxx.common.settings.CommonSettings;
+                - generic [ref=e147]: import javax.jms.*;
+                - generic [ref=e148]: "public class MessagePriorityTest {"
+                - generic [ref=e149]: "public static void main(String[] args) throws JMSException {"
+                - generic [ref=e150]: ConnectionFactory connectionFactory = CommonSettings.getConnectionFactory();
+                - generic [ref=e151]: Queue queue = CommonSettings.getDefaultQueue();
+                - generic [ref=e152]: "try (JMSContext jmsContext = connectionFactory.createContext()) {"
+                - generic [ref=e153]: JMSProducer producer = jmsContext.createProducer();
+                - generic [ref=e154]: "String[] messages = {\"Msg One\", \"Msg two\", \"Msg three\", \"Msg four\", \"Msg five\"};"
+                - generic [ref=e156]: producer.setPriority(0).send(queue, messages[0]);
+                - generic [ref=e157]: producer.setPriority(9).send(queue, messages[1]);
+                - generic [ref=e158]: producer.setPriority(4).send(queue, messages[2]);
+                - generic [ref=e159]: producer.setPriority(2).send(queue, messages[3]);
+                - generic [ref=e160]: producer.send(queue, messages[4]);
+                - generic [ref=e162]: JMSConsumer consumer = jmsContext.createConsumer(queue);
+                - generic [ref=e163]: "for (int i = 0; i < messages.length; i++) {"
+                - generic [ref=e164]: Message message = consumer.receive();
+                - generic [ref=e165]: "System.out.println(\"Priority: \" + message.getJMSPriority() + \" #### Message: \" + message.getBody(String.class));"
+                - generic [ref=e166]: "}"
+                - generic [ref=e167]: "}"
+                - generic [ref=e168]: "}"
+                - generic [ref=e169]: "}"
+            - paragraph [ref=e170]:
+              - strong [ref=e171]: Output
+            - generic [ref=e172]: "Priority: 9 #### Message: Msg two Priority: 4 #### Message: Msg three Priority: 2 #### Message: Msg four Priority: 2 #### Message: Msg five Priority: 0 #### Message: Msg One"
+            - heading "JMS Message default priority" [level=2] [ref=e173]
+            - paragraph [ref=e174]: Even if you do not specify the message priority, JMS assigns a default priority to each message. Look at the below code example, you can see in the output that each message has priority 4.
+            - generic [ref=e175]:
+              - generic [ref=e176]: Java
+              - button "Copy" [ref=e177] [cursor=pointer]:
+                - img [ref=e178]
+              - code [ref=e181]:
+                - generic [ref=e182]: package lab01.message.model;
+                - generic [ref=e183]: import labxx.common.settings.CommonSettings;
+                - generic [ref=e184]: import javax.jms.*;
+                - generic [ref=e185]: "public class MessageDefaultPriorityTest {"
+                - generic [ref=e186]: "public static void main(String[] args) throws JMSException {"
+                - generic [ref=e187]: ConnectionFactory connectionFactory = CommonSettings.getConnectionFactory();
+                - generic [ref=e188]: Queue queue = CommonSettings.getDefaultQueue();
+                - generic [ref=e189]: "try (JMSContext jmsContext = connectionFactory.createContext()) {"
+                - generic [ref=e190]: JMSProducer producer = jmsContext.createProducer();
+                - generic [ref=e191]: "String[] messages = {\"Msg One\", \"Msg two\", \"Msg three\", \"Msg four\", \"Msg five\"};"
+                - generic [ref=e192]: producer.send(queue, messages[0]);
+                - generic [ref=e193]: producer.send(queue, messages[1]);
+                - generic [ref=e194]: producer.send(queue, messages[2]);
+                - generic [ref=e195]: producer.send(queue, messages[3]);
+                - generic [ref=e196]: producer.send(queue, messages[4]);
+                - generic [ref=e197]: JMSConsumer consumer = jmsContext.createConsumer(queue);
+                - generic [ref=e198]: "for (int i = 0; i < messages.length; i++) {"
+                - generic [ref=e199]: Message message = consumer.receive();
+                - generic [ref=e200]: "System.out.println(\"Default Priority: \" + message.getJMSPriority() + \" #### Message: \" + message.getBody(String.class));"
+                - generic [ref=e201]: "}"
+                - generic [ref=e202]: "}"
+                - generic [ref=e203]: "}"
+                - generic [ref=e204]: "}"
+            - paragraph [ref=e205]:
+              - strong [ref=e206]: Output
+            - generic [ref=e207]: "Default Priority: 4 #### Message: Msg One Default Priority: 4 #### Message: Msg two Default Priority: 4 #### Message: Msg three Default Priority: 4 #### Message: Msg four Default Priority: 4 #### Message: Msg five"
+            - paragraph [ref=e208]: This is all as part of JMS Prioritize messages, you have learned how to assign custom priority to control the message delivery.
+          - generic [ref=e211]:
+            - insertion
+          - generic [ref=e212]:
+            - generic [ref=e213]:
+              - text: By
+              - link "Bikram Kundu" [ref=e215] [cursor=pointer]:
+                - /url: ../../author/superadmin/
+            - generic [ref=e216]: "|"
+            - generic [ref=e217]: "Last Updated: April 3rd, 2024"
+            - generic [ref=e218]: "|"
+            - generic [ref=e219]:
+              - text: "Categories:"
+              - link "Java™" [ref=e220] [cursor=pointer]:
+                - /url: ../../topics/java/
+              - text: ","
+              - link "JMS" [ref=e221] [cursor=pointer]:
+                - /url: ../../topics/jms/
+        - generic [ref=e223]:
+          - progressbar
+          - heading "Table of Contents" [level=4] [ref=e225]
+          - list [ref=e228]:
+            - listitem [ref=e229]:
+              - link "•JMS Priority example" [ref=e230] [cursor=pointer]:
+                - /url: "#toc_JMS_Priority_example"
+            - listitem [ref=e231]:
+              - link "•JMS Message default priority" [ref=e232] [cursor=pointer]:
+                - /url: "#toc_JMS_Message_default_priority"
+          - link "Join on Gitter" [ref=e234] [cursor=pointer]:
+            - /url: https://matrix.to/#/#jstobigdata:gitter.im
+            - generic [ref=e235]: 
+            - generic [ref=e236]: Join on Gitter
+          - link "Github" [ref=e238] [cursor=pointer]:
+            - /url: https://github.com/jstobigdata/jms-parent-app/tree/master/jms-glassfish5/src/main/java
+            - generic [ref=e239]: 
+            - generic [ref=e240]: Github
+    - contentinfo [ref=e245]:
+      - generic [ref=e247]:
+        - generic [ref=e249]:
+          - text: © Copyright 2026 | All Rights Reserved | Created by
+          - link "Bikram Kundu" [ref=e250] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/bikramkundu
+            - strong [ref=e251]: Bikram Kundu
+          - text: "|"
+          - link "Sitemap" [ref=e252] [cursor=pointer]:
+            - /url: ../../sitemap_index.xml
+        - generic [ref=e255]:
+          - link " Facebook" [ref=e256] [cursor=pointer]:
+            - /url: https://www.facebook.com/Jstobigdata-A-programming-blog-on-Emerging-Tech-112256500159124
+            - text: 
+            - generic [ref=e257]: Facebook
+          - link " LinkedIn" [ref=e258] [cursor=pointer]:
+            - /url: https://www.linkedin.com/groups/10543520/
+            - text: 
+            - generic [ref=e259]: LinkedIn
+          - link " Reddit" [ref=e260] [cursor=pointer]:
+            - /url: https://www.reddit.com/user/Jstobigdata
+            - text: 
+            - generic [ref=e261]: Reddit
+  - region "Go to Top":
+    - link " Go to Top":
+      - /url: "#"
+      - text: 
+      - generic: Go to Top

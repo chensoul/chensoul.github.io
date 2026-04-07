@@ -1,10 +1,12 @@
 ---
-title: "【译】如何使用Spring Security和JWT保护您的REST API"
+title: "【译】如何使用 Spring Security 和 JWT 保护您的 REST API"
 date: 2022-09-10 00:00:00+08:00
+draft: true
 slug: spring-security-jwt
-categories: [ "translation" ]
-tags: ['spring-boot','security','jwt']
-description: "原文链接：How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs) ..."
+categories: ["translation"]
+tags: ['spring-boot', 'security', 'jwt']
+description: "使用 Spring Security 和 JWT 保护 REST API 的完整指南。"
+canonicalURL: "https://www.danvega.dev/blog/spring-security-jwt"
 ---
 
 原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https://www.danvega.dev/blog/spring-security-jwt)
@@ -484,3 +486,9 @@ class HomeControllerTest {
 - Rob Winch
 - Josh Cummings
 - Toshiaki Maki
+
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[How to Secure your REST APIs with Spring Security & JSON Web Tokens (JWTs)](https://www.danvega.dev/blog/spring-security-jwt)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。

@@ -26,6 +26,23 @@ mkdir -p public/images/{slug}
 
 单张下载并转码：[`../scripts/fetch-image.example.sh`](../scripts/fetch-image.example.sh)
 
+## 反爬或仅面向浏览器的站点（例：Baeldung）
+
+对 `curl`、内置 `WebFetch` 等 **非浏览器** 请求，部分站点会返回 **403/402** 或空壳页；这不代表你本机浏览器无法打开。
+
+**在 Cursor 里「用插件抓取」**，通常指下面几类（助手能否代劳取决于当前会话是否接通对应工具）：
+
+1. **Playwright MCP / Browser MCP（优先）**  
+   在 Cursor 的 MCP 配置里启用后，助手可通过受控 Chromium 打开 `canonicalURL`、等待 DOM 渲染，再读取正文与元数据。配置方式可参考你站内文章（例如 Codex / Playwright MCP 相关说明）。**首次**一般需在本机执行 Playwright 的浏览器安装步骤（具体以所用 MCP 文档为准）。
+
+2. **本机浏览器 + 扩展（不依赖 MCP）**  
+   用 SingleFile、MarkDownload、「复制为 Markdown」类等扩展把页面保存为 `.html` / `.md`，将**本地文件路径**发给助手对照翻译；frontmatter 里的 `canonicalURL` 仍填线上原文链接。
+
+3. **GitHub 代码仓库对照**  
+   Baeldung 大量教程对应 [eugenp/tutorials](https://github.com/eugenp/tutorials) 下的示例，可与正文互补；**不可替代**全文，但可核对 API 与代码片段。
+
+不建议把整站抓取的 HTML **长期放入 Git 仓库**；仅保留译文与 `public/images/{slug}/` 配图即可。
+
 ## Git（先同步再提交）
 
 ```bash

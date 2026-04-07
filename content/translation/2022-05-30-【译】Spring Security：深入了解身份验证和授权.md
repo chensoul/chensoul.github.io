@@ -1,10 +1,12 @@
 ---
 title: "【译】Spring Security：深入了解身份验证和授权"
 date: 2022-05-30 00:00:00+08:00
+draft: true
 slug: spring-security-authentication-and-authorization
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']
 description: "您可以使用本指南来了解 Spring Security 是什么以及其核心功能（如身份验证、授权或常见漏洞保护）如何工作。此外，还有全面的常见问题解答。 ..."
+canonicalURL: "https://www.marcobehler.com/guides/spring-security"
 ---
 
 您可以使用本指南来了解 Spring Security 是什么以及其核心功能（如身份验证、授权或常见漏洞保护）如何工作。此外，还有全面的常见问题解答。
@@ -996,3 +998,9 @@ context.setAuthentication(authentication);
 向 Patricio "Pato" Moschcovich 致以深深的谢意，他不仅对本文进行了校对，还提供了宝贵的反馈！
 
 原文链接：[https://www.marcobehler.com/guides/spring-security](https://www.marcobehler.com/guides/spring-security)
+
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[Spring Security: A Comprehensive Guide](https://www.marcobehler.com/guides/spring-security)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。

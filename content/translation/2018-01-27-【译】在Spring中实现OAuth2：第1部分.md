@@ -1,33 +1,37 @@
 ---
 title: "【译】在 Spring 中实现 OAuth2：第 1 部分"
 date: 2018-01-27 00:00:00+08:00
+draft: true
 slug: using-oauth2-in-spring
 categories: [ "translation" ]
-tags: ['spring-boot', 'oauth2']
-description: "OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 OAuth RFC 或[维基百科](https://en.wikipedia.org/wiki/OAu ..."
+tags: [ "spring-boot", "oauth2" ]
+description: "在 Spring Boot 中搭建 OAuth2：授权服务器与资源服务器、常见授权类型与令牌刷新，附 curl 示例。"
+canonicalURL: "http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/"
 ---
 
-OAuth2 是一组规范，主要提供对 Rest API 的安全访问的方法。 OAuth 的主要目的是允许通过使用令牌来执行身份验证和授权，而不必为每个操作提供凭据。由于本文的重点是实现，并且为了不重新发明轮子，可以查看 [OAuth RFC](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)以获取更多理论背景。在这篇文章中，我们将深入探讨 Spring 中的 OAuth2 实现以及如何使用不同的授权类型，但在此之前值得提供一些重要概念的简要定义。
+**OAuth 2** 是一套开放标准，用来为 **REST API** 等资源提供**受控访问**。其核心思路是：客户端用**令牌（token）**完成身份校验与授权，而不必在每次请求里重复提交用户名/密码等凭据。
 
-## 访问令牌和刷新令牌
+本文侧重**落地实现**；理论背景可阅读 [OAuth 2.0 RFC 6749](https://tools.ietf.org/html/rfc6749) 或[维基百科](https://en.wikipedia.org/wiki/OAuth)自行补充。下文将说明如何在 **Spring** 中接入 OAuth2、演示几种常见 **grant type（授权许可类型）**，并先厘清几个必备概念。
 
-身份验证成功后将提供访问令牌以及刷新令牌。访问令牌有一个有限的有效期（标准为 1 小时），之后需要刷新令牌才能获取新的访问令牌和新的刷新令牌。 Referesh 令牌通常会在使用后过期。
+## 访问令牌与刷新令牌
 
-## 资源服务器和授权服务器
+认证成功后，通常会拿到 **access token（访问令牌）** 与 **refresh token（刷新令牌）**。访问令牌**有效期有限**（常见如 1 小时；示例里为更短以便演示）；过期后需用刷新令牌向授权服务器换取**新的**访问令牌（以及可能轮换的刷新令牌）。**刷新令牌**往往在**使用后即失效**或受策略限制，需查阅具体实现。
 
-OAuth 引入了授权服务器的概念，授权服务器是发出访问和刷新令牌的实体，并在每个操作中进行咨询以查看令牌是否有效。资源服务器只是由不同客户端应用程序（前端应用程序、移动设备、其他后端服务......）访问的实际 Rest API。资源服务器和授权服务器可以是不同的实体，也可以是同一实体。
+## 资源服务器与授权服务器
 
-## 授权类型
+OAuth 引入 **authorization server（授权服务器）**：负责签发访问/刷新令牌，并在需要时校验令牌是否有效。**resource server（资源服务器）**则是对外暴露、被各类客户端（浏览器、移动端、其它后端服务等）访问的 **REST API** 本体。两者在物理上可以**合一**，也可以**分离**部署。
 
-OAuth 中最常用的授权有：客户端凭据、密码、授权码和隐式授权。每项资助都有特定的流程和用例，但由于本文的重点不是理论，因此我们将重点关注其实施。有关授权及其用途的更多详细信息，请参阅 [OAuth RFC](https://tools.ietf.org/html/rfc6749#page-8)。
+## 授权类型（grant types）
+
+实践中常见几类：**client credentials**、**password**、**authorization code**、**implicit** 等；每种有固定流程与适用场景。本文不展开协议细节，只演示在 Spring 中的配置与调用；各 grant 的语义仍以 [RFC 6749 第 1.3 节起](https://tools.ietf.org/html/rfc6749#page-8)为准。
 
 ## 实现
 
-在实现方面，我们将使用 Spring Boot 来利用其自动配置和引导功能，并更多地关注我们的核心主题。
+示例使用 **Spring Boot** 的自动配置与起步依赖，把精力放在安全与 OAuth 配置上。
 
-- 资源服务器：
+### 资源服务器
 
-我们有一个资源服务器，其中包含我们希望保护的以下端点：
+下面是一个资源服务器上的控制器，暴露若干待保护的端点：
 
 ```java
 @RestController("/")
@@ -55,7 +59,7 @@ public class ResourceController {
 }
 ```
 
-为此，我们需要配置一个用 `@EnableResourceServer` 注释的 `ResourceServerConfigurerAdapter` bean：
+为此需要声明基于 **`ResourceServerConfigurerAdapter`** 的配置，并加上 **`@EnableResourceServer`**：
 
 ```java
 @Configuration
@@ -86,11 +90,11 @@ public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapt
 }
 ```
 
-我们已经告诉 spring 检查端点的身份验证（可以使用 `"/*"` 或 `.anyRequest()` 来表示所有端点）。此外，我们还配置了一个 `RemoteTokenServices` bean 来告诉 Spring 提供令牌检查端点（授权服务器），并配置了客户端 id 和密钥。这样我们的资源服务器就配置好了。最后，我们设置了资源 id，如果多个资源服务器使用该资源（这很常见），则该资源 id 可以在授权服务器中用作标识。
+含义概览：要求对上述路径走认证（也可用 `"/*"` 或 `.anyRequest()` 一刀切）；注册 **`RemoteTokenServices`**，指向授权服务器的 **`/oauth/check_token`**，并配置用于自省（introspect）的客户端 **id/secret**；**`resourceId`** 用于在**多资源服务器**场景下与授权服务器侧配置对齐。
 
-- 授权服务器：
+### 授权服务器
 
-为了实现授权服务器，我们将使用内存客户端配置。 Spring Security 还提供了将 oauth 客户端配置存储在更适合生产应用程序的数据库中的可能性。
+授权服务器示例使用**内存客户端**（`inMemory`）；生产环境可改为 JDBC 等持久化存储。
 
 ```java
 @Configuration
@@ -128,13 +132,13 @@ public class AuthorizationSecurityConfig extends AuthorizationServerConfigurerAd
 }
 ```
 
-除了我们在其中配置客户端、密钥、oauth 范围（下一篇文章中将详细介绍）、权限（与令牌关联的角色）、令牌有效性、资源 id 之外，我们还配置了对 Spring Boot 在 `/oauth/check_token` 处提供的检查令牌端点的访问，以及对也自动映射在 `/oauth/token` 处的令牌发行端点的访问。
+除注册客户端 id、密钥、**scope（下一篇详述）**、与令牌绑定的 **authorities**、令牌有效期、**resourceIds** 外，还放行了 Spring Boot 默认映射的 **`/oauth/check_token`** 与 **`/oauth/token`** 相关端点访问策略，便于本地演示。
 
-## OAuth 的实际应用
+## 动手示例
 
-我们已将授权服务器配置为在端口 8081 上运行，将资源服务器配置为在端口 8989 上运行。对于下面的所有示例，都使用 `curl` ，但客户端可以是任何应用程序。
+假设**授权服务器**监听 **8081**，**资源服务器**监听 **8989**。下文用 **`curl`** 演示；真实客户端可以是任意应用。
 
-我们首先尝试访问资源服务器中的一个端点：
+先直接访问受保护资源：
 
 ```bash
 curl localhost:8989/foo
@@ -147,15 +151,15 @@ curl localhost:8989/foo
 }
 ```
 
-让我们获取一个令牌并重试。
+接着获取令牌再访问。
 
-- 客户凭证授予：
+### client_credentials
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client' -H "Accept: application/json"
 ```
 
-回复：
+响应示例：
 
 ```json
 {
@@ -166,7 +170,7 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'gr
 }
 ```
 
-我们现在可以使用令牌来访问受保护的端点：
+携带令牌访问（示例 token 请替换为你实际返回的）：
 
 ```bash
 curl -v localhost:8989/foo -H "Authorization: Bearer 6bb86f18-e69e-4c2b-8fbf-85d7d5b800a4"
@@ -174,11 +178,11 @@ curl -v localhost:8989/foo -H "Authorization: Bearer 6bb86f18-e69e-4c2b-8fbf-85d
 foo
 ```
 
-客户端凭据授予不支持刷新令牌。
+**client_credentials** 流程**不提供**刷新令牌。
 
-- 密码授予：
+### password
 
-就获取令牌的流程而言，密码授予与客户端凭据类似，只是它使用实际的用户凭据。它还意味着需要为应用程序配置用户。 Web 安全配置如下：
+流程与 **client_credentials** 类似，但额外提交**资源拥有者**的用户名与密码，因此需在应用里配置用户（见 WebSecurity）。示例安全配置：
 
 ```java
 @Configuration
@@ -201,15 +205,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 }
 ```
 
-然后我们可以使用用户凭据来获取令牌，如下所示：
+获取令牌：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
  -d 'grant_type=password&username=gwidgets&password=gwidgets' \
  -H "Accept: application/json"
 ```
-
-回复：
 
 ```json
 {
@@ -220,11 +222,11 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 }
 ```
 
-密码授予不支持刷新令牌。
+**password** 许可在常见配置下同样**不颁发**刷新令牌（是否启用以你的授权服务器策略为准）。
 
-- 隐式授予：
+### implicit
 
-隐式授权最适合前端路由应用程序。隐式授权需要基本身份验证和 HTTP 会话。为了执行隐式授权，我们将向授权服务器添加一个简单的 http 页面（它可以位于不同的服务器上）：
+**implicit** 适合带前端路由的单页应用等场景，往往依赖浏览器会话与登录态。可在授权服务器上放一个简单的测试页（也可部署在别处）：
 
 ```html
 <!DOCTYPE html>
@@ -239,30 +241,37 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 </html>
 ```
 
-要执行隐式授予，我们需要在浏览器中导航到以下地址：<http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html>
+在浏览器中打开授权端点（注意与客户端注册的 **redirect_uri** 一致）：
 
-![Login redirect](using-oauth-2-in-spring/01.webp)
+<http://localhost:8081/oauth/authorize?response_type=token&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html>
 
-登录后，我们得到一个 OAuth 审批页面（spring 默认提供，但可以自定义）：
+![Login redirect](01.webp)
 
-![OAuth approval](using-oauth-2-in-spring/02.webp)
-批准令牌的范围后，我们最终会重定向到我们的页面，在该页面中我们在 url 的哈希中找到令牌：
+登录后进入 OAuth **同意/授权**页（Spring 默认 UI，可自定义）：
 
-![Implicit grant](using-oauth-2-in-spring/03.webp)
+![OAuth approval](02.webp)
 
-- 授权码授予：
+用户同意后，浏览器重定向回 **redirect_uri**，此时 **access token** 出现在 **URL fragment（# 之后）**：
 
-对于授权码授予，我们需要首先以与隐式流程相同的方式进行授权，只不过 `response_type` 现在是 `code` 。为此，我们需要导航到：[http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html](http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html)
+![Implicit grant](03.webp)
 
-然后我们被重定向到登录，登录后，我们被重定向到 OAuth 范围批准，如上一节中的隐式流程。之后，我们被重定向到以下地址：[http://localhost:8081/test.html?code=bD0mVb](http://localhost:8081/test.html?code=bD0mVb)，这是我们应用程序的欢迎页面，但带有一个特殊的查询参数： `code` 。我们将使用 curl 来获取令牌以进行演示，但也可以使用 JavaScript 在页面中完成此操作：
+### authorization_code
+
+与 **implicit** 类似，先把 `response_type` 换成 **`code`**，例如：
+
+[http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html](http://localhost:8081/oauth/authorize?response_type=code&client_id=my-trusted-client&redirect-uri=http://localhost:8081/test.html)
+
+登录并同意后，回调 URL 会带上 **`code`** 查询参数，例如：
+
+[http://localhost:8081/test.html?code=bD0mVb](http://localhost:8081/test.html?code=bD0mVb)
+
+再用 **code** 换令牌（演示用 curl；页面里用 JavaScript 亦可）：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 -d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html'\
 -H "Accept: application/json"
 ```
-
-回复：
 
 ```json
 {
@@ -274,9 +283,9 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 }
 ```
 
-- 刷新令牌：
+### refresh_token
 
-我们已经看到授权授予是唯一支持刷新令牌的授予。使用访问令牌 60 秒后，它就会过期，我们得到以下响应：
+在上述示例中，**authorization_code** 流程会返回 **refresh_token**。访问令牌约 **60 秒**后过期，再用旧 token 访问会得到类似：
 
 ```json
 {
@@ -285,13 +294,11 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 }
 ```
 
-这意味着访问令牌已过期。要获取新令牌，我们需要使用刷新令牌：
+此时用刷新令牌换新对：
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'client_id=my-trusted-client&grant_type=refresh_token&refresh_token=cf6aa9db-3757-465e-af68-b7d59d1f0b77' -H "Accept: application/json"
 ```
-
-回复：
 
 ```json
 {
@@ -303,12 +310,16 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'cl
 }
 ```
 
-每次令牌过期时都可以重复此过程。
+可如此反复续期。
 
-## 总结
+## 小结
 
-Spring OAuth 提供开箱即用的 OAuth 端点和流程，并且可以成为以最小的努力设置 OAuth 的绝佳解决方案。然而，对于不熟悉 Spring 的开发人员来说，这可能有点令人畏惧，因为很多事情都在幕后发生。希望这篇文章可以帮助您了解全局。在下一篇文章中，我们将讨论使用 OAuth 范围来保护端点。
+Spring Security OAuth（及配套自动配置）提供了开箱即用的 **`/oauth/token`**、**`/oauth/check_token`** 等端点，能快速搭起演示环境；对不熟悉 Spring 的读者，背后仍有较多魔法。希望本文能帮你建立整体图景。**下一篇**将讨论如何用 **scope** 细粒度保护端点。
 
-完整的源代码可以在[这里](https://github.com/zak905/oauth2-example)找到。
+完整示例代码见：[zak905/oauth2-example](https://github.com/zak905/oauth2-example)。
 
-原文链接：[http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/](http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[Using OAuth2 in Spring, Part 1](http://www.zakariaamine.com/2018-01-27/using-oauth2-in-spring/)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。

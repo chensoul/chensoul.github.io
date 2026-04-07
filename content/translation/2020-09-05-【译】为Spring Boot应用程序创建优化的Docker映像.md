@@ -2,9 +2,11 @@
 title: "【译】为 Spring Boot 应用程序创建优化的 Docker 映像"
 date: 2020-09-05 14:00:00+08:00
 slug: spring-boot-docker
+draft: true
 categories: [ "translation" ]
 tags: ['spring-boot']
 description: "容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。 ..."
+canonicalURL: "https://reflectoring.io/spring-boot-docker/"
 ---
 
 容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。
@@ -449,4 +451,8 @@ docker images
 dive <image ID or image tag>
 ```
 
-原文链接：[https://reflectoring.io/spring-boot-docker/](https://reflectoring.io/spring-boot-docker/)
+> 本文为学习目的的个人翻译，译文仅供参考。
+>
+> 原文链接：[Creating Optimized Docker Images for a Spring Boot](https://reflectoring.io/spring-boot-docker/)。
+>
+> 版权归原作者或原刊登方所有。本文为非官方译本；如有不妥，请联系删除。
