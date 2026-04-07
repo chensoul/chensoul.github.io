@@ -1,12 +1,8 @@
 # 辅助：命令备忘
 
-通用译稿流程（**不限定**某一博客或平台）。路径、slug、**文件名 `{YYYY-MM-DD}-【译】…`**、**`date`（原文时间优先，否则当前时间，上海时区）**、**不写 `originalPublishedAt`**、配图规则见 [`../SKILL.md`](../SKILL.md)。
+通用译稿流程（**不限定**某一博客或平台）。路径、slug、**文件名 `{YYYY-MM-DD}-【译】…`**、**`date`（原文时间优先，否则当前时间，上海时区）**、**不写 `originalPublishedAt`**、**用 `canonicalURL` 识别是否按本技能落盘**、配图规则见 [`../SKILL.md`](../SKILL.md)。存量无 `canonicalURL` 的译文对齐方式见 SKILL 中「存量译文」；可用 `scripts/normalize-legacy-translation-frontmatter.py`。
 
-## 翻译完成后
-
-**不要执行任何 `pnpm` 命令**（包括 `pnpm astro check`、`pnpm build` 等），除非用户明确要求。
-
-若用户单独要求本地校验，可自行运行仓库脚本，本技能流程不默认包含。
+文末**翻译声明**三行模版见 SKILL「步骤 3」；批量统一存量可运行仓库根目录 `python3 scripts/normalize-translation-footer.py`。
 
 ## 配图
 
