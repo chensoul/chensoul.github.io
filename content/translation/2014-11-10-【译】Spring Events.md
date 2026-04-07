@@ -6,6 +6,7 @@ slug: spring-events
 categories: [ "translation" ]
 tags: [ "spring", "events" ]
 description: "在 Spring 中发布与监听应用事件：自定义事件、异步多路广播、@EventListener、泛型条件监听与 @TransactionalEventListener。"
+canonicalURL: "https://www.baeldung.com/spring-events"
 ---
 
 ## 1. 概述
