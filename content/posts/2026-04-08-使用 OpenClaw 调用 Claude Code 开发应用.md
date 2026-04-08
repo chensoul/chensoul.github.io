@@ -4,7 +4,7 @@ date: 2026-03-24 14:20:00+08:00
 slug: create-app-with-claude-code-in-openclaw
 categories: [ "tech" ]
 tags: [ 'openclaw','claude']
-draft: true
+draft: false
 description: "本文介绍在 Codespaces 中从安装到正常使用的完整步骤。"
 favicon: "openclaw.svg"
 ---
