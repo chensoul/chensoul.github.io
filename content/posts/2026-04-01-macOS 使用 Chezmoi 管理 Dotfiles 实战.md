@@ -89,7 +89,7 @@ chezmoi add ~/.gitignore_global
 # Starship 配置
 chezmoi add ~/.config/starship.toml
 
-# Ghostty 终端配置
+# Ghostty 终端配置（Ghostty 1.3+）
 chezmoi add ~/.config/ghostty/config
 
 # Yazi 文件管理器配置
