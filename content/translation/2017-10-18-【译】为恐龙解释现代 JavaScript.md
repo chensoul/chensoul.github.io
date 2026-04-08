@@ -4,7 +4,7 @@ date: 2017-10-18 00:00:00+08:00
 draft: false
 slug: modern-javascript-explained-for-dinosaurs
 categories: [ "translation" ]
-tags: [ "javascript", "tooling" ]
+tags: [ "javascript"]
 description: "从纯 HTML/JS 到 npm、Browserify/Webpack、Babel 与 npm scripts：按时间线理解现代前端工具链。"
 canonicalURL: "https://peterxjang.com/blog/modern-javascript-explained-for-dinosaurs"
 ---

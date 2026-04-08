@@ -4,7 +4,7 @@ date: 2025-09-06 23:30:00+08:00
 draft: false
 slug: "ep179-kubernetes-explained"
 categories: [ "translation" ]
-tags: [ "kubernetes", "k8s", "containers", "orchestration" ]
+tags: [ "kubernetes", "k8s"]
 description: "这篇文章介绍了 Kubernetes 的控制平面和工作节点组件，包括 API 服务器、调度器、etcd、Pods 等。"
 canonicalURL: "https://blog.bytebytego.com/p/ep179-kubernetes-explained"
 ---

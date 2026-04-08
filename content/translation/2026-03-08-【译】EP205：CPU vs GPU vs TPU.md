@@ -4,7 +4,7 @@ date: 2026-03-08 00:31:00+08:00
 draft: false
 slug: "ep205-cpu-vs-gpu-vs-tpu"
 categories: [ "translation" ]
-tags: [ "cpu", "gpu", "tpu", "hardware" ]
+tags: [ "cpu", "gpu", "tpu" ]
 description: "这篇文章解释了 CPU、GPU 和 TPU 之间的架构差异，以及为什么相同代码在 GPU 上运行快，在 CPU 上慢，在 TPU 上更快。"
 canonicalURL: "https://blog.bytebytego.com/p/ep205-cpu-vs-gpu-vs-tpu"
 ---

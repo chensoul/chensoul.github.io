@@ -4,7 +4,7 @@ date: 2025-07-24 23:30:00+08:00
 draft: false
 slug: "consistency-and-partition-tolerance"
 categories: [ "translation" ]
-tags: [ "cap-theorem", "pacelc", "distributed-systems", "database" ]
+tags: ["distributed-systems", "database" ]
 description: "这篇文章介绍了 CAP 定理和 PACELC 定理，帮助理解分布式数据库在一致性、可用性和延迟之间的权衡。"
 canonicalURL: "https://blog.bytebytego.com/p/consistency-and-partition-tolerance"
 ---

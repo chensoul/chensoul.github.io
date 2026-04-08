@@ -4,7 +4,7 @@ date: 2022-12-04 00:36:00+08:00
 draft: false
 slug: "ep35-what-is-kubernetes"
 categories: [ "translation" ]
-tags: [ "kubernetes", "containers", "devops" ]
+tags: [ "kubernetes",  "devops" ]
 description: "这篇文章介绍了 RPC vs. gRPC、单体架构 vs. 微服务架构、Kubernetes（k8s）的核心组件，以及 ChatGPT 的代码能力。"
 canonicalURL: "https://blog.bytebytego.com/p/ep35-what-is-kubernetes"
 ---

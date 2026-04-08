@@ -4,7 +4,7 @@ date: 2025-06-17 23:30:00+08:00
 draft: false
 slug: "how-the-google-cloud-outage-crashed"
 categories: [ "translation" ]
-tags: [ "google-cloud", "outage", "reliability", "incident" ]
+tags: [  "reliability", "incident" ]
 description: "这篇文章分析了 2025 年 6 月 12 日 Google Cloud 全球宕机的原因、影响和教训。"
 canonicalURL: "https://blog.bytebytego.com/p/how-the-google-cloud-outage-crashed"
 ---

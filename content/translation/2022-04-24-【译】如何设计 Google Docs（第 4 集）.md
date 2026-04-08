@@ -4,7 +4,7 @@ date: 2022-04-24 00:01:00+08:00
 draft: false
 slug: "how-to-design-google-docs-episode"
 categories: [ "translation" ]
-tags: [ "google-docs", "system-design", "real-time" ]
+tags: [ "system-design"]
 description: "这篇文章介绍了如何设计 Google Docs 实时协作文档系统，包括部署策略（蓝绿、金丝雀、A/B 测试）和实时冲突解决算法（OT、CRDT）。"
 canonicalURL: "https://blog.bytebytego.com/p/how-to-design-google-docs-episode"
 ---

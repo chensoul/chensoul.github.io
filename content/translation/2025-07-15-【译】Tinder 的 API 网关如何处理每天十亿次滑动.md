@@ -4,7 +4,7 @@ date: 2025-07-15 23:31:00+08:00
 draft: false
 slug: "how-tinders-api-gateway-handles-a-billion-swipes"
 categories: [ "translation" ]
-tags: [ "api-gateway", "tinder", "scalability", "architecture" ]
+tags: [ "api-gateway", "scalability", "architecture" ]
 description: "这篇文章介绍了 Tinder 如何构建自定义 API 网关（TAG）来处理每天十亿次滑动，以及为什么他们选择自建而不是使用现成解决方案。"
 canonicalURL: "https://blog.bytebytego.com/p/how-tinders-api-gateway-handles-a"
 ---

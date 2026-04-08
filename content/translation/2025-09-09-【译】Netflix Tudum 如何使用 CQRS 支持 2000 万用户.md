@@ -4,7 +4,7 @@ date: 2025-09-09 23:30:00+08:00
 draft: false
 slug: "how-netflix-tudum-supports-20-million"
 categories: [ "translation" ]
-tags: [ "netflix", "cqrs", "architecture", "raw-hollow" ]
+tags: [ "netflix",  "architecture" ]
 description: "这篇文章介绍了 Netflix Tudum 平台如何使用 CQRS 架构和 RAW Hollow 技术来支持 2000 万用户，以及他们如何优化编辑预览体验。"
 canonicalURL: "https://blog.bytebytego.com/p/how-netflix-tudum-supports-20-million"
 ---

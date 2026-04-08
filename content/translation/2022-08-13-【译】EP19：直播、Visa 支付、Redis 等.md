@@ -4,7 +4,7 @@ date: 2022-08-13 23:30:00+08:00
 draft: false
 slug: "ep19-live-streaming-visa-payment"
 categories: [ "translation" ]
-tags: [ "live-streaming", "payment", "system-design" ]
+tags: [ "payment", "system-design" ]
 description: "这篇文章介绍了直播技术的工作原理、Visa 与 American Express 的支付模型差异、信用卡为何被称为银行最盈利产品，以及单线程 Redis 为何快速等话题。"
 canonicalURL: "https://blog.bytebytego.com/p/ep19-live-streaming-visa-payment"
 ---

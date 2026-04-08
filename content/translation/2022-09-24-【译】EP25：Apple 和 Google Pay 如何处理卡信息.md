@@ -4,7 +4,7 @@ date: 2022-09-24 23:30:00+08:00
 draft: false
 slug: "ep25-how-applegoogle-pay-handle-card"
 categories: [ "translation" ]
-tags: [ "apple-pay", "google-pay", "payment", "security" ]
+tags: [ "payment", "security" ]
 description: "这篇文章对比了 Apple Pay 和 Google Pay 在信用卡注册和支付流程中的安全实现差异，并介绍了印度 UPI 支付系统和 Google 街景模糊处理架构。"
 canonicalURL: "https://blog.bytebytego.com/p/ep25-how-applegoogle-pay-handle-card"
 ---

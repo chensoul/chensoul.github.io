@@ -4,7 +4,7 @@ date: 2026-03-18 23:30:00+08:00
 draft: false
 slug: "how-openai-codex-works"
 categories: [ "translation" ]
-tags: [ "openai", "codex", "ai-agent", "architecture" ]
+tags: [ "openai", "codex",  "architecture" ]
 description: "这篇文章介绍了 OpenAI Codex 的架构，包括代理循环、提示和上下文管理，以及多表面架构，让一个代理服务于多个不同界面。"
 canonicalURL: "https://blog.bytebytego.com/p/how-openai-codex-works"
 ---
