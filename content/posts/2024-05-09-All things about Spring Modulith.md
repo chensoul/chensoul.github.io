@@ -3,7 +3,7 @@ title: "Spring Modulith 学习资料与入门索引"
 date: 2024-05-09 08:00:00+08:00
 slug: all-things-about-spring-modulith
 categories: [ "tech" ]
-tags: ['spring', 'modulith']
+tags: [ "spring-boot" ]
 description: "整理 Spring Modulith 的背景介绍、核心概念与延伸阅读资料，适合作为了解模块化 Spring Boot 架构的入门索引。"
 ---
 

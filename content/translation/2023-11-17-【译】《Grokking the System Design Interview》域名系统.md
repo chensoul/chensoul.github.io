@@ -3,7 +3,7 @@ title: "【译】《Grokking the System Design Interview》域名系统"
 date: 2023-11-17 08:00:00+08:00
 slug: dns
 categories: [ "translation" ]
-tags: ['architecture']
+tags: [ "architecture" ]
 description: "这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 [Domain Name System](https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/introduction-to-domain-na ..."
 canonicalURL: "https://www.designgurus.io/course-think-like-a-system-design-interviewer/article/naming-systems"
 ---

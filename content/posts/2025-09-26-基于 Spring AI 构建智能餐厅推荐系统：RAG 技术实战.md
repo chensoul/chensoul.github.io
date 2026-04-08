@@ -3,7 +3,7 @@ title: "基于 Spring AI 构建智能餐厅推荐系统：RAG 技术实战"
 date: 2025-09-26 08:00:00+08:00
 slug: spring-ai-restaurant-showcase-rag
 categories: [ "tech" ]
-tags: ['spring-boot','spring-ai']
+tags: ["spring-boot","spring-ai"]
 favicon: "spring-ai.svg"
 description: "通过智能餐厅推荐系统示例，介绍如何用 Spring AI 实现 RAG 应用，让模型基于真实餐厅数据生成更准确的推荐结果。"
 ---
@@ -72,12 +72,12 @@ mvn spring-boot:run -Pollama-ai
 # 5. 加载数据
 curl -X POST "http://localhost:8080/api/rag/load" \
   -H "Content-Type: application/json" \
-  -d '{"filePath": "classpath:restaurant-knowledge.txt"}'
+  -d "{"filePath": "classpath:restaurant-knowledge.txt"}"
 
 # 6. 开始聊天
 curl -X POST "http://localhost:8080/api/rag/chat" \
   -H "Content-Type: application/json" \
-  -d '"我想在北京找一家川菜馆"'
+  -d ""我想在北京找一家川菜馆""
 ```
 
 **预期结果**：你会看到类似上面的智能推荐回答！
@@ -283,7 +283,7 @@ mvn spring-boot:run -Pollama-ai
 # 加载餐厅数据
 curl -X POST "http://localhost:8080/api/rag/load" \
   -H "Content-Type: application/json" \
-  -d '{"filePath": "classpath:restaurant-knowledge.txt"}'
+  -d "{"filePath": "classpath:restaurant-knowledge.txt"}"
 ```
 
 ### 基础测试
@@ -293,7 +293,7 @@ curl -X POST "http://localhost:8080/api/rag/load" \
 ```bash
 curl -X POST "http://localhost:8080/api/rag/chat" \
   -H "Content-Type: application/json" \
-  -d '"我想在北京找一家川菜馆"'
+  -d ""我想在北京找一家川菜馆""
 ```
 
 **测试文档搜索**：
@@ -301,7 +301,7 @@ curl -X POST "http://localhost:8080/api/rag/chat" \
 ```bash
 curl -X POST "http://localhost:8080/api/rag/search" \
   -H "Content-Type: application/json" \
-  -d '{"query": "水煮鱼", "topK": 3}'
+  -d "{"query": "水煮鱼", "topK": 3}"
 ```
 
 ### 监控和调试
@@ -341,7 +341,7 @@ A: 检查数据是否正确加载，尝试调整检索参数。
 ```bash
 curl -X POST "http://localhost:8080/api/rag/chat-personalized" \
   -H "Content-Type: application/json" \
-  -d '{"message": "推荐川菜馆", "userPreferences": {"city": "北京", "priceRange": "100-150"}}'
+  -d "{"message": "推荐川菜馆", "userPreferences": {"city": "北京", "priceRange": "100-150"}}"
 ```
 
 **向量相似性搜索**：基于语义相似度检索相关文档
@@ -349,7 +349,7 @@ curl -X POST "http://localhost:8080/api/rag/chat-personalized" \
 ```bash
 curl -X POST "http://localhost:8080/api/rag/search" \
   -H "Content-Type: application/json" \
-  -d '{"query": "水煮鱼", "topK": 3}'
+  -d "{"query": "水煮鱼", "topK": 3}"
 ```
 
 **性能监控**：访问 `http://localhost:8080/actuator/prometheus` 查看详细指标。
@@ -489,17 +489,17 @@ CREATE INDEX ON vector_store USING GIN (metadata);
 -- 测试插入一条记录
 INSERT INTO vector_store (id, content, metadata, embedding) 
 VALUES (
-    'test-1', 
-    '测试内容', 
-    '{"source": "test"}'::jsonb,
-    '[0.1,0.2,0.3]'::vector
+    "test-1", 
+    "测试内容", 
+    "{"source": "test"}"::jsonb,
+    "[0.1,0.2,0.3]"::vector
 );
 
 -- 查询测试记录
-SELECT * FROM vector_store WHERE id = 'test-1';
+SELECT * FROM vector_store WHERE id = "test-1";
 
 -- 清理测试数据
-DELETE FROM vector_store WHERE id = 'test-1';
+DELETE FROM vector_store WHERE id = "test-1";
 ```
 
 ## 总结与思考

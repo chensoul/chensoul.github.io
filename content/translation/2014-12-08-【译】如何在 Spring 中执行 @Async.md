@@ -4,7 +4,7 @@ date: 2014-12-08 00:00:00+08:00
 draft: false
 slug: spring-async
 categories: ["translation"]
-tags: ["spring", "async", "concurrency"]
+tags: ["spring-boot", "concurrency"]
 description: "在 Spring 中使用@Async 注解实现异步方法执行：配置、返回值处理、线程池和异常处理。"
 canonicalURL: "https://www.baeldung.com/spring-async"
 ---

@@ -4,7 +4,7 @@ date: 2024-10-29 23:30:00+08:00
 draft: false
 slug: "18-trillion-events-per-day-with-kafka"
 categories: [ "translation" ]
-tags: [ "Kafka", "distributed-systems" ]
+tags: [ "kafka", "distributed-systems" ]
 description: "Agoda 每天通过 Apache Kafka 发送约 1.8 万亿条事件。本文探讨了 Agoda 在扩展 Kafka 基础设施时面临的挑战及其解决方案。"
 canonicalURL: "https://blog.bytebytego.com/p/18-trillion-events-per-day-with-kafka"
 ---

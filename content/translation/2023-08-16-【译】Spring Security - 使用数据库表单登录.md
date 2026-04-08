@@ -3,7 +3,7 @@ title: "【译】Spring Security - 使用数据库表单登录"
 date: 2023-08-16 08:00:00+08:00
 slug: spring-security-form-login-with-database
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "内容 ..."
 canonicalURL: "https://www.tutorialspoint.com/spring_security/spring_security_form_login_with_database.htm"
 ---
@@ -129,7 +129,7 @@ CREATE TABLE attempts (
 
 ```sql
 INSERT INTO users(username,password,account_non_locked)
-VALUES ('user','12345', true);
+VALUES ("user","12345", true);
 ```
 
 ### 项目设置

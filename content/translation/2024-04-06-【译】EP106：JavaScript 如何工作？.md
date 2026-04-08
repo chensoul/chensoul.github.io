@@ -4,7 +4,7 @@ date: 2024-04-06 23:30:00+08:00
 draft: false
 slug: "ep106-how-does-javascript-work"
 categories: [ "translation" ]
-tags: [ "javascript", "programming", "web" ]
+tags: [ "javascript", "programming" ]
 description: "这篇文章介绍了 JavaScript 的核心特性，包括解释型语言、函数是一等公民、动态类型、客户端执行、基于原型的 OOP 等。"
 canonicalURL: "https://blog.bytebytego.com/p/ep106-how-does-javascript-work"
 ---
@@ -33,7 +33,7 @@ canonicalURL: "https://blog.bytebytego.com/p/ep106-how-does-javascript-work"
 2. 记录累加器
 3. 发送者线程（I/O 线程）
 
-我们需要为 producer 配置适当的'acks'和'retries'以确保消息发送到 broker。
+我们需要为 producer 配置适当的"acks"和"retries"以确保消息发送到 broker。
 
 ### Broker
 

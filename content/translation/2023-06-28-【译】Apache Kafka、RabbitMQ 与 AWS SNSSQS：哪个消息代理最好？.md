@@ -3,7 +3,7 @@ title: "【译】Apache Kafka、RabbitMQ 与 AWS SNSSQS：哪个消息代理最�
 date: 2023-06-28 00:00:00+08:00
 slug: apache-kafka-vs-rabbitmq-vs-aws-sns-sqs
 categories: [ "translation" ]
-tags: ['kafka', 'rabbitmq']
+tags: [ "messaging" ]
 description: "原文链接：https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs ..."
 canonicalURL: "https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs"
 ---

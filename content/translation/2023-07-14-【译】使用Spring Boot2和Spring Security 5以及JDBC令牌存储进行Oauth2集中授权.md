@@ -3,7 +3,7 @@ title: "【译】使用Spring Boot2和Spring Security 5以及JDBC令牌存储进
 date: 2023-07-14 08:00:00+08:00
 slug: oauth-2-centralized-authorization-with-spring-boot-2-and-spring-security-5-and-jdbc-token-store
 categories: [ "translation" ]
-tags: ['oauth2', 'security', 'spring-boot']
+tags: ["oauth2", "security", "spring-boot"]
 description: "在这篇文章中，我们将了解如何使用 Spring Boot 2 和 Spring Security 5 OAuth2 来实现集中授权的授权服务器以及如何通过 GUI 对其进行管理，还将提供资源服务器演示以及 github 下的整个项目。 ..."
 canonicalURL: "https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2"
 ---
@@ -79,7 +79,7 @@ OAuth 2 为不同的用例提供了多种“授权类型”。定义的授权类
 
 ```sql
 INSERT INTO OAUTH_CLIENT_DETAILS(CLIENT_ID, RESOURCE_IDS, CLIENT_SECRET, SCOPE, AUTHORIZED_GRANT_TYPES, AUTHORITIES, ACCESS_TOKEN_VALIDITY, REFRESH_TOKEN_VALIDITY)
-VALUES ('read-write-client', 'product-api','$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2','read,write', 'client_credentials', 'ROLE_PRODUCT_ADMIN', 10800, 2592000);
+VALUES ("read-write-client", "product-api","$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2","read,write", "client_credentials", "ROLE_PRODUCT_ADMIN", 10800, 2592000);
 #password [hashed with BCCrypt] :user
 ```
 
@@ -94,13 +94,13 @@ Spring Security 附带两个有用的接口：
 下面的脚本将加载所有权限和凭据（用户）：
 
 ```sql
-INSERT INTO authority  VALUES(1,'ROLE_OAUTH_ADMIN');
-INSERT INTO authority VALUES(2,'ROLE_ADMIN_PRODUCT');
-INSERT INTO authority VALUES(3,'ROLE_RESOURCE_ADMIN');
+INSERT INTO authority  VALUES(1,"ROLE_OAUTH_ADMIN");
+INSERT INTO authority VALUES(2,"ROLE_ADMIN_PRODUCT");
+INSERT INTO authority VALUES(3,"ROLE_RESOURCE_ADMIN");
 
-INSERT INTO credentials VALUES(1,b'1','oauth_admin','$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2','0');
-INSERT INTO credentials VALUES(2,b'1','resource_admin','$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2','0');
-INSERT INTO credentials  VALUES(3,b'1','user','$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2','0');
+INSERT INTO credentials VALUES(1,b"1","oauth_admin","$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2","0");
+INSERT INTO credentials VALUES(2,b"1","resource_admin","$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2","0");
+INSERT INTO credentials  VALUES(3,b"1","user","$2a$10$BurTWIy5NTF9GJJH4magz.9Bd4bBurWYG8tmXxeQh1vs7r/wnCFG2","0");
 
 INSERT INTO credentials_authorities VALUES (1, 1);
 INSERT INTO credentials_authorities VALUES (2, 3);
@@ -263,11 +263,11 @@ public class ResourcesServerConfiguration  extends ResourceServerConfigurerAdapt
     public void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope('write')")
+                .antMatchers(HttpMethod.GET, "/**").access("#oauth2.hasScope("read")")
+                .antMatchers(HttpMethod.POST, "/**").access("#oauth2.hasScope("write")")
+                .antMatchers(HttpMethod.PATCH, "/**").access("#oauth2.hasScope("write")")
+                .antMatchers(HttpMethod.PUT, "/**").access("#oauth2.hasScope("write")")
+                .antMatchers(HttpMethod.DELETE, "/**").access("#oauth2.hasScope("write")")
                 .and()
                 .headers().addHeaderWriter((request, response) -> {
                response.addHeader("Access-Control-Allow-Origin", "*");

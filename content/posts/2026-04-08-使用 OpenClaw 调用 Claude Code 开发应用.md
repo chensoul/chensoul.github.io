@@ -3,7 +3,7 @@ title: "使用 OpenClaw 调用 Claude Code 开发应用"
 date: 2026-04-08 14:20:00+08:00
 slug: create-app-with-claude-code-in-openclaw
 categories: [ "tech" ]
-tags: [ 'openclaw','claude' ]
+tags: [ "openclaw","claude" ]
 draft: false
 description: "本文介绍在 Codespaces 中从安装到正常使用的完整步骤。"
 favicon: "openclaw.svg"
@@ -297,7 +297,7 @@ nvm install 25.8.0
 nvm use 25.8.0
 
 # 重新安装 openclaw
-curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash
+curl -fsSL --proto "=https" --tlsv1.2 https://openclaw.ai/install.sh | bash
 ```
 
 5. 更新环境变量
@@ -317,7 +317,7 @@ source /home/chensoul/.bashrc
 现在需要更新 openclaw.json 的配置，将 /root/.openclaw 改为 /home/chensoul/.openclaw
 
 ```bash
-sed -i 's|/root/\.openclaw|/home/chensoul/.openclaw|g' /home/chensoul/.openclaw/openclaw.json
+sed -i "s|/root/\.openclaw|/home/chensoul/.openclaw|g" /home/chensoul/.openclaw/openclaw.json
 ```
 
 6. 复制并更新 crontab

@@ -2,7 +2,7 @@
 title: "Spring AI 让数据库听懂人话：Text2SQL 自然语言查询实践指南"
 slug: spring-ai-text2sql-showcase
 description: "深入探索 Spring AI + DeepSeek 实现 Text2SQL 自然语言数据库查询，包含直接模式、MCP工具集成、分步骤查询三种实现方案，附完整源码和踩坑经验"
-tags: ['spring-ai', 'text2sql']
+tags: [ "spring-ai" ]
 categories: [ "tech" ]
 date: 2025-09-30 09:00:00+08:00
 mermaid: true
@@ -302,7 +302,7 @@ public class Text2SqlController {
 ```bash
 curl -X POST http://localhost:8080/api/query \
   -H "Content-Type: application/json" \
-  -d '{"query": "统计每个部门的员工数量"}'
+  -d "{"query": "统计每个部门的员工数量"}"
 ```
 
 **返回结果**：
@@ -341,43 +341,43 @@ curl -X POST http://localhost:8080/api/query \
 ```sql
 -- 员工表数据
 INSERT IGNORE INTO employees (name, department, position, salary, hire_date, email) VALUES
-('张三', '技术部', '高级工程师', 15000, '2022-01-15', 'zhangsan@company.com'),
-('李四', '技术部', '工程师', 12000, '2022-03-20', 'lisi@company.com'),
-('王五', '销售部', '销售经理', 18000, '2021-11-10', 'wangwu@company.com'),
-('赵六', '销售部', '销售代表', 10000, '2023-02-01', 'zhaoliu@company.com'),
-('钱七', '人事部', '人事经理', 16000, '2021-08-05', 'qianqi@company.com'),
-('孙八', '财务部', '会计师', 14000, '2022-06-15', 'sunba@company.com'),
-('周九', '技术部', '架构师', 25000, '2020-12-01', 'zhoujiu@company.com'),
-('吴十', '市场部', '市场专员', 11000, '2023-01-10', 'wushi@company.com');
+("张三", "技术部", "高级工程师", 15000, "2022-01-15", "zhangsan@company.com"),
+("李四", "技术部", "工程师", 12000, "2022-03-20", "lisi@company.com"),
+("王五", "销售部", "销售经理", 18000, "2021-11-10", "wangwu@company.com"),
+("赵六", "销售部", "销售代表", 10000, "2023-02-01", "zhaoliu@company.com"),
+("钱七", "人事部", "人事经理", 16000, "2021-08-05", "qianqi@company.com"),
+("孙八", "财务部", "会计师", 14000, "2022-06-15", "sunba@company.com"),
+("周九", "技术部", "架构师", 25000, "2020-12-01", "zhoujiu@company.com"),
+("吴十", "市场部", "市场专员", 11000, "2023-01-10", "wushi@company.com");
 
 -- 项目表数据
 INSERT IGNORE INTO projects (name, description, start_date, end_date, status, budget) VALUES
-('电商平台重构', '重构现有电商平台，提升性能和用户体验', '2023-01-01', '2023-06-30', '进行中', 500000),
-('移动端应用开发', '开发公司移动端应用', '2023-03-01', '2023-08-31', '进行中', 300000),
-('数据分析系统', '构建企业数据分析平台', '2022-10-01', '2023-02-28', '已完成', 200000),
-('客户管理系统', '升级客户关系管理系统', '2023-02-15', '2023-07-15', '进行中', 150000),
-('财务系统优化', '优化财务系统性能', '2022-12-01', '2023-01-31', '已完成', 80000);
+("电商平台重构", "重构现有电商平台，提升性能和用户体验", "2023-01-01", "2023-06-30", "进行中", 500000),
+("移动端应用开发", "开发公司移动端应用", "2023-03-01", "2023-08-31", "进行中", 300000),
+("数据分析系统", "构建企业数据分析平台", "2022-10-01", "2023-02-28", "已完成", 200000),
+("客户管理系统", "升级客户关系管理系统", "2023-02-15", "2023-07-15", "进行中", 150000),
+("财务系统优化", "优化财务系统性能", "2022-12-01", "2023-01-31", "已完成", 80000);
 
 -- 项目成员关系表数据
 INSERT IGNORE INTO project_members (project_id, employee_id, role, join_date) VALUES
-(1, 1, '开发负责人', '2023-01-01'),
-(1, 2, '开发工程师', '2023-01-01'),
-(1, 7, '技术架构师', '2023-01-01'),
-(2, 1, '项目经理', '2023-03-01'),
-(2, 2, '开发工程师', '2023-03-01'),
-(3, 7, '技术负责人', '2022-10-01'),
-(3, 6, '数据分析师', '2022-10-01'),
-(4, 3, '项目经理', '2023-02-15'),
-(4, 4, '业务分析师', '2023-02-15'),
-(5, 6, '项目经理', '2022-12-01');
+(1, 1, "开发负责人", "2023-01-01"),
+(1, 2, "开发工程师", "2023-01-01"),
+(1, 7, "技术架构师", "2023-01-01"),
+(2, 1, "项目经理", "2023-03-01"),
+(2, 2, "开发工程师", "2023-03-01"),
+(3, 7, "技术负责人", "2022-10-01"),
+(3, 6, "数据分析师", "2022-10-01"),
+(4, 3, "项目经理", "2023-02-15"),
+(4, 4, "业务分析师", "2023-02-15"),
+(5, 6, "项目经理", "2022-12-01");
 
 -- 部门表数据
 INSERT IGNORE INTO departments (name, manager_id, budget, location) VALUES
-('技术部', 7, 2000000, '北京'),
-('销售部', 3, 1500000, '上海'),
-('人事部', 5, 800000, '北京'),
-('财务部', 6, 600000, '北京'),
-('市场部', 8, 1000000, '上海');
+("技术部", 7, 2000000, "北京"),
+("销售部", 3, 1500000, "上海"),
+("人事部", 5, 800000, "北京"),
+("财务部", 6, 600000, "北京"),
+("市场部", 8, 1000000, "上海");
 ```
 
 ## 第二版：MCP 工具集成模式 - 让 AI 更聪明
@@ -486,7 +486,7 @@ public class DatabaseTool {
                     SELECT TABLE_NAME 
                     FROM INFORMATION_SCHEMA.TABLES 
                     WHERE TABLE_SCHEMA = DATABASE()
-                    AND TABLE_TYPE = 'BASE TABLE'
+                    AND TABLE_TYPE = "BASE TABLE"
                     ORDER BY TABLE_NAME
                     """;
 
@@ -872,14 +872,14 @@ projects + project_members → "通过project_id字段关联"
 **业务规则推理**：
 
 - 时间范围: 2023-12-01 至 2024-12-31
-- 筛选条件: hire_date >= '2023-12-01'
+- 筛选条件: hire_date >= "2023-12-01"
 - 业务规则: 需要添加WHERE条件进行时间筛选
 
 **生成的SQL**：
 
 ```sql
 SELECT * FROM employees 
-WHERE hire_date >= '2023-12-01' 
+WHERE hire_date >= "2023-12-01" 
 ORDER BY hire_date DESC
 ```
 
@@ -909,7 +909,7 @@ ORDER BY avg_salary DESC
 
 **业务规则推理**：
 
-- 筛选条件: department = '技术部'
+- 筛选条件: department = "技术部"
 - 排序规则: 按salary字段降序排列
 - 结果限制: 使用LIMIT 3限制结果数量
 - 关键字段: name, salary, department, position
@@ -919,7 +919,7 @@ ORDER BY avg_salary DESC
 ```sql
 SELECT name, salary, position 
 FROM employees 
-WHERE department = '技术部' 
+WHERE department = "技术部" 
 ORDER BY salary DESC 
 LIMIT 3
 ```
@@ -1156,8 +1156,8 @@ public class SqlUtils {
     private static boolean containsSqlInjection(String sql) {
         // 检测常见的SQL注入模式
         String[] injectionPatterns = {
-            "'.*--", "'.*;", "'.*UNION", "'.*OR.*=", 
-            "'.*AND.*=", "'.*OR.*1=1", "'.*AND.*1=1"
+            "".*--", "".*;", "".*UNION", "".*OR.*=", 
+            "".*AND.*=", "".*OR.*1=1", "'.*AND.*1=1"
         };
         
         for (String pattern : injectionPatterns) {

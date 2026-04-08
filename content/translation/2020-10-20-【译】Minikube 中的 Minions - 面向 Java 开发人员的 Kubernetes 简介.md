@@ -2,7 +2,7 @@
 title: "【译】Minikube 中的 Minions - 面向 Java 开发人员的 Kubernetes 简介"
 date: 2020-10-20 00:00:00+08:00
 slug: minions-in-minikube-a-kubernetes-intro-for-java-de
-tags: ['java', 'kubernetes']
+tags: [ "java", "kubernetes" ]
 categories: [ "translation" ]
 description: "我们希望我们的微服务是可复制、可替换的工作程序，我们可以轻松升级或降级，无需停机，管理也只需最少。我们可能会说我们希望他们是我们的奴才。在本文中，我们将通过一个简单的示例来了解 Kubernetes 通过创建和编排奴才大军可以为我们做些什么。您可以按照本文进行编码，也可以从[此处](https://github.com/ryandawsonuk/minions/blob/master/minion ..."
 canonicalURL: "https://dzone.com/articles/minions-in-minikube-a-kubernetes-intro-for-java-de"

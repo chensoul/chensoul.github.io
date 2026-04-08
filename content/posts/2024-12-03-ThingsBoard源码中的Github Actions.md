@@ -3,7 +3,7 @@ title: "ThingsBoard 源码中的 GitHub Actions"
 date: 2024-12-03 08:00:00+08:00
 slug: github-actions-in-thingsboard
 categories: [ "tech" ]
-tags: ['thingsboard', 'github']
+tags: [ "thingsboard", "github" ]
 description: "梳理 ThingsBoard 仓库中 GitHub Actions 的工作流文件，了解其配置校验、许可证处理等自动化流程。"
 ---
 
@@ -26,13 +26,13 @@ on:
       - master
   pull_request:
     paths:
-      - 'application/src/main/resources/thingsboard.yml'
-      - 'transport/http/src/main/resources/tb-http-transport.yml'
-      - 'transport/http/src/main/resources/tb-mqtt-transport.yml'
-      - 'transport/http/src/main/resources/tb-coap-transport.yml'
-      - 'transport/http/src/main/resources/tb-lwm2m-transport.yml'
-      - 'transport/http/src/main/resources/tb-snmp-transport.yml'
-      - 'msa/vc-executor/src/main/resources/tb-vc-executor.yml'
+      - "application/src/main/resources/thingsboard.yml"
+      - "transport/http/src/main/resources/tb-http-transport.yml"
+      - "transport/http/src/main/resources/tb-mqtt-transport.yml"
+      - "transport/http/src/main/resources/tb-coap-transport.yml"
+      - "transport/http/src/main/resources/tb-lwm2m-transport.yml"
+      - "transport/http/src/main/resources/tb-snmp-transport.yml"
+      - "msa/vc-executor/src/main/resources/tb-vc-executor.yml"
 
 jobs:
   build:
@@ -63,9 +63,9 @@ name: License header format
 on:
   push:
     branches:
-      - 'master'
-      - 'develop/3*'
-      - 'hotfix/3*'
+      - "master"
+      - "develop/3*"
+      - "hotfix/3*"
 
 jobs:
   license-format:
@@ -78,9 +78,9 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: 'corretto' # https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
-          java-version: '21'
-          cache: 'maven' # https://github.com/actions/setup-java?tab=readme-ov-file#caching-sbt-dependencies
+          distribution: "corretto" # https://github.com/actions/setup-java?tab=readme-ov-file#supported-distributions
+          java-version: "21"
+          cache: "maven" # https://github.com/actions/setup-java?tab=readme-ov-file#caching-sbt-dependencies
 
       - name: License header format
         run: mvn -T 1C license:format

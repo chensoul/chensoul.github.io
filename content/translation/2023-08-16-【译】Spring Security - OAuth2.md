@@ -3,7 +3,7 @@ title: "【译】Spring Security - OAuth2"
 date: 2023-08-16 08:00:00+08:00
 slug: spring-security-with-oauth2
 categories: [ "translation" ]
-tags: ['spring-boot', 'security','oauth2']
+tags: ["spring-boot", "security","oauth2"]
 description: "OAuth 2.0 基础知识 ..."
 canonicalURL: "https://www.tutorialspoint.com/spring_security/spring_security_with_oauth2.htm"
 ---

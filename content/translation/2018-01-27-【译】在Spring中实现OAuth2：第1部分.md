@@ -156,7 +156,7 @@ curl localhost:8989/foo
 ### client_credentials
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d "grant_type=client_credentials&client_id=my-trusted-client" -H "Accept: application/json"
 ```
 
 响应示例：
@@ -209,7 +209,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
- -d 'grant_type=password&username=gwidgets&password=gwidgets' \
+ -d "grant_type=password&username=gwidgets&password=gwidgets" \
  -H "Accept: application/json"
 ```
 
@@ -269,7 +269,7 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 
 ```bash
 curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
--d 'grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html'\
+-d "grant_type=authorization_code&code=bD0mVb&redirect_uri=http://localhost:8081/test.html"\
 -H "Accept: application/json"
 ```
 
@@ -297,7 +297,7 @@ curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token \
 此时用刷新令牌换新对：
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'client_id=my-trusted-client&grant_type=refresh_token&refresh_token=cf6aa9db-3757-465e-af68-b7d59d1f0b77' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d "client_id=my-trusted-client&grant_type=refresh_token&refresh_token=cf6aa9db-3757-465e-af68-b7d59d1f0b77" -H "Accept: application/json"
 ```
 
 ```json

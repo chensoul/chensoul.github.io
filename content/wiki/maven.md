@@ -2,7 +2,7 @@
 title: "Maven"
 date: 2026-03-11 10:30:00+08:00
 slug: "maven"
-tags: ['maven']
+tags: [ "maven" ]
 draft: false
 categories: [ "wiki" ]
 description: "Maven 插件与仓库实践笔记：常用插件、格式化与 BOM、参考 pom 与父 POM 链接。"

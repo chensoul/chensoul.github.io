@@ -4,7 +4,7 @@ date: 2026-03-23 23:31:00+08:00
 draft: false
 slug: "how-agentic-rag-works"
 categories: [ "translation" ]
-tags: [ "agentic-rag", "rag", "llm" ]
+tags: [ "rag", "ai" ]
 description: "这篇文章介绍了 Agentic RAG 如何把标准 RAG 的单次检索流程改造成带反馈的控制循环，并分析了它在复杂查询场景下的优势、成本与适用边界。"
 canonicalURL: "https://blog.bytebytego.com/p/how-agentic-rag-works"
 favicon: "ai.svg"

@@ -18,8 +18,8 @@ const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
 const allTags = PostUtils.getUniqueTags(publishedPosts).sort(
   (a, b) => b.count - a.count || a.tagName.localeCompare(b.tagName, "zh-CN")
 );
-const topTags = allTags.slice(0, 10);
-const otherTags = [...allTags.slice(10)].sort((a, b) =>
+const topTags = allTags.slice(0, 16);
+const otherTags = [...allTags.slice(16)].sort((a, b) =>
   a.tagName.localeCompare(b.tagName, "zh-CN")
 );
 ---

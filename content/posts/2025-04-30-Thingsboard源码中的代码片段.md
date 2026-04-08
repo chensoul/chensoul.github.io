@@ -3,7 +3,7 @@ title: "ThingsBoard 源码中的代码片段整理"
 date: 2025-04-30 08:00:00+08:00
 slug: codes-in-thingsboard
 categories: [ "tech" ]
-tags: ['thingsboard']
+tags: [ "thingsboard" ]
 description: "记录 ThingsBoard 源码阅读过程中遇到的一些关键代码片段与实现细节，作为后续分析和查阅的笔记整理。"
 ---
 
@@ -153,7 +153,7 @@ CsvUtils
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CsvUtils {
     public static List<List<String>> parseCsv(String content, Character delimiter) throws Exception {
-        CSVFormat csvFormat = delimiter.equals(',') ? CSVFormat.DEFAULT : CSVFormat.DEFAULT.withDelimiter(delimiter);
+        CSVFormat csvFormat = delimiter.equals(",") ? CSVFormat.DEFAULT : CSVFormat.DEFAULT.withDelimiter(delimiter);
 
         List<CSVRecord> records;
         try (CharSequenceReader reader = new CharSequenceReader(content)) {

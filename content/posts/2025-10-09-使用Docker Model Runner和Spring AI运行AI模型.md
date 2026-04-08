@@ -4,7 +4,7 @@ description: "学习如何使用Docker Model Runner和Spring AI构建本地AI应
 date: 2025-10-09 08:00:00+08:00
 slug: docker-model-runner-spring-ai-local-ai-application
 categories: [ "tech" ]
-tags: ['spring-ai', 'docker', 'rag', 'pgvector']
+tags: ["spring-ai", "docker", "rag"]
 favicon: "docker.svg"
 ---
 
@@ -319,7 +319,7 @@ volumes:
 ```bash
 curl -X POST http://localhost:8080/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "请用中文介绍一下Spring AI框架"}'
+  -d "{"message": "请用中文介绍一下Spring AI框架"}"
 ```
 
 ### 🌊 流式响应
@@ -339,12 +339,12 @@ curl -X GET "http://localhost:8080/api/chat/stream?message=Hello%20AI"
 # 添加文档
 curl -X POST http://localhost:8080/api/chat/document \
   -H "Content-Type: application/json" \
-  -d '{"content": "Spring AI提供了统一的API来访问各种AI模型"}'
+  -d "{"content": "Spring AI提供了统一的API来访问各种AI模型"}"
 
 # 基于文档的聊天
 curl -X POST http://localhost:8080/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "请根据上下文介绍Spring AI"}'
+  -d "{"message": "请根据上下文介绍Spring AI"}"
 ```
 
 ### 健康检查

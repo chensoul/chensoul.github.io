@@ -3,7 +3,7 @@ title: "【译】OAuth2 with Spring 第1部分：了解基本概念"
 date: 2024-06-05 08:00:00+08:00
 slug: oauth2-with-spring-part-1-knowing-the-basic-concepts
 categories: [ "translation" ]
-tags: ['spring-boot','oauth2']
+tags: ["spring-boot","oauth2"]
 description: "原文地址：<https://mainul35.medium.com/oauth2-with-spring-part-1-knowing-the-basic-concepts-5c4aa17884a..."
 canonicalURL: "https://www.javatechonline.com/oauth2-with-spring-boot-part-1-access-token/"
 ---

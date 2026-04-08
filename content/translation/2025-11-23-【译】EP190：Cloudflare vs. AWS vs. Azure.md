@@ -4,7 +4,7 @@ date: 2025-11-23 00:30:00+08:00
 draft: false
 slug: "ep190-cloudflare-vs-aws-vs-azure"
 categories: [ "translation" ]
-tags: [ "cloudflare", "aws", "azure"]
+tags: [ "cloud" ]
 description: "这篇文章比较了 Cloudflare、AWS 和 Azure 的云服务，包括边缘计算、存储、数据库等功能。"
 canonicalURL: "https://blog.bytebytego.com/p/ep190-cloudflare-vs-aws-vs-azure"
 ---

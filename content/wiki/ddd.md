@@ -2,7 +2,7 @@
 title: "DDD"
 date: 2026-03-11 10:30:00+08:00
 slug: "ddd"
-tags: ['ddd']
+tags: [ "ddd" ]
 draft: false
 categories: [ "wiki" ]
 description: "领域驱动设计（DDD）笔记：核心概念、实践要点与书单/文章/视频资源索引。"

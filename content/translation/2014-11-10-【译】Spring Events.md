@@ -4,7 +4,7 @@ date: 2014-11-10 21:59:00+08:00
 draft: false
 slug: spring-events
 categories: ["translation"]
-tags: ["spring", "events"]
+tags: ["spring-boot"]
 description: "Spring 中的事件机制：自定义事件、异步处理、@EventListener 注解、泛型支持和事务绑定事件。"
 canonicalURL: "https://www.baeldung.com/spring-events"
 ---

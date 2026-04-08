@@ -3,7 +3,7 @@ title: "【译】Spring Boot授权服务器 - 使用 Java 的资源服务器和�
 date: 2023-07-26 08:00:00+08:00
 slug: spring-boot-authorization-server
 categories: [ "translation" ]
-tags: ['spring-boot', 'oauth2']
+tags: [ "spring-boot", "oauth2" ]
 description: "概述 ..."
 canonicalURL: "https://blog.devgenius.io/spring-boot-authorization-server-825230ae0ed2"
 ---
@@ -23,11 +23,11 @@ canonicalURL: "https://blog.devgenius.io/spring-boot-authorization-server-825230
 让我们将以下依赖项添加到我们的项目中。
 
 ```
-implementation 'org.springframework.security:spring-security-oauth2-authorization-server:1.0.0'
-implementation 'org.springframework.boot:spring-boot-starter-security'
-implementation 'org.springframework.boot:spring-boot-starter-web'
-testImplementation 'org.springframework.boot:spring-boot-starter-test'
-testImplementation 'org.springframework.security:spring-security-test'
+implementation "org.springframework.security:spring-security-oauth2-authorization-server:1.0.0"
+implementation "org.springframework.boot:spring-boot-starter-security"
+implementation "org.springframework.boot:spring-boot-starter-web"
+testImplementation "org.springframework.boot:spring-boot-starter-test"
+testImplementation "org.springframework.security:spring-security-test"
 ```
 
 我们正在使用 spring oauth2 依赖项的最新（当时）稳定版本。
@@ -120,8 +120,8 @@ public AuthorizationServerSettings authorizationServerSettings() {
 现在我们已经配置了一切，让我们尝试运行应用程序并获取令牌：
 
 ```bash
-curl -X POST 'http://localhost:9090/oauth2/token?grant_type=client_credentials' \
-  --header 'Authorization: Basic b2F1dGgtY2xpZW50Om9hdXRoLXNlY3JldA=='
+curl -X POST "http://localhost:9090/oauth2/token?grant_type=client_credentials" \
+  --header "Authorization: Basic b2F1dGgtY2xpZW50Om9hdXRoLXNlY3JldA=="
 ```
 
 注意：根据您的配置更新端口号。
@@ -145,11 +145,11 @@ curl -X POST 'http://localhost:9090/oauth2/token?grant_type=client_credentials' 
 让我们将以下依赖项添加到我们的项目中：
 
 ```
-implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-implementation 'org.springframework.boot:spring-boot-starter-security'
-implementation 'org.springframework.boot:spring-boot-starter-web'
-testImplementation 'org.springframework.boot:spring-boot-starter-test'
-testImplementation 'org.springframework.security:spring-security-test'
+implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+implementation "org.springframework.boot:spring-boot-starter-security"
+implementation "org.springframework.boot:spring-boot-starter-web"
+testImplementation "org.springframework.boot:spring-boot-starter-test"
+testImplementation "org.springframework.security:spring-security-test"
 ```
 
 ## Java 实现
@@ -182,7 +182,7 @@ public class ResourceServerConfig {
         http
           .authorizeRequests()
           .requestMatchers("/articles/**")
-          .access("hasAuthority('SCOPE_articles.read')")
+          .access("hasAuthority("SCOPE_articles.read")")
           .and()
           .oauth2ResourceServer()
           .jwt();
@@ -215,11 +215,11 @@ spring:
 ## 依赖项
 
 ```
-implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-implementation 'org.springframework.boot:spring-boot-starter-web'
-implementation 'org.springframework:spring-webflux'
-testImplementation 'org.springframework.boot:spring-boot-starter-test'
-testImplementation 'org.springframework.security:spring-security-test'
+implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+implementation "org.springframework.boot:spring-boot-starter-web"
+implementation "org.springframework:spring-webflux"
+testImplementation "org.springframework.boot:spring-boot-starter-test"
+testImplementation "org.springframework.security:spring-security-test"
 ```
 
 ## Java 实现

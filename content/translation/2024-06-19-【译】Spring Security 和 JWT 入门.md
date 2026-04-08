@@ -162,9 +162,9 @@ Maven 依赖：
 Gradle 依赖：
 
 ```groovy
-compile 'io.jsonwebtoken:jjwt-api:0.11.1'
-runtime 'io.jsonwebtoken:jjwt-impl:0.11.1'
-runtime 'io.jsonwebtoken:jjwt-jackson:0.11.1'
+compile "io.jsonwebtoken:jjwt-api:0.11.1"
+runtime "io.jsonwebtoken:jjwt-impl:0.11.1"
+runtime "io.jsonwebtoken:jjwt-jackson:0.11.1"
 ```
 
 本文中的 Java 应用是基于 Maven 的，因此我们会把上面的 Maven 依赖加入 `pom.xml`。

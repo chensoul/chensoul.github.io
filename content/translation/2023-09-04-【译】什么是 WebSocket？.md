@@ -3,7 +3,7 @@ title: "【译】什么是WebSocket？"
 date: 2023-09-04 06:00:00+08:00
 slug: websockets
 categories: [ "translation" ]
-tags: ['websocket']
+tags: [ "websocket" ]
 description: "..."
 canonicalURL: "https://www.pubnub.com/guides/websockets/"
 ---

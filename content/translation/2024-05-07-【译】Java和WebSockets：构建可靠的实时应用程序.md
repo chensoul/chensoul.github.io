@@ -3,7 +3,7 @@ title: "【译】Java和WebSockets：构建可靠的实时应用程序"
 date: 2024-05-07 08:00:00+08:00
 slug: websockets-java
 categories: [ "translation" ]
-tags: ['websocket']
+tags: [ "websocket" ]
 description: "原文：https://ably.com/topic/websockets-java ..."
 canonicalURL: "https://ably.com/topic/websockets-java"
 ---
@@ -24,7 +24,7 @@ Java是一种流行的编程语言和计算语言。它是 Android 智能手机�
 
 ```java
 / Create a WebSocket. The scheme part can be one of the following:
-/ 'ws', 'wss', 'http' and 'https' (case-insensitive). The user info
+/ "ws", "wss", "http" and "https" (case-insensitive). The user info
 / part, if any, is interpreted as expected. If a raw socket failed
 / to be created, an IOException is thrown.
 WebSocket ws = new WebSocketFactory().createSocket("ws://localhost/endpoint");

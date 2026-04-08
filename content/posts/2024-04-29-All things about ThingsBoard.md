@@ -3,7 +3,7 @@ title: "ThingsBoard 资料整理与入门索引"
 date: 2024-04-29 08:00:00+08:00
 slug: all-things-about-thingsboard
 categories: [ "tech" ]
-tags: ['thingsboard']
+tags: [ "thingsboard" ]
 description: "整理 ThingsBoard 的官方资料、基础介绍与相关学习内容，作为了解和入门这个开源物联网平台的索引页。"
 ---
 

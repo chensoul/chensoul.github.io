@@ -4,7 +4,7 @@ title: "【译】Spring Security - JWT"
 date: 2023-08-16 08:00:00+08:00
 slug: spring-security-with-jwt
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "简介和概述 ..."
 canonicalURL: "https://www.tutorialspoint.com/spring_security/spring_security_with_jwt.htm"
 

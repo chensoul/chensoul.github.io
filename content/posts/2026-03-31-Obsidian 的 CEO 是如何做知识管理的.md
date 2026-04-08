@@ -4,7 +4,7 @@ date: 2026-03-31 13:40:00+08:00
 slug: how-obsidian-ceo-does-knowledge-management
 categories: [ "tech" ]
 draft: false
-tags: [ 'obsidian', 'notes', 'pkm' ]
+tags: [ "pkm" ]
 description: "根据 Steph Ango（kepano）《How I use Obsidian》等文整理的用法笔记：库结构、Bases、内链与分形日记、模板属性、评分与发稿，附参考链接。"
 favicon: "obsidian.svg"
 ---

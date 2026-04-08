@@ -3,7 +3,7 @@ title: "【译】没有WebSecurityConfigurerAdapter的Spring Security"
 date: 2022-07-24 03:21:00+08:00
 slug: spring-security-without-websecurityconfigureradapter
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "..."
 canonicalURL: "https://www.baeldung.com/spring-security-without-websecurityconfigureradapter"
 ---

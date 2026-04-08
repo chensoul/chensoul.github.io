@@ -3,7 +3,7 @@ title: "在 GitHub CodeSpace 中安装和使用 OpenClaw"
 date: 2026-03-12 14:50:00+08:00
 slug: install-openclaw-in-github-codespace
 categories: [ "tech" ]
-tags: [ 'openclaw','github', 'codespace' ]
+tags: [ "openclaw","github" ]
 description: "本文介绍在 Codespaces 中从安装到正常使用的完整步骤。"
 favicon: "openclaw.svg"
 ---
@@ -31,13 +31,13 @@ favicon: "openclaw.svg"
 在终端输入 openclaw 安装命令：
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash
+curl -fsSL --proto "=https" --tlsv1.2 https://openclaw.ai/install.sh | bash
 ```
 
 脚本会检测/安装 Node、安装 OpenClaw CLI 并可选进入引导流程。**若只想安装二进制、跳过引导**：
 
 ```bash
-curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --no-onboard
+curl -fsSL --proto "=https" --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --no-onboard
 ```
 
 稍等片刻，安装成功之后会进入安装向导。

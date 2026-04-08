@@ -3,7 +3,7 @@ title: "【译】测试 Spring Boot 应用程序：最佳实践和框架"
 date: 2023-10-12 00:00:00+08:00
 slug: testing-spring-boot-applications-best-practices-and-frameworks
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "测试是软件开发不可或缺的一部分。它可确保您的 Spring Boot 应用程序按预期运行，并在不断发展的过程中继续保持这种状态。在本文中，我们将探讨如何使用最佳实践和工具测试 Spring Boot 应用程序。 ..."
 ---
 

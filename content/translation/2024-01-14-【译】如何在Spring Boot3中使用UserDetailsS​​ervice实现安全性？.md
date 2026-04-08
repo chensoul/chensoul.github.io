@@ -3,7 +3,7 @@ title: "【译】如何在Spring Boot3中使用UserDetailsService实现安全性
 date: 2024-01-14 05:04:00+08:00
 slug: how-to-implement-security-in-spring-boot3-using-userdetailsservice
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "..."
 ---
 
@@ -464,7 +464,7 @@ public class UserController {
    )
  {
   Integer id = userService.saveUser(user);
-  String message = "User '"+id+"' saved successfully !";
+  String message = "User ""+id+"" saved successfully !";
   model.addAttribute("msg", message);
   return "registerUser";
  }
@@ -839,7 +839,7 @@ public class SecurityConfig {
 
 ```
 [ERROR] Some problems were encountered while processing the POMs:
-[ERROR] 'dependencies.dependency.version' for org.thymeleaf.extras:thymeleaf-extras-springsecurity5:jar is missing.
+[ERROR] "dependencies.dependency.version" for org.thymeleaf.extras:thymeleaf-extras-springsecurity5:jar is missing.
 ```
 
 为了解决此错误，请更新 Thymeleaf 的版本，如下所示。

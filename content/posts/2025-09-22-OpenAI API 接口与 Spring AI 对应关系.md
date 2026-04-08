@@ -3,7 +3,7 @@ title: "OpenAI API 接口与 Spring AI 对应关系"
 date: 2025-09-22 08:00:00+08:00
 slug: openai-api-with-spring-ai
 categories: [ "tech" ]
-tags: ['spring-ai']
+tags: [ "spring-ai" ]
 favicon: "openai.svg"
 description: "梳理 OpenAI API 各类接口在 Spring AI 中的对应方式，帮助快速建立模型能力与 Spring 封装 API 之间的映射关系。"
 ---

@@ -4,7 +4,7 @@ date: 2016-12-31 08:16:00+08:00
 draft: false
 slug: spring-security-async-principal-propagation
 categories: [ "translation" ]
-tags: [ "spring-security", "async" ]
+tags: [ "spring-boot", "security" ]
 description: "在 @Async 线程中传播 Spring Security 的 Authentication：为何默认丢失，以及如何用 DelegatingSecurityContextAsyncTaskExecutor 恢复上下文。"
 canonicalURL: "https://www.baeldung.com/spring-security-async-principal-propagation"
 ---
@@ -86,7 +86,7 @@ web - 2016-12-30 22:41:58,921 [http-nio-8081-exec-3] INFO
   web - 2016-12-30 22:41:58,926 [SimpleAsyncTaskExecutor-1] ERROR
   o.s.a.i.SimpleAsyncUncaughtExceptionHandler -
   Unexpected error occurred invoking async method
-  'public void com.baeldung.web.service.AsyncServiceImpl.asyncCall()'.
+  "public void com.baeldung.web.service.AsyncServiceImpl.asyncCall()".
   java.lang.NullPointerException: null
 ```
 

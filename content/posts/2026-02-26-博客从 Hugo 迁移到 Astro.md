@@ -3,7 +3,7 @@ title: "博客从 Hugo 迁移到 Astro"
 date: 2026-02-26 06:00:00+08:00
 slug: from-hugo-to-astro-blog
 categories: [ "tech" ]
-tags: [ 'astro' ]
+tags: [ "astro" ]
 favicon: "astro.svg"
 description: "记录博客从 Hugo 迁移到 Astro 的过程，以及基于 astro-lhasa 主题做过的结构与样式调整，方便后续复盘与参考。"
 ---

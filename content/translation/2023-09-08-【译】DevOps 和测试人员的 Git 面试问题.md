@@ -3,7 +3,7 @@ title: "【译】DevOps 和测试人员的 Git 面试问题"
 date: 2023-09-08 19:01:00+08:00
 slug: git-interview-questions
 categories: [ "translation" ]
-tags: ['git']
+tags: [ "interview" ]
 description: "欢迎来到 Git 面试准备指南，我们将在这里向初学者和经验丰富的专业人士讨论最常见的 Git 面试问题。无论您是准备参加 DevOps 或测试面试，还是希望提高 Git 技能，此资源都可以通过深入研究一些与 Git 基本概念和实践相关的最常见面试问题来帮助您。 ..."
 ---
 
@@ -63,8 +63,8 @@ git config --global user.email "myname@gmail.com"
 您可以通过运行以下命令来验证更改。这些命令将分别显示配置的用户名和电子邮件。
 
 ```bash
-git config --global user.name   # Prints 'lokeshgupta1981'
-git config --global user.email    # Prints 'howtodoinjava@gmail.com'
+git config --global user.name   # Prints "lokeshgupta1981"
+git config --global user.email    # Prints "howtodoinjava@gmail.com"
 ```
 
 ## 4. Git 中的“暂存区”是什么意思？

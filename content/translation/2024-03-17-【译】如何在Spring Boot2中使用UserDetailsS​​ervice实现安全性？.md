@@ -3,7 +3,7 @@ title: "【译】如何在Spring Boot2中使用UserDetailsService实现安全性
 date: 2024-03-17 23:32:00+08:00
 slug: how-to-implement-security-in-spring-boot2-using-userdetailsservice
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "..."
 ---
 
@@ -479,7 +479,7 @@ public class UserController {
    )
  {
   Integer id = userService.saveUser(user);
-  String message = "User '"+id+"' saved successfully !";
+  String message = "User ""+id+"" saved successfully !";
   model.addAttribute("msg", message);
   return "registerUser";
  }

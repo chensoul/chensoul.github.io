@@ -4,7 +4,7 @@ date: 2023-06-03 23:30:00+08:00
 draft: false
 slug: "ep62-why-does-google-use-monorepo"
 categories: [ "translation" ]
-tags: [ "monorepo", "git", "code-management" ]
+tags: [ "architecture" ]
 description: "这篇文章对比了 Monorepo 和 Microrepo 的优缺点，解释了为什么 Google、Meta 等公司选择 Monorepo 策略。"
 canonicalURL: "https://blog.bytebytego.com/p/ep62-why-does-google-use-monorepo"
 ---

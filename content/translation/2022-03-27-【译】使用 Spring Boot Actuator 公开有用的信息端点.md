@@ -3,7 +3,7 @@ title: "【译】使用 Spring Boot Actuator 公开有用的信息端点"
 date: 2022-03-27 21:00:00+08:00
 slug: spring-boot-info-endpoint
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "在分布式、快节奏的环境中，开发团队通常希望了解他们部署应用程序的时间、部署的应用程序版本、部署的 Git 提交等等。 ..."
 canonicalURL: "https://www.baeldung.com/spring-boot-info-endpoint"
 ---
@@ -208,9 +208,9 @@ springBoot {
 springBoot {
   buildInfo {
     properties {
-      name = 'Sample App'
+      name = "Sample App"
       additional = [
-        'customKey': 'customValue'
+        "customKey": "customValue"
       ]
     }
   }
@@ -374,7 +374,7 @@ git.total.commit.count=2
 
 ```groovy
 plugins {
-  id 'com.gorylenko.gradle-git-properties' version '2.4.0'
+  id "com.gorylenko.gradle-git-properties" version "2.4.0"
 }
 ```
 
@@ -396,7 +396,7 @@ plugins {
 
 ```groovy
 gitProperties {
-  keys = ['git.commit.id']
+  keys = ["git.commit.id"]
 }
 ```
 

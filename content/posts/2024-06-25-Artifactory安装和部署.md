@@ -3,7 +3,7 @@ title: "搭建本地 Maven 仓库 Artifactory 开源版"
 date: 2024-06-25 08:00:00+08:00
 slug: install-artifactory-oss
 categories: [ "tech" ]
-tags: ['artifactory', 'maven']
+tags: [ "maven" ]
 description: "介绍 Artifactory 开源版的安装与部署方式，适合作为搭建本地 Maven 仓库和制品管理服务的入门参考。"
 ---
 
@@ -80,8 +80,8 @@ EOF
 > - 在 mysql 数据库创建 artifactory 数据库，并设置用户名和密码：artifactory/password。
 >
 >   ```sql
->   CREATE USER 'artifactory'@'%' IDENTIFIED BY 'password';
->   GRANT all ON *.* TO 'artifactory'@'%';
+>   CREATE USER "artifactory"@"%" IDENTIFIED BY "password";
+>   GRANT all ON *.* TO "artifactory"@"%";
 >   ```
 >
 > - 使用 mysql 数据库，需要下载 mysql 驱动

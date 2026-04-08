@@ -4,7 +4,7 @@ description: "本文深入介绍 OpenSpec 规范驱动开发工具，展示如�
 date: 2025-11-07 08:00:00+08:00
 slug: openspec
 categories: [ "tech" ]
-tags: ['OpenSpec', 'Cursor', 'Spec-Kit']
+tags: [ "cursor" ]
 favicon: "openai.svg"
 ---
 
@@ -377,9 +377,9 @@ CREATE TABLE audit_logs (
 
 ```javascript
 // services/twoFactorService.js
-const speakeasy = require('speakeasy');
-const QRCode = require('qrcode');
-const crypto = require('crypto');
+const speakeasy = require("speakeasy");
+const QRCode = require("qrcode");
+const crypto = require("crypto");
 
 class TwoFactorService {
   async generateSecret(userId, userEmail) {
@@ -403,7 +403,7 @@ class TwoFactorService {
     const secret = this.decryptSecret(user.two_factor_secret);
     
     const isValid = speakeasy.totp.verify({
-      secret, encoding: 'base32', token, window: 1
+      secret, encoding: "base32", token, window: 1
     });
     
     if (isValid) {
@@ -418,12 +418,12 @@ class TwoFactorService {
   }
   
   encryptSecret(secret) {
-    const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
+    const key = Buffer.from(process.env.ENCRYPTION_KEY, "hex");
     const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-    let encrypted = cipher.update(secret, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    return iv.toString('hex') + ':' + encrypted;
+    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+    let encrypted = cipher.update(secret, "utf8", "hex");
+    encrypted += cipher.final("hex");
+    return iv.toString("hex") + ":" + encrypted;
   }
 }
 ```
@@ -432,18 +432,18 @@ class TwoFactorService {
 
 ```javascript
 // routes/auth.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const twoFactorService = require('../services/twoFactorService');
+const twoFactorService = require("../services/twoFactorService");
 
-router.post('/2fa/setup', authenticate, async (req, res) => {
+router.post("/2fa/setup", authenticate, async (req, res) => {
   const result = await twoFactorService.generateSecret(
     req.user.id, req.user.email
   );
   res.json(result);
 });
 
-router.post('/2fa/enable', authenticate, async (req, res) => {
+router.post("/2fa/enable", authenticate, async (req, res) => {
   const { token } = req.body;
   const result = await twoFactorService.verifyAndEnable(
     req.user.id, token
@@ -451,15 +451,15 @@ router.post('/2fa/enable', authenticate, async (req, res) => {
   
   if (result.success) {
     res.json({ 
-      message: '2FA enabled', 
+      message: "2FA enabled", 
       backupCodes: result.backupCodes 
     });
   } else {
-    res.status(400).json({ error: 'Invalid code' });
+    res.status(400).json({ error: "Invalid code" });
   }
 });
 
-router.post('/2fa/verify', async (req, res) => {
+router.post("/2fa/verify", async (req, res) => {
   const { userId, token } = req.body;
   const isValid = await twoFactorService.verifyLoginCode(userId, token);
   
@@ -467,7 +467,7 @@ router.post('/2fa/verify', async (req, res) => {
     const sessionToken = generateSessionToken(userId);
     res.json({ token: sessionToken });
   } else {
-    res.status(401).json({ error: 'Invalid 2FA code' });
+    res.status(401).json({ error: "Invalid 2FA code" });
   }
 });
 ```
@@ -476,31 +476,31 @@ router.post('/2fa/verify', async (req, res) => {
 
 ```jsx
 // components/TwoFactorSetup.jsx
-import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import React, { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 function TwoFactorSetup() {
-  const [step, setStep] = useState('initial');
+  const [step, setStep] = useState("initial");
   const [qrCode, setQrCode] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [backupCodes, setBackupCodes] = useState([]);
   
   const handleGenerateSecret = async () => {
-    const response = await fetch('/api/auth/2fa/setup', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${getToken()}` }
+    const response = await fetch("/api/auth/2fa/setup", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${getToken()}` }
     });
     const data = await response.json();
     setQrCode(data.qrCode);
-    setStep('scan');
+    setStep("scan");
   };
   
   const handleVerifyAndEnable = async () => {
-    const response = await fetch('/api/auth/2fa/enable', {
-      method: 'POST',
+    const response = await fetch("/api/auth/2fa/enable", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${getToken()}`,
-        'Content-Type': 'application/json'
+        "Authorization": `Bearer ${getToken()}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ token: verificationCode })
     });
@@ -508,19 +508,19 @@ function TwoFactorSetup() {
     if (response.ok) {
       const data = await response.json();
       setBackupCodes(data.backupCodes);
-      setStep('complete');
+      setStep("complete");
     }
   };
   
   return (
     <div className="two-factor-setup">
-      {step === 'initial' && (
+      {step === "initial" && (
         <button onClick={handleGenerateSecret}>
           Enable 2FA
         </button>
       )}
       
-      {step === 'scan' && (
+      {step === "scan" && (
         <div>
           <QRCodeSVG value={qrCode} size={200} />
           <input
@@ -535,7 +535,7 @@ function TwoFactorSetup() {
         </div>
       )}
       
-      {step === 'complete' && (
+      {step === "complete" && (
         <div>
           <h3>Backup Codes</h3>
           {backupCodes.map(code => <code key={code}>{code}</code>)}

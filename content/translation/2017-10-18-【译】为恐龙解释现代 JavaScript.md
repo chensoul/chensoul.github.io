@@ -15,7 +15,7 @@ canonicalURL: "https://peterxjang.com/blog/modern-javascript-explained-for-dinos
 
 如果你不是「从洪荒时代就一直在前端圈里」，学现代 JavaScript 会很难：生态涨得太快，工具层出不穷，你常常**搞不清它们各自在解决什么问题**。我 1998 年就开始写程序，但认真学 JS 要到 2014 年。那时我第一次看到 [Browserify](http://browserify.org/)，盯着它的 slogan：
 
-> “Browserify lets you require('modules') in the browser by bundling up all of your dependencies.”
+> “Browserify lets you require("modules") in the browser by bundling up all of your dependencies.”
 
 这句话里几乎每个词我都看不懂，也想象不出它对我写代码能有什么帮助。
 
@@ -53,7 +53,7 @@ console.log("Hello from JavaScript!");
 这就够搭一个网页了。假设你想用别人写的库，例如 **moment.js**（把日期格式化成人类可读字符串）。在 JS 里可以这么写：
 
 ```js
-moment().startOf('day').fromNow();        // 20 hours ago
+moment().startOf("day").fromNow();        // 20 hours ago
 ```
 
 但前提是：**页面上真的加载了 moment.js**。打开 [moment.js 官网](http://momentjs.com/)，安装说明一长串——
@@ -84,7 +84,7 @@ moment().startOf('day').fromNow();        // 20 hours ago
 ```js
 // index.js
 console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log(moment().startOf("day").fromNow());
 ```
 
 这就是早年用第三方库做站的方式：**好懂**，但每次库升级都要自己找文件、下载，很烦。
@@ -182,19 +182,19 @@ npm install moment --save
 
 ```js
 // index.js
-var moment = require('moment');
+var moment = require("moment");
 
 console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log(moment().startOf("day").fromNow());
 ```
 
-Node 知道每个 npm 包装在哪，所以不用写 `require('./node_modules/moment/min/moment.min.js')`，直接 **`require('moment')`** 即可。
+Node 知道每个 npm 包装在哪，所以不用写 `require("./node_modules/moment/min/moment.min.js")`，直接 **`require("moment")`** 即可。
 
 这在 Node 里没问题；但若把这段原样丢进浏览器，会报 **`require` is not defined**。浏览器没有完整文件系统 API，动态加载脚本要么**同步阻塞**，要么**异步**带来时序问题——所以需要 **「模块打包器」**：在**有文件系统的构建阶段**，把所有 `require` 解析成真正的代码，输出**浏览器能跑的单文件**（没有 `require` 语法）。
 
 早年最出名的是 **Browserify**（2011），把 Node 风格的 `require` 搬到前端，也让 npm 成了前端依赖的事实标准。约 2015 年起 **webpack** 更流行（React 等生态也重度依赖 webpack）。
 
-下面用 webpack 让前面的 `require('moment')` 能在浏览器里跑。webpack 本身也是 npm 包：
+下面用 webpack 让前面的 `require("moment")` 能在浏览器里跑。webpack 本身也是 npm 包：
 
 ```bash
 npm install webpack webpack-cli --save-dev
@@ -255,11 +255,11 @@ npm install webpack webpack-cli --save-dev
 ```js
 // webpack.config.js
 module.exports = {
-  mode: 'development',
-  entry: './index.js',
+  mode: "development",
+  entry: "./index.js",
   output: {
-    filename: 'main.js',
-    publicPath: 'dist'
+    filename: "main.js",
+    publicPath: "dist"
   }
 };
 ```
@@ -293,11 +293,11 @@ npm install @babel/core @babel/preset-env babel-loader --save-dev
 ```js
 // webpack.config.js
 module.exports = {
-  mode: 'development',
-  entry: './index.js',
+  mode: "development",
+  entry: "./index.js",
   output: {
-    filename: 'main.js',
-    publicPath: 'dist'
+    filename: "main.js",
+    publicPath: "dist"
   },
   module: {
     rules: [
@@ -305,9 +305,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
+            presets: ["@babel/preset-env"]
           }
         }
       }
@@ -322,10 +322,10 @@ module.exports = {
 
 ```js
 // index.js
-var moment = require('moment');
+var moment = require("moment");
 
 console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log(moment().startOf("day").fromNow());
 
 var name = "Bob", time = "today";
 console.log(`Hello ${name}, how are you ${time}?`);
@@ -335,10 +335,10 @@ console.log(`Hello ${name}, how are you ${time}?`);
 
 ```js
 // index.js
-import moment from 'moment';
+import moment from "moment";
 
 console.log("Hello from JavaScript!");
-console.log(moment().startOf('day').fromNow());
+console.log(moment().startOf("day").fromNow());
 
 var name = "Bob", time = "today";
 console.log(`Hello ${name}, how are you ${time}?`);
@@ -355,7 +355,7 @@ console.log(`Hello ${name}, how are you ${time}?`);
 ```js
 // main.js
 // ...
-console.log('Hello ' + name + ', how are you ' + time + '?');
+console.log("Hello " + name + ", how are you " + time + "?");
 // ...
 ```
 

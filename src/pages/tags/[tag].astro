@@ -14,21 +14,22 @@ import { SITE } from "@/config";
 export const pageTitle = `标签 | ${SITE.title}`;
 
 /** 生成静态路径：每个标签一个路由，该标签下全部文章由懒加载分批显示 */
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+export async function getStaticPaths() {
   const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
   const tags = PostUtils.getUniqueTags(publishedPosts);
 
-  return tags.flatMap(({ tag, tagName }) => {
-    const tagPosts = PostUtils.getPostsByTag(publishedPosts, tag);
-    return paginate(tagPosts, {
-      params: { tag },
-      props: { tagName },
-      pageSize: tagPosts.length,
+  return tags
+    .filter(({ tag }) => tag !== "index") // 避免与 /tags/index 路由冲突
+    .map(({ tag, tagName }) => {
+      const tagPosts = PostUtils.getPostsByTag(publishedPosts, tag);
+      return {
+        params: { tag },
+        props: { tagName, tagPosts },
+      };
     });
-  });
 }
 
-const { page, tagName } = Astro.props;
+const { tagName, tagPosts } = Astro.props;
 ---
 
 <Layout title={pageTitle} robots="noindex,follow">
@@ -47,7 +48,7 @@ const { page, tagName } = Astro.props;
   </section>
   <ul id="tag-posts-list" class="post-cards-list m-0 list-none p-0">
     {
-      page.data.map((data, i) => (
+      tagPosts.map((data, i) => (
         <Card {...data} hidden={i >= SITE.postPerIndex} dateFormat="absolute" />
       ))
     }

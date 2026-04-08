@@ -3,7 +3,7 @@ title: "【译】Spring Boot项目如何实现JWT认证？"
 date: 2024-03-16 03:54:00+08:00
 slug: how-to-implement-jwt-authentication-in-spring-boot-project
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "..."
 canonicalURL: "https://javatechonline.com/how-to-implement-jwt-authentication-in-spring-boot-project/"
 ---
@@ -649,7 +649,7 @@ public class UserRestController {
  public ResponseEntity<String> saveUser(@RequestBody User user) {
 
   Integer id = userService.saveUser(user);
-  String message= "User with id '"+id+"' saved succssfully!";
+  String message= "User with id ""+id+"" saved succssfully!";
   //return new ResponseEntity<String>(message, HttpStatus.OK);
   return ResponseEntity.ok(message);
  }

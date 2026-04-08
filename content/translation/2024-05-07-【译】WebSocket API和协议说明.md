@@ -3,7 +3,7 @@ title: "【译】WebSocket API和协议说明"
 date: 2024-05-07 08:00:00+08:00
 slug: the-websocket-api-and-protocol-explained
 categories: [ "translation" ]
-tags: ['websocket']
+tags: [ "websocket" ]
 description: "..."
 canonicalURL: "https://ably.com/topic/websockets-api"
 ---
@@ -138,19 +138,19 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 浏览器（以及大多数 WebSocket 库）中的 WebSocket API 会自动为您处理开场握手。您所要做的就是实例化 `WebSocket` 对象，该对象将自动尝试打开与服务器的连接：
 
 ```javascript
-const socket = new WebSocket('wss://example.org');
+const socket = new WebSocket("wss://example.org");
 ```
 
 建立 WebSocket 连接时会引发 `open` 事件。它表示客户端和服务器之间的打开握手成功，现在可以使用 WebSocket 连接来发送和接收数据。下面是一个示例（请注意， `open` 该事件是通过 `onopen` 属性处理的）：
 
 ```javascript
 / Create WebSocket connection
-const socket = new WebSocket('wss://example.org');
+const socket = new WebSocket("wss://example.org");
 
 
 / Connection opened
 socket.onopen = function(e) {
-   console.log('Connection open!');
+   console.log("Connection open!");
 };
 ```
 
@@ -245,7 +245,7 @@ socket.onmessage = function(msg) {
 
 ```javascript
 socket.onopen = function(e) {
-   socket.send(JSON.stringify({'msg': 'payload'}));
+   socket.send(JSON.stringify({"msg": "payload"}));
 }
 ```
 

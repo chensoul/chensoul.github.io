@@ -3,7 +3,7 @@ title: "ThingsBoard 接口设计整理"
 date: 2025-07-24 09:00:00+08:00
 slug: thingsboard-api
 categories: [ "tech" ]
-tags: ['docker','thingsboard']
+tags: ["docker","thingsboard"]
 description: "系统整理 ThingsBoard 平台的 REST、MQTT、HTTP 等协议接口设计，适合作为 IoT 平台开发与对接时的参考资料。"
 ---
 
@@ -455,7 +455,7 @@ from typing import List, Dict, Optional
 import logging
 
 # 配置日志
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 class DevicePreRegistrationTester:
@@ -520,7 +520,7 @@ class DevicePreRegistrationTester:
             
             if response.status_code == 200:
                 device_info = response.json()
-                logger.info(f"设备创建成功: {device_name} (ID: {device_info['id']['id']})")
+                logger.info(f"设备创建成功: {device_name} (ID: {device_info["id"]["id"]})")
                 return device_info
             else:
                 logger.error(f"设备创建失败: {response.status_code} - {response.text}")
@@ -697,23 +697,23 @@ class DevicePreRegistrationTester:
     def export_devices_to_csv(self, devices: List[Dict], filename: str = "devices.csv"):
         """导出设备信息到CSV文件"""
         try:
-            with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ['device_id', 'device_name', 'device_type', 'access_token', 
-                             'manufacturer', 'model', 'firmware_version', 'created_time']
+            with open(filename, "w", newline='", encoding="utf-8') as csvfile:
+                fieldnames = ["device_id", "device_name", "device_type", "access_token", 
+                             "manufacturer", "model", "firmware_version", "created_time"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 
                 writer.writeheader()
                 for device in devices:
-                    additional_info = device.get('additionalInfo', {})
+                    additional_info = device.get("additionalInfo", {})
                     writer.writerow({
-                        'device_id': device['id']['id'],
-                        'device_name': device['name'],
-                        'device_type': device['type'],
-                        'access_token': device.get('accessToken', ''),
-                        'manufacturer': additional_info.get('manufacturer', ''),
-                        'model': additional_info.get('model', ''),
-                        'firmware_version': additional_info.get('firmwareVersion', ''),
-                        'created_time': additional_info.get('createdAt', '')
+                        "device_id": device["id"]["id"],
+                        "device_name": device["name"],
+                        "device_type": device["type"],
+                        "access_token": device.get("accessToken", ''),
+                        "manufacturer": additional_info.get("manufacturer", ''),
+                        "model": additional_info.get("model", ''),
+                        "firmware_version": additional_info.get("firmwareVersion", ''),
+                        "created_time": additional_info.get("createdAt", '')
                     })
             
             logger.info(f"设备信息已导出到: {filename}")
@@ -770,19 +770,19 @@ class DevicePreRegistrationTester:
         if test_connection:
             connection_results = []
             for device in devices_with_tokens:
-                token = device.get('accessToken')
+                token = device.get("accessToken")
                 if token:
                     mqtt_result = self.test_device_connection(token, "mqtt")
                     http_result = self.test_device_connection(token, "http")
                     connection_results.append({
-                        'device_name': device['name'],
-                        'mqtt_connection': mqtt_result,
-                        'http_connection': http_result
+                        "device_name": device["name"],
+                        "mqtt_connection": mqtt_result,
+                        "http_connection": http_result
                     })
             
             # 统计连接结果
-            mqtt_success = sum(1 for r in connection_results if r['mqtt_connection'])
-            http_success = sum(1 for r in connection_results if r['http_connection'])
+            mqtt_success = sum(1 for r in connection_results if r["mqtt_connection"])
+            http_success = sum(1 for r in connection_results if r["http_connection"])
             logger.info(f"连接测试结果 - MQTT: {mqtt_success}/{len(connection_results)}, HTTP: {http_success}/{len(connection_results)}")
         
         # 4. 导出设备信息
@@ -809,7 +809,7 @@ if __name__ == "__main__":
     if devices:
         print(f"\n成功预注册 {len(devices)} 个设备:")
         for device in devices:
-            print(f"  - {device['name']}: {device.get('accessToken', 'N/A')}")
+            print(f"  - {device["name"]}: {device.get("accessToken", "N/A")}")
     
     # 清理测试设备（可选）
     # tester.cleanup_devices(devices)
@@ -829,10 +829,10 @@ DEVICE_COUNT=10
 DEVICE_PREFIX="TestDevice"
 
 # 颜色输出
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+NC="\033[0m" # No Color
 
 # 日志函数
 log_info() {
@@ -870,7 +870,7 @@ create_device() {
         }")
     
     if [ $? -eq 0 ]; then
-        device_id=$(echo "$response" | jq -r '.id.id')
+        device_id=$(echo "$response" | jq -r ".id.id")
         if [ "$device_id" != "null" ] && [ "$device_id" != "" ]; then
             log_info "设备创建成功: $device_name (ID: $device_id)"
             echo "$device_id"
@@ -1106,7 +1106,7 @@ def on_message(client, userdata, msg):
     # 解析命令并响应
     try:
         command_data = json.loads(msg.payload)
-        request_id = msg.topic.split('/')[-1]
+        request_id = msg.topic.split("/")[-1]
         
         # 发送命令响应
         response = {
@@ -1158,7 +1158,7 @@ client.loop_forever()
 # 使用mosquitto_pub发送命令
 mosquitto_pub -h localhost -p 1883 -u "YOUR_DEVICE_TOKEN" \
   -t "v1/devices/me/commands/request/1" \
-  -m '{"method": "setTemperature", "params": {"temperature": 26.0}}'
+  -m "{"method": "setTemperature", "params": {"temperature": 26.0}}"
 
 # 监听命令响应
 mosquitto_sub -h localhost -p 1883 -u "YOUR_DEVICE_TOKEN" \
@@ -1179,22 +1179,22 @@ mosquitto_sub -h localhost -p 1883 -u "YOUR_DEVICE_TOKEN" \
     <h2>ThingsBoard WebSocket Test</h2>
     <div id="messages"></div>
     <script>
-        const token = 'YOUR_USER_TOKEN';
+        const token = "YOUR_USER_TOKEN";
         const ws = new WebSocket(`ws://localhost:8080/api/ws/plugins/telemetry?token=${token}`);
         
         ws.onopen = function(event) {
-            console.log('WebSocket connected');
-            document.getElementById('messages').innerHTML += '<p>Connected to ThingsBoard</p>';
+            console.log("WebSocket connected");
+            document.getElementById("messages").innerHTML += "<p>Connected to ThingsBoard</p>";
             
             // 订阅设备数据
             const subscribeMessage = {
-                deviceId: 'device_001',
-                keys: ['temperature', 'humidity'],
+                deviceId: "device_001",
+                keys: ["temperature", "humidity"],
                 startTs: Date.now() - 3600000, // 1小时前
                 endTs: Date.now(),
                 interval: 1000,
                 limit: 100,
-                agg: 'AVG'
+                agg: "AVG"
             };
             
             ws.send(JSON.stringify(subscribeMessage));
@@ -1202,21 +1202,21 @@ mosquitto_sub -h localhost -p 1883 -u "YOUR_DEVICE_TOKEN" \
         
         ws.onmessage = function(event) {
             const data = JSON.parse(event.data);
-            console.log('Received:', data);
-            document.getElementById('messages').innerHTML += 
+            console.log("Received:", data);
+            document.getElementById("messages").innerHTML += 
                 `<p>Received: ${JSON.stringify(data)}</p>`;
         };
         
         ws.onerror = function(error) {
-            console.error('WebSocket error:', error);
-            document.getElementById('messages').innerHTML += 
+            console.error("WebSocket error:", error);
+            document.getElementById("messages").innerHTML += 
                 `<p style="color: red;">Error: ${error}</p>`;
         };
         
         ws.onclose = function(event) {
-            console.log('WebSocket closed');
-            document.getElementById('messages').innerHTML += 
-                '<p>Connection closed</p>';
+            console.log("WebSocket closed");
+            document.getElementById("messages").innerHTML += 
+                "<p>Connection closed</p>";
         };
     </script>
 </body>
@@ -1279,13 +1279,13 @@ sudo apt-get install libcoap2-bin
 # 上报遥测数据
 coap-client -m POST \
   -H "Content-Type: application/json" \
-  -e '{"temperature": 25.5, "humidity": 60.2}' \
+  -e "{"temperature": 25.5, "humidity": 60.2}" \
   coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/telemetry
 
 # 上报属性数据
 coap-client -m POST \
   -H "Content-Type: application/json" \
-  -e '{"firmware_version": "1.0.0"}' \
+  -e "{"firmware_version": "1.0.0"}" \
   coap://localhost:5683/api/v1/YOUR_DEVICE_TOKEN/attributes
 
 # 获取属性
@@ -1312,11 +1312,11 @@ async def test_coap():
         "timestamp": int(time.time() * 1000)
     }
     
-    payload = json.dumps(telemetry_data).encode('utf-8')
+    payload = json.dumps(telemetry_data).encode("utf-8")
     
     request = Message(
         code=1,  # POST
-        uri=f'coap://localhost:5683/api/v1/{device_token}/telemetry',
+        uri=f"coap://localhost:5683/api/v1/{device_token}/telemetry",
         payload=payload,
         opt=Message.opt.ContentFormat(50)  # application/json
     )
@@ -1683,10 +1683,10 @@ class PerformanceTester:
         # 比较结果
         if rest_results and mqtt_results:
             print("\nPerformance Comparison:")
-            print(f"REST API avg: {rest_results['avg_time']:.3f}s")
-            print(f"MQTT avg: {mqtt_results['avg_time']:.3f}s")
+            print(f"REST API avg: {rest_results["avg_time"]:.3f}s")
+            print(f"MQTT avg: {mqtt_results["avg_time"]:.3f}s")
             
-            if rest_results['avg_time'] < mqtt_results['avg_time']:
+            if rest_results["avg_time"] < mqtt_results["avg_time"]:
                 print("REST API is faster")
             else:
                 print("MQTT is faster")

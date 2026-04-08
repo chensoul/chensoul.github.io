@@ -4,7 +4,7 @@ date: 2023-07-13 23:30:00+08:00
 draft: false
 slug: "the-foundation-of-rest-api-http"
 categories: [ "translation" ]
-tags: [ "http", "rest-api", "networking" ]
+tags: [ "http", "networking" ]
 description: "这篇文章深入讲解了 HTTP 协议的发展历程（HTTP/1.0 到 HTTP/3.0）、HTTP 头部字段、HTTP 方法（GET vs. POST）、持久连接（Keep-Alive）以及 TCP keepalive 的区别。"
 canonicalURL: "https://blog.bytebytego.com/p/the-foundation-of-rest-api-http"
 ---

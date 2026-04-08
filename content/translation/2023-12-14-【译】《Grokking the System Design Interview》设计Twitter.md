@@ -3,7 +3,7 @@ title: "【译】《Grokking the System Design Interview》设计Twitter"
 date: 2023-12-14 08:00:00+08:00
 slug: designing-twitter
 categories: [ "translation" ]
-tags: ['architecture']
+tags: [ "architecture" ]
 description: "这是一篇双语翻译的文章，原文出自 groksystemdesigninterview.pdf 的一篇文章《Designing Twitter》设计 Twitter。 ..."
 canonicalURL: "https://www.designgurus.io/course-think-like-a-system-design-interviewer/article/design-twitter"
 ---

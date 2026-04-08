@@ -3,7 +3,7 @@ title: "ThingsBoard 领域模型解析"
 date: 2024-05-07 08:00:00+08:00
 slug: thingsboard-domain
 categories: [ "tech" ]
-tags: ['thingsboard']
+tags: [ "thingsboard" ]
 description: "梳理 ThingsBoard 中租户、客户、用户、设备、资产等核心领域对象，帮助理解平台的数据组织方式与业务模型。"
 ---
 

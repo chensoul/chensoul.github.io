@@ -3,7 +3,7 @@ title: "【译】Spring Boot项目如何实现Security？"
 date: 2023-02-19 20:59:00+08:00
 slug: how-to-implement-security-in-spring-boot-project
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "..."
 canonicalURL: "https://javatechonline.com/how-to-implement-security-in-spring-boot-project/"
 ---
@@ -610,17 +610,17 @@ $2a$10$qnOB2PH1CqRvw8f5epvHzOlrounRkVGi.Y5ho6ENdmj/C1DmPdAsy
 执行 MySQL DB 命令如下：
 
 ```
-To create the database as 'testbootsecurity'
+To create the database as "testbootsecurity"
 ♦ create database testbootsecurity;
-To take 'testbootsecurity' in use:
+To take "testbootsecurity" in use:
 ♦ use testbootsecurity;
 To create the user table:
 ♦ create table user (user_id int, user_name varchar(30), user_pwd varchar(100), user_role varchar(20), user_enabled int);
 To check the description of user table:
 ♦ desc user;
-INSERT INTO user values(501,'devs','$2a$10$qnOB2PH1CqRvw8f5epvHzOlrounRkVGi.Y5ho6ENdmj/C1DmPdAsy','ADMIN',1);
-INSERT INTO user values(502,'ns','$2a$10$mmUMC5ZwoVnEQYV7/R6m.uWWtj7EiIo3lKasBObkOCc12huVUWpMC','EMPLOYEE',1);
-INSERT INTO user values(503,'vs','$2a$10$kqEC/fhQ7SNDhnncOQ9pb.yXXxJ/c7a1SQx2QPNZ.47fUmvF3Wb.i','MANAGER',1);
+INSERT INTO user values(501,"devs","$2a$10$qnOB2PH1CqRvw8f5epvHzOlrounRkVGi.Y5ho6ENdmj/C1DmPdAsy","ADMIN",1);
+INSERT INTO user values(502,"ns","$2a$10$mmUMC5ZwoVnEQYV7/R6m.uWWtj7EiIo3lKasBObkOCc12huVUWpMC","EMPLOYEE",1);
+INSERT INTO user values(503,"vs","$2a$10$kqEC/fhQ7SNDhnncOQ9pb.yXXxJ/c7a1SQx2QPNZ.47fUmvF3Wb.i","MANAGER",1);
 ♦ select * from user;  (To check if values are inserted into DB)
 ```
 

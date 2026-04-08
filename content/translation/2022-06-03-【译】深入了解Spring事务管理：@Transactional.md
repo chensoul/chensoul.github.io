@@ -3,7 +3,7 @@ title: "【译】深入了解Spring事务管理：@Transactional"
 date: 2022-06-03 00:00:00+08:00
 slug: spring-transaction-management-transactional-in-depth
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "您可以使用本指南来简单实用地了解 Spring 使用 @Transactional 注释进行事务管理的工作原理。 ..."
 canonicalURL: "https://www.baeldung.com/transaction-configuration-with-spring"
 ---
@@ -138,11 +138,11 @@ public class UserService {
 我们不会在本指南中详细介绍 XML 配置，但您可以使用此示例作为深入研究的起点 - 如果需要的话（直接取自 Spring 官方文档）：
 
 ```xml
-<!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
+<!-- the transactional advice (what "happens"; see the <aop:advisor/> bean below) -->
     <tx:advice id="txAdvice" transaction-manager="txManager">
         <!-- the transactional semantics... -->
         <tx:attributes>
-            <!-- all methods starting with 'get' are read-only -->
+            <!-- all methods starting with "get" are read-only -->
             <tx:method name="get*" read-only="true"/>
             <!-- other methods use the default transaction settings (see below) -->
             <tx:method name="*"/>

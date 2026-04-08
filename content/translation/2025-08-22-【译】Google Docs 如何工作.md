@@ -4,7 +4,7 @@ date: 2025-08-22 19:50:00+08:00
 draft: false
 slug: "how-does-google-docs-work"
 categories: [ "translation" ]
-tags: [ "google-docs", "collaborative-editing"]
+tags: [ "system-design" ]
 description: "这篇文章介绍了 Google Docs 的实时协作编辑原理，包括操作转换（OT）、延迟隐藏、冲突解决等核心技术。"
 canonicalURL: "https://newsletter.systemdesign.one/p/how-does-google-docs-work"
 ---

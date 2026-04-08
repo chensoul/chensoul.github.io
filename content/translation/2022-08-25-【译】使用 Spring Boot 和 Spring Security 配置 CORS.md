@@ -3,7 +3,7 @@ title: "【译】使用 Spring Boot 和 Spring Security 配置 CORS"
 date: 2022-08-25 21:00:00+08:00
 slug: spring-cors
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "跨源资源共享 (CORS) 是一种基于 HTTP 标头的机制，允许服务器显式将某些源列入白名单，并帮助绕过同源策略。 ..."
 canonicalURL: "https://www.baeldung.com/spring-cors"
 ---
@@ -285,7 +285,7 @@ public CorsWebFilter corsWebFilter() {
 Gradle:
 
 ```groovy
-  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation "org.springframework.boot:spring-boot-starter-security"
 ```
 
 ### Spring Security 应用于 Spring Web MVC

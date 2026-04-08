@@ -3,7 +3,7 @@ title: "【译】Spring Security 与 JWT for REST API"
 date: 2023-09-19 08:00:00+08:00
 slug: spring-security-jwt-for-rest-api
 categories: [ "translation" ]
-tags: ['spring-boot','security','jwt']
+tags: ["spring-boot","security","jwt"]
 description: "免责声明：Spring Security 5+ 已发布 OAuth JWT 支持。建议使用最新版本的 OAuth 来支持 JWT，而不是使用自定义安全性或过滤器。 ..."
 canonicalURL: "https://www.toptal.com/spring/spring-security-tutorial"
 ---

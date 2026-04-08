@@ -3,7 +3,7 @@ title: "Spring AI 对话记忆 + SSE 流式回复"
 date: 2026-01-04 08:00:00+08:00
 slug: spring-ai-chat-memory-sse
 categories: [ "tech" ]
-tags: ['spring-ai', 'sse']
+tags: [ "spring-ai" ]
 favicon: "memory.svg"
 description: "在 《Spring AI 对话记忆 》中我们用 MessageChatMemoryAdvisor + JDBC 实现了多轮对话记忆。本文基于同一套记忆能力，升级为 Server-Sent Events (SSE) 流式输出，并配上自定义前端让 DeepSeek 的回复实时逐字出现。"
 ---
@@ -81,7 +81,7 @@ ResponseEntity<SseEmitter> chatStream(@RequestBody @Valid Input input,
 
 `templates/index.html` 使用纯原生 JS + Bootstrap 打造聊天 UI，亮点包括：
 
-- `sendStreamingMessage()` 通过 `fetch('/api/chat/stream')` 获取 `ReadableStream`，持续读取 `reader.read()` 返回的 chunk，并同步滚动到底部。
+- `sendStreamingMessage()` 通过 `fetch("/api/chat/stream")` 获取 `ReadableStream`，持续读取 `reader.read()` 返回的 chunk，并同步滚动到底部。
 - 结合 **marked + DOMPurify**，自动将 Markdown、表格、代码块、甚至 DeepSeek 输出的列表渲染成安全的 HTML。
 - 自定义 `textToHtml` 兜底逻辑，修正 DeepSeek 常见的“行内列表”格式，确保 `- 条目` 也能渲染成 `<ul><li>…`。
 - 输入框自动增高、流式回复显示“闪烁光标”等细节提升了对话质感。
@@ -90,17 +90,17 @@ ResponseEntity<SseEmitter> chatStream(@RequestBody @Valid Input input,
 
 ```javascript
 async function sendStreamingMessage(prompt) {
-    const res = await fetch('/api/chat/stream', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/chat/stream", { method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }) });
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
-    let buffer = '', fullText = '';
+    let buffer = '", fullText = "';
 
     while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value, { stream: true });
-        const events = buffer.split('\n\n');
+        const events = buffer.split("\n\n");
         buffer = events.pop() || '';
         for (const event of events) {
             const payload = event.replace(/^data: ?/gm, '');
@@ -160,11 +160,11 @@ spring.ai.chat.memory.repository.jdbc.initialize-schema=always
    # 首次请求，从响应头中拿到 Set-Cookie 中的 X-CONV-ID，后续请求可携带该 Cookie
    curl -s -X POST http://localhost:8080/api/chat/stream \
      -H "Content-Type: application/json" \
-     -d '{"prompt":"我叫小明，请记住。"}' -c cookies.txt -b cookies.txt -D -
+     -d "{"prompt":"我叫小明，请记住。"}" -c cookies.txt -b cookies.txt -D -
    
    curl -s -X POST http://localhost:8080/api/chat/stream \
      -H "Content-Type: application/json" \
-     -d '{"prompt":"我叫什么名字？"}' -b cookies.txt
+     -d "{"prompt":"我叫什么名字？"}" -b cookies.txt
    ```
 
 6. **查看数据库**。可以看到数据库里面创建一个 `spring_ai_chat_memory` 表：

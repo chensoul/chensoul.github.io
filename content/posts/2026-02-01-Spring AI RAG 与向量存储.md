@@ -3,7 +3,7 @@ title: "Spring AI RAG 与向量存储"
 date: 2026-02-01 08:00:00+08:00
 slug: spring-ai-rag-vector-store
 categories: [ "tech" ]
-tags: ['spring-ai', 'rag', 'redis']
+tags: ["spring-ai", "rag", "redis"]
 favicon: "storage.svg"
 description: "介绍如何在 Spring AI 中结合 RAG 与向量存储构建 Spring Boot 应用，让模型能够基于外部知识做更准确的回答。"
 ---
@@ -33,11 +33,11 @@ description: "介绍如何在 Spring AI 中结合 RAG 与向量存储构建 Spri
 ```yaml
 services:
   redis:
-    image: 'redis/redis-stack:7.2.0-v18'
+    image: "redis/redis-stack:7.2.0-v18"
     labels:
       - "org.springframework.boot.service-connection=redis"
     ports:
-      - '6379:6379'
+      - "6379:6379"
 ```
 
 ### 使用 Spring AI 将 Spring Boot 应用与 Redis 集成

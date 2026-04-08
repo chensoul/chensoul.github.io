@@ -3,7 +3,7 @@ title: "【译】Spring Security 面试问题"
 date: 2023-05-23 01:31:00+08:00
 slug: spring-security-interview-questions
 categories: [ "translation" ]
-tags: ['spring-boot','security','jwt']
+tags: ["spring-boot","security","jwt"]
 description: "本面试准备指南将讨论一些常见的 Spring Security 面试问题。无论您是准备面试还是只是想增强对 Spring Security 的了解，这些问题都将帮助您理解关键概念并指导您设计常见安全问题的解决方案。 ..."
 canonicalURL: "https://www.baeldung.com/spring-security-interview-questions"
 ---
@@ -299,10 +299,10 @@ public class SecurityConfig {
 
 现在我们可以通过@Secured、@PreAuthorize、@PostAuthorize、@PreFilter 和@PostFilter 注解来授权方法调用，包括输入参数和返回值。
 
-在以下示例中， `deleteProduct` 方法使用 @PreAuthorize 注释进行保护，表达式 `hasRole('ADMIN')` 确保只有具有“ADMIN”角色的用户才能调用此方法。
+在以下示例中， `deleteProduct` 方法使用 @PreAuthorize 注释进行保护，表达式 `hasRole("ADMIN")` 确保只有具有“ADMIN”角色的用户才能调用此方法。
 
 ```java
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole("ADMIN")")
 public void deleteProduct(Long productId) {
     // Method logic for deleting a product
 }

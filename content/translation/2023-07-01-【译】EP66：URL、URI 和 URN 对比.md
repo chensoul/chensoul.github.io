@@ -4,7 +4,7 @@ date: 2023-07-01 23:30:00+08:00
 draft: false
 slug: "ep66-comparison-of-url-uri-and-urn"
 categories: [ "translation" ]
-tags: [ "url", "uri", "networking" ]
+tags: [ "networking" ]
 description: "这篇文章介绍了 URL、URI 和 URN 的区别，数据仓库 vs. 数据湖对比，以及 Twitter 1.0 技术栈。"
 canonicalURL: "https://blog.bytebytego.com/p/ep66-comparison-of-url-uri-and-urn"
 ---

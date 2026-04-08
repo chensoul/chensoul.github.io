@@ -2,7 +2,7 @@
 title: "【译】面向 Java 开发人员的 Kubernetes"
 date: 2024-07-08 08:00:00+08:00
 slug: kubernetes-for-java-developers
-tags: ['java', 'kubernetes']
+tags: [ "java", "kubernetes" ]
 categories: [ "translation" ]
 description: "有一类新工具可用于将应用程序 docker 化并部署到 Kubernetes，这些工具专门面向开发人员。该类别中的最新工具是 RedHat 的 JKube。 ..."
 ---

@@ -3,7 +3,7 @@ title: "基于 Linkding 和 RSS 的个人知识管理系统"
 date: 2026-03-23 18:40:00+08:00
 slug: linkding-rss-personal-knowledge-management-system
 categories: [ "tech" ]
-tags: [ 'linkding', 'rss', 'openclaw' ]
+tags: [ "linkding", "openclaw" ]
 description: "分享一套基于 Linkding 和 RSS 的个人知识管理方法：用 RSS 做持续输入，用 Linkding 做长期收藏，再通过笔记和输出系统完成沉淀与复用。"
 favicon: "linkding.svg"
 ---

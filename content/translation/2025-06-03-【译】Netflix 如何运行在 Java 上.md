@@ -4,7 +4,7 @@ date: 2025-06-03 23:30:00+08:00
 draft: false
 slug: "how-netflix-runs-on-java"
 categories: [ "translation" ]
-tags: [ "netflix", "java", "architecture" ]
+tags: [ ""java", "architecture" ]
 description: "这篇文章介绍了 Netflix 如何使用 Java 构建其后端系统，包括 GraphQL 架构、并发模型和技术演进。"
 canonicalURL: "https://blog.bytebytego.com/p/how-netflix-runs-on-java"
 ---

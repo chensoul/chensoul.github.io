@@ -3,7 +3,7 @@ title: "【译】如何通过 WebSocket 将 Kafka 消息流式传输到面向互
 date: 2024-11-15 00:00:00+08:00
 slug: websockets-kafka
 categories: [ "translation" ]
-tags: ['websocket', 'kafka']
+tags: [ "websocket", "kafka" ]
 description: "原文链接：https://ably.com/topic/websockets-kafka ..."
 ---
 
@@ -42,11 +42,11 @@ Apache Kafka 是目前最强大的异步消息传递技术之一。 Kafka 由 Ja
 在 Ably，我们的许多客户都通过我们[面向互联网的 pub/sub 实时消息服务](https://ably.com/pub-sub-messaging)[传输 Kafka](https://ably.com/solutions/extend-kafka-to-the-edge)消息。为了演示它是多么简单，下面是如何从 Kafka 消费数据并将其发布到 Ably 的示例：
 
 ```javascript
-const kafka = require('kafka-node');
-const Ably = require('ably');
+const kafka = require("kafka-node");
+const Ably = require("ably");
 
 const ably = new Ably.Realtime({{ABLY_API_KEY}});
-const ablyChannel = ably.channels.get('kafka-example');
+const ablyChannel = ably.channels.get("kafka-example");
 
 const Consumer = kafka.Consumer;
 const client = new kafka.KafkaClient({ kafkaHost: {{KAFKA_SERVER_URL}} });
@@ -57,20 +57,20 @@ const consumer = new Consumer(
        ]
    );
 
-consumer.on('message', function (message) {
-   ablyChannel.publish('kafka-event', message.value);
+consumer.on("message", function (message) {
+   ablyChannel.publish("kafka-event", message.value);
 });
 ```
 
 以下是客户端连接到 Ably 来使用数据的方式：
 
 ```javascript
-const Ably = require('ably');
+const Ably = require("ably");
 const ably = new Ably.Realtime({{ABLY_KEY}});
-const channel = ably.channels.get('kafka-example');
+const channel = ably.channels.get("kafka-example");
 
 channel.subscribe(function(message) {
-  console.log('kafka message data: ', message.data);
+  console.log("kafka message data: ", message.data);
 });
 ```
 

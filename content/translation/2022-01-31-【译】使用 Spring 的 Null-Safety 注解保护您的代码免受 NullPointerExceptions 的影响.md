@@ -3,7 +3,7 @@ title: "【译】使用 Spring 的 Null-Safety 注解保护您的代码免受 Nu
 date: 2022-01-31 22:00:00+08:00
 slug: spring-boot-null-safety-annotations
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "NullPointerExceptions （通常缩写为“NPE”）对于每个 Java 程序员来说都是一场噩梦。 ..."
 canonicalURL: "https://www.baeldung.com/spring-boot-null-safety-annotations"
 ---
@@ -249,11 +249,11 @@ class Employee {
 
 ```groovy
 dependencies {
-  spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
+  spotbugsPlugins "com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0"
 }
 
 spotbugs {
-  toolVersion = '4.5.3'
+  toolVersion = "4.5.3"
 }
 ```
 

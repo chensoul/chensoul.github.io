@@ -3,7 +3,7 @@ title: "【译】《Grokking the System Design Interview》设计Facebook Messen
 date: 2023-11-24 08:00:00+08:00
 slug: designing-facebook-messenger
 categories: [ "translation" ]
-tags: ['architecture']
+tags: [ "architecture" ]
 description: "这是一篇双语翻译的文章，原文出自 groksystemdesigninterview.pdf 的一篇文章《Designing Facebook Messenger》设计 Facebook Messeng ..."
 canonicalURL: "https://www.designgurus.io/course-think-like-a-system-design-interviewer/article/design-facebook-messenger"
 ---

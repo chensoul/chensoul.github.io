@@ -3,7 +3,7 @@ title: "GitLab 安装与部署指南：使用 yum 源"
 date: 2024-07-15 08:00:00+08:00
 slug: install-gitlab-using-yum
 categories: [ "tech" ]
-tags: ['gitlab']
+tags: [ "gitlab" ]
 description: "记录通过 yum 源安装和部署 GitLab Server 的过程，包括环境准备、基础配置和服务启动步骤。"
 ---
 
@@ -83,10 +83,10 @@ $ vim /etc/gitlab/gitlab.rb
 ##! For more details on configuring external_url see:
 ##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 # 没有域名，可以设置为本机IP地址
-external_url 'http://172.17.0.61'
+external_url "http://172.17.0.61"
 ***
 $ grep "^external_url" /etc/gitlab/gitlab.rb
-external_url 'http://172.17.0.61'     #绑定监听的域名或IP
+external_url "http://172.17.0.61"     #绑定监听的域名或IP
 ```
 
 ##### 3、初始化 Gitlab
@@ -153,8 +153,8 @@ nginx   22501 gitlab-www    7u  IPv4  50923      0t0  TCP *:http (LISTEN)
 
 ```shell
 $ vim /etc/gitlab/gitlab.rb
-letsencrypt['enable'] = true /如果因为这行报错，改成false即可
-letsencrypt['contact_emails'] = ['testqq@qq.com']     # 添加联系人的电子邮件地址
+letsencrypt["enable"] = true /如果因为这行报错，改成false即可
+letsencrypt["contact_emails"] = ["testqq@qq.com"]     # 添加联系人的电子邮件地址
 ```
 
 ##### 6、Gitlab 添加smtp邮件功能
@@ -163,20 +163,20 @@ letsencrypt['contact_emails'] = ['testqq@qq.com']     # 添加联系人的电子
 $ vim /etc/gitlab/gitlab.rb
 postfix 并非必须的；根据具体情况配置，以 SMTP 的为例配置邮件服务器来实现通知；参考配置如下： 
 ### Email Settings
-gitlab_rails['gitlab_email_enabled'] = true
-gitlab_rails['gitlab_email_from'] = 'testqq@qq.com'
-gitlab_rails['gitlab_email_display_name'] = 'gitlab'
-gitlab_rails['gitlab_email_reply_to'] = 'testqq@qq.com'
-gitlab_rails['gitlab_email_subject_suffix'] = '[gitlab]'
-gitlab_rails['smtp_enable'] = true
-gitlab_rails['smtp_address'] = "smtp.qq.com"
-gitlab_rails['smtp_port'] = 465
-gitlab_rails['smtp_user_name'] = "testqq@qq.com"
-gitlab_rails['smtp_password'] = "kktohrvdryglbjjh" #这是我的qq邮箱授权码
-gitlab_rails['smtp_domain'] = "smtp.qq.com"
-gitlab_rails['smtp_authentication'] = "login"
-gitlab_rails['smtp_enable_starttls_auto'] = true
-gitlab_rails['smtp_tls'] = true
+gitlab_rails["gitlab_email_enabled"] = true
+gitlab_rails["gitlab_email_from"] = "testqq@qq.com"
+gitlab_rails["gitlab_email_display_name"] = "gitlab"
+gitlab_rails["gitlab_email_reply_to"] = "testqq@qq.com"
+gitlab_rails["gitlab_email_subject_suffix"] = "[gitlab]"
+gitlab_rails["smtp_enable"] = true
+gitlab_rails["smtp_address"] = "smtp.qq.com"
+gitlab_rails["smtp_port"] = 465
+gitlab_rails["smtp_user_name"] = "testqq@qq.com"
+gitlab_rails["smtp_password"] = "kktohrvdryglbjjh" #这是我的qq邮箱授权码
+gitlab_rails["smtp_domain"] = "smtp.qq.com"
+gitlab_rails["smtp_authentication"] = "login"
+gitlab_rails["smtp_enable_starttls_auto"] = true
+gitlab_rails["smtp_tls"] = true
 
 #修改配置后需要初始化配置，先关掉服务再重新初始化
 $ gitlab-ctl stop
@@ -225,7 +225,7 @@ $ gitlab-rails console
 ---------------------------------------------------------------------
 Loading production environment (Rails 6.0.2)
 irb(main):003:0> 
-irb(main):004:0> Notify.test_email('testqq@qq.com', 'Message Subject', 'Message Body').deliver_now  /输入测试命令，回车
+irb(main):004:0> Notify.test_email("testqq@qq.com", "Message Subject", "Message Body").deliver_now  /输入测试命令，回车
 
 Notify#test_email: processed outbound mail in 5.2ms
 Delivered mail 5eafceaa250a_1d063fb777add9a08601a@wing.mail (1430.1ms)
@@ -266,7 +266,7 @@ curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script
 ```shell
 $ gitlab-rails console production
 irb(main):001:0>user = User.where(id: 1).first      # id为1的是超级管理员
-irb(main):002:0>user.password = 'yourpassword'      # 密码必须至少8个字符
+irb(main):002:0>user.password = "yourpassword"      # 密码必须至少8个字符
 irb(main):003:0>user.save!                          # 如没有问题 返回true
 exit             # 退出
 ```
@@ -285,7 +285,7 @@ gitlab-ctl tail                         # 查看日志；
 
 ### 3、登陆 Gitlab
 
-**如果需要手工修改nginx的port ，可以在gitlab.rb中设置 nginx['listen_port'] = 8000 ，然后再次 gitlab-ctl reconfigure即可**
+**如果需要手工修改nginx的port ，可以在gitlab.rb中设置 nginx["listen_port"] = 8000 ，然后再次 gitlab-ctl reconfigure即可**
 
 ### 4、去掉用户的自动注册功能（安全）
 
@@ -309,8 +309,8 @@ $ cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
 
 ```shell
 $ vim /etc/gitlab/gitlab.rb
-gitlab_rails['manage_backup_path'] = true
-gitlab_rails['backup_path'] = "/data/gitlab/backups"
+gitlab_rails["manage_backup_path"] = true
+gitlab_rails["backup_path"] = "/data/gitlab/backups"
 ```
 
 该项定义了默认备份出文件的路径，可以通过修改该配置，并执行 **gitlab-ctl reconfigure 或者 gitlab-ctl  restart** 重启服务生效。
@@ -336,7 +336,7 @@ $ crontab -e
 
 ```shell
 $ vim /etc/gitlab/gitlab.rb
-gitlab_rails['backup_keep_time'] = 604800
+gitlab_rails["backup_keep_time"] = 604800
 ```
 
 设置备份保留7天（7*3600*24=604800），秒为单位，如果想增大或减小，可以直接在该处配置，并通过gitlab-ctl restart 重启服务生效。
@@ -355,7 +355,7 @@ gitlab_rails['backup_keep_time'] = 604800
 
 ```shell
 $ vim /etc/gitlab/gitlab.rb
-gitlab_rails['backup_path'] = "/data/gitlab/backups"
+gitlab_rails["backup_path"] = "/data/gitlab/backups"
 ```
 
 修改该配置，定义了默认备份出文件的路径，并执行 **gitlab-ctl reconfigure 或者 gitlab-ctl  restart** 重启服务生效。
@@ -419,7 +419,7 @@ $ gitlab-ctl restart
 ### 2、获取k8s集群API地址
 
 ```yaml
-$ kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print $NF}'
+$ kubectl cluster-info | grep "Kubernetes master" | awk "/http/ {print $NF}"
 https://192.168.19.200:6443
 ```
 
@@ -434,7 +434,7 @@ default-token-cvfqx   kubernetes.io/service-account-token   3      3d21h
 default-token-cvfqx 为上面获取到的secrets的名称，用以下命令查看证书
 
 ```bash
-$ kubectl get secret default-token-cvfqx  -o jsonpath="{['data']['ca\.crt']}" | base64 --decode
+$ kubectl get secret default-token-cvfqx  -o jsonpath="{["data"]["ca\.crt"]}" | base64 --decode
 -----BEGIN CERTIFICATE-----
 MIICyDCCAbCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
 cm5ldGVzMB4XDTIwMDgxNzA5MjAwMFoXDTMwMDgxNTA5MjAwMFowFTETMBEGA1UE
@@ -485,7 +485,7 @@ clusterrolebinding.rbac.authorization.k8s.io/gitlab-admin created
 ### 5、获取gitlab-admin的token
 
 ```yaml
-$ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep gitlab-admin | awk '{print $1}')
+$ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep gitlab-admin | awk "{print $1}")
 Name:         gitlab-admin-token-pmb2h
 Namespace:    kube-system
 Labels:       <none>

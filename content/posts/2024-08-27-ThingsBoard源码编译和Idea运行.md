@@ -3,7 +3,7 @@ title: "ThingsBoard 源码编译与 IDEA 运行"
 date: 2024-08-27 09:00:00+08:00
 slug: thingsboard-code-source-compile
 categories: [ "tech" ]
-tags: ['thingsboard']
+tags: [ "thingsboard" ]
 description: "记录 ThingsBoard 源码的编译过程，以及如何在 IDEA 中导入、启动和调试项目，适合作为本地源码环境搭建参考。"
 ---
 
@@ -37,14 +37,14 @@ mvn clean install -Dmaven.test.skip=true -Dlicense.skip=true
 > 1. 如果在编译过程中提示找不到 Gradle：
 >
 > ```
-> [ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution 'https://services.gradle.org/distributions/gradle-7.3.3-bin.zip'. -> [Help 1]
+> [ERROR] Failed to execute goal org.thingsboard:gradle-maven-plugin:1.0.12:invoke (default) on project http: org.gradle.tooling.BuildException: Could not execute build using connection to Gradle distribution "https://services.gradle.org/distributions/gradle-7.3.3-bin.zip". -> [Help 1]
 > ```
 >
 > 往上查看详细异常日志：
 >
 > ```
 > * What went wrong:
-> Could not compile build file '/Users/chensoul/Codes/github/thingsboard/packaging/java/build.gradle'.
+> Could not compile build file "/Users/chensoul/Codes/github/thingsboard/packaging/java/build.gradle".
 > > startup failed:
 >   General error during conversion: Unsupported class file major version 65
 > 

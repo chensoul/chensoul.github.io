@@ -4,7 +4,7 @@ date: 2025-11-13 08:00:00+08:00
 slug: vibesafe4j-annotation-processor-implementation
 description: "详细教程：如何使用 Java Annotation Processor 在编译时为 Vibesafe4j 生成代码。包含完整的实现代码、Maven/Gradle 配置、AI 集成方案和最佳实践。适合生产环境使用。"
 categories: [ "tech" ]
-tags: ['vibesafe4j', 'annotation-processor', 'ai']
+tags: [ "vibesafe4j", "ai" ]
 favicon: "java.svg"
 ---
 
@@ -559,19 +559,19 @@ public class MockAiCodeGenerator implements AiCodeGenerator {
 ```groovy
 dependencies {
     // Annotation Processor
-    annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
-    compileOnly 'com.google.auto.service:auto-service:1.1.1'
+    annotationProcessor "com.google.auto.service:auto-service:1.1.1"
+    compileOnly "com.google.auto.service:auto-service:1.1.1"
     
     // vibesafe4j 注解模块
-    implementation 'vibesafe4j:vibesafe4j-annotations:1.0.0'
+    implementation "vibesafe4j:vibesafe4j-annotations:1.0.0"
     // vibesafe4j Processor 模块（只在编译时使用）
-    annotationProcessor 'vibesafe4j:vibesafe4j-processor:1.0.0'
+    annotationProcessor "vibesafe4j:vibesafe4j-processor:1.0.0"
 }
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += [
-        '-Avibesafe4j.ai.apiKey=' + (System.getenv('VIBESAFE4J_API_KEY') ?: ''),
-        '-Avibesafe4j.ai.model=' + (System.getenv('VIBESAFE4J_MODEL') ?: 'gpt-4')
+        "-Avibesafe4j.ai.apiKey=" + (System.getenv("VIBESAFE4J_API_KEY") ?: ''),
+        "-Avibesafe4j.ai.model=" + (System.getenv("VIBESAFE4J_MODEL") ?: "gpt-4")
     ]
 }
 ```
@@ -580,10 +580,10 @@ tasks.withType(JavaCompile) {
 
 ```groovy
 dependencies {
-    annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
+    annotationProcessor "com.google.auto.service:auto-service:1.1.1"
     // 单一模块时，使用同一个 artifact
-    implementation 'vibesafe4j:vibesafe4j:1.0.0'
-    annotationProcessor 'vibesafe4j:vibesafe4j:1.0.0'
+    implementation "vibesafe4j:vibesafe4j:1.0.0"
+    annotationProcessor "vibesafe4j:vibesafe4j:1.0.0"
 }
 ```
 
@@ -602,7 +602,7 @@ public interface Greeting {
         return a greeting String
         
         >>> greet("Alice")
-        'Hello, Alice!'
+        "Hello, Alice!"
         """)
     String greet(String name);
 }
@@ -673,20 +673,20 @@ public class Vibesafe4jAutoConfiguration {
 ```groovy
 // build.gradle
 plugins {
-    id 'java'
-    id 'vibesafe4j' version '1.0.0'
+    id "java"
+    id "vibesafe4j" version "1.0.0"
 }
 
 vibesafe4j {
-    apiKey = project.findProperty('vibesafe4j.apiKey') ?: System.getenv('VIBESAFE4J_API_KEY')
-    model = 'gpt-4'
-    outputDir = file('src/generated/vibesafe4j')
+    apiKey = project.findProperty("vibesafe4j.apiKey") ?: System.getenv("VIBESAFE4J_API_KEY")
+    model = "gpt-4"
+    outputDir = file("src/generated/vibesafe4j")
 }
 
 sourceSets {
     main {
         java {
-            srcDirs += 'src/generated/vibesafe4j'
+            srcDirs += "src/generated/vibesafe4j"
         }
     }
 }

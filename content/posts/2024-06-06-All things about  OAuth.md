@@ -3,7 +3,7 @@ title: "OAuth 学习资料与入门索引"
 date: 2024-06-06 08:00:00+08:00
 slug: all-things-about-oauth
 categories: [ "tech" ]
-tags: ['oauth2']
+tags: [ "oauth2" ]
 description: "整理 OAuth 与 OAuth 2.0 的基础概念、入门文章和实践资料，帮助快速建立对授权协议的整体认识。"
 ---
 

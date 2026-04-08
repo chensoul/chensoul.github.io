@@ -4,7 +4,7 @@ date: 2023-10-26 23:30:00+08:00
 draft: false
 slug: "a-crash-course-in-kubernetes"
 categories: [ "translation" ]
-tags: [ "kubernetes", "containers", "orchestration" ]
+tags: [ "kubernetes" ]
 description: "这篇文章介绍了 Kubernetes 的核心概念（Pod、控制器、服务）、集群组件、适用场景以及采用 Kubernetes 前需要考虑的权衡。"
 canonicalURL: "https://blog.bytebytego.com/p/a-crash-course-in-kubernetes"
 ---

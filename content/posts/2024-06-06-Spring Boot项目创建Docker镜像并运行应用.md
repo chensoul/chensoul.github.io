@@ -3,7 +3,7 @@ title: "Spring Boot 项目创建 Docker 镜像并运行应用"
 date: 2024-06-06 11:00:00+08:00
 slug: spring-boot-docker-image
 categories: [ "tech" ]
-tags: ['spring-boot','docker']
+tags: ["spring-boot","docker"]
 description: "介绍如何为 Spring Boot 项目编写 Dockerfile、构建镜像并运行容器，完成一次基础的应用容器化实践。"
 ---
 
@@ -146,7 +146,7 @@ RUN --mount=type=bind,source=pom.xml,target=pom.xml \
 ################################################################################
 
 # Create a stage for extracting the application into separate layers.
-# Take advantage of Spring Boot's layer tools and Docker's caching by extracting
+# Take advantage of Spring Boot"s layer tools and Docker"s caching by extracting
 # the packaged application into separate layers that can be copied into the final stage.
 # See Spring's docs for reference:
 # https://docs.spring.io/spring-boot/docs/current/reference/html/container-images.html
@@ -215,7 +215,7 @@ ENTRYPOINT [ "java", "org.springframework.boot.loader.launch.JarLauncher" ]
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E "159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>" /usr/share/maven/conf/settings.xml
 
 FROM base AS test
 WORKDIR /build
@@ -240,7 +240,7 @@ RUN cp -r /build/target/extracted/dependencies/. ./
 RUN cp -r /build/target/extracted/spring-boot-loader/. ./
 RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /build/target/extracted/application/. ./
-CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
+CMD [ "java", "-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"", "org.springframework.boot.loader.launch.JarLauncher" ]
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
@@ -304,20 +304,20 @@ jib-maven-plugin 是 Google 开发的一款容器镜像构建工具，可以与 
 
 ```groovy
 plugins {
-    id 'com.google.cloud.tools.jib' version '3.4.4'
+    id "com.google.cloud.tools.jib" version "3.4.4"
 }
 
 jib {
     from {
-        image = 'eclipse-temurin:21-jre-jammy'
+        image = "eclipse-temurin:21-jre-jammy"
     }
     to {
-        image = 'my-spring-boot-app'
-        tags = ['latest', project.version]
+        image = "my-spring-boot-app"
+        tags = ["latest", project.version]
     }
     container {
-        mainClass = 'com.example.MySpringBootApp'
-        ports = ['8080']
+        mainClass = "com.example.MySpringBootApp"
+        ports = ["8080"]
     }
 }
 ```
@@ -660,7 +660,7 @@ ENTRYPOINT [ "java",  "org.springframework.boot.loader.launch.JarLauncher" ]
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E "159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>" /usr/share/maven/conf/settings.xml
 
 FROM base AS package
 WORKDIR /build
@@ -708,7 +708,7 @@ services:
     working_dir: /usr/src/workdir
     command: "mvn clean -DskipTests spring-boot:run"
     healthcheck:
-      test: [ 'CMD-SHELL','curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1' ]
+      test: [ "CMD-SHELL","curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1" ]
       interval: 5s
       timeout: 5s
       retries: 10

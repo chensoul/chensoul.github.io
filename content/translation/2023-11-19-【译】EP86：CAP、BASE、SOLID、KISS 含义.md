@@ -4,7 +4,7 @@ date: 2023-11-19 00:30:00+08:00
 draft: false
 slug: "ep86-cap-base-solid-kiss-what-do"
 categories: [ "translation" ]
-tags: [ "cap", "solid", "sso" ]
+tags: [ "system-design" ]
 description: "这篇文章解释了系统设计中的常见缩写（CAP、BASE、SOLID、KISS）、单点登录（SSO）、编程范式对比，以及数据管道概述。"
 canonicalURL: "https://blog.bytebytego.com/p/ep86-cap-base-solid-kiss-what-do"
 ---

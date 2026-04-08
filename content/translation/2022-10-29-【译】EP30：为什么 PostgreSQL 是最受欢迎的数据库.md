@@ -4,7 +4,7 @@ date: 2022-10-29 23:39:00+08:00
 draft: false
 slug: "ep30-why-is-postgresql-the-most-loved"
 categories: [ "translation" ]
-tags: [ "postgresql", "database", "system-design" ]
+tags: [ "database", "system-design" ]
 description: "这篇文章介绍了 PostgreSQL 的多功能用例（OLTP、OLAP、FDW、流处理、地理空间、时间序列、分布式表），以及正向代理 vs 反向代理、时间表示和 2012 年 Twitter 架构。"
 canonicalURL: "https://blog.bytebytego.com/p/ep30-why-is-postgresql-the-most-loved"
 ---

@@ -73,10 +73,10 @@ public class ResourceController {
  public void configure(HttpSecurity http) throws Exception {
   http
    .authorizeRequests()
-    .antMatchers(HttpMethod.GET,"/hello").access("#oauth2.hasScope('read')")
-    .antMatchers(HttpMethod.GET,"/foo").access("#oauth2.hasScope('read')")
-    .antMatchers(HttpMethod.POST,"/bar").access("#oauth2.hasScope('write')")
-    .antMatchers(HttpMethod.DELETE,"/test").access("#oauth2.hasScope('trust')")
+    .antMatchers(HttpMethod.GET,"/hello").access("#oauth2.hasScope("read")")
+    .antMatchers(HttpMethod.GET,"/foo").access("#oauth2.hasScope("read")")
+    .antMatchers(HttpMethod.POST,"/bar").access("#oauth2.hasScope("write")")
+    .antMatchers(HttpMethod.DELETE,"/test").access("#oauth2.hasScope("trust")")
    .anyRequest().authenticated().
     and().csrf().disable();
  }
@@ -86,25 +86,25 @@ public class ResourceController {
 ### 方式二：`@PreAuthorize` 等方法级注解
 
 ```java
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope("read")")
     @GetMapping("/hello")
     public String hello(){
         return "hello";
     }
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+    @PreAuthorize("#oauth2.hasScope("read")")
     @GetMapping("/foo")
     public String foo(){
         return "foo";
     }
 
-    @PreAuthorize("#oauth2.hasScope('write')")
+    @PreAuthorize("#oauth2.hasScope("write")")
     @PostMapping("/bar")
     public String bar(){
         return "bar";
     }
 
-    @PreAuthorize("#oauth2.hasScope('trust')")
+    @PreAuthorize("#oauth2.hasScope("trust")")
     @DeleteMapping("/test")
     public String test(){
         return "test";
@@ -113,14 +113,14 @@ public class ResourceController {
 
 若使用第二种方式，需在某一配置类上启用 **`@EnableGlobalMethodSecurity(prePostEnabled = true)`**（示例见 [ResourceSecurityConfiguration](https://github.com/zak905/oauth2-example/blob/master/resource-server/src/main/java/com/gwidgets/examples/resourceserver/ResourceSecurityConfiguration.java#L18)）。**`prePostEnabled = true`** 会启用 **`@PreAuthorize` / `@PostAuthorize`** 等前置/后置方法安全。
 
-`#oauth2.hasScope('trust')` 一类表达式基于 **Spring 表达式语言（SpEL）**，详见 [Spring Framework 文档](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)。
+`#oauth2.hasScope("trust")` 一类表达式基于 **Spring 表达式语言（SpEL）**，详见 [Spring Framework 文档](https://docs.spring.io/spring/docs/4.3.12.RELEASE/spring-framework-reference/html/expressions.html)。
 
 ## 按 scope 申请令牌
 
 若请求令牌时**未显式指定 scope**，Spring 默认认为令牌拥有**客户端配置中的全部 scopes**。先只申请 **`read`**：
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client&scope=read' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d "grant_type=client_credentials&client_id=my-trusted-client&scope=read" -H "Accept: application/json"
 ```
 
 ```json
@@ -160,7 +160,7 @@ curl -XPOST localhost:8989/bar -H "Authorization: Bearer acadbb31-f126-411d-ae5b
 换发只含 **`write`** 的令牌再试：
 
 ```bash
-curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d 'grant_type=client_credentials&client_id=my-trusted-client&scope=write' -H "Accept: application/json"
+curl -X POST --user my-trusted-client:mysecret localhost:8081/oauth/token -d "grant_type=client_credentials&client_id=my-trusted-client&scope=write" -H "Accept: application/json"
 ```
 
 ```json

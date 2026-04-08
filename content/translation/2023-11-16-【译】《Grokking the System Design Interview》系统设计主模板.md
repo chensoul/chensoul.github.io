@@ -3,7 +3,7 @@ title: "【译】《Grokking the System Design Interview》系统设计主模板
 date: 2023-11-16 08:00:00+08:00
 slug: system-design-master-template
 categories: [ "translation" ]
-tags: ['architecture']
+tags: [ "architecture" ]
 description: "这是一篇双语翻译的文章，原文出自《Grokking the System Design Interview》教程的 System Design Master Template 这篇章节 ..."
 canonicalURL: "https://www.designgurus.io/course-think-like-a-system-design-interviewer/article/system-design-mindset"
 ---
@@ -72,7 +72,7 @@ Load balancers employ various algorithms to determine the distribution of incomi
 - **Least Connections:** The load balancer assigns requests to the server with the fewest active connections, giving priority to less-busy servers.
   
   > 最少连接：负载均衡器将请求分配给活动连接最少的服务器，并优先考虑不太繁忙的服务器。
-- **IP Hash:** The client's IP address is hashed, and the resulting value is used to determine which server the request should be directed to. This method ensures that a specific client's requests are consistently routed to the same server, helping maintain session persistence.
+- **IP Hash:** The client"s IP address is hashed, and the resulting value is used to determine which server the request should be directed to. This method ensures that a specific client"s requests are consistently routed to the same server, helping maintain session persistence.
   
   > IP 哈希：对客户端的 IP 地址进行哈希处理，结果值用于确定请求应定向到哪个服务器。此方法可确保特定客户端的请求一致路由到同一服务器，从而有助于维护会话持久性。
 

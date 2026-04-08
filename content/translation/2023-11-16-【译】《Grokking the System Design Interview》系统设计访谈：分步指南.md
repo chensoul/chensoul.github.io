@@ -4,7 +4,7 @@ title: "【译】《Grokking the System Design Interview》系统设计访谈：
 date: 2023-11-16 08:00:00+08:00
 slug: sdi-a-step-by-step-guide
 categories: [ "translation" ]
-tags: ['architecture']
+tags: [ "architecture" ]
 description: "这是一篇双语翻译的文章，原文出自 groksystemdesigninterview.pdf 的一篇文章《System Design Interviews: A step by step guide》系 ..."
 canonicalURL: "https://www.designgurus.io/course-think-like-a-system-design-interviewer/article/system-design-framework"
 

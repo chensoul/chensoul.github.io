@@ -3,7 +3,7 @@ title: "Gemini CLI 安装、配置、使用与认证指南"
 date: 2026-03-02 15:00:00+08:00
 slug: gemini-cli-guide
 categories: [ "tech" ]
-tags: ['gemini', 'ai']
+tags: [ "ai" ]
 favicon: "gemini.svg"
 banner: "01.webp"
 description: Gemini CLI 是 Google 开源的终端 AI 助手，把 Gemini 的能力直接接到命令行里，让你在终端里对话、写代码、查资料、跑工具。本文介绍其安装、配置、使用、认证方式，以及和订阅方案的关系。

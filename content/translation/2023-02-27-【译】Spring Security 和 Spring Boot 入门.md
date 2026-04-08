@@ -3,7 +3,7 @@ title: "【译】Spring Security 和 Spring Boot 入门"
 date: 2023-02-27 21:00:00+08:00
 slug: spring-security
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "Spring Security 是一个有助于保护企业应用程序安全的框架。通过与 Spring MVC、Spring Webflux 或 Spring Boot 集成，我们可以创建一个强大且高度可定制的身份验证和访问控制框架。在本文中，我们将解释核心概念并仔细研究 Sprin ..."
 canonicalURL: "https://www.baeldung.com/spring-security"
 ---
@@ -628,7 +628,7 @@ public class CustomHeaderValidatorFilter extends OncePerRequestFilter {
 在这里，我们重写了 `doFilterInternal()` 并添加了我们的逻辑。在这种情况下，仅当请求中传递了所需的标头 `X-Application-Name` 时，请求才会在过滤器链中继续进行。此外，我们还可以验证该过滤器是否已从日志连接到我们的 `SecurityConfiguration` 类。
 
 ```text
-Will secure Ant [pattern='/library/**'] with
+Will secure Ant [pattern="/library/**"] with
 [org.springframework.security.web.session.DisableEncodeUrlFilter@669469c9,
  org.springframework.security.web.context.request.async.
    WebAsyncManagerIntegrationFilter@7f39ad3f,
@@ -781,7 +781,7 @@ public class BookController {
     }
 
     @GetMapping("/library/books/all")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole("ROLE_USER")")
     public ResponseEntity<List<BookDto>> getAllBooks() {
         return ResponseEntity.ok().body(bookService.getAllBooks());
     }
@@ -798,7 +798,7 @@ public class BookController {
 
 ![settings](spring-security/13.webp)
 
-1. `@PreAuthorize("hasRole('ROLE_USER')")` : 仅当当前主体具有 USER 角色时，我们才会收到成功响应。
+1. `@PreAuthorize("hasRole("ROLE_USER")")` : 仅当当前主体具有 USER 角色时，我们才会收到成功响应。
 
 接下来，让我们在 Repository 类中使  用 `@PostAuthorize` 。
 

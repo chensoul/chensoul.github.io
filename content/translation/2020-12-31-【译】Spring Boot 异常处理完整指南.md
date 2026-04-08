@@ -3,7 +3,7 @@ title: "【译】Spring Boot 异常处理完整指南"
 date: 2020-12-31 08:00:00+08:00
 slug: spring-boot-exception-handling
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "处理异常是构建健壮应用程序的重要部分。 Spring Boot 提供了不止一种方法。 ..."
 canonicalURL: "https://www.baeldung.com/exception-handling-for-rest-with-spring"
 ---
@@ -302,7 +302,7 @@ public class ProductController {
   ) {
     ErrorResponse errorResponse = new ErrorResponse(
         HttpStatus.UNPROCESSABLE_ENTITY.value(),
-        "Validation error. Check 'errors' field for details."
+        "Validation error. Check "errors" field for details."
     );
 
     for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
@@ -375,7 +375,7 @@ public class ProductController {
 为了实现这一点，我们首先引入了一个名为 `reflectoring.trace` 的服务器端配置属性，如果将其设置为 `true` ，为了实现此目的，我们首先引入了一个名为 `reflectoring.trace` 的服务器端配置属性，如果将其设置为 `true` ，将启用响应中的 `stackTrace` 字段。要实际在 API 响应中获取 `stackTrace` ，我们的客户端还必须传递带有值 `true` 的 `trace` 参数：
 
 ```bash
-curl --location --request GET 'http://localhost:8080/product/1?trace=true'
+curl --location --request GET "http://localhost:8080/product/1?trace=true"
 ```
 
 现在，由于 `stackTrace` 的行为由属性文件中的功能标志控制，因此当我们在生产环境中部署时，我们可以将其删除或将其设置为 `false` 。

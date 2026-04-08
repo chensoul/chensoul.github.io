@@ -4,7 +4,7 @@ date: 2025-06-05 23:30:00+08:00
 draft: false
 slug: "sql-vs-nosql-choosing-the-right-database"
 categories: [ "translation" ]
-tags: [ "sql", "nosql", "database" ]
+tags: [ "sql", "database" ]
 description: "这篇文章比较了 SQL 和 NoSQL 数据库，以及如何选择适合应用的数据库。"
 canonicalURL: "https://blog.bytebytego.com/p/sql-vs-nosql-choosing-the-right-database"
 ---

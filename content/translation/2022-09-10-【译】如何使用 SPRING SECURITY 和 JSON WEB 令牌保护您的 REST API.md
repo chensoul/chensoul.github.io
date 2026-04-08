@@ -4,7 +4,7 @@ date: 2022-09-10 00:00:00+08:00
 draft: false
 slug: spring-security-jwt
 categories: ["translation"]
-tags: ['spring-boot', 'security', 'jwt']
+tags: ["spring-boot", "security", "jwt"]
 description: "使用 Spring Security 和 JWT 保护 REST API 的完整指南。"
 canonicalURL: "https://www.danvega.dev/blog/spring-security-jwt"
 ---
@@ -217,11 +217,11 @@ Description:
 
 Parameter 0 of method setFilterChains in
 org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration
-required a bean of type 'org.springframework.security.oauth2.jwt.JwtDecoder' that could not be found.
+required a bean of type "org.springframework.security.oauth2.jwt.JwtDecoder" that could not be found.
 
 Action:
 
-Consider defining a bean of type 'org.springframework.security.oauth2.jwt.JwtDecoder'
+Consider defining a bean of type "org.springframework.security.oauth2.jwt.JwtDecoder"
 in your configuration.
 ```
 
@@ -375,7 +375,7 @@ public class AuthController {
 
     @PostMapping("/token")
     public String token(Authentication authentication) {
-        LOG.debug("Token requested for user: '{}'", authentication.getName());
+        LOG.debug("Token requested for user: "{}"", authentication.getName());
         String token = tokenService.generateToken(authentication);
         LOG.debug("Token granted: {}", token);
         return token;
@@ -419,7 +419,7 @@ http POST :8080/token --auth dvega:password -v
 响应将包含生成的 JWT 令牌。如果您在没有授权标头或没有正确令牌的情况下向根路径发出请求，您将收到 401（拒绝）响应。但是，如果您以正确的格式包含 Authorization 标头，您将获得从 `HomeController` 中的 home 方法返回的字符串。
 
 ```bash
-http :8080 'Authorization: Bearer JWT_TOKEN_HERE'
+http :8080 "Authorization: Bearer JWT_TOKEN_HERE"
 ```
 
 ![Httpie Response Success](spring-security-jwt/11.webp)

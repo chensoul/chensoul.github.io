@@ -3,7 +3,7 @@ title: "Spring Boot 2 升级到 Spring Boot 3 指南"
 date: 2026-03-06 07:50:00+08:00
 slug: spring-boot-2-to-3-upgrade-guide
 categories: [ "tech" ]
-tags: ['spring-boot', 'openrewrite', 'migration']
+tags: [ "spring-boot" ]
 description: "本文介绍如何使用 OpenRewrite 自动化迁移 Spring Boot 2.7.x 应用到 Spring Boot 3.x，以及如何使用 spring-boot-2-to-3 这个 AI Agent Skill 来简化升级流程。"
 favicon: "spring.svg"
 ---

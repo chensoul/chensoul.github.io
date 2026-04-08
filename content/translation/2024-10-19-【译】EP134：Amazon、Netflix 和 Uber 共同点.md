@@ -4,7 +4,7 @@ date: 2024-10-19 23:30:00+08:00
 draft: false
 slug: "ep134-what-do-amazon-netflix-and"
 categories: [ "translation" ]
-tags: [ "scaling", "architecture", "microservices" ]
+tags: [ "scaling", "architecture" ]
 description: "这篇文章介绍了扩展系统的 8 个必知策略、分页 vs. 分段、Git 工作流和微服务技术栈。"
 canonicalURL: "https://blog.bytebytego.com/p/ep134-what-do-amazon-netflix-and"
 ---

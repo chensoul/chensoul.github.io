@@ -3,7 +3,7 @@ title: "ThingsBoard HTTP Transport 实现方式"
 date: 2025-07-02 08:00:00+08:00
 slug: thingsboard-http-transport
 categories: [ "tech" ]
-tags: ['thingsboard']
+tags: [ "thingsboard" ]
 mermaid: true
 description: "系统梳理 ThingsBoard 平台 HTTP 设备接入的实现方式，重点分析 HTTP 自动注册机制、调用链与消息流转过程。"
 ---
@@ -32,7 +32,7 @@ curl -v -X POST http://localhost:8080/api/v1/p4qGvJp3443cotHE0JfY/telemetry \
 
 ```bash
 Note: Unnecessary use of -X or --request, POST is already inferred.
-* Uses proxy env variable http_proxy == 'http://127.0.0.1:7890'
+* Uses proxy env variable http_proxy == "http://127.0.0.1:7890"
 *   Trying 127.0.0.1:7890...
 * Connected to 127.0.0.1 (127.0.0.1) port 7890
 > POST http://localhost:8080/api/v1/p4qGvJp3443cotHE0JfY/telemetry HTTP/1.1
@@ -111,7 +111,7 @@ b、创建客户用户并用其认领设备（平台/客户侧）
 获取客户用户 Token
 
 ```bash
-TOKEN=`curl -s -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"username":"customer@thingsboard.org", "password":"customer"}' 'http://localhost:8080/api/auth/login'|jq -r .token`
+TOKEN=`curl -s -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{"username":"customer@thingsboard.org", "password":"customer"}" "http://localhost:8080/api/auth/login"|jq -r .token`
 ```
 
 - 先用客户用户账号登录，获取 JWT Token。

@@ -3,7 +3,7 @@ title: "Spring AI ChatClient API 介绍"
 date: 2025-09-19 08:00:00+08:00
 slug: spring-ai-chat-client-api
 categories: [ "tech" ]
-tags: ['spring-ai']
+tags: [ "spring-ai" ]
 favicon: "spring-ai.svg"
 description: "围绕 Spring AI 的 ChatClient API，介绍其创建方式、调用链设计、提示模板与结构化输出等核心能力。"
 ---
@@ -131,7 +131,7 @@ mvn spring-boot:run
 ```bash
 curl -s -X POST http://localhost:8080/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"prompt":"What is Spring Boot?"}'
+  -d "{"prompt":"What is Spring Boot?"}"
 ```
 
 返回为 JSON：`{"content":"..."}`。

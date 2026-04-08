@@ -4,7 +4,7 @@ date: 2022-05-30 00:00:00+08:00
 draft: false
 slug: spring-security-authentication-and-authorization
 categories: [ "translation" ]
-tags: ['spring-boot', 'security']
+tags: [ "spring-boot", "security" ]
 description: "您可以使用本指南来了解 Spring Security 是什么以及其核心功能（如身份验证、授权或常见漏洞保护）如何工作。此外，还有全面的常见问题解答。 ..."
 canonicalURL: "https://www.marcobehler.com/guides/spring-security"
 ---
@@ -616,7 +616,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ```java
   http
     .authorizeRequests()
-      .antMatchers("/admin").access("hasRole('admin') and hasIpAddress('192.168.1.0/24') and @myCustomBean.checkAccess(authentication,request)") // (1)
+      .antMatchers("/admin").access("hasRole("admin") and hasIpAddress("192.168.1.0/24") and @myCustomBean.checkAccess(authentication,request)") // (1)
 ```
 
 1. 您正在检查用户是否具有 ROLE_ADMIN、特定的 IP 地址以及自定义 bean 检查。
@@ -856,10 +856,10 @@ Spring Security 与 Thymeleaf 集成良好。它提供了一种特殊的 Spring 
 <div sec:authorize="isAuthenticated()">
   This content is only shown to authenticated users.
 </div>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
+<div sec:authorize="hasRole("ROLE_ADMIN")">
   This content is only shown to administrators.
 </div>
-<div sec:authorize="hasRole('ROLE_USER')">
+<div sec:authorize="hasRole("ROLE_USER")">
   This content is only shown to users.
 </div>
 ```

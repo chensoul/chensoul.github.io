@@ -109,7 +109,7 @@ export class PostUtils {
     this.getPublishedPosts(posts)
       .flatMap(post => post.data.tags)
       .forEach(tag => {
-        const tagKey = trimUrlSegment(tag);
+        const tagKey = trimUrlSegment(tag).toLowerCase();
 
         // 跳过空字符串标签
         if (!tagKey) {
@@ -134,8 +134,11 @@ export class PostUtils {
   }
 
   static getPostsByTag(posts: BlogLikeEntry[], tag: string): BlogLikeEntry[] {
+    const tagLower = tag.toLowerCase();
     return this.sort(
-      posts.filter(post => trimAll(post.data.tags).includes(tag))
+      posts.filter(post =>
+        trimAll(post.data.tags).some(t => t.toLowerCase() === tagLower)
+      )
     );
   }
 

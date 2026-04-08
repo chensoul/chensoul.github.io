@@ -3,7 +3,7 @@ title: "【译】WebSocket与REST"
 date: 2024-01-29 00:00:00+08:00
 slug: websocket-vs-rest
 categories: [ "translation" ]
-tags: ['websocket','rest']
+tags: [ "websocket" ]
 description: "原文链接：https://ably.com/topic/websocket-vs-rest ..."
 canonicalURL: "https://ably.com/topic/websocket-vs-rest"
 ---

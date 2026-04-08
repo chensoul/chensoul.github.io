@@ -4,7 +4,7 @@ date: 2025-08-30 23:49:00+08:00
 draft: false
 slug: "ep178-lifecycle-of-kubernetes-pod"
 categories: [ "translation" ]
-tags: [ "kubernetes", "k8s" ]
+tags: [ "kubernetes" ]
 description: "这篇文章介绍了 Kubernetes Pod 的生命周期，从创建到终止的各个阶段。"
 canonicalURL: "https://blog.bytebytego.com/p/ep178-the-lifecycle-of-a-kubernetes"
 ---

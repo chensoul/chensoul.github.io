@@ -3,7 +3,7 @@ title: "使用 Docker 容器化并运行 Spring Boot 应用程序"
 date: 2024-07-09 09:00:00+08:00
 slug: docker-for-spring-boot
 categories: [ "tech" ]
-tags: ['docker', 'spring-boot']
+tags: [ "docker", "spring-boot" ]
 description: "基于 Docker 官方 Java 指南，介绍如何将 Spring Boot 应用容器化运行，并逐步搭建本地开发、测试与部署流程。"
 ---
 
@@ -200,7 +200,7 @@ docker compose up --build
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E "159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>" /usr/share/maven/conf/settings.xml
 
 FROM base AS package
 WORKDIR /build
@@ -287,7 +287,7 @@ docker compose up --build
 ```bash
 $ curl  --request GET \
   --url http://localhost:8080/vets \
-  --header 'content-type: application/json'
+  --header "content-type: application/json"
 ```
 
 您应该收到以下回复：
@@ -383,8 +383,8 @@ docker compose watch
 `spring-petclinic/src/main/resources/templates/fragments/layout.html`在 IDE 或文本编辑器中打开并`Home`通过添加感叹号来更新导航字符串。
 
 ```diff
--   <li th:replace="~{::menuItem ('/','home','home page','home','Home')}">
-+   <li th:replace="~{::menuItem ('/','home','home page','home','Home!')}">
+-   <li th:replace="~{::menuItem ("/","home","home page","home","Home")}">
++   <li th:replace="~{::menuItem ("/","home","home page","home","Home!")}">
 ```
 
 保存更改`layout.html`，然后您可以在容器自动重建时继续开发。
@@ -422,7 +422,7 @@ docker compose watch
 FROM maven:3-eclipse-temurin-21-alpine AS base
 WORKDIR /build
 COPY ./src src/
-RUN sed -i -E '159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>' /usr/share/maven/conf/settings.xml
+RUN sed -i -E "159a <mirror>\n<id>aliyun</id>\n<name>Aliyun Mirror</name>\n<url>http://maven.aliyun.com/nexus/content/groups/public/</url>\n<mirrorOf>central</mirrorOf>\n</mirror>" /usr/share/maven/conf/settings.xml
 
 FROM base AS test
 WORKDIR /build
@@ -447,7 +447,7 @@ RUN cp -r /build/target/extracted/dependencies/. ./
 RUN cp -r /build/target/extracted/spring-boot-loader/. ./
 RUN cp -r /build/target/extracted/snapshot-dependencies/. ./
 RUN cp -r /build/target/extracted/application/. ./
-CMD [ "java", "-Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000'", "org.springframework.boot.loader.launch.JarLauncher" ]
+CMD [ "java", "-Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"", "org.springframework.boot.loader.launch.JarLauncher" ]
 
 FROM eclipse-temurin:21-jre-jammy AS final
 WORKDIR /app
@@ -564,7 +564,7 @@ docker build -t java-docker-image-test --progress=plain --no-cache --target=test
    on:
      push:
        branches: [ "main" ]
-       tags: ['spring-boot', 'java', 'backend', 'tutorial', 'docker', 'kubernetes', 'security', 'javascript']
+       tags: ["spring-boot", "java", "backend", "tutorial", "docker", "kubernetes", "security", "javascript"]
      release:
        types: [ created ]
    
@@ -595,7 +595,7 @@ docker build -t java-docker-image-test --progress=plain --no-cache --target=test
            uses: docker/setup-buildx-action@v3
    
          - name: Login to Docker Hub
-           if: github.event_name != 'pull_request'
+           if: github.event_name != "pull_request"
            uses: docker/login-action@v3
            with:
              username: ${{ secrets.DOCKER_USERNAME }}
@@ -608,7 +608,7 @@ docker build -t java-docker-image-test --progress=plain --no-cache --target=test
              platforms: linux/amd64,linux/arm64
              target: final
              tags: ${{ steps.meta.outputs.tags }}
-             push: ${{ github.event_name != 'pull_request' }}
+             push: ${{ github.event_name != "pull_request" }}
              labels: ${{ steps.meta.outputs.labels }}
    ```
 
@@ -746,7 +746,7 @@ spec:
    ```bash
    $ curl --request GET \
      --url http://localhost:30001/actuator/health \
-     --header 'content-type: application/json'
+     --header "content-type: application/json"
    ```
 
    您应该获得如下输出。

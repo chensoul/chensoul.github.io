@@ -3,7 +3,7 @@ title: "macOS 使用 Chezmoi 管理 Dotfiles 实战"
 date: 2026-04-08 16:00:00+08:00
 slug: chezmoi-dotfiles-macos
 categories: [ "tech" ]
-tags: [ 'chezmoi', 'dotfiles', 'macos']
+tags: [ "dotfiles", "macos"]
 draft: false
 description: "在 macOS 上用 chezmoi 管理 dotfiles：Fish Shell 配置、GPG 加密、SDKMAN 环境变量提取，以及新机器恢复完整流程。"
 favicon: "chezmoi.svg"
@@ -144,7 +144,7 @@ if test -n "$_sdkman_prefix"
     if test -s "$SDKMAN_DIR/bin/sdkman-init.sh"
         # Run sdkman-init.sh in bash and extract exported variables for fish
         for line in (bash -c "source \"$SDKMAN_DIR/bin/sdkman-init.sh\" && echo \"SDKMAN_VERSION=\$SDKMAN_VERSION\" && echo \"SDKMAN_CANDIDATES_CSV=\$SDKMAN_CANDIDATES_CSV\" && echo \"SDKMAN_PLATFORM=\$SDKMAN_PLATFORM\"")
-            set -gx (string split '=' $line)[1] (string split '=' $line)[2]
+            set -gx (string split "=" $line)[1] (string split "=" $line)[2]
         end
     end
 end
@@ -338,7 +338,7 @@ function pushcode
                 continue
             end
 
-            set -l branch (git symbolic-ref -q HEAD 2>/dev/null | sed -e 's|^refs/heads/||')
+            set -l branch (git symbolic-ref -q HEAD 2>/dev/null | sed -e "s|^refs/heads/||")
             if test -z "$branch"
                 echo "  非分支 HEAD，跳过 push: $name" >&2
                 popd >/dev/null
@@ -375,23 +375,23 @@ function cleanup
         echo "cleanup: dry-run（不会删除）:"
         for dir in $dirs_to_clean
             fd -t d "$dir" --max-depth 10 2>/dev/null | while read -l d
-                not string match -q '*/.git/*' "$d" && echo $d
+                not string match -q "*/.git/*" "$d" && echo $d
             end
         end
         fd -t f ".DS_Store" "*.log" --max-depth 10 2>/dev/null | while read -l f
-            not string match -q '*/.git/*' "$f" && echo $f
+            not string match -q "*/.git/*" "$f" && echo $f
         end
         return 0
     end
 
     for dir in $dirs_to_clean
         fd -t d "$dir" --max-depth 10 2>/dev/null | while read -l d
-            not string match -q '*/.git/*' "$d" && rm -rf "$d" 2>/dev/null
+            not string match -q "*/.git/*" "$d" && rm -rf "$d" 2>/dev/null
         end
     end
 
     fd -t f ".DS_Store" "*.log" --max-depth 10 2>/dev/null | while read -l f
-        not string match -q '*/.git/*' "$f" && rm -f "$f" 2>/dev/null
+        not string match -q "*/.git/*" "$f" && rm -f "$f" 2>/dev/null
     end
 
     echo "cleanup: 清理完成"
@@ -577,9 +577,9 @@ gpg --full-generate-key
 gpg --list-secret-keys
 
 # 配置 chezmoi 使用 GPG
-echo 'encryption = "gpg"' > ~/.config/chezmoi/chezmoi.toml
-echo '[gpg]' >> ~/.config/chezmoi/chezmoi.toml
-echo 'recipient = "ichensoul@gmail.com"' >> ~/.config/chezmoi/chezmoi.toml
+echo "encryption = "gpg"" > ~/.config/chezmoi/chezmoi.toml
+echo "[gpg]" >> ~/.config/chezmoi/chezmoi.toml
+echo "recipient = "ichensoul@gmail.com"" >> ~/.config/chezmoi/chezmoi.toml
 
 # 添加加密文件
 chezmoi add --encrypt ~/.netrc
@@ -594,7 +594,7 @@ chezmoi edit ~/.netrc
 
 ```bash
 mkdir -p ~/gpg-export
-KEY_ID=$(gpg --list-secret-keys --with-colons 2>/dev/null | awk -F: '/^sec:/{print $5; exit}')
+KEY_ID=$(gpg --list-secret-keys --with-colons 2>/dev/null | awk -F: "/^sec:/{print $5; exit}")
 gpg --armor --export-secret-keys $KEY_ID > ~/gpg-export/gpg-secret-keys.asc
 gpg --armor --export $KEY_ID > ~/gpg-export/gpg-public-keys.asc
 chmod 600 ~/gpg-export/gpg-secret-keys.asc

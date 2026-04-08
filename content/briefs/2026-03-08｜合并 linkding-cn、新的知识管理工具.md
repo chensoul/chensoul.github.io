@@ -2,7 +2,7 @@
 title: "2026-03-08｜合并 linkding-cn、新的知识管理工具"
 date: 2026-03-09 19:30:00+08:00
 slug: "20260308-week-review"
-tags: ['memos', 'vps', 'linking']
+tags: [ "vps" ]
 draft: false
 categories: [ "weekly" ]
 description: 这周一边用 AI Agent 合并 linkding-cn 代码、整理 Spring Boot 2 升 3 的方案，一边也在琢磨一款面向输入驱动用户的极简知识管理工具。

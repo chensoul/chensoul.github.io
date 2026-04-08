@@ -3,7 +3,7 @@ title: "将 Maven 站点发布到 GitHub Pages"
 date: 2024-07-18 08:00:00+08:00
 slug: publishing-a-maven-site-to-github-pages
 categories: [ "tech" ]
-tags: ['maven', 'github']
+tags: [ "maven", "github" ]
 description: "记录如何将 Maven 生成的站点发布到 GitHub Pages，包括项目创建、站点生成和发布流程配置。"
 ---
 
@@ -248,10 +248,10 @@ mvn clean site scm-publish:publish-scm
   >
   > Maven 将执行 SCM Publish 插件，将项目发布到指定的 SCM 提供商。
 
-从日志可以看出 git 推送提交的命令：`'git' 'push' 'git@github.com:chensoul/maven-site-github-example.git' 'refs/heads/gh-pages:refs/heads/gh-pages'`
+从日志可以看出 git 推送提交的命令：`"git" "push" "git@github.com:chensoul/maven-site-github-example.git" "refs/heads/gh-pages:refs/heads/gh-pages"`
 
 ```bash
-[INFO] Executing: /bin/sh -c cd '/Users/chensoul/Codes/github/maven-site-github-example/target/scmpublish-checkout' && 'git' 'push' 'git@github.com:chensoul/maven-site-github-example.git' 'refs/heads/gh-pages:refs/heads/gh-pages'
+[INFO] Executing: /bin/sh -c cd "/Users/chensoul/Codes/github/maven-site-github-example/target/scmpublish-checkout" && "git" "push" "git@github.com:chensoul/maven-site-github-example.git" "refs/heads/gh-pages:refs/heads/gh-pages"
 [INFO] Working directory: /Users/chensoul/Codes/github/maven-site-github-example/target/scmpublish-checkout
 [INFO] Checked in 24 file(s) to revision null in 0 h 0 m 4 s
 [INFO] ------------------------------------------------------------------------
@@ -428,7 +428,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ '8' ]
+        java: [ "8" ]
 
     steps:
       - name: Checkout
@@ -437,7 +437,7 @@ jobs:
       - name: Java ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: "temurin"
           java-version: ${{ matrix.java }}
           cache: maven
           server-id: github
@@ -466,7 +466,7 @@ server-id 相关信息可以在 actions/setup-java@v4 中设置，参考 [action
       - name: Java ${{ matrix.Java }}
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: "temurin"
           java-version: ${{ matrix.java }}
           cache: maven
           server-id: github
@@ -517,9 +517,9 @@ java.lang.NoClassDefFoundError: org/apache/maven/doxia/siterenderer/DocumentCont
 再次提交代码，发现 Github action 还是运行失败，异常日志：
 
 ```bash
-[INFO] Executing: /bin/sh -c cd '/home/runner/work/maven-site-github-example/maven-site-github-example/target' && 'git' 'clone' '--branch' 'gh-pages' 'git@github.com:chensoul/maven-site-github-example.git' '/home/runner/work/maven-site-github-example/maven-site-github-example/target/scmpublish-checkout'
+[INFO] Executing: /bin/sh -c cd "/home/runner/work/maven-site-github-example/maven-site-github-example/target" && "git" "clone" "--branch" "gh-pages" "git@github.com:chensoul/maven-site-github-example.git" "/home/runner/work/maven-site-github-example/maven-site-github-example/target/scmpublish-checkout"
 [INFO] Working directory: /home/runner/work/maven-site-github-example/maven-site-github-example/target
-Error:  Failed to check out from SCM: The git-clone command failed. Cloning into '/home/runner/work/maven-site-github-example/maven-site-github-example/target/scmpublish-checkout'...
+Error:  Failed to check out from SCM: The git-clone command failed. Cloning into "/home/runner/work/maven-site-github-example/maven-site-github-example/target/scmpublish-checkout"...
 git@github.com: Permission denied (publickey).
 fatal: Could not read from remote repository.
 

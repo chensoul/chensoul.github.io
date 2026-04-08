@@ -2,7 +2,7 @@
 title: "在 Kubernetes 中安装 Cert Manager 并生成证书"
 date: 2024-05-10 08:00:00+08:00
 slug: install-cert-manager
-tags: ['kubernetes']
+tags: [ "kubernetes" ]
 categories: [ "tech" ]
 description: "介绍如何在 Kubernetes 中安装 Cert Manager，并通过它为集群中的服务和 Ingress 自动签发与续订 TLS 证书。"
 ---
@@ -241,7 +241,7 @@ spec:
       name: letsencrypt-staging
     # Enable the HTTP-01 challenge provider
     solvers:
-    # An empty 'selector' means that this solver matches all domains
+    # An empty "selector" means that this solver matches all domains
     - selector: {}
       http01:
         ingress:
@@ -377,7 +377,7 @@ issuer.cert-manager.io/letsencrypt-staging created
 > 如果想将这个 Issuer 设置为默认使用，可以用如下命令升级 cert-manager
 >
 > ```
-> helm upgrade cert-manager jetstack/cert-manager --set 'extraArgs={--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}' -n cert-manager
+> helm upgrade cert-manager jetstack/cert-manager --set "extraArgs={--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}" -n cert-manager
 > ```
 
 创建一个证书：

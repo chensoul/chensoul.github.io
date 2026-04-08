@@ -3,7 +3,7 @@ title: "GitHub Action 发布 Jar 到 Maven 中央仓库"
 date: 2024-08-01 08:00:00+08:00
 slug: publishing-a-jar-to-maven-repository-with-github-action
 categories: [ "tech" ]
-tags: ['github','maven']
+tags: ["github","maven"]
 description: "介绍如何通过 GitHub Action 自动发布 Jar 包到 Maven 中央仓库，减少手工发布流程并提升发布效率。"
 ---
 
@@ -249,14 +249,14 @@ name: Maven Release
 on:
   push:
     branches: [ "main" ]
-    tags: ['java', 'backend', 'tutorial', 'redis', 'docker', 'javascript', 'git', 'maven']
+    tags: ["java", "backend", "tutorial", "redis", "docker", "javascript", "git", "maven"]
   release:
     types: [ created ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[CI Skip]')"
+    if: "!contains(github.event.head_commit.message, "[CI Skip]")"
 
     steps:
       - name: Checkout
@@ -265,7 +265,7 @@ jobs:
       - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: "temurin"
           java-version: 8
           cache: maven
           server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
@@ -329,14 +329,14 @@ name: Maven Release
 on:
   push:
     branches: [ "main" ]
-    tags: ['java', 'backend', 'tutorial', 'redis', 'docker', 'javascript', 'git', 'maven']
+    tags: ["java", "backend", "tutorial", "redis", "docker", "javascript", "git", "maven"]
   release:
     types: [ created ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[CI Skip]')"
+    if: "!contains(github.event.head_commit.message, "[CI Skip]")"
 
     steps:
       - name: Checkout
@@ -399,7 +399,7 @@ docker run -it qcastel/maven-release:latest  bash
 ```bash
 ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
 
-echo -e "Copy the following SSH private key and add it to your repo secrets under the name 'SSH_PRIVATE_KEY':"
+echo -e "Copy the following SSH private key and add it to your repo secrets under the name "SSH_PRIVATE_KEY":"
 base64 ~/.ssh/id_rsa
 
 echo -e " "
@@ -411,7 +411,7 @@ cat ~/.ssh/id_rsa.pub
 输出内容如下：
 
 ```bash
-Copy the following SSH private key and add it to your repo secrets under the name 'SSH_PRIVATE_KEY':
+Copy the following SSH private key and add it to your repo secrets under the name "SSH_PRIVATE_KEY":
 LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFB QUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUJGd0FBQUFkemMyZ3RjbgpOaEFBQUFB d0VBQVFBQUFRRUExQUFBclFpZFNRS25pY3g5VmNaQVdtTlI1ZWY0Q2tSbEJCZTdVdk5QNGNMMlAv eDRReXJpCmdWcGV2Um8wVHE0eUptWFN2L3hnclByNk5CQmk0STlXRmp6Q2l0a3phcTg3OGwyNVdt UUt5cTUyang5TWJ0MmhCZzVrdUsKZ05pRGxvMWNaY1VpZHd4ak9sNzVlVHpWaHpoSGZ4ZnphZTZY N0QybE1jeFUrd2d3MFJHZlpITjUvRUZWQ3JHRUhKdHlGSQpReFd1VDY0c3RNMElrVjA3azBPRlQy SHhYNlB6OUpvRjhRRm9SZmVjU0RUM2tPRk5rTVVicDVTNkkxNWxtTjB0YnNHVGNsClYxWFpwWUkr NHRFWWphN1EwWnlWaVBCVUJnWnBuUlpQNFRmOEIwRzhsVDdqSlNPWDM0YkRFWkFoMVM4bnRCQzc3 aFUyMUIKWGJDZHV6ZlpXUUFBQThoN29jU3VlNkhFcmdBQUFBZHpjMmd0Y25OaEFBQUJBUURVQUFD dENKMUpBcWVKekgxVnhrQmFZMQpIbDUvZ0tSR1VFRjd0UzgwL2h3dlkvL0hoREt1S0JXbDY5R2pS T3JqSW1aZEsvL0dDcyt2bzBFR0xnajFZV1BNS0syVE5xCnJ6dnlYYmxhWkFyS3JuYVBIMHh1M2FF R0RtUzRxQTJJT1dqVnhseFNKM0RHTTZYdmw1UE5XSE9FZC9GL05wN3Bmc1BhVXgKekZUN0NERFJF WjlrYzNuOFFWVUtzWVFjbTNJVWhERmE1UHJpeTB6UWlSWFR1VFE0VlBZZkZmby9QMG1nWHhBV2hG OTV4SQpOUGVRNFUyUXhSdW5sTG9qWG1XWTNTMXV3Wk55VlhWZG1sZ2o3aTBSaU5ydERSbkpXSThG UUdCbW1kRmsvaE4vd0hRYnlWClB1TWxJNWZmaHNNUmtDSFZMeWUwRUx2dUZUYlVGZHNKMjdOOWxa QUFBQUF3RUFBUUFBQVFCSzBqMXExSEYraFJ0UVBRVzMKTWlNZ1E1RnlETzZ6NFBPdUFCb3k2b0Mw OHpRcDNSY3N6WVBubDFkOGNqVW4xNzhIWWtTQlViZGxGYWNjblBQb3dXM21wMApjWjdoS0JncHNy clB4djlJTUNpWlI2YXRkMUFXK0ZUYXNxcU5VdDBPVTVIYXNUcTZ2WHAvN1drcTZ0ZUp3OGtvQi9I MjN5CmhyVGs1eFJ1WnZPckxGcS9vdXBQeXhVS1M0SzRVOG5JYjBnZjVjT3RXeUlWZFdKQ05EdU9R ZW1sdDBRajN3RjZPWkNpcU8KRGxaMFd3MWwrRzJpUWZFLzM2ODR0UXpKemVKeFgybEJaN0tmQStP bEcyZENPeXZwY01Ic1J4TE5ITy85aWpqUmNXWUVtMgp4SDVYQmRkZldlKzBkYkxxZFhoWHJHTnpx QjlSbjBTWGZ1QVRnSzZENjBsSkFBQUFnUUN6VmhONUh1YXVvOExzVVR1dkNRCkNibVhnakhuS1hB NDBqV1pyVmlucEgvbmcxNkNudlE5UmJhb041am1JWURUZEJ3TVp4dXZSck9JUTloeUZnUDVCSHRL dTgKQlhvZ08ybERySDFVRzA4bzN6ZHNhUTJaaGp0aEE5TFlMcXpvYkVtSEpndkwxemJjRVBWMHJC cm1SMXArL0trN3Y5OHd0eQpPT2VnYXVqK0djUXdBQUFJRUE5ZklKc0t2SGdsQVp1eS9sMzJWS3Q4 cTN4UFl4SUlrMVJKczV4bDRJUGFTZ0xsR0pzVFgwCll2bll1THcrb2NCMlVaazRxUUlML3I5bTRt cVhEOTF6bXhxZTNUKzZqOHk0ODBvbS91UWRma3h6MWdNWkljdDlkR2Z3RE8KczRBckNPSkx0TVI4 WG53emxXM1VLZnJhTDFRUFZMVUs3OWpSM29kN2k2VmNWMlpnY0FBQUNCQU55cXRMZk85NUhkU3Mz RwpyMWYvOStVRUJjV0xMSnpHMEl2OEZtd3J6ci9ZbksrbXpmR2dMVHNPeUgwV1pMZkVnYlJkUGxC aVJmTjFXQk1oWHZKRWhaCkp4YTY1N0IxTUExano1eEE2OElCcEJxUlhvNWZ6QmdHNFg0UGVNZkQz dXR5M0NENVR4Y2sxL0c1L2krUXpXNFhlR2RLNkkKaml1OGg5TXo3YkUxZHUyZkFBQUFFWEp2YjNS QVlqa3dZelJtWWpKbE9HVmxBUT09Ci0tLS0tRU5EIE9QRU5TU0ggUFJJVkFURSBLRVktLS0tLQo=
 
 Copy the encoded SSH public key and add it as one of your repo deploy keys with write access:
@@ -423,7 +423,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUAACtCJ1JAqeJzH1VxkBaY1Hl5/gKRGUEF7tS80/h
 macos 系统上执行命令：
 
 ```bash
-echo -e "Copy the following SSH private key and add it to your repo secrets under the name 'SSH_PRIVATE_KEY':"
+echo -e "Copy the following SSH private key and add it to your repo secrets under the name "SSH_PRIVATE_KEY":"
 base64 -i ~/.ssh/id_rsa
 
 echo -e " "
@@ -451,10 +451,10 @@ ssb   cv25519/116B95FF0068A7E8 2024-05-08 [E] [有效至：2027-05-08]
 获取 **MAVEN_GPG_KEY**，运行下面命令，输入密码，即 **MAVEN_GPG_PASSPHRASE** 对应的内容
 
 ```bash
-echo 'Public key to add in your bot github account:'
+echo "Public key to add in your bot github account:"
 gpg --armor --export 93C5993B9F7B43EE
 
-echo 'Private key to add to the CI secrets under GITHUB_GPG_KEY:'
+echo "Private key to add to the CI secrets under GITHUB_GPG_KEY:"
 gpg --export-secret-keys --armor 93C5993B9F7B43EE | base64
 ```
 
@@ -528,7 +528,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
 
@@ -541,8 +541,8 @@ jobs:
     - name: Set up JDK 8
       uses: actions/setup-java@v4
       with:
-        java-version: '8'
-        distribution: 'temurin'
+        java-version: "8"
+        distribution: "temurin"
         
     - name: Build with Maven
       run: mvn clean install

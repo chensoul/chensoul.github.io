@@ -4,7 +4,7 @@ date: 2020-09-05 14:00:00+08:00
 slug: spring-boot-docker
 draft: false
 categories: [ "translation" ]
-tags: ['spring-boot']
+tags: [ "spring-boot" ]
 description: "容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。 ..."
 canonicalURL: "https://reflectoring.io/spring-boot-docker/"
 ---
@@ -146,16 +146,16 @@ mvn spring-boot:build-image
 
 ```shell
 [INFO] --- spring-boot-maven-plugin:2.3.3.RELEASE:build-image (default-cli) @ usersignup ---
-[INFO] Building image 'docker.io/pratikdas/usersignup:v1'
+[INFO] Building image "docker.io/pratikdas/usersignup:v1"
 [INFO]
-[INFO]  > Pulling builder image 'gcr.io/paketo-buildpacks/builder:base-platform-api-0.3' 0%
+[INFO]  > Pulling builder image "gcr.io/paketo-buildpacks/builder:base-platform-api-0.3" 0%
 .
 .
-.. [creator]     Adding label 'org.springframework.boot.version'
+.. [creator]     Adding label "org.springframework.boot.version"
 .. [creator]     *** Images (c311fe74ec73):
 .. [creator]           docker.io/pratikdas/usersignup:v1
 [INFO]
-[INFO] Successfully built image 'docker.io/pratikdas/usersignup:v1'
+[INFO] Successfully built image "docker.io/pratikdas/usersignup:v1"
 ```
 
 从输出中，我们可以看到 `paketo Cloud-Native buildpack` 被用来构建可运行的 OCI 映像。正如我们之前所做的那样，我们可以通过运行以下命令来查看列为 Docker 映像的映像：

@@ -3,7 +3,7 @@ title: "GitLab Runner 安装与部署指南"
 date: 2024-07-19 08:00:00+08:00
 slug: gitlab-runner-install
 categories: [ "tech" ]
-tags: ['gitlab']
+tags: [ "gitlab" ]
 description: "介绍 GitLab Runner 的基本概念、核心作用以及安装部署方式，帮助搭建可执行 GitLab CI/CD 作业的运行环境。"
 ---
 
@@ -108,7 +108,7 @@ docker run --name gitlab-runner -itd -v /srv/gitlab-runner://etc/gitlab-runner -
     container_name: gitlab-runner
     restart: always
     volumes:
-      - '/srv/gitlab-runner://etc/gitlab-runner'
+      - "/srv/gitlab-runner://etc/gitlab-runner"
 ```
 
 ## 注册
@@ -162,7 +162,7 @@ docker 类型的执行器的有两种：
     container_name: gitlab-runner
     restart: always
     volumes:
-      - '/srv/gitlab-runner://etc/gitlab-runner'
+      - "/srv/gitlab-runner://etc/gitlab-runner"
       - /var/run/docker.sock://var/run/docker.sock
       - /etc/hosts://etc/hosts 
       - /etc/docker/daemon.json://etc/docker/daemon.json
