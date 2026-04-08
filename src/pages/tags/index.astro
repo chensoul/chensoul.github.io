@@ -11,15 +11,15 @@ import Tag from "@/components/Tag.astro";
 import { PostUtils } from "@/utils/postUtils";
 import { SITE } from "@/config";
 
-export const pageSlug = "tags";
+export const prerender = true;
 export const pageTitle = `标签 | ${SITE.title}`;
 
 const publishedPosts = PostUtils.getPublishedPosts(await getAllBlogLike());
-const tags = PostUtils.getUniqueTags(publishedPosts).sort(
+const allTags = PostUtils.getUniqueTags(publishedPosts).sort(
   (a, b) => b.count - a.count || a.tagName.localeCompare(b.tagName, "zh-CN")
 );
-const topTags = tags.slice(0, 10);
-const otherTags = [...tags.slice(10)].sort((a, b) =>
+const topTags = allTags.slice(0, 10);
+const otherTags = [...allTags.slice(10)].sort((a, b) =>
   a.tagName.localeCompare(b.tagName, "zh-CN")
 );
 ---
@@ -36,7 +36,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
             <h2>热门标签</h2>
             <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
               {topTags.map(({ tag, tagName, count }) => (
-                <Tag {tag} {tagName} {count} size="sm" />
+                <Tag tag={tag} tagName={tagName} count={count} size="sm" />
               ))}
             </ul>
           </section>
@@ -48,7 +48,7 @@ const otherTags = [...tags.slice(10)].sort((a, b) =>
             <h2>全部标签</h2>
             <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
               {otherTags.map(({ tag, tagName, count }) => (
-                <Tag {tag} {tagName} {count} size="sm" />
+                <Tag tag={tag} tagName={tagName} count={count} size="sm" />
               ))}
             </ul>
           </section>

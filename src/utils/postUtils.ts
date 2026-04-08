@@ -111,6 +111,11 @@ export class PostUtils {
       .forEach(tag => {
         const tagKey = trimUrlSegment(tag);
 
+        // 跳过空字符串标签
+        if (!tagKey) {
+          return;
+        }
+
         if (tagCountMap.has(tagKey)) {
           const existingTag = tagCountMap.get(tagKey)!;
           existingTag.count += 1;

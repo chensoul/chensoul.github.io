@@ -1,17 +1,15 @@
 ---
-
-## title: "macOS 使用 Chezmoi 管理 Dotfiles 实战"
+title: "macOS 使用 Chezmoi 管理 Dotfiles 实战"
 date: 2026-04-08 16:00:00+08:00
 slug: chezmoi-dotfiles-macos
 categories: [ "tech" ]
-tags: [ 'chezmoi', 'dotfiles', 'macos', 'fish-shell' ]
+tags: [ 'chezmoi', 'dotfiles', 'macos']
 draft: false
 description: "在 macOS 上用 chezmoi 管理 dotfiles：Fish Shell 配置、GPG 加密、SDKMAN 环境变量提取，以及新机器恢复完整流程。"
 favicon: "chezmoi.svg"
+---
 
 > 基于 macOS 14+ (ARM64) 环境，chezmoi v2.70.0 + Fish Shell 3.7+
-
----
 
 ## 一、当前环境状态
 
