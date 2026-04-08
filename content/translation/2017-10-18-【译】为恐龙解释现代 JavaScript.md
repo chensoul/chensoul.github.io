@@ -1,7 +1,7 @@
 ---
 title: "【译】为恐龙解释现代 JavaScript"
 date: 2017-10-18 00:00:00+08:00
-draft: true
+draft: false
 slug: modern-javascript-explained-for-dinosaurs
 categories: [ "translation" ]
 tags: [ "javascript", "tooling" ]

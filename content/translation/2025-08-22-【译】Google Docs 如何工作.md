@@ -1,7 +1,7 @@
 ---
 title: "【译】Google Docs 如何工作"
 date: 2025-08-22 19:50:00+08:00
-draft: true
+draft: false
 slug: "how-does-google-docs-work"
 categories: [ "translation" ]
 tags: [ "google-docs", "collaborative-editing", "ot" ]

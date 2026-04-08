@@ -1,7 +1,7 @@
 ---
 title: "【译】REST API 的基础：HTTP"
 date: 2023-07-13 23:30:00+08:00
-draft: true
+draft: false
 slug: "the-foundation-of-rest-api-http"
 categories: [ "translation" ]
 tags: [ "http", "rest-api", "networking" ]

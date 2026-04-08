@@ -83,7 +83,7 @@ description: >-
 ---
 title: "【译】自然中文标题"
 date: YYYY-MM-DD HH:mm:00+08:00
-draft: true
+draft: false
 slug: "from-url-only"
 categories: [ "translation" ]
 tags: [ "tag1", "tag2" ]

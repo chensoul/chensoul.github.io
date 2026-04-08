@@ -1,7 +1,7 @@
 ---
 title: "【译】在 Spring 中实现 OAuth2：第 1 部分"
 date: 2018-01-27 00:00:00+08:00
-draft: true
+draft: false
 slug: using-oauth2-in-spring
 categories: [ "translation" ]
 tags: [ "spring-boot", "oauth2" ]

@@ -1,7 +1,7 @@
 ---
 title: "【译】一致性和分区容错：理解 CAP vs PACELC"
 date: 2025-07-24 23:30:00+08:00
-draft: true
+draft: false
 slug: "consistency-and-partition-tolerance"
 categories: [ "translation" ]
 tags: [ "cap-theorem", "pacelc", "distributed-systems", "database" ]

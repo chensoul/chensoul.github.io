@@ -1,7 +1,7 @@
 ---
 title: "【译】如何使用 Spring Security 和 JWT 保护您的 REST API"
 date: 2022-09-10 00:00:00+08:00
-draft: true
+draft: false
 slug: spring-security-jwt
 categories: ["translation"]
 tags: ['spring-boot', 'security', 'jwt']

@@ -1,7 +1,7 @@
 ---
 title: "【译】ByteByteGo 正在招聘"
 date: 2026-01-24 00:31:00+08:00
-draft: true
+draft: false
 slug: "we-are-hiring-at-bytebytego"
 categories: [ "translation" ]
 tags: [ "hiring", "jobs", "career" ]

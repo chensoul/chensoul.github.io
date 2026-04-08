@@ -2,7 +2,7 @@
 title: "【译】为 Spring Boot 应用程序创建优化的 Docker 映像"
 date: 2020-09-05 14:00:00+08:00
 slug: spring-boot-docker
-draft: true
+draft: false
 categories: [ "translation" ]
 tags: ['spring-boot']
 description: "容器已成为打包具有所有软件和操作系统依赖项的应用程序，然后将其传送到不同环境的首选方式。 ..."

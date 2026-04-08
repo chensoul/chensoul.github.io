@@ -1,7 +1,7 @@
 ---
 title: "【译】为 JMS 安装和设置 Glassfish"
 date: 2019-12-23 13:15:00+08:00
-draft: true
+draft: false
 slug: install-and-setup-glassfish-for-jms
 categories: ["translation"]
 tags: ["jms"]

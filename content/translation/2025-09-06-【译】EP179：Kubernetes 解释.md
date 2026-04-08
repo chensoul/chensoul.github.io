@@ -1,7 +1,7 @@
 ---
 title: "【译】EP179：Kubernetes 解释"
 date: 2025-09-06 23:30:00+08:00
-draft: true
+draft: false
 slug: "ep179-kubernetes-explained"
 categories: [ "translation" ]
 tags: [ "kubernetes", "k8s", "containers", "orchestration" ]

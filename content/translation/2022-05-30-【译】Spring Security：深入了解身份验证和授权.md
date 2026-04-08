@@ -1,7 +1,7 @@
 ---
 title: "【译】Spring Security：深入了解身份验证和授权"
 date: 2022-05-30 00:00:00+08:00
-draft: true
+draft: false
 slug: spring-security-authentication-and-authorization
 categories: [ "translation" ]
 tags: ['spring-boot', 'security']

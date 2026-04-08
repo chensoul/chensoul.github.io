@@ -1,7 +1,7 @@
 ---
 title: "【译】Netflix 如何运行在 Java 上"
 date: 2025-06-03 23:30:00+08:00
-draft: true
+draft: false
 slug: "how-netflix-runs-on-java"
 categories: [ "translation" ]
 tags: [ "netflix", "java", "architecture" ]
