@@ -4,7 +4,7 @@ date: 2022-07-02 23:21:00+08:00
 draft: false
 slug: "ep13-tcp-or-udp-for-zoom"
 categories: [ "translation" ]
-tags: [ "tcp", "udp" ]
+tags: [ "networking" ]
 description: "这篇文章介绍了 TCP vs. UDP 的区别、分布式 SQL 数据库、阻塞 vs. 非阻塞队列等网络概念。"
 canonicalURL: "https://blog.bytebytego.com/p/ep13-tcp-or-udp-for-zoom-also"
 ---

@@ -4,7 +4,7 @@ date: 2025-09-10 23:30:00+08:00
 draft: false
 slug: "how-doordash-uses-ai-models-to-understand"
 categories: [ "translation" ]
-tags: [ "ai", "ai" ]
+tags: [ "ai" ]
 description: "这篇文章介绍了 DoorDash 如何使用 LLM 和 OCR 技术自动化餐厅菜单照片转换为结构化数据，以及他们如何构建 guardrail 模型来保证准确性。"
 canonicalURL: "https://blog.bytebytego.com/p/how-doordash-uses-ai-models-to-understand"
 ---

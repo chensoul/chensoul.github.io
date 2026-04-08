@@ -757,6 +757,7 @@ cat ~/.config/chezmoi/chezmoi.toml
 **原因**：Fish 的 `if` 语句必须用 `end` 闭合，且逻辑或要用 `; or` 连接两个 `test`。
 
 **解决**：
+
 ```fish
 # 错误写法（bash 风格）
 if test "$argv[1]" = "-n"; -o "$argv[1]" = "--dry-run"
@@ -808,6 +809,7 @@ cat ~/.config/chezmoi/chezmoi.toml
 **原因**：Fish 的 `if` 语句必须用 `end` 闭合，且逻辑或要用 `; or` 连接两个 `test`。
 
 **解决**：
+
 ```fish
 # 错误写法（bash 风格）
 if test "$argv[1]" = "-n"; -o "$argv[1]" = "--dry-run"
@@ -820,20 +822,22 @@ if test "$argv[1]" = "-n"; or test "$argv[1]" = "--dry-run"
 
 ## 十一、推荐工具清单
 
-| 工具          | 用途           | 安装命令                                 |
-|-------------|---------------|----------------------------------------|
-| fish        | Shell          | `brew install fish`                    |
-| starship    | 跨 Shell 提示符  | `brew install starship`                |
-| zoxide      | 智能目录跳转     | `brew install zoxide`                  |
-| fzf         | 模糊搜索        | `brew install fzf`                     |
-| eza         | ls 替代品       | `brew install eza`                     |
-| yazi        | 终端文件管理器    | `brew install yazi`                    |
-| fd          | find 替代品     | `brew install fd`                      |
-| ripgrep     | grep 替代品     | `brew install ripgrep`                 |
-| delta       | Git diff 美化  | `brew install git-delta`               |
-| age         | 现代加密工具     | `brew install age`                     |
-| OrbStack    | Docker 替代品   | 从 https://orbstack.dev 下载           |
-| Ghostty     | 现代化终端      | `brew install --cask ghostty`          |
+
+| 工具       | 用途          | 安装命令                                              |
+| -------- | ----------- | ------------------------------------------------- |
+| fish     | Shell       | `brew install fish`                               |
+| starship | 跨 Shell 提示符 | `brew install starship`                           |
+| zoxide   | 智能目录跳转      | `brew install zoxide`                             |
+| fzf      | 模糊搜索        | `brew install fzf`                                |
+| eza      | ls 替代品      | `brew install eza`                                |
+| yazi     | 终端文件管理器     | `brew install yazi`                               |
+| fd       | find 替代品    | `brew install fd`                                 |
+| ripgrep  | grep 替代品    | `brew install ripgrep`                            |
+| delta    | Git diff 美化 | `brew install git-delta`                          |
+| age      | 现代加密工具      | `brew install age`                                |
+| OrbStack | Docker 替代品  | 从 [https://orbstack.dev](https://orbstack.dev) 下载 |
+| Ghostty  | 现代化终端       | `brew install --cask ghostty`                     |
+
 
 ---
 
@@ -882,3 +886,4 @@ dotfiles/
 - [Starship 提示符](https://starship.rs/)
 - [我的 Dotfiles](https://github.com/chensoul/dotfiles)
 - [Awesome Dotfiles](https://github.com/webpro/awesome-dotfiles)
+

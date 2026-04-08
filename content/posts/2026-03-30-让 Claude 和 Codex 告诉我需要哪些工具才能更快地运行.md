@@ -3,7 +3,7 @@ title: "让Claude 和 Codex 告诉我需要哪些工具才能更快地运行"
 date: 2026-03-30 12:50:00+08:00
 slug: what-tools-it-needs-for-claude-codex
 categories: [ "tech" ]
-tags: [ ""codex", "homebrew"]
+tags: [ "ai", "tools" ]
 draft: false
 description: "让 Claude Code 与 Codex 自查本机开发环境：对比二者给出的缺失工具清单，并补齐 ripgrep、fd、fzf 等与 AI 协作相关的 CLI 工具链。"
 favicon: "claude.svg"

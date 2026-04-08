@@ -4,7 +4,7 @@ date: 2024-04-06 23:30:00+08:00
 draft: false
 slug: "ep106-how-does-javascript-work"
 categories: [ "translation" ]
-tags: [ "javascript", "programming" ]
+tags: [ "frontend", "programming" ]
 description: "这篇文章介绍了 JavaScript 的核心特性，包括解释型语言、函数是一等公民、动态类型、客户端执行、基于原型的 OOP 等。"
 canonicalURL: "https://blog.bytebytego.com/p/ep106-how-does-javascript-work"
 ---

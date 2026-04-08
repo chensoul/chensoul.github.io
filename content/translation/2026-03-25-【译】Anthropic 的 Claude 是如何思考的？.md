@@ -4,7 +4,7 @@ date: 2026-03-25 23:31:00+08:00
 draft: false
 slug: "how-anthropics-claude-thinks"
 categories: [ "translation" ]
-tags: [ "ai", "ai" ]
+tags: [ "claude" ]
 description: "这篇文章介绍了 Anthropic 如何追踪 Claude 的内部计算过程，并总结了其在概念表征、规划、数学推理、幻觉与越狱等问题上的关键观察与局限。"
 canonicalURL: "https://blog.bytebytego.com/p/how-anthropics-claude-thinks"
 favicon: "claude.svg"

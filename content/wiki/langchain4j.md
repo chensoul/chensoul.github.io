@@ -2,7 +2,7 @@
 title: "Langchain4j"
 date: 2026-03-11 10:30:00+08:00
 slug: "langchain4j"
-tags: [ "langchain4j" ]
+tags: [ "ai", "java" ]
 draft: false
 categories: [ "wiki" ]
 description: "LangChain4j 学习索引：官方与中文文档、awesome 列表及示例仓库链接。"
