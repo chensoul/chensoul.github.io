@@ -4,7 +4,7 @@ date: 2026-04-09 08:00:00+08:00
 slug: skillsjars-quickstart
 categories: [ "tech" ]
 tags: [ "ai", "spring-ai", "skillsjars" ]
-favicon: "tools.svg"
+favicon: "ai.svg"
 description: "介绍 SkillsJars 是什么、如何使用（AI 代码助手和 Spring AI）以及如何创建和发布 SkillsJars。"
 ---
 
@@ -42,7 +42,7 @@ SkillsJars 的解决方案很简单：**把 Skills 打包成 JAR，通过 Maven 
 
 JAR 文件结构如下：
 
-```
+```bash
 my-skill.jar
 └── META-INF/
     └── skills/
@@ -73,7 +73,6 @@ plugins {
 Maven:
 
 ```xml
-
 <build>
     <plugins>
         <plugin>
@@ -98,7 +97,6 @@ Maven:
 比如，添加 `anthropics__skills__pdf`
 
 ```xml
-
 <dependency>
     <groupId>com.skillsjars</groupId>
     <artifactId>anthropics__skills__pdf</artifactId>
@@ -271,7 +269,7 @@ license: MIT
 
 如果你自己用 Maven 插件打包 SkillsJars，必须在 `pom.xml` 中添加匹配属性。插件会验证属性值是否匹配 SKILL.md，若有不匹配则失败。
 
-```
+```xml
 <properties>
     <skillsjars.skill.my-skill.allowed-tools>Bash Read Edit</skillsjars.skill.my-skill.allowed-tools>
 </properties>
@@ -282,7 +280,6 @@ license: MIT
 添加 SkillsJars Maven 插件，goal 是 package。
 
 ```xml
-
 <build>
     <plugins>
         <plugin>
@@ -313,21 +310,6 @@ Central。
 
 > 提示：自定义技能目录
 > 默认情况下，插件会在`项目`根查找技能/技能。你可以用 `skillsDir` 配置参数来自定义。
-
-## 可用的 SkillsJars
-
-访问 [SkillsJars.com](https://www.skillsjars.com/) 浏览可用的 SkillsJars，主要分类：
-
-| 分类                      | 示例                                    |
-|-------------------------|---------------------------------------|
-| API & Interface Design  | anthropics__skills__api-design        |
-| CI/CD & Automation      | anthropics__skills__ci-cd             |
-| Code Review & Quality   | anthropics__skills__code-review       |
-| Documentation & ADRs    | anthropics__skills__documentation     |
-| Frontend/UI Engineering | anthropics__skills__frontend          |
-| Test Driven Development | anthropics__skills__testing           |
-| PDF 处理                  | anthropics__skills__pdf               |
-| Browser Automation      | browser-use__browser-use__browser-use |
 
 ## 小结
 
