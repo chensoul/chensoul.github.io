@@ -69,9 +69,11 @@ plugins {
     id("com.skillsjars.gradle-plugin") version "0.0.2"
 }
 ```
+
 Maven:
 
 ```xml
+
 <build>
     <plugins>
         <plugin>
@@ -80,10 +82,10 @@ Maven:
             <version>0.0.6</version>
             <dependencies>
                 <!-- Your SkillsJars -->
-                <dependency> 
-                    <groupId>com.skillsjars</groupId> 
-                    <artifactId>anthropics__skills__pdf</artifactId> 
-                    <version>2026_02_25-3d59511</version> 
+                <dependency>
+                    <groupId>com.skillsjars</groupId>
+                    <artifactId>anthropics__skills__pdf</artifactId>
+                    <version>2026_02_25-3d59511</version>
                 </dependency>
             </dependencies>
         </plugin>
@@ -96,11 +98,12 @@ Maven:
 比如，添加 `anthropics__skills__pdf`
 
 ```xml
-  <dependency>
-      <groupId>com.skillsjars</groupId>
-      <artifactId>anthropics__skills__pdf</artifactId>
-      <version>2026_02_25-3d59511</version>
-  </dependency>
+
+<dependency>
+    <groupId>com.skillsjars</groupId>
+    <artifactId>anthropics__skills__pdf</artifactId>
+    <version>2026_02_25-3d59511</version>
+</dependency>
 ```
 
 3. 提取技能
@@ -114,12 +117,11 @@ Maven:
 # Maven
 ./mvnw skillsjars:extract -Ddir=.cursor/skills
 ```
+
 替换 .cursor/skills 为您的AI助手用于技能的路径。
 
 > 提示：
 > 您的项目 AGENTS.md 可以指示 AI 代理在处理项目之前运行提取命令。这样，技能始终可用，无需手动设置。
-
-
 
 如果你不想使用 SkillsJars 构建插件提取技能，可以直接下载 SkillsJars 对应的jar包，然后手动解压。
 
@@ -135,26 +137,28 @@ unzip pdf-2026_02_25-3d59511.jar -d .cursor/skills/pdf/
 
 ### Spring AI
 
- [Spring AI Agent Utils ](https://github.com/spring-ai-community/spring-ai-agent-utils)项目提供了一个 SkillsTool，可将 Agent 技能直接集成到 Spring AI Agent 中。SkillsJars 开箱即用——技能直接从类路径读取，无需任何提取步骤。
+[Spring AI Agent Utils ](https://github.com/spring-ai-community/spring-ai-agent-utils)项目提供了一个 SkillsTool，可将
+Agent 技能直接集成到 Spring AI Agent 中。SkillsJars 开箱即用——技能直接从类路径读取，无需任何提取步骤。
 
 1. 添加依赖项
 
 将 Spring AI Agent Utils 库和所有 SkillsJar 依赖项添加到您的项目中：
 
 ```xml
-  <dependencies>
-      <dependency>
-          <groupId>org.springaicommunity</groupId>
-          <artifactId>spring-ai-agent-utils</artifactId>
-          <version>0.7.0</version>
-      </dependency>
-    
-      <dependency>
-          <groupId>com.skillsjars</groupId>
-          <artifactId>anthropics__skills__pdf</artifactId>
-          <version>2026_02_25-3d59511</version>
-      </dependency>
-  </dependencies>
+
+<dependencies>
+    <dependency>
+        <groupId>org.springaicommunity</groupId>
+        <artifactId>spring-ai-agent-utils</artifactId>
+        <version>0.7.0</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.skillsjars</groupId>
+        <artifactId>anthropics__skills__pdf</artifactId>
+        <version>2026_02_25-3d59511</version>
+    </dependency>
+</dependencies>
 ```
 
 2. 配置技能路径
@@ -170,7 +174,9 @@ agent.skills.paths=classpath:/META-INF/skills
 使用 SkillsTool 构建器加载技能并将其添加到您的 ChatClient 中：
 
 ```java
-@Value("${agent.skills.paths}") List<Resource> skillPaths;
+
+@Value("${agent.skills.paths}")
+List<Resource> skillPaths;
 
 ChatClient chatClient = chatClientBuilder
         .defaultToolCallbacks(
@@ -231,22 +237,25 @@ public class SkillsConfig {
 
 1. 创建技能目录
 
-`skills`在项目根目录下添加一个目录。每个子目录代表一项技能，并且必须包含一个符合  [Agent Skills 规范](https://agentskills.io/specification) 的 `SKILL.md` 标记文件。
+`skills`
+在项目根目录下添加一个目录。每个子目录代表一项技能，并且必须包含一个符合  [Agent Skills 规范](https://agentskills.io/specification)
+的 `SKILL.md` 标记文件。
 
 ```markdown
 skills/
 ├── my-skill/
-│   ├── SKILL.md
-│   └── helpers.py
+│ ├── SKILL.md
+│ └── helpers.py
 └── another-skill/
-    └── SKILL.md
+└── SKILL.md
 ```
 
 2. SKILL.md frontmatter
 
-每个文件都 `SKILL.md` 必须包含 YAML frontmatter，其中包含 `name` 和`description`。还可以选择包含`allowed-tools`（一个以空格分隔的预先批准的工具列表）和 `license`。
+每个文件都 `SKILL.md` 必须包含 YAML frontmatter，其中包含 `name` 和`description`。还可以选择包含`allowed-tools`
+（一个以空格分隔的预先批准的工具列表）和 `license`。
 
-```xml
+```yaml
 ---
 name: my-skill
 description: A useful skill
@@ -257,7 +266,8 @@ license: MIT
 ...
 ```
 
-通过 SkillsJars.com 发布时，`allowed-tools`会自动将其作为名为 `skillsjars.skill.<name>.allowed-tools` 的属性存储在 POM 中，以便消费者无需提取 JAR 即可读取它。
+通过 SkillsJars.com 发布时，`allowed-tools`会自动将其作为名为 `skillsjars.skill.<name>.allowed-tools` 的属性存储在 POM
+中，以便消费者无需提取 JAR 即可读取它。
 
 如果你自己用 Maven 插件打包 SkillsJars，必须在 `pom.xml` 中添加匹配属性。插件会验证属性值是否匹配 SKILL.md，若有不匹配则失败。
 
@@ -272,6 +282,7 @@ license: MIT
 添加 SkillsJars Maven 插件，goal 是 package。
 
 ```xml
+
 <build>
     <plugins>
         <plugin>
@@ -292,11 +303,13 @@ license: MIT
 
 4. 构建 Jar
 
-插件在 `mvn 包`期间运行，并将技能放入你的 JAR 内的 `META-INF/skills/`。如果你的项目在 POM 中配置了 GitHub SCM，它会从 URL 里调用 org/repo 来实现。否则它会使用项目的 groupID。
+插件在 `mvn 包`期间运行，并将技能放入你的 JAR 内的 `META-INF/skills/`。如果你的项目在 POM 中配置了 GitHub SCM，它会从 URL
+里调用 org/repo 来实现。否则它会使用项目的 groupID。
 
 5. 发布到 Maven Central
 
-把你的技能推送到公共的 GitHub 仓库，然后在主页使用“[ 发布 SkillsJar](https://www.skillsjars.com/)”表单，部署到 Maven Central。
+把你的技能推送到公共的 GitHub 仓库，然后在主页使用“[ 发布 SkillsJar](https://www.skillsjars.com/)”表单，部署到 Maven
+Central。
 
 > 提示：自定义技能目录
 > 默认情况下，插件会在`项目`根查找技能/技能。你可以用 `skillsDir` 配置参数来自定义。
@@ -326,7 +339,6 @@ SkillsJars 让 AI Agent Skills 可以像普通 Java 库一样管理：
 - **生态集成**：与 Spring AI 等框架无缝集成
 
 想要为你的 AI Agent 添加新技能？直接在 `pom.xml` 中加个依赖就行。
-
 
 ## 参考资料
 
