@@ -1,6 +1,6 @@
 ---
 title: "macOS 使用 Chezmoi 管理 Dotfiles 实战"
-date: 2026-04-09 17:00:00+08:00
+date: 2026-04-01 17:00:00+08:00
 slug: chezmoi-dotfiles-macos
 categories: [ "tech" ]
 tags: [ "dotfiles", "macos" ]
